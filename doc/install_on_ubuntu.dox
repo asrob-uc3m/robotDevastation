@@ -71,7 +71,7 @@ cd ../..
  * @subsection download_rd Download the Robot Devastation software from the repository
 
 \verbatim
-svn co https://asrob.svn.sourceforge.net/svnroot/asrob/robotDevastation robotDevastation
+git clone https://github.com/asrob-uc3m/robotDevastation.git
 \endverbatim
 
  * @subsection configure_rd Configure the Robot Devastation software
