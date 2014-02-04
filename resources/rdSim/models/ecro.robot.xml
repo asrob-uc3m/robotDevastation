@@ -1,0 +1,168 @@
+<!-- ecro as made by smorante and jgvictores -->
+
+<robot name="ecro">
+  <kinbody>
+    <body name="base" type="dynamic">
+      <geom type="box">
+        <extents>0.6 0.4 0.02</extents>
+        <translation>0 0 0.25</translation>
+        <diffuseColor>1 0 0</diffuseColor>
+      </geom>
+      <mass type="mimicgeom">
+        <total>5</total>
+      </mass>
+    </body>
+    
+    <body name="wheel_left" type="dynamic">
+      <translation>0.4 0.46 0.2</translation>
+      <geom type="cylinder">
+        <radius>0.2</radius>
+        <height>0.05</height>
+        <diffuseColor>1 1 0</diffuseColor>
+      </geom>
+      <mass type="mimicgeom">
+        <total>1</total>
+      </mass>
+    </body>
+    
+    <body name="wheel_right"  type="dynamic">
+      <translation>0.4 -0.46 0.2</translation>
+      <geom type="cylinder">
+        <radius>0.2</radius>
+        <height>0.05</height>
+        <diffuseColor>1 1 0</diffuseColor>
+      </geom>
+      <mass type="mimicgeom">
+        <total>1</total>
+      </mass>
+    </body>
+    
+    <body name="wheel_caster_r"  type="dynamic">
+      <translation>-0.4 -0.46 0.2</translation>
+      <geom type="cylinder">
+        <radius>0.2</radius>
+        <height>0.01</height>
+        <diffuseColor>1 1 0</diffuseColor>
+      </geom>
+      <mass type="mimicgeom">
+        <total>0.5</total>
+      </mass>
+    </body>
+  
+  
+      <body name="wheel_caster_l"  type="dynamic">
+      <translation>-0.4 0.46 0.2</translation>
+      <geom type="cylinder">
+        <radius>0.2</radius>
+        <height>0.01</height>
+        <diffuseColor>1 1 0</diffuseColor>
+      </geom>
+      <mass type="mimicgeom">
+        <total>0.5</total>
+      </mass>
+    </body>
+    
+    <joint name="wheel_left" type="hinge" circular="true">
+      <body>base</body>
+      <body>wheel_left</body>
+      <anchor>0.4 0 0.2</anchor>
+      <axis>0 1 0</axis>
+    </joint>
+    
+    <joint name="wheel_right" type="hinge" circular="true">
+      <body>base</body>
+      <body>wheel_right</body>
+      <anchor>0.4 0 0.2</anchor>
+      <axis>0 1 0</axis>
+    </joint>
+    
+    <joint name="wheel_caster_l" type="hinge" circular="true" >
+      <body>base</body>
+      <body>wheel_caster_l</body>
+      <anchor>-0.4 0 0.2</anchor>
+      <axis>0 1 0</axis>
+    </joint>   
+    
+    <joint name="wheel_caster_r" type="hinge" circular="true">
+      <body>base</body>
+      <body>wheel_caster_r</body>
+      <anchor>-0.4 0 0.2</anchor>
+      <axis>0 1 0</axis>
+    </joint>
+ 
+  
+      </kinbody>
+
+    <KinBody name="kinectKinbody">
+	    <Body type="dynamic" name="kinectMain">
+	        <Geom type="box">
+	            <Render>./wrls/kinect.wrl</Render>
+	            <Extents>.02 .07 .01</Extents>
+	            <diffuseColor>0 0 0</diffuseColor>
+	            <transparency>0.5</transparency>
+	        </Geom>
+
+	    </Body>
+	    <Body name="kinectHead">
+	        <Geom type="box">
+	            <Translation>0 0 0.06</Translation>
+	            <Extents>.02 .1 .01</Extents>
+	            <diffuseColor>0 0 0</diffuseColor>
+	            <transparency>0.5</transparency>
+	        </Geom>
+
+	    </Body>
+		<Joint name="K1" type="hinge" enable="false">
+			<body>kinectMain</body>
+			<body>kinectHead</body>
+			<axis>0 1 0</axis>
+			<limits>0 0</limits>
+		</Joint>
+	    <translation>0.55 0 0.26</translation>
+	 </KinBody>
+	    
+
+    <AttachedSensor name="depth">
+        <link>kinectHead</link>
+        <translation>0.028 0 0.0575</translation>
+        <rotationaxis>0 1 0 90</rotationaxis>
+        <rotationaxis>1 0 0 -90</rotationaxis>
+        <sensor type="BaseFlashLidar3D">
+            <maxrange>5</maxrange>
+            <time_scan>0.2</time_scan>
+            <KK>32 24 32 24</KK>
+            <width>64</width>
+            <height>48</height>
+            <color>.9 .9 0</color>
+        </sensor>
+    </AttachedSensor>
+    <!--AttachedSensor name="rgb">
+        <link>kinectHead</link>
+        <translation>0.028 0 0.0575</translation>
+        <rotationaxis>0 1 0 90</rotationaxis>
+        <rotationaxis>1 0 0 -90</rotationaxis>
+        <sensor type="BaseCamera">
+            <KK>32 24 32 24</KK>
+            <width>64</width>
+            <height>48</height>
+            <framerate>5</framerate>
+            <color>0.5 0.5 1</color>
+        </sensor>
+    </AttachedSensor-->
+
+
+	    <!-- connect the two pieces with dummy joints -->
+	    <KinBody>
+	        <joint name="dummy" type="hinge" enable="false">
+	            <body>base</body>
+	            <body>kinectMain</body>
+	            <limitsdeg>0 0</limitsdeg>
+	        </joint>
+	    </KinBody>
+
+    <Manipulator name="wheels">
+        <base>wheel_left</base>
+        <effector>wheel_caster_r</effector>
+    </Manipulator>
+
+</robot>

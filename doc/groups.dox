@@ -1,0 +1,11 @@
+/**
+* \defgroup rd_programs List of Robot Devastation programs
+*
+* Documentation for each program goes in each 
+* directory.
+*
+* <hr>
+*
+* This file can be edited at $RD_ROOT/main/doc/groups.dox
+*/
+
