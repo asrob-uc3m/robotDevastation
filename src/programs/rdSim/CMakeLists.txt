@@ -41,6 +41,8 @@ if (folder_source)
   set_target_properties(${KEYWORD} PROPERTIES LINK_FLAGS "${OpenRAVE_LINK_FLAGS}")
   target_link_libraries(${KEYWORD} ${OpenRAVE_LIBRARIES} ${OpenRAVE_CORE_LIBRARIES} ${Boost_THREAD_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${YARP_LIBRARIES})
   install(TARGETS ${KEYWORD} DESTINATION bin)
+  install(DIRECTORY ${PROJECT_SOURCE_DIR}/share/${KEYWORD} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/robotDevastation )  # Uninstall does not delete empty dirs.
+
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)

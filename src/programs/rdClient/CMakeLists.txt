@@ -6,9 +6,6 @@ IF (ENABLE_rdClient)
 
 set(KEYWORD "rdClient")
 
-# Start a project.
-project(${KEYWORD})
-
 # Find YARP.  Point the YARP_DIR environment variable at your build.
 find_package(YARP REQUIRED)
 
@@ -32,6 +29,7 @@ if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
   target_link_libraries(${KEYWORD} ${YARP_LIBRARIES})
   install(TARGETS ${KEYWORD} DESTINATION bin)
+  install(DIRECTORY ${PROJECT_SOURCE_DIR}/share/${KEYWORD} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/robotDevastation )  # Uninstall does not delete empty dirs.
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
