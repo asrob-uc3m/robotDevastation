@@ -5,13 +5,12 @@
 
 #include "RdInputBase.hpp"
 
-namespace rd{
+namespace rdlib{
 
 /**
  * @ingroup RdInputLib
  *
- * The RdInputKeyboard class implements keyboard input.
- * 
+ * @brief Implements a keyboard input for Robot Devastation.
  */
 class RdInputKeyboard : RdInputBase {
     public:
@@ -21,7 +20,7 @@ class RdInputKeyboard : RdInputBase {
         bool quiet;
 };
 
-} //rd
+} //rdlib
 
 #endif  // __RD_INPUT_KEYBOARD_HPP__
 

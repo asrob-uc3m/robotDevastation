@@ -2,7 +2,7 @@
 
 #include "RdInputKeyboard.hpp"
 
-namespace rd{
+namespace rdlib{
 
 /************************************************************************/
 bool RdInputKeyboard::init() {
@@ -23,5 +23,5 @@ bool RdInputKeyboard::stop() {
 
 /************************************************************************/
 
-} //rd
+} //rdlib
 

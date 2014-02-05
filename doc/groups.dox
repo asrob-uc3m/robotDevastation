@@ -9,3 +9,14 @@
 * This file can be edited at $RD_ROOT/main/doc/groups.dox
 */
 
+/**
+* \defgroup rd_libraries List of Robot Devastation libraries
+*
+* Documentation for each library goes in each 
+* directory.
+*
+* <hr>
+*
+* This file can be edited at $RD_ROOT/main/doc/groups.dox
+*/
+
