@@ -76,7 +76,7 @@ bool ExecutionThread::init(yarp::os::ResourceFinder &rf) {
     }
     gameControl.setVelocityControl(iVel);
 
-    string graphicsPath = "../resources/robotDevastation/graphics/";
+    string graphicsPath = "../../resources/rdClient/graphics/";
     string graphicsCabin = graphicsPath + "cabin_" + cabin + ".png";
     picture = imread(graphicsCabin.c_str());
     if(picture.empty()) {
@@ -96,7 +96,7 @@ bool ExecutionThread::init(yarp::os::ResourceFinder &rf) {
         } else cout << "[success] " << graphicsCabin2 << " found." << endl;
     } else cout << "[success] " << graphicsCabin << " found." << endl;
 
-    string xmlPath = "../resources/robotDevastation/xml/";
+    string xmlPath = "../../resources/rdClient/xml/";
     string xmlFace = xmlPath + DEFAULT_FACE_CASCADE_NAME;
     if( !faceCascade.load( xmlFace.c_str() ) ){
         cerr << "[warning] " << xmlFace << " not found." << endl;
@@ -142,10 +142,13 @@ void ExecutionThread::run() {  // periodical
         videoFrame = cvImage;
     }  
     enemyDetector.humansDetector(videoFrame, faceCascade);
+    std::vector< cv::Rect > enemies = enemyDetector.getEnemies();
+    gameControl.updateEnemies( &enemies );
     picture.copyTo(videoFrame, maskPic);
     key = waitKey(1);
     gameControl.keyboardActions(videoFrame, key);
     gameControl.showAmmo(videoFrame);
+    gameControl.showKills(videoFrame);
     imshow("Robot Devastation", videoFrame);
 }
 

@@ -34,6 +34,10 @@ class EnemyDetector{
 
     void humansDetector(Mat& frame, CascadeClassifier faceCascade);
 
+    std::vector< cv::Rect > getEnemies();
+
+  private:
+    std::vector< cv::Rect > enemies;
 };
 
 } //rdclient

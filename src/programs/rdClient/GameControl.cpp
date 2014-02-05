@@ -10,6 +10,14 @@ void GameControl::setVelocityControl(yarp::dev::IVelocityControl* _iVel) {
 }
 
 /************************************************************************/
+GameControl::GameControl()
+{
+    kills = 0;
+    ammo = 10;
+    gunColor = RED;
+    gunThickness= 3;
+}
+
 void GameControl::onMouse( int event, int x, int y, int flags, void* param ) {
     if ( event==CV_EVENT_MOUSEMOVE ) {
        cout << "x: " << x << " y: " << y << endl;
@@ -75,6 +83,9 @@ void GameControl::keyboardActions(Mat& image, const int key){
         line(image,references[0],references[1],gunColor, gunThickness);
         line(image,references[2],references[3],gunColor, gunThickness);
         reduceAmmo();
+
+        //-- This should not be hardcoded here, but as a patch it will work:
+        checkKilled();
     }
 }
 
@@ -107,6 +118,31 @@ void GameControl::showAmmo(Mat &image){
 }
 
 /************************************************************************/
+
+void GameControl::checkKilled( )
+{
+    //-- Check if we killed something
+    for (int i = 0; i < enemies->size(); i++ )
+    {
+        if ( enemies->at(i).x <= 320 && enemies->at(i).x+enemies->at(i).width >= 320 &&
+             enemies->at(i).y <= 110 && enemies->at(i).y+enemies->at(i).height >= 110 )
+            kills++;
+    }
+}
+
+void GameControl::showKills(Mat &image)
+{
+    stringstream ss;
+    ss << kills;
+    string count = "Killed: " + ss.str();
+    Point point1 = Point( image.cols*0.05, image.rows*0.05);
+    putText( image, count, point1, CV_FONT_HERSHEY_SIMPLEX,0.8,YELLOW,2);
+}
+
+void GameControl::updateEnemies(std::vector<Rect> * enemies)
+{
+    this->enemies = enemies;
+}
 
 } //rdclient
 

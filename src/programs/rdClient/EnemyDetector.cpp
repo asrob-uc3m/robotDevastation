@@ -8,13 +8,18 @@ namespace rdclient {
 
 void EnemyDetector::humansDetector(Mat& frame, CascadeClassifier faceCascade){
 
-    std::vector<Rect> faces;
     Mat frame_gray;
     cvtColor( frame, frame_gray, CV_BGR2GRAY );
-    faceCascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0, Size(70, 70));
-    for( int i = 0; i < faces.size(); i++ ){
-        rectangle(frame,faces[i],ORANGE,2);
+    faceCascade.detectMultiScale( frame_gray, enemies, 1.1, 2, 0, Size(70, 70));
+    for( int i = 0; i < enemies.size(); i++ ){
+        rectangle(frame,enemies[i],ORANGE,2);
     }
+
+}
+
+std::vector<Rect> EnemyDetector::getEnemies()
+{
+    return enemies;
 }
 
 /************************************************************************/
