@@ -60,8 +60,8 @@ bool ExecutionThread::init(yarp::os::ResourceFinder &rf) {
         yarp::os::Property rgbConfig;  // A YARP dictionary class.
         rgbConfig.put("device","remote_grabber");  // device type
         rgbConfig.put("local","/user/rgb/img:i");  // name of local port to use
-        rgbConfig.put("remote","/kinect/imageMap:o");  // name of remote port to connect to
-        rgbConfig.put("stream","mjpeg");  // carrier to use for streaming, using mjpeg
+        rgbConfig.put("remote","/ecro_rgb/img:o");  // name of remote port to connect to
+        //rgbConfig.put("stream","mjpeg");  // carrier to use for streaming, using mjpeg
         //rgbConfig.put("stream","udp");  // carrier to use for streaming, using mjpeg
         rgbDev.open(rgbConfig);
         if (!rgbDev.isValid()) {

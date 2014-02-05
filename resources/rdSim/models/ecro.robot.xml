@@ -2,6 +2,7 @@
 
 <robot name="ecro">
   <kinbody>
+
     <body name="base" type="dynamic">
       <geom type="box">
         <extents>0.6 0.4 0.02</extents>
@@ -11,8 +12,7 @@
       <mass type="mimicgeom">
         <total>5</total>
       </mass>
-    </body>
-    
+    </body>  
     <body name="wheel_left" type="dynamic">
       <translation>0.4 0.46 0.2</translation>
       <geom type="cylinder">
@@ -24,6 +24,12 @@
         <total>1</total>
       </mass>
     </body>
+    <joint name="wheel_left" type="hinge" circular="true">
+      <body>base</body>
+      <body>wheel_left</body>
+      <anchor>0.4 0 0.2</anchor>
+      <axis>0 1 0</axis>
+    </joint>
     
     <body name="wheel_right"  type="dynamic">
       <translation>0.4 -0.46 0.2</translation>
@@ -36,7 +42,13 @@
         <total>1</total>
       </mass>
     </body>
-    
+    <joint name="wheel_right" type="hinge" circular="true">
+      <body>base</body>
+      <body>wheel_right</body>
+      <anchor>0.4 0 0.2</anchor>
+      <axis>0 1 0</axis>
+    </joint>
+
     <body name="wheel_caster_r"  type="dynamic">
       <translation>-0.4 -0.46 0.2</translation>
       <geom type="cylinder">
@@ -48,7 +60,12 @@
         <total>0.5</total>
       </mass>
     </body>
-  
+      <joint name="wheel_caster_r" type="hinge" circular="true">
+      <body>base</body>
+      <body>wheel_caster_r</body>
+      <anchor>-0.4 0 0.2</anchor>
+      <axis>0 1 0</axis>
+    </joint>
   
       <body name="wheel_caster_l"  type="dynamic">
       <translation>-0.4 0.46 0.2</translation>
@@ -61,21 +78,6 @@
         <total>0.5</total>
       </mass>
     </body>
-    
-    <joint name="wheel_left" type="hinge" circular="true">
-      <body>base</body>
-      <body>wheel_left</body>
-      <anchor>0.4 0 0.2</anchor>
-      <axis>0 1 0</axis>
-    </joint>
-    
-    <joint name="wheel_right" type="hinge" circular="true">
-      <body>base</body>
-      <body>wheel_right</body>
-      <anchor>0.4 0 0.2</anchor>
-      <axis>0 1 0</axis>
-    </joint>
-    
     <joint name="wheel_caster_l" type="hinge" circular="true" >
       <body>base</body>
       <body>wheel_caster_l</body>
@@ -83,12 +85,7 @@
       <axis>0 1 0</axis>
     </joint>   
     
-    <joint name="wheel_caster_r" type="hinge" circular="true">
-      <body>base</body>
-      <body>wheel_caster_r</body>
-      <anchor>-0.4 0 0.2</anchor>
-      <axis>0 1 0</axis>
-    </joint>
+
  
   
       </kinbody>
@@ -136,19 +133,19 @@
             <color>.9 .9 0</color>
         </sensor>
     </AttachedSensor>
-    <!--AttachedSensor name="rgb">
+    <AttachedSensor name="rgb">
         <link>kinectHead</link>
         <translation>0.028 0 0.0575</translation>
         <rotationaxis>0 1 0 90</rotationaxis>
         <rotationaxis>1 0 0 -90</rotationaxis>
         <sensor type="BaseCamera">
-            <KK>32 24 32 24</KK>
-            <width>64</width>
-            <height>48</height>
+            <KK>320 240 320 240</KK>
+            <width>640</width>
+            <height>480</height>
             <framerate>5</framerate>
             <color>0.5 0.5 1</color>
         </sensor>
-    </AttachedSensor-->
+    </AttachedSensor>
 
 
 	    <!-- connect the two pieces with dummy joints -->
