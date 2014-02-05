@@ -6,9 +6,6 @@ IF (ENABLE_rdSim)
 
 set(KEYWORD "rdSim")
 
-# Start a project.
-project(${KEYWORD})
-
 # Find YARP and OpenRAVE.
 find_package(YARP REQUIRED)
 find_package(OpenRAVE REQUIRED)

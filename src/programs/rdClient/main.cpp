@@ -33,12 +33,12 @@
  * It should be straightforward to run the default test mode. Just click on the icon or open a terminal and write:
  *
 \verbatim
-robotDevastation
+rdColient
 \endverbatim
  *
  * <b>OPTIONAL:</b> If you prefer to connect to a real robot, for example the ECRO, indicate it with the robot parameter:
 \verbatim
-robotDevastation --robot ECRO
+rdClient --robot ECRO
 \endverbatim
  *
  * @section interfacing Interfacing with robotDevastation
@@ -52,22 +52,24 @@ robotDevastation --robot ECRO
  *
  */
 
+#include <iostream>
+
 #include "RdClient.hpp"
 
 int main(int argc, char *argv[]) {
 
-    cout << "--------------------------------------------------------------" << endl;
-    cout << "Robot Devastation @ ASROB 2014 (C) Robotics Society of the Universidad Carlos III de Madrid" << endl;
-    cout << "Welcome to Robot Devastation v0.1, developed by Juan G Victores and Santiago Morante." << endl;
-    cout << " ____       _           _   ____                      _        _   _             " << endl;
-    cout << "|  _ \\ ___ | |__   ___ | |_|  _ \\  _____   ____ _ ___| |_ __ _| |_(_) ___  _ __  " << endl;
-    cout << "| |_) / _ \\| '_ \\ / _ \\| __| | | |/ _ \\ \\ / / _` / __| __/ _` | __| |/ _ \\| '_ \\ " << endl;
-    cout << "|  _ < (_) | |_) | (_) | |_| |_| |  __/\\ V / (_| \\__ \\ || (_| | |_| | (_) | | | |" << endl;
-    cout << "|_| \\_\\___/|_.__/ \\___/ \\__|____/ \\___| \\_/ \\__,_|___/\\__\\__,_|\\__|_|\\___/|_| |_|" << endl;
-    cout << endl;
-    cout << "Fire with 'space'. Reload with 'r'. Move with 'a,s,d,w,x'. Run \"robotDevastation --help\" for options." << endl;
-    cout << "For a full description, please visit http://asrob.uc3m.es/rddoc/group__robotDevastation.html." << endl;
-    cout << "--------------------------------------------------------------" << endl;
+    std::cout << "--------------------------------------------------------------" << std::endl;
+    std::cout << "Robot Devastation @ ASROB 2014 (C) Robotics Society of the Universidad Carlos III de Madrid" << std::endl;
+    std::cout << "Welcome to Robot Devastation v0.1, developed by Juan G Victores and Santiago Morante." << std::endl;
+    std::cout << " ____       _           _   ____                      _        _   _             " << std::endl;
+    std::cout << "|  _ \\ ___ | |__   ___ | |_|  _ \\  _____   ____ _ ___| |_ __ _| |_(_) ___  _ __  " << std::endl;
+    std::cout << "| |_) / _ \\| '_ \\ / _ \\| __| | | |/ _ \\ \\ / / _` / __| __/ _` | __| |/ _ \\| '_ \\ " << std::endl;
+    std::cout << "|  _ < (_) | |_) | (_) | |_| |_| |  __/\\ V / (_| \\__ \\ || (_| | |_| | (_) | | | |" << std::endl;
+    std::cout << "|_| \\_\\___/|_.__/ \\___/ \\__|____/ \\___| \\_/ \\__,_|___/\\__\\__,_|\\__|_|\\___/|_| |_|" << std::endl;
+    std::cout << std::endl;
+    std::cout << "Fire with 'space'. Reload with 'r'. Move with 'a,s,d,w,x'. Run \"robotDevastation --help\" for options." << std::endl;
+    std::cout << "For a full description, please visit http://asrob.uc3m.es/rddoc/group__robotDevastation.html." << std::endl;
+    std::cout << "--------------------------------------------------------------" << std::endl;
 
     yarp::os::ResourceFinder rf;  // ResourceFinder is a YARP helper class we use for parsing command line arguments and conf file.
     rf.setVerbose(false);
@@ -78,14 +80,14 @@ int main(int argc, char *argv[]) {
     yarp::os::Network yarp;  // Must create this object in order to connect to the YARP network.
 
     if(rf.check("robot") && !rf.check("help")) {  // Unless we have no robot, or just asking for help, we'll need to check connectivity.
-        cout << "--------------------------------------------------------------" << endl;
-        cout << "rdClient checking for yarp network... ";
+        std::cout << "--------------------------------------------------------------" << std::endl;
+        std::cout << "rdClient checking for yarp network... ";
         fflush(stdout);
         if (!yarp.checkNetwork()) {
-            cerr << "[fail]" << endl
-                 << "rdClient found no yarp network (try running \"yarpserver &\"), bye!" << endl;
+            std::cerr << "[fail]" << std::endl
+                 << "rdClient found no yarp network (try running \"yarpserver &\"), bye!" << std::endl;
             return -1;
-        } else cout << "[ok]" << endl;
+        } else std::cout << "[ok]" << std::endl;
     }
 
     rdclient::RdClient mod;  // This is the rdClient program main class.

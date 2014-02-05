@@ -1,6 +1,6 @@
 
 # Order may be important here
 
-#add_subdirectory(libraries)  # No libraries yet.
+add_subdirectory(libraries)
 add_subdirectory(programs)
 

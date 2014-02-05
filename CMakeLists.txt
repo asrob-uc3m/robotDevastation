@@ -16,7 +16,10 @@ endif(COMMAND cmake_policy)
 
 project(robotDevastation)
 
-##### options
+##### library options
+option(ENABLE_RdControllerLib "Choose if you want to compile rdClient" TRUE)
+
+##### program options
 option(ENABLE_rdClient "Choose if you want to compile rdClient" TRUE)
 option(ENABLE_rdSim "Choose if you want to compile rdSim" TRUE)
 

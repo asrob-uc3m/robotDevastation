@@ -1,25 +1,13 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-/**
-  * Copyright 2012 ASROB (http://asrob.uc3m.es)
-  * This file is part of Robot Devastation Game
-  * Author: Santiago Morante
-  * Co-Author: Juan G. Victores
-  */
-
 #ifndef __ROBOT_DEVASTATION_HPP__
 #define __ROBOT_DEVASTATION_HPP__
 
-#include <yarp/os/RFModule.h>
-#include <yarp/os/Module.h>
 #include <yarp/os/Network.h>
-#include <yarp/os/Port.h>
-#include <yarp/os/BufferedPort.h>
+#include <yarp/os/RFModule.h>
 
-#include <yarp/dev/all.h>
+#include "RdInputBase.hpp"
 
-#include "GameControl.hpp"
-#include "ScreenDraw.hpp"
 #include "ExecutionThread.hpp"
 
 #define DEFAULT_WATCHDOG    5       // [s]
@@ -31,9 +19,10 @@ namespace rdclient{
  * @brief The main \ref rdClient program class, implemented as a slow watchdog class that also launches an \ref ExecutionThread.
  */
 class RdClient : public yarp::os::RFModule {
+
     public:
         /**
-         * Constructor og this slow watchdog thread.
+         * Constructor of this slow watchdog thread.
          */
         RdClient();
 
@@ -43,14 +32,9 @@ class RdClient : public yarp::os::RFModule {
          * @param rf a previously initialized ResourceFinder
          * @return true/false upon success/failure
          */
-        bool configure(yarp::os::ResourceFinder &rf);
+        virtual bool configure(yarp::os::ResourceFinder &rf);
 
     protected:
-
-        /**
-         * An instance of the main periodical fast thread.
-         */
-        ExecutionThread executionThread;
 
         /**
          * When your module wants to stop, return false.  The module's actual
@@ -59,25 +43,30 @@ class RdClient : public yarp::os::RFModule {
          *
          * @return true if module should continue
         */
-        bool updateModule();
+        virtual bool updateModule();
 
-        /**
-         * Closing rutines.
-         */
-        bool interruptModule();
+        /** Closing rutines. */
+        virtual bool interruptModule();
         
-        /**
-         * Tell YARP the period of this slow watchdog thread.
-         */
-        double getPeriod();
+        /** Tell YARP the period of this slow watchdog thread. */
+        virtual double getPeriod();
 
 
-        /**
-         * Will be returned through getPeriod().
-         */
-        double watchdog; // [s]
+        /** Will be returned through getPeriod() [s]. */
+        double watchdog;
 
+        /** An instance of the main periodical fast thread. */
+        ExecutionThread executionThread;
 
+        /** Input */
+        rd::RdInputBase* rdInputPtr;
+
+        /** Screen */
+        //RdScreen rdScreen;
+
+        /** Robot */
+        //RdRobot rdRobot;
+        
 };
 
 } //rdclient
