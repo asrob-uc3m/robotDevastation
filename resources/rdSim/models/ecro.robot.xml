@@ -119,7 +119,7 @@
 	 </KinBody>
 	    
 
-    <AttachedSensor name="depth">
+    <!--AttachedSensor name="depth">
         <link>kinectHead</link>
         <translation>0.028 0 0.0575</translation>
         <rotationaxis>0 1 0 90</rotationaxis>
@@ -132,7 +132,7 @@
             <height>48</height>
             <color>.9 .9 0</color>
         </sensor>
-    </AttachedSensor>
+    </AttachedSensor-->
     <AttachedSensor name="rgb">
         <link>kinectHead</link>
         <translation>0.028 0 0.0575</translation>
