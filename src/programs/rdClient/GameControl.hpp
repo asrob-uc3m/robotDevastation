@@ -42,13 +42,13 @@ class GameControl {
     void updateEnemies( std::vector< cv::Rect > * enemies );
     void checkKilled();
 
-    /** Pass a velocity controller pointer to the class. */
-    void setVelocityControl(yarp::dev::IVelocityControl* _iVel);
+    /** Pass a position controller pointer to the class. */
+    void setPositionControl(yarp::dev::IPositionControl* _iPos);
 
     protected:
 
         /** Velocity controller pointer. */
-        yarp::dev::IVelocityControl *iVel;
+        yarp::dev::IPositionControl *iPos;
 
         int gunThickness;
         Scalar gunColor;

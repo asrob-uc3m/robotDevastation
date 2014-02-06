@@ -20,7 +20,8 @@
 
 #define DEFAULT_ENV "rdSim_default.env.xml"
 #define DEFAULT_JMC_MS 20.0  // [ms]
-#define DEFAULT_PHYSICS "none"
+//#define DEFAULT_PHYSICS "none"
+#define DEFAULT_PHYSICS "ode"
 #define DEFAULT_VIEWER 1
 
 using namespace std;
@@ -91,6 +92,8 @@ class RdSim : public yarp::os::RFModule {
     EnvironmentBasePtr penv;
     PhysicsEngineBasePtr pe;
     vector<RobotBasePtr> probots;
+    //vector<ControllerBasePtr> pcontrollers;
+    ControllerBasePtr pcontroller;
     //
     boost::thread_group orThreads;
     //

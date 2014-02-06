@@ -50,7 +50,7 @@ class ExecutionThread : public yarp::os::RateThread {
     // #endif  // FORCE_DEV
     Mat videoFrame, maskPic, picture;
     yarp::dev::PolyDriver robotDev;
-    yarp::dev::IVelocityControl *iVel;
+    yarp::dev::IPositionControl *iPos;
     ScreenDraw screenDraw;
     GameControl gameControl;
     EnemyDetector enemyDetector;

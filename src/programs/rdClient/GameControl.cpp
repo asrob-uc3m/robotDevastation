@@ -5,8 +5,8 @@
 namespace rdclient {
 
 /************************************************************************/
-void GameControl::setVelocityControl(yarp::dev::IVelocityControl* _iVel) {
-    iVel = _iVel;
+void GameControl::setPositionControl(yarp::dev::IPositionControl* _iPos) {
+    iPos = _iPos;
 }
 
 /************************************************************************/
@@ -41,25 +41,25 @@ void GameControl::keyboardActions(Mat& image, const int key){
     }
     
     else if (key==115) { // s
-        double vels[2] = {1500,1500};
-        if(iVel) iVel->velocityMove(vels);
+        double vels[4] = {0,0,0,0};
+        if(iPos) iPos->positionMove(vels);
     }
     
     else if (key==119 || key==120 || key==97 || key==100) {
         ScreenDraw sd;
         rectangle(image,sd.indicateDirection(key), YELLOW, 2);
         if (key==119) { // w
-            double vels[2] = {1600,1600};
-            if(iVel) iVel->velocityMove(vels);
+            double vels[4] = {6,6,6,6};
+            if(iPos) iPos->positionMove(vels);
         } else if (key==120) {  // x
-            double vels[2] = {1400,1400};
-            if(iVel) iVel->velocityMove(vels);
+            double vels[4] = {-6,-6,-6,-6};
+            if(iPos) iPos->positionMove(vels);
         } else if (key==97) { // a
-            double vels[2] = {1600,1400};
-            if(iVel) iVel->velocityMove(vels);
+            double vels[4] = {6,-6,6,-6};
+            if(iPos) iPos->positionMove(vels);
         } else if (key==100) { // d
-            double vels[2] = {1400,1600};
-            if(iVel) iVel->velocityMove(vels);
+            double vels[4] = {-6,6,-6,6};
+            if(iPos) iPos->positionMove(vels);
         }
     }
     

@@ -40,27 +40,28 @@ bool ExecutionThread::init(yarp::os::ResourceFinder &rf) {
         }
         cout << "[success] Local camera available!" << endl;
         // Prepare null pointers for device interfaces
-        iVel = NULL;
+        iPos = NULL;
     } else {
         dev=false;
+        string local = "/rdClient";
         yarp::os::Property robotConfig;  // A YARP dictionary class.
         robotConfig.put("device","remote_controlboard");    // device type
-        robotConfig.put("local","/user");   // name of local port to use
-        robotConfig.put("remote","/skymegabot");  // name of remote port to connect to
+        robotConfig.put("local",local+robot);   // name of local port to use
+        robotConfig.put("remote",robot);  // name of remote port to connect to
         robotDev.open(robotConfig);
         if (!robotDev.isValid()) {
             cerr << "[error] Could not connect to robot" << endl;
             return false;
         }
-        if (!robotDev.view(iVel)) {
+        if (!robotDev.view(iPos)) {
             cerr << "[error] Could not connect to robot velocity" << endl;
             return false;
         }
 
         yarp::os::Property rgbConfig;  // A YARP dictionary class.
         rgbConfig.put("device","remote_grabber");  // device type
-        rgbConfig.put("local","/user/rgb/img:i");  // name of local port to use
-        rgbConfig.put("remote","/ecro_rgb/img:o");  // name of remote port to connect to
+        rgbConfig.put("remote",robot+"_rgb/img:o");  // name of remote port to connect to
+        rgbConfig.put("local",local+robot+"_rgb/img:i");  // name of local port to use
         //rgbConfig.put("stream","mjpeg");  // carrier to use for streaming, using mjpeg
         //rgbConfig.put("stream","udp");  // carrier to use for streaming, using mjpeg
         rgbDev.open(rgbConfig);
@@ -74,7 +75,7 @@ bool ExecutionThread::init(yarp::os::ResourceFinder &rf) {
         }
         cout << "[success] Remote camera available!" << endl;
     }
-    gameControl.setVelocityControl(iVel);
+    gameControl.setPositionControl(iPos);
 
     string graphicsPath = "../../resources/rdClient/graphics/";
     string graphicsCabin = graphicsPath + "cabin_" + cabin + ".png";
