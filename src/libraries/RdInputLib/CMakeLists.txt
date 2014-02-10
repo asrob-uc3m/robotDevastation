@@ -20,7 +20,7 @@ endforeach(header_file ${folder_header})
 
 # Set up our library.
 if (folder_source)
-  add_library(${KEYWORD} ${folder_source} ${folder_header})
+  add_library(${KEYWORD} SHARED ${folder_source} ${folder_header})
   target_link_libraries(${KEYWORD})
   install(TARGETS ${KEYWORD} DESTINATION lib)
 else (folder_source)
