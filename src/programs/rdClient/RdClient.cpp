@@ -2,6 +2,8 @@
 
 #include "RdClient.hpp"
 
+#include "RdInputKeyboard.hpp"
+
 namespace rdclient {
 
 /************************************************************************/
@@ -13,22 +15,30 @@ bool RdClient::configure(yarp::os::ResourceFinder &rf) {
     watchdog = rf.check("watchdog",DEFAULT_WATCHDOG).asDouble();
     std::cout << "RdClient using watchdog [s]: " << watchdog << " (default: " << DEFAULT_WATCHDOG << ")." << std::endl;
 
+    rdInputBasePtr = new rdlib::RdInputKeyboard();
+    rdInputBasePtr->init();
+
     return executionThread.start();
 }
 
 /************************************************************************/
+
 bool RdClient::updateModule() {
     std::cout << "RdClient alive..." << std::endl;
     return true;
 }
 
 /************************************************************************/
+
 double RdClient::getPeriod() {
     return watchdog;  // [s]
 }
 
 /************************************************************************/
-bool RdClient::interruptModule() {
+
+bool RdClient::interruptModule() {  // Closing rutines.
+    delete rdInputBasePtr;
+    rdInputBasePtr = 0;
     return true;
 }
 

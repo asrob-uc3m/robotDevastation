@@ -59,7 +59,7 @@ class RdClient : public yarp::os::RFModule {
         ExecutionThread executionThread;
 
         /** Input */
-        rdlib::RdInputBase* rdInputPtr;
+        rdlib::RdInputBase* rdInputBasePtr;
 
         /** Screen */
         //RdScreen rdScreen;
