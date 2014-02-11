@@ -105,7 +105,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::checkConnection()
     //-- Read welcome message to check if connected to the robot
     SerialPort::DataBuffer buffer;
     try {
-        serialPort->Read( buffer, 11, 1500);
+        serialPort->Read( buffer, 13, 1500);
     }
     catch ( SerialPort::ReadTimeout e)
     {
@@ -114,7 +114,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::checkConnection()
     }
 
     //-- Check if connected
-    std::string welcomeMessage = "[Debug] Ok!";
+    std::string welcomeMessage = "[Debug] Ok!\r\n";
     bool diffFlag = false;
 
     for (int i = 0; i < (int) buffer.size(); i++)
