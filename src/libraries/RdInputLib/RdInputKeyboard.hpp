@@ -12,8 +12,10 @@ namespace rdlib{
  *
  * @brief Implements a keyboard input for Robot Devastation.
  */
-class RdInputKeyboard : RdInputBase {
+class RdInputKeyboard : public RdInputBase {
     public:
+        RdInputKeyboard();
+        ~RdInputKeyboard();
         virtual bool init();
         virtual bool stop();
     protected:
