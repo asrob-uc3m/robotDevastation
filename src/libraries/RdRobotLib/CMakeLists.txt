@@ -2,9 +2,9 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (ENABLE_RdInputLib)
+IF (ENABLE_RdRobotLib)
 
-set(KEYWORD "RdInputLib")
+set(KEYWORD "RdRobotLib")
 
 # Search for source code.
 file(GLOB folder_source *.cpp *.cc *.c)
@@ -27,9 +27,9 @@ else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
 
-# Exporting dependencies for RDConfig.cmake quite manually for now... 
+# Exporting dependencies for RDConfig.cmake quite manually for now...
 set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs")
 set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} TinyMath CACHE INTERNAL "appended libraries") # Not for now as it is a header
 
-ENDIF (ENABLE_RdInputLib)
+ENDIF (ENABLE_RdRobotLib)
 
