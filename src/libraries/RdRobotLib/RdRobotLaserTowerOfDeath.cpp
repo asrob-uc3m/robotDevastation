@@ -5,10 +5,10 @@
 rdlib::RdRobotLaserTowerOfDeath::RdRobotLaserTowerOfDeath()
 {
     //-- Put function names in the map:
-    functionMap["panIncrement"] = (void *) &panIncrement;
-    functionMap["panDecrement"] = (void *) &panDecrement;
-    functionMap["tiltIncrement"] = (void *) &tiltIncrement;
-    functionMap["tiltDecrement"] = (void *) &tiltDecrement;
+    functionMap["panIncrement"] = (void *) &panIncrementWrapper;
+    functionMap["panDecrement"] = (void *) &panDecrementWrapper;
+    functionMap["tiltIncrement"] = (void *) &tiltIncrementWrapper;
+    functionMap["tiltDecrement"] = (void *) &tiltDecrementWrapper;
 
     //-- Serial port
     serialPort = new SerialPort( "/dev/ttyUSB0" );
@@ -77,6 +77,26 @@ bool rdlib::RdRobotLaserTowerOfDeath::reset()
     initSerialPort();
 }
 
+bool rdlib::RdRobotLaserTowerOfDeath::panIncrementWrapper(void *This)
+{
+    return (( rdlib::RdRobotLaserTowerOfDeath * ) This)->panIncrement();
+}
+
+bool rdlib::RdRobotLaserTowerOfDeath::panDecrementWrapper(void *This)
+{
+    return (( rdlib::RdRobotLaserTowerOfDeath * ) This)->panDecrement();
+}
+
+bool rdlib::RdRobotLaserTowerOfDeath::tiltIncrementWrapper(void *This)
+{
+    return (( rdlib::RdRobotLaserTowerOfDeath * ) This)->tiltIncrement();
+}
+
+bool rdlib::RdRobotLaserTowerOfDeath::tiltDecrementWrapper(void *This)
+{
+    return (( rdlib::RdRobotLaserTowerOfDeath * ) This)->tiltDecrement();
+}
+
 bool rdlib::RdRobotLaserTowerOfDeath::initSerialPort()
 {
     try
@@ -105,7 +125,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::checkConnection()
     //-- Read welcome message to check if connected to the robot
     SerialPort::DataBuffer buffer;
     try {
-        serialPort->Read( buffer, 11, 1500);
+        serialPort->Read( buffer, 13, 1500);
     }
     catch ( SerialPort::ReadTimeout e)
     {
@@ -114,7 +134,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::checkConnection()
     }
 
     //-- Check if connected
-    std::string welcomeMessage = "[Debug] Ok!";
+    std::string welcomeMessage = "[Debug] Ok!\r\n";
     bool diffFlag = false;
 
     for (int i = 0; i < (int) buffer.size(); i++)
