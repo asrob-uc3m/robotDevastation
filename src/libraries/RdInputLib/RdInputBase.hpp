@@ -32,6 +32,7 @@ class RdInputBase {
          * @return true if the object was closed successfully
          */
         virtual bool stop() = 0;
+
     protected:
         bool quiet;
 };
