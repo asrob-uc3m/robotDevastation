@@ -7,6 +7,7 @@
 #include <yarp/os/RFModule.h>
 
 #include "RdInputBase.hpp"
+//#include "RdRobotBase.hpp"
 
 #include "ExecutionThread.hpp"
 
@@ -61,11 +62,12 @@ class RdClient : public yarp::os::RFModule {
         /** Input */
         rdlib::RdInputBase* rdInputBasePtr;
 
+        /** Robot */
+        //rdlib::RdRobotBase* rdRobotBasePtr;
+
         /** Screen */
         //RdScreen rdScreen;
 
-        /** Robot */
-        //RdRobot rdRobot;
         
 };
 

@@ -3,6 +3,7 @@
 #include "RdClient.hpp"
 
 #include "RdInputKeyboard.hpp"
+//#include "RdRobotLaserTowerOfDeath.hpp"
 
 namespace rdclient {
 
@@ -17,6 +18,11 @@ bool RdClient::configure(yarp::os::ResourceFinder &rf) {
 
     rdInputBasePtr = new rdlib::RdInputKeyboard();
     rdInputBasePtr->init();
+
+    &rdInputBasePtr->init();
+    void (classA::*memfun)(void);
+    printf("Hi: %p,\n",);
+    //rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
 
     return executionThread.start();
 }
