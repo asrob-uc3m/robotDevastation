@@ -6,15 +6,15 @@ namespace rdlib{
 
 /************************************************************************/
 RdInputKeyboard::RdInputKeyboard() {
-    if (!quiet) std::cout << "[RdInputKeyboard] success: begin{RdInputKeyboard()}" << std::endl;
+    if (!quiet) std::cout << "[RdInputKeyboard] success: begin{RdInputKeyboard()}:" << std::endl;
 
-
+    
     if (!quiet) std::cout << "[RdInputKeyboard] success: end{RdInputKeyboard()}" << std::endl;
 }
 
 /************************************************************************/
 RdInputKeyboard::~RdInputKeyboard() {
-    if (!quiet) std::cout << "[RdInputKeyboard] success: begin{~RdInputKeyboard()}" << std::endl;
+    if (!quiet) std::cout << "[RdInputKeyboard] success: begin{~RdInputKeyboard()}" << this << std::endl;
 
 
     if (!quiet) std::cout << "[RdInputKeyboard] success: end{~RdInputKeyboard()}" << std::endl;
