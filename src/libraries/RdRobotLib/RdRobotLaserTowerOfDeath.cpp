@@ -64,6 +64,8 @@ bool rdlib::RdRobotLaserTowerOfDeath::shoot()
     SerialPort::DataBuffer outputBuff;
     outputBuff.push_back(0x5F); //-- 0x5F -> Toggle LED
     serialPort->Write( outputBuff );
+
+    std::cout << "Shooting!!" << std::endl;
 }
 
 bool rdlib::RdRobotLaserTowerOfDeath::reset()
