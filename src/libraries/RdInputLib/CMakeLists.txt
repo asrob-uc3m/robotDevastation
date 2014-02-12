@@ -6,6 +6,8 @@ IF (ENABLE_RdInputLib)
 
 set(KEYWORD "RdInputLib")
 
+find_package(X11 REQUIRED)
+
 # Search for source code.
 file(GLOB folder_source *.cpp *.cc *.c)
 file(GLOB folder_header *.hpp)
@@ -18,10 +20,12 @@ foreach(header_file ${folder_header})
   include_directories(${p})
 endforeach(header_file ${folder_header})
 
+include_directories(${X11_INCLUDE_DIR})
+
 # Set up our library.
 if (folder_source)
   add_library(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD})
+  target_link_libraries(${KEYWORD} ${X11_LIBRARIES})
   install(TARGETS ${KEYWORD} DESTINATION lib)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")

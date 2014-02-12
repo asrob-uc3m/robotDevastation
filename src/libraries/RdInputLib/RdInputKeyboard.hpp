@@ -5,6 +5,12 @@
 
 #include "RdInputBase.hpp"
 
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xos.h>
+#include <X11/Xatom.h>
+#include <X11/keysym.h>
+
 namespace rdlib{
 
 /**
@@ -20,6 +26,10 @@ class RdInputKeyboard : public RdInputBase {
         virtual bool stop();
     protected:
         bool quiet;
+        Display *dis;
+        Window win;
+        XSetWindowAttributes at;
+
 };
 
 } //rdlib
