@@ -5,10 +5,10 @@
 rdlib::RdRobotLaserTowerOfDeath::RdRobotLaserTowerOfDeath()
 {
     //-- Put function names in the map:
-    functionMap["panIncrement"] = (void *) &panIncrement;
-    functionMap["panDecrement"] = (void *) &panDecrement;
-    functionMap["tiltIncrement"] = (void *) &tiltIncrement;
-    functionMap["tiltDecrement"] = (void *) &tiltDecrement;
+    functionMap["panIncrement"] = (void *) &panIncrementWrapper;
+    functionMap["panDecrement"] = (void *) &panDecrementWrapper;
+    functionMap["tiltIncrement"] = (void *) &tiltIncrementWrapper;
+    functionMap["tiltDecrement"] = (void *) &tiltDecrementWrapper;
 
     //-- Serial port
     serialPort = new SerialPort( "/dev/ttyUSB0" );
@@ -75,6 +75,26 @@ bool rdlib::RdRobotLaserTowerOfDeath::reset()
     //-- Reset serial connecton
     serialPort->Close();
     initSerialPort();
+}
+
+bool rdlib::RdRobotLaserTowerOfDeath::panIncrementWrapper(void *This)
+{
+    return (( rdlib::RdRobotLaserTowerOfDeath * ) This)->panIncrement();
+}
+
+bool rdlib::RdRobotLaserTowerOfDeath::panDecrementWrapper(void *This)
+{
+    return (( rdlib::RdRobotLaserTowerOfDeath * ) This)->panDecrement();
+}
+
+bool rdlib::RdRobotLaserTowerOfDeath::tiltIncrementWrapper(void *This)
+{
+    return (( rdlib::RdRobotLaserTowerOfDeath * ) This)->tiltIncrement();
+}
+
+bool rdlib::RdRobotLaserTowerOfDeath::tiltDecrementWrapper(void *This)
+{
+    return (( rdlib::RdRobotLaserTowerOfDeath * ) This)->tiltDecrement();
 }
 
 bool rdlib::RdRobotLaserTowerOfDeath::initSerialPort()

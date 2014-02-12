@@ -33,6 +33,10 @@ class RdRobotBase {
 
         virtual bool reset() = 0;
 
+        //-- Static wrappers
+        static bool shootWrapper( void * This);
+        static bool resetWrapper( void * This);
+
     protected:
         std::map< std::string, void*> functionMap;
 

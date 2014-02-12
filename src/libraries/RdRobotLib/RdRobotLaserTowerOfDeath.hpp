@@ -28,15 +28,20 @@ class RdRobotLaserTowerOfDeath : public RdRobotBase {
         RdRobotLaserTowerOfDeath();
         ~RdRobotLaserTowerOfDeath();
 
-        static bool panIncrement();
-        static bool panDecrement();
+        bool panIncrement();
+        bool panDecrement();
 
-        static bool tiltIncrement();
-        static bool tiltDecrement();
+        bool tiltIncrement();
+        bool tiltDecrement();
 
         virtual bool shoot();
-
         virtual bool reset();
+
+        //-- Static wrappers:
+        static bool panIncrementWrapper(  void * This);
+        static bool panDecrementWrapper(  void * This);
+        static bool tiltIncrementWrapper( void * This);
+        static bool tiltDecrementWrapper( void * This);
 
     private:
         static const int panRangeMin = 0;
@@ -49,8 +54,8 @@ class RdRobotLaserTowerOfDeath : public RdRobotBase {
         static const int tiltStep = 5;
         static const int tiltInitial = 90;
 
-        static int panJointValue;
-        static int tiltJointValue;
+        int panJointValue;
+        int tiltJointValue;
 
         SerialPort * serialPort;
 
