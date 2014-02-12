@@ -23,9 +23,13 @@ bool RdClient::configure(yarp::os::ResourceFinder &rf) {
     //void (classA::*memfun)(void);
     //printf("Hi: %p,\n",);
     rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
-    //(rdRobotBasePtr->getFunctionByName("shoot") )( (void*) rdRobotBasePtr);
+    bool (*myFunction) (void *);
+    myFunction = (bool (*)(void*))( rdRobotBasePtr->getFunctionByName("shoot") );
+    (*myFunction)( (void*) rdRobotBasePtr);
 
-    return executionThread.start();
+
+    return true;
+    //return executionThread.start();
 }
 
 /************************************************************************/
