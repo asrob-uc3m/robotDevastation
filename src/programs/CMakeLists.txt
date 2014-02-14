@@ -3,4 +3,5 @@
 
 add_subdirectory(rdClient)
 add_subdirectory(rdSim)
+add_subdirectory(rdHeadTracker)
 
