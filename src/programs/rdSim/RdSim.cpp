@@ -66,22 +66,17 @@ bool RdSim::configure(yarp::os::ResourceFinder &rf) {
     //-- Get robots
     penv->GetRobots(probots);
     for(size_t i=0;i<probots.size();i++) {
-        //printf( "robots[%ld]: %s\n",i,probots[i]->GetName().c_str());
-        vector<RobotBase::ManipulatorPtr> pmanipulators = probots[i]->GetManipulators();
-        for(size_t j=0;j<pmanipulators.size();j++) {
-            //printf( "* manipulators[%ld]: %s\n",j,pmanipulators[j]->GetName().c_str() );
-            string manipulatorPortName("/");
-            manipulatorPortName += probots[i]->GetName();
-            manipulatorPortName += "/";
-            manipulatorPortName += pmanipulators[j]->GetName();
-            printf( "manipulatorPortName: %s\n",manipulatorPortName.c_str() );
-            std::vector< int > manipulatorIndices = pmanipulators[j]->GetArmIndices();
-            printf( "manipulatorIndices:");
-            for(size_t k=0;k<manipulatorIndices.size();k++)
-                printf(" %d",manipulatorIndices[k]);
-            printf(".\n");
-            createManipulatorDevice(manipulatorPortName,manipulatorIndices.size());
+        printf( "robots[%d]: %s\n",i,probots[i]->GetName().c_str());
+        pcontroller = RaveCreateController(penv,"odevelocity");
+        unsigned int dof = probots[i]->GetDOF();
+        vector<int> dofindices(dof);
+        for(unsigned int j = 0; j < dof; ++j) {
+            dofindices[j] = j;
         }
+        probots[i]->SetController(pcontroller,dofindices,0);
+        string manipulatorPortName("/");
+        manipulatorPortName += probots[i]->GetName();
+        createManipulatorDevice(manipulatorPortName,dof);
     }
 
     for ( unsigned int robotIter = 0; robotIter<probots.size(); robotIter++ ) {

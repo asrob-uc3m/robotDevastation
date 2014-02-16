@@ -20,23 +20,21 @@ bool RdSimRateThread::threadInit() {
 void RdSimRateThread::run() {
     //printf("[RdSimRateThread] run()\n");
 
-    int manipulatorCount = 0;
     for(size_t i=0;i<probots->size();i++) {  // For each robot
         int dof = probots->at(i)->GetDOF();  // Create a vector sized
-        std::vector<dReal> dEncRaw(dof);     //   its number of joints.
-        vector<RobotBase::ManipulatorPtr> pmanipulators = probots->at(i)->GetManipulators();  // Get its manipulators
-        for(size_t j=0;j<pmanipulators.size();j++) {
-            std::vector< int > manipulatorIndices = pmanipulators[j]->GetArmIndices();
-            //int numAxes;
-            //encs->at(manipulatorCount)->getAxes(&numAxes);
-            //double vals[numAxes];
-            double vals[manipulatorIndices.size()];  // experimental
-            encs->at(manipulatorCount)->getEncoders(vals);
-            for(size_t k=0;k<manipulatorIndices.size();k++)
-                dEncRaw[manipulatorIndices[k]] = (vals[k])*M_PI/180.0;
-            manipulatorCount++;
+        double vals[dof];
+        encs->at(i)->getEncoders(vals);
+        stringstream res, cmd;
+        cmd << "setvelocity ";
+        for(int j=0;j<dof;j++) {  // For each joint
+            cmd << j;
+            cmd << " ";
+            cmd << vals[j];
+            cmd << " ";
         }
-        probots->at(i)->SetJointValues(dEncRaw);  // More compatible with physics??
+        //sout << "setvelocity 1 2.0 3 2.0";
+        //printf("Send: %s.\n",sout.str().c_str());
+        probots->at(i)->GetController()->SendCommand(res, cmd);
     }
 
     penv->StepSimulation(jmcMs/1000.0);  // StepSimulation must be given in seconds
