@@ -23,18 +23,11 @@ namespace rdlib{
  */
 class RdInputBase {
     public:
-        /** An initialization rutine.
-         * @return true if the object was initialized successfully.
-         */
-        virtual bool init() = 0;
-
-        /** A closing rutine.
-         * @return true if the object was closed successfully
+        /** An init rutine.
+         * @return true if the object was init successfully.
          */
         virtual bool stop() = 0;
 
-    protected:
-        bool quiet;
 };
 
 } //rdlib

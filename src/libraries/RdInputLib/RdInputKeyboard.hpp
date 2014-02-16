@@ -11,6 +11,8 @@
 #include <X11/Xatom.h>
 #include <X11/keysym.h>
 
+#include <pthread.h>
+
 namespace rdlib{
 
 /**
@@ -22,14 +24,20 @@ class RdInputKeyboard : public RdInputBase {
     public:
         RdInputKeyboard();
         ~RdInputKeyboard();
-        virtual bool init();
+
         virtual bool stop();
+
+        void* keyThreadFunction(void *This);
+        static void* staticKeyThreadFunction(void *arg);
+
+    	pthread_t threadId;
+
     protected:
-        bool quiet;
         Display *dis;
         Window win;
         XSetWindowAttributes at;
-
+        XEvent report;
+        bool isRunning;
 };
 
 } //rdlib

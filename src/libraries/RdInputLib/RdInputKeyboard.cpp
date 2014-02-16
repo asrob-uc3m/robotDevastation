@@ -5,37 +5,70 @@
 namespace rdlib{
 
 /************************************************************************/
+
+void* RdInputKeyboard::staticKeyThreadFunction(void *arg) {
+    return reinterpret_cast<RdInputKeyboard*>(arg)->keyThreadFunction(arg);
+}
+
+/************************************************************************/
+
+void* RdInputKeyboard::keyThreadFunction(void *This) {
+    std::cout << "[success] RdInputKeyboard thread." << std::endl;
+    while (((RdInputKeyboard*)This)->isRunning) {
+        XNextEvent(dis, &report);
+        switch  (report.type) {
+            case KeyPress:
+                if (XLookupKeysym(&report.xkey, 0) == XK_space)  {
+                    std::cout << "The space bar was pressed." << std::endl;
+                } else if (XLookupKeysym(&report.xkey, 0) == XK_Escape) {
+                    std::cout << "The escape key was pressed. Bye!" << std::endl;
+                    isRunning = false;
+                }
+            default: 
+                break;
+        }
+    }
+}
+
+/************************************************************************/
+
 RdInputKeyboard::RdInputKeyboard() {
-    if (!quiet) std::cout << "[RdInputKeyboard] success: begin{RdInputKeyboard()}:" << std::endl;
     dis = XOpenDisplay(NULL);
+    if (!dis) {
+        std::cerr << "[warning] RdInputKeyboard unable to connect to display." << std::endl;
+    } else {
+        std::cout << "[success] RdInputKeyboard connected to display." << std::endl;
+    }
+    at.event_mask = KeyPressMask;  // needed?
+    win = XCreateWindow( dis, RootWindow(dis, 0), 10,10,200,200, 0, CopyFromParent, InputOnly, 0, 0, &at );    
 
-    
-    if (!quiet) std::cout << "[RdInputKeyboard] success: end{RdInputKeyboard()}" << std::endl;
+    /* tell the display server what kind of events we would like to see */
+    XSelectInput(dis, win, ButtonPressMask|StructureNotifyMask|KeyPressMask|KeyReleaseMask|KeymapStateMask);
+
+    XMapWindow(dis, win);
+    XFlush(dis);
+    isRunning=true;
+
+    int error = pthread_create (&threadId, NULL, &RdInputKeyboard::staticKeyThreadFunction, this);
+    if (error == 0) {
+        std::cout << "[success] RdInputKeyboard created thread." << std::endl;
+    } else {
+        std::cerr << "[warning] RdInputKeyboard could not create thread." << std::endl;
+    }
+
 }
 
 /************************************************************************/
+
 RdInputKeyboard::~RdInputKeyboard() {
-    if (!quiet) std::cout << "[RdInputKeyboard] success: begin{~RdInputKeyboard()}" << this << std::endl;
-
-
-    if (!quiet) std::cout << "[RdInputKeyboard] success: end{~RdInputKeyboard()}" << std::endl;
+    std::cout << "[info] RdInputKeyboard::~RdInputKeyboard()"<< std::endl;
 }
 
 /************************************************************************/
-bool RdInputKeyboard::init() {
-    if (!quiet) std::cout << "[RdInputKeyboard] success: begin{init()}" << std::endl;
 
-
-    if (!quiet) std::cout << "[RdInputKeyboard] success: end{init()}" << std::endl;
-    return true;
-}
-
-/************************************************************************/
 bool RdInputKeyboard::stop() {
-    if (!quiet) std::cout << "[RdInputKeyboard] success: begin{stop()}" << std::endl;
-
-
-    if (!quiet) std::cout << "[RdInputKeyboard] success: end{stop()}" << std::endl;
+    std::cout << "[info] RdInputKeyboard stop()" << std::endl;
+    isRunning = false;
 }
 
 /************************************************************************/
