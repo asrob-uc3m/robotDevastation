@@ -22,4 +22,5 @@ add_subdirectory(RdInputLib)
 add_subdirectory(RdRobotLib)
 add_subdirectory(RdManagerLib)
 add_subdirectory(RdCameraLib)
+add_subdirectory(RdOutputLib)
 
