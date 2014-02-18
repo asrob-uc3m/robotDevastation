@@ -20,6 +20,7 @@ void* RdInputKeyboard::keyThreadFunction(void *This) {
             case KeyPress:
                 if (XLookupKeysym(&report.xkey, 0) == XK_space)  {
                     std::cout << "The space bar was pressed." << std::endl;
+                    rdRobotBasePtr->shoot();
                 } else if (XLookupKeysym(&report.xkey, 0) == XK_Escape) {
                     std::cout << "The escape key was pressed. Bye!" << std::endl;
                     isRunning = false;

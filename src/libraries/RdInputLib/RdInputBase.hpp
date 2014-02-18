@@ -4,6 +4,7 @@
 #define __RD_INPUT_BASE_HPP__
 
 #include <iostream>
+#include "RdRobotBase.hpp"
 
 /**
  * @ingroup rd_libraries
@@ -28,6 +29,12 @@ class RdInputBase {
          */
         virtual bool stop() = 0;
 
+        void setRdRobotBasePtr(RdRobotBase* rdRobotBasePtr ) {
+            this->rdRobotBasePtr = rdRobotBasePtr;
+        }
+
+    protected:
+        RdRobotBase* rdRobotBasePtr;
 };
 
 } //rdlib

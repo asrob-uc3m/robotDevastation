@@ -20,7 +20,7 @@ foreach(header_file ${folder_header})
   include_directories(${p})
 endforeach(header_file ${folder_header})
 
-include_directories(${X11_INCLUDE_DIR})
+include_directories(${X11_INCLUDE_DIR} ${RD_INCLUDE_DIRS})
 
 # Set up our library.
 if (folder_source)
