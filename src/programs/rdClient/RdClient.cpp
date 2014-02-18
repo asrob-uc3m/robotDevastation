@@ -4,6 +4,7 @@
 
 #include "RdInputKeyboard.hpp"
 #include "RdRobotLaserTowerOfDeath.hpp"
+#include "RdManagerDefault.hpp"
 
 namespace rdclient {
 
@@ -16,10 +17,15 @@ bool RdClient::configure(yarp::os::ResourceFinder &rf) {
     watchdog = rf.check("watchdog",DEFAULT_WATCHDOG).asDouble();
     std::cout << "RdClient using watchdog [s]: " << watchdog << " (default: " << DEFAULT_WATCHDOG << ")." << std::endl;
 
+    rdManagerBasePtr = new rdlib::RdManagerDefault();
+
     rdInputBasePtr = new rdlib::RdInputKeyboard();
     rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
 
-    rdInputBasePtr->setRdRobotBasePtr(rdRobotBasePtr);
+    rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
+    rdManagerBasePtr->setRdRobotBasePtr(rdRobotBasePtr);
+
+    rdInputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
 
     return true;
     //return executionThread.start();

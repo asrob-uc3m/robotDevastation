@@ -59,6 +59,9 @@ class RdClient : public yarp::os::RFModule {
         /** An instance of the main periodical fast thread. */
         ExecutionThread executionThread;
 
+        /** Manager */
+        rdlib::RdManagerBase* rdManagerBasePtr;
+
         /** Input */
         rdlib::RdInputBase* rdInputBasePtr;
 

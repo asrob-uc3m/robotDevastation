@@ -18,11 +18,13 @@ project(robotDevastation)
 
 ##### library options
 option(ENABLE_RdInputLib "Choose if you want to compile RdInputLib" TRUE)
+option(ENABLE_RdManagerLib "Choose if you want to compile RdManagerLib" TRUE)
 option(ENABLE_RdRobotLib "Choose if you want to compile RdRobotLib" TRUE)
 
 ##### program options
 option(ENABLE_rdClient "Choose if you want to compile rdClient" TRUE)
 option(ENABLE_rdSim "Choose if you want to compile rdSim" TRUE)
+
 
 if(MSVC)
   MESSAGE(STATUS "Running on windows")    

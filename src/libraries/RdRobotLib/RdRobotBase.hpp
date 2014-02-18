@@ -16,6 +16,9 @@
 
 namespace rdlib{
 
+class RdInputBase;
+class RdManagerBase;
+
 /**
  * @ingroup RdRobotLib
  *

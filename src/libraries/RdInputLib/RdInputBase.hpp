@@ -4,7 +4,7 @@
 #define __RD_INPUT_BASE_HPP__
 
 #include <iostream>
-#include "RdRobotBase.hpp"
+#include "RdManagerBase.hpp"
 
 /**
  * @ingroup rd_libraries
@@ -15,6 +15,9 @@
  */
 
 namespace rdlib{
+
+class RdManagerBase;
+class RdRobotBase;
 
 /**
  * @ingroup RdInputLib
@@ -29,12 +32,12 @@ class RdInputBase {
          */
         virtual bool stop() = 0;
 
-        void setRdRobotBasePtr(RdRobotBase* rdRobotBasePtr ) {
-            this->rdRobotBasePtr = rdRobotBasePtr;
+        void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr ) {
+            this->rdManagerBasePtr = rdManagerBasePtr;
         }
 
     protected:
-        RdRobotBase* rdRobotBasePtr;
+        RdManagerBase* rdManagerBasePtr;
 };
 
 } //rdlib
