@@ -17,15 +17,7 @@ bool RdClient::configure(yarp::os::ResourceFinder &rf) {
     std::cout << "RdClient using watchdog [s]: " << watchdog << " (default: " << DEFAULT_WATCHDOG << ")." << std::endl;
 
     rdInputBasePtr = new rdlib::RdInputKeyboard();
-    rdInputBasePtr->init();
 
-    //&rdInputBasePtr->init();
-    //void (classA::*memfun)(void);
-    //printf("Hi: %p,\n",);
-    rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
-    bool (*myFunction) (void *);
-    myFunction = (bool (*)(void*))( rdRobotBasePtr->getFunctionByName("shoot") );
-    (*myFunction)( (void*) rdRobotBasePtr);
 
 
     return true;
