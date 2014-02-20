@@ -12,9 +12,9 @@ namespace rdclient {
 RdClient::RdClient() { }
 
 /************************************************************************/
-bool RdClient::configure(yarp::os::ResourceFinder &rf) {
+bool RdClient::runProgram() {
 
-    watchdog = rf.check("watchdog",DEFAULT_WATCHDOG).asDouble();
+    watchdog = DEFAULT_WATCHDOG;
     std::cout << "RdClient using watchdog [s]: " << watchdog << " (default: " << DEFAULT_WATCHDOG << ")." << std::endl;
 
     rdManagerBasePtr = new rdlib::RdManagerDefault();
@@ -27,26 +27,17 @@ bool RdClient::configure(yarp::os::ResourceFinder &rf) {
 
     rdInputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
 
-    return true;
-    //return executionThread.start();
-}
+    while(1) {
+        std::cout << "RdClient alive..." << std::endl;
+        usleep( watchdog * 1000000.0 );
+    }
 
-/************************************************************************/
-
-bool RdClient::updateModule() {
-    std::cout << "RdClient alive..." << std::endl;
     return true;
 }
 
 /************************************************************************/
 
-double RdClient::getPeriod() {
-    return watchdog;  // [s]
-}
-
-/************************************************************************/
-
-bool RdClient::interruptModule() {  // Closing rutines.
+bool RdClient::closeProgram() {  // Closing rutines.
     delete rdInputBasePtr;
     rdInputBasePtr = 0;
     return true;

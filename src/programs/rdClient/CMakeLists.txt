@@ -6,9 +6,6 @@ IF (ENABLE_rdClient)
 
 set(KEYWORD "rdClient")
 
-# Find YARP.  Point the YARP_DIR environment variable at your build.
-find_package(YARP REQUIRED)
-
 # Search for source code.
 file(GLOB folder_source *.cpp *.cc *.c)
 file(GLOB folder_header include/*.hpp)
@@ -22,12 +19,12 @@ foreach(header_file ${folder_header})
 endforeach(header_file ${folder_header})
 
 # Inclue any directories needed for YARP
-include_directories(${YARP_INCLUDE_DIRS} ${RD_INCLUDE_DIRS})
+include_directories(${RD_INCLUDE_DIRS})
 
 # Set up our main executable.
 if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${RD_LIBRARIES})
+  target_link_libraries(${KEYWORD} ${RD_LIBRARIES})
   install(TARGETS ${KEYWORD} DESTINATION bin)
   install(DIRECTORY ${PROJECT_SOURCE_DIR}/share/${KEYWORD} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/robotDevastation )  # Uninstall does not delete empty dirs.
 else (folder_source)
