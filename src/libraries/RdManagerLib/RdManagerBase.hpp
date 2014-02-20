@@ -23,7 +23,7 @@ class RdRobotBase;
 /**
  * @ingroup RdManagerLib
  *
- * @brief An abstract base class for Robot Devastation inputs (keyboard, xpad...).
+ * @brief An abstract base class for Robot Devastation managers.
  *
  */
 class RdManagerBase {

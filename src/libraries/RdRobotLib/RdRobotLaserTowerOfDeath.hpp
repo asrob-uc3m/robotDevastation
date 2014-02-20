@@ -20,7 +20,7 @@ namespace rdlib {
 /**
  * @ingroup RdRobotLaserTowerOfDeath
  *
- * @brief
+ * @brief Implements a Laser Tower of Death robot.
  */
 
 class RdRobotLaserTowerOfDeath : public RdRobotBase {

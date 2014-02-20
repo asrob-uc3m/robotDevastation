@@ -18,7 +18,7 @@ namespace rdlib{
 /**
  * @ingroup RdInputLib
  *
- * @brief Implements a keyboard input for Robot Devastation.
+ * @brief Implements an OpenCV libhighgui output for Robot Devastation.
  */
 class RdOutputHighgui : public RdInputBase {
     public:
