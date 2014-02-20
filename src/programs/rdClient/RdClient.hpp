@@ -3,9 +3,10 @@
 #ifndef __ROBOT_DEVASTATION_HPP__
 #define __ROBOT_DEVASTATION_HPP__
 
-#include "RdRobotBase.hpp"
+#include "RdManagerBase.hpp"
 
 #include "RdInputBase.hpp"
+#include "RdOutputBase.hpp"
 #include "RdRobotBase.hpp"
 
 #define DEFAULT_WATCHDOG    5       // [s]
@@ -49,13 +50,12 @@ class RdClient {
         /** Input */
         rdlib::RdInputBase* rdInputBasePtr;
 
+        /** Output */
+        rdlib::RdOutputBase* rdOutputBasePtr;
+
         /** Robot */
         rdlib::RdRobotBase* rdRobotBasePtr;
 
-        /** Screen */
-        //RdScreen rdScreen;
-
-        
 };
 
 } //rdclient

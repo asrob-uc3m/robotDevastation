@@ -25,7 +25,7 @@ class RdRobotBase;
  * @brief An abstract base class for Robot Devastation ouputs (screen...).
  *
  */
-class RdOuputBase {
+class RdOutputBase {
     public:
         /** An init rutine.
          * @return true if the object was init successfully.

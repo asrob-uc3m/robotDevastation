@@ -3,6 +3,7 @@
 #include "RdClient.hpp"
 
 #include "RdInputKeyboard.hpp"
+#include "RdOutputHighgui.hpp"
 #include "RdRobotLaserTowerOfDeath.hpp"
 #include "RdManagerDefault.hpp"
 
@@ -20,6 +21,7 @@ bool RdClient::runProgram() {
     rdManagerBasePtr = new rdlib::RdManagerDefault();
 
     rdInputBasePtr = new rdlib::RdInputKeyboard();
+    rdOutputBasePtr = new rdlib::RdOutputHighgui();
     rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
 
     rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);

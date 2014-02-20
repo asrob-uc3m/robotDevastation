@@ -20,12 +20,12 @@ foreach(header_file ${folder_header})
   include_directories(${p})
 endforeach(header_file ${folder_header})
 
-include_directories(${X11_INCLUDE_DIR} ${RD_INCLUDE_DIRS})
+include_directories(${RD_INCLUDE_DIRS})
 
 # Set up our library.
 if (folder_source)
   add_library(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD} ${X11_LIBRARIES})
+  target_link_libraries(${KEYWORD} ${OpenCV_LIBS})
   install(TARGETS ${KEYWORD} DESTINATION lib)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
