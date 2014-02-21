@@ -18,7 +18,7 @@ project(robotDevastation)
 
 ##### library options
 option(ENABLE_RdInputKeyboardLib "Choose if you want to compile RdInputKeyboardLib" TRUE)
-option(ENABLE_RdManagerLib "Choose if you want to compile RdManagerLib" TRUE)
+option(ENABLE_RdManagerDefaultLib "Choose if you want to compile RdManagerDefaultLib" TRUE)
 option(ENABLE_RdRobotLib "Choose if you want to compile RdRobotLib" TRUE)
 option(ENABLE_RdCameraLib "Choose if you want to compile RdCameraLib" TRUE)
 option(ENABLE_RdOutputLib "Choose if you want to compile RdInputLib" TRUE)

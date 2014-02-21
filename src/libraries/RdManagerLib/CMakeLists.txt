@@ -2,36 +2,20 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (ENABLE_RdManagerLib)
+IF (ENABLE_RdManagerDefaultLib)
 
-set(KEYWORD "RdManagerLib")
-
-# Search for source code.
-file(GLOB folder_source *.cpp *.cc *.c)
-file(GLOB folder_header *.hpp)
-source_group("Source Files" FILES ${folder_source})
-source_group("Header Files" FILES ${folder_header})
-
-# Automatically add include directories if needed.
-foreach(header_file ${folder_header})
-  get_filename_component(p ${header_file} PATH)
-  include_directories(${p})
-endforeach(header_file ${folder_header})
+set(KEYWORD "RdManagerDefaultLib")
 
 include_directories(${RD_INCLUDE_DIRS})
 
 # Set up our library.
-if (folder_source)
-  add_library(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD})
-  install(TARGETS ${KEYWORD} DESTINATION lib)
-else (folder_source)
-  message(FATAL_ERROR "No source code files found. Please add something")
-endif (folder_source)
+add_library(${KEYWORD} RdManagerDefault.cpp)
+target_link_libraries(${KEYWORD})
+install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now... 
 #set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
 set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
 
-ENDIF (ENABLE_RdManagerLib)
+ENDIF (ENABLE_RdManagerDefaultLib)
 
