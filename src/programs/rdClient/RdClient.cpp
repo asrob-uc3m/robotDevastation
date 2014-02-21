@@ -33,7 +33,7 @@ bool RdClient::runProgram() {
 
     rdManagerBasePtr = new rdlib::RdManagerDefault();
     rdInputBasePtr = new rdlib::RdInputKeyboard();
-    rdOutputBasePtr = new rdlib::RdOutputHighgui();
+    //rdOutputBasePtr = new rdlib::RdOutputHighgui();  // still in development
     rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
     rdCameraBasePtr = new rdlib::RdCameraWebcam();
 
@@ -42,9 +42,9 @@ bool RdClient::runProgram() {
 
     rdInputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
 
-    std::cout << "[info] RdClient quit in 1 second..." << std::endl;
+    /*std::cout << "[info] RdClient quit in 1 second..." << std::endl;
     usleep( 1 * 1000000.0 );
-    quitProgram();
+    quitProgram();*/
 
     while(1) {
         std::cout << "RdClient alive..." << std::endl;
