@@ -2,38 +2,22 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (ENABLE_RdCameraLib)
+IF (ENABLE_RdCameraWebcamLib)
 
-set(KEYWORD "RdCameraLib")
+set(KEYWORD "RdCameraWebcamLib")
 
-find_package(X11 REQUIRED)
+find_package(OpenCV REQUIRED)
 
-# Search for source code.
-file(GLOB folder_source *.cpp *.cc *.c)
-file(GLOB folder_header *.hpp)
-source_group("Source Files" FILES ${folder_source})
-source_group("Header Files" FILES ${folder_header})
+include_directories(${RD_INCLUDE_DIRS})
 
-# Automatically add include directories if needed.
-foreach(header_file ${folder_header})
-  get_filename_component(p ${header_file} PATH)
-  include_directories(${p})
-endforeach(header_file ${folder_header})
+add_library(${KEYWORD} RdCameraWebcam.cpp)
+target_link_libraries(${KEYWORD} ${OpenCV_LIBS} pthread)
+install(TARGETS ${KEYWORD} DESTINATION lib)
 
-include_directories(${X11_INCLUDE_DIR} ${RD_INCLUDE_DIRS})
-
-# Set up our library.
-if (folder_source)
-  add_library(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD} ${X11_LIBRARIES})
-  install(TARGETS ${KEYWORD} DESTINATION lib)
-else (folder_source)
-  message(FATAL_ERROR "No source code files found. Please add something")
-endif (folder_source)
-
-# Exporting dependencies for RDConfig.cmake quite manually for now... 
+# Exporting dependencies for RDConfig.cmake quite manually for now...
 #set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
 set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
 
-ENDIF (ENABLE_RdCameraLib)
+ENDIF (ENABLE_RdCameraWebcamLib)
+
 
