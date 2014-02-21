@@ -9,6 +9,7 @@
 
 #include <opencv2/opencv.hpp>
 #include <pthread.h>
+#include <unistd.h>  // usleep
 //#include <opencv2/imgproc/imgproc.hpp>
 //#include "opencv2/highgui/highgui.hpp"
 
