@@ -4,17 +4,17 @@ rdlib::RdCameraWebcam::RdCameraWebcam(int index)
 {
     //-- Set 'constants'
     frameRate = 10;
-    stop = false;
+    stopThread = false;
 
     //-- Start the camera
     webcam.open(index);
     webcam.read(imageBuffer);
 
     //-- Init the mutex
-    thread_mutex_init( &imageBufferMutex, NULL );
+    pthread_mutex_init( &imageBufferMutex, NULL );
 
     //-- Start the capture thread
-    pthread_create( capture_thread, NULL, capturethread, (void *) this );
+    pthread_create( &capture_thread, NULL, captureThread, (void *) this );
 }
 
 
@@ -32,7 +32,7 @@ void *rdlib::RdCameraWebcam::captureThread(void *This)
 
 void rdlib::RdCameraWebcam::capture()
 {
-    while( !stop )
+    while( !stopThread )
     {
         //-- Lock the mutex
         pthread_mutex_lock(&imageBufferMutex);
@@ -50,12 +50,12 @@ void rdlib::RdCameraWebcam::capture()
 
 bool rdlib::RdCameraWebcam::setStop(bool stop)
 {
-    this->stop() = stop;
+    this->stopThread = stop;
 }
 
 char *rdlib::RdCameraWebcam::getBufferPtr()
 {
-    return imageBuffer.data;
+    return (char *) imageBuffer.data;
 }
 
 bool rdlib::RdCameraWebcam::getDimensions(int &width, int &height, int &step)

@@ -6,6 +6,7 @@
 #include "RdOutputHighgui.hpp"
 #include "RdRobotLaserTowerOfDeath.hpp"
 #include "RdManagerDefault.hpp"
+#include "RdCameraWebcam.hpp"
 
 namespace rdclient {
 
@@ -34,6 +35,7 @@ bool RdClient::runProgram() {
     rdInputBasePtr = new rdlib::RdInputKeyboard();
     rdOutputBasePtr = new rdlib::RdOutputHighgui();
     rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
+    rdCameraBasePtr = new rdlib::RdCameraWebcam();
 
     rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
     rdManagerBasePtr->setRdRobotBasePtr(rdRobotBasePtr);
@@ -44,10 +46,10 @@ bool RdClient::runProgram() {
     usleep( 1 * 1000000.0 );
     quitProgram();
 
-    /*while(1) {
+    while(1) {
         std::cout << "RdClient alive..." << std::endl;
         usleep( watchdog * 1000000.0 );
-    }*/
+    }
 
     return true;
 }
@@ -75,6 +77,11 @@ bool RdClient::quitProgram() {  // Closing rutines.
         rdManagerBasePtr->quit();
         delete rdManagerBasePtr;
         rdManagerBasePtr = 0;
+    }
+    if (rdCameraBasePtr) {
+        rdCameraBasePtr->quit();
+        delete rdCameraBasePtr;
+        rdCameraBasePtr = 0;
     }
     return true;
 }

@@ -8,6 +8,7 @@
 
 
 #include <opencv2/opencv.hpp>
+#include <pthread.h>
 //#include <opencv2/imgproc/imgproc.hpp>
 //#include "opencv2/highgui/highgui.hpp"
 
@@ -19,14 +20,10 @@ namespace rdlib{
  * @brief An class for Robot Devastation webcam input using openCV.
  *
  */
-class RdCameraWebcam {
+class RdCameraWebcam : public RdCameraBase
+{
     public:
         RdCameraWebcam( int index = -1 );
-
-        /** An init rutine.
-         * @return true if the object was init successfully.
-         */
-        virtual bool stop() = 0;
 
         virtual bool quit();
 
@@ -44,7 +41,7 @@ class RdCameraWebcam {
         cv::VideoCapture webcam;
         cv::Mat imageBuffer;
         int frameRate; //-- Capture period (ms)
-        bool stop;
+        bool stopThread;
 };
 
 } //rdlib

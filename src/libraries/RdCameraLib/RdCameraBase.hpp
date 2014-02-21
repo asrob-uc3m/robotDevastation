@@ -27,11 +27,7 @@ class RdRobotBase;
  */
 class RdCameraBase {
     public:
-        /** An init rutine.
-         * @return true if the object was init successfully.
-         */
-        virtual bool stop() = 0;
-
+        virtual bool quit() =0;
 
         void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr ) {
             this->rdManagerBasePtr = rdManagerBasePtr;
