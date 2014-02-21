@@ -28,6 +28,11 @@ class RdRobotBase;
  */
 class RdManagerBase {
     public:
+        /** A quit rutine.
+         * @return true if the object was quit successfully.
+         */
+        virtual bool quit() = 0;
+
         /** An shoot rutine.
          * @return true if successful.
          */

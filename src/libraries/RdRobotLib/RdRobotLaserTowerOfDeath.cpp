@@ -68,7 +68,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::shoot()
     std::cout << "Shooting!!" << std::endl;
 }
 
-bool rdlib::RdRobotLaserTowerOfDeath::reset()
+bool rdlib::RdRobotLaserTowerOfDeath::quit()
 {
     //-- Initial values:
     panJointValue = panInitial;

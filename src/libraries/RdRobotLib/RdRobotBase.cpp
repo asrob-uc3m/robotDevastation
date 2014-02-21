@@ -18,7 +18,7 @@ bool rdlib::RdRobotBase::shootWrapper(void *This)
 
 bool rdlib::RdRobotBase::resetWrapper(void *This)
 {
-    return ((rdlib::RdRobotBase *) This)->reset();
+    return ((rdlib::RdRobotBase *) This)->quit();
 }
 
 

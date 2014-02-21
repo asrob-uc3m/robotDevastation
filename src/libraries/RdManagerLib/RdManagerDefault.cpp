@@ -15,13 +15,21 @@ bool RdManagerDefault::shoot() {
 /************************************************************************/
 
 RdManagerDefault::RdManagerDefault() {
-
+    std::cout << "[info] RdManagerDefault constructor." << std::endl;
 }
 
 /************************************************************************/
 
 RdManagerDefault::~RdManagerDefault() {
+    std::cout << "[info] RdManagerDefault destructor." << std::endl;
 }
+
+/************************************************************************/
+
+bool RdManagerDefault::quit() {
+    return true;
+}
+
 
 /************************************************************************/
 

@@ -34,7 +34,7 @@ class RdRobotBase {
         //-- Every robot in this game shoots
         virtual bool shoot() = 0;
 
-        virtual bool reset() = 0;
+        virtual bool quit() = 0;
 
         //-- Static wrappers
         static bool shootWrapper( void * This);

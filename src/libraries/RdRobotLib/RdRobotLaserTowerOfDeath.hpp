@@ -35,7 +35,7 @@ class RdRobotLaserTowerOfDeath : public RdRobotBase {
         bool tiltDecrement();
 
         virtual bool shoot();
-        virtual bool reset();
+        virtual bool quit();
 
         //-- Static wrappers:
         static bool panIncrementWrapper(  void * This);

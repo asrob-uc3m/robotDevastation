@@ -27,10 +27,10 @@ class RdRobotBase;
  */
 class RdOutputBase {
     public:
-        /** An init rutine.
-         * @return true if the object was init successfully.
+        /** A quit rutine.
+         * @return true if the object was quit successfully.
          */
-        virtual bool stop() = 0;
+        virtual bool quit() = 0;
 
         void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr ) {
             this->rdManagerBasePtr = rdManagerBasePtr;

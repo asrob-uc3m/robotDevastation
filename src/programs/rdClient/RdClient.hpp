@@ -26,6 +26,11 @@ class RdClient {
         RdClient();
 
         /**
+         * Destructor of this slow watchdog main thread.
+         */
+        ~RdClient();
+
+        /**
          * Run the program.
          *
          * @return true/false upon success/failure
@@ -33,11 +38,11 @@ class RdClient {
         bool runProgram();
 
         /**
-         * Close the program.
+         * Quit the program.
          *
          * @return true/false upon success/failure
          */
-        bool closeProgram();
+        bool quitProgram();
 
     protected:
 

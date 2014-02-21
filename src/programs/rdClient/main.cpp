@@ -62,6 +62,6 @@ int main(int argc, char *argv[]) {
     std::cout << "--------------------------------------------------------------" << std::endl;
 
     rdclient::RdClient program;  // This is the rdClient program main class.
-    return program.runProgram();  // JUST RUN THE MAIN CLASS (blocking function).
+    return program.runProgram();
 }
 

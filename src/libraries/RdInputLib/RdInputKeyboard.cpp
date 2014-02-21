@@ -67,8 +67,8 @@ RdInputKeyboard::~RdInputKeyboard() {
 
 /************************************************************************/
 
-bool RdInputKeyboard::stop() {
-    std::cout << "[info] RdInputKeyboard stop()" << std::endl;
+bool RdInputKeyboard::quit() {
+    std::cout << "[info] RdInputKeyboard quit()" << std::endl;
     isRunning = false;
 }
 

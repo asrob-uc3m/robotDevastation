@@ -23,8 +23,8 @@ RdOutputHighgui::~RdOutputHighgui() {
 
 /************************************************************************/
 
-bool RdOutputHighgui::stop() {
-    std::cout << "[info] RdOutputHighgui stop()" << std::endl;
+bool RdOutputHighgui::quit() {
+    std::cout << "[info] RdOutputHighgui quit()" << std::endl;
 }
 
 /************************************************************************/

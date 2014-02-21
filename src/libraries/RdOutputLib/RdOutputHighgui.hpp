@@ -20,7 +20,7 @@ class RdOutputHighgui : public RdOutputBase {
         RdOutputHighgui();
         ~RdOutputHighgui();
 
-        virtual bool stop();
+        virtual bool quit();
 
     protected:
         cv::Mat videoFrame;

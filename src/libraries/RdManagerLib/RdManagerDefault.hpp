@@ -15,8 +15,11 @@ namespace rdlib{
 class RdManagerDefault : public RdManagerBase {
     public:
         RdManagerDefault();
-        virtual bool shoot();
         ~RdManagerDefault();
+
+        virtual bool quit();
+
+        virtual bool shoot();
 
     protected:
 };
