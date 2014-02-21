@@ -25,7 +25,7 @@ option(ENABLE_RdOutputLib "Choose if you want to compile RdInputLib" TRUE)
 
 ##### program options
 option(ENABLE_rdClient "Choose if you want to compile rdClient" TRUE)
-option(ENABLE_rdSim "Choose if you want to compile rdSim" TRUE)
+option(ENABLE_rdSim "Choose if you want to compile rdSim" FALSE)
 
 
 if(MSVC)
