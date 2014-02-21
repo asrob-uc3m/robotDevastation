@@ -8,6 +8,7 @@
 #include "RdInputBase.hpp"
 #include "RdOutputBase.hpp"
 #include "RdRobotBase.hpp"
+#include "RdCameraBase.hpp"
 
 #define DEFAULT_WATCHDOG    5       // [s]
 
@@ -60,6 +61,9 @@ class RdClient {
 
         /** Robot */
         rdlib::RdRobotBase* rdRobotBasePtr;
+
+        /** Camera */
+        rdlib::RdCameraBase* rdCameraBasePtr;
 
 };
 
