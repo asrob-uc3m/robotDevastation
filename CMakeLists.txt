@@ -21,7 +21,7 @@ option(ENABLE_RdInputKeyboardLib "Choose if you want to compile RdInputKeyboardL
 option(ENABLE_RdManagerDefaultLib "Choose if you want to compile RdManagerDefaultLib" TRUE)
 option(ENABLE_RdRobotLib "Choose if you want to compile RdRobotLib" TRUE)
 option(ENABLE_RdCameraLib "Choose if you want to compile RdCameraLib" TRUE)
-option(ENABLE_RdOutputLib "Choose if you want to compile RdInputLib" TRUE)
+option(ENABLE_RdOutputHighguiLib "Choose if you want to compile RdOutputHighguiLib" TRUE)
 
 ##### program options
 option(ENABLE_rdClient "Choose if you want to compile rdClient" TRUE)
