@@ -7,6 +7,8 @@ namespace rdlib{
 /************************************************************************/
 
 bool RdManagerDefault::shoot() {
+    if (!rdRobotBasePtr) return false;
+    //
     return rdRobotBasePtr->shoot();
 }
 
