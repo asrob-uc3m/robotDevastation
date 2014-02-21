@@ -18,6 +18,7 @@ FOREACH(subdir ${SUBDIRS})
 ENDFOREACH()
 
 message( ${RD_INCLUDE_DIRS})
+add_subdirectory(RdUtilsLib)
 add_subdirectory(RdInputLib)
 add_subdirectory(RdRobotLib)
 add_subdirectory(RdManagerLib)
