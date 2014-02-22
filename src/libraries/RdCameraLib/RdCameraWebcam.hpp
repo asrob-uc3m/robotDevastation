@@ -34,7 +34,7 @@ class RdCameraWebcam : public RdCameraBase
 
         bool setStop( bool stop);
         char * getBufferPtr();
-        bool getDimensions( int& width, int& height, int &step);
+        virtual bool getDimensions( int& width, int& height, int &step);
 
     protected:
         pthread_t capture_thread;

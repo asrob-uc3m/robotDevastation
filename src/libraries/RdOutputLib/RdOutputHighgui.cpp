@@ -43,11 +43,18 @@ void rdlib::RdOutputHighgui::output( )
         usleep(100000);
     }
     while ( ! (rdCameraBasePtr) );
+
     std::cout << "[info] RdOutputHighgui started." << std::endl;
+
+    int width,height,step;
+    rdCameraBasePtr->getDimensions(width,height,step);
+    std::cout << "[info] RdOutputHighgui got camera [w:" << width << ", h:" << height << ", s:" << step  << "]" << std::endl;
+
     while(1) {
         std::cout << "[info] RdOutputHighgui alive..." << std::endl;
         usleep( 500000.0 );
     }
+
 }
 
 

@@ -4,6 +4,7 @@
 #define __RD_OUTPUT_HIGHGUI_HPP__
 
 #include "RdOutputBase.hpp"
+#include "RdCameraBase.hpp"
 
 #undef index  // avoid compilation "index" macro arguments error with opencv
 #include <opencv2/highgui/highgui.hpp>

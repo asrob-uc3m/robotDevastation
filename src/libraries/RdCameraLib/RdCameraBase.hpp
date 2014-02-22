@@ -28,6 +28,7 @@ class RdRobotBase;
 class RdCameraBase {
     public:
         virtual bool quit() =0;
+        virtual bool getDimensions( int& width, int& height, int &step) = 0;
 
         void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr ) {
             this->rdManagerBasePtr = rdManagerBasePtr;
