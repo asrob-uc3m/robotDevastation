@@ -33,7 +33,7 @@ class RdCameraWebcam : public RdCameraBase
         void capture();
 
         bool setStop( bool stop);
-        char * getBufferPtr();
+        virtual char * getBufferPtr();
         virtual bool getDimensions( int& width, int& height, int &step);
 
     protected:
