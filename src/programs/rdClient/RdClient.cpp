@@ -35,24 +35,31 @@ bool RdClient::runProgram() {
 
     rdCameraBasePtr = new rdlib::RdCameraWebcam();
     rdManagerBasePtr = new rdlib::RdManagerDefault();
+    //rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
+
+    //-- Use the next TWO lines for one input and a separated output
     //rdInputBasePtr = new rdlib::RdInputKeyboard();
     //rdOutputBasePtr = new rdlib::RdOutputHighgui();
-        rdlib::RdInOutHighgui * rdInOutHighguiPtr = new rdlib::RdInOutHighgui();
-        rdOutputBasePtr = rdInOutHighguiPtr;
-        rdInputBasePtr = rdInOutHighguiPtr;
-    rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
+    //-- OR use the NEXT THREE lines for one input+output
+    rdlib::RdInOutHighgui * rdInOutHighguiPtr = new rdlib::RdInOutHighgui();
+    rdOutputBasePtr = rdInOutHighguiPtr;
+    rdInputBasePtr = rdInOutHighguiPtr;
 
     rdManagerBasePtr->setRdCameraBasePtr(rdCameraBasePtr);
-    //rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
-    //rdManagerBasePtr->setRdOutputBasePtr(rdOutputBasePtr);
-        rdManagerBasePtr->setRdInputBasePtr(rdInOutHighguiPtr);
-        rdManagerBasePtr->setRdOutputBasePtr(rdInOutHighguiPtr);
     rdManagerBasePtr->setRdRobotBasePtr(rdRobotBasePtr);
 
+    //-- Use the next TWO lines for one input and a separated output
+    //rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
+    //rdManagerBasePtr->setRdOutputBasePtr(rdOutputBasePtr);
+    //-- OR use the NEXT TWO lines for one input+output
+    rdManagerBasePtr->setRdInputBasePtr(rdInOutHighguiPtr);
+    rdManagerBasePtr->setRdOutputBasePtr(rdInOutHighguiPtr);
+
+    //-- Use the next TWO lines for one input and a separated output
     //rdInputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
     //rdOutputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
-        rdInOutHighguiPtr->setRdManagerBasePtr(rdManagerBasePtr);
-
+    //-- OR use the NEXT ONE lines for one input+output
+    rdInOutHighguiPtr->setRdManagerBasePtr(rdManagerBasePtr);
 
     /*std::cout << "[info] RdClient quit in 1 second..." << std::endl;
     usleep( 1 * 1000000.0 );
