@@ -41,7 +41,7 @@ bool RdClient::runProgram() {
     //rdInputBasePtr = new rdlib::RdInputKeyboard();
     //rdOutputBasePtr = new rdlib::RdOutputHighgui();
     //-- OR use the NEXT THREE lines for one input+output
-    rdlib::RdInOutHighgui * rdInOutHighguiPtr = new rdlib::RdInOutHighgui();
+    rdlib::RdInOutHighgui * rdInOutHighguiPtr = new rdlib::RdInOutHighgui();  // Not deleted, but at least its quit is called.
     rdOutputBasePtr = rdInOutHighguiPtr;
     rdInputBasePtr = rdInOutHighguiPtr;
 
