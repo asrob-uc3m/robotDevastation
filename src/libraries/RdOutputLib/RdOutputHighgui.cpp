@@ -20,6 +20,7 @@ rdlib::RdOutputHighgui::RdOutputHighgui()
 bool rdlib::RdOutputHighgui::quit()
 {
     std::cout << "[info] RdOutputHighgui quit()" << std::endl;
+    pthread_join( output_thread, NULL);
 }
 
 void * rdlib::RdOutputHighgui::outputThread(void *This)

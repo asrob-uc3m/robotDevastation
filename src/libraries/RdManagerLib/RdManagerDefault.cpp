@@ -26,7 +26,12 @@ RdManagerDefault::~RdManagerDefault() {
 
 /************************************************************************/
 
-bool RdManagerDefault::quit() {
+bool RdManagerDefault::quit() {    
+    std::cout << "[info] RdManagerDefault quit." << std::endl;
+    //rdCameraBasePtr->quit();
+    rdInputBasePtr->quit();
+    //rdOutputBasePtr->quit();
+    //rdRobotBasePtr->quit();
     return true;
 }
 
