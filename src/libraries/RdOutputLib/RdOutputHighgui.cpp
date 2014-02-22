@@ -2,40 +2,51 @@
 
 #include "RdOutputHighgui.hpp"
 
-namespace rdlib{
-
-/************************************************************************/
-
-RdOutputHighgui::RdOutputHighgui() {
+rdlib::RdOutputHighgui::RdOutputHighgui()
+{
     std::cout << "[info] RdOutputHighgui::RdOutputHighgui()"<< std::endl;
 
-    // just for testing
+    //-- just for testing
     videoFrame = cv::imread("../share/rdClient/graphics/cabin_ecro.png");
     if(videoFrame.empty()) {
         std::cerr << "[warning] Image not found." << std::endl;
     }
 
-    cv::namedWindow("Robot Devastation", CV_WINDOW_NORMAL);
-    cv::setWindowProperty("Robot Devastation", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
-
-    cv::imshow("Robot Devastation", videoFrame);  // cv:: not needed here
-    cv::waitKey(0.1);  // libhighgui only renders with this
-
+    //-- Start the output thread
+    pthread_create( &output_thread, NULL, outputThread, (void *) this );
+    std::cout << "[info] RdOutputHighgui created thread." << std::endl;
 }
 
-/************************************************************************/
-
-RdOutputHighgui::~RdOutputHighgui() {
-    std::cout << "[info] RdOutputHighgui::~RdOutputHighgui()"<< std::endl;
-}
-
-/************************************************************************/
-
-bool RdOutputHighgui::quit() {
+bool rdlib::RdOutputHighgui::quit()
+{
     std::cout << "[info] RdOutputHighgui quit()" << std::endl;
 }
 
-/************************************************************************/
+void * rdlib::RdOutputHighgui::outputThread(void *This)
+{
+    ( (rdlib::RdOutputHighgui *) This)->output();
+}
 
-} //rdlib
+void rdlib::RdOutputHighgui::output( )
+{
+    std::cout << "[info] RdOutputHighgui thread." << std::endl;
+    while (!rdManagerBasePtr)
+    {
+        std::cout << "[info] RdOutputHighgui waiting for manager..." << std::endl;
+        usleep(100000);
+    }
+    do
+    {
+        rdCameraBasePtr = rdManagerBasePtr->getRdCameraBasePtr();
+        std::cout << "[info] RdOutputHighgui waiting for camera..." << std::endl;
+        usleep(100000);
+    }
+    while ( ! (rdCameraBasePtr) );
+    std::cout << "[info] RdOutputHighgui started." << std::endl;
+    while(1) {
+        std::cout << "[info] RdOutputHighgui alive..." << std::endl;
+        usleep( 500000.0 );
+    }
+}
+
 

@@ -27,20 +27,24 @@ bool RdClient::runProgram() {
     rdInputBasePtr = 0;
     rdOutputBasePtr = 0;
     rdRobotBasePtr = 0;
+    rdCameraBasePtr = 0;
 
     watchdog = DEFAULT_WATCHDOG;
     std::cout << "[info] RdClient using watchdog [s]: " << watchdog << " (default: " << DEFAULT_WATCHDOG << ")." << std::endl;
 
     rdManagerBasePtr = new rdlib::RdManagerDefault();
     rdInputBasePtr = new rdlib::RdInputKeyboard();
-    //rdOutputBasePtr = new rdlib::RdOutputHighgui();  // still in development
+    rdOutputBasePtr = new rdlib::RdOutputHighgui();
     rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
     rdCameraBasePtr = new rdlib::RdCameraWebcam();
 
+    rdManagerBasePtr->setRdCameraBasePtr(rdCameraBasePtr);
     rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
+    rdManagerBasePtr->setRdOutputBasePtr(rdOutputBasePtr);
     rdManagerBasePtr->setRdRobotBasePtr(rdRobotBasePtr);
 
     rdInputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
+    rdOutputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
 
     /*std::cout << "[info] RdClient quit in 1 second..." << std::endl;
     usleep( 1 * 1000000.0 );
@@ -58,6 +62,11 @@ bool RdClient::runProgram() {
 
 bool RdClient::quitProgram() {  // Closing rutines.
     std::cout << "[info] RdClient quitProgram()" << std::endl;
+    if (rdCameraBasePtr) {
+        rdCameraBasePtr->quit();
+        delete rdCameraBasePtr;
+        rdCameraBasePtr = 0;
+    }
     if (rdInputBasePtr) {
         rdInputBasePtr->quit();
         delete rdInputBasePtr;
@@ -77,11 +86,6 @@ bool RdClient::quitProgram() {  // Closing rutines.
         rdManagerBasePtr->quit();
         delete rdManagerBasePtr;
         rdManagerBasePtr = 0;
-    }
-    if (rdCameraBasePtr) {
-        rdCameraBasePtr->quit();
-        delete rdCameraBasePtr;
-        rdCameraBasePtr = 0;
     }
     return true;
 }

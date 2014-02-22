@@ -18,12 +18,18 @@ namespace rdlib{
 class RdOutputHighgui : public RdOutputBase {
     public:
         RdOutputHighgui();
-        ~RdOutputHighgui();
 
         virtual bool quit();
 
+        static void * outputThread( void * This );
+
+        void output();
+
     protected:
+        pthread_t output_thread;
+
         cv::Mat videoFrame;
+        rdlib::RdCameraBase* rdCameraBasePtr;
 };
 
 } //rdlib

@@ -4,6 +4,7 @@
 #define __RD_OUTPUT_BASE_HPP__
 
 #include <iostream>
+#include <unistd.h>
 #include "RdManagerBase.hpp"
 
 /**

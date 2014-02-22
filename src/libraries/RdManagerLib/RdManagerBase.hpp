@@ -17,7 +17,9 @@
 
 namespace rdlib{
 
+class RdCameraBase;
 class RdInputBase;
+class RdOutputBase;
 class RdRobotBase;
 
 /**
@@ -28,6 +30,14 @@ class RdRobotBase;
  */
 class RdManagerBase {
     public:
+
+        RdManagerBase() {
+            rdCameraBasePtr = 0;
+            rdInputBasePtr = 0;
+            rdOutputBasePtr = 0;
+            rdRobotBasePtr = 0;
+        }
+
         /** A quit rutine.
          * @return true if the object was quit successfully.
          */
@@ -38,15 +48,27 @@ class RdManagerBase {
          */
         virtual bool shoot() = 0;
 
+        void setRdCameraBasePtr(RdCameraBase* rdCameraBasePtr ) {
+            this->rdCameraBasePtr = rdCameraBasePtr;
+        }
         void setRdInputBasePtr(RdInputBase* rdInputBasePtr ) {
             this->rdInputBasePtr = rdInputBasePtr;
+        }
+        void setRdOutputBasePtr(RdOutputBase* rdOutputBasePtr ) {
+            this->rdOutputBasePtr = rdOutputBasePtr;
         }
         void setRdRobotBasePtr(RdRobotBase* rdRobotBasePtr ) {
             this->rdRobotBasePtr = rdRobotBasePtr;
         }
 
+        RdCameraBase* getRdCameraBasePtr() {
+            return this->rdCameraBasePtr;
+        }
+
     protected:
+        RdCameraBase* rdCameraBasePtr;
         RdInputBase* rdInputBasePtr;
+        RdOutputBase* rdOutputBasePtr;
         RdRobotBase* rdRobotBasePtr;
 };
 
