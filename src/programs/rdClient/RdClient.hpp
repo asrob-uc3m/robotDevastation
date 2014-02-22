@@ -10,7 +10,7 @@
 #include "RdRobotBase.hpp"
 #include "RdCameraBase.hpp"
 
-#define DEFAULT_WATCHDOG    5       // [s]
+#define DEFAULT_WATCHDOG    1       // [s]
 
 namespace rdclient{
 

@@ -2,41 +2,21 @@
 
 #include "RdManagerDefault.hpp"
 
-namespace rdlib{
-
-/************************************************************************/
-
-bool RdManagerDefault::shoot() {
+bool rdlib::RdManagerDefault::shoot() {
     if (!rdRobotBasePtr) return false;
     //
     return rdRobotBasePtr->shoot();
 }
 
-/************************************************************************/
-
-RdManagerDefault::RdManagerDefault() {
+rdlib::RdManagerDefault::RdManagerDefault()
+{
     std::cout << "[info] RdManagerDefault constructor." << std::endl;
+    this->managerStatus = 0;
 }
 
-/************************************************************************/
-
-RdManagerDefault::~RdManagerDefault() {
-    std::cout << "[info] RdManagerDefault destructor." << std::endl;
-}
-
-/************************************************************************/
-
-bool RdManagerDefault::quit() {    
+bool rdlib::RdManagerDefault::quit()
+{
     std::cout << "[info] RdManagerDefault quit." << std::endl;
-    //rdCameraBasePtr->quit();
-    rdInputBasePtr->quit();
-    //rdOutputBasePtr->quit();
-    //rdRobotBasePtr->quit();
+    this->managerStatus = -1;
     return true;
 }
-
-
-/************************************************************************/
-
-} //rdlib
-

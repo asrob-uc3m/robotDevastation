@@ -35,7 +35,7 @@ bool RdClient::runProgram() {
 
     rdCameraBasePtr = new rdlib::RdCameraWebcam();
     rdManagerBasePtr = new rdlib::RdManagerDefault();
-    //rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
+    rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
 
     //-- Use the next TWO lines for one input and a separated output
     //rdInputBasePtr = new rdlib::RdInputKeyboard();
@@ -61,16 +61,14 @@ bool RdClient::runProgram() {
     //-- OR use the NEXT ONE lines for one input+output
     rdInOutHighguiPtr->setRdManagerBasePtr(rdManagerBasePtr);
 
-    /*std::cout << "[info] RdClient quit in 1 second..." << std::endl;
-    usleep( 1 * 1000000.0 );
-    quitProgram();*/
-
+    int managerStatus;
     while(1) {
-        std::cout << "RdClient alive..." << std::endl;
+        managerStatus = rdManagerBasePtr->getManagerStatus();
+        std::cout << "RdClient alive, managerStatus: " << managerStatus << std::endl;
+        if (managerStatus < 0) break;
         usleep( watchdog * 1000000.0 );
     }
-
-    return true;
+    return this->quitProgram();
 }
 
 /************************************************************************/
@@ -82,11 +80,12 @@ bool RdClient::quitProgram() {  // Closing rutines.
         delete rdCameraBasePtr;
         rdCameraBasePtr = 0;
     }
-    if (rdInputBasePtr) {
+    //-- Comment out the NEXT FIVE lines for one input+output
+    /*if (rdInputBasePtr) {
         rdInputBasePtr->quit();
         delete rdInputBasePtr;
         rdInputBasePtr = 0;
-    }
+    }*/
     if (rdOutputBasePtr) {
         rdOutputBasePtr->quit();
         delete rdOutputBasePtr;

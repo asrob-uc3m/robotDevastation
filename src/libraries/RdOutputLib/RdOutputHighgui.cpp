@@ -61,6 +61,7 @@ void rdlib::RdOutputHighgui::output( )
         cv::Mat image(cv::Size(width, height), CV_8UC3, rdCameraBasePtr->getBufferPtr(), step);  // cv::Mat::AUTO_STEP ???
         cv::imshow("Robot Devastation", image);  // no cv:: needed.
         cv::waitKey( 1 );
+        image.release();
     }
 }
 

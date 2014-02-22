@@ -22,7 +22,7 @@ class RdInOutHighgui : public RdOutputBase, public RdInputBase {
 
         virtual bool quit();
 
-        static void * outputThread( void * This );
+        static void * highguiThread( void * This );
 
         void output();
 
@@ -31,12 +31,14 @@ class RdInOutHighgui : public RdOutputBase, public RdInputBase {
         }
 
     protected:
-        pthread_t output_thread;
+        pthread_t highgui_thread;
 
         cv::Mat videoFrame;
         rdlib::RdCameraBase* rdCameraBasePtr;
 
         RdManagerBase* rdManagerBasePtr;  //--solve ambiguity
+
+        bool isRunning;
 
 };
 

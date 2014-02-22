@@ -20,6 +20,8 @@ rdlib::RdCameraWebcam::RdCameraWebcam(int index)
 
 bool rdlib::RdCameraWebcam::quit()
 {
+    std::cout << "[info] RdCameraWebcam quit()" << std::endl;
+    stopThread = true;
     pthread_join( capture_thread, NULL);
 }
 

@@ -48,6 +48,10 @@ class RdManagerBase {
          */
         virtual bool shoot() = 0;
 
+        int getManagerStatus() {
+            return managerStatus;
+        }
+
         void setRdCameraBasePtr(RdCameraBase* rdCameraBasePtr ) {
             this->rdCameraBasePtr = rdCameraBasePtr;
         }
@@ -70,6 +74,7 @@ class RdManagerBase {
         RdInputBase* rdInputBasePtr;
         RdOutputBase* rdOutputBasePtr;
         RdRobotBase* rdRobotBasePtr;
+        int managerStatus;
 };
 
 } //rdlib

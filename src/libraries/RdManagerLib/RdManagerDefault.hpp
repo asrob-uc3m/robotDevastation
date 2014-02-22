@@ -15,7 +15,6 @@ namespace rdlib{
 class RdManagerDefault : public RdManagerBase {
     public:
         RdManagerDefault();
-        ~RdManagerDefault();
 
         virtual bool quit();
 

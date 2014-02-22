@@ -25,7 +25,6 @@ namespace rdlib{
 class RdInputKeyboard : public RdInputBase {
     public:
         RdInputKeyboard();
-        ~RdInputKeyboard();
 
         virtual bool quit();
 

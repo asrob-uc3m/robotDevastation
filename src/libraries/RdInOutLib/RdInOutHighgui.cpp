@@ -6,29 +6,26 @@ rdlib::RdInOutHighgui::RdInOutHighgui()
 {
     std::cout << "[info] RdInOutHighgui::RdInOutHighgui()"<< std::endl;
 
-    //-- just for testing
-    videoFrame = cv::imread("../share/rdClient/graphics/cabin_ecro.png");
-    if(videoFrame.empty()) {
-        std::cerr << "[warning] Image not found." << std::endl;
-    }
+    isRunning=true;
 
     //-- Start the output thread
-    pthread_create( &output_thread, NULL, outputThread, (void *) this );
+    pthread_create( &highgui_thread, NULL, highguiThread, (void *) this );
     std::cout << "[info] RdInOutHighgui created thread." << std::endl;
 }
 
 bool rdlib::RdInOutHighgui::quit()
 {
     std::cout << "[info] RdInOutHighgui quit()" << std::endl;
-    pthread_join( output_thread, NULL);
+    isRunning=false;
+    pthread_join( highgui_thread, NULL);
 }
 
-void * rdlib::RdInOutHighgui::outputThread(void *This)
+void * rdlib::RdInOutHighgui::highguiThread(void *This)
 {
     ( (rdlib::RdInOutHighgui *) This)->output();
 }
 
-void rdlib::RdInOutHighgui::output( )
+void rdlib::RdInOutHighgui::output()
 {
     std::cout << "[info] RdInOutHighgui thread." << std::endl;
     while (!rdManagerBasePtr)
@@ -53,13 +50,11 @@ void rdlib::RdInOutHighgui::output( )
     cv::namedWindow("Robot Devastation", CV_WINDOW_NORMAL);
     cv::setWindowProperty("Robot Devastation", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
 
-    while(1) {
+    while(isRunning) {
         //std::cout << "[info] RdInOutHighgui alive..." << std::endl;
-        //j//char * bufferPtr = rdCameraBasePtr->getBufferPtr();
-        //j//char bufferPtr[width* height];
-        //j//bufferPtr = rdCameraBasePtr->getBufferPtr();
         cv::Mat image(cv::Size(width, height), CV_8UC3, rdCameraBasePtr->getBufferPtr(), step);  // cv::Mat::AUTO_STEP ???
         cv::imshow("Robot Devastation", image);  // no cv:: needed.
+        image.release();
         char c = cv::waitKey( 1 );  // [ms]
         if (c == ' ')  {  // SPACE: 1048608 (0x100020), LSB: 32 (' ')
             std::cout << "The space bar was pressed." << std::endl;
