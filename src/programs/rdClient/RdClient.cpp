@@ -2,8 +2,9 @@
 
 #include "RdClient.hpp"
 
-#include "RdInputKeyboard.hpp"
-#include "RdOutputHighgui.hpp"
+//#include "RdInputKeyboard.hpp"
+//#include "RdOutputHighgui.hpp"
+  #include "RdInOutHighgui.hpp"
 #include "RdRobotLaserTowerOfDeath.hpp"
 #include "RdManagerDefault.hpp"
 #include "RdCameraWebcam.hpp"
@@ -32,19 +33,26 @@ bool RdClient::runProgram() {
     watchdog = DEFAULT_WATCHDOG;
     std::cout << "[info] RdClient using watchdog [s]: " << watchdog << " (default: " << DEFAULT_WATCHDOG << ")." << std::endl;
 
-    rdManagerBasePtr = new rdlib::RdManagerDefault();
-    rdInputBasePtr = new rdlib::RdInputKeyboard();
-    rdOutputBasePtr = new rdlib::RdOutputHighgui();
-    rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
     rdCameraBasePtr = new rdlib::RdCameraWebcam();
+    rdManagerBasePtr = new rdlib::RdManagerDefault();
+    //rdInputBasePtr = new rdlib::RdInputKeyboard();
+    //rdOutputBasePtr = new rdlib::RdOutputHighgui();
+        rdlib::RdInOutHighgui * rdInOutHighguiPtr = new rdlib::RdInOutHighgui();
+        rdOutputBasePtr = rdInOutHighguiPtr;
+        rdInputBasePtr = rdInOutHighguiPtr;
+    rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
 
     rdManagerBasePtr->setRdCameraBasePtr(rdCameraBasePtr);
-    rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
-    rdManagerBasePtr->setRdOutputBasePtr(rdOutputBasePtr);
+    //rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
+    //rdManagerBasePtr->setRdOutputBasePtr(rdOutputBasePtr);
+        rdManagerBasePtr->setRdInputBasePtr(rdInOutHighguiPtr);
+        rdManagerBasePtr->setRdOutputBasePtr(rdInOutHighguiPtr);
     rdManagerBasePtr->setRdRobotBasePtr(rdRobotBasePtr);
 
-    rdInputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
-    rdOutputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
+    //rdInputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
+    //rdOutputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
+        rdInOutHighguiPtr->setRdManagerBasePtr(rdManagerBasePtr);
+
 
     /*std::cout << "[info] RdClient quit in 1 second..." << std::endl;
     usleep( 1 * 1000000.0 );

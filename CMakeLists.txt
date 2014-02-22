@@ -17,12 +17,13 @@ endif(COMMAND cmake_policy)
 project(robotDevastation)
 
 ##### library options
-option(ENABLE_RdUtilsLib "Choose if you want to compile RdUtilsLib" TRUE)
+option(ENABLE_RdCameraWebcamLib "Choose if you want to compile RdCameraWebcamLib" TRUE)
 option(ENABLE_RdInputKeyboardLib "Choose if you want to compile RdInputKeyboardLib" TRUE)
+option(ENABLE_RdInOutHighguiLib "Choose if you want to compile RdOutputHighguiLib" TRUE)
+option(ENABLE_RdOutputHighguiLib "Choose if you want to compile RdOutputHighguiLib" TRUE)
 option(ENABLE_RdManagerDefaultLib "Choose if you want to compile RdManagerDefaultLib" TRUE)
 option(ENABLE_RdRobotLib "Choose if you want to compile RdRobotLib" TRUE)
-option(ENABLE_RdCameraWebcamLib "Choose if you want to compile RdCameraWebcamLib" TRUE)
-option(ENABLE_RdOutputHighguiLib "Choose if you want to compile RdOutputHighguiLib" TRUE)
+option(ENABLE_RdUtilsLib "Choose if you want to compile RdUtilsLib" TRUE)
 
 ##### program options
 option(ENABLE_rdClient "Choose if you want to compile rdClient" TRUE)
