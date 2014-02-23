@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
 #include "RdInOutHighgui.hpp"
-
+#include <stdio.h>
 rdlib::RdInOutHighgui::RdInOutHighgui()
 {
     std::cout << "[info] RdInOutHighgui::RdInOutHighgui()"<< std::endl;
@@ -55,12 +55,16 @@ void rdlib::RdInOutHighgui::output()
         cv::Mat image(cv::Size(width, height), CV_8UC3, rdCameraBasePtr->getBufferPtr(), step);  // cv::Mat::AUTO_STEP ???
         cv::imshow("Robot Devastation", image);  // no cv:: needed.
         image.release();
-        char c = cv::waitKey( 1 );  // [ms]
+        // waitKey returns key pressed, or -1 if nothing has been pressed.
+        char c = cv::waitKey( 1 );  // 1 is [ms]
         if (c == ' ')  {  // SPACE: 1048608 (0x100020), LSB: 32 (' ')
-            std::cout << "The space bar was pressed." << std::endl;
+            std::cout << "[info] RdInOutHighgui: The space bar was pressed." << std::endl;
             rdManagerBasePtr->shoot();
-        } else if ( c == '\x1b' ) {  // ESC: 1048603 (0x10001b), LSB: 27 ('\x1b')
-            std::cout << "The escape key was pressed. Bye!" << std::endl;
+        } else if ( c=='\x1b' ) {  // ESC: 1048603 (0x10001b), LSB: 27 ('\x1b')
+            std::cout << "[info] RdInOutHighgui: The escape key was pressed. Bye!" << std::endl;
+            rdManagerBasePtr->quit();
+        } else if ( c==99 ) {  // CTRL-C
+            std::cout << "[info] RdInOutHighgui: CTRL-C key was pressed. Bye!" << std::endl;
             rdManagerBasePtr->quit();
         }
     }
