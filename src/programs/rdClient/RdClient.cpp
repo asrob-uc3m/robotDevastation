@@ -44,7 +44,7 @@ bool rdclient::RdClient::runProgram()
 
     rdCameraBasePtr = new rdlib::RdCameraWebcam();
     rdManagerBasePtr = new rdlib::RdManagerDefault();
-    //rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
+    rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
 
     //-- Use the next TWO lines for one input and a separated output
     //rdInputBasePtr = new rdlib::RdInputKeyboard();
