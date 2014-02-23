@@ -9,21 +9,13 @@
 #include "RdManagerDefault.hpp"
 #include "RdCameraWebcam.hpp"
 
-namespace rdclient {
-
-/************************************************************************/
-RdClient::RdClient() {
+rdclient::RdClient::RdClient()
+{
     std::cout << "[info] RdClient constructor." << std::endl;
 }
 
-/************************************************************************/
-RdClient::~RdClient() {
-    std::cout << "[info] RdClient destructor." << std::endl;
-}
-
-/************************************************************************/
-bool RdClient::runProgram() {
-
+bool rdclient::RdClient::runProgram()
+{
     rdManagerBasePtr = 0;
     rdInputBasePtr = 0;
     rdOutputBasePtr = 0;
@@ -62,7 +54,8 @@ bool RdClient::runProgram() {
     rdInOutHighguiPtr->setRdManagerBasePtr(rdManagerBasePtr);
 
     int managerStatus;
-    while(1) {
+    while(1)
+    {
         managerStatus = rdManagerBasePtr->getManagerStatus();
         std::cout << "RdClient alive, managerStatus: " << managerStatus << std::endl;
         if (managerStatus < 0) break;
@@ -71,9 +64,9 @@ bool RdClient::runProgram() {
     return this->quitProgram();
 }
 
-/************************************************************************/
-
-bool RdClient::quitProgram() {  // Closing rutines.
+//-- Closing rutines.
+bool rdclient::RdClient::quitProgram()
+{
     std::cout << "[info] RdClient quitProgram()" << std::endl;
     if (rdCameraBasePtr) {
         rdCameraBasePtr->quit();
@@ -103,8 +96,3 @@ bool RdClient::quitProgram() {  // Closing rutines.
     }
     return true;
 }
-
-/************************************************************************/
-
-} //rdclient
-
