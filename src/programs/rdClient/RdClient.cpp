@@ -14,6 +14,19 @@ rdclient::RdClient::RdClient()
     std::cout << "[info] RdClient constructor." << std::endl;
 }
 
+
+rdclient::RdClient* globalRdClient;
+void rdclient::RdClient::staticSignalHandler(int s)
+{
+    //-- "kill -l" for a list of meanings. 2 is a SIGINT (ctrl-c).
+    std::cout << "[info] RdClient: Caught signal ";
+    if (s==2) std::cout << "SIGINT (usually a CTRL-C)";
+    else std::cout << s;
+    std::cout << ". Bye!" << std::endl;
+    globalRdClient->quitProgram();
+    exit(s);
+}
+
 bool rdclient::RdClient::runProgram()
 {
     rdManagerBasePtr = 0;
@@ -25,9 +38,13 @@ bool rdclient::RdClient::runProgram()
     watchdog = DEFAULT_WATCHDOG;
     std::cout << "[info] RdClient using watchdog [s]: " << watchdog << " (default: " << DEFAULT_WATCHDOG << ")." << std::endl;
 
+    //-- Set up callback for SIGTERM (ctrl-c)
+    globalRdClient = this;
+    signal (SIGINT,RdClient::staticSignalHandler);
+
     rdCameraBasePtr = new rdlib::RdCameraWebcam();
     rdManagerBasePtr = new rdlib::RdManagerDefault();
-    rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
+    //rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
 
     //-- Use the next TWO lines for one input and a separated output
     //rdInputBasePtr = new rdlib::RdInputKeyboard();
@@ -67,7 +84,7 @@ bool rdclient::RdClient::runProgram()
 //-- Closing rutines.
 bool rdclient::RdClient::quitProgram()
 {
-    std::cout << "[info] RdClient quitProgram()" << std::endl;
+    std::cout << "[info] RdClient quitProgram(): begin quitting..." << std::endl;
     if (rdCameraBasePtr) {
         rdCameraBasePtr->quit();
         delete rdCameraBasePtr;
@@ -94,5 +111,6 @@ bool rdclient::RdClient::quitProgram()
         delete rdManagerBasePtr;
         rdManagerBasePtr = 0;
     }
+    std::cout << "[success] RdClient quitProgram(): quit gracefully, bye!" << std::endl;
     return true;
 }

@@ -3,6 +3,8 @@
 #ifndef __ROBOT_DEVASTATION_HPP__
 #define __ROBOT_DEVASTATION_HPP__
 
+#include<signal.h>
+
 #include "RdManagerBase.hpp"
 
 #include "RdInputBase.hpp"
@@ -41,6 +43,8 @@ class RdClient {
         bool quitProgram();
 
     protected:
+
+        static void staticSignalHandler(int arg);
 
         /** Watchdog period [s]. */
         double watchdog;
