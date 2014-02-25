@@ -28,6 +28,9 @@ class RdRobotBase;
  */
 class RdOutputBase {
     public:
+
+        virtual bool start() = 0;
+
         /** A quit rutine.
          * @return true if the object was quit successfully.
          */

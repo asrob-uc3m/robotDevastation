@@ -38,6 +38,8 @@ class RdManagerBase {
             rdRobotBasePtr = 0;
         }
 
+        virtual bool start() = 0;
+
         /** A quit rutine.
          * @return true if the object was quit successfully.
          */

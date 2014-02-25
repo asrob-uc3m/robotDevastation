@@ -27,9 +27,10 @@ class RdRobotBase;
  */
 class RdCameraBase {
     public:
-        virtual bool quit() =0;
+        virtual bool start() = 0;
+        virtual bool quit() = 0;
         virtual bool getDimensions( int& width, int& height, int &step) = 0;
-        virtual char * getBufferPtr() = 0;
+        virtual char * getBufferPtr( int index = 0 ) = 0;
 
         void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr ) {
             this->rdManagerBasePtr = rdManagerBasePtr;
@@ -37,6 +38,7 @@ class RdCameraBase {
 
     protected:
         RdManagerBase* rdManagerBasePtr;
+
 };
 
 } //rdlib

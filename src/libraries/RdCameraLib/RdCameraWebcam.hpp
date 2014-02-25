@@ -9,6 +9,7 @@
 
 #include <opencv2/opencv.hpp>
 #include <pthread.h>
+#include <semaphore.h>
 #include <unistd.h>  // usleep
 //#include <opencv2/imgproc/imgproc.hpp>
 //#include "opencv2/highgui/highgui.hpp"
@@ -26,6 +27,7 @@ class RdCameraWebcam : public RdCameraBase
     public:
         RdCameraWebcam( int index = -1 );
 
+        virtual bool start();
         virtual bool quit();
 
         static void * captureThread( void * This );
@@ -33,14 +35,20 @@ class RdCameraWebcam : public RdCameraBase
         void capture();
 
         bool setStop( bool stop);
-        virtual char * getBufferPtr();
+        virtual char * getBufferPtr( int index = 0);
         virtual bool getDimensions( int& width, int& height, int &step);
+
+        sem_t * getCaptureSemaphores();
+        sem_t * getProcessSemaphores();
+        sem_t * getDisplaySemaphores();
 
     protected:
         pthread_t capture_thread;
-        pthread_mutex_t imageBufferMutex;
+        sem_t * captureSemaphores;
+        sem_t * processSemaphores;
+        sem_t * displaySemaphores;
         cv::VideoCapture webcam;
-        cv::Mat imageBuffer;
+        std::vector<cv::Mat> imageBuffers;
         int frameRate; //-- Capture period (ms)
         bool stopThread;
 };

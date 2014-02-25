@@ -70,6 +70,18 @@ bool rdclient::RdClient::runProgram()
     //-- OR use the NEXT ONE lines for one input+output
     rdInOutHighguiPtr->setRdManagerBasePtr(rdManagerBasePtr);
 
+    //-- Semaphore configuration (it may be good to convert this to a cleaner syntax)
+    ((rdlib::RdManagerDefault * )rdManagerBasePtr)->setProcessSemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getProcessSemaphores() );
+    ((rdlib::RdManagerDefault * )rdManagerBasePtr)->setDisplaySemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getDisplaySemaphores() );
+    ((rdlib::RdInOutHighgui * ) rdOutputBasePtr)->setDisplaySemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getDisplaySemaphores() );
+    ((rdlib::RdInOutHighgui * ) rdOutputBasePtr)->setCaptureSemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getCaptureSemaphores() );
+
+    //-- Start components
+    rdCameraBasePtr->start();
+    rdManagerBasePtr->start();
+    rdOutputBasePtr->start();
+    //rdInputBasePtr-start(); //-- What happens if I call this twice??
+
     int managerStatus;
     while(1)
     {

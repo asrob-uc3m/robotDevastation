@@ -8,6 +8,7 @@
 
 #undef index  // avoid compilation "index" macro arguments error with opencv
 #include <opencv2/highgui/highgui.hpp>
+#include <semaphore.h>
 
 namespace rdlib{
 
@@ -20,20 +21,24 @@ class RdInOutHighgui : public RdOutputBase, public RdInputBase {
     public:
         RdInOutHighgui();
 
+        virtual bool start();
         virtual bool quit();
 
         static void * highguiThread( void * This );
 
         void output();
 
-        void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr ) {  //--solve ambiguity
-            this->rdManagerBasePtr = rdManagerBasePtr;
-        }
+        void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr );
+
+        void setDisplaySemaphores( sem_t * displaySemaphores);
+        void setCaptureSemaphores( sem_t * captureSemaphores);
 
     protected:
+        sem_t * captureSemaphores;
+        sem_t * displaySemaphores;
         pthread_t highgui_thread;
 
-        cv::Mat videoFrame;
+        std::vector<cv::Mat> videoFrames;
         rdlib::RdCameraBase* rdCameraBasePtr;
 
         RdManagerBase* rdManagerBasePtr;  //--solve ambiguity
