@@ -21,6 +21,8 @@ void rdclient::RdClient::staticSignalHandler(int s)
     //-- "kill -l" for a list of meanings. 2 is a SIGINT (ctrl-c).
     std::cout << "[info] RdClient: Caught signal ";
     if (s==2) std::cout << "SIGINT (usually a CTRL-C)";
+    //else if (s==9) std::cout << "SIGKILL";  //-- Killed before reaching.
+    else if (s==15) std::cout << "SIGTERM";
     else std::cout << s;
     std::cout << ". Bye!" << std::endl;
     globalRdClient->quitProgram();
@@ -38,9 +40,11 @@ bool rdclient::RdClient::runProgram()
     watchdog = DEFAULT_WATCHDOG;
     std::cout << "[info] RdClient using watchdog [s]: " << watchdog << " (default: " << DEFAULT_WATCHDOG << ")." << std::endl;
 
-    //-- Set up callback for SIGTERM (ctrl-c)
+    //-- Set up callbacks
     globalRdClient = this;
     signal (SIGINT,RdClient::staticSignalHandler);
+    //signal (SIGKILL,RdClient::staticSignalHandler);  //-- Killed before reaching.
+    signal (SIGTERM,RdClient::staticSignalHandler);
 
     rdCameraBasePtr = new rdlib::RdCameraWebcam();
     rdManagerBasePtr = new rdlib::RdManagerDefault();
