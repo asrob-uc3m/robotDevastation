@@ -62,7 +62,9 @@ void rdlib::RdInOutHighgui::output()
 
             //-- Display things:
             //std::cout << "[info] RdInOutHighgui alive..." << std::endl;
+
             cv::Mat image(cv::Size(width, height), CV_8UC3, rdCameraBasePtr->getBufferPtr(i), step);  // cv::Mat::AUTO_STEP ???
+            printEnemies( image, image, i );
             cv::imshow("Robot Devastation", image);  // no cv:: needed.
             image.release();
 
@@ -96,6 +98,26 @@ void rdlib::RdInOutHighgui::output()
                 rdManagerBasePtr->quit();
             }
         }
+    }
+}
+
+bool rdlib::RdInOutHighgui::printEnemies(cv::Mat &src, cv::Mat &dst, int index)
+{
+    //-- If output is empty, clone input image
+    if (dst.empty())
+        dst = src.clone();
+
+    //-- Get the enemies from the manager
+    std::vector< std::pair< int, int> > enemyPos;
+    std::vector< double > enemySize;
+    rdManagerBasePtr->getEnemies( index, enemyPos, enemySize);
+
+    //-- Draw the enemy markers
+    for ( int i = 0; i < enemyPos.size() ; i++)
+    {
+        cv::rectangle( dst, cv::Point2d( enemyPos[i].first, enemyPos[i].second)
+                       , cv::Point2d( enemyPos[i].first + enemySize[i]*2, enemyPos[i].second + enemySize[i]*2)
+                       , cv::Scalar( 0, 0, 255));
     }
 }
 

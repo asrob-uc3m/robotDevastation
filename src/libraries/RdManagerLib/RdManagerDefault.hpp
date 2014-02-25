@@ -5,7 +5,13 @@
 
 #include "RdManagerBase.hpp"
 #include <semaphore.h>
+#include <vector>
+#include <utility>
 #include <pthread.h>
+
+#include <opencv2/opencv.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+
 
 namespace rdlib{
 
@@ -28,6 +34,7 @@ class RdManagerDefault : public RdManagerBase {
 
         static bool toggleHeadTrackWrapper( void * This);
         bool toggleHeadTrack();
+        bool trackHead( int index); //-- Index is the source image that is being processed
 
         void setProcessSemaphores(sem_t * processSemaphores);
         void setDisplaySemaphores(sem_t * displaySemaphores);

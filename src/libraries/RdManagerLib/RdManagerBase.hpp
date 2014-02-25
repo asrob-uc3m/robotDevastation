@@ -6,6 +6,10 @@
 #include <iostream>
 #include "RdInputBase.hpp"
 #include "RdRobotBase.hpp"
+#include "RdCameraBase.hpp"
+
+#include <vector>
+#include <utility>
 
 /**
  * @ingroup rd_libraries
@@ -83,6 +87,12 @@ class RdManagerBase {
             return this->rdCameraBasePtr;
         }
 
+        void getEnemies( int index,  std::vector< std::pair<int, int> >& enemyPos,
+                         std::vector< double >& enemySize) {
+            enemyPos = this->enemyPos[index];
+            enemySize = this->enemySize[index];
+        }
+
     protected:
         RdCameraBase* rdCameraBasePtr;
         RdInputBase* rdInputBasePtr;
@@ -90,6 +100,10 @@ class RdManagerBase {
         RdRobotBase* rdRobotBasePtr;
         int managerStatus;
         std::map< std::string, void*> functionMap;
+
+        //-- Enemies
+        std::vector< std::vector< std::pair<int, int> > > enemyPos;
+        std::vector< std::vector< double > > enemySize;
 };
 
 } //rdlib

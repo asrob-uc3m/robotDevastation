@@ -27,6 +27,7 @@ class RdInOutHighgui : public RdOutputBase, public RdInputBase {
         static void * highguiThread( void * This );
 
         void output();
+        bool printEnemies(cv::Mat& src, cv::Mat& dst, int index);
 
         void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr );
 
