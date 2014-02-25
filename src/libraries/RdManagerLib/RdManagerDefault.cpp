@@ -6,6 +6,9 @@ rdlib::RdManagerDefault::RdManagerDefault()
 {
     std::cout << "[info] RdManagerDefault constructor." << std::endl;
     this->managerStatus = 0;
+
+    //-- Add functions (currently only hardcoded)
+    functionMap["toggleHeadTrack"] = (void *) &toggleHeadTrackWrapper;
 }
 
 bool rdlib::RdManagerDefault::start()
@@ -43,6 +46,11 @@ bool rdlib::RdManagerDefault::processImage()
             sem_post( displaySemaphores+i);
         }
     }
+}
+
+bool rdlib::RdManagerDefault::toggleHeadTrackWrapper(void *This)
+{
+       (( rdlib::RdManagerDefault *) This)->toggleHeadTrack();
 }
 
 bool rdlib::RdManagerDefault::toggleHeadTrack()

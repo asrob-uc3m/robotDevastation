@@ -69,7 +69,7 @@ void rdlib::RdCameraWebcam::capture()
 
             //-- Get a frame
             webcam.read(imageBuffers.at(i));
-            std::cout << "[info] Captured frame # " << i << "." << std::endl;
+            //std::cout << "[info] Captured frame # " << i << "." << std::endl;
 
             //-- Unlock the corresponding process semaphore
             sem_post( processSemaphores+i);

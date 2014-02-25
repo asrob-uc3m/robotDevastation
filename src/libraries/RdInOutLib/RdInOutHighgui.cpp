@@ -21,6 +21,7 @@ bool rdlib::RdInOutHighgui::quit()
     std::cout << "[info] RdInOutHighgui quit()" << std::endl;
     isRunning=false;
     pthread_join( highgui_thread, NULL);
+    return true;
 }
 
 void * rdlib::RdInOutHighgui::highguiThread(void *This)
@@ -65,7 +66,7 @@ void rdlib::RdInOutHighgui::output()
             cv::imshow("Robot Devastation", image);  // no cv:: needed.
             image.release();
 
-            std::cout << "[info] Displayed frame # " << i << "." << std::endl;
+            //std::cout << "[info] Displayed frame # " << i << "." << std::endl;
 
             //-- Unlock capture semaphore:
             sem_post( captureSemaphores+i);
@@ -77,11 +78,14 @@ void rdlib::RdInOutHighgui::output()
                 std::cout << "[info] RdInOutHighgui: The space bar was pressed." << std::endl;
                 rdManagerBasePtr->shoot();
             }
-//            else if ( c == 't' ) // Letter T
-//            {
-//                std::cout << "[info] RdInOutHighgui: The key 't' was pressed." << std::endl;
-//                rdManagerBasePtr->toggleHeadTrack();
-//            }
+            else if ( c == 't' ) // Letter T
+            {
+                std::cout << "[info] RdInOutHighgui: The key 't' was pressed." << std::endl;
+                //-- This enables/disables the head tracking thing
+                bool (* toggleHeadTrack) (void *);
+                toggleHeadTrack = (bool (*)(void*)) rdManagerBasePtr->getFunctionByName("toggleHeadTrack");
+                (*toggleHeadTrack)((void *) rdManagerBasePtr);
+            }
             else if ( c=='\x1b' ) // ESC: 1048603 (0x10001b), LSB: 27 ('\x1b')
             {
                 std::cout << "[info] RdInOutHighgui: The escape key was pressed. Bye!" << std::endl;

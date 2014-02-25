@@ -36,6 +36,9 @@ class RdManagerBase {
             rdInputBasePtr = 0;
             rdOutputBasePtr = 0;
             rdRobotBasePtr = 0;
+
+            //-- Add shoot to dictionary
+            functionMap[ "shoot"] = (void *) &shootWrapper;
         }
 
         virtual bool start() = 0;
@@ -49,6 +52,15 @@ class RdManagerBase {
          * @return true if successful.
          */
         virtual bool shoot() = 0;
+
+        static bool shootWrapper(void *This)
+        {
+            return (( rdlib::RdManagerBase *) This)->shoot();
+        }
+
+        void *getFunctionByName( std::string function_name ) {
+            return functionMap[ function_name ];
+        }
 
         int getManagerStatus() {
             return managerStatus;
@@ -77,6 +89,7 @@ class RdManagerBase {
         RdOutputBase* rdOutputBasePtr;
         RdRobotBase* rdRobotBasePtr;
         int managerStatus;
+        std::map< std::string, void*> functionMap;
 };
 
 } //rdlib

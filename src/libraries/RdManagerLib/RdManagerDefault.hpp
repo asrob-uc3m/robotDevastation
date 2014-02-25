@@ -24,9 +24,9 @@ class RdManagerDefault : public RdManagerBase {
         virtual bool shoot();
 
         static void * processImageThread( void * This);
-
         bool processImage();
 
+        static bool toggleHeadTrackWrapper( void * This);
         bool toggleHeadTrack();
 
         void setProcessSemaphores(sem_t * processSemaphores);
