@@ -77,7 +77,7 @@ bool rdlib::RdManagerDefault::trackHead( int index )
     //-- Create a haars cascade classifier
     cv::CascadeClassifier faceDetector;
 
-    bool ok = faceDetector.load( "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml" );
+    bool ok = faceDetector.load( "/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml" );
     if (!ok)
         std::cerr << "[Debug] Cascade Classifier could not find template." << std::endl;
 

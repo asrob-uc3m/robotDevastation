@@ -5,6 +5,7 @@
 
 #include "RdOutputBase.hpp"
 #include "RdCameraBase.hpp"
+#include "RdIniReader.hpp"
 
 #undef index  // avoid compilation "index" macro arguments error with opencv
 #include <opencv2/highgui/highgui.hpp>

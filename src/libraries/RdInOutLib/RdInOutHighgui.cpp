@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
 #include "RdInOutHighgui.hpp"
-#include <stdio.h>
+
 rdlib::RdInOutHighgui::RdInOutHighgui()
 {
     std::cout << "[info] RdInOutHighgui::RdInOutHighgui()"<< std::endl;
@@ -11,6 +11,10 @@ rdlib::RdInOutHighgui::RdInOutHighgui()
 
 bool rdlib::RdInOutHighgui::start()
 {
+     std::map< std::string, std::string > keyMap;
+     RdIniReader< std::string, std::string > rdIniReader;
+     rdIniReader.parseFile("../share/rdClient/conf/sample.ini", keyMap);
+
     //-- Start the output thread
     pthread_create( &highgui_thread, NULL, highguiThread, (void *) this );
     std::cout << "[info] RdInOutHighgui created thread." << std::endl;
