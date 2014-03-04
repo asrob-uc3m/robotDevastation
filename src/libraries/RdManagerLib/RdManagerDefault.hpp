@@ -24,25 +24,17 @@ class RdManagerDefault : public RdManagerBase {
     public:
         RdManagerDefault();
 
-        virtual bool start();
         virtual bool quit();
 
         virtual bool shoot();
 
-        static void * processImageThread( void * This);
-        bool processImage();
+        virtual bool processImage();
 
         static bool toggleHeadTrackWrapper( void * This);
         bool toggleHeadTrack();
         bool trackHead( int index); //-- Index is the source image that is being processed
 
-        void setProcessSemaphores(sem_t * processSemaphores);
-        void setDisplaySemaphores(sem_t * displaySemaphores);
 
-    protected:
-        sem_t * processSemaphores;
-        sem_t * displaySemaphores;
-        pthread_t processImage_thread;
 };
 
 } //rdlib

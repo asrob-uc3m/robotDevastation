@@ -37,7 +37,7 @@ class RdManagerBase {
 
         RdManagerBase();
 
-        virtual bool start() = 0;
+        virtual bool start();
 
         /** A quit rutine.
          * @return true if the object was quit successfully.
@@ -60,17 +60,36 @@ class RdManagerBase {
         void setRdOutputBasePtr(RdOutputBase* rdOutputBasePtr );
         void setRdRobotBasePtr(RdRobotBase* rdRobotBasePtr );
 
+        void setProcessSemaphores(sem_t * processSemaphores);
+        void setDisplaySemaphores(sem_t * displaySemaphores);
+
     protected:
+        static const int PIPELINE_SIZE = 3;
+
+        int managerStatus;
+        std::map< std::string, void*> functionMap;
+
+        //-- Pointers to other modules
         RdCameraBase* rdCameraBasePtr;
         RdInputBase* rdInputBasePtr;
         RdOutputBase* rdOutputBasePtr;
         RdRobotBase* rdRobotBasePtr;
-        int managerStatus;
-        std::map< std::string, void*> functionMap;
+
+        //-- Thread-related
+        pthread_t processImage_thread;
+
+        //-- Semaphores for manager/output sync
+        sem_t * processSemaphores;
+        sem_t * displaySemaphores;
 
         //-- Enemies
         std::vector< std::vector< std::pair<int, int> > > enemyPos;
         std::vector< std::vector< double > > enemySize;
+
+        virtual bool processImage() = 0;
+
+     private:
+        static void * processImageThread( void * This);
 };
 
 } //rdlib
