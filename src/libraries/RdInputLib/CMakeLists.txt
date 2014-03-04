@@ -7,10 +7,9 @@ IF (ENABLE_RdInputKeyboardLib)
 set(KEYWORD "RdInputKeyboardLib")
 
 find_package(X11 REQUIRED)
-
 include_directories(${X11_INCLUDE_DIR} ${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdInputKeyboard.cpp)
+add_library(${KEYWORD} RdInputBase.cpp RdInputKeyboard.cpp)
 target_link_libraries(${KEYWORD} ${X11_LIBRARIES} pthread)
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
@@ -20,3 +19,19 @@ set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries")
 
 ENDIF (ENABLE_RdInputKeyboardLib)
 
+
+IF (ENABLE_RdInputHighguiLib)
+set(KEYWORD "RdInputHighguiLib")
+
+find_package(OpenCV REQUIRED)
+include_directories(${RD_INCLUDE_DIRS})
+
+add_library(${KEYWORD} RdInputBase.cpp RdInputHighgui.cpp)
+target_link_libraries(${KEYWORD}  ${OpenCV_LIBS} pthread)
+install(TARGETS ${KEYWORD} DESTINATION lib)
+
+# Exporting dependencies for RDConfig.cmake quite manually for now... 
+#set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
+set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
+
+ENDIF (ENABLE_RdInputHighguiLib)

@@ -26,13 +26,7 @@ rdlib::RdInputKeyboard::RdInputKeyboard()
     XFlush(dis);
     isRunning=true;
 
-    int error = pthread_create (&threadId, NULL, &RdInputKeyboard::staticKeyThreadFunction, this);
-    if (error == 0) {
-        std::cout << "[success] RdInputKeyboard created thread." << std::endl;
-    } else {
-        std::cerr << "[warning] RdInputKeyboard could not create thread." << std::endl;
-    }
-
+    start(); //-- Note: Taking this out of here will give us more flexibility
 }
 
 bool rdlib::RdInputKeyboard::quit()
@@ -42,15 +36,11 @@ bool rdlib::RdInputKeyboard::quit()
     pthread_join( threadId, NULL);
 }
 
-void* rdlib::RdInputKeyboard::staticKeyThreadFunction(void *arg)
-{
-    return reinterpret_cast<RdInputKeyboard*>(arg)->keyThreadFunction(arg);
-}
-
-void* rdlib::RdInputKeyboard::keyThreadFunction(void *This)
+//void* rdlib::RdInputKeyboard::keyThreadFunction(void *This)
+bool rdlib::RdInputKeyboard::input()
 {
     std::cout << "[success] RdInputKeyboard thread." << std::endl;
-    while (((RdInputKeyboard*)This)->isRunning)
+    while ( isRunning )
     {
         XNextEvent(dis, &report);
         switch  (report.type)
