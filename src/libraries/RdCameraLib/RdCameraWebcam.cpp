@@ -8,7 +8,7 @@ rdlib::RdCameraWebcam::RdCameraWebcam(int index)
 
     //-- Start the camera
     webcam.open(index);
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < PIPELINE_SIZE; i++)
     {
         cv::Mat frame;
         webcam.read(frame);
@@ -16,24 +16,18 @@ rdlib::RdCameraWebcam::RdCameraWebcam(int index)
     }
 
     //-- Init the semaphores
-    captureSemaphores = new sem_t[3];
-    for( int i = 0; i < 3; i++)
+    captureSemaphores = new sem_t[PIPELINE_SIZE];
+    for( int i = 0; i < PIPELINE_SIZE; i++)
         sem_init( captureSemaphores+i, 0, 1);
 
-    processSemaphores = new sem_t[3];
-    for( int i = 0; i < 3; i++)
+    processSemaphores = new sem_t[PIPELINE_SIZE];
+    for( int i = 0; i < PIPELINE_SIZE; i++)
         sem_init( processSemaphores+i, 0, 0);
 
-    displaySemaphores = new sem_t[3];
-    for( int i = 0; i < 3; i++)
+    displaySemaphores = new sem_t[PIPELINE_SIZE];
+    for( int i = 0; i < PIPELINE_SIZE; i++)
         sem_init( displaySemaphores+i, 0, 0);
 
-}
-
-bool rdlib::RdCameraWebcam::start()
-{
-    //-- Start the capture thread
-    pthread_create( &capture_thread, NULL, captureThread, (void *) this );
 }
 
 
@@ -52,37 +46,10 @@ bool rdlib::RdCameraWebcam::quit()
 }
 
 
-void *rdlib::RdCameraWebcam::captureThread(void *This)
+void rdlib::RdCameraWebcam::capture( int index)
 {
-    ( (rdlib::RdCameraWebcam *) This)->capture();
-}
-
-
-void rdlib::RdCameraWebcam::capture()
-{
-    while( !stopThread )
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            //-- Lock the semaphore
-            sem_wait( captureSemaphores+i);
-
-            //-- Get a frame
-            webcam.read(imageBuffers.at(i));
-            //std::cout << "[info] Captured frame # " << i << "." << std::endl;
-
-            //-- Unlock the corresponding process semaphore
-            sem_post( processSemaphores+i);
-
-            //-- Wait
-            //usleep( frameRate * 1000);
-        }
-     }
-}
-
-bool rdlib::RdCameraWebcam::setStop(bool stop)
-{
-    this->stopThread = stop;
+    webcam.read(imageBuffers.at(index));
+    //std::cout << "[info] Captured frame # " << index << "." << std::endl;
 }
 
 char *rdlib::RdCameraWebcam::getBufferPtr(int index)
@@ -97,21 +64,6 @@ bool rdlib::RdCameraWebcam::getDimensions(int &width, int &height, int &step)
     step = imageBuffers.at(0).step[0];
 
     return true;
-}
-
-sem_t *rdlib::RdCameraWebcam::getCaptureSemaphores()
-{
-    return captureSemaphores;
-}
-
-sem_t *rdlib::RdCameraWebcam::getProcessSemaphores()
-{
-    return processSemaphores;
-}
-
-sem_t *rdlib::RdCameraWebcam::getDisplaySemaphores()
-{
-    return displaySemaphores;
 }
 
 

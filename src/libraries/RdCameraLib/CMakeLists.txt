@@ -10,7 +10,7 @@ find_package(OpenCV REQUIRED)
 
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdCameraWebcam.cpp)
+add_library(${KEYWORD}  RdCameraBase.cpp RdCameraWebcam.cpp)
 target_link_libraries(${KEYWORD} ${OpenCV_LIBS} pthread)
 install(TARGETS ${KEYWORD} DESTINATION lib)
 

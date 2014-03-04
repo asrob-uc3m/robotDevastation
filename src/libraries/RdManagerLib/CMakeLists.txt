@@ -9,7 +9,7 @@ set(KEYWORD "RdManagerDefaultLib")
 include_directories(${RD_INCLUDE_DIRS})
 
 # Set up our library.
-add_library(${KEYWORD} RdManagerDefault.cpp)
+add_library(${KEYWORD} RdManagerBase.cpp RdManagerDefault.cpp)
 target_link_libraries(${KEYWORD})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 

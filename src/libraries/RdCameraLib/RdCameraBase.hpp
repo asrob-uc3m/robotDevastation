@@ -4,6 +4,9 @@
 #define __RD_CAMERA_BASE_HPP__
 
 #include <iostream>
+#include <pthread.h>
+#include <semaphore.h>
+
 #include "RdManagerBase.hpp"
 
 /**
@@ -27,17 +30,42 @@ class RdRobotBase;
  */
 class RdCameraBase {
     public:
-        virtual bool start() = 0;
+        virtual bool start();
         virtual bool quit() = 0;
         virtual bool getDimensions( int& width, int& height, int &step) = 0;
         virtual char * getBufferPtr( int index = 0 ) = 0;
 
-        void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr ) {
-            this->rdManagerBasePtr = rdManagerBasePtr;
-        }
+        void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr );
+
+        //-- Get references to the semaphores
+        sem_t * getCaptureSemaphores();
+        sem_t * getProcessSemaphores();
+        sem_t * getDisplaySemaphores();
+
+        bool setStop( bool stop);
 
     protected:
+        static const int PIPELINE_SIZE = 3;
+
+        //-- Index is the index in the pipeline ( between 0 and PIPELINE_SIZE-1)
+        virtual void capture(int index) = 0;
+
         RdManagerBase* rdManagerBasePtr;
+
+        pthread_t capture_thread;
+
+        //-- Semaphores for camera/manager/output sync
+        sem_t * captureSemaphores;
+        sem_t * processSemaphores;
+        sem_t * displaySemaphores;
+
+        bool stopThread;
+
+    private:
+        static void * captureThread( void * This );
+        void *captureWithSync();
+
+
 
 };
 

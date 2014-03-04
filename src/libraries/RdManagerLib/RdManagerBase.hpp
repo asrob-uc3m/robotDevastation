@@ -35,15 +35,7 @@ class RdRobotBase;
 class RdManagerBase {
     public:
 
-        RdManagerBase() {
-            rdCameraBasePtr = 0;
-            rdInputBasePtr = 0;
-            rdOutputBasePtr = 0;
-            rdRobotBasePtr = 0;
-
-            //-- Add shoot to dictionary
-            functionMap[ "shoot"] = (void *) &shootWrapper;
-        }
+        RdManagerBase();
 
         virtual bool start() = 0;
 
@@ -56,42 +48,17 @@ class RdManagerBase {
          * @return true if successful.
          */
         virtual bool shoot() = 0;
+        static bool shootWrapper(void *This);
 
-        static bool shootWrapper(void *This)
-        {
-            return (( rdlib::RdManagerBase *) This)->shoot();
-        }
+        void *getFunctionByName( std::string function_name );
+        int getManagerStatus();
+        RdCameraBase* getRdCameraBasePtr();
+        void getEnemies( int index,  std::vector< std::pair<int, int> >& enemyPos, std::vector< double >& enemySize);
 
-        void *getFunctionByName( std::string function_name ) {
-            return functionMap[ function_name ];
-        }
-
-        int getManagerStatus() {
-            return managerStatus;
-        }
-
-        void setRdCameraBasePtr(RdCameraBase* rdCameraBasePtr ) {
-            this->rdCameraBasePtr = rdCameraBasePtr;
-        }
-        void setRdInputBasePtr(RdInputBase* rdInputBasePtr ) {
-            this->rdInputBasePtr = rdInputBasePtr;
-        }
-        void setRdOutputBasePtr(RdOutputBase* rdOutputBasePtr ) {
-            this->rdOutputBasePtr = rdOutputBasePtr;
-        }
-        void setRdRobotBasePtr(RdRobotBase* rdRobotBasePtr ) {
-            this->rdRobotBasePtr = rdRobotBasePtr;
-        }
-
-        RdCameraBase* getRdCameraBasePtr() {
-            return this->rdCameraBasePtr;
-        }
-
-        void getEnemies( int index,  std::vector< std::pair<int, int> >& enemyPos,
-                         std::vector< double >& enemySize) {
-            enemyPos = this->enemyPos[index];
-            enemySize = this->enemySize[index];
-        }
+        void setRdCameraBasePtr(RdCameraBase* rdCameraBasePtr );
+        void setRdInputBasePtr(RdInputBase* rdInputBasePtr ) ;
+        void setRdOutputBasePtr(RdOutputBase* rdOutputBasePtr );
+        void setRdRobotBasePtr(RdRobotBase* rdRobotBasePtr );
 
     protected:
         RdCameraBase* rdCameraBasePtr;
