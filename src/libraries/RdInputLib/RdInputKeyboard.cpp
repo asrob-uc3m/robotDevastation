@@ -36,7 +36,6 @@ bool rdlib::RdInputKeyboard::quit()
     pthread_join( threadId, NULL);
 }
 
-//void* rdlib::RdInputKeyboard::keyThreadFunction(void *This)
 bool rdlib::RdInputKeyboard::input()
 {
     std::cout << "[success] RdInputKeyboard thread." << std::endl;

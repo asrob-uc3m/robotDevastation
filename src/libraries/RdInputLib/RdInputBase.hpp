@@ -32,7 +32,7 @@ class RdInputBase {
         /** A quit rutine.
          * @return true if the object was quit successfully.
          */
-        virtual bool quit() = 0;
+        virtual bool quit();
 
         void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr );
 

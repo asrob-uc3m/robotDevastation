@@ -29,8 +29,6 @@ class RdInputKeyboard : public RdInputBase {
         virtual bool start();
         virtual bool quit();
 
-        void* keyThreadFunction(void *This);
-
     protected:
         virtual bool input();
 
