@@ -34,12 +34,13 @@ bool rdlib::RdInputHighgui::input()
     pthread_mutex_lock( inputKeyMutex );
 
     //-- Get a copy of the key
-    char currentInputKey = &inputKey;
+    char currentInputKey = *inputKey;
 
     //-- Release the mutex
     pthread_mutex_unlock( inputKeyMutex);
 
     //-- Look for the key in the table and execute action(s):
     //! \todo Look for the key in the table and execute action(s)
+    std::cout << "[Info] Received key: \"" << currentInputKey << "\"" << std::endl;
 
 }

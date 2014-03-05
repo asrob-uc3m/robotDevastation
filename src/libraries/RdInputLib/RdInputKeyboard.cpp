@@ -29,13 +29,6 @@ rdlib::RdInputKeyboard::RdInputKeyboard()
     start(); //-- Note: Taking this out of here will give us more flexibility
 }
 
-bool rdlib::RdInputKeyboard::quit()
-{
-    std::cout << "[info] RdInputKeyboard quit()" << std::endl;
-    isRunning = false;
-    pthread_join( threadId, NULL);
-}
-
 bool rdlib::RdInputKeyboard::input()
 {
     std::cout << "[success] RdInputKeyboard thread." << std::endl;

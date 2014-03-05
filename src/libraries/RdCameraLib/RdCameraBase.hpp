@@ -31,7 +31,8 @@ class RdRobotBase;
 class RdCameraBase {
     public:
         virtual bool start();
-        virtual bool quit() = 0;
+        virtual bool quit();
+
         virtual bool getDimensions( int& width, int& height, int &step) = 0;
         virtual char * getBufferPtr( int index = 0 ) = 0;
 

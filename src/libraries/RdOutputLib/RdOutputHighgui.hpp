@@ -20,17 +20,20 @@ class RdOutputHighgui : public RdOutputBase {
     public:
         RdOutputHighgui();
 
-        virtual bool quit();
-
-        static void * outputThread( void * This );
-
-        void output();
+        char * getInputKey();
+        pthread_mutex_t * getInputKeyMutex();
 
     protected:
-        pthread_t output_thread;
+        virtual bool output(int pipelineIndex);
 
         cv::Mat videoFrame;
-        rdlib::RdCameraBase* rdCameraBasePtr;
+
+        //-- References to other modules
+        RdCameraBase* rdCameraBasePtr;
+
+        //-- Add queue here (and its mutex)
+        char * inputKey;
+        pthread_mutex_t * inputKeyMutex;
 };
 
 } //rdlib

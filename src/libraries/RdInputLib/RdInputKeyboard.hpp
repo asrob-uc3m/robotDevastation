@@ -26,7 +26,6 @@ class RdInputKeyboard : public RdInputBase {
     public:
         RdInputKeyboard();
 
-        virtual bool start();
         virtual bool quit();
 
     protected:

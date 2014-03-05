@@ -12,23 +12,19 @@ rdlib::RdOutputHighgui::RdOutputHighgui()
         std::cerr << "[warning] Image not found." << std::endl;
     }
 
-    //-- Start the output thread
-    pthread_create( &output_thread, NULL, outputThread, (void *) this );
-    std::cout << "[info] RdOutputHighgui created thread." << std::endl;
 }
 
-bool rdlib::RdOutputHighgui::quit()
+char *rdlib::RdOutputHighgui::getInputKey()
 {
-    std::cout << "[info] RdOutputHighgui quit()" << std::endl;
-    pthread_join( output_thread, NULL);
+    return inputKey;
 }
 
-void * rdlib::RdOutputHighgui::outputThread(void *This)
+pthread_mutex_t *rdlib::RdOutputHighgui::getInputKeyMutex()
 {
-    ( (rdlib::RdOutputHighgui *) This)->output();
+    return inputKeyMutex;
 }
 
-void rdlib::RdOutputHighgui::output( )
+bool rdlib::RdOutputHighgui::output(int pipelineIndex)
 {
     std::cout << "[info] RdOutputHighgui thread." << std::endl;
     while (!rdManagerBasePtr)

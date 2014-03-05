@@ -41,7 +41,7 @@ class RdInOutHighgui : public RdOutputBase, public RdInputBase {
         pthread_t highgui_thread;
 
         std::vector<cv::Mat> videoFrames;
-        rdlib::RdCameraBase* rdCameraBasePtr;
+        RdCameraBase* rdCameraBasePtr;
 
         RdManagerBase* rdManagerBasePtr;  //--solve ambiguity
 

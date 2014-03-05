@@ -29,19 +29,42 @@ class RdRobotBase;
 class RdOutputBase {
     public:
 
-        virtual bool start() = 0;
+        virtual bool start();
 
         /** A quit rutine.
          * @return true if the object was quit successfully.
          */
-        virtual bool quit() = 0;
+        virtual bool quit();
 
-        void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr ) {
-            this->rdManagerBasePtr = rdManagerBasePtr;
-        }
+        void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr );
+
+        void setDisplaySemaphores( sem_t * displaySemaphores);
+        void setCaptureSemaphores( sem_t * captureSemaphores);
+
+        bool setStop( bool stop );
 
     protected:
+        static const int PIPELINE_SIZE = 3;
+
+        virtual bool output(int pipelineIndex) = 0;
+
+        //-- Sync with other modules
+        sem_t * captureSemaphores;
+        sem_t * displaySemaphores;
+
+        //-- References to other modules
+        RdCameraBase* rdCameraBasePtr;
         RdManagerBase* rdManagerBasePtr;
+
+        //-- Thread-related
+        pthread_t output_thread;
+        bool isRunning;
+
+   private:
+        static void * outputThread( void * This );
+        bool outputWithSync();
+
+
 };
 
 } //rdlib

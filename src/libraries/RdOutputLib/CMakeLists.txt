@@ -10,7 +10,7 @@ find_package(OpenCV REQUIRED)
 
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdOutputHighgui.cpp)
+add_library(${KEYWORD} RdOutputBase.cpp RdOutputHighgui.cpp)
 target_link_libraries(${KEYWORD} ${OpenCV_LIBS})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
