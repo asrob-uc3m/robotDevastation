@@ -50,15 +50,16 @@ class RdCameraBase {
         //-- Index is the index in the pipeline ( between 0 and PIPELINE_SIZE-1)
         virtual void capture(int index) = 0;
 
+        //-- Pointers to other modules:
         RdManagerBase* rdManagerBasePtr;
-
-        pthread_t capture_thread;
 
         //-- Semaphores for camera/manager/output sync
         sem_t * captureSemaphores;
         sem_t * processSemaphores;
         sem_t * displaySemaphores;
 
+        //-- Thread-related
+        pthread_t capture_thread;
         bool stopThread;
 
     private:

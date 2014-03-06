@@ -61,8 +61,8 @@ mark_as_advanced(LIBRARY_OUTPUT_PATH EXECUTABLE_OUTPUT_PATH)
 mark_as_advanced(CMAKE_BACKWARDS_COMPATIBILITY)
 ##########################################
 
-# Pick up our scripts - they are all in the conf subdirectory
-set(RD_MODULE_PATH ${CMAKE_SOURCE_DIR}/conf)
+# Pick up our scripts - they are all in the cmake conf subdirectory
+set(RD_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 #set_property(GLOBAL PROPERTY RD_INCLUDE_DIRS)
 #set_property(GLOBAL PROPERTY RD_LINK_DIRS)
@@ -77,12 +77,12 @@ add_subdirectory(src)
 
 # export our variables to a RDConfig.cmake creation
 set(RD_LINK_DIRS ${RD_LINK_DIRS} ${LIBRARY_OUTPUT_PATH})
-configure_file(${CMAKE_SOURCE_DIR}/conf/template/RDConfig.cmake.in
+configure_file(${CMAKE_SOURCE_DIR}/cmake/template/RDConfig.cmake.in
                ${CMAKE_BINARY_DIR}/RDConfig.cmake @ONLY)
 
 # uninstall target
 configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/conf/template/RDConfigUninstall.cmake.in"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/RDConfigUninstall.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/RDConfigUninstall.cmake" IMMEDIATE @ONLY)
 
 add_custom_target(uninstall

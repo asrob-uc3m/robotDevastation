@@ -19,21 +19,10 @@ rdlib::RdManagerDefault::RdManagerDefault()
 
 }
 
-bool rdlib::RdManagerDefault::start()
-{
-    //-- Start the capture thread
-    pthread_create( &processImage_thread, NULL, processImageThread, (void *) this );
-}
-
 bool rdlib::RdManagerDefault::shoot() {
     if (!rdRobotBasePtr) return false;
     //
     return rdRobotBasePtr->shoot();
-}
-
-void * rdlib::RdManagerDefault::processImageThread(void *This)
-{
-    (( rdlib::RdManagerDefault *) This)->processImage();
 }
 
 bool rdlib::RdManagerDefault::processImage()
@@ -77,7 +66,7 @@ bool rdlib::RdManagerDefault::trackHead( int index )
     //-- Create a haars cascade classifier
     cv::CascadeClassifier faceDetector;
 
-    bool ok = faceDetector.load( "/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml" );
+    bool ok = faceDetector.load( "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml" );
     if (!ok)
         std::cerr << "[Debug] Cascade Classifier could not find template." << std::endl;
 
@@ -128,15 +117,5 @@ bool rdlib::RdManagerDefault::quit()
     this->managerStatus = -1;
     pthread_join( processImage_thread, NULL );
     return true;
-}
-
-void rdlib::RdManagerDefault::setProcessSemaphores(sem_t *processSemaphores)
-{
-    this->processSemaphores = processSemaphores;
-}
-
-void rdlib::RdManagerDefault::setDisplaySemaphores(sem_t *displaySemaphores)
-{
-    this->displaySemaphores = displaySemaphores;
 }
 

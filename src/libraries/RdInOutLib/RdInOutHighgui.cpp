@@ -101,6 +101,7 @@ void rdlib::RdInOutHighgui::output()
                 std::cout << "[info] RdInOutHighgui: CTRL-C key was pressed. Bye!" << std::endl;
                 rdManagerBasePtr->quit();
             }
+
         }
     }
 }
