@@ -5,8 +5,10 @@
 
 #include <iostream>
 #include <fstream>
-#include <map>
 #include <sstream>
+
+#include <vector>
+#include <map>
 
 /**
  * @ingroup rd_libraries
@@ -29,12 +31,43 @@ class RdIniReader {
     public:
         RdIniReader() { }
         ~RdIniReader() { }
+
+        void parseFile(const char* fileName, std::vector< std::pair< T1, T2 > >& data) {
+            std::ifstream ifs(fileName);
+            if(!ifs.is_open()) {
+                std::cerr << "[error] RdIniReader::parseFile(" << fileName << ", vector): Bad file open." << std::endl;
+            } else {
+                std::cout << "[success] RdIniReader::parseFile(" << fileName << ", vector): File open." << std::endl;
+            }
+            std::string line;
+            while (getline(ifs, line)) {
+                //std::cout << "--------------------------" << std::endl;
+                int separator = (int)line.find(' ', 0);
+                if(separator == std::string::npos) continue;
+                //std::cout <<  line << std::endl;
+                std::stringstream stringstream1( line.substr(0, separator) );
+                //std::cout << "["<<  stringstream1.str() << "]" << std::endl;
+                int end = (int)line.find(' ', separator+1);
+                std::stringstream stringstream2( line.substr(separator+1,end-separator-1) );
+                //std::cout << "[" <<  stringstream2.str() << "]" << std::endl;
+                //std::cout << "[info] Configured [ " << stringstream1.str() << " <-> " << stringstream2.str() << " ]" << std::endl;
+                T1 val1;
+                stringstream1 >> val1;
+                T2 val2;
+                stringstream2 >> val2;
+                data.push_back ( std::pair< T1, T2 >(val1, val2) );
+            }
+            //std::cout << "--------------------------" << std::endl;
+            ifs.close();
+            std::cout << "[info] RdIniReader::parseFile(" << fileName << ", vector): Past file close."<< std::endl;
+        }
+
         void parseFile(const char* fileName, std::map< T1, T2 >& data) {
             std::ifstream ifs(fileName);
             if(!ifs.is_open()) {
-                std::cerr << "[error] RdIniReader: Bad file open." << std::endl;
+                std::cerr << "[error] RdIniReader::parseFile(" << fileName << ", map): Bad file open." << std::endl;
             } else {
-                std::cout << "[success] RdIniReader: Begin file open: " << fileName << std::endl;
+                std::cout << "[success] RdIniReader::parseFile(" << fileName << ", map): File open." << std::endl;
             }
             std::string line;
             while (getline(ifs, line)) {
@@ -56,7 +89,7 @@ class RdIniReader {
             }
             //std::cout << "--------------------------" << std::endl;
             ifs.close();
-            std::cout << "[info] RdIniReader: End file close: " << fileName << std::endl;
+            std::cout << "[info] RdIniReader::parseFile(" << fileName << ", map): Past file close." << std::endl;
         }
 };
 
