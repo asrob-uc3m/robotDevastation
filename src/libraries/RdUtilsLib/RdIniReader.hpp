@@ -6,7 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#include<sstream>
+#include <sstream>
 
 /**
  * @ingroup rd_libraries
@@ -55,7 +55,7 @@ class RdIniReader {
             }
             //std::cout << "--------------------------" << std::endl;
             ifs.close();
-            std::cout << "[success] End file close: " << fileName << std::endl;
+            std::cout << "[info] End file close: " << fileName << std::endl;
         }
 };
 
