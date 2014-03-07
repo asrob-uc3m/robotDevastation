@@ -6,10 +6,6 @@ rdlib::RdInputKeyboard::RdInputKeyboard()
 {
     std::cout << "[info] RdInputKeyboard::RdInputKeyboard()" << std::endl;
 
-    std::map< std::string, std::string > keyMap;
-    RdIniReader< std::string, std::string > rdIniReader;
-    rdIniReader.parseFile("../share/rdClient/conf/sample.ini", keyMap);
-
     dis = XOpenDisplay(NULL);
     if (!dis) {
         std::cerr << "[warning] RdInputKeyboard unable to connect to display." << std::endl;
