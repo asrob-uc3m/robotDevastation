@@ -19,6 +19,7 @@ namespace rdlib{
 class RdOutputHighgui : public RdOutputBase {
     public:
         RdOutputHighgui();
+        virtual bool start();
 
         char * getInputKey();
         pthread_mutex_t * getInputKeyMutex();
