@@ -4,7 +4,8 @@
 #define __RD_MACROS_HPP__
 
 #include <stdio.h>
-#include <string>
+#include <string>  // std::string
+#include <string.h>  // strrchr
 
 namespace rdlib{
 
@@ -61,10 +62,23 @@ inline std::wstring ChangeTextColorW (int attribute, int fg)
 
 // end{git/openrave/include/openrave/openrave.h copy}
 
-#define RD_ERROR
-#define RD_WARNING
-#define RD_SUCCESS
-#define RD_INFO
+//-- Thanks http://stackoverflow.com/questions/8487986/file-macro-shows-full-path
+#define __REL_FILE__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
+// For Windows use '\\' instead of '/'.
+
+// http://en.wikipedia.org/wiki/Variadic_macro
+// http://stackoverflow.com/questions/15549893/modify-printfs-via-macro-to-include-file-and-line-number-information
+#define RD_ERROR(...) do{fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                         fprintf(stderr, __VA_ARGS__);} while(0)
+
+#define RD_WARNING(...) do{fprintf(stderr, "[warning] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           fprintf(stderr, __VA_ARGS__);} while(0)
+
+#define RD_SUCCESS(...) do{printf("[success] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           printf(__VA_ARGS__);} while(0)
+
+#define RD_INFO(...) do{printf("[info] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           printf(__VA_ARGS__);} while(0)
 
 } //rdlib
 
