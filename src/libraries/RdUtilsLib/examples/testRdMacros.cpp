@@ -5,6 +5,7 @@
 int main(int argc, char *argv[])
 {
     int ten = 10;
+    RD_DEBUG("Hello from debug.\n");
     RD_INFO("Ten is \"%d\"\n",ten);
     RD_SUCCESS("Open.\n");
     RD_WARNING("Dangerous!\n");

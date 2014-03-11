@@ -46,6 +46,9 @@ namespace rdlib{
 #define RD_INFO(...) do{printf("[info] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
                            printf(__VA_ARGS__);} while(0)
 
+#define RD_DEBUG(...) fprintf(stderr,BLUE); do{printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET);
+
 } //rdlib
 
 #endif  // __RD_MACROS_HPP__
