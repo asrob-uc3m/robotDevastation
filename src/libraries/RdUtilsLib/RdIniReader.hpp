@@ -3,7 +3,9 @@
 #ifndef __RD_INI_READER_HPP__
 #define __RD_INI_READER_HPP__
 
-#include <iostream>
+#include <RdMacros.hpp>
+
+//#include <iostream>
 #include <fstream>
 #include <sstream>
 
@@ -35,9 +37,9 @@ class RdIniReader {
         void parseFile(const char* fileName, std::vector< std::pair< T1, T2 > >& data) {
             std::ifstream ifs(fileName);
             if(!ifs.is_open()) {
-                std::cerr << "[error] RdIniReader::parseFile(" << fileName << ", vector): Bad file open." << std::endl;
+                RD_ERROR("vector implementation could not open file: %s\n",fileName);
             } else {
-                std::cout << "[success] RdIniReader::parseFile(" << fileName << ", vector): File open." << std::endl;
+                RD_SUCCESS("vector implementation opened file: %s\n",fileName);
             }
             std::string line;
             while (getline(ifs, line)) {
@@ -59,15 +61,15 @@ class RdIniReader {
             }
             //std::cout << "--------------------------" << std::endl;
             ifs.close();
-            std::cout << "[info] RdIniReader::parseFile(" << fileName << ", vector): Past file close."<< std::endl;
+            RD_INFO("vector implementation past close file: %s\n",fileName);
         }
 
         void parseFile(const char* fileName, std::map< T1, T2 >& data) {
             std::ifstream ifs(fileName);
             if(!ifs.is_open()) {
-                std::cerr << "[error] RdIniReader::parseFile(" << fileName << ", map): Bad file open." << std::endl;
+                RD_ERROR("map implementation could not open file: %s\n",fileName);
             } else {
-                std::cout << "[success] RdIniReader::parseFile(" << fileName << ", map): File open." << std::endl;
+                RD_SUCCESS("map implementation opened file: %s\n",fileName);
             }
             std::string line;
             while (getline(ifs, line)) {
@@ -89,7 +91,7 @@ class RdIniReader {
             }
             //std::cout << "--------------------------" << std::endl;
             ifs.close();
-            std::cout << "[info] RdIniReader::parseFile(" << fileName << ", map): Past file close." << std::endl;
+            RD_INFO("map implementation past close file: %s\n",fileName);
         }
 };
 
