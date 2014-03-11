@@ -3,17 +3,17 @@
 bool rdlib::RdInputBase::start()
 {
     isRunning = true;
-    int error = pthread_create (&threadId, NULL, &RdInputBase::inputThread, this);
-    if (error == 0) {
-        std::cout << "[success] RdInputKeyboard created thread." << std::endl;
+    int res = pthread_create (&threadId, NULL, &RdInputBase::inputThread, this);
+    if (res == 0) {
+        RD_SUCCESS("RdInputBase created thread.\n");
     } else {
-        std::cerr << "[warning] RdInputKeyboard could not create thread." << std::endl;
+        RD_WARNING("RdInputBase could not create thread.\n");
     }
 }
 
 bool rdlib::RdInputBase::quit()
 {
-    std::cout << "[info] RdInputKeyboard quit()" << std::endl;
+    std::cout << "[info] RdInputBase quit()" << std::endl;
     isRunning = false;
     pthread_join( threadId, NULL);
 }
