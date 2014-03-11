@@ -5,8 +5,6 @@
 
 rdlib::RdOutputHighgui::RdOutputHighgui()
 {
-    std::cout << "[info] RdOutputHighgui::RdOutputHighgui()"<< std::endl;
-
     //-- Create key & mutex
     inputKey = new char;
     *inputKey = -1;
@@ -18,8 +16,6 @@ rdlib::RdOutputHighgui::RdOutputHighgui()
 
 bool rdlib::RdOutputHighgui::start()
 {
-    std::cout << "[info] RdOutputHighgui started." << std::endl;
-
     cv::namedWindow("Robot Devastation", CV_WINDOW_NORMAL);
    // cv::setWindowProperty("Robot Devastation", CV_WND_PROP_FULLSCREEN, CV_WINDOW_FULLSCREEN);
 
