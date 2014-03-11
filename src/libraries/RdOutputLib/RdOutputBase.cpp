@@ -23,8 +23,11 @@ bool rdlib::RdOutputBase::start()
     }
 
     //-- Start the display thread
-    pthread_create( &output_thread, NULL, outputThread, (void *) this );
-    std::cout << "[info] RdOutputBase created thread." << std::endl;
+    int res = pthread_create( &output_thread, NULL, outputThread, (void *) this );
+    if (res == 0)
+    {
+        RD_INFO("RdOutputBase created thread.\n");
+    }
 }
 
 bool rdlib::RdOutputBase::quit()
