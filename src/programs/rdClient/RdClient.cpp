@@ -32,6 +32,12 @@ bool rdclient::RdClient::runProgram()
     watchdog = DEFAULT_WATCHDOG;
 
     //-- .ini reader
+    if(!getenv("RD_ROOT"))
+    {
+        RD_ERROR("check your RD_ROOT environomental variable, it is empty!\n");
+        return -1;
+    }
+    RD_INFO("Using RD_ROOT environomental variable: %s\n",getenv("RD_ROOT"));
     std::string inifilename( getenv("RD_ROOT") );
     inifilename += "/share/rdClient/conf/rdClient.ini";
     rdlib::RdIniReader< std::string, std::string > rdIniReader;
