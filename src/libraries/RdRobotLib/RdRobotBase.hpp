@@ -6,6 +6,8 @@
 #include <iostream>
 #include <map>
 
+#include "RdMacros.hpp"
+
 /**
  * @ingroup rd_libraries
  *

@@ -112,13 +112,13 @@ bool rdlib::RdRobotLaserTowerOfDeath::initSerialPort(const char* serialPortName)
     }
     catch ( SerialPort::OpenFailed e )
     {
-        std::cerr << "Error opening the serial port \"" << serialPortName << "\"" << std::endl;
+        RD_ERROR("Error opening the serial port \"%s\"\n", serialPortName);
         return false;
     }
 
     if ( ! checkConnection() )
     {
-        std::cerr << "Error communicating with the robot. Exiting..." << std::endl;
+        RD_ERROR("Error communicating with the robot. Exiting...\n");
         return false;
     }
 

@@ -6,6 +6,8 @@ IF (ENABLE_RdRobotLib)
 
 set(KEYWORD "RdRobotLib")
 
+include_directories(${RD_INCLUDE_DIRS})
+
 # Search for source code.
 file(GLOB folder_source *.cpp *.cc *.c)
 file(GLOB folder_header *.hpp)
