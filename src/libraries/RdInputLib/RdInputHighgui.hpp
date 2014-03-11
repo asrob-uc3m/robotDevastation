@@ -18,7 +18,6 @@ namespace rdlib{
  */
 class RdInputHighgui : public RdInputBase {
     public:
-        RdInputHighgui();
 
         virtual bool start();
 

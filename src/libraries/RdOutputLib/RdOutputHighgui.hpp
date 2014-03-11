@@ -20,17 +20,16 @@ class RdOutputHighgui : public RdOutputBase {
     public:
         RdOutputHighgui();
         virtual bool start();
+        virtual bool quit();
 
         char * getInputKey();
         pthread_mutex_t * getInputKeyMutex();
 
     protected:
         virtual bool output(int pipelineIndex);
+        bool printEnemies(cv::Mat& src, cv::Mat& dst, int pipelineIndex);
 
         cv::Mat videoFrame;
-
-        //-- References to other modules
-        RdCameraBase* rdCameraBasePtr;
 
         //-- Add queue here (and its mutex)
         char * inputKey;

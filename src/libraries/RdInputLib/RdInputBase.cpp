@@ -2,6 +2,7 @@
 
 bool rdlib::RdInputBase::start()
 {
+    isRunning = true;
     int error = pthread_create (&threadId, NULL, &RdInputBase::inputThread, this);
     if (error == 0) {
         std::cout << "[success] RdInputKeyboard created thread." << std::endl;

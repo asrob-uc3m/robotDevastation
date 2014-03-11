@@ -28,6 +28,7 @@ class RdRobotBase;
  */
 class RdOutputBase {
     public:
+        RdOutputBase();
 
         virtual bool start();
 

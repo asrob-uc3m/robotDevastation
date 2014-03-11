@@ -60,6 +60,7 @@ void *rdlib::RdCameraBase::captureWithSync()
             sem_wait( captureSemaphores+i);
 
             //-- Cpature frame however you want
+            //std::cout << "[info] Captured frame #" << i << std::endl;
             this->capture(i);
 
             //-- Unlock the corresponding process semaphore

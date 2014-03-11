@@ -3,8 +3,9 @@
 #include "RdClient.hpp"
 
 //#include "RdInputKeyboard.hpp"
-//#include "RdOutputHighgui.hpp"
-  #include "RdInOutHighgui.hpp"
+#include "RdInputHighgui.hpp"
+#include "RdOutputHighgui.hpp"
+#include "RdInOutHighgui.hpp"
 #include "RdRobotLaserTowerOfDeath.hpp"
 #include "RdManagerDefault.hpp"
 #include "RdCameraWebcam.hpp"
@@ -48,43 +49,49 @@ bool rdclient::RdClient::runProgram()
 
     rdCameraBasePtr = new rdlib::RdCameraWebcam();
     rdManagerBasePtr = new rdlib::RdManagerDefault();
-    rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
+    //rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
 
     //-- Use the next TWO lines for one input and a separated output
     //rdInputBasePtr = new rdlib::RdInputKeyboard();
-    //rdOutputBasePtr = new rdlib::RdOutputHighgui();
+    rdOutputBasePtr = new rdlib::RdOutputHighgui();
+    rdInputBasePtr = new rdlib::RdInputHighgui();
     //-- OR use the NEXT THREE lines for one input+output
-    rdlib::RdInOutHighgui * rdInOutHighguiPtr = new rdlib::RdInOutHighgui();  // Not deleted, but at least its quit is called.
-    rdOutputBasePtr = rdInOutHighguiPtr;
-    rdInputBasePtr = rdInOutHighguiPtr;
+    //rdlib::RdInOutHighgui * rdInOutHighguiPtr = new rdlib::RdInOutHighgui();  // Not deleted, but at least its quit is called.
+    //rdOutputBasePtr = rdInOutHighguiPtr;
+    //rdInputBasePtr = rdInOutHighguiPtr;
 
     rdManagerBasePtr->setRdCameraBasePtr(rdCameraBasePtr);
     rdManagerBasePtr->setRdRobotBasePtr(rdRobotBasePtr);
 
     //-- Use the next TWO lines for one input and a separated output
-    //rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
-    //rdManagerBasePtr->setRdOutputBasePtr(rdOutputBasePtr);
+    rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
+    rdManagerBasePtr->setRdOutputBasePtr(rdOutputBasePtr);
     //-- OR use the NEXT TWO lines for one input+output
-    rdManagerBasePtr->setRdInputBasePtr(rdInOutHighguiPtr);
-    rdManagerBasePtr->setRdOutputBasePtr(rdInOutHighguiPtr);
+    //rdManagerBasePtr->setRdInputBasePtr(rdInOutHighguiPtr);
+    //rdManagerBasePtr->setRdOutputBasePtr(rdInOutHighguiPtr);
 
     //-- Use the next TWO lines for one input and a separated output
-    //rdInputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
-    //rdOutputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
-    //-- OR use the NEXT ONE lines for one input+output
-    rdInOutHighguiPtr->setRdManagerBasePtr(rdManagerBasePtr);
+    rdInputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
+    ((rdlib::RdInputHighgui *) rdInputBasePtr)->setRdOutputHighguiPtr( (rdlib::RdOutputHighgui*) rdOutputBasePtr);
 
-    //-- Semaphore configuration (it may be good to convert this to a cleaner syntax)
-    ((rdlib::RdManagerDefault * )rdManagerBasePtr)->setProcessSemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getProcessSemaphores() );
-    ((rdlib::RdManagerDefault * )rdManagerBasePtr)->setDisplaySemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getDisplaySemaphores() );
-    ((rdlib::RdInOutHighgui * ) rdOutputBasePtr)->setDisplaySemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getDisplaySemaphores() );
-    ((rdlib::RdInOutHighgui * ) rdOutputBasePtr)->setCaptureSemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getCaptureSemaphores() );
+    rdOutputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
+    //-- OR use the NEXT ONE lines for one input+output
+    //rdInOutHighguiPtr->setRdManagerBasePtr(rdManagerBasePtr);
+
+    //-- Semaphore configuration
+    //! \todo convert this to a cleaner syntax
+    rdManagerBasePtr->setProcessSemaphores( rdCameraBasePtr->getProcessSemaphores() );
+    rdManagerBasePtr->setDisplaySemaphores( rdCameraBasePtr->getDisplaySemaphores() );
+    rdOutputBasePtr->setDisplaySemaphores(  rdCameraBasePtr->getDisplaySemaphores() );
+    rdOutputBasePtr->setCaptureSemaphores(  rdCameraBasePtr->getCaptureSemaphores() );
+    //((rdlib::RdInOutHighgui * ) rdOutputBasePtr)->setDisplaySemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getDisplaySemaphores() );
+    //((rdlib::RdInOutHighgui * ) rdOutputBasePtr)->setCaptureSemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getCaptureSemaphores() );
 
     //-- Start components
     rdCameraBasePtr->start();
     rdManagerBasePtr->start();
     rdOutputBasePtr->start();
-    //rdInputBasePtr-start(); //-- What happens if I call this twice??
+    rdInputBasePtr->start(); //-- What happens if I call this twice??
 
     int managerStatus;
     while(1)
@@ -107,11 +114,11 @@ bool rdclient::RdClient::quitProgram()
         rdCameraBasePtr = 0;
     }
     //-- Comment out the NEXT FIVE lines for one input+output
-    /*if (rdInputBasePtr) {
+    if (rdInputBasePtr) {
         rdInputBasePtr->quit();
         delete rdInputBasePtr;
         rdInputBasePtr = 0;
-    }*/
+    }
     if (rdOutputBasePtr) {
         rdOutputBasePtr->quit();
         delete rdOutputBasePtr;

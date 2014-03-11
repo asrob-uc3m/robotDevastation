@@ -1,4 +1,5 @@
 #include "RdCameraWebcam.hpp"
+#include <stdio.h>
 
 rdlib::RdCameraWebcam::RdCameraWebcam(int cameraIndex)
 {

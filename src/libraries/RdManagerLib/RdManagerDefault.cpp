@@ -27,7 +27,7 @@ bool rdlib::RdManagerDefault::shoot() {
 
 bool rdlib::RdManagerDefault::processImage()
 {
-    while( managerStatus != -1 )
+    while( managerStatus >= 0 )
     {
         for (int i = 0; i < PIPELINE_SIZE; i++)
         {
