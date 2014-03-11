@@ -2,28 +2,21 @@
 
 #include "RdClient.hpp"
 
-//#include "RdInputKeyboard.hpp"
 #include "RdInputHighgui.hpp"
 #include "RdOutputHighgui.hpp"
 #include "RdRobotLaserTowerOfDeath.hpp"
 #include "RdManagerDefault.hpp"
 #include "RdCameraWebcam.hpp"
 
-rdclient::RdClient::RdClient()
-{
-    std::cout << "[info] RdClient constructor." << std::endl;
-}
-
-
 rdclient::RdClient* globalRdClient;
 void rdclient::RdClient::staticSignalHandler(int s)
 {
-    //-- "kill -l" for a list of meanings. 2 is a SIGINT (ctrl-c).
-    std::cout << "[info] RdClient: Caught signal ";
-    if (s==2) std::cout << "SIGINT (usually a CTRL-C)";
-    else if (s==15) std::cout << "SIGTERM";
-    else std::cout << s;
-    std::cout << ". Bye!" << std::endl;
+    //-- see "kill -l" for a list of meanings. 2 is a SIGINT (ctrl-c).
+    std::string msg("Caught signal ");
+    if (s==2) msg += "SIGINT (usually a CTRL-C)";
+    else if (s==15) msg += "SIGTERM";
+    else msg += "Unknown";
+    RD_INFO("%s. Bye!\n",msg.c_str());
     globalRdClient->quitProgram();
     exit(s);
 }
@@ -43,12 +36,12 @@ bool rdclient::RdClient::runProgram()
     inifilename += "/share/rdClient/conf/rdClient.ini";
     rdlib::RdIniReader< std::string, std::string > rdIniReader;
     rdIniReader.parseFile(inifilename.c_str(), rdIniMap);
-    std::cout << "[info] testRdIniReader: managerMap contains:" << std::endl;
+    RD_INFO("managerMap contains:\n");
     for (std::map< std::string, std::string >::iterator it = rdIniMap.begin(); it != rdIniMap.end(); ++it)
-        std::cout << "[info] testRdIniReader: " << it->first << " => " << it->second << std::endl;
-    std::cout << "[info] testRdIniReader: end managerMap contains."  << std::endl;
+        RD_INFO("%s => %s\n", it->first.c_str(), it->second.c_str());
+    RD_INFO("end managerMap contains.\n");
 
-    std::cout << "[info] RdClient using watchdog [s]: " << watchdog << " (default: " << DEFAULT_WATCHDOG << ")." << std::endl;
+    RD_INFO("RdClient using watchdog [s]: %f (default: \"%f\").\n", watchdog, DEFAULT_WATCHDOG);
 
     //-- Set up callbacks
     globalRdClient = this;
@@ -59,7 +52,6 @@ bool rdclient::RdClient::runProgram()
     rdManagerBasePtr = new rdlib::RdManagerDefault();
     rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
 
-    //rdInputBasePtr = new rdlib::RdInputKeyboard();
     rdOutputBasePtr = new rdlib::RdOutputHighgui();
     rdInputBasePtr = new rdlib::RdInputHighgui();
 
@@ -106,13 +98,12 @@ bool rdclient::RdClient::runProgram()
 //-- Closing rutines.
 bool rdclient::RdClient::quitProgram()
 {
-    std::cout << "[info] RdClient quitProgram(): begin quitting..." << std::endl;
+    RD_INFO("begin quitting...\n");
     if (rdCameraBasePtr) {
         rdCameraBasePtr->quit();
         delete rdCameraBasePtr;
         rdCameraBasePtr = 0;
     }
-    //-- Comment out the NEXT FIVE lines for one input+output
     if (rdInputBasePtr) {
         rdInputBasePtr->quit();
         delete rdInputBasePtr;
@@ -133,6 +124,6 @@ bool rdclient::RdClient::quitProgram()
         delete rdManagerBasePtr;
         rdManagerBasePtr = 0;
     }
-    std::cout << "[success] RdClient quitProgram(): quit gracefully, bye!" << std::endl;
+    RD_SUCCESS("RdClient quitProgram(): quit gracefully, bye!\n");
     return true;
 }

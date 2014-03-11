@@ -6,6 +6,7 @@
 #include <signal.h>
 
 #include "RdIniReader.hpp"
+#include "RdMacros.hpp"
 
 #include "RdManagerBase.hpp"
 
@@ -14,7 +15,7 @@
 #include "RdRobotBase.hpp"
 #include "RdCameraBase.hpp"
 
-#define DEFAULT_WATCHDOG    1       // [s]
+#define DEFAULT_WATCHDOG    1.0       // [s]
 
 namespace rdclient{
 
@@ -25,11 +26,6 @@ namespace rdclient{
 class RdClient {
 
     public:
-        /**
-         * Constructor of this slow watchdog main thread.
-         */
-        RdClient();
-
         /**
          * Run the program.
          *
