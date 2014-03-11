@@ -5,8 +5,10 @@ bool rdlib::RdInputBase::start()
     isRunning = true;
     int res = pthread_create (&threadId, NULL, &RdInputBase::inputThread, this);
     if (res == 0) {
-        RD_SUCCESS("RdInputBase created thread.\n");
-    } else {
+        RD_INFO("RdInputBase created thread.\n");
+    }
+    else
+    {
         RD_WARNING("RdInputBase could not create thread.\n");
     }
 }

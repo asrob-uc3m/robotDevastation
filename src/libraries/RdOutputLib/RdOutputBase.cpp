@@ -28,6 +28,10 @@ bool rdlib::RdOutputBase::start()
     {
         RD_INFO("RdOutputBase created thread.\n");
     }
+    else
+    {
+        RD_WARNING("RdOutputBase could not create thread.\n");
+    }
 }
 
 bool rdlib::RdOutputBase::quit()

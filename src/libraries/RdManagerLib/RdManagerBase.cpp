@@ -19,6 +19,10 @@ bool rdlib::RdManagerBase::start()
     {
         RD_INFO("RdManagerBase created thread.\n");
     }
+    else
+    {
+        RD_WARNING("RdManagerBase could not create thread.\n");
+    }
 }
 
 bool rdlib::RdManagerBase::shootWrapper(void *This)
