@@ -4,7 +4,6 @@
 
 rdlib::RdManagerDefault::RdManagerDefault()
 {
-    std::cout << "[info] RdManagerDefault constructor." << std::endl;
     this->managerStatus = 0;
 
     //-- Add functions (currently only hardcoded)
