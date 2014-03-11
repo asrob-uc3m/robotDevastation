@@ -4,6 +4,9 @@
 #define __RD_MANAGER_BASE_HPP__
 
 #include <iostream>
+
+#include "RdMacros.hpp"
+
 #include "RdInputBase.hpp"
 #include "RdRobotBase.hpp"
 #include "RdCameraBase.hpp"

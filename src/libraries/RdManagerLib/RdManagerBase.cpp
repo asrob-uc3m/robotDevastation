@@ -14,9 +14,11 @@ rdlib::RdManagerBase::RdManagerBase()
 bool rdlib::RdManagerBase::start()
 {
     //-- Start the capture thread
-    pthread_create( &processImage_thread, NULL, processImageThread, (void *) this );
-    std::cout << "[info] RdManagerBase created thread." << std::endl;
-
+    int res = pthread_create( &processImage_thread, NULL, processImageThread, (void *) this );
+    if (res == 0)
+    {
+        RD_INFO("RdManagerBase created thread.\n");
+    }
 }
 
 bool rdlib::RdManagerBase::shootWrapper(void *This)
