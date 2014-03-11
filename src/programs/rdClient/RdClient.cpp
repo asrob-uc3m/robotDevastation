@@ -5,7 +5,6 @@
 //#include "RdInputKeyboard.hpp"
 #include "RdInputHighgui.hpp"
 #include "RdOutputHighgui.hpp"
-#include "RdInOutHighgui.hpp"
 #include "RdRobotLaserTowerOfDeath.hpp"
 #include "RdManagerDefault.hpp"
 #include "RdCameraWebcam.hpp"
