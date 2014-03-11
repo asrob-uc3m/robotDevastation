@@ -21,7 +21,6 @@ void rdclient::RdClient::staticSignalHandler(int s)
     //-- "kill -l" for a list of meanings. 2 is a SIGINT (ctrl-c).
     std::cout << "[info] RdClient: Caught signal ";
     if (s==2) std::cout << "SIGINT (usually a CTRL-C)";
-    //else if (s==9) std::cout << "SIGKILL";  //-- Killed before reaching.
     else if (s==15) std::cout << "SIGTERM";
     else std::cout << s;
     std::cout << ". Bye!" << std::endl;
@@ -54,39 +53,27 @@ bool rdclient::RdClient::runProgram()
     //-- Set up callbacks
     globalRdClient = this;
     signal (SIGINT,RdClient::staticSignalHandler);
-    //signal (SIGKILL,RdClient::staticSignalHandler);  //-- Killed before reaching.
     signal (SIGTERM,RdClient::staticSignalHandler);
 
     rdCameraBasePtr = new rdlib::RdCameraWebcam();
     rdManagerBasePtr = new rdlib::RdManagerDefault();
-    //rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
+    rdRobotBasePtr = new rdlib::RdRobotLaserTowerOfDeath();
 
-    //-- Use the next TWO lines for one input and a separated output
     //rdInputBasePtr = new rdlib::RdInputKeyboard();
     rdOutputBasePtr = new rdlib::RdOutputHighgui();
     rdInputBasePtr = new rdlib::RdInputHighgui();
-    //-- OR use the NEXT THREE lines for one input+output
-    //rdlib::RdInOutHighgui * rdInOutHighguiPtr = new rdlib::RdInOutHighgui();  // Not deleted, but at least its quit is called.
-    //rdOutputBasePtr = rdInOutHighguiPtr;
-    //rdInputBasePtr = rdInOutHighguiPtr;
 
     rdManagerBasePtr->setRdCameraBasePtr(rdCameraBasePtr);
     rdManagerBasePtr->setRdRobotBasePtr(rdRobotBasePtr);
 
-    //-- Use the next TWO lines for one input and a separated output
     rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
     rdManagerBasePtr->setRdOutputBasePtr(rdOutputBasePtr);
-    //-- OR use the NEXT TWO lines for one input+output
-    //rdManagerBasePtr->setRdInputBasePtr(rdInOutHighguiPtr);
-    //rdManagerBasePtr->setRdOutputBasePtr(rdInOutHighguiPtr);
 
-    //-- Use the next TWO lines for one input and a separated output
+
     rdInputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
     ((rdlib::RdInputHighgui *) rdInputBasePtr)->setRdOutputHighguiPtr( (rdlib::RdOutputHighgui*) rdOutputBasePtr);
 
     rdOutputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
-    //-- OR use the NEXT ONE lines for one input+output
-    //rdInOutHighguiPtr->setRdManagerBasePtr(rdManagerBasePtr);
 
     //-- Semaphore configuration
     //! \todo convert this to a cleaner syntax
@@ -94,8 +81,6 @@ bool rdclient::RdClient::runProgram()
     rdManagerBasePtr->setDisplaySemaphores( rdCameraBasePtr->getDisplaySemaphores() );
     rdOutputBasePtr->setDisplaySemaphores(  rdCameraBasePtr->getDisplaySemaphores() );
     rdOutputBasePtr->setCaptureSemaphores(  rdCameraBasePtr->getCaptureSemaphores() );
-    //((rdlib::RdInOutHighgui * ) rdOutputBasePtr)->setDisplaySemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getDisplaySemaphores() );
-    //((rdlib::RdInOutHighgui * ) rdOutputBasePtr)->setCaptureSemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getCaptureSemaphores() );
 
     rdRobotBasePtr->setRdIniMap(rdIniMap);
 
@@ -105,7 +90,7 @@ bool rdclient::RdClient::runProgram()
     rdOutputBasePtr->start();
 
     rdRobotBasePtr->connect();
-    //rdInputBasePtr-start(); //-- What happens if I call this twice??
+    rdInputBasePtr->start(); //-- What happens if I call this twice??
 
     int managerStatus;
     while(1)
