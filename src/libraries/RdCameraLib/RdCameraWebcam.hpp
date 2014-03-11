@@ -25,9 +25,7 @@ namespace rdlib{
 class RdCameraWebcam : public RdCameraBase
 {
     public:
-        RdCameraWebcam( int index = 1 );
-
-        virtual bool quit();
+        RdCameraWebcam( int cameraIndex = 0 );
 
         virtual void capture(int index);
 

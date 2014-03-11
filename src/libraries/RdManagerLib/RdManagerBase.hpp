@@ -53,7 +53,7 @@ class RdManagerBase {
         void *getFunctionByName( std::string function_name );
         int getManagerStatus();
         RdCameraBase* getRdCameraBasePtr();
-        void getEnemies( int index,  std::vector< std::pair<int, int> >& enemyPos, std::vector< double >& enemySize);
+        void getEnemies( int pipelineIndex,  std::vector< std::pair<int, int> >& enemyPos, std::vector< double >& enemySize);
 
         void setRdCameraBasePtr(RdCameraBase* rdCameraBasePtr );
         void setRdInputBasePtr(RdInputBase* rdInputBasePtr ) ;

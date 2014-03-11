@@ -15,6 +15,8 @@ bool rdlib::RdManagerBase::start()
 {
     //-- Start the capture thread
     pthread_create( &processImage_thread, NULL, processImageThread, (void *) this );
+    std::cout << "[info] RdManagerBase created thread." << std::endl;
+
 }
 
 bool rdlib::RdManagerBase::shootWrapper(void *This)
@@ -54,10 +56,10 @@ rdlib::RdCameraBase* rdlib::RdManagerBase::getRdCameraBasePtr() {
     return this->rdCameraBasePtr;
 }
 
-void rdlib::RdManagerBase::getEnemies( int index,  std::vector< std::pair<int, int> >& enemyPos,
+void rdlib::RdManagerBase::getEnemies( int pipelineIndex,  std::vector< std::pair<int, int> >& enemyPos,
                  std::vector< double >& enemySize) {
-    enemyPos = this->enemyPos[index];
-    enemySize = this->enemySize[index];
+    enemyPos = this->enemyPos[pipelineIndex];
+    enemySize = this->enemySize[pipelineIndex];
 }
 
 void * rdlib::RdManagerBase::processImageThread(void *This)

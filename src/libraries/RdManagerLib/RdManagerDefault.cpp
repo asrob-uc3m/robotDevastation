@@ -11,7 +11,7 @@ rdlib::RdManagerDefault::RdManagerDefault()
     functionMap["toggleHeadTrack"] = (void *) &toggleHeadTrackWrapper;
 
     //-- Enemy init:
-    for( int i = 0; i < 3; i++)
+    for( int i = 0; i < PIPELINE_SIZE; i++)
     {
         enemyPos.push_back( std::vector< std::pair<int, int> >() );
         enemySize.push_back( std::vector< double> () );
@@ -27,9 +27,9 @@ bool rdlib::RdManagerDefault::shoot() {
 
 bool rdlib::RdManagerDefault::processImage()
 {
-    while( managerStatus != -1 )
+    while( managerStatus >= 0 )
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < PIPELINE_SIZE; i++)
         {
             //-- Lock the semaphore
             sem_wait( processSemaphores+i);

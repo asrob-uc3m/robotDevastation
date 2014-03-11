@@ -6,6 +6,20 @@ bool rdlib::RdCameraBase::start()
     pthread_create( &capture_thread, NULL, captureThread, (void *) this );
 }
 
+bool rdlib::RdCameraBase::quit()
+{
+    std::cout << "[info] RdCameraBase quit()" << std::endl;
+    stopThread = true;
+    pthread_join( capture_thread, NULL);
+
+    delete[] captureSemaphores;
+    captureSemaphores = 0;
+    delete[] processSemaphores; //-- Doing this here will cause (probably) a segmentation fault
+    processSemaphores = 0;
+    delete[] displaySemaphores;
+    displaySemaphores = 0;
+}
+
 void rdlib::RdCameraBase::setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr )
 {
     this->rdManagerBasePtr = rdManagerBasePtr;
@@ -46,6 +60,7 @@ void *rdlib::RdCameraBase::captureWithSync()
             sem_wait( captureSemaphores+i);
 
             //-- Cpature frame however you want
+            //std::cout << "[info] Captured frame #" << i << std::endl;
             this->capture(i);
 
             //-- Unlock the corresponding process semaphore

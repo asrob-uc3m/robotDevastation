@@ -27,17 +27,27 @@ class RdRobotBase;
  */
 class RdInputBase {
     public:
+        virtual bool start();
+
         /** A quit rutine.
          * @return true if the object was quit successfully.
          */
-        virtual bool quit() = 0;
+        virtual bool quit();
 
-        void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr ) {
-            this->rdManagerBasePtr = rdManagerBasePtr;
-        }
+        void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr );
 
     protected:
+        //-- Thread-related
+        pthread_t threadId;
+        bool isRunning;
+
+        //-- Pointers to other modules
         RdManagerBase* rdManagerBasePtr;
+
+        virtual bool input() = 0;
+
+    private:
+        static void * inputThread( void * This );
 };
 
 } //rdlib

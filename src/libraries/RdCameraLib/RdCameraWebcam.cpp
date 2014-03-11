@@ -1,13 +1,14 @@
 #include "RdCameraWebcam.hpp"
+#include <stdio.h>
 
-rdlib::RdCameraWebcam::RdCameraWebcam(int index)
+rdlib::RdCameraWebcam::RdCameraWebcam(int cameraIndex)
 {
     //-- Set 'constants'
     frameRate = 10;
     stopThread = false;
 
     //-- Start the camera
-    webcam.open(index);
+    webcam.open(cameraIndex);
     for (int i = 0; i < PIPELINE_SIZE; i++)
     {
         cv::Mat frame;
@@ -28,21 +29,6 @@ rdlib::RdCameraWebcam::RdCameraWebcam(int index)
     for( int i = 0; i < PIPELINE_SIZE; i++)
         sem_init( displaySemaphores+i, 0, 0);
 
-}
-
-
-bool rdlib::RdCameraWebcam::quit()
-{
-    std::cout << "[info] RdCameraWebcam quit()" << std::endl;
-    stopThread = true;
-    pthread_join( capture_thread, NULL);
-
-    delete[] captureSemaphores;
-    captureSemaphores = 0;
-    delete[] processSemaphores; //-- Doing this here will cause (probably) a segmentation fault
-    processSemaphores = 0;
-    delete[] displaySemaphores;
-    displaySemaphores = 0;
 }
 
 

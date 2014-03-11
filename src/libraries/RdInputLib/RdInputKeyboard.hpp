@@ -26,17 +26,14 @@ class RdInputKeyboard : public RdInputBase {
 
         virtual bool quit();
 
-        void* keyThreadFunction(void *This);
-        static void* staticKeyThreadFunction(void *arg);
-
-    	pthread_t threadId;
-
     protected:
+        virtual bool input();
+
         Display *dis;
         Window win;
         XSetWindowAttributes at;
         XEvent report;
-        bool isRunning;
+
 };
 
 } //rdlib
