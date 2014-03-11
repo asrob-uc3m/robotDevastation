@@ -36,10 +36,10 @@ bool rdclient::RdClient::runProgram()
     inifilename += "/share/rdClient/conf/rdClient.ini";
     rdlib::RdIniReader< std::string, std::string > rdIniReader;
     rdIniReader.parseFile(inifilename.c_str(), rdIniMap);
-    RD_INFO("managerMap contains:\n");
+    RD_INFO("rdIniMap contains:\n");
     for (std::map< std::string, std::string >::iterator it = rdIniMap.begin(); it != rdIniMap.end(); ++it)
         RD_INFO("%s => %s\n", it->first.c_str(), it->second.c_str());
-    RD_INFO("end managerMap contains.\n");
+    RD_INFO("end rdIniMap contains.\n");
 
     RD_INFO("RdClient using watchdog [s]: %f (default: \"%f\").\n", watchdog, DEFAULT_WATCHDOG);
 
