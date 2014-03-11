@@ -10,10 +10,6 @@ rdlib::RdRobotLaserTowerOfDeath::RdRobotLaserTowerOfDeath()
     functionMap["tiltIncrement"] = (void *) &tiltIncrementWrapper;
     functionMap["tiltDecrement"] = (void *) &tiltDecrementWrapper;
 
-    //-- Serial port
-    serialPort = new SerialPort( "/dev/ttyUSB0" );
-    initSerialPort();
-
     //-- Initial values:
     panJointValue = panInitial;
     tiltJointValue = tiltInitial;
@@ -76,7 +72,6 @@ bool rdlib::RdRobotLaserTowerOfDeath::quit()
 
     //-- Reset serial connecton
     serialPort->Close();
-    initSerialPort();
 }
 
 bool rdlib::RdRobotLaserTowerOfDeath::panIncrementWrapper(void *This)
@@ -99,8 +94,16 @@ bool rdlib::RdRobotLaserTowerOfDeath::tiltDecrementWrapper(void *This)
     return (( rdlib::RdRobotLaserTowerOfDeath * ) This)->tiltDecrement();
 }
 
-bool rdlib::RdRobotLaserTowerOfDeath::initSerialPort()
+bool rdlib::RdRobotLaserTowerOfDeath::connect()
 {
+    std::string serial_port = rdIniMap.at("serial_port");
+    initSerialPort(serial_port.c_str());
+    return true;
+}
+
+bool rdlib::RdRobotLaserTowerOfDeath::initSerialPort(const char* serialPortName)
+{
+    serialPort = new SerialPort( serialPortName );  // "/dev/ttyUSB0"
     try
     {
         serialPort->Open( SerialPort::BAUD_57600, SerialPort::CHAR_SIZE_8,
@@ -109,7 +112,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::initSerialPort()
     }
     catch ( SerialPort::OpenFailed e )
     {
-        std::cerr << "Error opening the serial port \"" << "/dev/ttyUSB0" << "\"" << std::endl;
+        std::cerr << "Error opening the serial port \"" << serialPortName << "\"" << std::endl;
         return false;
     }
 

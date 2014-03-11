@@ -31,6 +31,8 @@ class RdRobotBase {
 
         void *getFunctionByName( std::string function_name );
 
+        virtual bool connect() = 0;
+
         //-- Every robot in this game shoots
         virtual bool shoot() = 0;
 
@@ -40,8 +42,17 @@ class RdRobotBase {
         static bool shootWrapper( void * This);
         static bool resetWrapper( void * This);
 
+        void setRdIniMap(std::map< std::string, std::string >& rdIniMap)
+        {
+            this->rdIniMap = rdIniMap;
+        }
+
+
     protected:
         std::map< std::string, void*> functionMap;
+
+        /** Map */
+        std::map< std::string, std::string > rdIniMap;
 
 };
 

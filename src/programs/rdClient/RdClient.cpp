@@ -38,6 +38,17 @@ bool rdclient::RdClient::runProgram()
     rdCameraBasePtr = 0;
 
     watchdog = DEFAULT_WATCHDOG;
+
+    //-- .ini reader
+    std::string inifilename( getenv("RD_ROOT") );
+    inifilename += "/share/rdClient/conf/rdClient.ini";
+    rdlib::RdIniReader< std::string, std::string > rdIniReader;
+    rdIniReader.parseFile(inifilename.c_str(), rdIniMap);
+    std::cout << "[info] testRdIniReader: managerMap contains:" << std::endl;
+    for (std::map< std::string, std::string >::iterator it = rdIniMap.begin(); it != rdIniMap.end(); ++it)
+        std::cout << "[info] testRdIniReader: " << it->first << " => " << it->second << std::endl;
+    std::cout << "[info] testRdIniReader: end managerMap contains."  << std::endl;
+
     std::cout << "[info] RdClient using watchdog [s]: " << watchdog << " (default: " << DEFAULT_WATCHDOG << ")." << std::endl;
 
     //-- Set up callbacks
@@ -80,10 +91,13 @@ bool rdclient::RdClient::runProgram()
     ((rdlib::RdInOutHighgui * ) rdOutputBasePtr)->setDisplaySemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getDisplaySemaphores() );
     ((rdlib::RdInOutHighgui * ) rdOutputBasePtr)->setCaptureSemaphores( ((rdlib::RdCameraWebcam *)rdCameraBasePtr)->getCaptureSemaphores() );
 
+    rdRobotBasePtr->setRdIniMap(rdIniMap);
+
     //-- Start components
     rdCameraBasePtr->start();
     rdManagerBasePtr->start();
     rdOutputBasePtr->start();
+    rdRobotBasePtr->connect();
     //rdInputBasePtr-start(); //-- What happens if I call this twice??
 
     int managerStatus;

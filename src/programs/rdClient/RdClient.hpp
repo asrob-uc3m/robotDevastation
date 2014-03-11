@@ -3,7 +3,9 @@
 #ifndef __ROBOT_DEVASTATION_HPP__
 #define __ROBOT_DEVASTATION_HPP__
 
-#include<signal.h>
+#include <signal.h>
+
+#include "RdIniReader.hpp"
 
 #include "RdManagerBase.hpp"
 
@@ -63,6 +65,9 @@ class RdClient {
 
         /** Camera */
         rdlib::RdCameraBase* rdCameraBasePtr;
+
+        /** Map */
+        std::map< std::string, std::string > rdIniMap;
 
 };
 

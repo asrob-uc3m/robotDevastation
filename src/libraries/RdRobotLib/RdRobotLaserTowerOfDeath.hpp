@@ -34,6 +34,7 @@ class RdRobotLaserTowerOfDeath : public RdRobotBase {
         bool tiltIncrement();
         bool tiltDecrement();
 
+        virtual bool connect();
         virtual bool shoot();
         virtual bool quit();
 
@@ -59,7 +60,7 @@ class RdRobotLaserTowerOfDeath : public RdRobotBase {
 
         SerialPort * serialPort;
 
-        bool initSerialPort();
+        bool initSerialPort(const char* serialPortName);
         bool checkConnection();
 
         bool sendCurrentJointValues();
