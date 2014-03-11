@@ -60,7 +60,7 @@ bool rdlib::RdInputHighgui::input()
         //! \todo Look for the key in the table and execute action(s)
         //std::cout << "[Info] Received key: \"" << (int)currentInputKey << "\"" << std::endl;
 
-        if ( currentInputKey != -1 )
+        if ((currentInputKey != -1)&&(lastInputKey == -1))
         {
             if (currentInputKey == ' ')   // SPACE: 1048608 (0x100020), LSB: 32 (' ')
             {
@@ -85,12 +85,7 @@ bool rdlib::RdInputHighgui::input()
                 std::cout << "[info] RdInputHighgui: CTRL-C key was pressed. Bye!" << std::endl;
                 rdManagerBasePtr->quit();
             }
-
-            currentInputKey = -1;
         }
-//        else
-//        {
-//            std::cout << "[info] RdInputHighgui: No key was pressed." << std::endl;
-//        }
+        lastInputKey = currentInputKey;
     }
 }

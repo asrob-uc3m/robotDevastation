@@ -28,6 +28,7 @@ class RdInputHighgui : public RdInputBase {
 
         //-- Add queue here (and its mutex)
         char * inputKey;
+        char lastInputKey;
         pthread_mutex_t * inputKeyMutex;
 
         //-- Refence to Highgui output module:
