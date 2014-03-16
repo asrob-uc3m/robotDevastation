@@ -88,7 +88,7 @@ bool rdclient::RdClient::runProgram()
     rdOutputBasePtr->start();
 
     rdRobotBasePtr->connect();
-    rdInputBasePtr->start(); //-- What happens if I call this twice??
+    rdInputBasePtr->start();
 
     int managerStatus;
     while(1)
@@ -105,30 +105,30 @@ bool rdclient::RdClient::runProgram()
 bool rdclient::RdClient::quitProgram()
 {
     RD_INFO("begin quitting...\n");
-    if (rdCameraBasePtr) {
-        rdCameraBasePtr->quit();
-        delete rdCameraBasePtr;
-        rdCameraBasePtr = 0;
-    }
     if (rdInputBasePtr) {
         rdInputBasePtr->quit();
         delete rdInputBasePtr;
         rdInputBasePtr = 0;
-    }
-    if (rdOutputBasePtr) {
-        rdOutputBasePtr->quit();
-        delete rdOutputBasePtr;
-        rdOutputBasePtr = 0;
     }
     if (rdRobotBasePtr) {
         rdRobotBasePtr->quit();
         delete rdRobotBasePtr;
         rdRobotBasePtr = 0;
     }
+    if (rdOutputBasePtr) {
+        rdOutputBasePtr->quit();
+        delete rdOutputBasePtr;
+        rdOutputBasePtr = 0;
+    }
     if (rdManagerBasePtr) {
         rdManagerBasePtr->quit();
         delete rdManagerBasePtr;
         rdManagerBasePtr = 0;
+    }
+    if (rdCameraBasePtr) {
+        rdCameraBasePtr->quit();
+        delete rdCameraBasePtr;
+        rdCameraBasePtr = 0;
     }
     RD_SUCCESS("RdClient quitProgram(): quit gracefully, bye!\n");
     return true;

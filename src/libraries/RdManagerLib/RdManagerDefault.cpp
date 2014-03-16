@@ -4,7 +4,7 @@
 
 rdlib::RdManagerDefault::RdManagerDefault()
 {
-    this->managerStatus = 0;
+    this->managerStatus = MANAGER_STATUS_OK;
 
     //-- Add functions (currently only hardcoded)
     functionMap["toggleHeadTrack"] = (void *) &toggleHeadTrackWrapper;
@@ -26,25 +26,30 @@ bool rdlib::RdManagerDefault::shoot() {
 
 bool rdlib::RdManagerDefault::processImage()
 {
-    while( managerStatus >= 0 )
+    if (managerStatus == MANAGER_STATUS_OK)
     {
-        for (int i = 0; i < PIPELINE_SIZE; i++)
+        do
         {
-            //-- Lock the semaphore
-            sem_wait( processSemaphores+i);
-
-            //-- Right now, it doesn't do much
-            //std::cout << "[info] Processed frame # " << i << "." << std::endl;
-            if ( managerStatus == 1 )
+            for (int i = 0; i < PIPELINE_SIZE; i++)
             {
-                std::cout << "[info] Tracking head." << std::endl;
-                trackHead(i);
-            }
+                //-- Lock the semaphore
+                sem_wait( processSemaphores+i);
 
-            //-- Unlock the corresponding process semaphore
-            sem_post( displaySemaphores+i);
-        }
+                //-- Right now, it doesn't do much
+                std::cout << "[info] Processed frame # " << i << "." << std::endl;
+                if ( managerStatus == MANAGER_STATUS_HEAD_TRACK )
+                {
+                    std::cout << "[info] Tracking head." << std::endl;
+                    trackHead(i);
+                }
+
+                //-- Unlock the corresponding process semaphore
+                sem_post(displaySemaphores+i);
+            }
+        } while(managerStatus != MANAGER_STATUS_STOPPED);
     }
+    RD_SUCCESS("Exited manager main thread!");
+
 }
 
 bool rdlib::RdManagerDefault::toggleHeadTrackWrapper(void *This)
@@ -54,10 +59,10 @@ bool rdlib::RdManagerDefault::toggleHeadTrackWrapper(void *This)
 
 bool rdlib::RdManagerDefault::toggleHeadTrack()
 {
-    if ( managerStatus != 1 )
-        managerStatus = 1;
+    if ( managerStatus != MANAGER_STATUS_HEAD_TRACK )
+        managerStatus = MANAGER_STATUS_HEAD_TRACK;
     else
-        managerStatus = 0;
+        managerStatus = MANAGER_STATUS_OK;
 }
 
 bool rdlib::RdManagerDefault::trackHead( int index )
@@ -106,15 +111,7 @@ bool rdlib::RdManagerDefault::trackHead( int index )
     enemyPos[index] = enemiesFound;
     enemySize[index] = enemiesFoundSize;
 
-     //-- Here I should call the functions that controls the robot camera
+     //-- Here I should call the functions that control the robot camera
      //-- towards the face
-}
-
-bool rdlib::RdManagerDefault::quit()
-{
-    std::cout << "[info] RdManagerDefault quit." << std::endl;
-    this->managerStatus = -1;
-    pthread_join( processImage_thread, NULL );
-    return true;
 }
 

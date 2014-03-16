@@ -45,7 +45,7 @@ class RdManagerBase {
         /** A quit rutine.
          * @return true if the object was quit successfully.
          */
-        virtual bool quit() = 0;
+        virtual bool quit();
 
         /** An shoot rutine.
          * @return true if successful.
@@ -56,7 +56,7 @@ class RdManagerBase {
         void *getFunctionByName( std::string function_name );
         int getManagerStatus();
         RdCameraBase* getRdCameraBasePtr();
-        void getEnemies( int pipelineIndex,  std::vector< std::pair<int, int> >& enemyPos, std::vector< double >& enemySize);
+        void getEnemies(int pipelineIndex,  std::vector< std::pair<int, int> >& enemyPos, std::vector< double >& enemySize);
 
         void setRdCameraBasePtr(RdCameraBase* rdCameraBasePtr );
         void setRdInputBasePtr(RdInputBase* rdInputBasePtr ) ;
@@ -68,6 +68,8 @@ class RdManagerBase {
 
     protected:
         static const int PIPELINE_SIZE = 3;
+        static const int MANAGER_STATUS_OK = 0;
+        static const int MANAGER_STATUS_STOPPED = -1;
 
         int managerStatus;
         std::map< std::string, void*> functionMap;
@@ -92,7 +94,7 @@ class RdManagerBase {
         virtual bool processImage() = 0;
 
      private:
-        static void * processImageThread( void * This);
+        static void * processImageThread(void * This);
 };
 
 } //rdlib

@@ -36,9 +36,9 @@ bool rdlib::RdOutputBase::start()
 
 bool rdlib::RdOutputBase::quit()
 {
-    std::cout << "[info] RdOutputHighgui quit()" << std::endl;
+    RD_INFO("Starting quit sequence for RdOuputBase");
     isRunning = false;
-    pthread_join( output_thread, NULL);
+    //pthread_join( output_thread, NULL);
     return true;
 }
 
@@ -60,25 +60,30 @@ void rdlib::RdOutputBase::setCaptureSemaphores(sem_t *captureSemaphores)
 
 void *rdlib::RdOutputBase::outputThread(void *This)
 {
-    ((RdOutputBase* ) This)->outputWithSync();
+    ((RdOutputBase*) This)->outputWithSync();
 }
 
 bool rdlib::RdOutputBase::outputWithSync()
 {
-    while( isRunning )
+    if (isRunning)
     {
-        for (int i = 0; i < PIPELINE_SIZE; i++)
+        do
         {
-            //-- Lock the semaphore
-            sem_wait( displaySemaphores+i);
+            for (int i = 0; i < PIPELINE_SIZE; i++)
+            {
+                //-- Lock the semaphore
+                sem_wait(displaySemaphores+i);
 
-            //-- Output screen
-            //std::cout << "[info] Output frame #" << i << std::endl;
-            this->output(i);
+                //-- Output screen
+                std::cout << "[info] Output frame #" << i << std::endl;
+                this->output(i);
 
-            //-- Unlock the corresponding process semaphore
-            sem_post( captureSemaphores+i);
-
-        }
+                //-- Unlock the corresponding process semaphore
+                sem_post(captureSemaphores+i);
+            }
+        } while (isRunning);
     }
+
+    //sem_post(captureSemaphores);
+    RD_SUCCESS("Exited output main thread!");
 }

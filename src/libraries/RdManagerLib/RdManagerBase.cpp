@@ -16,13 +16,17 @@ bool rdlib::RdManagerBase::start()
     //-- Start the capture thread
     int res = pthread_create( &processImage_thread, NULL, processImageThread, (void *) this );
     if (res == 0)
-    {
         RD_INFO("RdManagerBase created thread.\n");
-    }
     else
-    {
         RD_WARNING("RdManagerBase could not create thread.\n");
-    }
+}
+
+bool rdlib::RdManagerBase::quit()
+{
+    RD_INFO("Starting quit sequence for RdManagerBase");
+    managerStatus = MANAGER_STATUS_STOPPED;
+    //pthread_join( processImage_thread, NULL );
+    return true;
 }
 
 bool rdlib::RdManagerBase::shootWrapper(void *This)

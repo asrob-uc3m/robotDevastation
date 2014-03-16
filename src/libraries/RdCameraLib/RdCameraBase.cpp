@@ -52,21 +52,28 @@ void *rdlib::RdCameraBase::captureThread(void *This)
 
 void *rdlib::RdCameraBase::captureWithSync()
 {
-    while( !stopThread )
+    if( !stopThread )
     {
-        for (int i = 0; i < PIPELINE_SIZE; i++)
+        do
         {
+            for (int i = 0; i < PIPELINE_SIZE; i++)
+            {
             //-- Lock the semaphore
             sem_wait( captureSemaphores+i);
 
-            //-- Cpature frame however you want
-            //std::cout << "[info] Captured frame #" << i << std::endl;
+            //-- Capture frame however you want
+            std::cout << "[info] Captured frame #" << i << std::endl;
             this->capture(i);
 
             //-- Unlock the corresponding process semaphore
             sem_post( processSemaphores+i);
-
-        }
+            }
+        } while ( !stopThread);
     }
 
+    //-- Lock twice the semaphore in order to be the last thread to exit in
+    //-- the pipeline. This way the semaphores are deleted correctly and
+    //-- the other threads are not locked
+    //sem_wait(captureSemaphores);
+    RD_SUCCESS("Exited camera main thread!");
 }
