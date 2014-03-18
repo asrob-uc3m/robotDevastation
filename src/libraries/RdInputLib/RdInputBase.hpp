@@ -47,6 +47,7 @@ class RdInputBase {
 
         virtual bool input() = 0;
 
+        /** Map on input base to describe mapping of implementation of keys */
         std::map< std::string, std::string > keyMap;
 
     private:
