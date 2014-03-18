@@ -44,10 +44,7 @@ class RdRobotBase {
         static bool shootWrapper( void * This);
         static bool resetWrapper( void * This);
 
-        void setRdIniMap(std::map< std::string, std::string >& rdIniMap)
-        {
-            this->rdIniMap = rdIniMap;
-        }
+        void setRdIniMap(std::map< std::string, std::string >& rdIniMap);
 
 
     protected:

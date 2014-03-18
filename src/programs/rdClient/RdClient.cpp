@@ -13,9 +13,12 @@ void rdclient::RdClient::staticSignalHandler(int s)
 {
     //-- see "kill -l" for a list of meanings. 2 is a SIGINT (ctrl-c).
     std::string msg("Caught signal ");
-    if (s==2) msg += "SIGINT (usually a CTRL-C)";
-    else if (s==15) msg += "SIGTERM";
-    else msg += "Unknown";
+    if (s==2)
+        msg += "SIGINT (usually a CTRL-C)";
+    else if (s==15)
+        msg += "SIGTERM";
+    else
+        msg += "Unknown";
     RD_INFO("%s. Bye!\n",msg.c_str());
     globalRdClient->quitProgram();
     exit(s);
@@ -61,16 +64,19 @@ bool rdclient::RdClient::runProgram()
     rdOutputBasePtr = new rdlib::RdOutputHighgui();
     rdInputBasePtr = new rdlib::RdInputHighgui();
 
+    //-- Link manager to the rest of the modules:
     rdManagerBasePtr->setRdCameraBasePtr(rdCameraBasePtr);
     rdManagerBasePtr->setRdRobotBasePtr(rdRobotBasePtr);
-
     rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
     rdManagerBasePtr->setRdOutputBasePtr(rdOutputBasePtr);
 
-
+    //-- Link input to the manager
     rdInputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
+
+    //-- This is only needed because we are using OpenCV's Highgui I/O
     ((rdlib::RdInputHighgui *) rdInputBasePtr)->setRdOutputHighguiPtr( (rdlib::RdOutputHighgui*) rdOutputBasePtr);
 
+    //-- Link output to the manager
     rdOutputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
 
     //-- Semaphore configuration
@@ -80,6 +86,7 @@ bool rdclient::RdClient::runProgram()
     rdOutputBasePtr->setDisplaySemaphores(  rdCameraBasePtr->getDisplaySemaphores() );
     rdOutputBasePtr->setCaptureSemaphores(  rdCameraBasePtr->getCaptureSemaphores() );
 
+    //-- Pass reference to the commands/actions
     rdRobotBasePtr->setRdIniMap(rdIniMap);
 
     //-- Start components
@@ -94,8 +101,9 @@ bool rdclient::RdClient::runProgram()
     while(1)
     {
         managerStatus = rdManagerBasePtr->getManagerStatus();
-        std::cout << "RdClient alive, managerStatus: " << managerStatus << std::endl;
-        if (managerStatus < 0) break;
+        RD_INFO("RdClient alive, managerStatus: %d\n",managerStatus);
+        if (managerStatus < 0)
+            break;
         usleep( watchdog * 1000000.0 );
     }
     return this->quitProgram();
