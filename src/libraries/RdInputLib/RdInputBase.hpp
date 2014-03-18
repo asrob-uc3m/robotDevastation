@@ -5,6 +5,8 @@
 
 #include <iostream>
 #include <map>
+
+#include "RdMacros.hpp"
 #include "RdManagerBase.hpp"
 
 /**
