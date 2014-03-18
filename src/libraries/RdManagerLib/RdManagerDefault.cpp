@@ -65,9 +65,22 @@ bool rdlib::RdManagerDefault::trackHead( int index )
     //-- Create a haars cascade classifier
     cv::CascadeClassifier faceDetector;
 
-    bool ok = faceDetector.load( "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml" );
-    if (!ok)
-        std::cerr << "[Debug] Cascade Classifier could not find template." << std::endl;
+    if(!getenv("RD_ROOT"))
+    {
+        RD_ERROR("Required RD_ROOT environomental variable empty!\n");
+        RD_ERROR("Include the line \"export RD_ROOT=/your/path/to/robotDevastation\" or similar in .bashrc or .profile\n");
+        return -1;
+    }
+    std::string faceDetectorFilename( getenv("RD_ROOT") );
+    faceDetectorFilename += "/share/rdClient/xml/haarcascade_frontalface_alt.xml";
+    if ( ! faceDetector.load( faceDetectorFilename.c_str() ) )
+    {
+        RD_WARNING("Cascade Classifier could not find template.\n");
+    }
+    else
+    {
+        RD_SUCCESS("Cascade Classifier found template.\n");
+    }
 
     //-- Get image
     int width,height,step;
