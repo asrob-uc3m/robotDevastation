@@ -2,43 +2,51 @@
 
 rdlib::RdOutputBase::RdOutputBase()
 {
-    isRunning=true;
+    stopThread=false;
+}
+
+bool rdlib::RdOutputBase::setup()
+{
+    //-- This does nothing (right now)
+    RD_INFO("RdOutputBase: setup!\n");
 }
 
 bool rdlib::RdOutputBase::start()
 {
     if ( rdManagerBasePtr == NULL)
     {
-        std::cerr << "[error] RdOutputBase could not start. Missing pointer to manager.";
-        std::cerr << std::endl;
+        RD_ERROR("RdOutputBase could not start. Missing pointer to manager.\n");
         return false;
     }
     rdCameraBasePtr = rdManagerBasePtr->getRdCameraBasePtr();
 
     if ( ! rdCameraBasePtr )
     {
-        std::cerr << "[error] RdOutputBase could not start. Missing pointer to camera.";
-        std::cerr << std::endl;
+        RD_ERROR("RdOutputBase could not start. Missing pointer to camera.\n");
         return false;
     }
 
     //-- Start the display thread
-    int res = pthread_create( &output_thread, NULL, outputThread, (void *) this );
-    if (res == 0)
-    {
-        RD_INFO("RdOutputBase created thread.\n");
-    }
+    int result = pthread_create( &output_thread, NULL, outputThread, (void *) this );
+    if (result == 0)
+        {RD_INFO("RdOutputBase started thread.\n");}
     else
-    {
-        RD_WARNING("RdOutputBase could not create thread.\n");
-    }
+        {RD_WARNING("RdOutputBase could not create thread.\n");}
+
+    return true;
+}
+
+bool rdlib::RdOutputBase::askToStop()
+{
+    RD_INFO("RdOutputBase: stopping...\n");
+    stopThread = true;
+    return true;
 }
 
 bool rdlib::RdOutputBase::quit()
 {
-    RD_INFO("Starting quit sequence for RdOuputBase");
-    isRunning = false;
-    //pthread_join( output_thread, NULL);
+    RD_INFO("RdOutputBase: exiting...\n");
+    pthread_join( output_thread, NULL);
     return true;
 }
 
@@ -65,7 +73,7 @@ void *rdlib::RdOutputBase::outputThread(void *This)
 
 bool rdlib::RdOutputBase::outputWithSync()
 {
-    if (isRunning)
+    if (!stopThread)
     {
         do
         {
@@ -75,13 +83,13 @@ bool rdlib::RdOutputBase::outputWithSync()
                 sem_wait(displaySemaphores+i);
 
                 //-- Output screen
-                std::cout << "[info] Output frame #" << i << std::endl;
+                //RD_INFO("Output frame #%i\n", i);
                 this->output(i);
 
                 //-- Unlock the corresponding process semaphore
                 sem_post(captureSemaphores+i);
             }
-        } while (isRunning);
+        } while (!stopThread);
     }
 
     //sem_post(captureSemaphores);

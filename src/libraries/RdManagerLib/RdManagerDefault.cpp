@@ -36,10 +36,10 @@ bool rdlib::RdManagerDefault::processImage()
                 sem_wait( processSemaphores+i);
 
                 //-- Right now, it doesn't do much
-                std::cout << "[info] Processed frame # " << i << "." << std::endl;
+                //RD_INFO("Processed frame #%i\n", i);
                 if ( managerStatus == MANAGER_STATUS_HEAD_TRACK )
                 {
-                    std::cout << "[info] Tracking head." << std::endl;
+                    RD_INFO("Tracking head.\n");
                     trackHead(i);
                 }
 

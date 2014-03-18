@@ -70,21 +70,11 @@ bool rdclient::RdClient::runProgram()
     rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
     rdManagerBasePtr->setRdOutputBasePtr(rdOutputBasePtr);
 
-    //-- Link input to the manager
-    rdInputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
+    //-- Setup the manager
+    rdManagerBasePtr->setup();
 
     //-- This is only needed because we are using OpenCV's Highgui I/O
     ((rdlib::RdInputHighgui *) rdInputBasePtr)->setRdOutputHighguiPtr( (rdlib::RdOutputHighgui*) rdOutputBasePtr);
-
-    //-- Link output to the manager
-    rdOutputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
-
-    //-- Semaphore configuration
-    //! \todo convert this to a cleaner syntax
-    rdManagerBasePtr->setProcessSemaphores( rdCameraBasePtr->getProcessSemaphores() );
-    rdManagerBasePtr->setDisplaySemaphores( rdCameraBasePtr->getDisplaySemaphores() );
-    rdOutputBasePtr->setDisplaySemaphores(  rdCameraBasePtr->getDisplaySemaphores() );
-    rdOutputBasePtr->setCaptureSemaphores(  rdCameraBasePtr->getCaptureSemaphores() );
 
     //-- Pass reference to the commands/actions
     rdRobotBasePtr->setRdIniMap(rdIniMap);
@@ -94,7 +84,7 @@ bool rdclient::RdClient::runProgram()
     rdManagerBasePtr->start();
     rdOutputBasePtr->start();
 
-    rdRobotBasePtr->connect();
+    rdRobotBasePtr->connect(); //! \todo Change this to setup
     rdInputBasePtr->start();
 
     int managerStatus;

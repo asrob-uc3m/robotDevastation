@@ -15,22 +15,7 @@ rdlib::RdCameraWebcam::RdCameraWebcam(int cameraIndex)
         webcam.read(frame);
         imageBuffers.push_back(frame.clone() );
     }
-
-    //-- Init the semaphores
-    captureSemaphores = new sem_t[PIPELINE_SIZE];
-    for( int i = 0; i < PIPELINE_SIZE; i++)
-        sem_init( captureSemaphores+i, 0, 1);
-
-    processSemaphores = new sem_t[PIPELINE_SIZE];
-    for( int i = 0; i < PIPELINE_SIZE; i++)
-        sem_init( processSemaphores+i, 0, 0);
-
-    displaySemaphores = new sem_t[PIPELINE_SIZE];
-    for( int i = 0; i < PIPELINE_SIZE; i++)
-        sem_init( displaySemaphores+i, 0, 0);
-
 }
-
 
 void rdlib::RdCameraWebcam::capture( int index)
 {
