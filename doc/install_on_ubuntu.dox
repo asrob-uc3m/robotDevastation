@@ -2,11 +2,10 @@
 /**
  * \page install_on_ubuntu Robot Devastation - Installation from Source Code (Ubuntu)
 
-  \li \ref install_cmake \endref
-  \li \ref install_yarp \endref
-  \li \ref install_opencv \endref
+  \li \ref install_cmake
+  \li \ref install_opencv
 
-  \li \ref install_rd \endref
+  \li \ref install_rd
 
 
  * @section install_cmake Install CMake
