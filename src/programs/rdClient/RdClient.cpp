@@ -20,8 +20,7 @@ void rdclient::RdClient::staticSignalHandler(int s)
     else
         msg += "Unknown";
     RD_INFO("%s. Bye!\n",msg.c_str());
-    globalRdClient->quitProgram();
-    exit(s);
+    globalRdClient->getRdManagerBasePtr()->askToStop();
 }
 
 bool rdclient::RdClient::runProgram()
@@ -92,7 +91,7 @@ bool rdclient::RdClient::runProgram()
     {
         managerStatus = rdManagerBasePtr->getManagerStatus();
         RD_INFO("RdClient alive, managerStatus: %d\n",managerStatus);
-        if (managerStatus < 0)
+        if (managerStatus == rdlib::RdManagerBase::MANAGER_STATUS_STOPPED)
             break;
         usleep( watchdog * 1000000.0 );
     }
@@ -102,7 +101,19 @@ bool rdclient::RdClient::runProgram()
 //-- Closing rutines.
 bool rdclient::RdClient::quitProgram()
 {
-    RD_INFO("begin quitting...\n");
+    RD_INFO("Stopping components...\n");
+    if (rdInputBasePtr)
+        rdInputBasePtr->askToStop();
+
+    if (rdRobotBasePtr)
+        rdRobotBasePtr->askToStop();
+
+    if (rdManagerBasePtr)
+        rdManagerBasePtr->askToStop();
+
+    usleep( 1e5);
+
+    RD_INFO("Deleting components...\n");
     if (rdInputBasePtr) {
         rdInputBasePtr->quit();
         delete rdInputBasePtr;
@@ -113,21 +124,18 @@ bool rdclient::RdClient::quitProgram()
         delete rdRobotBasePtr;
         rdRobotBasePtr = 0;
     }
-    if (rdOutputBasePtr) {
-        rdOutputBasePtr->quit();
-        delete rdOutputBasePtr;
-        rdOutputBasePtr = 0;
-    }
+
     if (rdManagerBasePtr) {
         rdManagerBasePtr->quit();
         delete rdManagerBasePtr;
         rdManagerBasePtr = 0;
     }
-    if (rdCameraBasePtr) {
-        rdCameraBasePtr->quit();
-        delete rdCameraBasePtr;
-        rdCameraBasePtr = 0;
-    }
+
     RD_SUCCESS("RdClient quitProgram(): quit gracefully, bye!\n");
     return true;
+}
+
+rdlib::RdManagerBase *rdclient::RdClient::getRdManagerBasePtr()
+{
+    return rdManagerBasePtr;
 }

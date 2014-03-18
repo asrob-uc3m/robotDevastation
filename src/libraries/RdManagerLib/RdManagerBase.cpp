@@ -32,8 +32,9 @@ bool rdlib::RdManagerBase::setup()
     //-- Link input to the manager
     rdInputBasePtr->setRdManagerBasePtr(this);
 
-    //-- Link output to the manager
+    //-- Link output to the manager & camera
     rdOutputBasePtr->setRdManagerBasePtr(this);
+    rdOutputBasePtr->setRdCameraBasePtr(rdCameraBasePtr);
 
     //-- Semaphore configuration
     rdCameraBasePtr->setCaptureSemaphores(captureSemaphores);
@@ -78,11 +79,17 @@ bool rdlib::RdManagerBase::askToStop()
 
 bool rdlib::RdManagerBase::quit()
 {
-    RD_INFO("RdCameraBase: exiting...\n");
+    RD_INFO("RdManagerBase: stopping different components...\n");
 
+    rdCameraBasePtr->quit();
+    rdOutputBasePtr->quit();
+
+    RD_INFO("RdManagerBase: waiting for the manager thread to finish...\n");
     pthread_join( processImage_thread, NULL );
 
     //-- Delete semaphores
+    RD_INFO("RdManagerBase: deleting semaphores...\n");
+
     delete[] captureSemaphores;
     captureSemaphores = 0;
     delete[] processSemaphores; //-- Doing this here will cause (probably) a segmentation fault

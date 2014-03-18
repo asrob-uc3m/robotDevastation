@@ -67,10 +67,11 @@ class RdManagerBase {
         void setRdOutputBasePtr(RdOutputBase* rdOutputBasePtr );
         void setRdRobotBasePtr(RdRobotBase* rdRobotBasePtr );
 
-    protected:
-        static const int PIPELINE_SIZE = 3;
         static const int MANAGER_STATUS_OK = 0;
         static const int MANAGER_STATUS_STOPPED = -1;
+
+    protected:
+        static const int PIPELINE_SIZE = 3;
 
         int managerStatus;
         std::map< std::string, void*> functionMap;

@@ -45,7 +45,7 @@ bool rdlib::RdInputHighgui::setRdOutputHighguiPtr(rdlib::RdOutputHighgui *rdOutp
 
 bool rdlib::RdInputHighgui::input()
 {
-    while ( isRunning )
+    while ( !stopThread )
     {
         //-- Lock the mutex to access the key
         pthread_mutex_lock( inputKeyMutex );
@@ -78,12 +78,12 @@ bool rdlib::RdInputHighgui::input()
             else if ( currentInputKey == '\x1b' ) // ESC: 1048603 (0x10001b), LSB: 27 ('\x1b')
             {
                 std::cout << "[info] RdInputHighgui: The escape key was pressed. Bye!" << std::endl;
-                rdManagerBasePtr->quit();
+                rdManagerBasePtr->askToStop();
             }
             else if ( currentInputKey==99 )  // CTRL-C
             {
                 std::cout << "[info] RdInputHighgui: CTRL-C key was pressed. Bye!" << std::endl;
-                rdManagerBasePtr->quit();
+                rdManagerBasePtr->askToStop();
             }
         }
         lastInputKey = currentInputKey;

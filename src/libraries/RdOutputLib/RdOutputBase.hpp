@@ -42,6 +42,7 @@ class RdOutputBase {
         virtual bool quit();
 
         void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr );
+        void setRdCameraBasePtr(RdCameraBase* rdCameraBasePtr);
 
         void setDisplaySemaphores( sem_t * displaySemaphores);
         void setCaptureSemaphores( sem_t * captureSemaphores);

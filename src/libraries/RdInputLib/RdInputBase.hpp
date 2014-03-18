@@ -27,7 +27,9 @@ class RdRobotBase;
  */
 class RdInputBase {
     public:
+        virtual bool setup();
         virtual bool start();
+        virtual bool askToStop();
 
         /** A quit rutine.
          * @return true if the object was quit successfully.
@@ -39,7 +41,7 @@ class RdInputBase {
     protected:
         //-- Thread-related
         pthread_t threadId;
-        bool isRunning;
+        bool stopThread;
 
         //-- Pointers to other modules
         RdManagerBase* rdManagerBasePtr;

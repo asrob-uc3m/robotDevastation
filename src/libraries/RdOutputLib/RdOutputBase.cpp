@@ -18,7 +18,6 @@ bool rdlib::RdOutputBase::start()
         RD_ERROR("RdOutputBase could not start. Missing pointer to manager.\n");
         return false;
     }
-    rdCameraBasePtr = rdManagerBasePtr->getRdCameraBasePtr();
 
     if ( ! rdCameraBasePtr )
     {
@@ -54,6 +53,11 @@ bool rdlib::RdOutputBase::quit()
 void rdlib::RdOutputBase::setRdManagerBasePtr(rdlib::RdManagerBase *rdManagerBasePtr)
 {
     this->rdManagerBasePtr = rdManagerBasePtr;
+}
+
+void rdlib::RdOutputBase::setRdCameraBasePtr(rdlib::RdCameraBase *rdCameraBasePtr)
+{
+   this->rdCameraBasePtr = rdCameraBasePtr;
 }
 
 void rdlib::RdOutputBase::setDisplaySemaphores(sem_t *displaySemaphores)

@@ -1,10 +1,17 @@
 #include "RdInputBase.hpp"
 
+bool rdlib::RdInputBase::setup()
+{
+    //-- This does nothing (right now)
+    RD_INFO("RdInputBase: setup!\n");
+    return true;
+}
+
 bool rdlib::RdInputBase::start()
 {
-    isRunning = true;
-    int res = pthread_create (&threadId, NULL, &RdInputBase::inputThread, this);
-    if (res == 0) {
+    stopThread = false;
+    int result = pthread_create (&threadId, NULL, &RdInputBase::inputThread, this);
+    if (result == 0) {
         RD_INFO("RdInputBase created thread.\n");
     }
     else
@@ -13,10 +20,16 @@ bool rdlib::RdInputBase::start()
     }
 }
 
+bool rdlib::RdInputBase::askToStop()
+{
+    RD_INFO("RdInputBase: stopping...\n");
+    stopThread = true;
+    return true;
+}
+
 bool rdlib::RdInputBase::quit()
 {
-    std::cout << "[info] RdInputBase quit()" << std::endl;
-    isRunning = false;
+    RD_INFO("RdInputBase: exiting...\n");
     pthread_join( threadId, NULL);
 }
 

@@ -20,7 +20,6 @@ rdlib::RdCameraWebcam::RdCameraWebcam(int cameraIndex)
 void rdlib::RdCameraWebcam::capture( int index)
 {
     webcam.read(imageBuffers.at(index));
-    //std::cout << "[info] Captured frame # " << index << "." << std::endl;
 }
 
 char *rdlib::RdCameraWebcam::getBufferPtr(int index)
