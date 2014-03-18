@@ -18,41 +18,6 @@ sudo apt-get install cmake
 sudo apt-get install cmake-curses-gui  # Needed for ccmake.
 \endverbatim
 
-
- * @section install_yarp Install YARP
-
-Note that you will be prompted for your password upon using '''sudo''' a couple of times:
-
-\verbatim
-sudo apt-get install build-essential libace-dev subversion git
-sudo apt-get install libgsl0-dev  # Needed for creating YARP lib_math we use for kinematics
-sudo apt-get install libgtkmm-2.4-dev  # Needed for YARP GUIs: yarpview, gyarpmanager
-sudo apt-get install libjpeg8-dev   # Needed for mjpeg_carrier for ravebot cam on web
-git clone git://github.com/robotology/yarp.git
-cd yarp; mkdir build; cd build
-cmake .. -DCREATE_LIB_MATH=ON -DCREATE_GUIS=ON -DCREATE_OPTIONAL_CARRIERS=ON -DENABLE_yarpcar_mjpeg_carrier=ON
-make -j3;  sudo make install; cd ../..
-\endverbatim
-
-For additional options use ccmake instead of cmake.
-
-Do not forget to set the YARP_ROOT environment variable to ''yarp'' and the YARP_DIR environment variable to ''yarp/build''. There are two ways of doing this:
-
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). For this option, type:
- 
-\verbatim
-echo "export YARP_ROOT=$PWD/yarp" >> ~/.profile
-echo "export YARP_DIR=$PWD/yarp/build" >> ~/.profile
-\endverbatim
-
- 2) Through ~/.baschrc (parsed inside each terminal). For this other option, type:
- 
-\verbatim
-echo "export YARP_ROOT=$PWD/yarp" >> ~/.bashrc
-echo "export YARP_DIR=$PWD/yarp/build" >> ~/.bashrc
-\endverbatim
-
-
  * @section install_opencv Install OpenCV
 
 We'll do this from source to assure the CMake file is created.
