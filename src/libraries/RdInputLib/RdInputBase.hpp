@@ -4,6 +4,7 @@
 #define __RD_INPUT_BASE_HPP__
 
 #include <iostream>
+#include <map>
 #include "RdManagerBase.hpp"
 
 /**
@@ -45,6 +46,8 @@ class RdInputBase {
         RdManagerBase* rdManagerBasePtr;
 
         virtual bool input() = 0;
+
+        std::map< std::string, std::string > keyMap;
 
     private:
         static void * inputThread( void * This );
