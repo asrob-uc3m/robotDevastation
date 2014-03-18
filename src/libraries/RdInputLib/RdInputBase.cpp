@@ -29,3 +29,13 @@ void * rdlib::RdInputBase::inputThread(void *This)
 {
     reinterpret_cast<RdInputBase*>(This)->input();
 }
+
+const char& rdlib::RdInputBase::getKeyCharByName(std::string keychar_name)
+{
+    keyMap[ keychar_name ];
+}
+
+void rdlib::RdInputBase::setKeyFunctionMap(const std::map<char, void *> &value)
+{
+    keyFunctionMap = value;
+}

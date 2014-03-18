@@ -2,6 +2,11 @@
 
 bool rdlib::RdInputHighgui::start()
 {
+    std::pair< std::string, char > kb_esc("ESC", '\x1b');
+    keyMap.insert(kb_esc);
+    std::pair< std::string, char > kb_w("W", 'w');
+    keyMap.insert(kb_w);
+
     if ( rdOutputHighguiPtr == NULL )
     {
         RD_ERROR("Could not start RdInputHighgui,\n");

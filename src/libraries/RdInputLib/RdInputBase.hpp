@@ -39,7 +39,12 @@ class RdInputBase {
 
         void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr );
 
-    protected:
+
+        const char& getKeyCharByName(std::string keychar_name);
+
+        void setKeyFunctionMap(const std::map<char, void *> &value);
+
+protected:
         //-- Thread-related
         pthread_t threadId;
         bool isRunning;
@@ -50,7 +55,10 @@ class RdInputBase {
         virtual bool input() = 0;
 
         /** Map on input base to describe mapping of implementation of keys */
-        std::map< std::string, std::string > keyMap;
+        std::map< std::string, char > keyMap;
+
+        /** Map of keys to functions */
+        std::map< char, void*> keyFunctionMap;
 
     private:
         static void * inputThread( void * This );

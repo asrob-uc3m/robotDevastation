@@ -62,6 +62,14 @@ bool rdclient::RdClient::runProgram(const int& argc, char *argv[])
     rdOutputBasePtr = new rdlib::RdOutputHighgui();
     rdInputBasePtr = new rdlib::RdInputHighgui();
 
+    for(std::map< std::string, std::string >::iterator it = rdIniMap.begin(); it != rdIniMap.end(); ++it) {
+        char keyChar = rdInputBasePtr->getKeyCharByName(it->first.c_str());
+        void* funcPtr = rdManagerBasePtr->getFunctionByName(it->second.c_str());
+        std::pair< char, void*> keyFunctionPair(keyChar, funcPtr);
+        keyFunctionMap.insert( keyFunctionPair );
+    }
+    rdInputBasePtr->setKeyFunctionMap(keyFunctionMap);
+
     rdManagerBasePtr->setRdCameraBasePtr(rdCameraBasePtr);
     rdManagerBasePtr->setRdRobotBasePtr(rdRobotBasePtr);
 

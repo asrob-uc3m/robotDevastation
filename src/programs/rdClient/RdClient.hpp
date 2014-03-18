@@ -62,8 +62,11 @@ class RdClient {
         /** Camera */
         rdlib::RdCameraBase* rdCameraBasePtr;
 
-        /** Map */
+        /** Map read from ini file */
         std::map< std::string, std::string > rdIniMap;
+
+        /** Map of keys to functions */
+        std::map< char, void*> keyFunctionMap;
 
 };
 
