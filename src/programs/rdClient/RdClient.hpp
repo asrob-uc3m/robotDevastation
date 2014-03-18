@@ -31,7 +31,7 @@ class RdClient {
          *
          * @return true/false upon success/failure
          */
-        bool runProgram();
+        bool runProgram(const int& argc, char *argv[]);
 
         /**
          * Quit the program.

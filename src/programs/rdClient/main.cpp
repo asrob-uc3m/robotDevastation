@@ -65,6 +65,6 @@ int main(int argc, char *argv[]) {
     std::cout << "--------------------------------------------------------------" << std::endl;
 
     rdclient::RdClient program;  // This is the rdClient program main class.
-    return program.runProgram();
+    return program.runProgram(argc,argv);
 }
 

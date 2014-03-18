@@ -21,7 +21,7 @@ void rdclient::RdClient::staticSignalHandler(int s)
     exit(s);
 }
 
-bool rdclient::RdClient::runProgram()
+bool rdclient::RdClient::runProgram(const int& argc, char *argv[])
 {
     rdManagerBasePtr = 0;
     rdInputBasePtr = 0;
@@ -34,7 +34,8 @@ bool rdclient::RdClient::runProgram()
     //-- .ini reader
     if(!getenv("RD_ROOT"))
     {
-        RD_ERROR("check your RD_ROOT environomental variable, it is empty!\n");
+        RD_ERROR("Required RD_ROOT environomental variable empty!\n");
+        RD_ERROR("Include the line \"export RD_ROOT=/your/path/to/robotDevastation\" or similar in .bashrc or .profile\n");
         return -1;
     }
     RD_INFO("Using RD_ROOT environomental variable: %s\n",getenv("RD_ROOT"));
