@@ -40,6 +40,8 @@ class RdClient {
          */
         bool quitProgram();
 
+        rdlib::RdManagerBase* getRdManagerBasePtr();
+
     protected:
 
         static void staticSignalHandler(int arg);

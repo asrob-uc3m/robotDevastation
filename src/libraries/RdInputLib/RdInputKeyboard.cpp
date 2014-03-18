@@ -20,7 +20,7 @@ rdlib::RdInputKeyboard::RdInputKeyboard()
 
     XMapWindow(dis, win);
     XFlush(dis);
-    isRunning=true;
+    stopThread=true;
 
     start(); //-- Note: Taking this out of here will give us more flexibility
 }
@@ -28,7 +28,7 @@ rdlib::RdInputKeyboard::RdInputKeyboard()
 bool rdlib::RdInputKeyboard::input()
 {
     std::cout << "[success] RdInputKeyboard thread." << std::endl;
-    while ( isRunning )
+    while ( !stopThread )
     {
         XNextEvent(dis, &report);
         switch  (report.type)

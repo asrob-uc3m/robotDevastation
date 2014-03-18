@@ -2,42 +2,49 @@
 
 rdlib::RdOutputBase::RdOutputBase()
 {
-    isRunning=true;
+    stopThread=false;
+}
+
+bool rdlib::RdOutputBase::setup()
+{
+    //-- This does nothing (right now)
+    RD_INFO("RdOutputBase: setup!\n");
 }
 
 bool rdlib::RdOutputBase::start()
 {
     if ( rdManagerBasePtr == NULL)
     {
-        std::cerr << "[error] RdOutputBase could not start. Missing pointer to manager.";
-        std::cerr << std::endl;
+        RD_ERROR("RdOutputBase could not start. Missing pointer to manager.\n");
         return false;
     }
-    rdCameraBasePtr = rdManagerBasePtr->getRdCameraBasePtr();
 
     if ( ! rdCameraBasePtr )
     {
-        std::cerr << "[error] RdOutputBase could not start. Missing pointer to camera.";
-        std::cerr << std::endl;
+        RD_ERROR("RdOutputBase could not start. Missing pointer to camera.\n");
         return false;
     }
 
     //-- Start the display thread
-    int res = pthread_create( &output_thread, NULL, outputThread, (void *) this );
-    if (res == 0)
-    {
-        RD_INFO("RdOutputBase created thread.\n");
-    }
+    int result = pthread_create( &output_thread, NULL, outputThread, (void *) this );
+    if (result == 0)
+        {RD_INFO("RdOutputBase started thread.\n");}
     else
-    {
-        RD_WARNING("RdOutputBase could not create thread.\n");
-    }
+        {RD_WARNING("RdOutputBase could not create thread.\n");}
+
+    return true;
+}
+
+bool rdlib::RdOutputBase::askToStop()
+{
+    RD_INFO("RdOutputBase: stopping...\n");
+    stopThread = true;
+    return true;
 }
 
 bool rdlib::RdOutputBase::quit()
 {
-    std::cout << "[info] RdOutputHighgui quit()" << std::endl;
-    isRunning = false;
+    RD_INFO("RdOutputBase: exiting...\n");
     pthread_join( output_thread, NULL);
     return true;
 }
@@ -46,6 +53,11 @@ bool rdlib::RdOutputBase::quit()
 void rdlib::RdOutputBase::setRdManagerBasePtr(rdlib::RdManagerBase *rdManagerBasePtr)
 {
     this->rdManagerBasePtr = rdManagerBasePtr;
+}
+
+void rdlib::RdOutputBase::setRdCameraBasePtr(rdlib::RdCameraBase *rdCameraBasePtr)
+{
+   this->rdCameraBasePtr = rdCameraBasePtr;
 }
 
 void rdlib::RdOutputBase::setDisplaySemaphores(sem_t *displaySemaphores)
@@ -60,25 +72,30 @@ void rdlib::RdOutputBase::setCaptureSemaphores(sem_t *captureSemaphores)
 
 void *rdlib::RdOutputBase::outputThread(void *This)
 {
-    ((RdOutputBase* ) This)->outputWithSync();
+    ((RdOutputBase*) This)->outputWithSync();
 }
 
 bool rdlib::RdOutputBase::outputWithSync()
 {
-    while( isRunning )
+    if (!stopThread)
     {
-        for (int i = 0; i < PIPELINE_SIZE; i++)
+        do
         {
-            //-- Lock the semaphore
-            sem_wait( displaySemaphores+i);
+            for (int i = 0; i < PIPELINE_SIZE; i++)
+            {
+                //-- Lock the semaphore
+                sem_wait(displaySemaphores+i);
 
-            //-- Output screen
-            //std::cout << "[info] Output frame #" << i << std::endl;
-            this->output(i);
+                //-- Output screen
+                //RD_INFO("Output frame #%i\n", i);
+                this->output(i);
 
-            //-- Unlock the corresponding process semaphore
-            sem_post( captureSemaphores+i);
-
-        }
+                //-- Unlock the corresponding process semaphore
+                sem_post(captureSemaphores+i);
+            }
+        } while (!stopThread);
     }
+
+    //sem_post(captureSemaphores);
+    RD_SUCCESS("Exited output main thread!");
 }

@@ -24,8 +24,6 @@ class RdManagerDefault : public RdManagerBase {
     public:
         RdManagerDefault();
 
-        virtual bool quit();
-
         virtual bool shoot();
 
         virtual bool processImage();
@@ -33,7 +31,8 @@ class RdManagerDefault : public RdManagerBase {
         static bool toggleHeadTrackWrapper( void * This);
         bool toggleHeadTrack();
         bool trackHead( int index); //-- Index is the source image that is being processed
-
+   protected:
+        static const int MANAGER_STATUS_HEAD_TRACK = 1;
 
 };
 

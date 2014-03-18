@@ -13,12 +13,14 @@ void rdclient::RdClient::staticSignalHandler(int s)
 {
     //-- see "kill -l" for a list of meanings. 2 is a SIGINT (ctrl-c).
     std::string msg("Caught signal ");
-    if (s==2) msg += "SIGINT (usually a CTRL-C)";
-    else if (s==15) msg += "SIGTERM";
-    else msg += "Unknown";
+    if (s==2)
+        msg += "SIGINT (usually a CTRL-C)";
+    else if (s==15)
+        msg += "SIGTERM";
+    else
+        msg += "Unknown";
     RD_INFO("%s. Bye!\n",msg.c_str());
-    globalRdClient->quitProgram();
-    exit(s);
+    globalRdClient->getRdManagerBasePtr()->askToStop();
 }
 
 bool rdclient::RdClient::runProgram(const int& argc, char *argv[])
@@ -62,6 +64,20 @@ bool rdclient::RdClient::runProgram(const int& argc, char *argv[])
     rdOutputBasePtr = new rdlib::RdOutputHighgui();
     rdInputBasePtr = new rdlib::RdInputHighgui();
 
+    //-- Link manager to the rest of the modules:
+    rdManagerBasePtr->setRdCameraBasePtr(rdCameraBasePtr);
+    rdManagerBasePtr->setRdRobotBasePtr(rdRobotBasePtr);
+    rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
+    rdManagerBasePtr->setRdOutputBasePtr(rdOutputBasePtr);
+
+    //-- Setup the manager
+    //! \todo Setup the other things
+    rdManagerBasePtr->setup();
+
+    //-- This is only needed because we are using OpenCV's Highgui I/O
+    ((rdlib::RdInputHighgui *) rdInputBasePtr)->setRdOutputHighguiPtr( (rdlib::RdOutputHighgui*) rdOutputBasePtr);
+
+    //-- Creates "The map" relating keys with function pointers and sets it to the rdInput
     for(std::map< std::string, std::string >::iterator it = rdIniMap.begin(); it != rdIniMap.end(); ++it) {
         char keyChar = rdInputBasePtr->getKeyCharByName(it->first.c_str());
         void* funcPtr = rdManagerBasePtr->getFunctionByName(it->second.c_str());
@@ -70,25 +86,7 @@ bool rdclient::RdClient::runProgram(const int& argc, char *argv[])
     }
     rdInputBasePtr->setKeyFunctionMap(keyFunctionMap);
 
-    rdManagerBasePtr->setRdCameraBasePtr(rdCameraBasePtr);
-    rdManagerBasePtr->setRdRobotBasePtr(rdRobotBasePtr);
-
-    rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
-    rdManagerBasePtr->setRdOutputBasePtr(rdOutputBasePtr);
-
-
-    rdInputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
-    ((rdlib::RdInputHighgui *) rdInputBasePtr)->setRdOutputHighguiPtr( (rdlib::RdOutputHighgui*) rdOutputBasePtr);
-
-    rdOutputBasePtr->setRdManagerBasePtr(rdManagerBasePtr);
-
-    //-- Semaphore configuration
-    //! \todo convert this to a cleaner syntax
-    rdManagerBasePtr->setProcessSemaphores( rdCameraBasePtr->getProcessSemaphores() );
-    rdManagerBasePtr->setDisplaySemaphores( rdCameraBasePtr->getDisplaySemaphores() );
-    rdOutputBasePtr->setDisplaySemaphores(  rdCameraBasePtr->getDisplaySemaphores() );
-    rdOutputBasePtr->setCaptureSemaphores(  rdCameraBasePtr->getCaptureSemaphores() );
-
+    //-- Pass reference to the configuration filemap
     rdRobotBasePtr->setRdIniMap(rdIniMap);
 
     //-- Start components
@@ -96,15 +94,16 @@ bool rdclient::RdClient::runProgram(const int& argc, char *argv[])
     rdManagerBasePtr->start();
     rdOutputBasePtr->start();
 
-    rdRobotBasePtr->connect();
-    rdInputBasePtr->start(); //-- What happens if I call this twice??
+    rdRobotBasePtr->connect(); //! \todo Change this to setup
+    rdInputBasePtr->start();
 
     int managerStatus;
     while(1)
     {
         managerStatus = rdManagerBasePtr->getManagerStatus();
-        std::cout << "RdClient alive, managerStatus: " << managerStatus << std::endl;
-        if (managerStatus < 0) break;
+        RD_INFO("RdClient alive, managerStatus: %d\n",managerStatus);
+        if (managerStatus == rdlib::RdManagerBase::MANAGER_STATUS_STOPPED)
+            break;
         usleep( watchdog * 1000000.0 );
     }
     return this->quitProgram();
@@ -113,32 +112,41 @@ bool rdclient::RdClient::runProgram(const int& argc, char *argv[])
 //-- Closing rutines.
 bool rdclient::RdClient::quitProgram()
 {
-    RD_INFO("begin quitting...\n");
-    if (rdCameraBasePtr) {
-        rdCameraBasePtr->quit();
-        delete rdCameraBasePtr;
-        rdCameraBasePtr = 0;
-    }
+    RD_INFO("Stopping components...\n");
+    if (rdInputBasePtr)
+        rdInputBasePtr->askToStop();
+
+    if (rdRobotBasePtr)
+        rdRobotBasePtr->askToStop();
+
+    if (rdManagerBasePtr)
+        rdManagerBasePtr->askToStop();
+
+    usleep( 1e5);
+
+    RD_INFO("Deleting components...\n");
     if (rdInputBasePtr) {
         rdInputBasePtr->quit();
         delete rdInputBasePtr;
         rdInputBasePtr = 0;
-    }
-    if (rdOutputBasePtr) {
-        rdOutputBasePtr->quit();
-        delete rdOutputBasePtr;
-        rdOutputBasePtr = 0;
     }
     if (rdRobotBasePtr) {
         rdRobotBasePtr->quit();
         delete rdRobotBasePtr;
         rdRobotBasePtr = 0;
     }
+
     if (rdManagerBasePtr) {
         rdManagerBasePtr->quit();
         delete rdManagerBasePtr;
         rdManagerBasePtr = 0;
     }
+
     RD_SUCCESS("RdClient quitProgram(): quit gracefully, bye!\n");
     return true;
+}
+
+rdlib::RdManagerBase *rdclient::RdClient::getRdManagerBasePtr()
+{
+    return rdManagerBasePtr;
 }

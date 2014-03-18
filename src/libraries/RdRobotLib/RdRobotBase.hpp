@@ -38,16 +38,14 @@ class RdRobotBase {
         //-- Every robot in this game shoots
         virtual bool shoot() = 0;
 
+        virtual bool askToStop() = 0;
         virtual bool quit() = 0;
 
         //-- Static wrappers
         static bool shootWrapper( void * This);
         static bool resetWrapper( void * This);
 
-        void setRdIniMap(std::map< std::string, std::string >& rdIniMap)
-        {
-            this->rdIniMap = rdIniMap;
-        }
+        void setRdIniMap(std::map< std::string, std::string >& rdIniMap);
 
 
     protected:

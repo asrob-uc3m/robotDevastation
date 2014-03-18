@@ -30,7 +30,9 @@ class RdRobotBase;
  */
 class RdCameraBase {
     public:
+        virtual bool setup();
         virtual bool start();
+        virtual bool askToStop();
         virtual bool quit();
 
         virtual bool getDimensions( int& width, int& height, int &step) = 0;
@@ -39,11 +41,8 @@ class RdCameraBase {
         void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr );
 
         //-- Get references to the semaphores
-        sem_t * getCaptureSemaphores();
-        sem_t * getProcessSemaphores();
-        sem_t * getDisplaySemaphores();
-
-        bool setStop( bool stop);
+        void setCaptureSemaphores(sem_t * captureSemaphores);
+        void setProcessSemaphores(sem_t * processSemaphores);
 
     protected:
         static const int PIPELINE_SIZE = 3;
@@ -57,7 +56,6 @@ class RdCameraBase {
         //-- Semaphores for camera/manager/output sync
         sem_t * captureSemaphores;
         sem_t * processSemaphores;
-        sem_t * displaySemaphores;
 
         //-- Thread-related
         pthread_t capture_thread;

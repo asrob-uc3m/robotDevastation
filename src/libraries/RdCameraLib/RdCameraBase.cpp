@@ -1,23 +1,36 @@
 #include "RdCameraBase.hpp"
 
+bool rdlib::RdCameraBase::setup()
+{
+    //-- This does nothing (right now)
+    RD_INFO("RdCameraBase: setup!\n");
+    return true;
+}
+
 bool rdlib::RdCameraBase::start()
 {
     //-- Start the capture thread
-    pthread_create( &capture_thread, NULL, captureThread, (void *) this );
+    int result = pthread_create( &capture_thread, NULL, captureThread, (void *) this );
+    if (result == 0)
+        {RD_INFO("RdCameraBase started thread.\n");}
+    else
+        {RD_WARNING("RdCameraBase could not create thread.\n");}
+
+    return true;
+}
+
+bool rdlib::RdCameraBase::askToStop()
+{
+    RD_INFO("RdCameraBase: stopping...\n");
+    stopThread = true;
+    return true;
 }
 
 bool rdlib::RdCameraBase::quit()
 {
-    std::cout << "[info] RdCameraBase quit()" << std::endl;
-    stopThread = true;
+    RD_INFO("RdCameraBase: exiting...\n");
     pthread_join( capture_thread, NULL);
-
-    delete[] captureSemaphores;
-    captureSemaphores = 0;
-    delete[] processSemaphores; //-- Doing this here will cause (probably) a segmentation fault
-    processSemaphores = 0;
-    delete[] displaySemaphores;
-    displaySemaphores = 0;
+    return true;
 }
 
 void rdlib::RdCameraBase::setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr )
@@ -25,24 +38,14 @@ void rdlib::RdCameraBase::setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr )
     this->rdManagerBasePtr = rdManagerBasePtr;
 }
 
-sem_t *rdlib::RdCameraBase::getCaptureSemaphores()
+void rdlib::RdCameraBase::setCaptureSemaphores(sem_t *captureSemaphores)
 {
-    return captureSemaphores;
+    this->captureSemaphores = captureSemaphores;
 }
 
-sem_t *rdlib::RdCameraBase::getProcessSemaphores()
+void rdlib::RdCameraBase::setProcessSemaphores(sem_t *processSemaphores)
 {
-    return processSemaphores;
-}
-
-sem_t *rdlib::RdCameraBase::getDisplaySemaphores()
-{
-    return displaySemaphores;
-}
-
-bool rdlib::RdCameraBase::setStop(bool stop)
-{
-     this->stopThread = stop;
+    this->processSemaphores = processSemaphores;
 }
 
 void *rdlib::RdCameraBase::captureThread(void *This)
@@ -52,21 +55,28 @@ void *rdlib::RdCameraBase::captureThread(void *This)
 
 void *rdlib::RdCameraBase::captureWithSync()
 {
-    while( !stopThread )
+    if( !stopThread )
     {
-        for (int i = 0; i < PIPELINE_SIZE; i++)
+        do
         {
+            for (int i = 0; i < PIPELINE_SIZE; i++)
+            {
             //-- Lock the semaphore
             sem_wait( captureSemaphores+i);
 
-            //-- Cpature frame however you want
-            //std::cout << "[info] Captured frame #" << i << std::endl;
+            //-- Capture frame however you want
+            //RD_INFO("Captured frame #%i\n", i);
             this->capture(i);
 
             //-- Unlock the corresponding process semaphore
             sem_post( processSemaphores+i);
-
-        }
+            }
+        } while ( !stopThread);
     }
 
+    //-- Lock twice the semaphore in order to be the last thread to exit in
+    //-- the pipeline. This way the semaphores are deleted correctly and
+    //-- the other threads are not locked
+    //sem_wait(captureSemaphores);
+    RD_SUCCESS("Exited camera main thread!");
 }

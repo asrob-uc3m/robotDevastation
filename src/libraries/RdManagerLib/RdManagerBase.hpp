@@ -3,16 +3,18 @@
 #ifndef __RD_MANAGER_BASE_HPP__
 #define __RD_MANAGER_BASE_HPP__
 
-#include <iostream>
-
 #include "RdMacros.hpp"
 
 #include "RdInputBase.hpp"
+#include "RdOutputBase.hpp"
 #include "RdRobotBase.hpp"
 #include "RdCameraBase.hpp"
 
+#include <iostream>
 #include <vector>
 #include <utility>
+#include <pthread.h>
+#include <semaphore.h>
 
 /**
  * @ingroup rd_libraries
@@ -40,12 +42,14 @@ class RdManagerBase {
 
         RdManagerBase();
 
+        virtual bool setup();
         virtual bool start();
 
+        virtual bool askToStop();
         /** A quit rutine.
          * @return true if the object was quit successfully.
          */
-        virtual bool quit() = 0;
+        virtual bool quit();
 
         /** An shoot rutine.
          * @return true if successful.
@@ -56,15 +60,15 @@ class RdManagerBase {
         void *getFunctionByName( std::string function_name );
         int getManagerStatus();
         RdCameraBase* getRdCameraBasePtr();
-        void getEnemies( int pipelineIndex,  std::vector< std::pair<int, int> >& enemyPos, std::vector< double >& enemySize);
+        void getEnemies(int pipelineIndex,  std::vector< std::pair<int, int> >& enemyPos, std::vector< double >& enemySize);
 
         void setRdCameraBasePtr(RdCameraBase* rdCameraBasePtr );
         void setRdInputBasePtr(RdInputBase* rdInputBasePtr ) ;
         void setRdOutputBasePtr(RdOutputBase* rdOutputBasePtr );
         void setRdRobotBasePtr(RdRobotBase* rdRobotBasePtr );
 
-        void setProcessSemaphores(sem_t * processSemaphores);
-        void setDisplaySemaphores(sem_t * displaySemaphores);
+        static const int MANAGER_STATUS_OK = 0;
+        static const int MANAGER_STATUS_STOPPED = -1;
 
     protected:
         static const int PIPELINE_SIZE = 3;
@@ -81,7 +85,8 @@ class RdManagerBase {
         //-- Thread-related
         pthread_t processImage_thread;
 
-        //-- Semaphores for manager/output sync
+        //-- Semaphores for camera/manager/output sync
+        sem_t * captureSemaphores;
         sem_t * processSemaphores;
         sem_t * displaySemaphores;
 
@@ -92,7 +97,7 @@ class RdManagerBase {
         virtual bool processImage() = 0;
 
      private:
-        static void * processImageThread( void * This);
+        static void * processImageThread(void * This);
 };
 
 } //rdlib

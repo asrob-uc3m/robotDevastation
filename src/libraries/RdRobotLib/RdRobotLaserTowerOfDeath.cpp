@@ -61,7 +61,18 @@ bool rdlib::RdRobotLaserTowerOfDeath::shoot()
     outputBuff.push_back(0x5F); //-- 0x5F -> Toggle LED
     serialPort->Write( outputBuff );
 
-    std::cout << "Shooting!!" << std::endl;
+    RD_SUCCESS("Shooting!!\n");
+}
+
+bool rdlib::RdRobotLaserTowerOfDeath::askToStop()
+{
+    RD_INFO("RdRdRobotLaserTowerOfDeath: stopping connection...\n");
+
+    //-- Close serial port
+    if ( serialPort->IsOpen() )
+        serialPort->Close();
+
+    return true;
 }
 
 bool rdlib::RdRobotLaserTowerOfDeath::quit()
@@ -70,8 +81,8 @@ bool rdlib::RdRobotLaserTowerOfDeath::quit()
     panJointValue = panInitial;
     tiltJointValue = tiltInitial;
 
-    //-- Reset serial connecton
-    serialPort->Close();
+    if ( serialPort->IsOpen() )
+        serialPort->Close();
 }
 
 bool rdlib::RdRobotLaserTowerOfDeath::panIncrementWrapper(void *This)

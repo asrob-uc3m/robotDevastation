@@ -6,6 +6,7 @@
 #include <iostream>
 #include <unistd.h>
 #include "RdManagerBase.hpp"
+#include "RdCameraBase.hpp"
 
 /**
  * @ingroup rd_libraries
@@ -18,6 +19,7 @@
 namespace rdlib{
 
 class RdManagerBase;
+class RdCameraBase;
 class RdRobotBase;
 
 /**
@@ -30,7 +32,9 @@ class RdOutputBase {
     public:
         RdOutputBase();
 
+        virtual bool setup();
         virtual bool start();
+        virtual bool askToStop();
 
         /** A quit rutine.
          * @return true if the object was quit successfully.
@@ -38,11 +42,10 @@ class RdOutputBase {
         virtual bool quit();
 
         void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr );
+        void setRdCameraBasePtr(RdCameraBase* rdCameraBasePtr);
 
         void setDisplaySemaphores( sem_t * displaySemaphores);
         void setCaptureSemaphores( sem_t * captureSemaphores);
-
-        bool setStop( bool stop );
 
     protected:
         static const int PIPELINE_SIZE = 3;
@@ -59,7 +62,7 @@ class RdOutputBase {
 
         //-- Thread-related
         pthread_t output_thread;
-        bool isRunning;
+        bool stopThread;
 
    private:
         static void * outputThread( void * This );

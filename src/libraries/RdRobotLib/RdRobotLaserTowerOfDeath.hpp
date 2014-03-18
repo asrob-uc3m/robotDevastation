@@ -36,6 +36,7 @@ class RdRobotLaserTowerOfDeath : public RdRobotBase {
 
         virtual bool connect();
         virtual bool shoot();
+        virtual bool askToStop();
         virtual bool quit();
 
         //-- Static wrappers:
