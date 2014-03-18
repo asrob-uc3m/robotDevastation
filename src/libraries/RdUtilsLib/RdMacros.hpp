@@ -34,20 +34,20 @@ namespace rdlib{
 
 // http://en.wikipedia.org/wiki/Variadic_macro
 // http://stackoverflow.com/questions/15549893/modify-printfs-via-macro-to-include-file-and-line-number-information
-#define RD_ERROR(...) fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                         fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET);
+#define RD_ERROR(...) { fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                         fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET); }
 
-#define RD_WARNING(...) fprintf(stderr,YELLOW); do{fprintf(stderr, "[warning] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET);
+#define RD_WARNING(...) { fprintf(stderr,YELLOW); do{fprintf(stderr, "[warning] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET); }
 
-#define RD_SUCCESS(...) fprintf(stderr,GREEN); do{printf("[success] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET); 
+#define RD_SUCCESS(...) { fprintf(stderr,GREEN); do{printf("[success] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET); }
 
-#define RD_INFO(...) do{printf("[info] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           printf(__VA_ARGS__);} while(0)
+#define RD_INFO(...) { do{printf("[info] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           printf(__VA_ARGS__);} while(0); }  
 
-#define RD_DEBUG(...) fprintf(stderr,BLUE); do{printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET);
+#define RD_DEBUG(...) { fprintf(stderr,BLUE); do{printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET); }
 
 } //rdlib
 
