@@ -11,14 +11,14 @@ bool rdlib::RdInputHighgui::start()
 
     if ( inputKeyMutex == NULL )
     {
-        RD_ERROR("[Error] RdInputHighgui: Could not start RdInputHighgui,\n");
+        RD_ERROR("Could not start RdInputHighgui,\n");
         RD_ERROR("required reference to inputKey mutex not found.\n");
         return false;
     }
 
     if ( inputKey == NULL )
     {
-        RD_ERROR("[Error] RdInputHighgui: Could not start RdInputHighgui,\n");
+        RD_ERROR("Could not start RdInputHighgui,\n");
         RD_ERROR("required reference to inputKey not found.\n");
         return false;
     }
@@ -31,8 +31,8 @@ bool rdlib::RdInputHighgui::setRdOutputHighguiPtr(rdlib::RdOutputHighgui *rdOutp
     this->rdOutputHighguiPtr = rdOutputHighgui;
     if ( rdOutputHighguiPtr == NULL )
     {
-        RD_ERROR("[Error] RdInputHighgui: Error setting reference to\n");
-        RD_ERROR(" Highgui output module.\n");
+        RD_ERROR("Error setting reference to\n");
+        RD_ERROR("Highgui output module.\n");
         return false;
     }
     else
