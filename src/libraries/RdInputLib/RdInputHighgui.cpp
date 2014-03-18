@@ -4,22 +4,22 @@ bool rdlib::RdInputHighgui::start()
 {
     if ( rdOutputHighguiPtr == NULL )
     {
-        std::cerr << "[Error] RdInputHighgui: Could not start RdInputHighgui,";
-        std::cerr << "required reference to OutputHighgui not found." << std::endl;
+        RD_ERROR("Could not start RdInputHighgui,\n");
+        RD_ERROR("required reference to OutputHighgui not found.\n");
         return false;
     }
 
     if ( inputKeyMutex == NULL )
     {
-        std::cerr << "[Error] RdInputHighgui: Could not start RdInputHighgui,";
-        std::cerr << "required reference to inputKey mutex not found." << std::endl;
+        RD_ERROR("[Error] RdInputHighgui: Could not start RdInputHighgui,\n");
+        RD_ERROR("required reference to inputKey mutex not found.\n");
         return false;
     }
 
     if ( inputKey == NULL )
     {
-        std::cerr << "[Error] RdInputHighgui: Could not start RdInputHighgui,";
-        std::cerr << "required reference to inputKey not found." << std::endl;
+        RD_ERROR("[Error] RdInputHighgui: Could not start RdInputHighgui,\n");
+        RD_ERROR("required reference to inputKey not found.\n");
         return false;
     }
 
@@ -31,8 +31,8 @@ bool rdlib::RdInputHighgui::setRdOutputHighguiPtr(rdlib::RdOutputHighgui *rdOutp
     this->rdOutputHighguiPtr = rdOutputHighgui;
     if ( rdOutputHighguiPtr == NULL )
     {
-        std::cerr << "[Error] RdInputHighgui: Error setting reference to";
-        std::cerr << " Highgui output module." << std::endl;
+        RD_ERROR("[Error] RdInputHighgui: Error setting reference to\n");
+        RD_ERROR(" Highgui output module.\n");
         return false;
     }
     else
