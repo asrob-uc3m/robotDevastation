@@ -1,12 +1,20 @@
 #include "RdInputHighgui.hpp"
 
+bool rdlib::RdInputHighgui::setup()
+{
+    RD_INFO("RdInputHighgui: setup!\n");
+    keyMap["a"]='a';
+    keyMap["d"]='d';
+    keyMap["s"]='s';
+    keyMap["w"]='w';
+    keyMap["t"]='t';
+    keyMap["SPACE"]=' ';
+    keyMap["ESC"]='\x1b';
+    keyMap["CTRL_C"]='c';  // This is bad... maybe catch?
+}
+
 bool rdlib::RdInputHighgui::start()
 {
-    std::pair< std::string, char > kb_esc("ESC", '\x1b');
-    keyMap.insert(kb_esc);
-    std::pair< std::string, char > kb_w("W", 'w');
-    keyMap.insert(kb_w);
-
     if ( rdOutputHighguiPtr == NULL )
     {
         RD_ERROR("Could not start RdInputHighgui,\n");
@@ -67,29 +75,13 @@ bool rdlib::RdInputHighgui::input()
 
         if ((currentInputKey != -1)&&(lastInputKey == -1))
         {
-            if (currentInputKey == ' ')   // SPACE: 1048608 (0x100020), LSB: 32 (' ')
-            {
-                std::cout << "[info] RdInputHighgui: The space bar was pressed." << std::endl;
-                rdManagerBasePtr->shoot();
-            }
-            else if ( currentInputKey == 't' ) // Letter T
-            {
-                std::cout << "[info] RdInputHighgui: The key 't' was pressed." << std::endl;
-                //-- This enables/disables the head tracking thing
-                bool (* toggleHeadTrack) (void *);
-                toggleHeadTrack = (bool (*)(void*)) rdManagerBasePtr->getFunctionByName("toggleHeadTrack");
-                (*toggleHeadTrack)((void *) rdManagerBasePtr);
-            }
-            else if ( currentInputKey == '\x1b' ) // ESC: 1048603 (0x10001b), LSB: 27 ('\x1b')
-            {
-                std::cout << "[info] RdInputHighgui: The escape key was pressed. Bye!" << std::endl;
-                rdManagerBasePtr->askToStop();
-            }
-            else if ( currentInputKey==99 )  // CTRL-C
-            {
-                std::cout << "[info] RdInputHighgui: CTRL-C key was pressed. Bye!" << std::endl;
-                rdManagerBasePtr->askToStop();
-            }
+            bool (* functionPointer) (void *);
+            functionPointer = (bool (*)(void*)) keyFunctionMap[currentInputKey];
+
+            //-- Call the function through the pointer as long as it is not NULL
+            if ( functionPointer )
+                (*functionPointer)((void *) rdManagerBasePtr);
+
         }
         lastInputKey = currentInputKey;
     }

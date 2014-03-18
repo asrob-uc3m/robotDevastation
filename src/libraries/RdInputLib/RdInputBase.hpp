@@ -30,7 +30,7 @@ class RdRobotBase;
  */
 class RdInputBase {
     public:
-        virtual bool setup();
+        virtual bool setup() = 0;
         virtual bool start();
         virtual bool askToStop();
 

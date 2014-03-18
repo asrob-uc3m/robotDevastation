@@ -19,6 +19,7 @@ namespace rdlib{
 class RdInputHighgui : public RdInputBase {
     public:
 
+        virtual bool setup();
         virtual bool start();
 
         bool setRdOutputHighguiPtr( rdlib::RdOutputHighgui * rdOutputHighgui );

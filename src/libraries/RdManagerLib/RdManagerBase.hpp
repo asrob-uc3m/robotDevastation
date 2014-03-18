@@ -46,6 +46,8 @@ class RdManagerBase {
         virtual bool start();
 
         virtual bool askToStop();
+        static bool askToStopWrapper( void * This);
+
         /** A quit rutine.
          * @return true if the object was quit successfully.
          */

@@ -10,6 +10,7 @@ rdlib::RdManagerBase::RdManagerBase()
 
     //-- Add shoot to dictionary
     functionMap[ "shoot"] = (void *) &shootWrapper;
+    functionMap[ "askToStop"] = (void *) &askToStopWrapper;
 
     //-- Init the semaphores
     captureSemaphores = new sem_t[PIPELINE_SIZE];
@@ -75,6 +76,11 @@ bool rdlib::RdManagerBase::askToStop()
     rdOutputBasePtr->askToStop();
 
     return true;
+}
+
+bool rdlib::RdManagerBase::askToStopWrapper(void *This)
+{
+    return (( rdlib::RdManagerBase *) This)->askToStop();
 }
 
 bool rdlib::RdManagerBase::quit()

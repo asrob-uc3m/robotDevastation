@@ -73,6 +73,7 @@ bool rdclient::RdClient::runProgram(const int& argc, char *argv[])
     //-- Setup the manager
     //! \todo Setup the other things
     rdManagerBasePtr->setup();
+    rdInputBasePtr->setup();
 
     //-- This is only needed because we are using OpenCV's Highgui I/O
     ((rdlib::RdInputHighgui *) rdInputBasePtr)->setRdOutputHighguiPtr( (rdlib::RdOutputHighgui*) rdOutputBasePtr);
@@ -80,7 +81,9 @@ bool rdclient::RdClient::runProgram(const int& argc, char *argv[])
     //-- Creates "The map" relating keys with function pointers and sets it to the rdInput
     for(std::map< std::string, std::string >::iterator it = rdIniMap.begin(); it != rdIniMap.end(); ++it) {
         char keyChar = rdInputBasePtr->getKeyCharByName(it->first.c_str());
+        printf("* char[%c]",keyChar);
         void* funcPtr = rdManagerBasePtr->getFunctionByName(it->second.c_str());
+        printf("--> ptr[%p]\n",funcPtr);
         std::pair< char, void*> keyFunctionPair(keyChar, funcPtr);
         keyFunctionMap.insert( keyFunctionPair );
     }
@@ -142,7 +145,7 @@ bool rdclient::RdClient::quitProgram()
         rdManagerBasePtr = 0;
     }
 
-    RD_SUCCESS("RdClient quitProgram(): quit gracefully, bye!\n");
+    RD_SUCCESS("Quit gracefully, bye!\n");
     return true;
 }
 
