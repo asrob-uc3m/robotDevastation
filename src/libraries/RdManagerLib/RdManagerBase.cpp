@@ -8,10 +8,6 @@ rdlib::RdManagerBase::RdManagerBase()
     rdOutputBasePtr = 0;
     rdRobotBasePtr = 0;
 
-    //-- Add shoot to dictionary
-    functionMap[ "shoot"] = (void *) &shootWrapper;
-    functionMap[ "askToStop"] = (void *) &askToStopWrapper;
-
     //-- Init the semaphores
     captureSemaphores = new sem_t[PIPELINE_SIZE];
     for( int i = 0; i < PIPELINE_SIZE; i++)
@@ -27,7 +23,11 @@ rdlib::RdManagerBase::RdManagerBase()
 }
 
 bool rdlib::RdManagerBase::callFunctionByName(const std::string& cmd) {
-    if( cmd == "shoot" )
+    if ( cmd  == "quit" || cmd == "exit"  || cmd == "askToStop")
+    {
+        this->askToStop();
+    }
+    else if( cmd == "shoot" )
     {
         this->shoot();
     }
@@ -67,7 +67,7 @@ bool rdlib::RdManagerBase::start()
     //-- Start the different modules in order:
     rdCameraBasePtr->start();
 
-    int result = pthread_create( &processImage_thread, NULL, processImageThread, (void *) this );
+    int result = pthread_create( &manage_thread, NULL, manageThread, (void *) this );
     if (result == 0)
         { RD_INFO("RdManagerBase started thread.\n");}
     else
@@ -90,10 +90,6 @@ bool rdlib::RdManagerBase::askToStop()
     return true;
 }
 
-bool rdlib::RdManagerBase::askToStopWrapper(void *This)
-{
-    return (( rdlib::RdManagerBase *) This)->askToStop();
-}
 
 bool rdlib::RdManagerBase::quit()
 {
@@ -103,7 +99,7 @@ bool rdlib::RdManagerBase::quit()
     rdOutputBasePtr->quit();
 
     RD_INFO("RdManagerBase: waiting for the manager thread to finish...\n");
-    pthread_join( processImage_thread, NULL );
+    pthread_join( manage_thread, NULL );
 
     //-- Delete semaphores
     RD_INFO("RdManagerBase: deleting semaphores...\n");
@@ -151,7 +147,29 @@ void rdlib::RdManagerBase::getEnemies( int pipelineIndex,  std::vector< std::pai
     enemySize = this->enemySize[pipelineIndex];
 }
 
-void * rdlib::RdManagerBase::processImageThread(void *This)
+void * rdlib::RdManagerBase::manageThread(void *This)
 {
-    (( rdlib::RdManagerBase *) This)->processImage();
+    (( rdlib::RdManagerBase *) This)->manageWithSync();
+}
+
+bool rdlib::RdManagerBase::manageWithSync()
+{
+    if (managerStatus == MANAGER_STATUS_OK)
+    {
+        do
+        {
+            for (int i = 0; i < PIPELINE_SIZE; i++)
+            {
+                //-- Lock the semaphore
+                sem_wait( processSemaphores+i);
+
+                //RD_INFO("Processed frame #%i\n", i);
+                manage(i);
+
+                //-- Unlock the corresponding process semaphore
+                sem_post(displaySemaphores+i);
+            }
+        } while(managerStatus != MANAGER_STATUS_STOPPED);
+    }
+    RD_SUCCESS("Exited manager main thread!");
 }

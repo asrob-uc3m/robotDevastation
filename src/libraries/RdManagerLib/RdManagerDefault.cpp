@@ -6,9 +6,6 @@ rdlib::RdManagerDefault::RdManagerDefault()
 {
     this->managerStatus = MANAGER_STATUS_OK;
 
-    //-- Add functions (currently only hardcoded)
-    functionMap["toggleHeadTrack"] = (void *) &toggleHeadTrackWrapper;
-
     //-- Enemy init:
     for( int i = 0; i < PIPELINE_SIZE; i++)
     {
@@ -18,43 +15,27 @@ rdlib::RdManagerDefault::RdManagerDefault()
 
 }
 
+bool rdlib::RdManagerDefault::callFunctionByName(const std::string &cmd)
+{
+    if (cmd == "toggleHeadTrack")
+        this->toggleHeadTrack();
+}
+
 bool rdlib::RdManagerDefault::shoot() {
     if (!rdRobotBasePtr) return false;
     //
     return rdRobotBasePtr->shoot();
 }
 
-bool rdlib::RdManagerDefault::processImage()
+bool rdlib::RdManagerDefault::manage(int pipelineIndex)
 {
-    if (managerStatus == MANAGER_STATUS_OK)
+    //-- Right now, it doesn't do much
+
+    if ( managerStatus == MANAGER_STATUS_HEAD_TRACK )
     {
-        do
-        {
-            for (int i = 0; i < PIPELINE_SIZE; i++)
-            {
-                //-- Lock the semaphore
-                sem_wait( processSemaphores+i);
-
-                //-- Right now, it doesn't do much
-                //RD_INFO("Processed frame #%i\n", i);
-                if ( managerStatus == MANAGER_STATUS_HEAD_TRACK )
-                {
-                    RD_INFO("Tracking head.\n");
-                    trackHead(i);
-                }
-
-                //-- Unlock the corresponding process semaphore
-                sem_post(displaySemaphores+i);
-            }
-        } while(managerStatus != MANAGER_STATUS_STOPPED);
+        RD_INFO("Tracking head.\n");
+        trackHead(pipelineIndex);
     }
-    RD_SUCCESS("Exited manager main thread!");
-
-}
-
-bool rdlib::RdManagerDefault::toggleHeadTrackWrapper(void *This)
-{
-       (( rdlib::RdManagerDefault *) This)->toggleHeadTrack();
 }
 
 bool rdlib::RdManagerDefault::toggleHeadTrack()

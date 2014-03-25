@@ -24,11 +24,11 @@ class RdManagerDefault : public RdManagerBase {
     public:
         RdManagerDefault();
 
+        virtual bool callFunctionByName(const std::string &cmd);
         virtual bool shoot();
 
-        virtual bool processImage();
+        virtual bool manage(int pipelineIndex);
 
-        static bool toggleHeadTrackWrapper( void * This);
         bool toggleHeadTrack();
         bool trackHead( int index); //-- Index is the source image that is being processed
    protected:

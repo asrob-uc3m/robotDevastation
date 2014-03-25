@@ -77,7 +77,6 @@ class RdManagerBase {
         static const int PIPELINE_SIZE = 3;
 
         int managerStatus;
-        std::map< std::string, void*> functionMap;
 
         //-- Pointers to other modules
         RdCameraBase* rdCameraBasePtr;
@@ -86,7 +85,7 @@ class RdManagerBase {
         RdRobotBase* rdRobotBasePtr;
 
         //-- Thread-related
-        pthread_t processImage_thread;
+        pthread_t manage_thread;
 
         //-- Semaphores for camera/manager/output sync
         sem_t * captureSemaphores;
@@ -97,10 +96,11 @@ class RdManagerBase {
         std::vector< std::vector< std::pair<int, int> > > enemyPos;
         std::vector< std::vector< double > > enemySize;
 
-        virtual bool processImage() = 0;
+        virtual bool manage(int pipelineIndex) = 0;
 
      private:
-        static void * processImageThread(void * This);
+        static void * manageThread(void * This);
+        bool manageWithSync();
 };
 
 } //rdlib
