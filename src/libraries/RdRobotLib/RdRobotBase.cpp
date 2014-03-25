@@ -2,6 +2,7 @@
 
 rdlib::RdRobotBase::RdRobotBase()
 {
+    RD_DEBUG("this: %p.\n",this);
     functionMap[ "reset" ] = (void *) &resetWrapper;
     functionMap[ "shoot" ] = (void *) &shootWrapper;
 }
@@ -24,6 +25,14 @@ bool rdlib::RdRobotBase::resetWrapper(void *This)
 void rdlib::RdRobotBase::setRdIniMap(std::map<std::string, std::string> &rdIniMap)
 {
     this->rdIniMap = rdIniMap;
+}
+
+bool rdlib::RdRobotBase::callFunctionByName(const std::string& cmd)
+{
+    if( cmd == "shoot" )
+    {
+        shoot();
+    }
 }
 
 

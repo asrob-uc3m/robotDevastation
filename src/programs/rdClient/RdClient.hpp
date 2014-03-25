@@ -68,7 +68,7 @@ class RdClient {
         std::map< std::string, std::string > rdIniMap;
 
         /** Map of keys to functions */
-        std::map< char, void*> keyFunctionMap;
+        std::map< char, std::string > keyFunctionMap;
 
 };
 

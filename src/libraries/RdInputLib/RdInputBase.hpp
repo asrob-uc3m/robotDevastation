@@ -44,7 +44,7 @@ class RdInputBase {
 
         const char& getKeyCharByName(std::string keychar_name);
 
-        void setKeyFunctionMap(const std::map<char, void *> &value);
+        void setKeyFunctionMap(const std::map<char, std::string > &value);
 
 protected:
         //-- Thread-related
@@ -60,7 +60,7 @@ protected:
         std::map< std::string, char > keyMap;
 
         /** Map of keys to functions */
-        std::map< char, void*> keyFunctionMap;
+        std::map< char, std::string > keyFunctionMap;
 
     private:
         static void * inputThread( void * This );

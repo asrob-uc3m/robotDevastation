@@ -41,6 +41,8 @@ class RdRobotBase {
         virtual bool askToStop() = 0;
         virtual bool quit() = 0;
 
+        virtual bool callFunctionByName(const std::string& cmd);
+
         //-- Static wrappers
         static bool shootWrapper( void * This);
         static bool resetWrapper( void * This);

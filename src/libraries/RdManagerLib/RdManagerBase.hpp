@@ -42,6 +42,8 @@ class RdManagerBase {
 
         RdManagerBase();
 
+        virtual bool callFunctionByName(const std::string& cmd);
+
         virtual bool setup();
         virtual bool start();
 

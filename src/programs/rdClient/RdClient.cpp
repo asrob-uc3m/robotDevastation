@@ -82,9 +82,7 @@ bool rdclient::RdClient::runProgram(const int& argc, char *argv[])
     for(std::map< std::string, std::string >::iterator it = rdIniMap.begin(); it != rdIniMap.end(); ++it) {
         char keyChar = rdInputBasePtr->getKeyCharByName(it->first.c_str());
         printf("* char[%c]",keyChar);
-        void* funcPtr = rdManagerBasePtr->getFunctionByName(it->second.c_str());
-        printf("--> ptr[%p]\n",funcPtr);
-        std::pair< char, void*> keyFunctionPair(keyChar, funcPtr);
+        std::pair< char, std::string > keyFunctionPair(keyChar, it->second.c_str());
         keyFunctionMap.insert( keyFunctionPair );
     }
     rdInputBasePtr->setKeyFunctionMap(keyFunctionMap);

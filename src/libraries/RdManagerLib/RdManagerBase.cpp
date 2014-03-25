@@ -26,6 +26,18 @@ rdlib::RdManagerBase::RdManagerBase()
         sem_init( displaySemaphores+i, 0, 0);
 }
 
+bool rdlib::RdManagerBase::callFunctionByName(const std::string& cmd) {
+    if( cmd == "shoot" )
+    {
+        this->shoot();
+    }
+    else
+    {
+        rdRobotBasePtr->callFunctionByName(cmd);
+    }
+}
+
+
 bool rdlib::RdManagerBase::setup()
 {
     RD_INFO("RdManagerBase: setup!\n");

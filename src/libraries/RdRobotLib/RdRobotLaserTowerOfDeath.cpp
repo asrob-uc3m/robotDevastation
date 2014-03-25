@@ -4,11 +4,12 @@
 
 rdlib::RdRobotLaserTowerOfDeath::RdRobotLaserTowerOfDeath()
 {
+    RD_DEBUG("this: %p.\n",this);
     //-- Put function names in the map:
-    functionMap["panIncrement"] = (void *) &panIncrementWrapper;
-    functionMap["panDecrement"] = (void *) &panDecrementWrapper;
-    functionMap["tiltIncrement"] = (void *) &tiltIncrementWrapper;
-    functionMap["tiltDecrement"] = (void *) &tiltDecrementWrapper;
+    functionMap["camera_left"] = (void *) &panIncrementWrapper;
+    functionMap["camera_right"] = (void *) &panDecrementWrapper;
+    functionMap["camera_up"] = (void *) &tiltIncrementWrapper;
+    functionMap["camera_down"] = (void *) &tiltDecrementWrapper;
 
     //-- Initial values:
     panJointValue = panInitial;
@@ -21,14 +22,30 @@ rdlib::RdRobotLaserTowerOfDeath::~RdRobotLaserTowerOfDeath()
 {
     serialPort->Close();
     delete serialPort;
+    serialPort = 0;
 }
+
+bool rdlib::RdRobotLaserTowerOfDeath::callFunctionByName(const std::string& cmd)
+{
+    RdRobotBase::callFunctionByName(cmd);
+
+    if (cmd == "camera_left")
+        panIncrement();
+    else if ( cmd == "camera_right")
+        panDecrement();
+    else if ( cmd == "camera_up")
+        tiltIncrement();
+    else if ( cmd == "camera_down")
+        tiltDecrement();
+}
+
 
 bool rdlib::RdRobotLaserTowerOfDeath::panIncrement()
 {
     if (panJointValue < panRangeMax)
         panJointValue++;
 
-    return true;
+    return sendCurrentJointValuesWrapper((void *)this);
 }
 
 bool rdlib::RdRobotLaserTowerOfDeath::panDecrement()
@@ -36,7 +53,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::panDecrement()
     if (  panJointValue > panRangeMin )
         panJointValue--;
 
-    return true;
+    return sendCurrentJointValuesWrapper((void *)this);
 }
 
 bool rdlib::RdRobotLaserTowerOfDeath::tiltIncrement()
@@ -44,7 +61,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::tiltIncrement()
     if (tiltJointValue < tiltRangeMax)
         tiltJointValue++;
 
-    return true;
+    return sendCurrentJointValuesWrapper((void *)this);
 }
 
 bool rdlib::RdRobotLaserTowerOfDeath::tiltDecrement()
@@ -52,7 +69,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::tiltDecrement()
     if (  tiltJointValue > tiltRangeMin )
         tiltJointValue--;
 
-    return true;
+    return sendCurrentJointValuesWrapper((void *)this);
 }
 
 bool rdlib::RdRobotLaserTowerOfDeath::shoot()
@@ -105,6 +122,11 @@ bool rdlib::RdRobotLaserTowerOfDeath::tiltDecrementWrapper(void *This)
     return (( rdlib::RdRobotLaserTowerOfDeath * ) This)->tiltDecrement();
 }
 
+bool rdlib::RdRobotLaserTowerOfDeath::sendCurrentJointValuesWrapper(void *This)
+{
+    return (( rdlib::RdRobotLaserTowerOfDeath * ) This)->sendCurrentJointValues();
+}
+
 bool rdlib::RdRobotLaserTowerOfDeath::connect()
 {
     std::string serial_port = rdIniMap.at("serial_port");
@@ -114,6 +136,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::connect()
 
 bool rdlib::RdRobotLaserTowerOfDeath::initSerialPort(const char* serialPortName)
 {
+    RD_DEBUG("init Serial Port.\n");
     serialPort = new SerialPort( serialPortName );  // "/dev/ttyUSB0"
     try
     {
@@ -132,7 +155,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::initSerialPort(const char* serialPortName)
         RD_ERROR("Error communicating with the robot. Exiting...\n");
         return false;
     }
-
+    RD_SUCCESS("Ok Serial Port: %p\n",serialPort);
     return true;
 }
 
@@ -169,8 +192,10 @@ bool rdlib::RdRobotLaserTowerOfDeath::sendCurrentJointValues()
 
     outputBuff.push_back( (char) panJointValue );
     outputBuff.push_back( (char) tiltJointValue );
-
+    RD_DEBUG("hi1\n");
     serialPort->Write( outputBuff );
+    RD_DEBUG("hi2\n");
+
 }
 
 

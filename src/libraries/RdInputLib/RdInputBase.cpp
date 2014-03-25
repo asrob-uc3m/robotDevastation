@@ -48,7 +48,7 @@ const char& rdlib::RdInputBase::getKeyCharByName(std::string keychar_name)
     keyMap[ keychar_name ];
 }
 
-void rdlib::RdInputBase::setKeyFunctionMap(const std::map<char, void *> &value)
+void rdlib::RdInputBase::setKeyFunctionMap(const std::map<char, std::string > &value)
 {
     keyFunctionMap = value;
 }
