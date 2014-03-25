@@ -61,7 +61,6 @@ class RdManagerBase {
         virtual bool shoot() = 0;
         static bool shootWrapper(void *This);
 
-        void *getFunctionByName( std::string function_name );
         int getManagerStatus();
         RdCameraBase* getRdCameraBasePtr();
         void getEnemies(int pipelineIndex,  std::vector< std::pair<int, int> >& enemyPos, std::vector< double >& enemySize);
