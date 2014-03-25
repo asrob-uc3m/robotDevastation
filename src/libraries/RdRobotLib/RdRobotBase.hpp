@@ -29,10 +29,6 @@ class RdManagerBase;
  */
 class RdRobotBase {
     public:
-        RdRobotBase();
-
-        void *getFunctionByName( std::string function_name );
-
         virtual bool connect() = 0;
 
         //-- Every robot in this game shoots
@@ -41,21 +37,14 @@ class RdRobotBase {
         virtual bool askToStop() = 0;
         virtual bool quit() = 0;
 
-        virtual bool callFunctionByName(const std::string& cmd);
-
-        //-- Static wrappers
-        static bool shootWrapper( void * This);
-        static bool resetWrapper( void * This);
+        virtual bool callFunctionByName(const std::string& cmd) = 0;
 
         void setRdIniMap(std::map< std::string, std::string >& rdIniMap);
 
 
     protected:
-        std::map< std::string, void*> functionMap;
-
         /** Map */
         std::map< std::string, std::string > rdIniMap;
-
 };
 
 } //rdlib

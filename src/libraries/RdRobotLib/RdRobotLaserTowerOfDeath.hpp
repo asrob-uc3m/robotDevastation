@@ -41,13 +41,6 @@ class RdRobotLaserTowerOfDeath : public RdRobotBase {
         virtual bool askToStop();
         virtual bool quit();
 
-        //-- Static wrappers:
-        static bool panIncrementWrapper(  void * This);
-        static bool panDecrementWrapper(  void * This);
-        static bool tiltIncrementWrapper( void * This);
-        static bool tiltDecrementWrapper( void * This);
-        static bool sendCurrentJointValuesWrapper( void * This);
-
     private:
         static const int panRangeMin = 0;
         static const int panRangeMax = 180;
