@@ -123,10 +123,6 @@ bool rdlib::RdManagerBase::shootWrapper(void *This)
     return (( rdlib::RdManagerBase *) This)->shoot();
 }
 
-void *rdlib::RdManagerBase::getFunctionByName( std::string function_name ) {
-    return functionMap[ function_name ];
-}
-
 int rdlib::RdManagerBase::getManagerStatus() {
     return managerStatus;
 }

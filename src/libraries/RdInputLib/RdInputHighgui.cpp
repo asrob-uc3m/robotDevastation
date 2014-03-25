@@ -75,12 +75,6 @@ bool rdlib::RdInputHighgui::input()
 
         if ((currentInputKey != -1)&&(lastInputKey == -1))
         {
-            /*bool (* functionPointer) (void *);
-            functionPointer = (bool (*)(void*)) keyFunctionMap[currentInputKey];
-
-            //-- Call the function through the pointer as long as it is not NULL
-            if ( functionPointer )
-                (*functionPointer)((void *) rdManagerBasePtr);*/
             rdManagerBasePtr->callFunctionByName( keyFunctionMap[currentInputKey] );
 
         }
