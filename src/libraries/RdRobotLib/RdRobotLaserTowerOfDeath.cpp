@@ -159,9 +159,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::sendCurrentJointValues()
 
     outputBuff.push_back( (char) panJointValue );
     outputBuff.push_back( (char) tiltJointValue );
-    RD_DEBUG("hi1\n");
     serialPort->Write( outputBuff );
-    RD_DEBUG("hi2\n");
 
 }
 
