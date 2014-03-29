@@ -172,5 +172,5 @@ bool rdlib::RdManagerBase::manageWithSync()
             }
         } while(managerStatus != MANAGER_STATUS_STOPPED);
     }
-    RD_SUCCESS("Exited manager main thread!");
+    RD_SUCCESS("Exited manager main thread!\n");
 }

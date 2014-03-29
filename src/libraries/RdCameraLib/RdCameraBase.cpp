@@ -78,5 +78,5 @@ void *rdlib::RdCameraBase::captureWithSync()
     //-- the pipeline. This way the semaphores are deleted correctly and
     //-- the other threads are not locked
     //sem_wait(captureSemaphores);
-    RD_SUCCESS("Exited camera main thread!");
+    RD_SUCCESS("Exited camera main thread!\n");
 }
