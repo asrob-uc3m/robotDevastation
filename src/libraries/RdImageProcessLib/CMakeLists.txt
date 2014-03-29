@@ -2,20 +2,20 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (ENABLE_RdManagerDefaultLib)
+IF (ENABLE_RdImageProcessOpenCVLib)
 
-set(KEYWORD "RdManagerDefaultLib")
+set(KEYWORD "RdImageProcessOpenCVLib")
 
 include_directories(${RD_INCLUDE_DIRS})
 
 # Set up our library.
-add_library(${KEYWORD} RdManagerBase.cpp RdManagerDefault.cpp)
-target_link_libraries(${KEYWORD} ${RD_LIBRARIES})
+add_library(${KEYWORD} RdImageProcessOpenCV.cpp)
+target_link_libraries(${KEYWORD})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now... 
 #set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
 set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
 
-ENDIF (ENABLE_RdManagerDefaultLib)
+ENDIF (ENABLE_RdImageProcessOpenCVLib)
 

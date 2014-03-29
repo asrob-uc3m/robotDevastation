@@ -19,6 +19,7 @@ ENDFOREACH()
 
 add_subdirectory(RdUtilsLib)
 add_subdirectory(RdCameraLib)
+add_subdirectory(RdImageProcessLib)
 add_subdirectory(RdInputLib)
 add_subdirectory(RdOutputLib)
 add_subdirectory(RdRobotLib)

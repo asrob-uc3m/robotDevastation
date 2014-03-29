@@ -9,9 +9,7 @@
 #include <utility>
 #include <pthread.h>
 
-#include <opencv2/opencv.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-
+#include "RdImageProcessOpenCV.hpp"
 
 namespace rdlib{
 
@@ -26,14 +24,14 @@ class RdManagerDefault : public RdManagerBase {
 
         virtual bool callFunctionByName(const std::string &cmd);
         virtual bool shoot();
+        virtual bool setup();
 
         virtual bool manage(int pipelineIndex);
 
         bool toggleHeadTrack();
-        bool trackHead( int index); //-- Index is the source image that is being processed
    protected:
         static const int MANAGER_STATUS_HEAD_TRACK = 1;
-
+        int width, height, step;
 };
 
 } //rdlib

@@ -7,6 +7,7 @@ rdlib::RdManagerBase::RdManagerBase()
     rdInputBasePtr = 0;
     rdOutputBasePtr = 0;
     rdRobotBasePtr = 0;
+    rdImageProcessorBasePtr = 0;
 
     //-- Init the semaphores
     captureSemaphores = new sem_t[PIPELINE_SIZE];

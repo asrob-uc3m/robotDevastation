@@ -9,6 +9,7 @@
 #include "RdOutputBase.hpp"
 #include "RdRobotBase.hpp"
 #include "RdCameraBase.hpp"
+#include "RdImageProcessBase.hpp"
 
 #include <iostream>
 #include <vector>
@@ -30,6 +31,7 @@ class RdCameraBase;
 class RdInputBase;
 class RdOutputBase;
 class RdRobotBase;
+class RdImageProcessBase;
 
 /**
  * @ingroup RdManagerLib
@@ -83,6 +85,8 @@ class RdManagerBase {
         RdInputBase* rdInputBasePtr;
         RdOutputBase* rdOutputBasePtr;
         RdRobotBase* rdRobotBasePtr;
+
+        RdImageProcessBase* rdImageProcessorBasePtr;
 
         //-- Thread-related
         pthread_t manage_thread;
