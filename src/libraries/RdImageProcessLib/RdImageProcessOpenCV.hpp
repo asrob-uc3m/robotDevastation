@@ -21,7 +21,7 @@ namespace rdlib{
 /**
  * @ingroup RdImageProcessLib
  *
- * @brief An abstract base class for Robot Devastation inputs (keyboard, xpad...).
+ * @brief A class for Robot Devastation that uses OpenCV to process images.
  *
  */
 class RdImageProcessOpenCV : public RdImageProcessBase {

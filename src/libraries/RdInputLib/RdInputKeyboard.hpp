@@ -18,7 +18,7 @@ namespace rdlib{
 /**
  * @ingroup RdInputLib
  *
- * @brief Implements a keyboard input for Robot Devastation.
+ * @brief Implements a keyboard input for Robot Devastation through xlib (X11).
  */
 class RdInputKeyboard : public RdInputBase {
     public:
