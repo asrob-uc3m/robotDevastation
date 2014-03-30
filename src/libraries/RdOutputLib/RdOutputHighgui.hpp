@@ -26,6 +26,8 @@ class RdOutputHighgui : public RdOutputBase {
                                            rdlib::RdWeaponBase *currentWeapon);
         virtual bool showWeaponSight(cv::Mat &src, cv::Mat &dst, int pipelineIndex,
                                      rdlib::RdWeaponBase* currentWeapon);
+        virtual bool showBullets(cv::Mat &src, cv::Mat &dst, int pipelineIndex,
+                                     rdlib::RdWeaponBase* currentWeapon);
         char * getInputKey();
         pthread_mutex_t * getInputKeyMutex();
 

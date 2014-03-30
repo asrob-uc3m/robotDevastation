@@ -57,6 +57,30 @@ bool rdlib::RdOutputHighgui::showWeaponSight(cv::Mat &src, cv::Mat &dst, int pip
     cv::circle(dst, cv::Point(dst.cols/2, dst.rows/2), 1, cv::Scalar(0, 255, 0), 1);
 }
 
+bool rdlib::RdOutputHighgui::showBullets(cv::Mat &src, cv::Mat &dst, int pipelineIndex, rdlib::RdWeaponBase *currentWeapon)
+{
+    //-- If output is empty, clone input image
+    if (dst.empty())
+        dst = src.clone();
+
+    if (currentWeapon->getShootCurrentDelay() != 0)
+    {
+        cv::Point initPoint(dst.cols*0.75, dst.rows);
+        int vx = (dst.cols/2-dst.cols*0.75)/currentWeapon->getShootDelay();
+        int vy = (dst.rows/2-dst.rows)/currentWeapon->getShootDelay();
+
+        int t = currentWeapon->getShootDelay()-currentWeapon->getShootCurrentDelay();
+
+        int x = dst.cols*0.75+vx*t;
+        int y = dst.rows+vy*t;
+
+        RD_DEBUG("Shoot end at (%i, %i)\n", x, y);
+        cv::Point endPoint(x, y);
+        cv::line(dst, initPoint, endPoint, cv::Scalar(0, 0, 255), 3 );
+        //cv::circle(dst, endPoint, 3, cv::Scalar(0, 0, 255), 2);
+    }
+}
+
 char *rdlib::RdOutputHighgui::getInputKey()
 {
     return inputKey;
@@ -80,6 +104,7 @@ bool rdlib::RdOutputHighgui::output(int pipelineIndex)
     RdWeaponBase* currentWeapon = rdManagerBasePtr->getCurrentWeapon();
     showCurrentWeaponInfo(image, image, pipelineIndex, currentWeapon);
     showWeaponSight(image, image, pipelineIndex, currentWeapon);
+    showBullets(image, image, pipelineIndex, currentWeapon);
     cv::imshow("Robot Devastation", image);
 
     //std::cout << "[info] Displayed frame # " << pipelineIndex << "." << std::endl;
