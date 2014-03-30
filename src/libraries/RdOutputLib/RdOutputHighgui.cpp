@@ -47,6 +47,16 @@ bool rdlib::RdOutputHighgui::showCurrentWeaponInfo(cv::Mat &src, cv::Mat &dst, i
 
 }
 
+bool rdlib::RdOutputHighgui::showWeaponSight(cv::Mat &src, cv::Mat &dst, int pipelineIndex, rdlib::RdWeaponBase *currentWeapon)
+{
+    //-- If output is empty, clone input image
+    if (dst.empty())
+        dst = src.clone();
+
+    cv::circle(dst, cv::Point(dst.cols/2, dst.rows/2), 5, cv::Scalar(0, 255, 0), 2);
+    cv::circle(dst, cv::Point(dst.cols/2, dst.rows/2), 1, cv::Scalar(0, 255, 0), 1);
+}
+
 char *rdlib::RdOutputHighgui::getInputKey()
 {
     return inputKey;
@@ -69,6 +79,7 @@ bool rdlib::RdOutputHighgui::output(int pipelineIndex)
     printEnemies( image, image, pipelineIndex );
     RdWeaponBase* currentWeapon = rdManagerBasePtr->getCurrentWeapon();
     showCurrentWeaponInfo(image, image, pipelineIndex, currentWeapon);
+    showWeaponSight(image, image, pipelineIndex, currentWeapon);
     cv::imshow("Robot Devastation", image);
 
     //std::cout << "[info] Displayed frame # " << pipelineIndex << "." << std::endl;
