@@ -13,18 +13,34 @@ rdlib::RdManagerDefault::RdManagerDefault()
         enemySize.push_back( std::vector< double> () );
     }
 
+    //-- Weapons init:
+    weapons.push_back(RdWeaponBase(RdWeaponBase::RD_WEAPON_LASER_GUN));
+    weapons.push_back(RdWeaponBase(RdWeaponBase::RD_WEAPON_MACHINE_GUN));
+    currentWeapon = &weapons[0];
+    currentWeaponIndex = 0;
 }
 
 bool rdlib::RdManagerDefault::callFunctionByName(const std::string &cmd)
 {
+    RD_DEBUG("Passing cmd \"%s\" to parent handler!\n", cmd.c_str());
+    RdManagerBase::callFunctionByName(cmd);
+
     if (cmd == "toggleHeadTrack")
         this->toggleHeadTrack();
+    else if ( cmd == "shoot")
+        this->shoot();
+
 }
 
-bool rdlib::RdManagerDefault::shoot() {
-    if (!rdRobotBasePtr) return false;
-    //
-    return rdRobotBasePtr->shoot();
+bool rdlib::RdManagerDefault::shoot()
+{
+    if (!rdRobotBasePtr)
+        return false;
+
+    if (currentWeapon && currentWeapon->getCurrentAmmo() > 0 )
+        return rdRobotBasePtr->shoot();
+    else
+        return false;
 }
 
 bool rdlib::RdManagerDefault::manage(int pipelineIndex)

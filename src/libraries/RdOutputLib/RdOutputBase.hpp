@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include "RdManagerBase.hpp"
 #include "RdCameraBase.hpp"
+#include "RdWeaponBase.hpp"
 
 /**
  * @ingroup rd_libraries
@@ -40,6 +41,8 @@ class RdOutputBase {
          * @return true if the object was quit successfully.
          */
         virtual bool quit();
+
+        //virtual bool showCurrentWeaponInfo( RdWeaponBase * currentWeapon) = 0;
 
         void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr );
         void setRdCameraBasePtr(RdCameraBase* rdCameraBasePtr);

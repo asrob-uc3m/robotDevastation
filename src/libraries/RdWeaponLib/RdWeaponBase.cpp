@@ -1,6 +1,6 @@
 #include "RdWeaponBase.hpp"
 
-rdlib::RdWeaponBase::RdWeaponBase(const int &weapon_type)
+rdlib::RdWeaponBase::RdWeaponBase(int weapon_type)
 {
     if (weapon_type==RD_WEAPON_LASER_GUN)
     {

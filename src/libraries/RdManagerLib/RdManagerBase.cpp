@@ -20,16 +20,31 @@ rdlib::RdManagerBase::RdManagerBase()
     displaySemaphores = new sem_t[PIPELINE_SIZE];
     for( int i = 0; i < PIPELINE_SIZE; i++)
         sem_init( displaySemaphores+i, 0, 0);
+
+    //-- Init the weapon variables
+    currentWeapon = 0;
+    currentWeaponIndex = -1;
 }
 
-bool rdlib::RdManagerBase::callFunctionByName(const std::string& cmd) {
+bool rdlib::RdManagerBase::callFunctionByName(const std::string& cmd)
+{
+    RD_INFO("Received command \"%s\", processing...\n", cmd.c_str());
+
     if ( cmd  == "quit" || cmd == "exit"  || cmd == "askToStop")
     {
-        this->askToStop();
+        RdManagerBase::askToStop();
     }
     else if( cmd == "shoot" )
     {
-        this->shoot();
+        RdManagerBase::shoot();
+    }
+    else if ( cmd == "reload")
+    {
+        RdManagerBase::reload();
+    }
+    else if (cmd == "changeWeapon")
+    {
+        RdManagerBase::changeWeapon(-1);
     }
     else
     {
@@ -114,9 +129,43 @@ bool rdlib::RdManagerBase::quit()
     return true;
 }
 
-bool rdlib::RdManagerBase::shootWrapper(void *This)
+bool rdlib::RdManagerBase::shoot()
 {
-    return (( rdlib::RdManagerBase *) This)->shoot();
+    RD_SUCCESS("Shoot!\n");
+    currentWeapon->shoot();
+}
+
+bool rdlib::RdManagerBase::reload()
+{
+    RD_SUCCESS("Reload!\n");
+    currentWeapon->reload();
+}
+
+bool rdlib::RdManagerBase::changeWeapon(int index)
+{
+    if (index>=0 && index < weapons.size())
+    {
+        currentWeapon = &weapons.at(index);
+        currentWeaponIndex = index;
+    }
+    else if ( index == -1 )
+    {
+        currentWeaponIndex++;
+
+        if (currentWeaponIndex >= weapons.size())
+            currentWeaponIndex = 0;
+
+        currentWeapon = &weapons.at(currentWeaponIndex);
+
+    }
+    else
+    {
+        RD_ERROR("Weapon selected does not exist\n");
+        return false;
+    }
+
+    RD_SUCCESS("Changed Weapon!\n");
+    return true;
 }
 
 int rdlib::RdManagerBase::getManagerStatus() {
@@ -137,14 +186,31 @@ void rdlib::RdManagerBase::setRdRobotBasePtr(RdRobotBase* rdRobotBasePtr ) {
 }
 
 
-rdlib::RdCameraBase* rdlib::RdManagerBase::getRdCameraBasePtr() {
-    return this->rdCameraBasePtr;
-}
-
 void rdlib::RdManagerBase::getEnemies( int pipelineIndex,  std::vector< std::pair<int, int> >& enemyPos,
                  std::vector< double >& enemySize) {
     enemyPos = this->enemyPos[pipelineIndex];
     enemySize = this->enemySize[pipelineIndex];
+}
+
+std::vector<rdlib::RdWeaponBase> rdlib::RdManagerBase::getWeapons()
+{
+    return weapons;
+}
+
+rdlib::RdWeaponBase *rdlib::RdManagerBase::getCurrentWeapon()
+{
+    return currentWeapon;
+}
+
+int rdlib::RdManagerBase::getCurrentWeaponIndex()
+{
+    return currentWeaponIndex;
+}
+
+bool rdlib::RdManagerBase::updateWeapons()
+{
+    for (int i = 0; i < (int) weapons.size(); i++)
+        weapons.at(i).update();
 }
 
 void * rdlib::RdManagerBase::manageThread(void *This)
@@ -165,6 +231,8 @@ bool rdlib::RdManagerBase::manageWithSync()
 
                 //RD_INFO("Processed frame #%i\n", i);
                 manage(i);
+
+                updateWeapons();
 
                 //-- Unlock the corresponding process semaphore
                 sem_post(displaySemaphores+i);

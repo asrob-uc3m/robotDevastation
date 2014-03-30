@@ -9,6 +9,7 @@
 #include "RdOutputBase.hpp"
 #include "RdRobotBase.hpp"
 #include "RdCameraBase.hpp"
+#include "RdWeaponBase.hpp"
 
 #include <iostream>
 #include <vector>
@@ -58,18 +59,29 @@ class RdManagerBase {
         /** An shoot rutine.
          * @return true if successful.
          */
-        virtual bool shoot() = 0;
-        static bool shootWrapper(void *This);
+        virtual bool shoot();
+        virtual bool reload();
+        virtual bool changeWeapon(int index = -1);
 
-        int getManagerStatus();
-        RdCameraBase* getRdCameraBasePtr();
+        //-- Enemies -----------------------------------------------//
         void getEnemies(int pipelineIndex,  std::vector< std::pair<int, int> >& enemyPos, std::vector< double >& enemySize);
 
+        //-- Weapons -----------------------------------------------//
+        std::vector<RdWeaponBase> getWeapons();
+        RdWeaponBase* getCurrentWeapon();
+        int getCurrentWeaponIndex();
+
+        bool updateWeapons();
+
+
+        //-- Set pointers to other modules -------------------------//
         void setRdCameraBasePtr(RdCameraBase* rdCameraBasePtr );
         void setRdInputBasePtr(RdInputBase* rdInputBasePtr ) ;
         void setRdOutputBasePtr(RdOutputBase* rdOutputBasePtr );
         void setRdRobotBasePtr(RdRobotBase* rdRobotBasePtr );
 
+        //-- Different status of the manager ----------------------//
+        int getManagerStatus();
         static const int MANAGER_STATUS_OK = 0;
         static const int MANAGER_STATUS_STOPPED = -1;
 
@@ -95,6 +107,11 @@ class RdManagerBase {
         //-- Enemies
         std::vector< std::vector< std::pair<int, int> > > enemyPos;
         std::vector< std::vector< double > > enemySize;
+
+        //-- Weapons
+        std::vector<RdWeaponBase> weapons;
+        RdWeaponBase * currentWeapon;
+        int currentWeaponIndex;
 
         virtual bool manage(int pipelineIndex) = 0;
 

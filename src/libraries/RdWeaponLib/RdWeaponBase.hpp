@@ -11,7 +11,7 @@ namespace rdlib{
 class RdWeaponBase
 {
     public:
-        RdWeaponBase(const int& weapon_type);
+        RdWeaponBase(int weapon_type);
 
         bool shoot();
         bool reload();

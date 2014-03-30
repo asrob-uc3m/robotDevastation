@@ -44,12 +44,12 @@ class RdRobotLaserTowerOfDeath : public RdRobotBase {
     private:
         static const int panRangeMin = 0;
         static const int panRangeMax = 180;
-        static const int panStep = 15;
+        static const int panStep = 10;
         static const int panInitial = 90;
 
         static const int tiltRangeMin = 0;
         static const int tiltRangeMax = 180;
-        static const int tiltStep = 15;
+        static const int tiltStep = 10;
         static const int tiltInitial = 90;
 
         int panJointValue;

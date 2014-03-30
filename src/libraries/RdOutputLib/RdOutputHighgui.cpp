@@ -28,6 +28,25 @@ bool rdlib::RdOutputHighgui::quit()
     delete inputKeyMutex;
 }
 
+bool rdlib::RdOutputHighgui::showCurrentWeaponInfo(cv::Mat &src, cv::Mat &dst, int pipelineIndex, rdlib::RdWeaponBase *currentWeapon)
+{
+    //-- If output is empty, clone input image
+    if (dst.empty())
+        dst = src.clone();
+
+    //-- Draw the ammo level
+    float ammo_percentage = currentWeapon->getCurrentAmmo() / (float) currentWeapon->getMaxAmmo();
+    cv::Point barUpperLeft( dst.cols*0.8, dst.rows*0.10 );
+    cv::Point barLowerRight( dst.cols*0.98, dst.rows*0.15);
+    cv::Point ammoLowerRight( dst.cols*0.8+(dst.cols*(0.98-0.8)*ammo_percentage), dst.rows*0.15);
+
+    cv::rectangle(dst, barUpperLeft, barLowerRight, cv::Scalar(0, 255, 0));
+    cv::rectangle(dst, barUpperLeft, ammoLowerRight, cv::Scalar(0, 255, 0), CV_FILLED);
+    cv::putText(dst, "Ammo", cv::Point( dst.cols*0.7, dst.rows*0.15), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255,0));
+
+
+}
+
 char *rdlib::RdOutputHighgui::getInputKey()
 {
     return inputKey;
@@ -48,7 +67,9 @@ bool rdlib::RdOutputHighgui::output(int pipelineIndex)
 
     cv::Mat image(cv::Size(width, height), CV_8UC3, rdCameraBasePtr->getBufferPtr(pipelineIndex), step);  // cv::Mat::AUTO_STEP ???
     printEnemies( image, image, pipelineIndex );
-    cv::imshow("Robot Devastation", image);  // no cv:: needed.
+    RdWeaponBase* currentWeapon = rdManagerBasePtr->getCurrentWeapon();
+    showCurrentWeaponInfo(image, image, pipelineIndex, currentWeapon);
+    cv::imshow("Robot Devastation", image);
 
     //std::cout << "[info] Displayed frame # " << pipelineIndex << "." << std::endl;
     pthread_mutex_lock(inputKeyMutex);
