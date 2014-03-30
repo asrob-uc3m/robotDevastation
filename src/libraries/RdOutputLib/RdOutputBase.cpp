@@ -97,5 +97,5 @@ bool rdlib::RdOutputBase::outputWithSync()
     }
 
     //sem_post(captureSemaphores);
-    RD_SUCCESS("Exited output main thread!");
+    RD_SUCCESS("Exited output main thread!\n");
 }

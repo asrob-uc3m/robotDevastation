@@ -13,6 +13,7 @@
  * Robot Devastation project
  *
  * Authors:
+ * David Estevez,
  * <a href="http://roboticslab.uc3m.es/roboticslab/persona_publ.php?id_pers=72">Juan G. Victores</a>,
  * <a href="http://www.mendeley.com/profiles/santiago-morante-cendrero/">Santiago Morante</a>.
  *

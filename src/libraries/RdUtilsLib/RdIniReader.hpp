@@ -25,7 +25,7 @@ namespace rdlib{
 /**
  * @ingroup RdIniReaderLib
  *
- * @brief An class to read ini files.
+ * @brief A class to read ini files.
  *
  */
 template < class T1, class T2 >

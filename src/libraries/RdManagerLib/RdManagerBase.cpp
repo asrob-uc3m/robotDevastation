@@ -7,6 +7,7 @@ rdlib::RdManagerBase::RdManagerBase()
     rdInputBasePtr = 0;
     rdOutputBasePtr = 0;
     rdRobotBasePtr = 0;
+    rdImageProcessorBasePtr = 0;
 
     //-- Init the semaphores
     captureSemaphores = new sem_t[PIPELINE_SIZE];
@@ -239,5 +240,5 @@ bool rdlib::RdManagerBase::manageWithSync()
             }
         } while(managerStatus != MANAGER_STATUS_STOPPED);
     }
-    RD_SUCCESS("Exited manager main thread!");
+    RD_SUCCESS("Exited manager main thread!\n");
 }

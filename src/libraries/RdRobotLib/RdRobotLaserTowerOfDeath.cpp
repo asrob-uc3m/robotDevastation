@@ -74,7 +74,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::shoot()
 
 bool rdlib::RdRobotLaserTowerOfDeath::askToStop()
 {
-    RD_INFO("RdRdRobotLaserTowerOfDeath: stopping connection...\n");
+    RD_INFO("Stopping connection...\n");
 
     //-- Close serial port
     if ( serialPort->IsOpen() )
