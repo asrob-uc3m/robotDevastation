@@ -38,6 +38,13 @@ bool rdlib::RdManagerDefault::setup()
     return true;
 }
 
+bool rdlib::RdManagerDefault::askToStop()
+{
+    delete rdImageProcessorBasePtr;
+    rdImageProcessorBasePtr = 0;
+    return RdManagerBase::askToStop();
+}
+
 bool rdlib::RdManagerDefault::shoot() {
     if (!rdRobotBasePtr) return false;
     //

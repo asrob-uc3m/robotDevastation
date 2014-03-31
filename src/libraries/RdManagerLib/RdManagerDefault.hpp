@@ -25,6 +25,7 @@ class RdManagerDefault : public RdManagerBase {
         virtual bool callFunctionByName(const std::string &cmd);
         virtual bool shoot();
         virtual bool setup();
+        virtual bool askToStop();
 
         virtual bool manage(int pipelineIndex);
 
