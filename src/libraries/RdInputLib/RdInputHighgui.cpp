@@ -8,6 +8,8 @@ bool rdlib::RdInputHighgui::setup()
     keyMap["s"]='s';
     keyMap["w"]='w';
     keyMap["t"]='t';
+    keyMap["m"]='m';
+    keyMap["n"]='n';
     keyMap["SPACE"]=' ';
     keyMap["ESC"]='\x1b';
     keyMap["CTRL_C"]='c';  // This is bad... maybe catch?
@@ -67,7 +69,7 @@ bool rdlib::RdInputHighgui::input()
         char currentInputKey = *inputKey;
 
         //-- Release the mutex
-        pthread_mutex_unlock( inputKeyMutex);
+        pthread_mutex_unlock(inputKeyMutex);
 
         //-- Look for the key in the table and execute action(s):
         //! \todo Look for the key in the table and execute action(s)
@@ -75,6 +77,7 @@ bool rdlib::RdInputHighgui::input()
 
         if ((currentInputKey != -1)&&(lastInputKey == -1))
         {
+            RD_DEBUG("Function called: %s\n", keyFunctionMap[currentInputKey].c_str() );
             rdManagerBasePtr->callFunctionByName( keyFunctionMap[currentInputKey] );
 
         }

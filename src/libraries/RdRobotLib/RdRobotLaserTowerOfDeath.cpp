@@ -34,7 +34,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::callFunctionByName(const std::string& cmd)
 bool rdlib::RdRobotLaserTowerOfDeath::panIncrement()
 {
     if (panJointValue < panRangeMax)
-        panJointValue++;
+        panJointValue+=panStep;
 
     return sendCurrentJointValues();
 }
@@ -42,7 +42,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::panIncrement()
 bool rdlib::RdRobotLaserTowerOfDeath::panDecrement()
 {
     if (  panJointValue > panRangeMin )
-        panJointValue--;
+        panJointValue-=panStep;
 
     return sendCurrentJointValues();
 }
@@ -50,7 +50,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::panDecrement()
 bool rdlib::RdRobotLaserTowerOfDeath::tiltIncrement()
 {
     if (tiltJointValue < tiltRangeMax)
-        tiltJointValue++;
+        tiltJointValue+=tiltStep;
 
     return sendCurrentJointValues();
 }
@@ -58,7 +58,7 @@ bool rdlib::RdRobotLaserTowerOfDeath::tiltIncrement()
 bool rdlib::RdRobotLaserTowerOfDeath::tiltDecrement()
 {
     if (  tiltJointValue > tiltRangeMin )
-        tiltJointValue--;
+        tiltJointValue-=tiltStep;
 
     return sendCurrentJointValues();
 }

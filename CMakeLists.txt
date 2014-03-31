@@ -26,6 +26,8 @@ option(ENABLE_RdOutputHighguiLib "Choose if you want to compile RdOutputHighguiL
 option(ENABLE_RdManagerDefaultLib "Choose if you want to compile RdManagerDefaultLib" TRUE)
 option(ENABLE_RdRobotLib "Choose if you want to compile RdRobotLib" TRUE)
 option(ENABLE_RdUtilsLib "Choose if you want to compile RdUtilsLib" TRUE)
+option(ENABLE_RdWeaponLib "Choose if you want to compile RdWeaponLib" TRUE)
+option(ENABLE_RdWeaponTests "Choose if you want to compile RdWeaponTests" TRUE)
 
 ##### program options
 option(ENABLE_rdClient "Choose if you want to compile rdClient" TRUE)
