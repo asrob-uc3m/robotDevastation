@@ -31,7 +31,7 @@ bool rdlib::RdImageProcessZbar::process(char * imgPtr, const int width, const in
     for(zbar::Image::SymbolIterator symbol = image.symbol_begin(); symbol != image.symbol_end(); ++symbol) {
         std::vector<cv::Point> vp;
         // do something useful with results
-        std::cout << "decoded " << symbol->get_type_name() << " symbol \"" << symbol->get_data() << '"' <<" "<< std::endl;
+        RD_INFO("[%s]: %s\n", symbol->get_type_name().c_str(), symbol->get_data().c_str());
         int n = symbol->get_location_size();
         for(int i=0;i<n;i++){
             vp.push_back(cv::Point(symbol->get_location_x(i),symbol->get_location_y(i)));
@@ -42,14 +42,12 @@ bool rdlib::RdImageProcessZbar::process(char * imgPtr, const int width, const in
         enemiesFound.push_back( std::pair< int, int>( r.center.x, r.center.y ));
         enemiesFoundSize.push_back( pts[1].x - pts[0].x );
     }
-
-
+    cvimage.release();
+    cvimagetreat.release();
 
     enemyPos = enemiesFound;
     enemySize = enemiesFoundSize;
 
-     //-- Here I should call the functions that control the robot camera
-     //-- towards the face
     return true;
 }
 
