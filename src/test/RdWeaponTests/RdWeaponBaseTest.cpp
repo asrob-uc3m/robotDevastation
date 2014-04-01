@@ -98,14 +98,14 @@ int main(void)
 {
     RD_INFO("Testing RdWeaponBase class\n");
     RD_INFO("Creating a laser gun weapon...\n");
-    RdWeaponBase laser_gun(0);
+    RdWeaponBase laser_gun(RdWeaponBase::RD_WEAPON_LASER_GUN);
     RD_SUCCESS("[ok]\n");
 
     test_weapon(laser_gun, LASER_GUN_MAX_AMMO, LASER_GUN_DELAY_SHOOT, LASER_GUN_DELAY_RELOAD,
                 LASER_GUN_POWER);
 
     RD_INFO("Creating a laser gun weapon...\n");
-    RdWeaponBase machine_gun(1);
+    RdWeaponBase machine_gun(RdWeaponBase::RD_WEAPON_MACHINE_GUN);
     RD_SUCCESS("[ok]\n");
 
     test_weapon(machine_gun, MACHINE_GUN_MAX_AMMO, MACHINE_GUN_DELAY_SHOOT, MACHINE_GUN_DELAY_RELOAD,
