@@ -3,16 +3,39 @@
 bool rdlib::RdInputHighgui::setup()
 {
     RD_INFO("RdInputHighgui: setup!\n");
+    // alpha = list(string.ascii_lowercase)
+    // for letter in alpha:
+    //     print 'keyMap["'+letter+'"]=\''+letter+'\';'
     keyMap["a"]='a';
+    keyMap["b"]='b';
+    keyMap["c"]='c';
     keyMap["d"]='d';
-    keyMap["s"]='s';
-    keyMap["w"]='w';
-    keyMap["t"]='t';
+    keyMap["e"]='e';
+    keyMap["f"]='f';
+    keyMap["g"]='g';
+    keyMap["h"]='h';
+    keyMap["i"]='i';
+    keyMap["j"]='j';
+    keyMap["k"]='k';
+    keyMap["l"]='l';
     keyMap["m"]='m';
     keyMap["n"]='n';
+    keyMap["o"]='o';
+    keyMap["p"]='p';
+    keyMap["q"]='q';
+    keyMap["r"]='r';
+    keyMap["s"]='s';
+    keyMap["t"]='t';
+    keyMap["u"]='u';
+    keyMap["v"]='v';
+    keyMap["w"]='w';
+    keyMap["x"]='x';
+    keyMap["y"]='y';
+    keyMap["z"]='z';
+
     keyMap["SPACE"]=' ';
     keyMap["ESC"]='\x1b';
-    keyMap["CTRL_C"]='c';  // This is bad... maybe catch?
+    //keyMap["CTRL_C"]='c';  // This is bad... maybe catch an exception?
 }
 
 bool rdlib::RdInputHighgui::start()
