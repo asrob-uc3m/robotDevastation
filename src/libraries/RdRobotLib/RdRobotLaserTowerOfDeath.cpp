@@ -65,11 +65,20 @@ bool rdlib::RdRobotLaserTowerOfDeath::tiltDecrement()
 
 bool rdlib::RdRobotLaserTowerOfDeath::shoot()
 {
-    SerialPort::DataBuffer outputBuff;
-    outputBuff.push_back(0x5F); //-- 0x5F -> Toggle LED
-    serialPort->Write( outputBuff );
+    if ( serialPort->IsOpen() )
+    {
+        SerialPort::DataBuffer outputBuff;
+        outputBuff.push_back(0x5F); //-- 0x5F -> Toggle LED
+        serialPort->Write( outputBuff );
 
-    RD_SUCCESS("Shooting!!\n");
+        RD_SUCCESS("Shooting!!\n");
+        return true;
+    }
+    else
+    {
+        RD_WARNING("Robot could not shoot (because it is not connected).\n");
+        return false;
+    }
 }
 
 bool rdlib::RdRobotLaserTowerOfDeath::askToStop()
@@ -154,13 +163,22 @@ bool rdlib::RdRobotLaserTowerOfDeath::checkConnection()
 
 bool rdlib::RdRobotLaserTowerOfDeath::sendCurrentJointValues()
 {
-    SerialPort::DataBuffer outputBuff;
-    outputBuff.push_back(0x50); //-- 0x50 -> Set pos to all joints
+    if ( serialPort->IsOpen() )
+    {
+        SerialPort::DataBuffer outputBuff;
+        outputBuff.push_back(0x50); //-- 0x50 -> Set pos to all joints
 
-    outputBuff.push_back( (char) panJointValue );
-    outputBuff.push_back( (char) tiltJointValue );
-    serialPort->Write( outputBuff );
+        outputBuff.push_back( (char) panJointValue );
+        outputBuff.push_back( (char) tiltJointValue );
+        serialPort->Write( outputBuff );
 
+        return true;
+    }
+    else
+    {
+        RD_WARNING("Robot could not send joints (because it is not connected).\n");
+        return false;
+    }
 }
 
 
