@@ -39,7 +39,8 @@ bool rdlib::RdManagerDefault::setup()
         return false;
     }
 
-    rdImageProcessorBasePtr = new rdlib::RdImageProcessOpenCV();
+    //rdImageProcessorBasePtr = new rdlib::RdImageProcessOpenCV();  // Tracks faces
+    rdImageProcessorBasePtr = new rdlib::RdImageProcessZbar();  // Tracks QR codes
     rdImageProcessorBasePtr->setup();
 
     return true;

@@ -19,3 +19,21 @@ set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries")
 
 ENDIF (ENABLE_RdImageProcessOpenCVLib)
 
+
+IF (ENABLE_RdImageProcessZbarLib)
+
+set(KEYWORD "RdImageProcessZbarLib")
+
+include_directories(${RD_INCLUDE_DIRS})
+
+# Set up our library.
+add_library(${KEYWORD} RdImageProcessZbar.cpp)
+target_link_libraries(${KEYWORD} zbar)
+install(TARGETS ${KEYWORD} DESTINATION lib)
+
+# Exporting dependencies for RDConfig.cmake quite manually for now... 
+#set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
+set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} zbar CACHE INTERNAL "appended libraries") # Not for now as it is a header
+
+ENDIF (ENABLE_RdImageProcessZbarLib)
+

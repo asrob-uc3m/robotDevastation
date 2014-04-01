@@ -19,6 +19,7 @@ project(robotDevastation)
 ##### library options
 option(ENABLE_RdCameraWebcamLib "Choose if you want to compile RdCameraWebcamLib" TRUE)
 option(ENABLE_RdImageProcessOpenCVLib "Choose if you want to compile RdImageProcessOpenCVLib" TRUE)
+option(ENABLE_RdImageProcessZbarLib "Choose if you want to compile RdImageProcessZbarLib" TRUE)
 option(ENABLE_RdInputKeyboardLib "Choose if you want to compile RdInputKeyboardLib" TRUE)
 option(ENABLE_RdInputHighguiLib "Choose if you want to compile RdInputHighguiLib" TRUE)
 option(ENABLE_RdInOutHighguiLib "Choose if you want to compile RdOutputHighguiLib" TRUE)

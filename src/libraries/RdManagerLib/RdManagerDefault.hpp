@@ -10,6 +10,7 @@
 #include <pthread.h>
 
 #include "RdImageProcessOpenCV.hpp"
+#include "RdImageProcessZbar.hpp"
 
 namespace rdlib{
 
