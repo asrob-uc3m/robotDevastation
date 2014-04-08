@@ -107,8 +107,7 @@ bool rdserver::RdServer::createPort()
     my_addr.sin_family = AF_INET;
     //-- short, network byte order
     my_addr.sin_port = htons(DEFAULT_PORT);
-    //my_addr.sin_addr.s_addr = INADDR_ANY;
-    my_addr.sin_addr.s_addr = inet_addr(DEFAULT_IP);
+    my_addr.sin_addr.s_addr = inet_addr(DEFAULT_IP);  // Alternatively use INADDR_ANY
     //-- zero the rest of the struct
     memset(&(my_addr.sin_zero), 0, 8);
     if(bind(sockfd, (struct sockaddr *)&my_addr, sizeof(struct sockaddr)) == -1)
@@ -116,7 +115,6 @@ bool rdserver::RdServer::createPort()
         RD_ERROR("bind() fail.\n");
         return false;
     }
-    else
-        RD_SUCCESS("bind() ok.\n");
+    RD_SUCCESS("bind() ok.\n");
     return true;
 }
