@@ -8,10 +8,11 @@
 #include "RdIniReader.hpp"
 #include "RdMacros.hpp"
 
-//#include <string.h>
-//#include <sys/types.h>
-//#include <sys/socket.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>  // inet_addr in linux.
 #include <netinet/in.h>  // sockaddr_in in linux.
+#include <arpa/inet.h>
 
 #define DEFAULT_WATCHDOG    1.0       // [s]
 #define DEFAULT_IP "127.0.0.1"
@@ -54,6 +55,10 @@ class RdServer {
 
         bool createPort();
 
+        /** Socket file descriptor */
+        int sockfd;
+
+        std::vector<int> vectorOfScores;
 };
 
 } //rdserver

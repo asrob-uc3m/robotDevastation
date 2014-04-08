@@ -55,13 +55,27 @@ bool rdserver::RdServer::runProgram(const int& argc, char *argv[])
 
     if( ! this->createPort() ) {
         RD_ERROR("Could not create port.\n");
+        return false;
     }
+
+    int res = listen(sockfd, 10);
+    if ( res != 0   ) { //-- Careful, max 10 connections.
+        RD_ERROR("Could not listen.\n");
+        return false;
+    }
+
+
+    vectorOfScores.resize(2);
 
     serverStatus = 0;
     while(serverStatus == 0)
     {
-        RD_INFO("RdServer alive, serverStatus: %d\n",serverStatus);
         usleep( watchdog * 1000000.0 );
+        RD_INFO("RdServer alive, serverStatus: %d\n",serverStatus);
+        for(int i=0;i<vectorOfScores.size();i++){
+            RD_INFO("Player %d: %d.\n",i+1,vectorOfScores[i]);
+        }
+
     }
     return this->quitProgram();
 }
@@ -80,6 +94,29 @@ bool rdserver::RdServer::quitProgram()
 
 bool rdserver::RdServer::createPort()
 {
-    int sockfd; /*socket file descriptor*/
     struct sockaddr_in my_addr;
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
+    {
+        RD_ERROR("sockfd failed.\n");
+        return false;
+    }
+    else
+        RD_SUCCESS("sockfd ok.\n");
+    //-- host byte order
+    my_addr.sin_family = AF_INET;
+    //-- short, network byte order
+    my_addr.sin_port = htons(DEFAULT_PORT);
+    //my_addr.sin_addr.s_addr = INADDR_ANY;
+    my_addr.sin_addr.s_addr = inet_addr(DEFAULT_IP);
+    //-- zero the rest of the struct
+    memset(&(my_addr.sin_zero), 0, 8);
+    if(bind(sockfd, (struct sockaddr *)&my_addr, sizeof(struct sockaddr)) == -1)
+    {
+        RD_ERROR("bind() fail.\n");
+        return false;
+    }
+    else
+        RD_SUCCESS("bind() ok.\n");
+    return true;
 }
