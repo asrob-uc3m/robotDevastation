@@ -47,6 +47,41 @@ bool rdlib::RdEnemy::hit(RdBullet bullet)
         return false;
 }
 
+int rdlib::RdEnemy::getId()
+{
+    return id;
+}
+
+RdVector2d rdlib::RdEnemy::getPos()
+{
+    return pos;
+}
+
+int rdlib::RdEnemy::getWidth()
+{
+    return width;
+}
+
+int rdlib::RdEnemy::getHeight()
+{
+    return height;
+}
+
+int rdlib::RdEnemy::getMaxHealth()
+{
+    return max_health;
+}
+
+int rdlib::RdEnemy::getCurrentHealth()
+{
+    return current_health;
+}
+
+std::string rdlib::RdEnemy::getName()
+{
+    return name;
+}
+
 bool rdlib::RdEnemy::existCollision(RdBullet bullet)
 {
     int enemy_start_x = pos.x - width/2;

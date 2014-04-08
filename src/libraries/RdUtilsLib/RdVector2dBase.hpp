@@ -18,6 +18,11 @@ class RdVector2dBase {
         RdVector2dBase( T x, T y): x(x), y(y) {}
         RdVector2dBase(): x(0), y(0) {}
         T x, y;
+        
+        bool operator==( const RdVector2dBase<T>& other_vector) { return this->x == other_vector.x
+                    && this->y == other_vector.y; }
+
+        RdVector2dBase& operator+=( const RdVector2dBase<T>& a ) { x+=a.x; y+=a.y; return *this;}
 };
 typedef RdVector2dBase<int> RdVector2d;
 

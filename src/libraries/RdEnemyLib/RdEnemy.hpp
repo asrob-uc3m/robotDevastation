@@ -27,8 +27,9 @@ class RdEnemy
         static const int QR_CODE = 1;
 
         int getId();
-        int getPos();
-        int getDimensions();
+        RdVector2d getPos();
+        int getWidth();
+        int getHeight();
         int getMaxHealth();
         int getCurrentHealth();
         std::string getName();

@@ -6,6 +6,6 @@ IF (ENABLE_RdEnemyTests)
 include_directories(${RD_INCLUDE_DIRS})
 
 add_executable(RdEnemyBaseTest RdEnemyBaseTest.cpp)
-target_link_libraries(RdEnemyBaseTest  ${RD_LIBRARIES})
+target_link_libraries(RdEnemyBaseTest RdEnemyLib)
 
 ENDIF (ENABLE_RdEnemyTests)
