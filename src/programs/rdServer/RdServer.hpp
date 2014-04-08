@@ -55,8 +55,12 @@ class RdServer {
 
         bool createPort();
 
+        struct sockaddr_in sourceAddr;
+        struct sockaddr_in destAddr;
+
         /** Socket file descriptor */
-        int sockfd;
+        int listenSocket;
+        int newSocket;
 
         std::vector<int> vectorOfScores;
 };

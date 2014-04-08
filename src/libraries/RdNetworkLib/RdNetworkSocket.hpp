@@ -5,6 +5,14 @@
 
 #include "RdNetworkBase.hpp"
 
+#include <sys/types.h>
+#include <sys/socket.h>  // inet_addr in linux.
+#include <netinet/in.h>  // sockaddr_in in linux.
+#include <arpa/inet.h>
+
+#define DEFAULT_IP "127.0.0.1"
+#define DEFAULT_PORT 5000
+
 /**
  * @ingroup rd_libraries
  *
@@ -28,8 +36,8 @@ class RdNetworkSocket : public RdNetworkBase {
 
 
     protected:
-
-
+        struct sockaddr_in destAddr;
+        int testSocket;
 };
 
 } //rdlib

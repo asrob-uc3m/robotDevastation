@@ -185,7 +185,9 @@ void rdlib::RdManagerBase::setRdOutputBasePtr(RdOutputBase* rdOutputBasePtr ) {
 void rdlib::RdManagerBase::setRdRobotBasePtr(RdRobotBase* rdRobotBasePtr ) {
     this->rdRobotBasePtr = rdRobotBasePtr;
 }
-
+void rdlib::RdManagerBase::setRdNetworkBasePtr(RdNetworkBase* rdNetworkBasePtr ) {
+    this->rdNetworkBasePtr = rdNetworkBasePtr;
+}
 
 void rdlib::RdManagerBase::getEnemies( int pipelineIndex,  std::vector< std::pair<int, int> >& enemyPos,
                  std::vector< double >& enemySize) {

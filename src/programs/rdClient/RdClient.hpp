@@ -14,6 +14,7 @@
 #include "RdOutputBase.hpp"
 #include "RdRobotBase.hpp"
 #include "RdCameraBase.hpp"
+#include "RdNetworkBase.hpp"
 
 #define DEFAULT_WATCHDOG    1.0       // [s]
 
@@ -63,6 +64,9 @@ class RdClient {
 
         /** Camera */
         rdlib::RdCameraBase* rdCameraBasePtr;
+
+        /** Network */
+        rdlib::RdNetworkBase* rdNetworkBasePtr;
 
         /** Map read from ini file */
         std::map< std::string, std::string > rdIniMap;

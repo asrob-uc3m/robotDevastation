@@ -24,5 +24,6 @@ add_subdirectory(RdInputLib)
 add_subdirectory(RdOutputLib)
 add_subdirectory(RdRobotLib)
 add_subdirectory(RdManagerLib)
+add_subdirectory(RdNetworkLib)
 add_subdirectory(RdWeaponLib)
 

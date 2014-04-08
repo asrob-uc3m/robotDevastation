@@ -34,6 +34,7 @@ class RdInputBase;
 class RdOutputBase;
 class RdRobotBase;
 class RdImageProcessBase;
+class RdNetworkBase;
 
 /**
  * @ingroup RdManagerLib
@@ -82,6 +83,7 @@ class RdManagerBase {
         void setRdInputBasePtr(RdInputBase* rdInputBasePtr ) ;
         void setRdOutputBasePtr(RdOutputBase* rdOutputBasePtr );
         void setRdRobotBasePtr(RdRobotBase* rdRobotBasePtr );
+        void setRdNetworkBasePtr(RdNetworkBase* rdNetworkBasePtr );
 
         //-- Different status of the manager ----------------------//
         int getManagerStatus();
@@ -98,6 +100,7 @@ class RdManagerBase {
         RdInputBase* rdInputBasePtr;
         RdOutputBase* rdOutputBasePtr;
         RdRobotBase* rdRobotBasePtr;
+        RdNetworkBase* rdNetworkBasePtr;
 
         RdImageProcessBase* rdImageProcessorBasePtr;
 

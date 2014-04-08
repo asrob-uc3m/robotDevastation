@@ -25,6 +25,7 @@ option(ENABLE_RdInputHighguiLib "Choose if you want to compile RdInputHighguiLib
 option(ENABLE_RdInOutHighguiLib "Choose if you want to compile RdOutputHighguiLib" TRUE)
 option(ENABLE_RdOutputHighguiLib "Choose if you want to compile RdOutputHighguiLib" TRUE)
 option(ENABLE_RdManagerDefaultLib "Choose if you want to compile RdManagerDefaultLib" TRUE)
+option(ENABLE_RdNetworkSocketLib "Choose if you want to compile RdNetworkSocketLib" TRUE)
 option(ENABLE_RdRobotLib "Choose if you want to compile RdRobotLib" TRUE)
 option(ENABLE_RdUtilsLib "Choose if you want to compile RdUtilsLib" TRUE)
 option(ENABLE_RdWeaponLib "Choose if you want to compile RdWeaponLib" TRUE)

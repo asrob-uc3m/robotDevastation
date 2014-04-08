@@ -7,6 +7,7 @@
 #include "RdRobotLaserTowerOfDeath.hpp"
 #include "RdManagerDefault.hpp"
 #include "RdCameraWebcam.hpp"
+#include "RdNetworkSocket.hpp"
 
 rdclient::RdClient* globalRdClient;
 void rdclient::RdClient::staticSignalHandler(int s)
@@ -30,6 +31,7 @@ bool rdclient::RdClient::runProgram(const int& argc, char *argv[])
     rdOutputBasePtr = 0;
     rdRobotBasePtr = 0;
     rdCameraBasePtr = 0;
+    rdNetworkBasePtr = 0;
 
     watchdog = DEFAULT_WATCHDOG;
 
@@ -64,16 +66,20 @@ bool rdclient::RdClient::runProgram(const int& argc, char *argv[])
     rdOutputBasePtr = new rdlib::RdOutputHighgui();
     rdInputBasePtr = new rdlib::RdInputHighgui();
 
+    rdNetworkBasePtr = new rdlib::RdNetworkSocket();
+
     //-- Link manager to the rest of the modules:
     rdManagerBasePtr->setRdCameraBasePtr(rdCameraBasePtr);
     rdManagerBasePtr->setRdRobotBasePtr(rdRobotBasePtr);
     rdManagerBasePtr->setRdInputBasePtr(rdInputBasePtr);
     rdManagerBasePtr->setRdOutputBasePtr(rdOutputBasePtr);
+    rdManagerBasePtr->setRdNetworkBasePtr(rdNetworkBasePtr);
 
     //-- Setup the manager
     //! \todo Setup the other things
     rdManagerBasePtr->setup();
     rdInputBasePtr->setup();
+    rdNetworkBasePtr->setup();
 
     //-- This is only needed because we are using OpenCV's Highgui I/O
     ((rdlib::RdInputHighgui *) rdInputBasePtr)->setRdOutputHighguiPtr( (rdlib::RdOutputHighgui*) rdOutputBasePtr);

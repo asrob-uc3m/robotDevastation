@@ -58,11 +58,9 @@ bool rdserver::RdServer::runProgram(const int& argc, char *argv[])
         return false;
     }
 
-    int res = listen(sockfd, 10);
-    if ( res != 0   ) { //-- Careful, max 10 connections.
-        RD_ERROR("Could not listen.\n");
-        return false;
-    }
+    //struct sockaddr_in their_addr;
+    //int sin_size = sizeof their_addr;
+    //int new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
 
 
     vectorOfScores.resize(2);
@@ -94,27 +92,46 @@ bool rdserver::RdServer::quitProgram()
 
 bool rdserver::RdServer::createPort()
 {
-    struct sockaddr_in my_addr;
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
+    // [thanks] http://wiki.treck.com/Introduction_to_BSD_Sockets
+
+    //-- Specify the address family
+    destAddr.sin_family = AF_INET;
+    //-- Specify the IP
+    destAddr.sin_addr.s_addr = inet_addr(DEFAULT_IP);  // Alternatively use INADDR_ANY
+    //-- Specify the port
+    destAddr.sin_port = htons(DEFAULT_PORT);
+    //-- zero the rest of the struct
+    memset(&(destAddr.sin_zero), 0, 8);
+
+    //-- Create a socket
+    listenSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);  // Alternatively use 0 as last argument
+    //-- Make sure the socket was created successfully
+    if(listenSocket  == -1)
     {
         RD_ERROR("sockfd failed.\n");
         return false;
     }
-    else
-        RD_SUCCESS("sockfd ok.\n");
-    //-- host byte order
-    my_addr.sin_family = AF_INET;
-    //-- short, network byte order
-    my_addr.sin_port = htons(DEFAULT_PORT);
-    my_addr.sin_addr.s_addr = inet_addr(DEFAULT_IP);  // Alternatively use INADDR_ANY
-    //-- zero the rest of the struct
-    memset(&(my_addr.sin_zero), 0, 8);
-    if(bind(sockfd, (struct sockaddr *)&my_addr, sizeof(struct sockaddr)) == -1)
+    RD_SUCCESS("sockfd ok.\n");
+
+    //-- Bind the socket to the port and address at which we wish to receive data
+    if( bind(listenSocket, (struct sockaddr *)&destAddr, sizeof(struct sockaddr)) == -1 )
     {
-        RD_ERROR("bind() fail.\n");
+        RD_ERROR("bind fail.\n");
         return false;
     }
-    RD_SUCCESS("bind() ok.\n");
+    RD_SUCCESS("bind ok.\n");
+
+    //-- Set up the socket as a listening socket
+    int res = listen(listenSocket, 10);  //-- Careful, max 10 connections.
+    if ( res < 0   ) {
+        RD_ERROR("Could not listen.\n");
+        return false;
+    }
+    RD_SUCCESS("listen ok.\n");
+
+    RD_INFO("Accepting clients...\n");
+    socklen_t addrLen = sizeof(sourceAddr);
+    newSocket = accept(listenSocket, (struct sockaddr *)&sourceAddr, &addrLen);
+
     return true;
 }
