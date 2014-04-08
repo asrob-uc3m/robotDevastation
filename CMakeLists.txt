@@ -27,8 +27,13 @@ option(ENABLE_RdOutputHighguiLib "Choose if you want to compile RdOutputHighguiL
 option(ENABLE_RdManagerDefaultLib "Choose if you want to compile RdManagerDefaultLib" TRUE)
 option(ENABLE_RdRobotLib "Choose if you want to compile RdRobotLib" TRUE)
 option(ENABLE_RdUtilsLib "Choose if you want to compile RdUtilsLib" TRUE)
+option(ENABLE_RdEnemyLib "Choose if you want to compile RdEnemyLib" TRUE)
 option(ENABLE_RdWeaponLib "Choose if you want to compile RdWeaponLib" TRUE)
-option(ENABLE_RdWeaponTests "Choose if you want to compile RdWeaponTests" TRUE)
+option(ENABLE_RdBulletLib "Choose if you want to compile RdBulletLib" TRUE)
+option(ENABLE_RdBulletTests "Choose if you want to compile RdBulletTests" TRUE)
+option(ENABLE_RdWeaponTests "Choose if you want to compile RdWeaponTests" TRUE) 
+option(ENABLE_RdEnemyTests "Choose if you want to compile RdEnemyTests" TRUE)
+option(ENABLE_RdEnemyLib "Choose if you want to compile RdEnemyLib" TRUE)
 
 ##### program options
 option(ENABLE_rdClient "Choose if you want to compile rdClient" TRUE)
