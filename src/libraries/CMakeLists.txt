@@ -26,4 +26,7 @@ add_subdirectory(RdRobotLib)
 add_subdirectory(RdManagerLib)
 add_subdirectory(RdNetworkLib)
 add_subdirectory(RdWeaponLib)
+add_subdirectory(RdBulletLib)
+add_subdirectory(RdEnemyLib)
+
 
