@@ -32,6 +32,7 @@ option(ENABLE_RdWeaponTests "Choose if you want to compile RdWeaponTests" TRUE)
 
 ##### program options
 option(ENABLE_rdClient "Choose if you want to compile rdClient" TRUE)
+option(ENABLE_rdServer "Choose if you want to compile rdServer" TRUE)
 option(ENABLE_rdSim "Choose if you want to compile rdSim" FALSE)
 
 
