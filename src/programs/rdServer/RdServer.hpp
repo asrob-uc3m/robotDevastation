@@ -8,7 +8,14 @@
 #include "RdIniReader.hpp"
 #include "RdMacros.hpp"
 
+//#include <string.h>
+//#include <sys/types.h>
+//#include <sys/socket.h>
+#include <netinet/in.h>  // sockaddr_in in linux.
+
 #define DEFAULT_WATCHDOG    1.0       // [s]
+#define DEFAULT_IP "127.0.0.1"
+#define DEFAULT_PORT 5000
 
 namespace rdserver{
 
@@ -44,6 +51,8 @@ class RdServer {
         std::map< std::string, std::string > rdIniMap;
 
         int serverStatus;
+
+        bool createPort();
 
 };
 

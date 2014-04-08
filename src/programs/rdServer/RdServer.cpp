@@ -53,6 +53,9 @@ bool rdserver::RdServer::runProgram(const int& argc, char *argv[])
     signal (SIGINT,RdServer::staticSignalHandler);
     signal (SIGTERM,RdServer::staticSignalHandler);
 
+    if( ! this->createPort() ) {
+        RD_ERROR("Could not create port.\n");
+    }
 
     serverStatus = 0;
     while(serverStatus == 0)
@@ -75,3 +78,8 @@ bool rdserver::RdServer::quitProgram()
     return true;
 }
 
+bool rdserver::RdServer::createPort()
+{
+    int sockfd; /*socket file descriptor*/
+    struct sockaddr_in my_addr;
+}
