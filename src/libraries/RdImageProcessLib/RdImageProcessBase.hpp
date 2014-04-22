@@ -31,7 +31,7 @@ class RdImageProcessBase {
     public:
         virtual bool setup()=0;
         virtual bool process( char * imgPtr, const int width, const int height, const int step,
-                              std::vector< RdEnemy* >& enemies )=0;
+                              std::vector< RdEnemy >& vectorOfRdEnemyPtr, pthread_mutex_t& mutexOfVectorOfRdEnemyPtr )=0;
 
         void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr )
         {
