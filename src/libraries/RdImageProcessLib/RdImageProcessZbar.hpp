@@ -43,10 +43,6 @@ class RdImageProcessZbar : public RdImageProcessBase {
     protected:
         zbar::ImageScanner scanner;
 
-        std::vector< std::pair<int, int> > enemiesFound;
-        std::vector< double > enemiesFoundSize;
-
-        std::vector<RdEnemy> vectorOfRdEnemyPtr;
 };
 
 } //rdlib

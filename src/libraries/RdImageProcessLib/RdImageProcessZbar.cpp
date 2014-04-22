@@ -24,8 +24,11 @@ bool rdlib::RdImageProcessZbar::process(char * imgPtr, const int width, const in
     int n = scanner.scan(image);
     // extract results
 
-    enemiesFound.clear();
-    enemiesFoundSize.clear();
+    std::vector<RdEnemy> localVectorOfRdEnemy;
+    //std::vector< std::pair<int, int> > enemiesFound;
+    //std::vector< double > enemiesFoundSize;
+    //enemiesFound.clear();
+    //enemiesFoundSize.clear();
 
     for(zbar::Image::SymbolIterator symbol = image.symbol_begin(); symbol != image.symbol_end(); ++symbol) {
         std::vector<cv::Point> vp;
@@ -38,14 +41,17 @@ bool rdlib::RdImageProcessZbar::process(char * imgPtr, const int width, const in
         cv::RotatedRect r = minAreaRect(vp);
         cv::Point2f pts[4];
         r.points(pts);
-        enemiesFound.push_back( std::pair< int, int>( r.center.x, r.center.y ));
-        enemiesFoundSize.push_back( pts[1].x - pts[0].x );
+        //enemiesFound.push_back( std::pair< int, int>( r.center.x, r.center.y ));
+        //enemiesFoundSize.push_back( pts[1].x - pts[0].x );
+        RdEnemy enemy(localVectorOfRdEnemy.size(), RdEnemy::QR_CODE, RdVector2d( r.center.x, r.center.y ), pts[1].x-pts[0].x, pts[2].y-pts[0].y );
+        localVectorOfRdEnemy.push_back(enemy);
     }
     cvimage.release();
     cvimagetreat.release();
 
-    //j//enemies = enemiesFound;
-    //j//enemySize = enemiesFoundSize;
+    pthread_mutex_lock(&mutexOfVectorOfRdEnemy);
+    vectorOfRdEnemy = localVectorOfRdEnemy;
+    pthread_mutex_unlock(&mutexOfVectorOfRdEnemy);
 
     return true;
 }
