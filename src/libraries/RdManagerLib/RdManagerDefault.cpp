@@ -9,8 +9,8 @@ rdlib::RdManagerDefault::RdManagerDefault()
     //-- Enemy init:
     for( int i = 0; i < PIPELINE_SIZE; i++)
     {
-        enemyPos.push_back( std::vector< std::pair<int, int> >() );
-        enemySize.push_back( std::vector< double> () );
+        //enemyPos.push_back( std::vector< std::pair<int, int> >() );
+        //enemySize.push_back( std::vector< double> () );
     }
 
     //-- Weapons init:
@@ -74,7 +74,7 @@ bool rdlib::RdManagerDefault::manage(int pipelineIndex)
         RD_INFO("Tracking head.\n");
         //trackHead(pipelineIndex);
         rdImageProcessorBasePtr->process( rdCameraBasePtr->getBufferPtr(pipelineIndex), width, height, step,
-                                          enemyPos[pipelineIndex], enemySize[pipelineIndex]);
+                                          vectorOfRdEnemyPtr);
     }
 }
 

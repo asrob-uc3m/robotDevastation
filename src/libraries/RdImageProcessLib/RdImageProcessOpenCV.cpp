@@ -24,8 +24,7 @@ bool rdlib::RdImageProcessOpenCV::setup()
 }
 
 bool rdlib::RdImageProcessOpenCV::process(char * imgPtr, const int width, const int height, const int step,
-                                          std::vector<std::pair<int, int> > &enemyPos,
-                                          std::vector<double> &enemySize)
+                                          std::vector<RdEnemy *> &enemies)
 {
     //-- Put image in cv::Mat
     cv::Mat image(cv::Size(width, height), CV_8UC3, imgPtr, step);
@@ -59,8 +58,8 @@ bool rdlib::RdImageProcessOpenCV::process(char * imgPtr, const int width, const 
                                         + pow( detectedFaces[i].height / 2.0 , 2)  ) );
     }
 
-    enemyPos = enemiesFound;
-    enemySize = enemiesFoundSize;
+    //j//enemies = enemiesFound;
+    //j//enemySize = enemiesFoundSize;
 
      //-- Here I should call the functions that control the robot camera
      //-- towards the face

@@ -8,6 +8,7 @@
 
 #include "RdMacros.hpp"
 #include "RdManagerBase.hpp"
+#include "RdEnemy.hpp"
 
 /**
  * @ingroup rd_libraries
@@ -30,8 +31,7 @@ class RdImageProcessBase {
     public:
         virtual bool setup()=0;
         virtual bool process( char * imgPtr, const int width, const int height, const int step,
-                              std::vector< std::pair<int, int> >& enemyPos,
-                              std::vector< double >& enemySize )=0;
+                              std::vector< RdEnemy* >& enemies )=0;
 
         void setRdManagerBasePtr(RdManagerBase* rdManagerBasePtr )
         {

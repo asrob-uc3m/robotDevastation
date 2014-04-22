@@ -9,8 +9,7 @@ bool rdlib::RdImageProcessZbar::setup()
 }
 
 bool rdlib::RdImageProcessZbar::process(char * imgPtr, const int width, const int height, const int step,
-                                          std::vector<std::pair<int, int> > &enemyPos,
-                                          std::vector<double> &enemySize)
+                                          std::vector<RdEnemy *> &enemies)
 {
     //-- Put image in cv::Mat
     //cv::Mat cvimage(cv::Size(width, height), CV_8UC3, imgPtr, step);
@@ -45,8 +44,8 @@ bool rdlib::RdImageProcessZbar::process(char * imgPtr, const int width, const in
     cvimage.release();
     cvimagetreat.release();
 
-    enemyPos = enemiesFound;
-    enemySize = enemiesFoundSize;
+    //j//enemies = enemiesFound;
+    //j//enemySize = enemiesFoundSize;
 
     return true;
 }

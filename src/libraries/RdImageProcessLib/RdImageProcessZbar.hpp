@@ -31,8 +31,7 @@ class RdImageProcessZbar : public RdImageProcessBase {
 
         virtual bool setup();
         virtual bool process(char * ptr , const int width, const int height, const int step,
-                             std::vector<std::pair<int, int> > &enemyPos,
-                             std::vector<double> &enemySize );
+                             std::vector< RdEnemy* >& enemies );
 
         bool trackHead( int index );
 

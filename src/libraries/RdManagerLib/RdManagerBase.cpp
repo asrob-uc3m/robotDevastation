@@ -189,10 +189,9 @@ void rdlib::RdManagerBase::setRdNetworkBasePtr(RdNetworkBase* rdNetworkBasePtr )
     this->rdNetworkBasePtr = rdNetworkBasePtr;
 }
 
-void rdlib::RdManagerBase::getEnemies( int pipelineIndex,  std::vector< std::pair<int, int> >& enemyPos,
-                 std::vector< double >& enemySize) {
-    enemyPos = this->enemyPos[pipelineIndex];
-    enemySize = this->enemySize[pipelineIndex];
+void rdlib::RdManagerBase::getEnemies( std::vector< rdlib::RdEnemy* >& vectorOfRdEnemyPtr, pthread_mutex_t& mutexOfVectorOfRdEnemyPtr) {
+    vectorOfRdEnemyPtr = this->vectorOfRdEnemyPtr;
+    mutexOfVectorOfRdEnemyPtr = this->mutexOfVectorOfRdEnemyPtr;
 }
 
 std::vector<rdlib::RdWeaponBase> rdlib::RdManagerBase::getWeapons()

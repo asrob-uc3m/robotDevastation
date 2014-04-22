@@ -11,7 +11,7 @@
 #include "RdCameraBase.hpp"
 #include "RdWeaponBase.hpp"
 #include "RdImageProcessBase.hpp"
-
+#include "RdEnemy.hpp"
 
 #include <iostream>
 #include <vector>
@@ -35,6 +35,7 @@ class RdOutputBase;
 class RdRobotBase;
 class RdImageProcessBase;
 class RdNetworkBase;
+class RdEnemy;
 
 /**
  * @ingroup RdManagerLib
@@ -68,7 +69,7 @@ class RdManagerBase {
         virtual bool changeWeapon(int index = -1);
 
         //-- Enemies -----------------------------------------------//
-        void getEnemies(int pipelineIndex,  std::vector< std::pair<int, int> >& enemyPos, std::vector< double >& enemySize);
+        void getEnemies( std::vector< rdlib::RdEnemy* >& vectorOfRdEnemyPtr, pthread_mutex_t& mutexOfVectorOfRdEnemyPtr );
 
         //-- Weapons -----------------------------------------------//
         std::vector<RdWeaponBase> getWeapons();
@@ -113,8 +114,8 @@ class RdManagerBase {
         sem_t * displaySemaphores;
 
         //-- Enemies
-        std::vector< std::vector< std::pair<int, int> > > enemyPos;
-        std::vector< std::vector< double > > enemySize;
+        std::vector<RdEnemy*> vectorOfRdEnemyPtr;
+        pthread_mutex_t mutexOfVectorOfRdEnemyPtr;
 
         //-- Weapons
         std::vector<RdWeaponBase> weapons;

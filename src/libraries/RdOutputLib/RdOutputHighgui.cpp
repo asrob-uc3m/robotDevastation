@@ -122,16 +122,16 @@ bool rdlib::RdOutputHighgui::printEnemies(cv::Mat &src, cv::Mat &dst, int pipeli
         dst = src.clone();
 
     //-- Get the enemies from the manager
-    std::vector< std::pair< int, int> > enemyPos;
-    std::vector< double > enemySize;
-    rdManagerBasePtr->getEnemies( pipelineIndex, enemyPos, enemySize);
+    std::vector< RdEnemy* > vectorOfRdEnemyPtr;
+    pthread_mutex_t mutexOfVectorOfRdEnemyPtr;
+    rdManagerBasePtr->getEnemies( vectorOfRdEnemyPtr, mutexOfVectorOfRdEnemyPtr );
 
     //-- Draw the enemy markers
-    for ( int i = 0; i < enemyPos.size() ; i++)
+    for ( int i = 0; i < vectorOfRdEnemyPtr.size() ; i++)
     {
-        cv::rectangle( dst, cv::Point2d( enemyPos[i].first, enemyPos[i].second)
-                       , cv::Point2d( enemyPos[i].first + enemySize[i]*2, enemyPos[i].second + enemySize[i]*2)
-                       , cv::Scalar( 0, 0, 255));
+        //cv::rectangle( dst, cv::Point2d( enemyPos[i].first, enemyPos[i].second)
+        //               , cv::Point2d( enemyPos[i].first + enemySize[i]*2, enemyPos[i].second + enemySize[i]*2)
+        //               , cv::Scalar( 0, 0, 255));
     }
 }
 
