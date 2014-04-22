@@ -41,3 +41,7 @@ bool rdlib::RdNetworkSocket::setup()
 
     return true;
 }
+
+bool rdlib::RdNetworkSocket::pointerIncrement() {
+    return true;
+}

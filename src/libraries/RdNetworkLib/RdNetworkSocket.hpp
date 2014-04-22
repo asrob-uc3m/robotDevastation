@@ -33,6 +33,8 @@ class RdNetworkSocket : public RdNetworkBase {
     public:
 
         virtual bool setup();
+        virtual bool pointerIncrement();
+
 
 
     protected:

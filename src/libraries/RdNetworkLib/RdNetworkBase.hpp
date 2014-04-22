@@ -29,7 +29,7 @@ class RdManagerBase;
 class RdNetworkBase {
     public:
         virtual bool setup()=0;
-
+        virtual bool pointerIncrement()=0;
 
     protected:
 
