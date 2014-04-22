@@ -43,6 +43,8 @@ class RdEnemy
         int max_health;
         int current_health;
         std::string name;
+
+
 };
 }
 

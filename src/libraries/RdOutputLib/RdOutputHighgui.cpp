@@ -122,17 +122,24 @@ bool rdlib::RdOutputHighgui::printEnemies(cv::Mat &src, cv::Mat &dst, int pipeli
         dst = src.clone();
 
     //-- Get the enemies from the manager
-    std::vector< RdEnemy* > vectorOfRdEnemyPtr;
+    std::vector< RdEnemy* > enemies;
     pthread_mutex_t mutexOfVectorOfRdEnemyPtr;
-    rdManagerBasePtr->getEnemies( vectorOfRdEnemyPtr, mutexOfVectorOfRdEnemyPtr );
+    rdManagerBasePtr->getEnemies( enemies, mutexOfVectorOfRdEnemyPtr );
 
     //-- Draw the enemy markers
-    for ( int i = 0; i < vectorOfRdEnemyPtr.size() ; i++)
+    pthread_mutex_lock(&mutexOfVectorOfRdEnemyPtr);
+    for ( int i = 0; i < enemies.size() ; i++)
     {
-        //cv::rectangle( dst, cv::Point2d( enemyPos[i].first, enemyPos[i].second)
-        //               , cv::Point2d( enemyPos[i].first + enemySize[i]*2, enemyPos[i].second + enemySize[i]*2)
-        //               , cv::Scalar( 0, 0, 255));
+        RdVector2d pos = enemies[i]->getPos();
+        int width = enemies[i]->getWidth();
+        int height = enemies[i]->getHeight();
+
+        cv::Point2d upperleft = cv::Point2d( pos.x - width/2, pos.y - height / 2);
+        cv::Point2d lowerright = cv::Point2d( pos.x + width/2, pos.y + height / 2);
+
+        cv::rectangle( dst, upperleft, lowerright, cv::Scalar( 0, 0, 255));
     }
+    pthread_mutex_unlock(&mutexOfVectorOfRdEnemyPtr);
 }
 
 
