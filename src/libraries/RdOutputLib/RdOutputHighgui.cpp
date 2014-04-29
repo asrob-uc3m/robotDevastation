@@ -134,10 +134,27 @@ bool rdlib::RdOutputHighgui::printEnemies(cv::Mat &src, cv::Mat &dst, int pipeli
         int width = enemies->at(i).getWidth();
         int height = enemies->at(i).getHeight();
 
-        cv::Point2d upperleft = cv::Point2d( pos.x - width/2, pos.y - height / 2);
-        cv::Point2d lowerright = cv::Point2d( pos.x + width/2, pos.y + height / 2);
+        cv::Point2d lowerright = cv::Point2d( pos.x - width/2, pos.y - height / 2);
+        cv::Point2d upperleft = cv::Point2d( pos.x + width/2, pos.y + height / 2);
 
         cv::rectangle( dst, upperleft, lowerright, cv::Scalar( 0, 0, 255));
+
+        //-- Enemy health bar
+        int health = enemies->at(i).getCurrentHealth();
+        int max_health = enemies->at(i).getMaxHealth();
+
+        cv::Point2d health_bar_upperleft( upperleft.x, upperleft.y-5);
+        cv::Point2d health_bar_lowerright( lowerright.x, upperleft.y-15);
+
+        int health_bar_level_lowerright_x = health_bar_upperleft.x +
+                (health_bar_lowerright.x-health_bar_upperleft.x)*(int)(health/(double)max_health);
+        cv::Point2d health_bar_level_lowerright( health_bar_level_lowerright_x,
+                                                 health_bar_lowerright.y);
+
+        cv::rectangle( dst, health_bar_upperleft, health_bar_lowerright, cv::Scalar( 0, 0, 255));
+        cv::rectangle( dst, health_bar_upperleft, health_bar_level_lowerright, cv::Scalar( 0, 0, 255), CV_FILLED);
+
+
     }
     pthread_mutex_unlock(mutexOfVectorOfRdEnemy);
 }

@@ -10,7 +10,7 @@ rdlib::RdEnemy::RdEnemy(int id, int enemy_type, RdVector2d pos, int width, int h
     }
     else if (enemy_type == QR_CODE )
     {
-        max_health == 500;
+        max_health = 500;
         name = "QR";
     }
     else
