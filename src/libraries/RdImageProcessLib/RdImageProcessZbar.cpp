@@ -9,7 +9,7 @@ bool rdlib::RdImageProcessZbar::setup()
 }
 
 bool rdlib::RdImageProcessZbar::process(char * imgPtr, const int width, const int height, const int step,
-                                          std::vector<RdEnemy> &vectorOfRdEnemy, pthread_mutex_t &mutexOfVectorOfRdEnemy)
+                                          std::vector<RdEnemy>* vectorOfRdEnemy, pthread_mutex_t* mutexOfVectorOfRdEnemy)
 {
     //-- Put image in cv::Mat
     //cv::Mat cvimage(cv::Size(width, height), CV_8UC3, imgPtr, step);
@@ -24,7 +24,8 @@ bool rdlib::RdImageProcessZbar::process(char * imgPtr, const int width, const in
     int n = scanner.scan(image);
     // extract results
 
-    std::vector<RdEnemy> localVectorOfRdEnemy;
+    //std::vector<RdEnemy>
+    localVectorOfRdEnemy.clear();
     //std::vector< std::pair<int, int> > enemiesFound;
     //std::vector< double > enemiesFoundSize;
     //enemiesFound.clear();
@@ -49,9 +50,9 @@ bool rdlib::RdImageProcessZbar::process(char * imgPtr, const int width, const in
     cvimage.release();
     cvimagetreat.release();
 
-    pthread_mutex_lock(&mutexOfVectorOfRdEnemy);
-    vectorOfRdEnemy = localVectorOfRdEnemy;
-    pthread_mutex_unlock(&mutexOfVectorOfRdEnemy);
+    pthread_mutex_lock(mutexOfVectorOfRdEnemy);
+    *vectorOfRdEnemy = localVectorOfRdEnemy;
+    pthread_mutex_unlock(mutexOfVectorOfRdEnemy);
 
     return true;
 }
