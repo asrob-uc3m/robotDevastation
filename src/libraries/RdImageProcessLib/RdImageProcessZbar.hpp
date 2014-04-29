@@ -31,7 +31,7 @@ class RdImageProcessZbar : public RdImageProcessBase {
 
         virtual bool setup();
         virtual bool process(char * ptr , const int width, const int height, const int step,
-                             std::vector< RdEnemy >& vectorOfRdEnemy, pthread_mutex_t& mutexOfVectorOfRdEnemy );
+                             std::vector< RdEnemy >* vectorOfRdEnemy, pthread_mutex_t* mutexOfVectorOfRdEnemy );
 
         bool trackHead( int index );
 
@@ -42,6 +42,7 @@ class RdImageProcessZbar : public RdImageProcessBase {
 
     protected:
         zbar::ImageScanner scanner;
+        std::vector<RdEnemy> localVectorOfRdEnemy;
 
 };
 

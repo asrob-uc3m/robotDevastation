@@ -74,7 +74,7 @@ bool rdlib::RdManagerDefault::manage(int pipelineIndex)
         RD_INFO("Tracking head.\n");
         //trackHead(pipelineIndex);
         rdImageProcessorBasePtr->process( rdCameraBasePtr->getBufferPtr(pipelineIndex), width, height, step,
-                                          vectorOfRdEnemy, mutexOfVectorOfRdEnemy);
+                                          &vectorOfRdEnemy, &mutexOfVectorOfRdEnemy);
     }
 }
 
