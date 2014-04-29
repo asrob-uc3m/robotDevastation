@@ -122,6 +122,10 @@ class RdManagerBase {
         RdWeaponBase * currentWeapon;
         int currentWeaponIndex;
 
+        //-- Bullets
+        std::vector<RdBullet> vectorOfRdBullet;
+        pthread_mutex_t mutexOfVectorOfRdBullet;
+
         virtual bool manage(int pipelineIndex) = 0;
 
      private:

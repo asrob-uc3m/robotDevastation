@@ -28,6 +28,9 @@ rdlib::RdManagerBase::RdManagerBase()
 
     //-- Enemy init
     pthread_mutex_init(&mutexOfVectorOfRdEnemy, NULL);
+
+    //-- Bullet init
+    pthread_mutex_init(&mutexOfVectorOfRdBullet, NULL);
 }
 
 bool rdlib::RdManagerBase::callFunctionByName(const std::string& cmd)
