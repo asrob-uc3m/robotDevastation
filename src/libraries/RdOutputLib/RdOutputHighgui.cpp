@@ -130,9 +130,9 @@ bool rdlib::RdOutputHighgui::printEnemies(cv::Mat &src, cv::Mat &dst, int pipeli
     pthread_mutex_lock(mutexOfVectorOfRdEnemy);
     for ( int i = 0; i < enemies->size() ; i++)
     {
-        RdVector2d pos = enemies[i]->getPos();
-        int width = enemies[i]->getWidth();
-        int height = enemies[i]->getHeight();
+        RdVector2d pos = enemies->at(i).getPos();
+        int width = enemies->at(i).getWidth();
+        int height = enemies->at(i).getHeight();
 
         cv::Point2d upperleft = cv::Point2d( pos.x - width/2, pos.y - height / 2);
         cv::Point2d lowerright = cv::Point2d( pos.x + width/2, pos.y + height / 2);

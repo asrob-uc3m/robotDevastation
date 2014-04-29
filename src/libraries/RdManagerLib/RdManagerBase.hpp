@@ -69,7 +69,7 @@ class RdManagerBase {
         virtual bool changeWeapon(int index = -1);
 
         //-- Enemies -----------------------------------------------//
-        void getEnemies( std::vector< rdlib::RdEnemy >& vectorOfRdEnemy, pthread_mutex_t& mutexOfVectorOfRdEnemy );
+        void getEnemies( std::vector< rdlib::RdEnemy >* vectorOfRdEnemy, pthread_mutex_t* mutexOfVectorOfRdEnemy );
 
         //-- Weapons -----------------------------------------------//
         std::vector<RdWeaponBase> getWeapons();
