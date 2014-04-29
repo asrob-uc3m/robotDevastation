@@ -25,6 +25,9 @@ rdlib::RdManagerBase::RdManagerBase()
     //-- Init the weapon variables
     currentWeapon = 0;
     currentWeaponIndex = -1;
+
+    //-- Enemy init
+    pthread_mutex_init(&mutexOfVectorOfRdEnemy, NULL);
 }
 
 bool rdlib::RdManagerBase::callFunctionByName(const std::string& cmd)
