@@ -122,9 +122,9 @@ bool rdlib::RdOutputHighgui::printEnemies(cv::Mat &src, cv::Mat &dst, int pipeli
         dst = src.clone();
 
     //-- Get the enemies from the manager
-    std::vector<RdEnemy>* enemies;
-    pthread_mutex_t* mutexOfVectorOfRdEnemy;
-    rdManagerBasePtr->getEnemies( enemies, mutexOfVectorOfRdEnemy );
+    std::vector<RdEnemy>* enemies = NULL;
+    pthread_mutex_t* mutexOfVectorOfRdEnemy = NULL;
+    rdManagerBasePtr->getEnemies( &enemies, &mutexOfVectorOfRdEnemy );
 
     //-- Draw the enemy markers
     pthread_mutex_lock(mutexOfVectorOfRdEnemy);
