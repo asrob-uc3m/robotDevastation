@@ -118,6 +118,9 @@ bool rdlib::RdManagerBase::quit()
     RD_INFO("RdManagerBase: stopping different components...\n");
 
     rdCameraBasePtr->quit();
+
+    //-- Unlock shared resources mutexes
+    pthread_mutex_unlock(&mutexOfVectorOfRdEnemy);
     rdOutputBasePtr->quit();
 
     RD_INFO("RdManagerBase: waiting for the manager thread to finish...\n");
