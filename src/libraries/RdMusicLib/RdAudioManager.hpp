@@ -23,6 +23,7 @@ class RdAudioManager
 
         bool load( const std::string& music_filepath, const std::string& id, const int& type);
         bool playMusic(const std::string& id, int loop);
+        bool playSound(const std::string& id, int loop);
         bool stopMusic();
 
     private:

@@ -33,8 +33,8 @@ const std::string RdAudioManagerTest::sound_explosion = "../../share/sounds/15_e
 TEST_F( RdAudioManagerTest, AudioManagerLoadsAudio)
 {
     ASSERT_TRUE(audioManager.load(sound_bso, "bso", 0));
-//    ASSERT_TRUE(audioManager.load(sound_shoot, "shoot", RdAudioManager::FX));
-//    ASSERT_TRUE(audioManager.load(sound_explosion, "explosion", RdAudioManager::FX));
+    ASSERT_TRUE(audioManager.load(sound_shoot, "shoot", 1));
+    ASSERT_TRUE(audioManager.load(sound_explosion, "explosion", 1));
 }
 
 TEST_F( RdAudioManagerTest, AudioManagerPlaysOneSound )
@@ -43,5 +43,30 @@ TEST_F( RdAudioManagerTest, AudioManagerPlaysOneSound )
 
     EXPECT_TRUE(audioManager.playMusic("bso", true));
     sleep(2);
+    EXPECT_TRUE(audioManager.stopMusic());
+}
+
+TEST_F( RdAudioManagerTest, AudioManagerPlaysFx )
+{
+    ASSERT_TRUE(audioManager.load(sound_shoot, "shoot", 1));
+    ASSERT_TRUE(audioManager.load(sound_explosion, "explosion", 1));
+
+    EXPECT_TRUE(audioManager.playSound("shoot", false));
+    sleep(1);
+    EXPECT_TRUE(audioManager.playSound("explosion", false));
+    sleep(2);
+}
+
+TEST_F( RdAudioManagerTest, AudioManagerPlaysAllSounds )
+{
+    ASSERT_TRUE(audioManager.load(sound_bso, "bso", 0));
+    ASSERT_TRUE(audioManager.load(sound_shoot, "shoot", 1));
+    ASSERT_TRUE(audioManager.load(sound_explosion, "explosion", 1));
+
+    EXPECT_TRUE(audioManager.playMusic("bso", true));
+    EXPECT_TRUE(audioManager.playSound("shoot", true));
+    sleep(1);
+    EXPECT_TRUE(audioManager.playSound("explosion", false));
+    sleep(4);
     EXPECT_TRUE(audioManager.stopMusic());
 }
