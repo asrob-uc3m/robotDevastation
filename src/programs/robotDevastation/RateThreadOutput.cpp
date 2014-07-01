@@ -29,7 +29,7 @@ void rd::RateThreadOutput::init(yarp::os::ResourceFinder &rf)
     }
 
     //display = SDL_SetVideoMode(640, 480, 24, SDL_HWSURFACE | SDL_DOUBLEBUF);SDL_SWSURFACE
-    display = SDL_SetVideoMode(640, 480, 8, SDL_SWSURFACE);
+    display = SDL_SetVideoMode(640, 480, 32, SDL_SWSURFACE);
     //display = SDL_SetVideoMode(128, 128, 8, SDL_HWSURFACE | SDL_DOUBLEBUF);
     if (display == NULL)
     {
