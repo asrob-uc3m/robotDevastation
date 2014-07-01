@@ -18,6 +18,7 @@ project(robotDevastation)
 
 ##### library options
 option(ENABLE_RdUtilsLib "Choose if you want to compile RdUtilsLib" TRUE)
+option(ENABLE_RdMusicLib "Choose if you want to compile RdMusicLib" TRUE)
 
 ##### program options
 option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" FALSE)
@@ -67,6 +68,7 @@ set(RD_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
 
 # add main contents
 add_subdirectory(src)
+add_subdirectory(test)
 
 # export our variables to a RDConfig.cmake creation
 set(RD_LINK_DIRS ${RD_LINK_DIRS} ${LIBRARY_OUTPUT_PATH})
