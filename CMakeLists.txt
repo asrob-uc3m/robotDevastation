@@ -20,7 +20,7 @@ project(robotDevastation)
 option(ENABLE_RdUtilsLib "Choose if you want to compile RdUtilsLib" TRUE)
 
 ##### program options
-option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" FALSE)
+option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" TRUE)
 
 
 if(MSVC)
