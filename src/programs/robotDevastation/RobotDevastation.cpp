@@ -13,17 +13,13 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     }
     printf("RobotDevastation using no additional special options.\n");
 
-    //segmentorThread.setInImg(&inImg);
-    //segmentorThread.setOutImg(&outImg);
-    //segmentorThread.setOutPort(&outPort);
-
+    rateThreadOutput.setInImg(&inImg);
+    
     rateThreadOutput.init(rf);
 
     //-----------------OPEN LOCAL PORTS------------//
-    //inImg.open("/img:i");
-    //outImg.open("/img:o");
-    //outPort.open("/features:o");
-
+    inImg.open("/img:i");
+    
     return true;
 }
 
@@ -40,10 +36,8 @@ bool rd::RobotDevastation::updateModule()
 
 bool rd::RobotDevastation::interruptModule() {
     printf("RobotDevastation closing...\n");
-    //outPort.interrupt();
-    //inImg.interrupt();
-    //outPort.close();
-    //inImg.close();
+    inImg.interrupt();
+    inImg.close();
     return true;
 }
 

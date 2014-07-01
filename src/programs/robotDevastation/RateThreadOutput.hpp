@@ -19,7 +19,7 @@ namespace rd
 
 class RateThreadOutput : public yarp::os::RateThread {
     private:
-        //BufferedPort<ImageOf<PixelRgb> > *pInImg;
+        yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > *pInImg;
         //BufferedPort<ImageOf<PixelRgb> > *pOutImg;  // for testing
         //Port *pOutPort;
         //
@@ -28,7 +28,7 @@ class RateThreadOutput : public yarp::os::RateThread {
     public:
         RateThreadOutput() : RateThread(DEFAULT_RATE_MS) {}
 
-        //void setInImg(BufferedPort<ImageOf<PixelRgb> > * _pInImg);
+        void setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pInImg);
         //void setOutImg(BufferedPort<ImageOf<PixelRgb> > * _pOutImg);
         //void setOutPort(Port *_pOutPort);
         void init(yarp::os::ResourceFinder &rf);

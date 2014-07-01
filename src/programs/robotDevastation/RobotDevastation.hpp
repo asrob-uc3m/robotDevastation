@@ -15,7 +15,7 @@ class RobotDevastation : public yarp::os::RFModule
     private:
         RateThreadOutput rateThreadOutput;
         //
-        //BufferedPort<ImageOf<PixelRgb> > inImg;
+        yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > inImg;
         //BufferedPort<ImageOf<PixelRgb> > outImg;
         //Port outPort;
 

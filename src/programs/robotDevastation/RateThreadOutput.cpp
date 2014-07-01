@@ -6,6 +6,7 @@ void rd::RateThreadOutput::init(yarp::os::ResourceFinder &rf)
 {
     int rateMs = DEFAULT_RATE_MS;
 
+    printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
         printf("RateThreadOutput options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
@@ -15,6 +16,11 @@ void rd::RateThreadOutput::init(yarp::os::ResourceFinder &rf)
 
     printf("RateThreadOutput using rateMs: %d.\n", rateMs);
 
+    printf("--------------------------------------------------------------\n");
+    if(rf.check("help")) {
+        ::exit(1);
+    }
+
     this->setRate(rateMs);
     this->start();
 
@@ -22,13 +28,13 @@ void rd::RateThreadOutput::init(yarp::os::ResourceFinder &rf)
 
 void rd::RateThreadOutput::run()
 {
-    printf("[SegmentorThread] run()\n");
+    //printf("[SegmentorThread] run()\n");
 
-    //ImageOf<PixelRgb> *inYarpImg = pInImg->read(false);
-    //if (inYarpImg==NULL) {
-        //printf("No img yet...\n");
-    //    return;
-    //};
+    yarp::sig::ImageOf<yarp::sig::PixelRgb> *inYarpImg = pInImg->read(false);
+    if (inYarpImg==NULL) {
+        printf("No img yet...\n");
+        return;
+    };
     
     // {yarp ImageOf Rgb -> openCv Mat Bgr}
     //IplImage *inIplImage = cvCreateImage(cvSize(inYarpImg->width(), inYarpImg->height()),
@@ -39,7 +45,7 @@ void rd::RateThreadOutput::run()
 
 }
 
-//void SegmentorThread::setInImg(BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pInImg) {
-//    pInImg = _pInImg;
-//}
+void rd::RateThreadOutput::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * pInImg) {
+    this->pInImg = pInImg;
+}
 
