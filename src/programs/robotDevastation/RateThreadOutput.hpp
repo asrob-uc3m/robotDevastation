@@ -12,6 +12,10 @@
 
 #include <yarp/sig/all.h>
 
+#include <SDL/SDL_image.h>
+
+#include "RdMacros.hpp"
+
 #define DEFAULT_RATE_MS 20
 
 namespace rd
@@ -23,7 +27,9 @@ class RateThreadOutput : public yarp::os::RateThread {
         //BufferedPort<ImageOf<PixelRgb> > *pOutImg;  // for testing
         //Port *pOutPort;
         //
-
+        int rateMs;
+        //
+        SDL_Surface* display;
 
     public:
         RateThreadOutput() : RateThread(DEFAULT_RATE_MS) {}
