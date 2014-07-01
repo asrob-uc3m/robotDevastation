@@ -11,6 +11,11 @@ rd::RdAudioManager::RdAudioManager()
         RD_ERROR("AudioMixer could not be opened!");
 }
 
+rd::RdAudioManager::~RdAudioManager()
+{
+    Mix_CloseAudio();
+}
+
 bool rd::RdAudioManager::load(const std::string &music_filepath, const std::string &id, const int &type)
 {
     if(type == 0)
@@ -66,7 +71,11 @@ bool rd::RdAudioManager::playSound(const std::string &id, int loop)
 bool rd::RdAudioManager::stopMusic()
 {
     if ( Mix_PlayingMusic() )
-        Mix_HaltMusic();
+        if(Mix_HaltMusic() == -1)
+        {
+            RD_ERROR( "Error stopping music\n");
+            return false;
+        }
 
     return true;
 }

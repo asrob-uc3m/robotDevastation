@@ -8,14 +8,9 @@ using namespace rd;
 class RdAudioManagerTest : public testing::Test
 {
 	public:
-		void SetUp() 
-		{
-		}
+        virtual void SetUp() {}
 		
-		virtual void TearDown()
-		{
-		
-		}
+        virtual void TearDown() {}
 
 
 	protected:

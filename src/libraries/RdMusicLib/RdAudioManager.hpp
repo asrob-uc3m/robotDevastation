@@ -17,6 +17,7 @@ class RdAudioManager
     public:
 
         RdAudioManager();
+        ~RdAudioManager();
 
         static const int MUSIC = 0;
         static const int FX = 1;
