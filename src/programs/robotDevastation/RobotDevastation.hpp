@@ -5,7 +5,7 @@
 
 #include <yarp/os/RFModule.h>
 
-//#include "SegmentorThread.hpp"
+#include "RateThreadOutput.hpp"
 
 namespace rd
 {
@@ -13,9 +13,9 @@ namespace rd
 class RobotDevastation : public yarp::os::RFModule
 {
     private:
-        //SegmentorThread segmentorThread;
+        RateThreadOutput rateThreadOutput;
         //
-        //BufferedPort<ImageOf<PixelRgb> > inImg;
+        yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > inImg;
         //BufferedPort<ImageOf<PixelRgb> > outImg;
         //Port outPort;
 

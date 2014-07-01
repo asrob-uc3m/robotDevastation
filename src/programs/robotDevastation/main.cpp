@@ -3,7 +3,7 @@
 /**
  * 
  * @ingroup rd_programs
- * \defgroup rdClient rdClient
+ * \defgroup robotDevastation robotDevastation
  *
  * @brief The Robot Devastation PC client.
  *
@@ -45,6 +45,8 @@ rdClient
 
 #include <iostream>
 
+#include <yarp/os/Network.h>
+
 #include "RdMacros.hpp"
 #include "RobotDevastation.hpp"
 
@@ -66,7 +68,27 @@ int main(int argc, char *argv[]) {
     std::cout << "For a full description, please visit http://asrob.uc3m.es/rddoc/group__robotDevastation.html." << std::endl;
     std::cout << "--------------------------------------------------------------" << std::endl;
 
-    rd::RobotDevastation program;  // This is the robotDevastation program main class.
-    return program.configure(argc,argv);
+    yarp::os::ResourceFinder rf;
+    rf.setVerbose(false);
+    rf.setDefaultContext("robotDevastation/conf");
+    rf.setDefaultConfigFile("robotDevastation.ini");
+    rf.configure("RD_ROOT", argc, argv);
+
+    rd::RobotDevastation robotDevastation;
+    if(rf.check("help")) {
+        return robotDevastation.runModule(rf);
+    }
+
+    printf("Run \"%s --help\" for options.\n",argv[0]);
+    printf("%s checking for yarp network... ",argv[0]);
+    fflush(stdout);
+    yarp::os::Network yarp;
+    if (!yarp.checkNetwork()) {
+        fprintf(stderr,"[fail]\n%s found no yarp network (try running \"yarpserver &\"), bye!\n",argv[0]);
+        return -1;
+    } else printf("[ok]\n");
+
+    return robotDevastation.runModule(rf);
+
 }
 

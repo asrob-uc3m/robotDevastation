@@ -2,8 +2,7 @@
 
 #include "RobotDevastation.hpp"
 
-/************************************************************************/
-bool RobotDevastation::configure(ResourceFinder &rf)
+bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 {
 
     //printf("--------------------------------------------------------------\n");
@@ -12,46 +11,33 @@ bool RobotDevastation::configure(ResourceFinder &rf)
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
-    printf("VisionSegmentor using no additional special options.\n");
+    printf("RobotDevastation using no additional special options.\n");
 
-    segmentorThread.setInImg(&inImg);
-    segmentorThread.setOutImg(&outImg);
-    segmentorThread.setOutPort(&outPort);
-
-    segmentorThread.init(rf);
+    rateThreadOutput.setInImg(&inImg);
+    
+    rateThreadOutput.init(rf);
 
     //-----------------OPEN LOCAL PORTS------------//
     inImg.open("/img:i");
-    outImg.open("/img:o");
-    outPort.open("/features:o");
-
+    
     return true;
 }
 
-/*****************************************************************/
-double RobotDevastation::getPeriod()
+double rd::RobotDevastation::getPeriod()
 {
     return 2.0;  // Fixed, in seconds, the slow thread that calls updateModule below
 }
 
-/************************************************************************/
-
-bool RobotDevastation::updateModule()
+bool rd::RobotDevastation::updateModule()
 {
     printf("RobotDevastation alive...\n");
     return true;
 }
 
-/************************************************************************/
-
-bool RobotDevastation::interruptModule() {
+bool rd::RobotDevastation::interruptModule() {
     printf("RobotDevastation closing...\n");
-    //outPort.interrupt();
-    //inImg.interrupt();
-    //outPort.close();
-    //inImg.close();
+    inImg.interrupt();
+    inImg.close();
     return true;
 }
-
-/************************************************************************/
 

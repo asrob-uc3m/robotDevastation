@@ -29,7 +29,7 @@ include_directories(${RD_INCLUDE_DIRS})
 # Set up our main executable.
 if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES})
+  target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES} SDL)
   install(TARGETS ${KEYWORD} DESTINATION bin)
   install(DIRECTORY ${PROJECT_SOURCE_DIR}/share/${KEYWORD} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/robotDevastation )  # Uninstall does not delete empty dirs.
 else (folder_source)

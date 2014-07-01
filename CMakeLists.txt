@@ -21,7 +21,7 @@ option(ENABLE_RdUtilsLib "Choose if you want to compile RdUtilsLib" TRUE)
 option(ENABLE_RdMusicLib "Choose if you want to compile RdMusicLib" TRUE)
 
 ##### program options
-option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" FALSE)
+option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" TRUE)
 
 
 if(MSVC)
