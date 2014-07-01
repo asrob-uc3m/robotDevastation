@@ -28,9 +28,7 @@ void rd::RateThreadOutput::init(yarp::os::ResourceFinder &rf)
         ::exit(1);
     }
 
-    //display = SDL_SetVideoMode(640, 480, 24, SDL_HWSURFACE | SDL_DOUBLEBUF);SDL_SWSURFACE
-    display = SDL_SetVideoMode(640, 480, 32, SDL_SWSURFACE);
-    //display = SDL_SetVideoMode(128, 128, 8, SDL_HWSURFACE | SDL_DOUBLEBUF);
+    display = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);  // SDL_SWSURFACE
     if (display == NULL)
     {
         RD_ERROR("SDL_SetVideoMode(): %s\n",SDL_GetError());
@@ -51,13 +49,13 @@ void rd::RateThreadOutput::run()
 
     yarp::sig::ImageOf<yarp::sig::PixelRgb> *inYarpImg = pInImg->read(false);
     if (inYarpImg==NULL) {
-        printf("No img yet...\n");
+        //printf("No img yet...\n");
         return;
     };
     
     int depth=8;  // the depth of the surface in bits
-    int channels=3;  // 
-    int widthstep = 1920; // the length of a row of pixels in bytes
+    int channels=3;  // R G B
+    int widthstep = 1920; // the length of a row of pixels in bytes, inYarpImg->getRowSize()
 
     // http://stackoverflow.com/1questions/393954/how-to-convert-an-opencv-iplimage-to-an-sdl-surface
 //    SDL_Surface *surface = SDL_CreateRGBSurfaceFrom((void*)inYarpImg->getIplImage(),
@@ -79,10 +77,9 @@ void rd::RateThreadOutput::run()
         ::exit(1);
     }
 
-    SDL_Flip(display);
+    SDL_Flip(display);  // SDL_DOUBLEBUF flips with hw accel, if not just updates.
 
-    printf("[RateThreadOutput] p:%p, w:%d h:%d, %d.\n",surface,inYarpImg->width(),
-                inYarpImg->height(),inYarpImg->getRowSize());
+    //SDL_FreeSurface(surface); // needed? seems not from checking free.
 
     //SDL_Event evt;
     //SDL_WaitEvent(&evt);
