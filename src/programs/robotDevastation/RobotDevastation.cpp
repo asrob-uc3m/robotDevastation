@@ -17,7 +17,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //segmentorThread.setOutImg(&outImg);
     //segmentorThread.setOutPort(&outPort);
 
-    //segmentorThread.init(rf);
+    rateThreadOutput.init(rf);
 
     //-----------------OPEN LOCAL PORTS------------//
     //inImg.open("/img:i");
