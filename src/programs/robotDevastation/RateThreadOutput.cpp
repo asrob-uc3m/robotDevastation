@@ -28,8 +28,9 @@ void rd::RateThreadOutput::init(yarp::os::ResourceFinder &rf)
         ::exit(1);
     }
 
-    //display = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
-    display = SDL_SetVideoMode(128, 128, 8, SDL_HWSURFACE | SDL_DOUBLEBUF);
+    //display = SDL_SetVideoMode(640, 480, 24, SDL_HWSURFACE | SDL_DOUBLEBUF);SDL_SWSURFACE
+    display = SDL_SetVideoMode(640, 480, 8, SDL_SWSURFACE);
+    //display = SDL_SetVideoMode(128, 128, 8, SDL_HWSURFACE | SDL_DOUBLEBUF);
     if (display == NULL)
     {
         RD_ERROR("SDL_SetVideoMode(): %s\n",SDL_GetError());
@@ -54,27 +55,37 @@ void rd::RateThreadOutput::run()
         return;
     };
     
-    // http://stackoverflow.com/questions/393954/how-to-convert-an-opencv-iplimage-to-an-sdl-surface
-    SDL_Surface *surface = SDL_CreateRGBSurfaceFrom((void*)inYarpImg->getIplImage(),
+    int depth=8;  // the depth of the surface in bits
+    int channels=3;  // 
+    int widthstep = 1920; // the length of a row of pixels in bytes
+
+    // http://stackoverflow.com/1questions/393954/how-to-convert-an-opencv-iplimage-to-an-sdl-surface
+//    SDL_Surface *surface = SDL_CreateRGBSurfaceFrom((void*)inYarpImg->getIplImage(),
+    SDL_Surface *surface = SDL_CreateRGBSurfaceFrom((void*)inYarpImg->getRawImage(),
                 inYarpImg->width(),
                 inYarpImg->height(),
-                inYarpImg->depth,
-                3,
-                0xff0000, 0x00ff00, 0x0000ff, 0
+                depth*channels,
+                widthstep,
+                0x0000ff, 0x00ff00, 0xff0000, 0
                 );
 
-    printf("[RateThreadOutput] w:%d h:%d.\n",inYarpImg->width(),
-                inYarpImg->height());
 
     //http://gameprogrammingtutorials.blogspot.com.es/2010/01/sdl-tutorial-series-part-4-how-to-load.html
 
     // Apply the image to the display
     if (SDL_BlitSurface(surface, NULL, display, NULL) != 0)
     {
-        //cerr << "SDL_BlitSurface() Failed: " << SDL_GetError() << endl;
         RD_ERROR("SDL_BlitSurface(): %s\n", SDL_GetError());
         ::exit(1);
     }
+
+    SDL_Flip(display);
+
+    printf("[RateThreadOutput] p:%p, w:%d h:%d, %d.\n",surface,inYarpImg->width(),
+                inYarpImg->height(),inYarpImg->getRowSize());
+
+    //SDL_Event evt;
+    //SDL_WaitEvent(&evt);
 
     //int x_pos=0, y_pos=0;
     //SDL_Rect rcDest = { x_pos, y_pos, 0, 0 };
