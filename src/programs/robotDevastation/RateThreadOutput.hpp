@@ -30,6 +30,13 @@ class RateThreadOutput : public yarp::os::RateThread {
         int rateMs;
         //
         SDL_Surface* display;
+        //
+        int cameraDepth;  // the depth of the surface in bits
+        int cameraChannels;  // R G B
+        int cameraWidthstep; // the length of a row of pixels in bytes 1920 for 640x480
+        int cameraWidth;
+        int cameraHeight;
+        bool cameraInitialized;
 
     public:
         RateThreadOutput() : RateThread(DEFAULT_RATE_MS) {}

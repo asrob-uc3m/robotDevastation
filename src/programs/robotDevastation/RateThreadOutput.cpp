@@ -5,6 +5,7 @@
 void rd::RateThreadOutput::init(yarp::os::ResourceFinder &rf)
 {
     rateMs = DEFAULT_RATE_MS;
+    cameraInitialized = false;
 
     printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
@@ -53,19 +54,23 @@ void rd::RateThreadOutput::run()
         return;
     };
     
-    int depth=8;  // the depth of the surface in bits
-    int channels=3;  // R G B
-    int widthstep = 1920; // the length of a row of pixels in bytes, inYarpImg->getRowSize()
+    if(!cameraInitialized)
+    {
+        cameraDepth=8;  // the depth of the surface in bits
+        cameraChannels=3;  // R G B
+        cameraWidthstep = inYarpImg->getRowSize(); // the length of a row of pixels in bytes 1920 for 640x480
+        cameraWidth = inYarpImg->width();
+        cameraHeight = inYarpImg->height();
+        cameraInitialized = true;
+    }
 
     // http://stackoverflow.com/1questions/393954/how-to-convert-an-opencv-iplimage-to-an-sdl-surface
-//    SDL_Surface *surface = SDL_CreateRGBSurfaceFrom((void*)inYarpImg->getIplImage(),
-    SDL_Surface *surface = SDL_CreateRGBSurfaceFrom((void*)inYarpImg->getRawImage(),
-                inYarpImg->width(),
-                inYarpImg->height(),
-                depth*channels,
-                widthstep,
-                0x0000ff, 0x00ff00, 0xff0000, 0
-                );
+    SDL_Surface *surface = SDL_CreateRGBSurfaceFrom( (void*)inYarpImg->getRawImage(),
+                                                     cameraWidth, cameraHeight,
+                                                     cameraDepth*cameraChannels,
+                                                     cameraWidthstep,
+                                                     0x0000ff, 0x00ff00, 0xff0000, 0
+                                                   );
 
 
     //http://gameprogrammingtutorials.blogspot.com.es/2010/01/sdl-tutorial-series-part-4-how-to-load.html
@@ -83,17 +88,6 @@ void rd::RateThreadOutput::run()
 
     //SDL_Event evt;
     //SDL_WaitEvent(&evt);
-
-    //int x_pos=0, y_pos=0;
-    //SDL_Rect rcDest = { x_pos, y_pos, 0, 0 };
-    //SDL_BlitSurface ( image, NULL, surface, &rcDest );
-
-    // {yarp ImageOf Rgb -> openCv Mat Bgr}
-    //IplImage *inIplImage = cvCreateImage(cvSize(inYarpImg->width(), inYarpImg->height()),
-    //                                     IPL_DEPTH_8U, 3 );
-    //cvCvtColor((IplImage*)inYarpImg->getIplImage(), inIplImage, CV_RGB2BGR);
-    //Mat inCvMat(inIplImage);
-
 
 }
 
