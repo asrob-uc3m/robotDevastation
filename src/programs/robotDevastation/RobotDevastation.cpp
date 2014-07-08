@@ -16,9 +16,10 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     initSound();
     audioManager.playMusic("bso", -1);
 
-    rateThreadOutput.setInImg(&inImg);
-    
+    rateThreadOutput.setInImg(&inImg);    
     rateThreadOutput.init(rf);
+
+    eventInput.start();   
 
     //-----------------OPEN LOCAL PORTS------------//
     inImg.open("/img:i");
@@ -53,6 +54,7 @@ bool rd::RobotDevastation::initSound()
 
 bool rd::RobotDevastation::interruptModule() {
     printf("RobotDevastation closing...\n");
+    audioManager.destroy();
     inImg.interrupt();
     inImg.close();
     return true;
