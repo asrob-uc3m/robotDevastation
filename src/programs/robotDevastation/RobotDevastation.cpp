@@ -13,6 +13,9 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     }
     printf("RobotDevastation using no additional special options.\n");
 
+    initSound();
+    audioManager.playMusic("bso", -1);
+
     rateThreadOutput.setInImg(&inImg);
     
     rateThreadOutput.init(rf);
@@ -31,6 +34,20 @@ double rd::RobotDevastation::getPeriod()
 bool rd::RobotDevastation::updateModule()
 {
     printf("RobotDevastation alive...\n");
+    return true;
+}
+
+bool rd::RobotDevastation::initSound()
+{
+    if (audioManager.load("../../share/sounds/RobotDevastationBSO.mp3", "bso", 0) == -1)
+        return false;
+
+    if (audioManager.load("../../share/sounds/01_milshot.wav", "shoot", 1) == -1 )
+        return false;
+
+    if (audioManager.load("../../share/sounds/15_explosion.wav", "explosion", 1) == -1)
+        return false;
+
     return true;
 }
 

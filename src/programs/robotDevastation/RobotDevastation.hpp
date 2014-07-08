@@ -6,6 +6,7 @@
 #include <yarp/os/RFModule.h>
 
 #include "RateThreadOutput.hpp"
+#include "RdAudioManager.hpp"
 
 namespace rd
 {
@@ -23,8 +24,12 @@ class RobotDevastation : public yarp::os::RFModule
         double getPeriod();
         bool updateModule();
 
+        bool initSound();
+
     public:
         bool configure(yarp::os::ResourceFinder &rf);
+        RdAudioManager audioManager;
+
 };
 
 }  // namespace rd
