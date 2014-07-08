@@ -18,6 +18,7 @@ class RdAudioManager
 
         RdAudioManager();
         ~RdAudioManager();
+        bool destroy();
 
         static const int MUSIC = 0;
         static const int FX = 1;
