@@ -8,7 +8,7 @@
 #include <yarp/os/Network.h>
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
-#include <yarp/os/Thread.h>
+#include <yarp/os/RateThread.h>
 
 #include <yarp/sig/all.h>
 
@@ -21,7 +21,7 @@
 namespace rd
 {
 
-class EventInput : public yarp::os::Thread {
+class EventInput : public yarp::os::RateThread {
     private:
         //yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > *pInImg;
         //BufferedPort<ImageOf<PixelRgb> > *pOutImg;  // for testing
@@ -39,7 +39,7 @@ class EventInput : public yarp::os::Thread {
         //bool cameraInitialized;
 
     public:
-        //EventInput() : RateThread(DEFAULT_RATE_MS) {}
+        EventInput() : RateThread(DEFAULT_RATE_MS) {}
 
         //void setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pInImg);
         //void setOutImg(BufferedPort<ImageOf<PixelRgb> > * _pOutImg);

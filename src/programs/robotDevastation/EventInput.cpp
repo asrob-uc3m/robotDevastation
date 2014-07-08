@@ -5,7 +5,6 @@
 /*void rd::EventInput::init(yarp::os::ResourceFinder &rf)
 {
     rateMs = DEFAULT_RATE_MS;
-    cameraInitialized = false;
 
     printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
@@ -22,37 +21,41 @@
         ::exit(1);
     }
 
-    // http://gameprogrammingtutorials.blogspot.com.es/2010/01/sdl-tutorial-series-part-3-your-first.html
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
-    {
-        RD_ERROR("SDL_Init(): %s\n",SDL_GetError());
-        ::exit(1);
-    }
-
-    display = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);  // SDL_SWSURFACE
-    if (display == NULL)
-    {
-        RD_ERROR("SDL_SetVideoMode(): %s\n",SDL_GetError());
-        ::exit(1);
-    }
-
-    // Set the title bar
-    SDL_WM_SetCaption("Robot Devastation", "Robot Devastation");
-
     this->setRate(rateMs);
     this->start();
-
 }*/
 
 void rd::EventInput::run()
 {
-    printf("[EventInput] run()\n");
+    //printf("[EventInput] run()\n");
 
-    //SDL_FreeSurface(surface); // needed? seems not from checking free.
+    SDL_Event event;
 
-    SDL_Event evt;
-    SDL_WaitEvent(&evt);
+    while( SDL_PollEvent( &event ) )
+    {
+        /* We are only worried about SDL_KEYDOWN and SDL_KEYUP events */
+        switch( event.type )
+        {
+            case SDL_KEYDOWN:
+                //printf( "Key press detected\n" );
+                switch( event.key.keysym.sym )
+                {
+                    case SDLK_SPACE:
+                        printf( "SPACE detected\n" );
+                        break;
+                    default:
+                        break;
+                }                
+                break;
 
+            //case SDL_KEYUP:
+            //    printf( "Key release detected\n" );
+            //    break;
+
+            default:
+                break;
+        }
+    }
 }
 
 /*
