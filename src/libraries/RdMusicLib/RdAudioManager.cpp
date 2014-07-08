@@ -16,6 +16,11 @@ rd::RdAudioManager::~RdAudioManager()
     Mix_CloseAudio();
 }
 
+bool rd::RdAudioManager::destroy()
+{
+    Mix_CloseAudio();
+}
+
 bool rd::RdAudioManager::load(const std::string &music_filepath, const std::string &id, const int &type)
 {
     if(type == 0)
