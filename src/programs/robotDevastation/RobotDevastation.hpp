@@ -6,6 +6,7 @@
 #include <yarp/os/RFModule.h>
 
 #include "RateThreadOutput.hpp"
+#include "EventInput.hpp"
 #include "RdAudioManager.hpp"
 
 namespace rd
@@ -13,8 +14,13 @@ namespace rd
 
 class RobotDevastation : public yarp::os::RFModule
 {
+    public:
+        bool configure(yarp::os::ResourceFinder &rf);
+
     private:
         RateThreadOutput rateThreadOutput;
+        EventInput eventInput;
+        RdAudioManager audioManager;
         //
         yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > inImg;
         //BufferedPort<ImageOf<PixelRgb> > outImg;
@@ -25,11 +31,6 @@ class RobotDevastation : public yarp::os::RFModule
         bool updateModule();
 
         bool initSound();
-
-    public:
-        bool configure(yarp::os::ResourceFinder &rf);
-        RdAudioManager audioManager;
-
 };
 
 }  // namespace rd
