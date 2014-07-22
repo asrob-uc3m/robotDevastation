@@ -9,9 +9,44 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     if (rf.check("help")) {
         printf("RobotDevastation options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
+        printf("\t--name\n");
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
     printf("RobotDevastation using no additional special options.\n");
+
+    if(rf.check("id"))
+    {
+        RD_INFO("id: %d\n",rf.find("id").asInt());
+    }
+    else
+    {
+        RD_ERROR("No id!\n");
+        return false;
+    }
+
+    if(rf.check("name"))
+    {
+        RD_INFO("name: %s\n",rf.find("name").asString().c_str());
+    }
+    else
+    {
+        RD_ERROR("No name!\n");
+        return false;
+    }
+
+    if(rf.check("team"))
+    {
+        RD_INFO("team: %d\n",rf.find("team").asInt());
+    }
+    else
+    {
+        RD_ERROR("No team!\n");
+        return false;
+    }
+
+    RdPlayer rdPlayer(rf.find("id").asInt(),rf.find("name").asString(),100,rf.find("team").asInt());
+
+
 
     initSound();
     audioManager.playMusic("bso", -1);
@@ -23,10 +58,11 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     rateThreadProcess.init(rf);
 
     eventInput.start();   
+    
 
     //-----------------OPEN LOCAL PORTS------------//
     inImg.open("/img:i");
-    
+
     return true;
 }
 

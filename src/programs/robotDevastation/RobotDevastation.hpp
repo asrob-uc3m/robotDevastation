@@ -9,6 +9,7 @@
 #include "RateThreadProcess.hpp"
 #include "EventInput.hpp"
 #include "RdAudioManager.hpp"
+#include "RdPlayer.hpp"
 
 namespace rd
 {
@@ -33,6 +34,7 @@ class RobotDevastation : public yarp::os::RFModule
         bool updateModule();
 
         bool initSound();
+
 };
 
 }  // namespace rd

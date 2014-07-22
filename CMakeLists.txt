@@ -19,6 +19,7 @@ project(robotDevastation)
 ##### library options
 option(ENABLE_RdUtilsLib "Choose if you want to compile RdUtilsLib" TRUE)
 option(ENABLE_RdMusicLib "Choose if you want to compile RdMusicLib" TRUE)
+option(ENABLE_RdMentalMapLib "Choose if you want to compile RdMentalMapLib" TRUE)
 
 ##### program options
 option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" TRUE)
