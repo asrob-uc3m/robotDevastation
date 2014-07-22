@@ -4,12 +4,15 @@
 #define __ROBOT_DEVASTATION_HPP__
 
 #include <yarp/os/RFModule.h>
+#include <yarp/os/RpcClient.h>
 
 #include "RateThreadOutput.hpp"
 #include "RateThreadProcess.hpp"
 #include "EventInput.hpp"
 #include "RdAudioManager.hpp"
 #include "RdPlayer.hpp"
+
+#define VOCAB_RD_LOGIN VOCAB3('l','o','g')
 
 namespace rd
 {
@@ -26,8 +29,7 @@ class RobotDevastation : public yarp::os::RFModule
         RdAudioManager audioManager;
         //
         yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > inImg;
-        //BufferedPort<ImageOf<PixelRgb> > outImg;
-        //Port outPort;
+        yarp::os::RpcClient rpcClient;
 
         bool interruptModule();
         double getPeriod();

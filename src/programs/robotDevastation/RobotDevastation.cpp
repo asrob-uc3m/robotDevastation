@@ -46,8 +46,6 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     RdPlayer rdPlayer(rf.find("id").asInt(),rf.find("name").asString(),100,rf.find("team").asInt());
 
-
-
     initSound();
     audioManager.playMusic("bso", -1);
 
@@ -61,7 +59,23 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     
 
     //-----------------OPEN LOCAL PORTS------------//
-    inImg.open("/img:i");
+    std::ostringstream s;
+    s << rdPlayer.getId();
+    inImg.open("/img/"+s.str());
+    rpcClient.open("/rpc/"+s.str());
+
+    while(1){
+        if(rpcClient.getOutputCount() > 0) break;
+        printf("Waiting to be connected to server...\n");
+        yarp::os::Time::delay(0.5);
+    }
+
+    yarp::os::Bottle msgRdPlayer;
+    msgRdPlayer.addVocab(VOCAB_RD_LOGIN);
+    msgRdPlayer.addInt(rdPlayer.getId());
+    msgRdPlayer.addString(rdPlayer.getName());
+    msgRdPlayer.addInt(rdPlayer.getTeam_id());
+    rpcClient.write(msgRdPlayer);
 
     return true;
 }
