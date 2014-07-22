@@ -6,6 +6,7 @@
 #include <yarp/os/RFModule.h>
 
 #include "RateThreadOutput.hpp"
+#include "RateThreadProcess.hpp"
 #include "EventInput.hpp"
 #include "RdAudioManager.hpp"
 
@@ -19,6 +20,7 @@ class RobotDevastation : public yarp::os::RFModule
 
     private:
         RateThreadOutput rateThreadOutput;
+        RateThreadProcess rateThreadProcess;
         EventInput eventInput;
         RdAudioManager audioManager;
         //

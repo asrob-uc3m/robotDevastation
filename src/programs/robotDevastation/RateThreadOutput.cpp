@@ -48,6 +48,7 @@ void rd::RateThreadOutput::run()
 {
     //printf("[RateThreadOutput] run()\n");
 
+
     yarp::sig::ImageOf<yarp::sig::PixelRgb> *inYarpImg = pInImg->read(false);
     if (inYarpImg==NULL) {
         //printf("No img yet...\n");

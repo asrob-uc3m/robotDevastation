@@ -19,6 +19,9 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     rateThreadOutput.setInImg(&inImg);    
     rateThreadOutput.init(rf);
 
+    rateThreadProcess.setInImg(&inImg);    
+    rateThreadProcess.init(rf);
+
     eventInput.start();   
 
     //-----------------OPEN LOCAL PORTS------------//
