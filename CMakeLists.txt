@@ -23,6 +23,7 @@ option(ENABLE_RdMentalMapLib "Choose if you want to compile RdMentalMapLib" TRUE
 
 ##### program options
 option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" TRUE)
+option(ENABLE_rdServer "Choose if you want to compile rdServer" TRUE)
 
 
 if(MSVC)
