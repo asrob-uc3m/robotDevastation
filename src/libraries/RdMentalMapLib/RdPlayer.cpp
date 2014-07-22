@@ -50,6 +50,17 @@ void rd::RdPlayer::setTeam_id(int value)
     team_id = value;
 }
 
+std::string rd::RdPlayer::str()
+{
+    std::stringstream sstream;
+    sstream << "ID: " << id << std::endl;
+    sstream << "Name: " << name << std::endl;
+    sstream << "Health: " << health << "/" << max_health << std::endl;
+    sstream << "Team ID: " << team_id << std::endl;
+
+    return sstream.str();
+}
+
 
 rd::RdPlayer::RdPlayer(int id, std::string name, int max_health, int team_id)
 {

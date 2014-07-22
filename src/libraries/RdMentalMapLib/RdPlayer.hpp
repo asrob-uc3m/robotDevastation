@@ -4,6 +4,7 @@
 #define __RD_PLAYER_HPP__
 
 #include <string>
+#include <sstream>
 
 namespace rd{
 
@@ -26,6 +27,8 @@ public:
 
     int getTeam_id() const;
     void setTeam_id(int value);
+
+    std::string str();
 
 private:
     std::string name;
