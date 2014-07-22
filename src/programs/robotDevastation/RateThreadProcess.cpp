@@ -70,10 +70,12 @@ void rd::RateThreadProcess::run()
     //zbar::Image image(cameraWidth, cameraHeight, "GREY", raw, cameraWidth * cameraHeight);  //remove//
     //image.convert( *(int*)"Y800",cameraWidth, cameraHeight);  //remove//
     int n = scanner.scan(image);
-    printf("%d\n",n);
-    // extract results    
+    //printf("%d\n",n);
 
+    //cvimagetreat.release();  // not required
+    cvReleaseImage(&iplImage);  // needed!!
 
+    // extract results
     for(zbar::Image::SymbolIterator symbol = image.symbol_begin(); symbol != image.symbol_end(); ++symbol) {
         //std::vector<cv::Point> vp;
         // do something useful with results
