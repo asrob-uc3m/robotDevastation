@@ -11,7 +11,7 @@ namespace rd{
 class RdPlayer
 {
 public:
-    RdPlayer( int id, std::string name, int max_health, int team_id);
+    RdPlayer( int id, std::string name, int max_health, int team_id, int score);
 
     std::string getName() const;
     void setName(const std::string &value);
@@ -36,6 +36,7 @@ private:
     int health;
     int max_health;
     int team_id;
+    int score;
 
 };
 }

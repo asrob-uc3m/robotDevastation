@@ -57,16 +57,18 @@ std::string rd::RdPlayer::str()
     sstream << "Name: " << name << std::endl;
     sstream << "Health: " << health << "/" << max_health << std::endl;
     sstream << "Team ID: " << team_id << std::endl;
+    sstream << "Score: " << score;
 
     return sstream.str();
 }
 
 
-rd::RdPlayer::RdPlayer(int id, std::string name, int max_health, int team_id)
+rd::RdPlayer::RdPlayer(int id, std::string name, int max_health, int team_id, int score)
 {
     this->id = id;
     this->name = name;
     this->health = max_health;
     this->max_health = max_health;
     this->team_id = team_id;
+    this->score = score;
 }

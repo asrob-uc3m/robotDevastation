@@ -21,7 +21,7 @@ bool rd::RdServer::updateModule()
     printf("Number of players: %zd\n",players.size());
     for(size_t i=0;i<players.size();i++)
     {
-       printf("----------------------\n%s",players[i].str().c_str());
+       printf("----------------------\n%s\n",players[i].str().c_str());
     }
     printf("======================\n");
     return true;

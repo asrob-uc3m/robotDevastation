@@ -44,7 +44,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         return false;
     }
 
-    RdPlayer rdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,rf.find("team").asInt());
+    RdPlayer rdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,rf.find("team").asInt(),0);
 
     initSound();
     audioManager.playMusic("bso", -1);

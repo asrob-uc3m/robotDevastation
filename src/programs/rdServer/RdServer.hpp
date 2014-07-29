@@ -41,7 +41,6 @@ class RdServer : public yarp::os::RFModule
 
         int serverStatus;
 
-        std::vector<int> vectorOfScores;
         std::vector <RdPlayer> players;
 
         yarp::os::RpcServer rpcServer;
