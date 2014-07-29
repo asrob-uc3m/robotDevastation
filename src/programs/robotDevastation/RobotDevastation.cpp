@@ -63,10 +63,12 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     s << rdPlayer.getId();
     inImg.open(("/img/"+s.str()).c_str());
     rpcClient.open(("/rpc/"+s.str()).c_str());
+    callbackPort.open(("/callback/"+s.str()).c_str());
+    callbackPort.useCallback();
 
     while(1){
         if(rpcClient.getOutputCount() > 0) break;
-        printf("Waiting to be connected to server...\n");
+        printf("Waiting for rpc to be connected to server...\n");
         yarp::os::Time::delay(0.5);
         yarp::os::Network::connect( ("/rpc/"+s.str()).c_str() , "/rdServer" );
     }

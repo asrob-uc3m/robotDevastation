@@ -11,6 +11,7 @@
 #include "EventInput.hpp"
 #include "RdAudioManager.hpp"
 #include "RdPlayer.hpp"
+#include "CallbackPort.hpp"
 
 #define VOCAB_RD_LOGIN VOCAB3('l','o','g')
 
@@ -30,6 +31,7 @@ class RobotDevastation : public yarp::os::RFModule
         //
         yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > inImg;
         yarp::os::RpcClient rpcClient;
+        CallbackPort callbackPort;
 
         bool interruptModule();
         double getPeriod();
