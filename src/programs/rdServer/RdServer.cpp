@@ -7,6 +7,7 @@ bool rd::RdServer::configure(yarp::os::ResourceFinder &rf)
     rdRpcResponder.setPlayers(&players);
     rpcServer.open("/rdServer");
     rpcServer.setReader(rdRpcResponder);
+    printf("======================\n");
     return true;
 }
 
@@ -17,10 +18,12 @@ double rd::RdServer::getPeriod()
 
 bool rd::RdServer::updateModule()
 {
-    RD_INFO("============\n");
-    RD_INFO("Number of players: %zd\n",players.size());
+    printf("Number of players: %zd\n",players.size());
     for(size_t i=0;i<players.size();i++)
-       RD_INFO("%s\n----------",players[i].str().c_str());
+    {
+       printf("----------------------\n%s",players[i].str().c_str());
+    }
+    printf("======================\n");
     return true;
 }
 

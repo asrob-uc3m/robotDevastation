@@ -10,7 +10,6 @@
 
 #include "RdMacros.hpp"
 #include "RdRpcResponder.hpp"
-#include "RdUtils.hpp"
 #include "RdPlayer.hpp"
 
 #define DEFAULT_WATCHDOG    1.0       // [s]
