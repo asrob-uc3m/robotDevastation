@@ -43,19 +43,25 @@ int main(void)
     }
 
     //-- Draw text
-    SDL_Color tmpfontcolor = {255,0,0,0};
+    SDL_Color redcolor = {255,0,0,0};
 
-    SDL_Surface * text_surface = TTF_RenderText_Solid(font, "ROBODEVASTATION", tmpfontcolor);
+    SDL_Surface * text_surface = TTF_RenderText_Solid(font, "ROBODEVASTATION", redcolor);
 
     int i = 0;
     while ( i < 2000 )
     {
         SDL_FillRect(screen, NULL, 0x000000);
 
-        SDL_Rect health_bar;
-        health_bar.x = 5; health_bar.y = 20;
+        SDL_Rect health_bar, bar2, bar3;
+        health_bar.x = 5; health_bar.y = 40;
         health_bar.w = i; health_bar.h = 20;
+        bar2 = health_bar; bar2.y = 70;
+        bar3 = health_bar; bar3.y = 100;
         if( SDL_FillRect(screen, &health_bar, SDL_MapRGB(screen->format, 255, 0, 0)) == -1)
+            std::cerr << "Could not print bar..." << std::endl;
+        if( SDL_FillRect(screen, &bar2, SDL_MapRGB(screen->format, 0, 255, 0)) == -1)
+            std::cerr << "Could not print bar..." << std::endl;
+        if( SDL_FillRect(screen, &bar3, SDL_MapRGB(screen->format, 0, 0, 255)) == -1)
             std::cerr << "Could not print bar..." << std::endl;
 
         //Setup the location on the screen to blit to
