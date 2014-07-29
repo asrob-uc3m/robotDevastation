@@ -6,3 +6,6 @@ link_directories(${RD_LINK_DIRS})
 
 add_executable(testRdAudioManager testRdAudioManager.cpp)
 target_link_libraries(testRdAudioManager ${RD_LIBRARIES} RdMusicLib gtest gtest_main)
+
+add_executable(testSDLTextDisplay testSDLTextDisplay.cpp)
+target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} SDL SDL_image SDL_ttf)
