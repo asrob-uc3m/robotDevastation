@@ -68,6 +68,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         if(rpcClient.getOutputCount() > 0) break;
         printf("Waiting to be connected to server...\n");
         yarp::os::Time::delay(0.5);
+        yarp::os::Network::connect( ("/rpc/"+s.str()).c_str() , "/rdServer" );
     }
 
     yarp::os::Bottle msgRdPlayer,res;
@@ -76,7 +77,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     msgRdPlayer.addString(rdPlayer.getName().c_str());
     msgRdPlayer.addInt(rdPlayer.getTeam_id());
     rpcClient.write(msgRdPlayer,res);
-
+    RD_INFO("rdServer response from login: %s",res.toString().c_str());
     return true;
 }
 
