@@ -27,6 +27,8 @@ class RdRpcResponder : public yarp::os::PortReader {
     */
     virtual bool read(yarp::os::ConnectionReader& connection);
 
+    yarp::os::Port* rdBroadcast;
+
   public:
     std::vector <RdPlayer>* players;
     void setPlayers(std::vector<RdPlayer> *value);

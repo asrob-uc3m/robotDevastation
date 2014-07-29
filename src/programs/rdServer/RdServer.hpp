@@ -14,6 +14,8 @@
 
 #define DEFAULT_WATCHDOG    1.0       // [s]
 
+#define VOCAB_RD_PLAYERS VOCAB('p','l','y','s')
+
 namespace rd{
 
 /**
@@ -45,6 +47,7 @@ class RdServer : public yarp::os::RFModule
 
         yarp::os::RpcServer rpcServer;
         RdRpcResponder rdRpcResponder;
+        yarp::os::Port rdBroadcast;
 };
 
 } //rd
