@@ -14,7 +14,8 @@ bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
     if ((in.get(0).asString() == "login")||(in.get(0).asVocab() == VOCAB_RD_LOGIN)) {  // login //
 
         RdPlayer rdPlayer(in.get(1).asInt(),in.get(2).asString(),100,in.get(3).asInt());
-        players.push_back(rdPlayer);
+        //printf("%s\n",rdPlayer.str().c_str());
+        players->push_back(rdPlayer);
 
         out.addVocab(VOCAB_RD_OK);
     }
@@ -25,3 +26,10 @@ bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
     return out.write(*returnToSender);
 
 }
+
+void rd::RdRpcResponder::setPlayers(std::vector<RdPlayer> *value)
+{
+    players = value;
+}
+
+
