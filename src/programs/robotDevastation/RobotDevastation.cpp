@@ -44,7 +44,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         return false;
     }
 
-    RdPlayer rdPlayer(rf.find("id").asInt(),rf.find("name").asString(),100,rf.find("team").asInt());
+    RdPlayer rdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,rf.find("team").asInt());
 
     initSound();
     audioManager.playMusic("bso", -1);
@@ -61,8 +61,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-----------------OPEN LOCAL PORTS------------//
     std::ostringstream s;
     s << rdPlayer.getId();
-    inImg.open("/img/"+s.str());
-    rpcClient.open("/rpc/"+s.str());
+    inImg.open(("/img/"+s.str()).c_str());
+    rpcClient.open(("/rpc/"+s.str()).c_str());
 
     while(1){
         if(rpcClient.getOutputCount() > 0) break;
@@ -70,12 +70,12 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         yarp::os::Time::delay(0.5);
     }
 
-    yarp::os::Bottle msgRdPlayer;
+    yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_LOGIN);
     msgRdPlayer.addInt(rdPlayer.getId());
-    msgRdPlayer.addString(rdPlayer.getName());
+    msgRdPlayer.addString(rdPlayer.getName().c_str());
     msgRdPlayer.addInt(rdPlayer.getTeam_id());
-    rpcClient.write(msgRdPlayer);
+    rpcClient.write(msgRdPlayer,res);
 
     return true;
 }
