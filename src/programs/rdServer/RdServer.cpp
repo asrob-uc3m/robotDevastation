@@ -8,7 +8,6 @@ bool rd::RdServer::configure(yarp::os::ResourceFinder &rf)
     rdBroadcast.open("/rdBroadcast");
     rpcServer.open("/rdServer");
     rpcServer.setReader(rdRpcResponder);
-    printf("======================\n");
     return true;
 }
 
@@ -21,6 +20,7 @@ bool rd::RdServer::updateModule()
 {
     yarp::os::Bottle msgBroadcast;
     msgBroadcast.addVocab(VOCAB_RD_PLAYERS);
+    printf("=======rdServer=======\n");
     printf("Number of players: %zd\n",players.size());
     for(size_t i=0;i<players.size();i++)
     {
@@ -34,7 +34,8 @@ bool rd::RdServer::updateModule()
        msgPlayer.addInt(players[i].getScore());
        msgBroadcast.addList() = msgPlayer;
     }
-    printf("======================\n");
+
+    //printf("======================\n");
     rdBroadcast.write(msgBroadcast);
     return true;
 }

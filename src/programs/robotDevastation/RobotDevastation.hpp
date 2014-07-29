@@ -5,15 +5,14 @@
 
 #include <yarp/os/RFModule.h>
 #include <yarp/os/RpcClient.h>
+#include <yarp/os/Semaphore.h>
 
+#include "RdUtils.hpp"
 #include "RateThreadOutput.hpp"
 #include "RateThreadProcess.hpp"
 #include "EventInput.hpp"
-#include "RdAudioManager.hpp"
-#include "RdPlayer.hpp"
 #include "CallbackPort.hpp"
-
-#define VOCAB_RD_LOGIN VOCAB3('l','o','g')
+#include "RdAudioManager.hpp"
 
 namespace rd
 {
@@ -39,6 +38,8 @@ class RobotDevastation : public yarp::os::RFModule
 
         bool initSound();
 
+        std::vector <RdPlayer> players;
+        yarp::os::Semaphore playersSemaphore;
 };
 
 }  // namespace rd

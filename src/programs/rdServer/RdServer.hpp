@@ -8,13 +8,11 @@
 
 #include <vector>
 
-#include "RdMacros.hpp"
+#include "RdUtils.hpp"
 #include "RdRpcResponder.hpp"
-#include "RdPlayer.hpp"
 
 #define DEFAULT_WATCHDOG    1.0       // [s]
 
-#define VOCAB_RD_PLAYERS VOCAB('p','l','y','s')
 
 namespace rd{
 

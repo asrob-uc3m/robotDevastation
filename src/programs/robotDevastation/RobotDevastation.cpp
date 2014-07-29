@@ -44,7 +44,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         return false;
     }
 
-    RdPlayer rdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,rf.find("team").asInt(),0);
+    RdPlayer rdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0);
 
     initSound();
     audioManager.playMusic("bso", -1);
@@ -57,6 +57,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     eventInput.start();   
     
+    callbackPort.setPlayersSemaphore(&playersSemaphore);
+    callbackPort.setPlayers(&players);
 
     //-----------------OPEN LOCAL PORTS------------//
     std::ostringstream s;
@@ -72,6 +74,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         yarp::os::Time::delay(0.5);
         yarp::os::Network::connect( ("/rpc/"+s.str()).c_str() , "/rdServer" );
     }
+    yarp::os::Network::connect( "/rdBroadcast", ("/callback/"+s.str()).c_str() );
 
     yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_LOGIN);
@@ -90,7 +93,15 @@ double rd::RobotDevastation::getPeriod()
 
 bool rd::RobotDevastation::updateModule()
 {
-    printf("RobotDevastation alive...\n");
+    printf("===robotDevastation===\n");
+    playersSemaphore.wait();
+    printf("Number of players: %zd\n",players.size());
+    for(size_t i=0;i<players.size();i++)
+    {
+       printf("----------------------\n%s\n",players[i].str().c_str());
+    }
+    playersSemaphore.post();
+    //printf("======================\n");
     return true;
 }
 
@@ -111,8 +122,11 @@ bool rd::RobotDevastation::initSound()
 bool rd::RobotDevastation::interruptModule() {
     printf("RobotDevastation closing...\n");
     audioManager.destroy();
+    callbackPort.disableCallback();
     inImg.interrupt();
+    callbackPort.interrupt();
     inImg.close();
+    callbackPort.close();
     return true;
 }
 
