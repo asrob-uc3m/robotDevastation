@@ -40,4 +40,12 @@ bool rd::RdServer::updateModule()
     return true;
 }
 
+bool rd::RdServer::interruptModule() {
+    printf("RdServer closing...\n");
+    rdBroadcast.interrupt();
+    rpcServer.interrupt();
+    rdBroadcast.close();
+    rpcServer.close();
+    return true;
+}
 

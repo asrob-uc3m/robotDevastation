@@ -32,7 +32,7 @@ class RdServer : public yarp::os::RFModule
         bool configure(yarp::os::ResourceFinder &rf);
 
     protected:
-        //bool interruptModule();
+        bool interruptModule();
         double getPeriod();
         bool updateModule();
 
