@@ -1,15 +1,5 @@
 #include "RdPlayer.hpp"
 
-std::string rd::RdPlayer::getName() const
-{
-    return name;
-}
-
-void rd::RdPlayer::setName(const std::string &value)
-{
-    name = value;
-}
-
 int rd::RdPlayer::getId() const
 {
     return id;
@@ -18,6 +8,16 @@ int rd::RdPlayer::getId() const
 void rd::RdPlayer::setId(int value)
 {
     id = value;
+}
+
+std::string rd::RdPlayer::getName() const
+{
+    return name;
+}
+
+void rd::RdPlayer::setName(const std::string &value)
+{
+    name = value;
 }
 
 int rd::RdPlayer::getHealth() const
@@ -50,6 +50,16 @@ void rd::RdPlayer::setTeam_id(int value)
     team_id = value;
 }
 
+int rd::RdPlayer::getScore() const
+{
+    return score;
+}
+
+void rd::RdPlayer::setScore(int value)
+{
+    score = value;
+}
+
 std::string rd::RdPlayer::str()
 {
     std::stringstream sstream;
@@ -62,12 +72,11 @@ std::string rd::RdPlayer::str()
     return sstream.str();
 }
 
-
-rd::RdPlayer::RdPlayer(int id, std::string name, int max_health, int team_id, int score)
+rd::RdPlayer::RdPlayer(int id, std::string name, int health, int max_health, int team_id, int score)
 {
     this->id = id;
     this->name = name;
-    this->health = max_health;
+    this->health = health;
     this->max_health = max_health;
     this->team_id = team_id;
     this->score = score;

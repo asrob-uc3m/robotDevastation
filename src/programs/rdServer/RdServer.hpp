@@ -8,11 +8,11 @@
 
 #include <vector>
 
-#include "RdMacros.hpp"
+#include "RdUtils.hpp"
 #include "RdRpcResponder.hpp"
-#include "RdPlayer.hpp"
 
 #define DEFAULT_WATCHDOG    1.0       // [s]
+
 
 namespace rd{
 
@@ -45,6 +45,7 @@ class RdServer : public yarp::os::RFModule
 
         yarp::os::RpcServer rpcServer;
         RdRpcResponder rdRpcResponder;
+        yarp::os::Port rdBroadcast;
 };
 
 } //rd
