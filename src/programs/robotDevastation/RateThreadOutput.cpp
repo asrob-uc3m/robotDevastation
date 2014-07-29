@@ -83,6 +83,29 @@ void rd::RateThreadOutput::run()
         ::exit(1);
     }
 
+    //-- Test drawing the scope on screen
+    //--------------------------------------------------------------------------------------
+    //-- Load png file
+    SDL_Surface * image_scope = IMG_Load("../../share/images/test_scope_small.png");
+    if (!image_scope)
+    {
+        RD_ERROR("Image not loaded!");
+        ::exit(1);
+    }
+
+    //-- Specify where to put the scope:
+    SDL_Rect src, dst;
+    src.x = 0; src.y = 0;
+    src.h = image_scope->h; src.w = image_scope->w;
+
+    dst.x = (640 - 300) / 2;
+    dst.y = (480 - 300) / 2;
+    dst.h = image_scope->h; dst.w = image_scope->w;
+
+    SDL_BlitSurface(image_scope, &src, display, &dst);
+
+    //-------------------------------------------------------------------------------------
+
     SDL_Flip(display);  // SDL_DOUBLEBUF flips with hw accel, if not just updates.
 
     //SDL_FreeSurface(surface); // needed? seems not from checking free.
