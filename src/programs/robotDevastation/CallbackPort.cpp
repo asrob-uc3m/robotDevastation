@@ -25,7 +25,7 @@ void rd::CallbackPort::onRead(yarp::os::Bottle& b)
     }
     else
     {
-        RD_ERROR("What?");
+        RD_ERROR("What?\n");
     }
 
 
