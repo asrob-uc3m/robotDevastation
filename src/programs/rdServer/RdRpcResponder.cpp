@@ -13,7 +13,7 @@ bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
 
     if ((in.get(0).asString() == "login")||(in.get(0).asVocab() == VOCAB_RD_LOGIN)) {  // login //
 
-        RdPlayer rdPlayer(in.get(1).asInt(),in.get(2).asString(),100,in.get(3).asInt());
+        RdPlayer rdPlayer(in.get(1).asInt(),in.get(2).asString(),100,in.get(3).asInt(),0);
         //printf("%s\n",rdPlayer.str().c_str());
         players->push_back(rdPlayer);
 

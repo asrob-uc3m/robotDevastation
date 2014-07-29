@@ -10,7 +10,6 @@
 
 #include "RdMacros.hpp"
 #include "RdRpcResponder.hpp"
-#include "RdUtils.hpp"
 #include "RdPlayer.hpp"
 
 #define DEFAULT_WATCHDOG    1.0       // [s]
@@ -42,7 +41,6 @@ class RdServer : public yarp::os::RFModule
 
         int serverStatus;
 
-        std::vector<int> vectorOfScores;
         std::vector <RdPlayer> players;
 
         yarp::os::RpcServer rpcServer;

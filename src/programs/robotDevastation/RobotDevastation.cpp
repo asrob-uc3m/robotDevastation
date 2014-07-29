@@ -44,7 +44,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         return false;
     }
 
-    RdPlayer rdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,rf.find("team").asInt());
+    RdPlayer rdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,rf.find("team").asInt(),0);
 
     initSound();
     audioManager.playMusic("bso", -1);
@@ -77,7 +77,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     msgRdPlayer.addString(rdPlayer.getName().c_str());
     msgRdPlayer.addInt(rdPlayer.getTeam_id());
     rpcClient.write(msgRdPlayer,res);
-    RD_INFO("rdServer response from login: %s",res.toString().c_str());
+    RD_INFO("rdServer response from login: %s\n",res.toString().c_str());
     return true;
 }
 
