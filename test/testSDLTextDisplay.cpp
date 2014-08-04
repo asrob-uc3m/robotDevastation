@@ -47,37 +47,37 @@ int main(void)
 
     SDL_Surface * text_surface = TTF_RenderText_Solid(font, "ROBODEVASTATION", redcolor);
 
-    int i = 0;
-    while ( i < 2000 )
+    int i = 0, j = 0;
+    while( j < 1)
     {
-        SDL_FillRect(screen, NULL, 0x000000);
+        while ( i < SCREEN_WIDTH )
+        {
+            SDL_FillRect(screen, NULL, 0x000000);
 
-        SDL_Rect health_bar, bar2, bar3;
-        health_bar.x = 5; health_bar.y = 40;
-        health_bar.w = i; health_bar.h = 20;
-        bar2 = health_bar; bar2.y = 70;
-        bar3 = health_bar; bar3.y = 100;
-        if( SDL_FillRect(screen, &health_bar, SDL_MapRGB(screen->format, 255, 0, 0)) == -1)
-            std::cerr << "Could not print bar..." << std::endl;
-        if( SDL_FillRect(screen, &bar2, SDL_MapRGB(screen->format, 0, 255, 0)) == -1)
-            std::cerr << "Could not print bar..." << std::endl;
-        if( SDL_FillRect(screen, &bar3, SDL_MapRGB(screen->format, 0, 0, 255)) == -1)
-            std::cerr << "Could not print bar..." << std::endl;
+            SDL_Rect health_bar, bar2, bar3;
+            health_bar.x = 5; health_bar.y = 40;
+            health_bar.w = i; health_bar.h = 20;
+            bar2 = health_bar; bar2.y = 70;
+            bar3 = health_bar; bar3.y = 100;
+            if( SDL_FillRect(screen, &health_bar, SDL_MapRGB(screen->format, 255, 0, 0)) == -1)
+                std::cerr << "Could not print bar..." << std::endl;
+            if( SDL_FillRect(screen, &bar2, SDL_MapRGB(screen->format, 0, 255, 0)) == -1)
+                std::cerr << "Could not print bar..." << std::endl;
+            if( SDL_FillRect(screen, &bar3, SDL_MapRGB(screen->format, 0, 0, 255)) == -1)
+                std::cerr << "Could not print bar..." << std::endl;
 
-        //Setup the location on the screen to blit to
-        SDL_Rect rect = { i+5, 5, i+100, 50 };
+            //Setup the location on the screen to blit to
+            SDL_Rect rect = { i+5, 5, i+100, 50 };
 
-        //Blit text_surface surface to the screen surface
-        SDL_BlitSurface(text_surface, NULL, screen, &rect);
+            //Blit text_surface surface to the screen surface
+            SDL_BlitSurface(text_surface, NULL, screen, &rect);
 
-        SDL_Flip(screen); //Refresh the screen
-        SDL_Delay(20); //Wait a bit :)
+            SDL_Flip(screen); //Refresh the screen
+            SDL_Delay(20); //Wait a bit :)
 
-        i++;
-        if ( i == SCREEN_WIDTH )
-            i = 0;
-
-
+            i++;
+        }
+    j++;
     }
 
     //Free the text_surface surface
