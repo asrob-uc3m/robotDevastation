@@ -162,3 +162,35 @@ TEST_F( RdMentalMapTest, UpdatePlayersUpdatesPlayers)
     mentalMap = NULL;
 }
 
+
+TEST_F( RdMentalMapTest, MyselfPointsToMe)
+{
+    //-- Create a mental map for two players:
+    const int n_players = 2;
+    const int id = 0;
+    mentalMap = new RdMentalMap(id, n_players);
+    ASSERT_FALSE(!mentalMap);
+
+    //-- Update players:
+    std::vector<RdPlayer> players;
+    players.push_back(*player1);
+    players.push_back(*player2);
+
+    ASSERT_TRUE(mentalMap->updatePlayers(players));
+
+    //-- Check players stored:
+    std::vector<RdPlayer> players_stored = mentalMap->getPlayers();
+    ASSERT_EQ(2, (int) players_stored.size());
+
+    //-- Check if myself is me:
+    RdPlayer me = mentalMap->getMyself();
+    EXPECT_EQ(0, me.getId());
+    EXPECT_STREQ("Myself", me.getName().c_str());
+    EXPECT_EQ(0, me.getTeamId());
+
+    //-- Destroy the mentalMap
+    EXPECT_TRUE(mentalMap->destroy());
+    delete mentalMap;
+    mentalMap = NULL;
+
+}
