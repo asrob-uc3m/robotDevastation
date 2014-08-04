@@ -30,22 +30,22 @@ void rd::RdPlayer::setHealth(int value)
     health = value;
 }
 
-int rd::RdPlayer::getMax_health() const
+int rd::RdPlayer::getMaxHealth() const
 {
     return max_health;
 }
 
-void rd::RdPlayer::setMax_health(int value)
+void rd::RdPlayer::setMaxHealth(int value)
 {
     max_health = value;
 }
 
-int rd::RdPlayer::getTeam_id() const
+int rd::RdPlayer::getTeamId() const
 {
     return team_id;
 }
 
-void rd::RdPlayer::setTeam_id(int value)
+void rd::RdPlayer::setTeamId(int value)
 {
     team_id = value;
 }
@@ -70,6 +70,17 @@ std::string rd::RdPlayer::str()
     sstream << "Score: " << score;
 
     return sstream.str();
+}
+
+rd::RdPlayer::RdPlayer()
+{
+    //-- Default values
+    this->id = -1;
+    this->name = "Dummy";
+    this->health = -1;
+    this->max_health = -1;
+    this->team_id = -1;
+    this->score = -1;
 }
 
 rd::RdPlayer::RdPlayer(int id, std::string name, int health, int max_health, int team_id, int score)

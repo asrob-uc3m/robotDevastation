@@ -11,6 +11,7 @@ namespace rd{
 class RdPlayer
 {
 public:
+    RdPlayer();
     RdPlayer( int id, std::string name, int health, int max_health, int team_id, int score);
 
     int getId() const;
@@ -22,11 +23,11 @@ public:
     int getHealth() const;
     void setHealth(int value);
 
-    int getMax_health() const;
-    void setMax_health(int value);
+    int getMaxHealth() const;
+    void setMaxHealth(int value);
 
-    int getTeam_id() const;
-    void setTeam_id(int value);
+    int getTeamId() const;
+    void setTeamId(int value);
 
     int getScore() const;
     void setScore(int value);

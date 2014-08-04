@@ -9,3 +9,6 @@ target_link_libraries(testRdAudioManager ${RD_LIBRARIES} RdMusicLib gtest gtest_
 
 add_executable(testSDLTextDisplay testSDLTextDisplay.cpp)
 target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} SDL SDL_image SDL_ttf)
+
+add_executable(testMentalMap testMentalMap.cpp)
+target_link_libraries(testMentalMap ${RD_LIBRARIES} RdMentalMapLib gtest gtest_main)

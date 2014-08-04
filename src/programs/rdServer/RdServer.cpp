@@ -29,8 +29,8 @@ bool rd::RdServer::updateModule()
        msgPlayer.addInt(players[i].getId());
        msgPlayer.addString(players[i].getName());
        msgPlayer.addInt(players[i].getHealth());
-       msgPlayer.addInt(players[i].getMax_health());
-       msgPlayer.addInt(players[i].getTeam_id());
+       msgPlayer.addInt(players[i].getMaxHealth());
+       msgPlayer.addInt(players[i].getTeamId());
        msgPlayer.addInt(players[i].getScore());
        msgBroadcast.addList() = msgPlayer;
     }

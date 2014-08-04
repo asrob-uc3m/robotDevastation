@@ -8,7 +8,7 @@ set(KEYWORD "RdMentalMapLib")
 
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdPlayer.cpp RdEnemy.cpp)
+add_library(${KEYWORD} RdMentalMap.cpp RdPlayer.cpp RdEnemy.cpp)
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...

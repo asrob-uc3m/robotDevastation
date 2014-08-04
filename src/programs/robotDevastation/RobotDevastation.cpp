@@ -80,7 +80,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     msgRdPlayer.addVocab(VOCAB_RD_LOGIN);
     msgRdPlayer.addInt(rdPlayer.getId());
     msgRdPlayer.addString(rdPlayer.getName().c_str());
-    msgRdPlayer.addInt(rdPlayer.getTeam_id());
+    msgRdPlayer.addInt(rdPlayer.getTeamId());
     rpcClient.write(msgRdPlayer,res);
     RD_INFO("rdServer response from login: %s\n",res.toString().c_str());
     return true;
