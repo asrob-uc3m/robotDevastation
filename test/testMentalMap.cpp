@@ -15,6 +15,8 @@ class RdMentalMapTest : public testing::Test
         {
             player1 = new RdPlayer(0, "Myself", 100, 100, 0, 0);
             player2 = new RdPlayer(1, "Enemy", 100, 100, 1, 0);
+
+            enemy1 = new RdEnemy(1, RdVector2d(100, 100), RdVector2d(50, 50));
         }
 
         virtual void TearDown()
@@ -25,6 +27,8 @@ class RdMentalMapTest : public testing::Test
 
         RdPlayer * player1;
         RdPlayer * player2;
+
+        RdEnemy * enemy1;
 
     protected:
         RdMentalMap * mentalMap;
@@ -209,7 +213,42 @@ TEST_F( RdMentalMapTest, MyselfPointsToMe)
 
 TEST_F( RdMentalMapTest, UpdateEnemiesUpdateEnemies)
 {
-    ASSERT_FALSE(true);
+    //-- Create a mental map for two players:
+    const int n_players = 2;
+    const int id = 0;
+    mentalMap = new RdMentalMap(id, n_players);
+    ASSERT_FALSE(!mentalMap);
+
+
+    //-- Update players:
+    std::vector<RdPlayer> players;
+    players.push_back(*player1);
+    players.push_back(*player2);
+
+    ASSERT_TRUE(mentalMap->updatePlayers(players));
+
+
+    //-- Update enemies:
+    std::vector<RdEnemy> enemies;
+    enemies.push_back(*enemy1);
+
+    ASSERT_TRUE(mentalMap->updateEnemies(enemies));
+
+
+    //-- Check enemies:
+    std::vector<RdEnemy> enemies_stored = mentalMap->getEnemies();
+    ASSERT_EQ(1, enemies_stored.size());
+    EXPECT_EQ(1, enemies_stored[0].getPlayerId());
+    EXPECT_EQ(100, enemies_stored[0].getPos().x);
+    EXPECT_EQ(100, enemies_stored[0].getPos().y);
+    EXPECT_EQ(50, enemies_stored[0].getDimensions().x);
+    EXPECT_EQ(50, enemies_stored[0].getDimensions().y);
+    EXPECT_EQ(100, enemies_stored[0].getBelief());
+
+    //-- Destroy the mentalMap
+    EXPECT_TRUE(mentalMap->destroy());
+    delete mentalMap;
+    mentalMap = NULL;
 }
 
 TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)

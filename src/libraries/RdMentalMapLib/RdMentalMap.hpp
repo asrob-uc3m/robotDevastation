@@ -25,11 +25,12 @@ class RdMentalMap
         RdPlayer getMyself();
 
         bool updatePlayers(std::vector<RdPlayer> new_player_vector);
+        bool updateEnemies(std::vector<RdEnemy> new_enemy_detections);
 
         bool destroy();
 
     private:
-        std::vector<RdEnemy> enemies;
+        std::map<int, RdEnemy> enemies;
         std::map<int, RdPlayer> players;
 
         int my_id;

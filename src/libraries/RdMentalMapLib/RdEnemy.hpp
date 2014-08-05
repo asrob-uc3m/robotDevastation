@@ -11,22 +11,25 @@ namespace rd{
 class RdEnemy
 {
 public:
-    RdEnemy( RdPlayer* player, RdVector2d pos, RdVector2d dimensions );
+    RdEnemy();
+    RdEnemy( int player_id, RdVector2d pos, RdVector2d dimensions );
 
-    RdPlayer *getPlayer() const;
-    void setPlayer(RdPlayer *value);
+    int getPlayerId();
+    void setPlayerId(int id);
 
-    RdVector2d getPos() const;
-    void setPos(const RdVector2d &value);
+    RdVector2d getPos();
+    void setPos(const RdVector2d &pos);
 
-    RdVector2d getDimensions() const;
-    void setDimensions(const RdVector2d &value);
+    RdVector2d getDimensions();
+    void setDimensions(const RdVector2d &dimensions);
+
+    int getBelief();
 
 private:
-    RdPlayer * player;
+    int player_id;
     RdVector2d pos;
     RdVector2d dimensions;
-    float belief;
+    int belief;
 };
 }
 

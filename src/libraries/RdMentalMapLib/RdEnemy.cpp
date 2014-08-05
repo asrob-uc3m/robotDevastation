@@ -1,40 +1,53 @@
 #include "RdEnemy.hpp"
 
-rd::RdPlayer *rd::RdEnemy::getPlayer() const
+int rd::RdEnemy::getPlayerId()
 {
-    return player;
+    return player_id;
 }
 
-void rd::RdEnemy::setPlayer(RdPlayer *value)
+void rd::RdEnemy::setPlayerId(int id)
 {
-    player = value;
+    player_id = id;
 }
 
-RdVector2d rd::RdEnemy::getPos() const
+RdVector2d rd::RdEnemy::getPos()
 {
     return pos;
 }
 
-void rd::RdEnemy::setPos(const RdVector2d &value)
+void rd::RdEnemy::setPos(const RdVector2d &pos)
 {
-    pos = value;
+    this->pos = pos;
 }
 
-RdVector2d rd::RdEnemy::getDimensions() const
+RdVector2d rd::RdEnemy::getDimensions()
 {
     return dimensions;
 }
 
-void rd::RdEnemy::setDimensions(const RdVector2d &value)
+void rd::RdEnemy::setDimensions(const RdVector2d &dimensions)
 {
-    dimensions = value;
+   this->dimensions = dimensions;
+}
+
+int rd::RdEnemy::getBelief()
+{
+    return belief;
 }
 
 
-rd::RdEnemy::RdEnemy(rd::RdPlayer *player, RdVector2d pos, RdVector2d dimensions)
+rd::RdEnemy::RdEnemy()
 {
-    this->player = player;
+    this->player_id = -1;
+    this->pos = RdVector2d(-1, -1);
+    this->dimensions = RdVector2d(-1, -1);
+    this->belief = -1;
+}
+
+rd::RdEnemy::RdEnemy(int player_id, RdVector2d pos, RdVector2d dimensions)
+{
+    this->player_id = player_id;
     this->pos = pos;
     this->dimensions = dimensions;
-    this->belief = 1;
+    this->belief = 100;
 }

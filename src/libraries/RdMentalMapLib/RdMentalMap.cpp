@@ -11,7 +11,15 @@ rd::RdMentalMap::RdMentalMap(const int &player_id, const int &max_num_players)
 
 std::vector<rd::RdEnemy> rd::RdMentalMap::getEnemies()
 {
-    return std::vector<RdEnemy>();
+    std::vector<RdEnemy> enemy_vector;
+
+    for( std::map<int, RdEnemy>::const_iterator it = enemies.begin(); it != enemies.end(); ++it)
+    {
+        enemy_vector.push_back(it->second);
+    }
+
+    return enemy_vector;
+
 }
 
 std::vector<rd::RdPlayer> rd::RdMentalMap::getPlayers()
@@ -79,6 +87,33 @@ bool rd::RdMentalMap::updatePlayers(std::vector<rd::RdPlayer> new_player_vector)
 
     //-- Update enemies to point to this new players!
     /// \todo Update enemies to point to this new players!
+
+    return true;
+}
+
+bool rd::RdMentalMap::updateEnemies(std::vector<rd::RdEnemy> new_enemy_detections)
+{
+    //-- Reduce the belief of all the enemies and deletes them when belief is 0
+//    for( std::map<int, RdEnemy>::const_iterator it = enemies.begin(); it != enemies.end(); ++it)
+//    {
+//        if ( !it->second.reduceBelief(10) )
+//            enemies.erase(it);
+//    }
+
+    //-- Check dimensions:
+    if ( new_enemy_detections.size() > max_num_players-1 )
+    {
+        RD_ERROR( "Enemies in the update (%i) exceed the maximum number allowed in mental map (%i)\n",
+                  (int) new_enemy_detections.size(), max_num_players-1);
+        return false;
+    }
+
+    //-- Add new enemies / update old ones (just replacing):
+    for (int i = 0; i < (int) new_enemy_detections.size(); i++)
+    {
+        int id = new_enemy_detections[i].getPlayerId();
+        enemies[id] = new_enemy_detections[i];
+    }
 
     return true;
 }
