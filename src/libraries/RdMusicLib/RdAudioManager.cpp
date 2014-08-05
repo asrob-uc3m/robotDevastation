@@ -29,7 +29,7 @@ bool rd::RdAudioManager::load(const std::string &music_filepath, const std::stri
 
         if(pMusic == 0)
         {
-            RD_ERROR( ("Error loading file: \"" + music_filepath + " " + std::string(Mix_GetError()) + "\n").c_str() );
+            RD_ERROR( "Error loading file: \"%s\": %s\n", music_filepath.c_str(), Mix_GetError());
             return false;
         }
 
@@ -41,7 +41,7 @@ bool rd::RdAudioManager::load(const std::string &music_filepath, const std::stri
         Mix_Chunk* pChunk = Mix_LoadWAV(music_filepath.c_str());
         if(pChunk == 0)
         {
-            RD_ERROR( ("Error loading file: \"" + music_filepath + " " + std::string(Mix_GetError()) + "\n").c_str() );
+            RD_ERROR( "Error loading file: \"%s\": %s\n", music_filepath.c_str(), Mix_GetError());
             return false;
         }
 
@@ -55,7 +55,7 @@ bool rd::RdAudioManager::playMusic(const std::string &id, int loop)
 {
     if (Mix_PlayMusic(music_sounds[id], loop) == -1)
     {
-        RD_ERROR( ("Error playing sound \"" + id + "\n").c_str() );
+        RD_ERROR( "Error playing sound \"%s\"\n", id.c_str());
         return false;
     }
 
@@ -66,7 +66,7 @@ bool rd::RdAudioManager::playSound(const std::string &id, int loop)
 {
     if( Mix_PlayChannel(-1, fx_sounds[id], loop) == -1 )
     {
-        RD_ERROR( ("Error playing sound \"" + id + "\n").c_str() );
+        RD_ERROR( "Error playing sound \"%s\"\n", id.c_str());
         return false;
     }
 
