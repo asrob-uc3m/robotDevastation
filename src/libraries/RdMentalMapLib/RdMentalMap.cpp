@@ -77,6 +77,9 @@ bool rd::RdMentalMap::updatePlayers(std::vector<rd::RdPlayer> new_player_vector)
             myself = &players[id];
     }
 
+    //-- Update enemies to point to this new players!
+    /// \todo Update enemies to point to this new players!
+
     return true;
 }
 

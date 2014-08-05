@@ -31,6 +31,7 @@ class RdMentalMapTest : public testing::Test
 };
 
 
+
 TEST_F( RdMentalMapTest, CreateCreatesMentalMap)
 {
     //-- Create a mental map for two players:
@@ -53,6 +54,12 @@ TEST_F( RdMentalMapTest, CreateCreatesMentalMap)
     mentalMap = NULL;
 
 }
+
+
+
+//---------------------------------------------------------------------------------------
+//-- Player-related
+//---------------------------------------------------------------------------------------
 
 TEST_F( RdMentalMapTest, UpdatePlayersUpdatesPlayers)
 {
@@ -162,7 +169,6 @@ TEST_F( RdMentalMapTest, UpdatePlayersUpdatesPlayers)
     mentalMap = NULL;
 }
 
-
 TEST_F( RdMentalMapTest, MyselfPointsToMe)
 {
     //-- Create a mental map for two players:
@@ -193,4 +199,36 @@ TEST_F( RdMentalMapTest, MyselfPointsToMe)
     delete mentalMap;
     mentalMap = NULL;
 
+}
+
+
+
+//---------------------------------------------------------------------------------------
+//-- Enemy-related
+//---------------------------------------------------------------------------------------
+
+TEST_F( RdMentalMapTest, UpdateEnemiesUpdateEnemies)
+{
+    ASSERT_FALSE(true);
+}
+
+TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
+{
+    ASSERT_TRUE(false);
+}
+
+
+
+//---------------------------------------------------------------------------------------
+//-- Thread-safe functions
+//---------------------------------------------------------------------------------------
+
+TEST_F( RdMentalMapTest, EnemiesLockedWhenModified)
+{
+    ASSERT_TRUE(false);
+}
+
+TEST_F( RdMentalMapTest, PlayersLockedWhenModified)
+{
+    ASSERT_FALSE(true);
 }
