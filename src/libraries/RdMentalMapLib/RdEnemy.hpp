@@ -12,7 +12,7 @@ class RdEnemy
 {
 public:
     RdEnemy();
-    RdEnemy( int player_id, RdVector2d pos, RdVector2d dimensions );
+    RdEnemy( int player_id, RdVector2d pos, RdVector2d dimensions);
 
     int getPlayerId();
     void setPlayerId(int id);
@@ -24,12 +24,16 @@ public:
     void setDimensions(const RdVector2d &dimensions);
 
     int getBelief();
+    bool reduceBelief(int amount);
+    bool resetBelief();
 
 private:
     int player_id;
     RdVector2d pos;
     RdVector2d dimensions;
     int belief;
+
+    static const int MAX_BELIEF = 100;
 };
 }
 

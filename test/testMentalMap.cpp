@@ -253,7 +253,56 @@ TEST_F( RdMentalMapTest, UpdateEnemiesUpdateEnemies)
 
 TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
 {
-    ASSERT_TRUE(false);
+    //-- Create a mental map for two players:
+    const int n_players = 2;
+    const int id = 0;
+    mentalMap = new RdMentalMap(id, n_players);
+    ASSERT_FALSE(!mentalMap);
+
+
+    //-- Update players:
+    std::vector<RdPlayer> players;
+    players.push_back(*player1);
+    players.push_back(*player2);
+
+    ASSERT_TRUE(mentalMap->updatePlayers(players));
+
+
+    //-- Update enemies:
+    std::vector<RdEnemy> enemies;
+    enemies.push_back(*enemy1);
+
+    ASSERT_TRUE(mentalMap->updateEnemies(enemies));
+
+
+    //-- Update with empty vector until belief reaches 0:
+    //-- (Belief decrease is hardcoded, and decreases by 10 each update)
+    std::vector<RdEnemy> empty_enemy_vector;
+
+    ASSERT_TRUE(mentalMap->updateEnemies(empty_enemy_vector));
+
+    //-- Check enemies:
+    std::vector<RdEnemy> enemies_stored = mentalMap->getEnemies();
+    ASSERT_EQ(1, enemies_stored.size());
+    EXPECT_EQ(1, enemies_stored[0].getPlayerId());
+    EXPECT_EQ(100, enemies_stored[0].getPos().x);
+    EXPECT_EQ(100, enemies_stored[0].getPos().y);
+    EXPECT_EQ(50, enemies_stored[0].getDimensions().x);
+    EXPECT_EQ(50, enemies_stored[0].getDimensions().y);
+    EXPECT_EQ(90, enemies_stored[0].getBelief());
+
+
+    for (int i = 0; i < 9; i++)
+    {
+        ASSERT_TRUE(mentalMap->updateEnemies(empty_enemy_vector));
+    }
+
+    EXPECT_EQ(0, mentalMap->getEnemies().size());
+
+    //-- Destroy the mentalMap
+    EXPECT_TRUE(mentalMap->destroy());
+    delete mentalMap;
+    mentalMap = NULL;
 }
 
 

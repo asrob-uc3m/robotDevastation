@@ -94,11 +94,11 @@ bool rd::RdMentalMap::updatePlayers(std::vector<rd::RdPlayer> new_player_vector)
 bool rd::RdMentalMap::updateEnemies(std::vector<rd::RdEnemy> new_enemy_detections)
 {
     //-- Reduce the belief of all the enemies and deletes them when belief is 0
-//    for( std::map<int, RdEnemy>::const_iterator it = enemies.begin(); it != enemies.end(); ++it)
-//    {
-//        if ( !it->second.reduceBelief(10) )
-//            enemies.erase(it);
-//    }
+    for( std::map<int, RdEnemy>::iterator it = enemies.begin(); it != enemies.end(); ++it)
+    {
+        if ( !it->second.reduceBelief(10) )
+            enemies.erase(it);
+    }
 
     //-- Check dimensions:
     if ( new_enemy_detections.size() > max_num_players-1 )
