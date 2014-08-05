@@ -15,20 +15,25 @@ class RdMentalMapTest : public testing::Test
         {
             player1 = new RdPlayer(0, "Myself", 100, 100, 0, 0);
             player2 = new RdPlayer(1, "Enemy", 100, 100, 1, 0);
+            player3 = new RdPlayer(2, "Enemy2", 100, 100, 1, 0);
 
             enemy1 = new RdEnemy(1, RdVector2d(100, 100), RdVector2d(50, 50));
+            enemy2 = new RdEnemy(2, RdVector2d( 20,  20), RdVector2d( 5,  5));
         }
 
         virtual void TearDown()
         {
-            delete player1;
-            delete player2;
+            delete player1; player1 = NULL;
+            delete player2; player2 = NULL;
+            delete player3; player3 = NULL;
+
+            delete enemy1; enemy1 = NULL;
+            delete enemy2; enemy2 = NULL;
         }
 
-        RdPlayer * player1;
-        RdPlayer * player2;
+        RdPlayer * player1, * player2, * player3;
 
-        RdEnemy * enemy1;
+        RdEnemy * enemy1, * enemy2;
 
     protected:
         RdMentalMap * mentalMap;
@@ -254,7 +259,7 @@ TEST_F( RdMentalMapTest, UpdateEnemiesUpdateEnemies)
 TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
 {
     //-- Create a mental map for two players:
-    const int n_players = 2;
+    const int n_players = 3;
     const int id = 0;
     mentalMap = new RdMentalMap(id, n_players);
     ASSERT_FALSE(!mentalMap);
@@ -264,40 +269,42 @@ TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
     std::vector<RdPlayer> players;
     players.push_back(*player1);
     players.push_back(*player2);
-
+    players.push_back(*player3);
     ASSERT_TRUE(mentalMap->updatePlayers(players));
 
 
     //-- Update enemies:
     std::vector<RdEnemy> enemies;
     enemies.push_back(*enemy1);
+    enemies.push_back(*enemy2);
 
     ASSERT_TRUE(mentalMap->updateEnemies(enemies));
 
 
-    //-- Update with empty vector until belief reaches 0:
+    //-- Update with a single enemy until belief for the other enemy reaches 0:
     //-- (Belief decrease is hardcoded, and decreases by 10 each update)
-    std::vector<RdEnemy> empty_enemy_vector;
-
-    ASSERT_TRUE(mentalMap->updateEnemies(empty_enemy_vector));
+    std::vector<RdEnemy> new_enemy_vector;
+    new_enemy_vector.push_back(*enemy2);
+    ASSERT_TRUE(mentalMap->updateEnemies(new_enemy_vector));
 
     //-- Check enemies:
-    std::vector<RdEnemy> enemies_stored = mentalMap->getEnemies();
-    ASSERT_EQ(1, enemies_stored.size());
-    EXPECT_EQ(1, enemies_stored[0].getPlayerId());
-    EXPECT_EQ(100, enemies_stored[0].getPos().x);
-    EXPECT_EQ(100, enemies_stored[0].getPos().y);
-    EXPECT_EQ(50, enemies_stored[0].getDimensions().x);
-    EXPECT_EQ(50, enemies_stored[0].getDimensions().y);
-    EXPECT_EQ(90, enemies_stored[0].getBelief());
+    RdEnemy enemy_not_updated = mentalMap->getEnemy(1);
+    EXPECT_EQ(1, enemy_not_updated.getPlayerId());
+    EXPECT_EQ(100, enemy_not_updated.getPos().x);
+    EXPECT_EQ(100, enemy_not_updated.getPos().y);
+    EXPECT_EQ(50, enemy_not_updated.getDimensions().x);
+    EXPECT_EQ(50, enemy_not_updated.getDimensions().y);
+    EXPECT_EQ(90, enemy_not_updated.getBelief());
 
 
     for (int i = 0; i < 9; i++)
     {
-        ASSERT_TRUE(mentalMap->updateEnemies(empty_enemy_vector));
+        ASSERT_TRUE(mentalMap->updateEnemies(new_enemy_vector));
     }
 
-    EXPECT_EQ(0, mentalMap->getEnemies().size());
+    EXPECT_EQ(1, mentalMap->getEnemies().size());
+    EXPECT_EQ(2, mentalMap->getEnemies()[0].getPlayerId());
+    EXPECT_EQ(100, mentalMap->getEnemies()[0].getBelief());
 
     //-- Destroy the mentalMap
     EXPECT_TRUE(mentalMap->destroy());

@@ -34,6 +34,20 @@ std::vector<rd::RdPlayer> rd::RdMentalMap::getPlayers()
     return player_vector;
 }
 
+rd::RdEnemy rd::RdMentalMap::getEnemy(const int &id)
+{
+    if ( enemies.find(id) != enemies.end() )
+    {
+        return enemies[id];
+    }
+    else
+    {
+        RD_ERROR("Enemy with id %i not found!!\n", id);
+        RD_ERROR("Returning standard enemy\n");
+        return RdEnemy();
+    }
+}
+
 rd::RdPlayer rd::RdMentalMap::getPlayer(const int &id)
 {
     if ( players.find(id) != players.end() )

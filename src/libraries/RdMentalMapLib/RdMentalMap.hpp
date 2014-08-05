@@ -21,6 +21,7 @@ class RdMentalMap
 
         std::vector<RdEnemy> getEnemies();
         std::vector<RdPlayer> getPlayers();
+        RdEnemy getEnemy(const int& id = -1);
         RdPlayer getPlayer(const int& id = -1);
         RdPlayer getMyself();
 
