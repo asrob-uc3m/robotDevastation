@@ -12,3 +12,6 @@ target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} SDL SDL_image SDL_ttf)
 
 add_executable(testMentalMap testMentalMap.cpp)
 target_link_libraries(testMentalMap ${RD_LIBRARIES} RdMentalMapLib gtest gtest_main)
+
+add_executable(testHUD testHUD.cpp)
+target_link_libraries(testHUD ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
