@@ -16,13 +16,24 @@
 
 using namespace rd;
 
+//-- Player info constants
 static const int PLAYER_NAME_H = 15;
 static const int PLAYER_NAME_W = 65;
 static const int HEALTH_BAR_H = 10;
 static const int HEALTH_BAR_W = 80;
 
-TTF_Font *player_font;
+//-- Scope constants
+static const int SCOPE_VERT_W = 4;
+static const int SCOPE_VERT_H = 50;
+static const int SCOPE_VERT_H_SPACE = 20;
+
+static const int SCOPE_HORIZ_W = 50;
+static const int SCOPE_HORIZ_H = 4;
+static const int SCOPE_HORIZ_W_SPACE = 20;
+
+TTF_Font *player_font, *enemy_font;
 SDL_Color greencolor = {0, 255, 0, 0};
+SDL_Color redcolor =   {255, 0, 0, 0};
 
 bool drawPlayerUI( SDL_Surface * screen, RdPlayer player, int x, int y)
 {
@@ -42,7 +53,69 @@ bool drawPlayerUI( SDL_Surface * screen, RdPlayer player, int x, int y)
     SDL_FillRect(screen, &current_health, SDL_MapRGB(screen->format, 0, 255, 0));
 
     SDL_FreeSurface(text_surface);
+    return true;
 }
+
+bool drawTargetUI( SDL_Surface * screen, RdEnemy enemy, RdPlayer player_data)
+{
+    //-- Put enclosing box:
+    SDL_Rect enemy_rect = { enemy.getPos().x, enemy.getPos().y,
+                            enemy.getDimensions().x, enemy.getDimensions().y};
+    SDL_FillRect(screen, &enemy_rect, SDL_MapRGB(screen->format, 255, 0, 0));
+
+    //-- Put enemy name:
+    SDL_Surface * text_surface = TTF_RenderText_Solid(enemy_font, player_data.getName().c_str(), redcolor);
+    SDL_Rect text_rect = { enemy.getPos().x, enemy.getPos().y - 15,
+                           enemy.getDimensions().x, 15};
+    SDL_Rect source_rect = {0, 0, enemy.getDimensions().x, 15};
+    SDL_BlitSurface(text_surface, &source_rect, screen, &text_rect);
+
+    //-- Put enemy health bar:
+    SDL_Rect health_bar = { enemy.getPos().x,
+                            enemy.getPos().y + enemy.getDimensions().y + 5,
+                            enemy.getDimensions().x,
+                            5 };
+    SDL_FillRect(screen, &health_bar, SDL_MapRGB(screen->format, 127, 0, 0));
+
+    SDL_Rect current_health = { enemy.getPos().x,
+                            enemy.getPos().y + enemy.getDimensions().y + 5,
+                            (int)(enemy.getDimensions().x *player_data.getHealth() / (float) player_data.getMaxHealth()),
+                            5 };
+    SDL_FillRect(screen, &current_health, SDL_MapRGB(screen->format, 255, 0, 0));
+
+    SDL_FreeSurface(text_surface);
+    return true;
+}
+
+bool drawScope( SDL_Surface * screen )
+{
+    SDL_Rect scope_v_rect_top = { (int)(SCREEN_WIDTH  / 2 - SCOPE_VERT_W  / 2),
+                                  (int)(SCREEN_HEIGHT / 2 - SCOPE_VERT_H  / 2),
+                                  SCOPE_VERT_W,
+                                  (int)(SCOPE_VERT_H / 2 - SCOPE_VERT_H_SPACE / 2) };
+    SDL_FillRect(screen, &scope_v_rect_top, SDL_MapRGB(screen->format, 0, 0, 255));
+
+    SDL_Rect scope_v_rect_bottom = { (int)(SCREEN_WIDTH  / 2 - SCOPE_VERT_W  / 2),
+                                     (int)(SCREEN_HEIGHT / 2 + SCOPE_VERT_H_SPACE / 2),
+                                     SCOPE_VERT_W,
+                                     (int)(SCOPE_VERT_H / 2 - SCOPE_VERT_H_SPACE / 2) };
+    SDL_FillRect(screen, &scope_v_rect_bottom, SDL_MapRGB(screen->format, 0, 0, 255));
+
+    SDL_Rect scope_h_rect_left = { (int) (SCREEN_WIDTH  / 2 - SCOPE_HORIZ_W  / 2),
+                                   (int) (SCREEN_HEIGHT / 2 - SCOPE_HORIZ_H  / 2),
+                                   (int) (SCOPE_HORIZ_W / 2 - SCOPE_HORIZ_W_SPACE / 2),
+                                   SCOPE_HORIZ_H };
+    SDL_FillRect(screen, &scope_h_rect_left, SDL_MapRGB(screen->format, 0, 0, 255));
+
+    SDL_Rect scope_h_rect_right = { (int) (SCREEN_WIDTH  / 2 + SCOPE_HORIZ_W_SPACE / 2),
+                                    (int) (SCREEN_HEIGHT / 2 - SCOPE_HORIZ_H  / 2),
+                                    (int) (SCOPE_HORIZ_W / 2 - SCOPE_HORIZ_W_SPACE / 2),
+                                    SCOPE_HORIZ_H };
+    SDL_FillRect(screen, &scope_h_rect_right, SDL_MapRGB(screen->format, 0, 0, 255));
+
+    return true;
+}
+
 
 int main(void)
 {
@@ -70,10 +143,16 @@ int main(void)
         return false;
     }
 
-    //-- Load the font
+    //-- Load the font(s)
     char * font_name = "/usr/share/fonts/truetype/freefont/FreeMono.ttf";
     player_font = TTF_OpenFont(font_name, 12);
     if (player_font == NULL){
+        printf("Unable to load font: %s %s \n", font_name, TTF_GetError());
+        return false;
+    }
+
+    enemy_font = TTF_OpenFont(font_name, 12);
+    if (enemy_font == NULL){
         printf("Unable to load font: %s %s \n", font_name, TTF_GetError());
         return false;
     }
@@ -90,20 +169,34 @@ int main(void)
 
     std::vector<RdEnemy> enemies;
     enemies.push_back(RdEnemy(1, RdVector2d(100, 100), RdVector2d(50, 50)));
-    enemies.push_back(RdEnemy(2, RdVector2d( 20,  20), RdVector2d( 5,  5)));
+    enemies.push_back(RdEnemy(2, RdVector2d(400, 200), RdVector2d(100, 100)));
     mentalMap.updateEnemies(enemies);
 
 
     //-- Draw interface:
     //---------------------------------------------------------------------------------
-    SDL_FillRect(screen, NULL, 0xFFFFFFFF);
+//    SDL_FillRect(screen, NULL, 0xFFFFFFFF);
+    SDL_FillRect(screen, NULL, 0x00000000);
 
-    //-- Get a copy of the players stored:
+    //-- Get a copy of the enemies stored & draw them:
+    std::vector<RdEnemy> enemies_stored  = mentalMap.getEnemies();
+    for (int i = 0; i < (int) enemies_stored.size(); i++)
+    {
+        RdPlayer player_data = mentalMap.getPlayer(enemies_stored[i].getPlayerId());
+        drawTargetUI(screen, enemies_stored[i], player_data);
+    }
+
+    //-- Get a copy of the players stored & draw them:
     std::vector<RdPlayer> players_stored = mentalMap.getPlayers();
     for ( int i = 0; i < (int) players_stored.size(); i++)
     {
         drawPlayerUI(screen, players_stored[i], 5, 10+i*(PLAYER_NAME_H+3));
     }
+
+
+
+    //-- Draw scope:
+    drawScope(screen);
 
     //-- Show interface
     SDL_Flip(screen);
