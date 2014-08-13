@@ -9,10 +9,23 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     if (rf.check("help")) {
         printf("RobotDevastation options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        printf("\t--name\n");
+        printf("\t--id integer\n");
+        printf("\t--name string\n");
+        printf("\t--team integer\n");
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
     printf("RobotDevastation using no additional special options.\n");
+
+    rdRoot = ::getenv ("RD_ROOT");
+    if (rdRoot!=NULL)
+    {
+        RD_INFO("The RD_ROOT is: %s\n",rdRoot);
+    }
+    else
+    {
+        RD_WARNING("No RD_ROOT environment variable!\n");
+        return false;
+    }
 
     if(rf.check("id"))
     {
@@ -107,14 +120,19 @@ bool rd::RobotDevastation::updateModule()
 
 bool rd::RobotDevastation::initSound()
 {
-    if (audioManager.load("../../share/sounds/RobotDevastationBSO.mp3", "bso", 0) == -1)
-        return false;
+    std::string rdRootStr(rdRoot);
 
-    if (audioManager.load("../../share/sounds/01_milshot.wav", "shoot", 1) == -1 )
-        return false;
+    if (audioManager.load(rdRootStr+"/share/sounds/RobotDevastationBSO.mp3", "bso", 0) == -1)
+        if (audioManager.load("../../share/sounds/RobotDevastationBSO.mp3", "bso", 0) == -1)
+            return false;
 
-    if (audioManager.load("../../share/sounds/15_explosion.wav", "explosion", 1) == -1)
-        return false;
+    if (audioManager.load(rdRootStr+"/share/sounds/01_milshot.wav", "shoot", 1) == -1 )
+        if (audioManager.load("../../share/sounds/01_milshot.wav", "shoot", 1) == -1 )
+            return false;
+
+    if (audioManager.load(rdRootStr+"/share/sounds/15_explosion.wav", "explosion", 1) == -1)
+        if (audioManager.load("../../share/sounds/15_explosion.wav", "explosion", 1) == -1)
+            return false;
 
     return true;
 }
@@ -123,8 +141,10 @@ bool rd::RobotDevastation::interruptModule() {
     printf("RobotDevastation closing...\n");
     audioManager.destroy();
     callbackPort.disableCallback();
+    // interrupt ports
     inImg.interrupt();
     callbackPort.interrupt();
+    // close ports
     inImg.close();
     callbackPort.close();
     return true;
