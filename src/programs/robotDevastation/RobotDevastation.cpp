@@ -62,6 +62,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     initSound();
     audioManager.playMusic("bso", -1);
 
+    rateThreadOutput.setRdRoot(rdRoot);
     rateThreadOutput.setInImg(&inImg);    
     rateThreadOutput.init(rf);
 

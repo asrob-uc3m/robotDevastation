@@ -28,6 +28,7 @@ class RateThreadOutput : public yarp::os::RateThread {
         //Port *pOutPort;
         //
         int rateMs;
+        char* rdRoot;
         //
         SDL_Surface* display;
         //
@@ -41,6 +42,7 @@ class RateThreadOutput : public yarp::os::RateThread {
     public:
         RateThreadOutput() : RateThread(DEFAULT_RATE_MS) {}
 
+        void setRdRoot(char *value);
         void setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pInImg);
         //void setOutImg(BufferedPort<ImageOf<PixelRgb> > * _pOutImg);
         //void setOutPort(Port *_pOutPort);

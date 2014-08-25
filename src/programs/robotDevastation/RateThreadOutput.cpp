@@ -86,11 +86,16 @@ void rd::RateThreadOutput::run()
     //-- Test drawing the scope on screen
     //--------------------------------------------------------------------------------------
     //-- Load png file
-    SDL_Surface * image_scope = IMG_Load("../../share/images/test_scope_small.png");
+    std::string rdRootStr(rdRoot);
+    SDL_Surface * image_scope = IMG_Load((rdRootStr+"/share/images/test_scope_small.png").c_str());
     if (!image_scope)
     {
-        RD_ERROR("Image not loaded!");
-        ::exit(1);
+        image_scope = IMG_Load("../../share/images/test_scope_small.png");
+        if (!image_scope)
+        {
+            RD_ERROR("Image not loaded!");
+            ::exit(1);
+        }
     }
 
     //-- Specify where to put the scope:
@@ -115,7 +120,13 @@ void rd::RateThreadOutput::run()
 
 }
 
-void rd::RateThreadOutput::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * pInImg) {
+void rd::RateThreadOutput::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * pInImg)
+{
     this->pInImg = pInImg;
+}
+
+void rd::RateThreadOutput::setRdRoot(char *value)
+{
+    rdRoot = value;
 }
 

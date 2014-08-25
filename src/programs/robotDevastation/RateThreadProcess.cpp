@@ -99,7 +99,7 @@ void rd::RateThreadProcess::run()
     }
 }
 
-void rd::RateThreadProcess::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * pInImg) {
+void rd::RateThreadProcess::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * pInImg)
+{
     this->pInImg = pInImg;
 }
-
