@@ -77,10 +77,10 @@ void rd::RateThreadProcess::run()
 
     // extract results
     for(zbar::Image::SymbolIterator symbol = image.symbol_begin(); symbol != image.symbol_end(); ++symbol) {
-        //std::vector<cv::Point> vp;
+        std::vector<cv::Point> vp;
         // do something useful with results
         RD_INFO("[%s]: %s\n", symbol->get_type_name().c_str(), symbol->get_data().c_str());
-        /*int n = symbol->get_location_size();
+        int n = symbol->get_location_size();
         for(int i=0;i<n;i++){
             vp.push_back(cv::Point(symbol->get_location_x(i),symbol->get_location_y(i)));
         }
@@ -89,13 +89,27 @@ void rd::RateThreadProcess::run()
         r.points(pts);
         //enemiesFound.push_back( std::pair< int, int>( r.center.x, r.center.y ));
         //enemiesFoundSize.push_back( pts[1].x - pts[0].x );
-        //RdEnemy enemy(localVectorOfRdEnemy.size(), RdEnemy::QR_CODE, RdVector2d( r.center.x, r.center.y ), pts[1].x-pts[0].x, pts[2].y-pts[0].y );
         std::stringstream identifier_str(symbol->get_data());
         int identifier_int;
         identifier_str >> identifier_int;
         RD_INFO("QR RdEnemy id: %d.\n",identifier_int);
-        RdEnemy enemy(identifier_int, RdEnemy::QR_CODE, RdVector2d( r.center.x, r.center.y ), pts[1].x-pts[0].x, pts[2].y-pts[0].y );
-        localVectorOfRdEnemy.push_back(enemy);*/
+        playersSemaphore->wait();
+        for(int iter=0;iter<players->size();iter++)
+        {
+            if (identifier_int==players->at(iter).getId())
+            {
+                RD_INFO("Enemy MATCH player %s.\n",players->at(iter).getName().c_str());
+            }
+            else
+            {
+                RD_INFO("Enemy is not player %s.\n",players->at(iter).getName().c_str());
+            }
+        }
+        playersSemaphore->post();
+        //RdEnemy enemy(identifier_int, RdEnemy::QR_CODE, RdVector2d( r.center.x, r.center.y ), pts[1].x-pts[0].x, pts[2].y-pts[0].y );
+        //localVectorOfRdEnemy.push_back(enemy);
+        //RdEnemy( int player_id, RdVector2d pos, RdVector2d dimensions);
+
     }
 }
 
@@ -103,3 +117,14 @@ void rd::RateThreadProcess::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<y
 {
     this->pInImg = pInImg;
 }
+
+void rd::RateThreadProcess::setPlayers(std::vector<RdPlayer> *value)
+{
+    players = value;
+}
+
+void rd:: RateThreadProcess::setPlayersSemaphore(yarp::os::Semaphore *value)
+{
+    playersSemaphore = value;
+}
+

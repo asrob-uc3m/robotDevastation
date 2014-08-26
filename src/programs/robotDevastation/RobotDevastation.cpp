@@ -66,6 +66,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     rateThreadOutput.setInImg(&inImg);    
     rateThreadOutput.init(rf);
 
+    rateThreadProcess.setPlayersSemaphore(&playersSemaphore);
+    rateThreadProcess.setPlayers(&players);
     rateThreadProcess.setInImg(&inImg);    
     rateThreadProcess.init(rf);
 

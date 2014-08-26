@@ -9,6 +9,7 @@
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/RateThread.h>
+#include <yarp/os/Semaphore.h>
 
 #include <yarp/sig/all.h>
 
@@ -19,6 +20,7 @@
 #include <zbar.h>
 
 #include "RdMacros.hpp"
+#include "RdEnemy.hpp"
 
 #define DEFAULT_RATE_MS 20
 
@@ -41,6 +43,9 @@ class RateThreadProcess : public yarp::os::RateThread {
         bool cameraInitialized;
         //
         zbar::ImageScanner scanner;
+        //
+        std::vector <RdPlayer>* players;
+        yarp::os::Semaphore* playersSemaphore;
 
     public:
         RateThreadProcess() : RateThread(DEFAULT_RATE_MS) {}
@@ -50,6 +55,9 @@ class RateThreadProcess : public yarp::os::RateThread {
         //void setOutPort(Port *_pOutPort);
         void init(yarp::os::ResourceFinder &rf);
         void run();  // The periodical function
+
+        void setPlayers(std::vector<RdPlayer> *value);
+        void setPlayersSemaphore(yarp::os::Semaphore *value);
 };
 
 }  // namespace rd
