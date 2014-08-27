@@ -41,6 +41,9 @@ class RobotDevastation : public yarp::os::RFModule
         std::vector <RdPlayer> players;
         yarp::os::Semaphore playersSemaphore;
 
+        std::vector <RdEnemy> enemies;
+        yarp::os::Semaphore enemiesSemaphore;
+
         char* rdRoot;
 
 };

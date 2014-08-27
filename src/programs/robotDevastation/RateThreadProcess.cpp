@@ -128,3 +128,13 @@ void rd:: RateThreadProcess::setPlayersSemaphore(yarp::os::Semaphore *value)
     playersSemaphore = value;
 }
 
+void rd::RateThreadProcess::setEnemies(std::vector<RdEnemy> *value)
+{
+    enemies = value;
+}
+
+void rd:: RateThreadProcess::setEnemiesSemaphore(yarp::os::Semaphore *value)
+{
+    enemiesSemaphore = value;
+}
+

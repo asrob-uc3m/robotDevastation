@@ -47,6 +47,9 @@ class RateThreadProcess : public yarp::os::RateThread {
         std::vector <RdPlayer>* players;
         yarp::os::Semaphore* playersSemaphore;
 
+        std::vector <RdEnemy>* enemies;
+        yarp::os::Semaphore* enemiesSemaphore;
+
     public:
         RateThreadProcess() : RateThread(DEFAULT_RATE_MS) {}
 
@@ -58,6 +61,9 @@ class RateThreadProcess : public yarp::os::RateThread {
 
         void setPlayers(std::vector<RdPlayer> *value);
         void setPlayersSemaphore(yarp::os::Semaphore *value);
+
+        void setEnemies(std::vector<RdEnemy> *value);
+        void setEnemiesSemaphore(yarp::os::Semaphore *value);
 };
 
 }  // namespace rd
