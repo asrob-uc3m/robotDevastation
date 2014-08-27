@@ -111,6 +111,13 @@ void rd::RateThreadOutput::run()
 
     //-------------------------------------------------------------------------------------
 
+    //-- Display enemies
+    enemiesSemaphore->wait();  //-- Wait for resource
+    // DO SOMETHING WITH:
+    //enemies->at(iterator).getPos();
+    //enemies->at(iterator).getDimensions();
+    enemiesSemaphore->post();  //-- Release the resource
+
     SDL_Flip(display);  // SDL_DOUBLEBUF flips with hw accel, if not just updates.
 
     //SDL_FreeSurface(surface); // needed? seems not from checking free.
@@ -127,3 +134,12 @@ void rd::RateThreadOutput::setRdRoot(char *value)
     rdRoot = value;
 }
 
+void rd::RateThreadOutput::setEnemies(std::vector<RdEnemy> *value)
+{
+    enemies = value;
+}
+
+void rd::RateThreadOutput::setEnemiesSemaphore(yarp::os::Semaphore *value)
+{
+    enemiesSemaphore = value;
+}
