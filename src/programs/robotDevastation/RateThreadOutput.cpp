@@ -115,9 +115,6 @@ void rd::RateThreadOutput::run()
 
     //SDL_FreeSurface(surface); // needed? seems not from checking free.
 
-    //SDL_Event evt;
-    //SDL_WaitEvent(&evt);
-
 }
 
 void rd::RateThreadOutput::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * pInImg)
