@@ -145,7 +145,12 @@ bool rd::RobotDevastation::initSound()
 }
 
 bool rd::RobotDevastation::interruptModule() {
-    printf("RobotDevastation closing...\n");
+    RD_INFO("Logout...\n");
+    yarp::os::Bottle msgRdPlayer,res;
+    msgRdPlayer.addVocab(VOCAB_RD_LOGOUT);
+    msgRdPlayer.addInt(myPlayer.getId());
+    rpcClient.write(msgRdPlayer,res);
+    RD_INFO("Closing program...\n");
     audioManager.destroy();
     callbackPort.disableCallback();
     // interrupt ports
