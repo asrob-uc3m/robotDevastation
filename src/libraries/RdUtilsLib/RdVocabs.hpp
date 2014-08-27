@@ -5,10 +5,12 @@
 
 #include <yarp/os/Vocab.h>
 
-#define VOCAB_RD_PLAYERS VOCAB('p','l','y','s')
-#define VOCAB_RD_LOGIN VOCAB3('l','o','g')
-#define VOCAB_RD_OK VOCAB2('o','k')
 #define VOCAB_RD_FAIL VOCAB('f','a','i','l')
+#define VOCAB_RD_HELP VOCAB('h','e','l','p')
+#define VOCAB_RD_LOGIN VOCAB3('l','o','g')
+#define VOCAB_RD_LOGOUT VOCAB('l','o','g','o')
+#define VOCAB_RD_OK VOCAB2('o','k')
+#define VOCAB_RD_PLAYERS VOCAB('p','l','y','s')
 
 #endif  // __RD_VOCABS_HPP__
 
