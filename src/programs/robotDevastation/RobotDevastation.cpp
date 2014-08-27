@@ -57,7 +57,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         return false;
     }
 
-    RdPlayer rdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0);
+    myPlayer = RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0);
+
 
     initSound();
     audioManager.playMusic("bso", -1);
@@ -66,6 +67,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     rateThreadOutput.setInImg(&inImg);    
     rateThreadOutput.init(rf);
 
+    rateThreadProcess.setMyPlayer(&myPlayer);
     rateThreadProcess.setPlayersSemaphore(&playersSemaphore);
     rateThreadProcess.setPlayers(&players);
     rateThreadProcess.setEnemiesSemaphore(&enemiesSemaphore);
@@ -80,7 +82,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     //-----------------OPEN LOCAL PORTS------------//
     std::ostringstream s;
-    s << rdPlayer.getId();
+    s << myPlayer.getId();
     inImg.open(("/img/"+s.str()).c_str());
     rpcClient.open(("/rpc/"+s.str()).c_str());
     callbackPort.open(("/callback/"+s.str()).c_str());
@@ -96,9 +98,9 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_LOGIN);
-    msgRdPlayer.addInt(rdPlayer.getId());
-    msgRdPlayer.addString(rdPlayer.getName().c_str());
-    msgRdPlayer.addInt(rdPlayer.getTeamId());
+    msgRdPlayer.addInt(myPlayer.getId());
+    msgRdPlayer.addString(myPlayer.getName().c_str());
+    msgRdPlayer.addInt(myPlayer.getTeamId());
     rpcClient.write(msgRdPlayer,res);
     RD_INFO("rdServer response from login: %s\n",res.toString().c_str());
     return true;

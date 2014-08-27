@@ -38,6 +38,8 @@ class RobotDevastation : public yarp::os::RFModule
 
         bool initSound();
 
+        RdPlayer myPlayer;
+
         std::vector <RdPlayer> players;
         yarp::os::Semaphore playersSemaphore;
 

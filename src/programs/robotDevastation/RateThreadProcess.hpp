@@ -44,6 +44,8 @@ class RateThreadProcess : public yarp::os::RateThread {
         //
         zbar::ImageScanner scanner;
         //
+        RdPlayer* myPlayer;
+
         std::vector <RdPlayer>* players;
         yarp::os::Semaphore* playersSemaphore;
 
@@ -59,11 +61,14 @@ class RateThreadProcess : public yarp::os::RateThread {
         void init(yarp::os::ResourceFinder &rf);
         void run();  // The periodical function
 
+        void setMyPlayer(RdPlayer *value);
+
         void setPlayers(std::vector<RdPlayer> *value);
         void setPlayersSemaphore(yarp::os::Semaphore *value);
 
         void setEnemies(std::vector<RdEnemy> *value);
         void setEnemiesSemaphore(yarp::os::Semaphore *value);
+
 };
 
 }  // namespace rd

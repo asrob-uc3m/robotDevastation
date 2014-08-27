@@ -76,7 +76,8 @@ void rd::RateThreadProcess::run()
     cvReleaseImage(&iplImage);  // needed!!
 
     // extract results
-    for(zbar::Image::SymbolIterator symbol = image.symbol_begin(); symbol != image.symbol_end(); ++symbol) {
+    for(zbar::Image::SymbolIterator symbol = image.symbol_begin(); symbol != image.symbol_end(); ++symbol)
+    {
         std::vector<cv::Point> vp;
         // do something useful with results
         RD_INFO("[%s]: %s\n", symbol->get_type_name().c_str(), symbol->get_data().c_str());
@@ -87,30 +88,55 @@ void rd::RateThreadProcess::run()
         cv::RotatedRect r = minAreaRect(vp);
         cv::Point2f pts[4];
         r.points(pts);
-        //enemiesFound.push_back( std::pair< int, int>( r.center.x, r.center.y ));
-        //enemiesFoundSize.push_back( pts[1].x - pts[0].x );
+
         std::stringstream identifier_str(symbol->get_data());
         int identifier_int;
         identifier_str >> identifier_int;
-        RD_INFO("QR RdEnemy id: %d.\n",identifier_int);
-        playersSemaphore->wait();
+        RD_INFO("QR id: %d.\n",identifier_int);
+
+        //-- If identifier matches that of a player, get its team identifier.
+        //-- If the team identifier is not our own, create an enemy and put it in the enemies vector.
+        playersSemaphore->wait();  //-- Wait to read players
+        enemiesSemaphore->wait();  //-- Wait to write enemies
+        enemies->clear();
+        bool identifierIsPlayer = false;
         for(int iter=0;iter<players->size();iter++)
         {
             if (identifier_int==players->at(iter).getId())
             {
-                RD_INFO("Enemy MATCH player %s.\n",players->at(iter).getName().c_str());
-            }
-            else
-            {
-                RD_INFO("Enemy is not player %s.\n",players->at(iter).getName().c_str());
+                RD_INFO("QR id MATCHES that of player \"%s\" of team %d.\n",
+                        players->at(iter).getName().c_str(), players->at(iter).getTeamId());
+                identifierIsPlayer = true;
+
+                if(players->at(iter).getTeamId() == myPlayer->getTeamId())
+                {
+                    RD_INFO("Player \"%s\" is a team member.\n",players->at(iter).getName().c_str());
+                }
+                else
+                {
+                    RD_INFO("Player \"%s\" is an enemy!\n",players->at(iter).getName().c_str());
+                    //-- RdEnemy( int player_id, RdVector2d pos, RdVector2d dimensions);
+                    RdEnemy enemy( identifier_int,
+                                   RdVector2d(r.center.x,r.center.y),
+                                   RdVector2d(pts[1].x - pts[0].x, pts[2].y - pts[0].y) );
+                    enemies->push_back(enemy);
+                }
             }
         }
-        playersSemaphore->post();
-        //RdEnemy enemy(identifier_int, RdEnemy::QR_CODE, RdVector2d( r.center.x, r.center.y ), pts[1].x-pts[0].x, pts[2].y-pts[0].y );
-        //localVectorOfRdEnemy.push_back(enemy);
-        //RdEnemy( int player_id, RdVector2d pos, RdVector2d dimensions);
+        if(!identifierIsPlayer)
+        {
+            RD_INFO("QR id does not belong to any known player.\n");
+        }
+        enemiesSemaphore->post();  //-- Release enemies resource
+        playersSemaphore->post();  //-- Release players resource
 
     }
+}
+
+
+void rd::RateThreadProcess::setMyPlayer(RdPlayer *value)
+{
+    myPlayer = value;
 }
 
 void rd::RateThreadProcess::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * pInImg)
