@@ -24,7 +24,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     else
     {
         RD_WARNING("No RD_ROOT environment variable!\n");
-        return false;
+        //return false;  //-- Allow to run, and instead set:
+        rdRoot="../..";  //-- Prepare to run from build/bin
     }
 
     if(rf.check("id"))
