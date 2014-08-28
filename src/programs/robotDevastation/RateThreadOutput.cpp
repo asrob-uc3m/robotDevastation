@@ -90,12 +90,8 @@ void rd::RateThreadOutput::run()
     SDL_Surface * image_scope = IMG_Load((rdRootStr+"/share/images/test_scope_small.png").c_str());
     if (!image_scope)
     {
-        image_scope = IMG_Load("../../share/images/test_scope_small.png");
-        if (!image_scope)
-        {
-            RD_ERROR("Image not loaded!");
-            ::exit(1);
-        }
+        RD_ERROR("Image not loaded!");
+        ::exit(1);
     }
 
     //-- Specify where to put the scope:
