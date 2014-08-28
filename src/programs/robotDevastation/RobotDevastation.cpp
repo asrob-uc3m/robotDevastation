@@ -24,8 +24,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     else
     {
         RD_WARNING("No RD_ROOT environment variable!\n");
-        //return false;  //-- Allow to run, and instead set:
-        rdRoot="../..";  //-- Prepare to run from build/bin
+        rdRoot="../..";  //-- Allow to run from build/bin
     }
 
     if(rf.check("id"))
@@ -61,7 +60,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     myPlayer = RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0);
 
 
-    initSound();
+    if( ! initSound() )
+        return false;
     audioManager.playMusic("bso", -1);
 
     rateThreadOutput.setRdRoot(rdRoot);
@@ -132,17 +132,14 @@ bool rd::RobotDevastation::initSound()
 {
     std::string rdRootStr(rdRoot);
 
-    if (audioManager.load(rdRootStr+"/share/sounds/RobotDevastationBSO.mp3", "bso", 0) == -1)
-        if (audioManager.load("../../share/sounds/RobotDevastationBSO.mp3", "bso", 0) == -1)
-            return false;
+    if ( ! audioManager.load(rdRootStr+"/share/sounds/RobotDevastationBSO.mp3", "bso", 0) )
+        return false;
 
-    if (audioManager.load(rdRootStr+"/share/sounds/01_milshot.wav", "shoot", 1) == -1 )
-        if (audioManager.load("../../share/sounds/01_milshot.wav", "shoot", 1) == -1 )
-            return false;
+    if ( ! audioManager.load(rdRootStr+"/share/sounds/01_milshot.wav", "shoot", 1) )
+        return false;
 
-    if (audioManager.load(rdRootStr+"/share/sounds/15_explosion.wav", "explosion", 1) == -1)
-        if (audioManager.load("../../share/sounds/15_explosion.wav", "explosion", 1) == -1)
-            return false;
+    if ( ! audioManager.load(rdRootStr+"/share/sounds/15_explosion.wav", "explosion", 1) )
+        return false;
 
     return true;
 }
