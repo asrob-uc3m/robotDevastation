@@ -1,5 +1,5 @@
 # Class Diagram #
-![ScreenShot](doc/Class Diagram.png)
+<img src="https://raw.githubusercontent.com/asrob-uc3m/robotDevastation/architecture_proposal/doc/Class%20Diagram.png" alt="Class diagram" width="300" />
 
 # Class Explanation #
 ## Game ##
