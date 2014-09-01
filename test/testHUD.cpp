@@ -22,6 +22,9 @@ static const int PLAYER_NAME_W = 65;
 static const int HEALTH_BAR_H = 10;
 static const int HEALTH_BAR_W = 80;
 
+//-- Enemy constants
+static const int ENEMY_THICKNESS = 2;
+
 //-- Scope constants
 static const int SCOPE_VERT_W = 4;
 static const int SCOPE_VERT_H = 50;
@@ -59,9 +62,21 @@ bool drawPlayerUI( SDL_Surface * screen, RdPlayer player, int x, int y)
 bool drawTargetUI( SDL_Surface * screen, RdEnemy enemy, RdPlayer player_data)
 {
     //-- Put enclosing box:
-    SDL_Rect enemy_rect = { enemy.getPos().x, enemy.getPos().y,
-                            enemy.getDimensions().x, enemy.getDimensions().y};
-    SDL_FillRect(screen, &enemy_rect, SDL_MapRGB(screen->format, 255, 0, 0));
+    SDL_Rect enemy_rect_top = { enemy.getPos().x, enemy.getPos().y,
+                                enemy.getDimensions().x, ENEMY_THICKNESS };
+    SDL_FillRect(screen, &enemy_rect_top, SDL_MapRGB(screen->format, 255, 0, 0));
+
+    SDL_Rect enemy_rect_bottom = { enemy.getPos().x, enemy.getPos().y + enemy.getDimensions().y - ENEMY_THICKNESS,
+                                   enemy.getDimensions().x, ENEMY_THICKNESS};
+    SDL_FillRect(screen, &enemy_rect_bottom, SDL_MapRGB(screen->format, 255, 0, 0));
+
+    SDL_Rect enemy_rect_left = { enemy.getPos().x, enemy.getPos().y,
+                                 ENEMY_THICKNESS, enemy.getDimensions().y};
+    SDL_FillRect(screen, &enemy_rect_left, SDL_MapRGB(screen->format, 255, 0, 0));
+
+    SDL_Rect enemy_rect_right = { enemy.getPos().x + enemy.getDimensions().x - ENEMY_THICKNESS, enemy.getPos().y,
+                                  ENEMY_THICKNESS, enemy.getDimensions().y};
+    SDL_FillRect(screen, &enemy_rect_right, SDL_MapRGB(screen->format, 255, 0, 0));
 
     //-- Put enemy name:
     SDL_Surface * text_surface = TTF_RenderText_Solid(enemy_font, player_data.getName().c_str(), redcolor);
@@ -162,9 +177,9 @@ int main(void)
     RdMentalMap mentalMap(0, 3);
 
     std::vector<RdPlayer> players;
-    players.push_back(RdPlayer(0, "Myself", 100, 100, 0, 0));
-    players.push_back(RdPlayer(1, "Enemy1",  50, 100, 1, 0));
-    players.push_back(RdPlayer(2, "Enemy2", 100, 100, 1, 0));
+    players.push_back(RdPlayer(0, "Myself", 90, 100, 0, 0));
+    players.push_back(RdPlayer(1, "Enemy1", 50, 100, 1, 0));
+    players.push_back(RdPlayer(2, "Enemy2", 75, 100, 1, 0));
     mentalMap.updatePlayers(players);
 
     std::vector<RdEnemy> enemies;
@@ -192,8 +207,6 @@ int main(void)
     {
         drawPlayerUI(screen, players_stored[i], 5, 10+i*(PLAYER_NAME_H+3));
     }
-
-
 
     //-- Draw scope:
     drawScope(screen);
