@@ -2,10 +2,9 @@
 
 
 
-rd::RdMentalMap::RdMentalMap(const int &player_id, const int &max_num_players)
+rd::RdMentalMap::RdMentalMap(const int &player_id)
 {
     this->my_id = player_id;
-    this->max_num_players = max_num_players;
     this->myself = NULL;
 }
 

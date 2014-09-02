@@ -17,7 +17,7 @@ namespace rd{
 class RdMentalMap
 {
     public:
-        RdMentalMap(const int& player_id, const int& max_num_players );
+        RdMentalMap(const int& player_id );
 
         std::vector<RdEnemy> getEnemies();
         std::vector<RdPlayer> getPlayers();
