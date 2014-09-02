@@ -1,6 +1,14 @@
 #include "RdMentalMap.hpp"
 
+rd::RdMentalMap::RdMentalMap()
+{
+}
 
+bool rd::RdMentalMap::configure(const int &player_id)
+{
+    this->my_id = player_id;
+    this->myself = NULL;
+}
 
 rd::RdMentalMap::RdMentalMap(const int &player_id)
 {

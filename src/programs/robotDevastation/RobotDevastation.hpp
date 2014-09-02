@@ -13,6 +13,7 @@
 #include "EventInput.hpp"
 #include "CallbackPort.hpp"
 #include "RdAudioManager.hpp"
+#include "RdMentalMap.hpp"
 
 namespace rd
 {
@@ -45,6 +46,8 @@ class RobotDevastation : public yarp::os::RFModule
 
         std::vector <RdEnemy> enemies;
         yarp::os::Semaphore enemiesSemaphore;
+
+        RdMentalMap mentalMap;
 
         char* rdRoot;
 

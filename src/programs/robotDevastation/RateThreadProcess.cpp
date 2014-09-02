@@ -96,30 +96,27 @@ void rd::RateThreadProcess::run()
 
         //-- If identifier matches that of a player, get its team identifier.
         //-- If the team identifier is not our own, create an enemy and put it in the enemies vector.
-        playersSemaphore->wait();  //-- Wait to read players
-        enemiesSemaphore->wait();  //-- Wait to write enemies
-        enemies->clear();
         bool identifierIsPlayer = false;
-        for(int iter=0;iter<players->size();iter++)
+        for(int iter=0; iter < mentalMap->getPlayers().size(); iter++)
         {
-            if (identifier_int==players->at(iter).getId())
+            if (identifier_int == mentalMap->getPlayers().at(iter).getId())
             {
                 RD_INFO("QR id MATCHES that of player \"%s\" of team %d.\n",
-                        players->at(iter).getName().c_str(), players->at(iter).getTeamId());
+                        mentalMap->getPlayers().at(iter).getName().c_str(), mentalMap->getPlayers().at(iter).getTeamId());
                 identifierIsPlayer = true;
 
-                if(players->at(iter).getTeamId() == myPlayer->getTeamId())
+                if( mentalMap->getPlayers().at(iter).getTeamId() == myPlayer->getTeamId() )
                 {
-                    RD_INFO("Player \"%s\" is a team member.\n",players->at(iter).getName().c_str());
+                    RD_INFO("Player \"%s\" is a team member.\n", mentalMap->getPlayers().at(iter).getName().c_str());
                 }
                 else
                 {
-                    RD_INFO("Player \"%s\" is an enemy!\n",players->at(iter).getName().c_str());
+                    RD_INFO("Player \"%s\" is an enemy!\n", mentalMap->getPlayers().at(iter).getName().c_str());
                     //-- RdEnemy( int player_id, RdVector2d pos, RdVector2d dimensions);
                     RdEnemy enemy( identifier_int,
                                    RdVector2d(r.center.x,r.center.y),
                                    RdVector2d(pts[1].x - pts[0].x, pts[2].y - pts[0].y) );
-                    enemies->push_back(enemy);
+                    //enemies->push_back(enemy);
                 }
             }
         }
@@ -127,8 +124,6 @@ void rd::RateThreadProcess::run()
         {
             RD_INFO("QR id does not belong to any known player.\n");
         }
-        enemiesSemaphore->post();  //-- Release enemies resource
-        playersSemaphore->post();  //-- Release players resource
 
     }
 }
@@ -144,23 +139,9 @@ void rd::RateThreadProcess::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<y
     this->pInImg = pInImg;
 }
 
-void rd::RateThreadProcess::setPlayers(std::vector<RdPlayer> *value)
+void rd::RateThreadProcess::setMentalMap(RdMentalMap *value)
 {
-    players = value;
+    mentalMap = value;
 }
 
-void rd:: RateThreadProcess::setPlayersSemaphore(yarp::os::Semaphore *value)
-{
-    playersSemaphore = value;
-}
-
-void rd::RateThreadProcess::setEnemies(std::vector<RdEnemy> *value)
-{
-    enemies = value;
-}
-
-void rd::RateThreadProcess::setEnemiesSemaphore(yarp::os::Semaphore *value)
-{
-    enemiesSemaphore = value;
-}
 
