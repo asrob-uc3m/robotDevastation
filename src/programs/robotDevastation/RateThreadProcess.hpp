@@ -9,9 +9,8 @@
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/RateThread.h>
-#include <yarp/os/Semaphore.h>
 
-#include <yarp/sig/all.h>
+#include <yarp/sig/Image.h>
 
 // tmp use of opencv
 #include <opencv2/opencv.hpp>
@@ -20,7 +19,7 @@
 #include <zbar.h>
 
 #include "RdMacros.hpp"
-#include "RdEnemy.hpp"
+#include "RdMentalMap.hpp"
 
 #define DEFAULT_RATE_MS 20
 
@@ -30,8 +29,6 @@ namespace rd
 class RateThreadProcess : public yarp::os::RateThread {
     private:
         yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > *pInImg;
-        //BufferedPort<ImageOf<PixelRgb> > *pOutImg;  // for testing
-        //Port *pOutPort;
         //
         int rateMs;
         //
@@ -46,28 +43,20 @@ class RateThreadProcess : public yarp::os::RateThread {
         //
         RdPlayer* myPlayer;
 
-        std::vector <RdPlayer>* players;
-        yarp::os::Semaphore* playersSemaphore;
-
-        std::vector <RdEnemy>* enemies;
-        yarp::os::Semaphore* enemiesSemaphore;
+        RdMentalMap* mentalMap;
 
     public:
         RateThreadProcess() : RateThread(DEFAULT_RATE_MS) {}
 
         void setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pInImg);
-        //void setOutImg(BufferedPort<ImageOf<PixelRgb> > * _pOutImg);
-        //void setOutPort(Port *_pOutPort);
+
         void init(yarp::os::ResourceFinder &rf);
         void run();  // The periodical function
 
         void setMyPlayer(RdPlayer *value);
 
-        void setPlayers(std::vector<RdPlayer> *value);
-        void setPlayersSemaphore(yarp::os::Semaphore *value);
+        void setMentalMap(RdMentalMap *value);
 
-        void setEnemies(std::vector<RdEnemy> *value);
-        void setEnemiesSemaphore(yarp::os::Semaphore *value);
 
 };
 

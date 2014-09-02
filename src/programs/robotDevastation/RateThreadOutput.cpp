@@ -108,11 +108,11 @@ void rd::RateThreadOutput::run()
     //-------------------------------------------------------------------------------------
 
     //-- Display enemies
-    enemiesSemaphore->wait();  //-- Wait for resource
+    //enemiesSemaphore->wait();  //-- Wait for resource
     // DO SOMETHING WITH:
     //enemies->at(iterator).getPos();
     //enemies->at(iterator).getDimensions();
-    enemiesSemaphore->post();  //-- Release the resource
+    //enemiesSemaphore->post();  //-- Release the resource
 
     SDL_Flip(display);  // SDL_DOUBLEBUF flips with hw accel, if not just updates.
 
@@ -130,12 +130,7 @@ void rd::RateThreadOutput::setRdRoot(char *value)
     rdRoot = value;
 }
 
-void rd::RateThreadOutput::setEnemies(std::vector<RdEnemy> *value)
+void rd::RateThreadOutput::setMentalMap(RdMentalMap *value)
 {
-    enemies = value;
-}
-
-void rd::RateThreadOutput::setEnemiesSemaphore(yarp::os::Semaphore *value)
-{
-    enemiesSemaphore = value;
+    mentalMap = value;
 }

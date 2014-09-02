@@ -17,13 +17,16 @@ namespace rd{
 class RdMentalMap
 {
     public:
-        RdMentalMap(const int& player_id, const int& max_num_players );
+        RdMentalMap();
+        RdMentalMap(const int& player_id);
+        bool configure(const int& player_id );
 
         std::vector<RdEnemy> getEnemies();
         std::vector<RdPlayer> getPlayers();
         RdEnemy getEnemy(const int& id = -1);
         RdPlayer getPlayer(const int& id = -1);
         RdPlayer getMyself();
+
 
         bool updatePlayers(std::vector<RdPlayer> new_player_vector);
         bool updateEnemies(std::vector<RdEnemy> new_enemy_detections);

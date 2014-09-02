@@ -1,11 +1,18 @@
 #include "RdMentalMap.hpp"
 
+rd::RdMentalMap::RdMentalMap()
+{
+}
 
-
-rd::RdMentalMap::RdMentalMap(const int &player_id, const int &max_num_players)
+bool rd::RdMentalMap::configure(const int &player_id)
 {
     this->my_id = player_id;
-    this->max_num_players = max_num_players;
+    this->myself = NULL;
+}
+
+rd::RdMentalMap::RdMentalMap(const int &player_id)
+{
+    this->my_id = player_id;
     this->myself = NULL;
 }
 

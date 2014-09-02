@@ -66,16 +66,12 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     audioManager.playMusic("bso", -1);
 
     rateThreadOutput.setRdRoot(rdRoot);
-    rateThreadOutput.setEnemiesSemaphore(&enemiesSemaphore);
-    rateThreadOutput.setEnemies(&enemies);
-    rateThreadOutput.setInImg(&inImg);    
+    rateThreadOutput.setMentalMap(&mentalMap);
+    rateThreadOutput.setInImg(&inImg);
     rateThreadOutput.init(rf);
 
     rateThreadProcess.setMyPlayer(&myPlayer);
-    rateThreadProcess.setPlayersSemaphore(&playersSemaphore);
-    rateThreadProcess.setPlayers(&players);
-    rateThreadProcess.setEnemiesSemaphore(&enemiesSemaphore);
-    rateThreadProcess.setEnemies(&enemies);
+    rateThreadProcess.setMentalMap(&mentalMap);
     rateThreadProcess.setInImg(&inImg);
     rateThreadProcess.init(rf);
 
