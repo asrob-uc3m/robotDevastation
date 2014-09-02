@@ -20,4 +20,5 @@ ENDFOREACH()
 add_subdirectory(RdUtilsLib)
 add_subdirectory(RdMusicLib)
 add_subdirectory(RdMentalMapLib)
+add_subdirectory(RdUserInterfaceLib)
 
