@@ -44,9 +44,8 @@ class RdMentalMapTest : public testing::Test
 TEST_F( RdMentalMapTest, CreateCreatesMentalMap)
 {
     //-- Create a mental map for two players:
-    const int n_players = 2;
     const int id = 0;
-    mentalMap = new RdMentalMap(id, n_players);
+    mentalMap = new RdMentalMap(id);
     ASSERT_FALSE(!mentalMap);
 
     //-- Check the number of players
@@ -73,9 +72,8 @@ TEST_F( RdMentalMapTest, CreateCreatesMentalMap)
 TEST_F( RdMentalMapTest, UpdatePlayersUpdatesPlayers)
 {
     //-- Create a mental map for two players:
-    const int n_players = 2;
     const int id = 0;
-    mentalMap = new RdMentalMap(id, n_players);
+    mentalMap = new RdMentalMap(id);
     ASSERT_FALSE(!mentalMap);
 
     //-- Update players:
@@ -181,9 +179,8 @@ TEST_F( RdMentalMapTest, UpdatePlayersUpdatesPlayers)
 TEST_F( RdMentalMapTest, MyselfPointsToMe)
 {
     //-- Create a mental map for two players:
-    const int n_players = 2;
     const int id = 0;
-    mentalMap = new RdMentalMap(id, n_players);
+    mentalMap = new RdMentalMap(id);
     ASSERT_FALSE(!mentalMap);
 
     //-- Update players:
@@ -219,9 +216,8 @@ TEST_F( RdMentalMapTest, MyselfPointsToMe)
 TEST_F( RdMentalMapTest, UpdateEnemiesUpdateEnemies)
 {
     //-- Create a mental map for two players:
-    const int n_players = 2;
     const int id = 0;
-    mentalMap = new RdMentalMap(id, n_players);
+    mentalMap = new RdMentalMap(id);
     ASSERT_FALSE(!mentalMap);
 
 
@@ -258,10 +254,9 @@ TEST_F( RdMentalMapTest, UpdateEnemiesUpdateEnemies)
 
 TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
 {
-    //-- Create a mental map for two players:
-    const int n_players = 3;
+    //-- Create a mental map for three players:
     const int id = 0;
-    mentalMap = new RdMentalMap(id, n_players);
+    mentalMap = new RdMentalMap(id);
     ASSERT_FALSE(!mentalMap);
 
 
