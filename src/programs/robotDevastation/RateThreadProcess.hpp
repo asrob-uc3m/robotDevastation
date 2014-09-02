@@ -40,8 +40,6 @@ class RateThreadProcess : public yarp::os::RateThread {
         bool cameraInitialized;
         //
         zbar::ImageScanner scanner;
-        //
-        RdPlayer* myPlayer;
 
         RdMentalMap* mentalMap;
 
@@ -52,8 +50,6 @@ class RateThreadProcess : public yarp::os::RateThread {
 
         void init(yarp::os::ResourceFinder &rf);
         void run();  // The periodical function
-
-        void setMyPlayer(RdPlayer *value);
 
         void setMentalMap(RdMentalMap *value);
 

@@ -57,8 +57,9 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         return false;
     }
 
-    myPlayer = RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0);
+    //myPlayer = RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0);
 
+    mentalMap.configure( rf.find("id").asInt() );
 
     if( ! initSound() )
         return false;
@@ -70,19 +71,17 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     rateThreadOutput.setInImg(&inImg);
     rateThreadOutput.init(rf);
 
-    rateThreadProcess.setMyPlayer(&myPlayer);
     rateThreadProcess.setMentalMap(&mentalMap);
     rateThreadProcess.setInImg(&inImg);
     rateThreadProcess.init(rf);
 
     eventInput.start();   
     
-    callbackPort.setPlayersSemaphore(&playersSemaphore);
-    callbackPort.setPlayers(&players);
+    callbackPort.setMentalMap(&mentalMap);
 
     //-----------------OPEN LOCAL PORTS------------//
     std::ostringstream s;
-    s << myPlayer.getId();
+    s << mentalMap.getMyself().getId();
     inImg.open(("/img/"+s.str()).c_str());
     rpcClient.open(("/rpc/"+s.str()).c_str());
     callbackPort.open(("/callback/"+s.str()).c_str());
@@ -98,9 +97,9 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_LOGIN);
-    msgRdPlayer.addInt(myPlayer.getId());
-    msgRdPlayer.addString(myPlayer.getName().c_str());
-    msgRdPlayer.addInt(myPlayer.getTeamId());
+    msgRdPlayer.addInt(mentalMap.getMyself().getId());
+    msgRdPlayer.addString(mentalMap.getMyself().getName().c_str());
+    msgRdPlayer.addInt(mentalMap.getMyself().getTeamId());
     rpcClient.write(msgRdPlayer,res);
     RD_INFO("rdServer response from login: %s\n",res.toString().c_str());
     return true;
@@ -145,7 +144,7 @@ bool rd::RobotDevastation::interruptModule() {
     RD_INFO("Logout...\n");
     yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_LOGOUT);
-    msgRdPlayer.addInt(myPlayer.getId());
+    msgRdPlayer.addInt(mentalMap.getMyself().getId());
     rpcClient.write(msgRdPlayer,res);
     RD_INFO("Closing program...\n");
     audioManager.destroy();

@@ -105,7 +105,7 @@ void rd::RateThreadProcess::run()
                         mentalMap->getPlayers().at(iter).getName().c_str(), mentalMap->getPlayers().at(iter).getTeamId());
                 identifierIsPlayer = true;
 
-                if( mentalMap->getPlayers().at(iter).getTeamId() == myPlayer->getTeamId() )
+                if( mentalMap->getPlayers().at(iter).getTeamId() == mentalMap->getMyself().getTeamId() )
                 {
                     RD_INFO("Player \"%s\" is a team member.\n", mentalMap->getPlayers().at(iter).getName().c_str());
                 }
@@ -126,12 +126,6 @@ void rd::RateThreadProcess::run()
         }
 
     }
-}
-
-
-void rd::RateThreadProcess::setMyPlayer(RdPlayer *value)
-{
-    myPlayer = value;
 }
 
 void rd::RateThreadProcess::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * pInImg)

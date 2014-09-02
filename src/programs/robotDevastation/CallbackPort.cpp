@@ -7,8 +7,7 @@ void rd::CallbackPort::onRead(yarp::os::Bottle& b)
     //RD_INFO("Got %s\n", b.toString().c_str());
     if ((b.get(0).asString() == "players")||(b.get(0).asVocab() == VOCAB_RD_PLAYERS)) {  // players //
         //RD_INFO("Number of players: %d\n",b.size()-1);  // -1 because of vocab.
-        playersSemaphore->wait();
-        players->clear();
+        std::vector< RdPlayer > players;
         for(size_t i=1;i<b.size();i++)
         {
 
@@ -19,9 +18,9 @@ void rd::CallbackPort::onRead(yarp::os::Bottle& b)
                               b.get(i).asList()->get(4).asInt(),
                               b.get(i).asList()->get(5).asInt()
                               );
-            players->push_back(rdPlayer);
+             players.push_back(rdPlayer);
         }
-        playersSemaphore->post();
+        mentalMap->updatePlayers(players);
     }
     else
     {
@@ -31,13 +30,8 @@ void rd::CallbackPort::onRead(yarp::os::Bottle& b)
 
 }
 
-void rd::CallbackPort::setPlayers(std::vector<RdPlayer> *value)
+void rd::CallbackPort::setMentalMap(RdMentalMap *value)
 {
-    players = value;
-}
-
-void rd:: CallbackPort::setPlayersSemaphore(yarp::os::Semaphore *value)
-{
-    playersSemaphore = value;
+    mentalMap = value;
 }
 

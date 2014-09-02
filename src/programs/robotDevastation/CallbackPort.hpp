@@ -12,6 +12,7 @@
 #include "RdMacros.hpp"
 #include "RdPlayer.hpp"
 #include "RdVocabs.hpp"
+#include "RdMentalMap.hpp"
 
 namespace rd
 {
@@ -27,14 +28,14 @@ class CallbackPort : public yarp::os::BufferedPort<yarp::os::Bottle> {
         * Implement the actual callback.
         */
         void onRead(yarp::os::Bottle& b);
-        std::vector <RdPlayer>* players;
-        yarp::os::Semaphore* playersSemaphore;
+
+        RdMentalMap* mentalMap;
 
 
     public:
 
-        void setPlayers(std::vector<RdPlayer> *value);
-        void setPlayersSemaphore(yarp::os::Semaphore *value);
+        void setMentalMap(RdMentalMap *value);
+
 };
 
 }
