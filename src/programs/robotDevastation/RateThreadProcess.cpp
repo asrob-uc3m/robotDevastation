@@ -75,6 +75,8 @@ void rd::RateThreadProcess::run()
     //cvimagetreat.release();  // not required
     cvReleaseImage(&iplImage);  // needed!!
 
+    std::vector< RdEnemy > enemies;
+
     // extract results
     for(zbar::Image::SymbolIterator symbol = image.symbol_begin(); symbol != image.symbol_end(); ++symbol)
     {
@@ -94,38 +96,16 @@ void rd::RateThreadProcess::run()
         identifier_str >> identifier_int;
         RD_INFO("QR id: %d.\n",identifier_int);
 
-        //-- If identifier matches that of a player, get its team identifier.
-        //-- If the team identifier is not our own, create an enemy and put it in the enemies vector.
-        bool identifierIsPlayer = false;
-        for(int iter=0; iter < mentalMap->getPlayers().size(); iter++)
-        {
-            if (identifier_int == mentalMap->getPlayers().at(iter).getId())
-            {
-                RD_INFO("QR id MATCHES that of player \"%s\" of team %d.\n",
-                        mentalMap->getPlayers().at(iter).getName().c_str(), mentalMap->getPlayers().at(iter).getTeamId());
-                identifierIsPlayer = true;
 
-                if( mentalMap->getPlayers().at(iter).getTeamId() == mentalMap->getMyself().getTeamId() )
-                {
-                    RD_INFO("Player \"%s\" is a team member.\n", mentalMap->getPlayers().at(iter).getName().c_str());
-                }
-                else
-                {
-                    RD_INFO("Player \"%s\" is an enemy!\n", mentalMap->getPlayers().at(iter).getName().c_str());
-                    //-- RdEnemy( int player_id, RdVector2d pos, RdVector2d dimensions);
-                    RdEnemy enemy( identifier_int,
-                                   RdVector2d(r.center.x,r.center.y),
-                                   RdVector2d(pts[1].x - pts[0].x, pts[2].y - pts[0].y) );
-                    //enemies->push_back(enemy);
-                }
-            }
-        }
-        if(!identifierIsPlayer)
-        {
-            RD_INFO("QR id does not belong to any known player.\n");
-        }
+        RdEnemy enemy( identifier_int,
+                       RdVector2d(r.center.x,r.center.y),
+                       RdVector2d(pts[1].x - pts[0].x, pts[2].y - pts[0].y) );
+        enemies.push_back(enemy);
 
     }
+
+    mentalMap->updateEnemies(enemies);
+
 }
 
 void rd::RateThreadProcess::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * pInImg)
