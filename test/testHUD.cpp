@@ -28,7 +28,7 @@ int main(void)
     }
 
     //-- Create a mental map with some info:
-    RdMentalMap mentalMap(0, 3);
+    RdMentalMap mentalMap(0);
 
     std::vector<RdPlayer> players;
     players.push_back(RdPlayer(0, "Myself", 90, 100, 0, 0));
@@ -47,7 +47,7 @@ int main(void)
 
     //-- Draw interface:
     //---------------------------------------------------------------------------------
-//    SDL_FillRect(screen, NULL, 0xFFFFFFFF);
+//  SDL_FillRect(screen, NULL, 0xFFFFFFFF);
     SDL_FillRect(screen, NULL, 0x00000000);
 
     gameScreen.show(screen);

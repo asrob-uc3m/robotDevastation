@@ -39,6 +39,11 @@ void rd::RateThreadOutput::init(yarp::os::ResourceFinder &rf)
     // Set the title bar
     SDL_WM_SetCaption("Robot Devastation", "Robot Devastation");
 
+    if (mentalMap != NULL)
+       gameScreen.setMentalMap(mentalMap);
+    else
+        RD_ERROR("MentalMap not created yet!");
+
     this->setRate(rateMs);
     this->start();
 
@@ -83,36 +88,7 @@ void rd::RateThreadOutput::run()
         ::exit(1);
     }
 
-    //-- Test drawing the scope on screen
-    //--------------------------------------------------------------------------------------
-    //-- Load png file
-    std::string rdRootStr(rdRoot);
-    SDL_Surface * image_scope = IMG_Load((rdRootStr+"/share/images/test_scope_small.png").c_str());
-    if (!image_scope)
-    {
-        RD_ERROR("Image not loaded!");
-        ::exit(1);
-    }
-
-    //-- Specify where to put the scope:
-    SDL_Rect src, dst;
-    src.x = 0; src.y = 0;
-    src.h = image_scope->h; src.w = image_scope->w;
-
-    dst.x = (640 - 300) / 2;
-    dst.y = (480 - 300) / 2;
-    dst.h = image_scope->h; dst.w = image_scope->w;
-
-    SDL_BlitSurface(image_scope, &src, display, &dst);
-
-    //-------------------------------------------------------------------------------------
-
-    //-- Display enemies
-    //enemiesSemaphore->wait();  //-- Wait for resource
-    // DO SOMETHING WITH:
-    //enemies->at(iterator).getPos();
-    //enemies->at(iterator).getDimensions();
-    //enemiesSemaphore->post();  //-- Release the resource
+    gameScreen.show(display);
 
     SDL_Flip(display);  // SDL_DOUBLEBUF flips with hw accel, if not just updates.
 

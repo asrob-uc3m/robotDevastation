@@ -18,6 +18,7 @@
 
 #include "RdMacros.hpp"
 #include "RdMentalMap.hpp"
+#include "RdGameScreen.hpp"
 
 #define DEFAULT_RATE_MS 20
 
@@ -43,6 +44,7 @@ class RateThreadOutput : public yarp::os::RateThread {
         bool cameraInitialized;
 
         RdMentalMap* mentalMap;
+        RdGameScreen gameScreen;
 
     public:
         RateThreadOutput() : RateThread(DEFAULT_RATE_MS) {}
