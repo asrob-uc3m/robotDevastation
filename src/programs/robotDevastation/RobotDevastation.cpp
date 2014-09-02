@@ -57,9 +57,11 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         return false;
     }
 
-    //myPlayer = RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0);
-
     mentalMap.configure( rf.find("id").asInt() );
+
+    std::vector< RdPlayer > players;
+    players.push_back( RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0) );
+    mentalMap.updatePlayers(players);
 
     if( ! initSound() )
         return false;
@@ -113,13 +115,11 @@ double rd::RobotDevastation::getPeriod()
 bool rd::RobotDevastation::updateModule()
 {
     printf("===robotDevastation===\n");
-    playersSemaphore.wait();
-    printf("Number of players: %zd\n",players.size());
-    for(size_t i=0;i<players.size();i++)
+    printf("Number of players: %zd\n",mentalMap.getPlayers().size());
+    for(size_t i=0;i<mentalMap.getPlayers().size();i++)
     {
-       printf("----------------------\n%s\n",players[i].str().c_str());
+       printf("----------------------\n%s\n",mentalMap.getPlayers().at(i).str().c_str());
     }
-    playersSemaphore.post();
     //printf("======================\n");
     return true;
 }

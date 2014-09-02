@@ -39,12 +39,6 @@ class RobotDevastation : public yarp::os::RFModule
 
         bool initSound();
 
-        std::vector <RdPlayer> players;
-        yarp::os::Semaphore playersSemaphore;
-
-        std::vector <RdEnemy> enemies;
-        yarp::os::Semaphore enemiesSemaphore;
-
         RdMentalMap mentalMap;
 
         char* rdRoot;

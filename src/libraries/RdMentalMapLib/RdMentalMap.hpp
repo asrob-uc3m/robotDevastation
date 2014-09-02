@@ -40,8 +40,6 @@ class RdMentalMap
         int my_id;
         RdPlayer* myself;
 
-        int max_num_players;
-
 };
 
 }

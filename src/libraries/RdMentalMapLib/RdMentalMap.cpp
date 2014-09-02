@@ -87,13 +87,6 @@ bool rd::RdMentalMap::updatePlayers(std::vector<rd::RdPlayer> new_player_vector)
 {
     //-- Right now, this just replaces the players inside the mental map
 
-    if ( new_player_vector.size() > max_num_players )
-    {
-        RD_ERROR( "Players in the update (%i) exceed the maximum number allowed in mental map (%i)\n",
-                  (int) new_player_vector.size(), max_num_players);
-        return false;
-    }
-
     //-- Clear the pointer to myself (player)
     myself = NULL;
 
@@ -119,14 +112,6 @@ bool rd::RdMentalMap::updateEnemies(std::vector<rd::RdEnemy> new_enemy_detection
     {
         if ( !it->second.reduceBelief(10) )
             enemies.erase(it);
-    }
-
-    //-- Check dimensions:
-    if ( new_enemy_detections.size() > max_num_players-1 )
-    {
-        RD_ERROR( "Enemies in the update (%i) exceed the maximum number allowed in mental map (%i)\n",
-                  (int) new_enemy_detections.size(), max_num_players-1);
-        return false;
     }
 
     //-- Add new enemies / update old ones (just replacing):
