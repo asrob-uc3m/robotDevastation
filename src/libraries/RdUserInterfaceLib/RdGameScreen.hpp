@@ -11,7 +11,7 @@
 #include <vector>
 
 #include "RdMentalMap.hpp"
-#include "RdEnemy.hpp"
+#include "RdTarget.hpp"
 #include "RdPlayer.hpp"
 
 
@@ -27,7 +27,7 @@ class RdGameScreen
 
     private:
         bool drawPlayerUI( SDL_Surface * screen, RdPlayer player, int x, int y);
-        bool drawTargetUI( SDL_Surface * screen, RdEnemy enemy, RdPlayer player_data);
+        bool drawTargetUI( SDL_Surface * screen, RdTarget target, RdPlayer player_data);
         bool drawScope( SDL_Surface * screen );
 
         //-- Screen constants (that should not be constant)

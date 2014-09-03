@@ -16,16 +16,16 @@ rd::RdMentalMap::RdMentalMap(const int &player_id)
     this->myself = NULL;
 }
 
-std::vector<rd::RdEnemy> rd::RdMentalMap::getEnemies()
+std::vector<rd::RdTarget> rd::RdMentalMap::getTargets()
 {
-    std::vector<RdEnemy> enemy_vector;
+    std::vector<RdTarget> target_vector;
 
-    for( std::map<int, RdEnemy>::const_iterator it = enemies.begin(); it != enemies.end(); ++it)
+    for( std::map<int, RdTarget>::const_iterator it = targets.begin(); it != targets.end(); ++it)
     {
-        enemy_vector.push_back(it->second);
+        target_vector.push_back(it->second);
     }
 
-    return enemy_vector;
+    return target_vector;
 
 }
 
@@ -41,17 +41,17 @@ std::vector<rd::RdPlayer> rd::RdMentalMap::getPlayers()
     return player_vector;
 }
 
-rd::RdEnemy rd::RdMentalMap::getEnemy(const int &id)
+rd::RdTarget rd::RdMentalMap::getTarget(const int &id)
 {
-    if ( enemies.find(id) != enemies.end() )
+    if ( targets.find(id) != targets.end() )
     {
-        return enemies[id];
+        return targets[id];
     }
     else
     {
         RD_ERROR("Enemy with id %i not found!!\n", id);
-        RD_ERROR("Returning standard enemy\n");
-        return RdEnemy();
+        RD_ERROR("Returning standard target\n");
+        return RdTarget();
     }
 }
 
@@ -99,26 +99,23 @@ bool rd::RdMentalMap::updatePlayers(std::vector<rd::RdPlayer> new_player_vector)
             myself = &players[id];
     }
 
-    //-- Update enemies to point to this new players!
-    /// \todo Update enemies to point to this new players!
-
     return true;
 }
 
-bool rd::RdMentalMap::updateEnemies(std::vector<rd::RdEnemy> new_enemy_detections)
+bool rd::RdMentalMap::updateTargets(std::vector<RdTarget> new_target_detections)
 {
-    //-- Reduce the belief of all the enemies and deletes them when belief is 0
-    for( std::map<int, RdEnemy>::iterator it = enemies.begin(); it != enemies.end(); ++it)
+    //-- Reduce the belief of all the targets and deletes them when belief is 0
+    for( std::map<int, RdTarget>::iterator it = targets.begin(); it != targets.end(); ++it)
     {
         if ( !it->second.reduceBelief(10) )
-            enemies.erase(it);
+            targets.erase(it);
     }
 
-    //-- Add new enemies / update old ones (just replacing):
-    for (int i = 0; i < (int) new_enemy_detections.size(); i++)
+    //-- Add new targets / update old ones (just replacing):
+    for (int i = 0; i < (int) new_target_detections.size(); i++)
     {
-        int id = new_enemy_detections[i].getPlayerId();
-        enemies[id] = new_enemy_detections[i];
+        int id = new_target_detections[i].getPlayerId();
+        targets[id] = new_target_detections[i];
     }
 
     return true;

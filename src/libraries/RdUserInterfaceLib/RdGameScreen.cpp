@@ -47,11 +47,11 @@ rd::RdGameScreen::RdGameScreen()
 void rd::RdGameScreen::show(SDL_Surface *screen)
 {
     //-- Get a copy of the enemies stored & draw them:
-    std::vector<RdEnemy> enemies_stored  = mentalMap->getEnemies();
-    for (int i = 0; i < (int) enemies_stored.size(); i++)
+    std::vector<RdTarget> targets_stored  = mentalMap->getTargets();
+    for (int i = 0; i < (int) targets_stored.size(); i++)
     {
-        RdPlayer player_data = mentalMap->getPlayer(enemies_stored[i].getPlayerId());
-        drawTargetUI(screen, enemies_stored[i], player_data);
+        RdPlayer player_data = mentalMap->getPlayer(targets_stored[i].getPlayerId());
+        drawTargetUI(screen, targets_stored[i], player_data);
     }
 
     //-- Get a copy of the players stored & draw them:
@@ -91,42 +91,42 @@ bool rd::RdGameScreen::drawPlayerUI(SDL_Surface *screen, RdPlayer player, int x,
     return true;
 }
 
-bool rd::RdGameScreen::drawTargetUI(SDL_Surface *screen, RdEnemy enemy, RdPlayer player_data)
+bool rd::RdGameScreen::drawTargetUI(SDL_Surface *screen, RdTarget target, RdPlayer player_data)
 {
     //-- Put enclosing box:
-    SDL_Rect enemy_rect_top = { enemy.getPos().x, enemy.getPos().y,
-                                enemy.getDimensions().x, ENEMY_THICKNESS };
+    SDL_Rect enemy_rect_top = { target.getPos().x, target.getPos().y,
+                                target.getDimensions().x, ENEMY_THICKNESS };
     SDL_FillRect(screen, &enemy_rect_top, SDL_MapRGB(screen->format, 255, 0, 0));
 
-    SDL_Rect enemy_rect_bottom = { enemy.getPos().x, enemy.getPos().y + enemy.getDimensions().y - ENEMY_THICKNESS,
-                                   enemy.getDimensions().x, ENEMY_THICKNESS};
+    SDL_Rect enemy_rect_bottom = { target.getPos().x, target.getPos().y + target.getDimensions().y - ENEMY_THICKNESS,
+                                   target.getDimensions().x, ENEMY_THICKNESS};
     SDL_FillRect(screen, &enemy_rect_bottom, SDL_MapRGB(screen->format, 255, 0, 0));
 
-    SDL_Rect enemy_rect_left = { enemy.getPos().x, enemy.getPos().y,
-                                 ENEMY_THICKNESS, enemy.getDimensions().y};
+    SDL_Rect enemy_rect_left = { target.getPos().x, target.getPos().y,
+                                 ENEMY_THICKNESS, target.getDimensions().y};
     SDL_FillRect(screen, &enemy_rect_left, SDL_MapRGB(screen->format, 255, 0, 0));
 
-    SDL_Rect enemy_rect_right = { enemy.getPos().x + enemy.getDimensions().x - ENEMY_THICKNESS, enemy.getPos().y,
-                                  ENEMY_THICKNESS, enemy.getDimensions().y};
+    SDL_Rect enemy_rect_right = { target.getPos().x + target.getDimensions().x - ENEMY_THICKNESS, target.getPos().y,
+                                  ENEMY_THICKNESS, target.getDimensions().y};
     SDL_FillRect(screen, &enemy_rect_right, SDL_MapRGB(screen->format, 255, 0, 0));
 
     //-- Put enemy name:
     SDL_Surface * text_surface = TTF_RenderText_Solid(enemy_font, player_data.getName().c_str(), redcolor);
-    SDL_Rect text_rect = { enemy.getPos().x, enemy.getPos().y - 15,
-                           enemy.getDimensions().x, 15};
-    SDL_Rect source_rect = {0, 0, enemy.getDimensions().x, 15};
+    SDL_Rect text_rect = { target.getPos().x, target.getPos().y - 15,
+                           target.getDimensions().x, 15};
+    SDL_Rect source_rect = {0, 0, target.getDimensions().x, 15};
     SDL_BlitSurface(text_surface, &source_rect, screen, &text_rect);
 
     //-- Put enemy health bar:
-    SDL_Rect health_bar = { enemy.getPos().x,
-                            enemy.getPos().y + enemy.getDimensions().y + 5,
-                            enemy.getDimensions().x,
+    SDL_Rect health_bar = { target.getPos().x,
+                            target.getPos().y + target.getDimensions().y + 5,
+                            target.getDimensions().x,
                             5 };
     SDL_FillRect(screen, &health_bar, SDL_MapRGB(screen->format, 127, 0, 0));
 
-    SDL_Rect current_health = { enemy.getPos().x,
-                                enemy.getPos().y + enemy.getDimensions().y + 5,
-                                (int)(enemy.getDimensions().x *player_data.getHealth() / (float) player_data.getMaxHealth()),
+    SDL_Rect current_health = { target.getPos().x,
+                                target.getPos().y + target.getDimensions().y + 5,
+                                (int)(target.getDimensions().x *player_data.getHealth() / (float) player_data.getMaxHealth()),
                                 5 };
     SDL_FillRect(screen, &current_health, SDL_MapRGB(screen->format, 255, 0, 0));
 

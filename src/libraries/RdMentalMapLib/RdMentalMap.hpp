@@ -8,7 +8,7 @@
 #include <iterator>
 
 #include "RdPlayer.hpp"
-#include "RdEnemy.hpp"
+#include "RdTarget.hpp"
 //#include "RdVector2dBase.hpp"
 #include "RdUtils.hpp"
 
@@ -21,20 +21,20 @@ class RdMentalMap
         RdMentalMap(const int& player_id);
         bool configure(const int& player_id );
 
-        std::vector<RdEnemy> getEnemies();
+        std::vector<RdTarget> getTargets();
         std::vector<RdPlayer> getPlayers();
-        RdEnemy getEnemy(const int& id = -1);
+        RdTarget getTarget(const int& id = -1);
         RdPlayer getPlayer(const int& id = -1);
         RdPlayer getMyself();
 
 
         bool updatePlayers(std::vector<RdPlayer> new_player_vector);
-        bool updateEnemies(std::vector<RdEnemy> new_enemy_detections);
+        bool updateTargets(std::vector<RdTarget> new_target_detections);
 
         bool destroy();
 
     private:
-        std::map<int, RdEnemy> enemies;
+        std::map<int, RdTarget> targets;
         std::map<int, RdPlayer> players;
 
         int my_id;

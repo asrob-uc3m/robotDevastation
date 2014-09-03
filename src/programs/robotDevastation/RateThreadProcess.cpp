@@ -75,7 +75,7 @@ void rd::RateThreadProcess::run()
     //cvimagetreat.release();  // not required
     cvReleaseImage(&iplImage);  // needed!!
 
-    std::vector< RdEnemy > enemies;
+    std::vector< RdTarget > targets;
 
     // extract results
     for(zbar::Image::SymbolIterator symbol = image.symbol_begin(); symbol != image.symbol_end(); ++symbol)
@@ -97,14 +97,14 @@ void rd::RateThreadProcess::run()
         RD_INFO("QR id: %d.\n",identifier_int);
 
 
-        RdEnemy enemy( identifier_int,
+        RdTarget target( identifier_int,
                        RdVector2d(r.center.x,r.center.y),
                        RdVector2d(pts[1].x - pts[0].x, pts[2].y - pts[0].y) );
-        enemies.push_back(enemy);
+        targets.push_back(target);
 
     }
 
-    mentalMap->updateEnemies(enemies);
+    mentalMap->updateTargets(targets);
 
 }
 

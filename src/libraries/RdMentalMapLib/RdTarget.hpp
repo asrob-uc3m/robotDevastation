@@ -8,11 +8,11 @@
 
 namespace rd{
 
-class RdEnemy
+class RdTarget
 {
 public:
-    RdEnemy();
-    RdEnemy( int player_id, RdVector2d pos, RdVector2d dimensions);
+    RdTarget();
+    RdTarget( int player_id, RdVector2d pos, RdVector2d dimensions);
 
     int getPlayerId();
     void setPlayerId(int id);

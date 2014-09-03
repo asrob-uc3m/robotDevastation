@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "RdMentalMap.hpp"
-#include "RdEnemy.hpp"
+#include "RdTarget.hpp"
 #include "RdPlayer.hpp"
 
 using namespace rd;
@@ -17,8 +17,8 @@ class RdMentalMapTest : public testing::Test
             player2 = new RdPlayer(1, "Enemy", 100, 100, 1, 0);
             player3 = new RdPlayer(2, "Enemy2", 100, 100, 1, 0);
 
-            enemy1 = new RdEnemy(1, RdVector2d(100, 100), RdVector2d(50, 50));
-            enemy2 = new RdEnemy(2, RdVector2d( 20,  20), RdVector2d( 5,  5));
+            target1 = new RdTarget(1, RdVector2d(100, 100), RdVector2d(50, 50));
+            target2 = new RdTarget(2, RdVector2d( 20,  20), RdVector2d( 5,  5));
         }
 
         virtual void TearDown()
@@ -27,13 +27,13 @@ class RdMentalMapTest : public testing::Test
             delete player2; player2 = NULL;
             delete player3; player3 = NULL;
 
-            delete enemy1; enemy1 = NULL;
-            delete enemy2; enemy2 = NULL;
+            delete target1; target1 = NULL;
+            delete target2; target2 = NULL;
         }
 
         RdPlayer * player1, * player2, * player3;
 
-        RdEnemy * enemy1, * enemy2;
+        RdTarget * target1, * target2;
 
     protected:
         RdMentalMap * mentalMap;
@@ -52,9 +52,9 @@ TEST_F( RdMentalMapTest, CreateCreatesMentalMap)
     std::vector<RdPlayer> players = mentalMap->getPlayers();
     EXPECT_EQ(0, (int) players.size());
 
-    //-- Check the number of enemies
-    std::vector<RdEnemy> enemies = mentalMap->getEnemies();
-    EXPECT_EQ(0, (int) enemies.size());
+    //-- Check the number of targets
+    std::vector<RdTarget> targets = mentalMap->getTargets();
+    EXPECT_EQ(0, (int) targets.size());
 
     //-- Destroy the mentalMap
     EXPECT_TRUE(mentalMap->destroy());
@@ -213,7 +213,7 @@ TEST_F( RdMentalMapTest, MyselfPointsToMe)
 //-- Enemy-related
 //---------------------------------------------------------------------------------------
 
-TEST_F( RdMentalMapTest, UpdateEnemiesUpdateEnemies)
+TEST_F( RdMentalMapTest, UpdateTargetsUpdateTargets)
 {
     //-- Create a mental map for two players:
     const int id = 0;
@@ -229,22 +229,22 @@ TEST_F( RdMentalMapTest, UpdateEnemiesUpdateEnemies)
     ASSERT_TRUE(mentalMap->updatePlayers(players));
 
 
-    //-- Update enemies:
-    std::vector<RdEnemy> enemies;
-    enemies.push_back(*enemy1);
+    //-- Update targets:
+    std::vector<RdTarget> targets;
+    targets.push_back(*target1);
 
-    ASSERT_TRUE(mentalMap->updateEnemies(enemies));
+    ASSERT_TRUE(mentalMap->updateTargets(targets));
 
 
-    //-- Check enemies:
-    std::vector<RdEnemy> enemies_stored = mentalMap->getEnemies();
-    ASSERT_EQ(1, enemies_stored.size());
-    EXPECT_EQ(1, enemies_stored[0].getPlayerId());
-    EXPECT_EQ(100, enemies_stored[0].getPos().x);
-    EXPECT_EQ(100, enemies_stored[0].getPos().y);
-    EXPECT_EQ(50, enemies_stored[0].getDimensions().x);
-    EXPECT_EQ(50, enemies_stored[0].getDimensions().y);
-    EXPECT_EQ(100, enemies_stored[0].getBelief());
+    //-- Check targets:
+    std::vector<RdTarget> targets_stored = mentalMap->getTargets();
+    ASSERT_EQ(1, targets_stored.size());
+    EXPECT_EQ(1, targets_stored[0].getPlayerId());
+    EXPECT_EQ(100, targets_stored[0].getPos().x);
+    EXPECT_EQ(100, targets_stored[0].getPos().y);
+    EXPECT_EQ(50, targets_stored[0].getDimensions().x);
+    EXPECT_EQ(50, targets_stored[0].getDimensions().y);
+    EXPECT_EQ(100, targets_stored[0].getBelief());
 
     //-- Destroy the mentalMap
     EXPECT_TRUE(mentalMap->destroy());
@@ -269,37 +269,36 @@ TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
 
 
     //-- Update enemies:
-    std::vector<RdEnemy> enemies;
-    enemies.push_back(*enemy1);
-    enemies.push_back(*enemy2);
+    std::vector<RdTarget> targets;
+    targets.push_back(*target1);
+    targets.push_back(*target2);
 
-    ASSERT_TRUE(mentalMap->updateEnemies(enemies));
+    ASSERT_TRUE(mentalMap->updateTargets(targets));
 
 
-    //-- Update with a single enemy until belief for the other enemy reaches 0:
+    //-- Update with a single target until belief for the other target reaches 0:
     //-- (Belief decrease is hardcoded, and decreases by 10 each update)
-    std::vector<RdEnemy> new_enemy_vector;
-    new_enemy_vector.push_back(*enemy2);
-    ASSERT_TRUE(mentalMap->updateEnemies(new_enemy_vector));
+    std::vector<RdTarget> new_target_vector;
+    new_target_vector.push_back(*target2);
+    ASSERT_TRUE(mentalMap->updateTargets(new_target_vector));
 
-    //-- Check enemies:
-    RdEnemy enemy_not_updated = mentalMap->getEnemy(1);
-    EXPECT_EQ(1, enemy_not_updated.getPlayerId());
-    EXPECT_EQ(100, enemy_not_updated.getPos().x);
-    EXPECT_EQ(100, enemy_not_updated.getPos().y);
-    EXPECT_EQ(50, enemy_not_updated.getDimensions().x);
-    EXPECT_EQ(50, enemy_not_updated.getDimensions().y);
-    EXPECT_EQ(90, enemy_not_updated.getBelief());
+    //-- Check targets:
+    RdTarget target_not_updated = mentalMap->getTarget(1);
+    EXPECT_EQ(1, target_not_updated.getPlayerId());
+    EXPECT_EQ(100, target_not_updated.getPos().x);
+    EXPECT_EQ(100, target_not_updated.getPos().y);
+    EXPECT_EQ(50, target_not_updated.getDimensions().x);
+    EXPECT_EQ(50, target_not_updated.getDimensions().y);
+    EXPECT_EQ(90, target_not_updated.getBelief());
 
 
     for (int i = 0; i < 9; i++)
-    {
-        ASSERT_TRUE(mentalMap->updateEnemies(new_enemy_vector));
-    }
+        ASSERT_TRUE(mentalMap->updateTargets(new_target_vector));
 
-    EXPECT_EQ(1, mentalMap->getEnemies().size());
-    EXPECT_EQ(2, mentalMap->getEnemies()[0].getPlayerId());
-    EXPECT_EQ(100, mentalMap->getEnemies()[0].getBelief());
+
+    EXPECT_EQ(1, mentalMap->getTargets().size());
+    EXPECT_EQ(2, mentalMap->getTargets()[0].getPlayerId());
+    EXPECT_EQ(100, mentalMap->getTargets()[0].getBelief());
 
     //-- Destroy the mentalMap
     EXPECT_TRUE(mentalMap->destroy());
@@ -313,12 +312,12 @@ TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
 //-- Thread-safe functions
 //---------------------------------------------------------------------------------------
 
-TEST_F( RdMentalMapTest, EnemiesLockedWhenModified)
-{
-    ASSERT_TRUE(false);
-}
+//TEST_F( RdMentalMapTest, TargetsLockedWhenModified)
+//{
+//    ASSERT_TRUE(false);
+//}
 
-TEST_F( RdMentalMapTest, PlayersLockedWhenModified)
-{
-    ASSERT_FALSE(true);
-}
+//TEST_F( RdMentalMapTest, PlayersLockedWhenModified)
+//{
+//    ASSERT_FALSE(true);
+//}

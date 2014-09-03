@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "RdMentalMap.hpp"
-#include "RdEnemy.hpp"
+#include "RdTarget.hpp"
 #include "RdPlayer.hpp"
 #include "RdGameScreen.hpp"
 
@@ -36,10 +36,10 @@ int main(void)
     players.push_back(RdPlayer(2, "Enemy2", 75, 100, 1, 0));
     mentalMap.updatePlayers(players);
 
-    std::vector<RdEnemy> enemies;
-    enemies.push_back(RdEnemy(1, RdVector2d(100, 100), RdVector2d(50, 50)));
-    enemies.push_back(RdEnemy(2, RdVector2d(400, 200), RdVector2d(100, 100)));
-    mentalMap.updateEnemies(enemies);
+    std::vector<RdTarget> targets;
+    targets.push_back(RdTarget(1, RdVector2d(100, 100), RdVector2d(50, 50)));
+    targets.push_back(RdTarget(2, RdVector2d(400, 200), RdVector2d(100, 100)));
+    mentalMap.updateTargets(targets);
 
 
     RdGameScreen gameScreen;
