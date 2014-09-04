@@ -39,11 +39,6 @@ void rd::RateThreadOutput::init(yarp::os::ResourceFinder &rf)
     // Set the title bar
     SDL_WM_SetCaption("Robot Devastation", "Robot Devastation");
 
-    if (mentalMap != NULL)
-       gameScreen.setMentalMap(mentalMap);
-    else
-        RD_ERROR("MentalMap not created yet!");
-
     this->setRate(rateMs);
     this->start();
 

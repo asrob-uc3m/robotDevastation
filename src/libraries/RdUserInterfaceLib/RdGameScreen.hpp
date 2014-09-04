@@ -23,8 +23,6 @@ class RdGameScreen
         RdGameScreen();
         void show( SDL_Surface * screen );
 
-        void setMentalMap( RdMentalMap * mentalMap);
-
     private:
         bool drawPlayerUI( SDL_Surface * screen, RdPlayer player, int x, int y);
         bool drawTargetUI( SDL_Surface * screen, RdTarget target, RdPlayer player_data);

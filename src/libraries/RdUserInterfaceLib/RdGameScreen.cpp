@@ -6,7 +6,7 @@ const SDL_Color rd::RdGameScreen::redcolor =   {255, 0, 0, 0};
 
 rd::RdGameScreen::RdGameScreen()
 {
-    /// \todo Fix this
+    /// \todo Fix this (to return something in case of error)
 
     //-- Setup SDL
     //----------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ rd::RdGameScreen::RdGameScreen()
         return;
     }
 
-    mentalMap = 0;
+    mentalMap = RdMentalMap::getMentalMap();
 }
 
 void rd::RdGameScreen::show(SDL_Surface *screen)
@@ -63,11 +63,6 @@ void rd::RdGameScreen::show(SDL_Surface *screen)
 
     //-- Draw scope:
     drawScope(screen);
-}
-
-void rd::RdGameScreen::setMentalMap(RdMentalMap *mentalMap)
-{
-    this->mentalMap = mentalMap;
 }
 
 bool rd::RdGameScreen::drawPlayerUI(SDL_Surface *screen, RdPlayer player, int x, int y)

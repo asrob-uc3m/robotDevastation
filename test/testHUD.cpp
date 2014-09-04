@@ -51,7 +51,6 @@ int main(void)
 
 
     RdGameScreen gameScreen;
-    gameScreen.setMentalMap(mentalMap); //-- To be removed
 
     //-- Draw interface:
     //---------------------------------------------------------------------------------
@@ -76,6 +75,8 @@ int main(void)
 
     //Free the text_surface surface
     SDL_FreeSurface(screen);
+
+    RdMentalMap::destroyMentalMap();
 }
 
 
