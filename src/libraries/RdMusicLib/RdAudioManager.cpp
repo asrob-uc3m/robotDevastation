@@ -1,22 +1,33 @@
 
 #include "RdAudioManager.hpp"
 
+//-- This is very important:
+rd::RdAudioManager * rd::RdAudioManager::audioManagerInstance = NULL;
 
 rd::RdAudioManager::RdAudioManager()
 {
     if(SDL_Init(SDL_INIT_AUDIO)==-1)
-        RD_ERROR("SDL Audio subsystem could not be initialized!");
+        RD_ERROR("SDL Audio subsystem could not be initialized!\n");
 
     if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096)==-1)
-        RD_ERROR("AudioMixer could not be opened!");
+        RD_ERROR("AudioMixer could not be opened!\n");
+}
+
+rd::RdAudioManager *rd::RdAudioManager::getAudioManager()
+{
+    if (audioManagerInstance == NULL)
+        audioManagerInstance = new RdAudioManager();
+
+    return audioManagerInstance;
+}
+
+bool rd::RdAudioManager::destroyAudioManager()
+{
+    delete audioManagerInstance;
+    audioManagerInstance = NULL;
 }
 
 rd::RdAudioManager::~RdAudioManager()
-{
-    Mix_CloseAudio();
-}
-
-bool rd::RdAudioManager::destroy()
 {
     Mix_CloseAudio();
 }

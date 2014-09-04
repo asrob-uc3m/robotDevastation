@@ -15,10 +15,10 @@ namespace rd{
 class RdAudioManager
 {
     public:
+        static RdAudioManager * getAudioManager();
+        static bool destroyAudioManager();
 
-        RdAudioManager();
         ~RdAudioManager();
-        bool destroy();
 
         static const int MUSIC = 0;
         static const int FX = 1;
@@ -29,6 +29,9 @@ class RdAudioManager
         bool stopMusic();
 
     private:
+        RdAudioManager();
+
+        static RdAudioManager * audioManagerInstance;
         std::map<std::string, Mix_Chunk*> fx_sounds;
         std::map<std::string, Mix_Music*> music_sounds;
 

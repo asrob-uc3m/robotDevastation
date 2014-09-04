@@ -27,7 +27,7 @@ class RobotDevastation : public yarp::os::RFModule
         RateThreadOutput rateThreadOutput;
         RateThreadProcess rateThreadProcess;
         EventInput eventInput;
-        RdAudioManager audioManager;
+        RdAudioManager * audioManager;
         //
         yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > inImg;
         yarp::os::RpcClient rpcClient;

@@ -66,7 +66,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     if( ! initSound() )
         return false;
 
-    audioManager.playMusic("bso", -1);
+    audioManager->playMusic("bso", -1);
 
     rateThreadOutput.setRdRoot(rdRoot);
     rateThreadOutput.setMentalMap(&mentalMap);
@@ -128,13 +128,15 @@ bool rd::RobotDevastation::initSound()
 {
     std::string rdRootStr(rdRoot);
 
-    if ( ! audioManager.load(rdRootStr+"/share/sounds/RobotDevastationBSO.mp3", "bso", 0) )
+    audioManager = RdAudioManager::getAudioManager();
+
+    if ( ! audioManager->load(rdRootStr+"/share/sounds/RobotDevastationBSO.mp3", "bso", 0) )
         return false;
 
-    if ( ! audioManager.load(rdRootStr+"/share/sounds/01_milshot.wav", "shoot", 1) )
+    if ( ! audioManager->load(rdRootStr+"/share/sounds/01_milshot.wav", "shoot", 1) )
         return false;
 
-    if ( ! audioManager.load(rdRootStr+"/share/sounds/15_explosion.wav", "explosion", 1) )
+    if ( ! audioManager->load(rdRootStr+"/share/sounds/15_explosion.wav", "explosion", 1) )
         return false;
 
     return true;
@@ -147,7 +149,11 @@ bool rd::RobotDevastation::interruptModule() {
     msgRdPlayer.addInt(mentalMap.getMyself().getId());
     rpcClient.write(msgRdPlayer,res);
     RD_INFO("Closing program...\n");
-    audioManager.destroy();
+
+    //-- Closing audio system:
+    RdAudioManager::destroyAudioManager();
+    audioManager = NULL;
+
     callbackPort.disableCallback();
     // interrupt ports
     inImg.interrupt();
