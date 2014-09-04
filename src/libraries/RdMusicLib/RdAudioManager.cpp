@@ -23,8 +23,13 @@ rd::RdAudioManager *rd::RdAudioManager::getAudioManager()
 
 bool rd::RdAudioManager::destroyAudioManager()
 {
+    if (audioManagerInstance == NULL)
+        return false;
+
     delete audioManagerInstance;
     audioManagerInstance = NULL;
+
+    return true;
 }
 
 rd::RdAudioManager::~RdAudioManager()
