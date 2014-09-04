@@ -34,8 +34,8 @@ rd::RdGameScreen::RdGameScreen()
         return;
     }
 
-    enemy_font = TTF_OpenFont(font_name, 12);
-    if (enemy_font == NULL)
+    target_font = TTF_OpenFont(font_name, 12);
+    if (target_font == NULL)
     {
         RD_ERROR("Unable to load font: %s %s \n", font_name, TTF_GetError());
         return;
@@ -93,41 +93,55 @@ bool rd::RdGameScreen::drawPlayerUI(SDL_Surface *screen, RdPlayer player, int x,
 
 bool rd::RdGameScreen::drawTargetUI(SDL_Surface *screen, RdTarget target, RdPlayer player_data)
 {
-    //-- Put enclosing box:
-    SDL_Rect enemy_rect_top = { target.getPos().x, target.getPos().y,
-                                target.getDimensions().x, ENEMY_THICKNESS };
-    SDL_FillRect(screen, &enemy_rect_top, SDL_MapRGB(screen->format, 255, 0, 0));
+    //-- Check that the dimensions of the target are feasible
+    if (target.getDimensions().x < 0 || target.getDimensions().y < 0 ||
+            target.getPos().x < 0 || target.getPos().y < 0)
+    {
+        RD_ERROR("Trying to draw an invalid target: %s\n", player_data.getName().c_str());
+        return false;
+    }
 
-    SDL_Rect enemy_rect_bottom = { target.getPos().x, target.getPos().y + target.getDimensions().y - ENEMY_THICKNESS,
-                                   target.getDimensions().x, ENEMY_THICKNESS};
-    SDL_FillRect(screen, &enemy_rect_bottom, SDL_MapRGB(screen->format, 255, 0, 0));
+    //-- Convert target coordinates from center+dimensions to corner+dimensions
+    int target_top_left_x = target.getPos().x - target.getDimensions().x / 2;
+    int target_top_left_y = target.getPos().y - target.getDimensions().y / 2;
+    int target_dimensions_x = target.getDimensions().x;
+    int target_dimensions_y = target.getDimensions().y;
 
-    SDL_Rect enemy_rect_left = { target.getPos().x, target.getPos().y,
-                                 ENEMY_THICKNESS, target.getDimensions().y};
-    SDL_FillRect(screen, &enemy_rect_left, SDL_MapRGB(screen->format, 255, 0, 0));
+    //-- Put enclosing box, which is made of 4 rectangles (one for each side):
+    SDL_Rect target_rect_top = { target_top_left_x, target_top_left_y,
+                                target_dimensions_x, TARGET_THICKNESS };
+    SDL_FillRect(screen, &target_rect_top, SDL_MapRGB(screen->format, 255, 0, 0));
 
-    SDL_Rect enemy_rect_right = { target.getPos().x + target.getDimensions().x - ENEMY_THICKNESS, target.getPos().y,
-                                  ENEMY_THICKNESS, target.getDimensions().y};
-    SDL_FillRect(screen, &enemy_rect_right, SDL_MapRGB(screen->format, 255, 0, 0));
+    SDL_Rect target_rect_bottom = { target_top_left_x, target_top_left_y + target_dimensions_y - TARGET_THICKNESS,
+                                   target_dimensions_x, TARGET_THICKNESS};
+    SDL_FillRect(screen, &target_rect_bottom, SDL_MapRGB(screen->format, 255, 0, 0));
 
-    //-- Put enemy name:
-    SDL_Surface * text_surface = TTF_RenderText_Solid(enemy_font, player_data.getName().c_str(), redcolor);
-    SDL_Rect text_rect = { target.getPos().x, target.getPos().y - 15,
-                           target.getDimensions().x, 15};
-    SDL_Rect source_rect = {0, 0, target.getDimensions().x, 15};
+    SDL_Rect target_rect_left = { target_top_left_x, target_top_left_y,
+                                 TARGET_THICKNESS, target_dimensions_y};
+    SDL_FillRect(screen, &target_rect_left, SDL_MapRGB(screen->format, 255, 0, 0));
+
+    SDL_Rect target_rect_right = { target_top_left_x + target_dimensions_x - TARGET_THICKNESS, target_top_left_y,
+                                  TARGET_THICKNESS, target_dimensions_y};
+    SDL_FillRect(screen, &target_rect_right, SDL_MapRGB(screen->format, 255, 0, 0));
+
+    //-- Put target name:
+    SDL_Surface * text_surface = TTF_RenderText_Solid(target_font, player_data.getName().c_str(), redcolor);
+    SDL_Rect text_rect = { target_top_left_x, target_top_left_y - TARGET_TEXT_BOX_HEIGHT,
+                           target_dimensions_x, TARGET_TEXT_BOX_HEIGHT};
+    SDL_Rect source_rect = {0, 0, target.getDimensions().x, TARGET_TEXT_BOX_HEIGHT};
     SDL_BlitSurface(text_surface, &source_rect, screen, &text_rect);
 
-    //-- Put enemy health bar:
-    SDL_Rect health_bar = { target.getPos().x,
-                            target.getPos().y + target.getDimensions().y + 5,
-                            target.getDimensions().x,
-                            5 };
+    //-- Put target health bar:
+    SDL_Rect health_bar = { target_top_left_x,
+                            target_top_left_y + target_dimensions_y + TARGET_HEALTH_BAR_H,
+                            target_dimensions_x,
+                            TARGET_HEALTH_BAR_H };
     SDL_FillRect(screen, &health_bar, SDL_MapRGB(screen->format, 127, 0, 0));
 
-    SDL_Rect current_health = { target.getPos().x,
-                                target.getPos().y + target.getDimensions().y + 5,
-                                (int)(target.getDimensions().x *player_data.getHealth() / (float) player_data.getMaxHealth()),
-                                5 };
+    SDL_Rect current_health = { target_top_left_x,
+                                target_top_left_y + target_dimensions_y + TARGET_HEALTH_BAR_H,
+                                (int)(target_dimensions_x *player_data.getHealth() / (float) player_data.getMaxHealth()),
+                                TARGET_HEALTH_BAR_H };
     SDL_FillRect(screen, &current_health, SDL_MapRGB(screen->format, 255, 0, 0));
 
     SDL_FreeSurface(text_surface);

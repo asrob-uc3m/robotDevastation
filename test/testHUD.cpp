@@ -16,6 +16,9 @@
 
 #define COLORKEY 255, 0, 255 //Your Transparent colour
 
+#define DEBUG
+#define TEST_DUMMY
+
 using namespace rd;
 
 int main(void)
@@ -39,6 +42,10 @@ int main(void)
     std::vector<RdTarget> targets;
     targets.push_back(RdTarget(1, RdVector2d(100, 100), RdVector2d(50, 50)));
     targets.push_back(RdTarget(2, RdVector2d(400, 200), RdVector2d(100, 100)));
+#ifdef TEST_DUMMY
+    targets.push_back(RdTarget());
+#endif
+
     mentalMap.updateTargets(targets);
 
 
@@ -51,6 +58,15 @@ int main(void)
     SDL_FillRect(screen, NULL, 0x00000000);
 
     gameScreen.show(screen);
+
+#ifdef DEBUG
+    //-- Debug
+    for (int i = 0; i < targets.size(); i++)
+    {
+        SDL_Rect test_point = {targets[i].getPos().x-1, targets[i].getPos().y-1, 2, 2 };
+        SDL_FillRect(screen, &test_point, SDL_MapRGB(screen->format, 127, 127, 0));
+    }
+#endif
 
     //-- Show interface
     SDL_Flip(screen);

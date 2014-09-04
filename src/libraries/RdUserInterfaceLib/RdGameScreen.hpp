@@ -41,8 +41,10 @@ class RdGameScreen
         static const int HEALTH_BAR_H = 10;
         static const int HEALTH_BAR_W = 80;
 
-        //-- Enemy constants
-        static const int ENEMY_THICKNESS = 2;
+        //-- Target constants
+        static const int TARGET_THICKNESS = 2;
+        static const int TARGET_TEXT_BOX_HEIGHT = 15;
+        static const int TARGET_HEALTH_BAR_H = 5;
 
         //-- Scope constants
         static const int SCOPE_VERT_W = 4;
@@ -53,7 +55,7 @@ class RdGameScreen
         static const int SCOPE_HORIZ_H = 4;
         static const int SCOPE_HORIZ_W_SPACE = 20;
 
-        TTF_Font *player_font, *enemy_font;
+        TTF_Font *player_font, *target_font;
         static const SDL_Color greencolor;
         static const SDL_Color redcolor;
 
