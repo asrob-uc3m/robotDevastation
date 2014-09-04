@@ -13,6 +13,8 @@ class RdMentalMapTest : public testing::Test
     public:
         virtual void SetUp()
         {
+            mentalMap = RdMentalMap::getMentalMap();
+
             player1 = new RdPlayer(0, "Myself", 100, 100, 0, 0);
             player2 = new RdPlayer(1, "Enemy", 100, 100, 1, 0);
             player3 = new RdPlayer(2, "Enemy2", 100, 100, 1, 0);
@@ -23,6 +25,8 @@ class RdMentalMapTest : public testing::Test
 
         virtual void TearDown()
         {
+            RdMentalMap::destroyMentalMap();
+
             delete player1; player1 = NULL;
             delete player2; player2 = NULL;
             delete player3; player3 = NULL;
@@ -39,14 +43,23 @@ class RdMentalMapTest : public testing::Test
         RdMentalMap * mentalMap;
 };
 
-
-
-TEST_F( RdMentalMapTest, CreateCreatesMentalMap)
+TEST_F( RdMentalMapTest, MentalMapIsSingleton)
 {
-    //-- Create a mental map for two players:
+    RdMentalMap * map2 = NULL;
+    map2 = RdMentalMap::getMentalMap();
+
+    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
+    ASSERT_NE((RdMentalMap *)NULL, map2);
+    ASSERT_EQ(mentalMap, map2);
+}
+
+TEST_F( RdMentalMapTest, ConfigureMentalMap)
+{
+    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
+
+    //-- Configure a mental map for two players:
     const int id = 0;
-    mentalMap = new RdMentalMap(id);
-    ASSERT_FALSE(!mentalMap);
+    ASSERT_FALSE(!mentalMap->configure(id));
 
     //-- Check the number of players
     std::vector<RdPlayer> players = mentalMap->getPlayers();
@@ -55,12 +68,6 @@ TEST_F( RdMentalMapTest, CreateCreatesMentalMap)
     //-- Check the number of targets
     std::vector<RdTarget> targets = mentalMap->getTargets();
     EXPECT_EQ(0, (int) targets.size());
-
-    //-- Destroy the mentalMap
-    EXPECT_TRUE(mentalMap->destroy());
-    delete mentalMap;
-    mentalMap = NULL;
-
 }
 
 
@@ -71,10 +78,11 @@ TEST_F( RdMentalMapTest, CreateCreatesMentalMap)
 
 TEST_F( RdMentalMapTest, UpdatePlayersUpdatesPlayers)
 {
-    //-- Create a mental map for two players:
+    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
+
+    //-- Configure a mental map for two players:
     const int id = 0;
-    mentalMap = new RdMentalMap(id);
-    ASSERT_FALSE(!mentalMap);
+    ASSERT_FALSE(!mentalMap->configure(id));
 
     //-- Update players:
     std::vector<RdPlayer> players;
@@ -170,18 +178,15 @@ TEST_F( RdMentalMapTest, UpdatePlayersUpdatesPlayers)
         ASSERT_TRUE(false);
     }
 
-    //-- Destroy the mentalMap
-    EXPECT_TRUE(mentalMap->destroy());
-    delete mentalMap;
-    mentalMap = NULL;
 }
 
 TEST_F( RdMentalMapTest, MyselfPointsToMe)
 {
-    //-- Create a mental map for two players:
+    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
+
+    //-- Configure a mental map for two players:
     const int id = 0;
-    mentalMap = new RdMentalMap(id);
-    ASSERT_FALSE(!mentalMap);
+    ASSERT_FALSE(!mentalMap->configure(id));
 
     //-- Update players:
     std::vector<RdPlayer> players;
@@ -200,11 +205,6 @@ TEST_F( RdMentalMapTest, MyselfPointsToMe)
     EXPECT_STREQ("Myself", me.getName().c_str());
     EXPECT_EQ(0, me.getTeamId());
 
-    //-- Destroy the mentalMap
-    EXPECT_TRUE(mentalMap->destroy());
-    delete mentalMap;
-    mentalMap = NULL;
-
 }
 
 
@@ -215,11 +215,11 @@ TEST_F( RdMentalMapTest, MyselfPointsToMe)
 
 TEST_F( RdMentalMapTest, UpdateTargetsUpdateTargets)
 {
-    //-- Create a mental map for two players:
-    const int id = 0;
-    mentalMap = new RdMentalMap(id);
-    ASSERT_FALSE(!mentalMap);
+    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
 
+    //-- Configure a mental map for two players:
+    const int id = 0;
+    ASSERT_FALSE(!mentalMap->configure(id));
 
     //-- Update players:
     std::vector<RdPlayer> players;
@@ -246,19 +246,15 @@ TEST_F( RdMentalMapTest, UpdateTargetsUpdateTargets)
     EXPECT_EQ(50, targets_stored[0].getDimensions().y);
     EXPECT_EQ(100, targets_stored[0].getBelief());
 
-    //-- Destroy the mentalMap
-    EXPECT_TRUE(mentalMap->destroy());
-    delete mentalMap;
-    mentalMap = NULL;
 }
 
 TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
 {
-    //-- Create a mental map for three players:
-    const int id = 0;
-    mentalMap = new RdMentalMap(id);
-    ASSERT_FALSE(!mentalMap);
+    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
 
+    //-- Configure a mental map for two players:
+    const int id = 0;
+    ASSERT_FALSE(!mentalMap->configure(id));
 
     //-- Update players:
     std::vector<RdPlayer> players;
@@ -300,10 +296,6 @@ TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
     EXPECT_EQ(2, mentalMap->getTargets()[0].getPlayerId());
     EXPECT_EQ(100, mentalMap->getTargets()[0].getBelief());
 
-    //-- Destroy the mentalMap
-    EXPECT_TRUE(mentalMap->destroy());
-    delete mentalMap;
-    mentalMap = NULL;
 }
 
 

@@ -31,13 +31,14 @@ int main(void)
     }
 
     //-- Create a mental map with some info:
-    RdMentalMap mentalMap(0);
+    RdMentalMap * mentalMap = RdMentalMap::getMentalMap();
+    mentalMap->configure(0);
 
     std::vector<RdPlayer> players;
     players.push_back(RdPlayer(0, "Myself", 90, 100, 0, 0));
     players.push_back(RdPlayer(1, "Enemy1", 50, 100, 1, 0));
     players.push_back(RdPlayer(2, "Enemy2", 75, 100, 1, 0));
-    mentalMap.updatePlayers(players);
+    mentalMap->updatePlayers(players);
 
     std::vector<RdTarget> targets;
     targets.push_back(RdTarget(1, RdVector2d(100, 100), RdVector2d(50, 50)));
@@ -46,11 +47,11 @@ int main(void)
     targets.push_back(RdTarget());
 #endif
 
-    mentalMap.updateTargets(targets);
+    mentalMap->updateTargets(targets);
 
 
     RdGameScreen gameScreen;
-    gameScreen.setMentalMap(&mentalMap);
+    gameScreen.setMentalMap(mentalMap); //-- To be removed
 
     //-- Draw interface:
     //---------------------------------------------------------------------------------

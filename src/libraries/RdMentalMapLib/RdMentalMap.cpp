@@ -1,7 +1,29 @@
 #include "RdMentalMap.hpp"
 
+//-- This is very important:
+rd::RdMentalMap * rd::RdMentalMap::mentalMapInstance = NULL;
+
 rd::RdMentalMap::RdMentalMap()
 {
+}
+
+rd::RdMentalMap *rd::RdMentalMap::getMentalMap()
+{
+    if (mentalMapInstance == NULL)
+        mentalMapInstance = new RdMentalMap();
+
+    return mentalMapInstance;
+}
+
+bool rd::RdMentalMap::destroyMentalMap()
+{
+    if (mentalMapInstance == NULL)
+        return false;
+
+    delete mentalMapInstance;
+    mentalMapInstance = NULL;
+
+    return true;
 }
 
 bool rd::RdMentalMap::configure(const int &player_id)

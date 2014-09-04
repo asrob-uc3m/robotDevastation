@@ -9,7 +9,6 @@
 
 #include "RdPlayer.hpp"
 #include "RdTarget.hpp"
-//#include "RdVector2dBase.hpp"
 #include "RdUtils.hpp"
 
 namespace rd{
@@ -17,8 +16,9 @@ namespace rd{
 class RdMentalMap
 {
     public:
-        RdMentalMap();
-        RdMentalMap(const int& player_id);
+        static RdMentalMap * getMentalMap();
+        static bool destroyMentalMap();
+
         bool configure(const int& player_id );
 
         std::vector<RdTarget> getTargets();
@@ -34,6 +34,11 @@ class RdMentalMap
         bool destroy();
 
     private:
+        static RdMentalMap * mentalMapInstance;
+
+        RdMentalMap();
+        RdMentalMap(const int& player_id);
+
         std::map<int, RdTarget> targets;
         std::map<int, RdPlayer> players;
 

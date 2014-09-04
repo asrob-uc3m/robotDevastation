@@ -39,7 +39,7 @@ class RobotDevastation : public yarp::os::RFModule
 
         bool initSound();
 
-        RdMentalMap mentalMap;
+        RdMentalMap * mentalMap;
 
         char* rdRoot;
 

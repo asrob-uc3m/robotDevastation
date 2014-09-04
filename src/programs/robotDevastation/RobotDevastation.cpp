@@ -57,11 +57,12 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         return false;
     }
 
-    mentalMap.configure( rf.find("id").asInt() );
+    mentalMap = RdMentalMap::getMentalMap();
+    mentalMap->configure( rf.find("id").asInt() );
 
     std::vector< RdPlayer > players;
     players.push_back( RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0) );
-    mentalMap.updatePlayers(players);
+    mentalMap->updatePlayers(players);
 
     if( ! initSound() )
         return false;
@@ -69,21 +70,17 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     audioManager->playMusic("bso", -1);
 
     rateThreadOutput.setRdRoot(rdRoot);
-    rateThreadOutput.setMentalMap(&mentalMap);
+    rateThreadOutput.setMentalMap(mentalMap); //-- To be deleted
     rateThreadOutput.setInImg(&inImg);
     rateThreadOutput.init(rf);
 
-    rateThreadProcess.setMentalMap(&mentalMap);
-    rateThreadProcess.setInImg(&inImg);
-    rateThreadProcess.init(rf);
-
     eventInput.start();   
     
-    callbackPort.setMentalMap(&mentalMap);
+    callbackPort.setMentalMap(mentalMap);
 
     //-----------------OPEN LOCAL PORTS------------//
     std::ostringstream s;
-    s << mentalMap.getMyself().getId();
+    s << mentalMap->getMyself().getId();
     inImg.open(("/img/"+s.str()).c_str());
     rpcClient.open(("/rpc/"+s.str()).c_str());
     callbackPort.open(("/callback/"+s.str()).c_str());
@@ -99,9 +96,9 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_LOGIN);
-    msgRdPlayer.addInt(mentalMap.getMyself().getId());
-    msgRdPlayer.addString(mentalMap.getMyself().getName().c_str());
-    msgRdPlayer.addInt(mentalMap.getMyself().getTeamId());
+    msgRdPlayer.addInt(mentalMap->getMyself().getId());
+    msgRdPlayer.addString(mentalMap->getMyself().getName().c_str());
+    msgRdPlayer.addInt(mentalMap->getMyself().getTeamId());
     rpcClient.write(msgRdPlayer,res);
     RD_INFO("rdServer response from login: %s\n",res.toString().c_str());
     return true;
@@ -115,10 +112,10 @@ double rd::RobotDevastation::getPeriod()
 bool rd::RobotDevastation::updateModule()
 {
     printf("===robotDevastation===\n");
-    printf("Number of players: %zd\n",mentalMap.getPlayers().size());
-    for(size_t i=0;i<mentalMap.getPlayers().size();i++)
+    printf("Number of players: %zd\n",mentalMap->getPlayers().size());
+    for(size_t i=0;i<mentalMap->getPlayers().size();i++)
     {
-       printf("----------------------\n%s\n",mentalMap.getPlayers().at(i).str().c_str());
+       printf("----------------------\n%s\n",mentalMap->getPlayers().at(i).str().c_str());
     }
     //printf("======================\n");
     return true;
@@ -146,13 +143,17 @@ bool rd::RobotDevastation::interruptModule() {
     RD_INFO("Logout...\n");
     yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_LOGOUT);
-    msgRdPlayer.addInt(mentalMap.getMyself().getId());
+    msgRdPlayer.addInt(mentalMap->getMyself().getId());
     rpcClient.write(msgRdPlayer,res);
     RD_INFO("Closing program...\n");
 
     //-- Closing audio system:
     RdAudioManager::destroyAudioManager();
     audioManager = NULL;
+
+    //-- Closing mental map:
+    RdMentalMap::destroyMentalMap();
+    mentalMap = NULL;
 
     callbackPort.disableCallback();
     // interrupt ports
