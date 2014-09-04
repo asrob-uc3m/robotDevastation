@@ -70,13 +70,10 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     audioManager->playMusic("bso", -1);
 
     rateThreadOutput.setRdRoot(rdRoot);
-    rateThreadOutput.setMentalMap(mentalMap); //-- To be deleted
     rateThreadOutput.setInImg(&inImg);
     rateThreadOutput.init(rf);
 
     eventInput.start();   
-    
-    callbackPort.setMentalMap(mentalMap);
 
     //-----------------OPEN LOCAL PORTS------------//
     std::ostringstream s;

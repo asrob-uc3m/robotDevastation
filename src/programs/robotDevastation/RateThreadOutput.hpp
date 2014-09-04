@@ -17,7 +17,6 @@
 #include <SDL/SDL_image.h>
 
 #include "RdMacros.hpp"
-#include "RdMentalMap.hpp"
 #include "RdGameScreen.hpp"
 
 #define DEFAULT_RATE_MS 20
@@ -43,7 +42,6 @@ class RateThreadOutput : public yarp::os::RateThread {
         int cameraHeight;
         bool cameraInitialized;
 
-        RdMentalMap* mentalMap;
         RdGameScreen gameScreen;
 
     public:
@@ -55,8 +53,6 @@ class RateThreadOutput : public yarp::os::RateThread {
         //void setOutPort(Port *_pOutPort);
         void init(yarp::os::ResourceFinder &rf);
         void run();  // The periodical function
-
-        void setMentalMap(RdMentalMap *value);
 };
 
 }  // namespace rd

@@ -112,10 +112,3 @@ void rd::RateThreadProcess::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<y
 {
     this->pInImg = pInImg;
 }
-
-void rd::RateThreadProcess::setMentalMap(RdMentalMap *value)
-{
-    mentalMap = value;
-}
-
-

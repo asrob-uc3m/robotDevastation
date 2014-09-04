@@ -2,6 +2,11 @@
 
 #include "CallbackPort.hpp"
 
+rd::CallbackPort::CallbackPort()
+{
+    mentalMap = RdMentalMap::getMentalMap();
+}
+
 void rd::CallbackPort::onRead(yarp::os::Bottle& b)
 {
     //RD_INFO("Got %s\n", b.toString().c_str());
@@ -28,10 +33,5 @@ void rd::CallbackPort::onRead(yarp::os::Bottle& b)
     }
 
 
-}
-
-void rd::CallbackPort::setMentalMap(RdMentalMap *value)
-{
-    mentalMap = value;
 }
 

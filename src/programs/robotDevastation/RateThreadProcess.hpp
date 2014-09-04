@@ -44,16 +44,12 @@ class RateThreadProcess : public yarp::os::RateThread {
         RdMentalMap* mentalMap;
 
     public:
-        RateThreadProcess() : RateThread(DEFAULT_RATE_MS) {}
+        RateThreadProcess() : RateThread(DEFAULT_RATE_MS) { mentalMap = RdMentalMap::getMentalMap(); }
 
         void setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pInImg);
 
         void init(yarp::os::ResourceFinder &rf);
         void run();  // The periodical function
-
-        void setMentalMap(RdMentalMap *value);
-
-
 };
 
 }  // namespace rd

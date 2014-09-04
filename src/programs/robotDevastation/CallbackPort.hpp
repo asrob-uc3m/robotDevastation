@@ -22,20 +22,16 @@ namespace rd
  *
  * CallbackPort class implements a port with callbacks.
  */
-class CallbackPort : public yarp::os::BufferedPort<yarp::os::Bottle> {
+class CallbackPort : public yarp::os::BufferedPort<yarp::os::Bottle>
+{
+    public:
+        CallbackPort();
+
     protected:
-        /**
-        * Implement the actual callback.
-        */
+        /// Implement the actual callback.
         void onRead(yarp::os::Bottle& b);
 
         RdMentalMap* mentalMap;
-
-
-    public:
-
-        void setMentalMap(RdMentalMap *value);
-
 };
 
 }

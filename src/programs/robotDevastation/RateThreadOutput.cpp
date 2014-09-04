@@ -100,8 +100,3 @@ void rd::RateThreadOutput::setRdRoot(char *value)
 {
     rdRoot = value;
 }
-
-void rd::RateThreadOutput::setMentalMap(RdMentalMap *value)
-{
-    mentalMap = value;
-}
