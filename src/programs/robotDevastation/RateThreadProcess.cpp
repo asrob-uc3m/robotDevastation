@@ -99,7 +99,7 @@ void rd::RateThreadProcess::run()
 
         RdTarget target( identifier_int,
                        RdVector2d(r.center.x,r.center.y),
-                       RdVector2d(pts[1].x - pts[0].x, pts[2].y - pts[0].y) );
+                       RdVector2d(r.size.width, r.size.height) );
         targets.push_back(target);
 
     }
