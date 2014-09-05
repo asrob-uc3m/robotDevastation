@@ -20,8 +20,8 @@ class RdAudioManager
 
         ~RdAudioManager();
 
-        static const int MUSIC = 0;
-        static const int FX = 1;
+        static const int MUSIC;
+        static const int FX;
 
         bool load( const std::string& music_filepath, const std::string& id, const int& type);
         bool playMusic(const std::string& id, int loop);
