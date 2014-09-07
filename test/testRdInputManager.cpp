@@ -32,19 +32,37 @@ class RdTestEventListener : public RdInputEventListener
 
         virtual bool onKeyPressed(RdKey k)
         {
-            RD_SUCCESS( "Key \"%c\" was pressed!\n", k.getChar() );
+            if ( k.isControlKey() )
+            {
+                RD_SUCCESS( "Control key with code %d pressed!\n", k.getValue() );
 
-            if ( k.getChar() == '0')
-            {
-                audioManager->playSound("shoot", false);
-                RD_SUCCESS("Shoot!\n");
+                if ( k.getValue() == RdKey::KEY_SPACE)
+                {
+                    audioManager->playSound("shoot", false);
+                    RD_SUCCESS("Shoot!\n");
+                }
+                else if ( k.getValue() == RdKey::KEY_ESCAPE)
+                {
+                    finished = true;
+                    RD_SUCCESS("Exit!\n");
+                }
             }
-            else if ( k.getChar() == 'q')
+            else if (k.isPrintable() )
             {
-                finished = true;
-                RD_SUCCESS("Exit!\n");
+                RD_SUCCESS( "Key \"%c\" was pressed!\n", k.getChar() );
+
+                if ( k.getChar() == '0')
+                {
+                    audioManager->playSound("shoot", false);
+                    RD_SUCCESS("Shoot!\n");
+                }
+                else if ( k.getChar() == 'q')
+                {
+                    finished = true;
+                    RD_SUCCESS("Exit!\n");
+                }
             }
-         }
+        }
 
     private:
         RdAudioManager * audioManager;
