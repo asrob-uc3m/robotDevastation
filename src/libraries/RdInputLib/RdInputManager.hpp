@@ -5,7 +5,7 @@
 
 #include "RdUtils.hpp"
 #include "RdInputEventListener.hpp"
-#include "RdMouseManager.hpp"
+#include "RdKeyboardManager.hpp"
 
 #include <vector>
 #include "SDL/SDL.h"
@@ -28,7 +28,7 @@ class RdInputManager
         RdInputManager();
 
         static RdInputManager * inputManagerInstance;
-        RdMouseManager * mouseManager;
+        RdKeyboardManager * keyboardManager;
         std::vector<RdInputEventListener *> listeners;
 
 };

@@ -26,17 +26,17 @@ bool rd::RdInputManager::destroyInputManager()
 rd::RdInputManager::~RdInputManager()
 {
     //-- Destroy submodules:
-    delete mouseManager;
-    mouseManager = NULL;
+    delete keyboardManager;
+    keyboardManager = NULL;
 }
 
 bool rd::RdInputManager::start()
 {
     //-- Set listeners to submodules:
-    mouseManager->setInputEventListeners(&listeners);
+    keyboardManager->setInputEventListeners(&listeners);
 
     //-- Start submodules:
-    mouseManager->start();
+    keyboardManager->start();
 }
 
 bool rd::RdInputManager::addInputEventListener(rd::RdInputEventListener *listener)
@@ -47,5 +47,5 @@ bool rd::RdInputManager::addInputEventListener(rd::RdInputEventListener *listene
 rd::RdInputManager::RdInputManager()
 {
     //-- Create submodules:
-    mouseManager = new RdMouseManager();
+    keyboardManager = new RdKeyboardManager();
 }
