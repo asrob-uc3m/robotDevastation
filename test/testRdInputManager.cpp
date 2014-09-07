@@ -1,3 +1,14 @@
+/***
+ * testRdInputManager
+ *
+ * Test class for testing the input manager and listener classes
+ *
+ * Commands:
+ * ARROWS -  control the scope bars
+ * SPACE or 0 - shoot
+ * ESCAPE or q - exit
+ *
+ ***/
 #include <RdInputManager.hpp>
 #include <RdInputEventListener.hpp>
 #include <RdAudioManager.hpp>
@@ -8,6 +19,8 @@
 using namespace rd;
 
 bool finished = false;
+int x_pos = 0;
+int y_pos = 0;
 
 class RdTestEventListener : public RdInputEventListener
 {
@@ -46,6 +59,39 @@ class RdTestEventListener : public RdInputEventListener
                     finished = true;
                     RD_SUCCESS("Exit!\n");
                 }
+                else if ( k.getValue() == RdKey::KEY_ARROW_LEFT)
+                {
+                    x_pos -= 20;
+                    if (x_pos < 0 )
+                        x_pos = 0;
+
+                    RD_SUCCESS("Reduce x!\n");
+                }
+                else if ( k.getValue() == RdKey::KEY_ARROW_RIGHT)
+                {
+                    x_pos += 20;
+                    if (x_pos > 640 )
+                        x_pos = 640;
+
+                    RD_SUCCESS("Increase x!\n");
+                }
+                else if ( k.getValue() == RdKey::KEY_ARROW_UP)
+                {
+                    y_pos -= 20;
+                    if (y_pos < 0 )
+                        y_pos = 0;
+
+                    RD_SUCCESS("Reduce y!\n");
+                }
+                else if ( k.getValue() == RdKey::KEY_ARROW_DOWN)
+                {
+                    y_pos += 20;
+                    if (y_pos > 640 )
+                        y_pos = 640;
+
+                    RD_SUCCESS("Increase y!\n");
+                }
+
             }
             else if (k.isPrintable() )
             {
@@ -84,11 +130,6 @@ int main(void)
         return false;
     }
 
-    //-- Draw dummy screen to enable input events
-    SDL_Flip(screen); //Refresh the screen
-    SDL_Delay(20); //Wait a bit :)
-
-
     //-- Get a inputManager
     RdInputManager * inputManager = RdInputManager::getInputManager();
     if (inputManager == NULL)
@@ -104,7 +145,21 @@ int main(void)
 
     //-- Wait for termination
     while(!finished)
-    { }
+    {
+        //-- Clear screen:
+        SDL_FillRect(screen, NULL, 0x000000);
+
+        //-- Draw a bar that can be controlled with the keyboard
+        SDL_Rect ybar = {0, y_pos, 640, 2};
+        SDL_FillRect(screen, &ybar, SDL_MapRGB(screen->format, 255, 0, 0));
+
+        SDL_Rect xbar = {x_pos, 0, 2, 480};
+        SDL_FillRect(screen, &xbar, SDL_MapRGB(screen->format, 255, 0, 0));
+
+        //-- Draw dummy screen to enable input events
+        SDL_Flip(screen); //Refresh the screen
+        SDL_Delay(20); //Wait a bit :)
+    }
 
     RdInputManager::destroyInputManager();
     SDL_Quit();
