@@ -4,7 +4,7 @@
 
 bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 {
-
+    //-- Show help
     //printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
         printf("RobotDevastation options:\n");
@@ -16,6 +16,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     }
     printf("RobotDevastation using no additional special options.\n");
 
+    //-- Get player data
+    //-----------------------------------------------------------------------------
     rdRoot = ::getenv ("RD_ROOT");
     if (rdRoot!=NULL)
     {
@@ -57,6 +59,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         return false;
     }
 
+    //-- Init mentalMap
     mentalMap = RdMentalMap::getMentalMap();
     mentalMap->configure( rf.find("id").asInt() );
 
@@ -64,18 +67,29 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     players.push_back( RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0) );
     mentalMap->updatePlayers(players);
 
+    //-- Init input manager
+    inputManager = RdInputManager::getInputManager();
+    inputManager->addInputEventListener(this);
+    if (!inputManager->start() )
+    {
+        RD_ERROR("Could not init inputManager!\n");
+        return false;
+    }
+
+    //-- Init sound
     if( ! initSound() )
         return false;
 
     audioManager->playMusic("bso", -1);
 
+    //-- Init output thread
     rateThreadOutput.setRdRoot(rdRoot);
     rateThreadOutput.setInImg(&inImg);
     rateThreadOutput.init(rf);
 
+    //-- Init process thread
     rateThreadProcess.setInImg(&inImg);
     rateThreadProcess.init(rf);
-    eventInput.start();   
 
     //-----------------OPEN LOCAL PORTS------------//
     std::ostringstream s;
@@ -101,6 +115,35 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     rpcClient.write(msgRdPlayer,res);
     RD_INFO("rdServer response from login: %s\n",res.toString().c_str());
     return true;
+}
+
+bool rd::RobotDevastation::onKeyPressed(rd::RdKey k)
+{
+    if ( k.isControlKey() )
+    {
+        RD_SUCCESS( "Control key with code %d pressed!\n", k.getValue() );
+
+        if ( k.getValue() == RdKey::KEY_SPACE)
+        {
+            audioManager->playSound("shoot", false);
+            RD_SUCCESS("Shoot!\n");
+        }
+        else if ( k.getValue() == RdKey::KEY_ESCAPE)
+        {
+            RD_SUCCESS("Exit!\n");
+            this->interruptModule();
+        }
+    }
+    else if (k.isPrintable() )
+    {
+        RD_SUCCESS( "Key \"%c\" was pressed!\n", k.getChar() );
+
+        if ( k.getChar() == 'q')
+        {
+            RD_SUCCESS("Exit!\n");
+            this->interruptModule();
+        }
+    }
 }
 
 double rd::RobotDevastation::getPeriod()

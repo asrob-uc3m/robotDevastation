@@ -14,19 +14,23 @@
 #include "CallbackPort.hpp"
 #include "RdAudioManager.hpp"
 #include "RdMentalMap.hpp"
+#include "RdInputManager.hpp"
+#include "RdInputEventListener.hpp"
 
 namespace rd
 {
 
-class RobotDevastation : public yarp::os::RFModule
+class RobotDevastation : public yarp::os::RFModule, public RdInputEventListener
 {
     public:
         bool configure(yarp::os::ResourceFinder &rf);
 
+        virtual bool onKeyPressed(RdKey k);
+
     private:
         RateThreadOutput rateThreadOutput;
         RateThreadProcess rateThreadProcess;
-        EventInput eventInput;
+        RdInputManager *  inputManager;
         RdAudioManager * audioManager;
         //
         yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > inImg;
