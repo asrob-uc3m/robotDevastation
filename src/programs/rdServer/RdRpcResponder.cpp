@@ -13,14 +13,26 @@ bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
 
     if ((in.get(0).asString() == "help")||(in.get(0).asVocab() == VOCAB_RD_HELP))  //-- help
     {
-        out.addString("Available commands: help, login I:id S:name I:team_id, logout I:id.");
+        out.addString("Available commands: help, hit I:id I:damage, login I:id S:name I:team_id, logout I:id.");
+    }
+    else if((in.get(0).asString() == "hit")||(in.get(0).asVocab() == VOCAB_RD_HIT))  //-- hit
+    {
+        int hitId = in.get(1).asInt();
+        int damage = in.get(2).asInt();
+
+        int currHealth = players->at( hitId ).getHealth();
+        players->at( hitId ).setHealth( currHealth - damage );
+
+        out.addVocab(VOCAB_RD_OK);
     }
     else if((in.get(0).asString() == "login")||(in.get(0).asVocab() == VOCAB_RD_LOGIN))  //-- login
     {
-        //-- RdPlayer( int id, std::string name, int health, int max_health, int team_id, int score);
-        RdPlayer rdPlayer(in.get(1).asInt(),in.get(2).asString(),100,100,in.get(3).asInt(),0);
+        int id = in.get(1).asInt();
 
-        players->push_back(rdPlayer);
+        //-- RdPlayer( int id, std::string name, int health, int max_health, int team_id, int score);
+        RdPlayer rdPlayer( id, in.get(2).asString(),100,100,in.get(3).asInt(),0);
+
+        players->operator[](id) = rdPlayer;
 
         out.addVocab(VOCAB_RD_OK);
     }
@@ -28,24 +40,13 @@ bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
     {
         int logoutId = in.get(1).asInt();
 
-        int iter = 0;
-        bool identifierIsPlayer = false;
-        while( (iter<players->size()) && (!identifierIsPlayer))
-        {
-            if(logoutId==players->at(iter).getId())
-            {
-                identifierIsPlayer = true;
-                players->erase( players->begin()+iter );
-                RD_SUCCESS("Logout ok, id: %d.\n",logoutId);
-                out.addVocab(VOCAB_RD_OK);
-            }
-            iter++;
-        }
-
-        if ( ! identifierIsPlayer )
+        if ( players->find(logoutId) == players->end() )
         {
             RD_ERROR("Not logged to logout, id: %d.\n",logoutId);
             out.addVocab(VOCAB_RD_FAIL);
+        } else {
+            players->erase(logoutId);
+            out.addVocab(VOCAB_RD_OK);
         }
     }
     else
@@ -57,7 +58,7 @@ bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
 
 }
 
-void rd::RdRpcResponder::setPlayers(std::vector<RdPlayer> *value)
+void rd::RdRpcResponder::setPlayers(std::map<int,RdPlayer> *value)
 {
     players = value;
 }

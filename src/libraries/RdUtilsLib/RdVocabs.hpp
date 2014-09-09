@@ -7,6 +7,7 @@
 
 #define VOCAB_RD_FAIL VOCAB('f','a','i','l')
 #define VOCAB_RD_HELP VOCAB('h','e','l','p')
+#define VOCAB_RD_HIT VOCAB3('h','i','t')
 #define VOCAB_RD_LOGIN VOCAB3('l','o','g')
 #define VOCAB_RD_LOGOUT VOCAB('l','o','g','o')
 #define VOCAB_RD_OK VOCAB2('o','k')

@@ -22,16 +22,18 @@ bool rd::RdServer::updateModule()
     msgBroadcast.addVocab(VOCAB_RD_PLAYERS);
     printf("=======rdServer=======\n");
     printf("Number of players: %zd\n",players.size());
-    for(size_t i=0;i<players.size();i++)
+
+    typedef std::map<int, RdPlayer>::iterator it_type;
+    for(it_type iterator = players.begin(); iterator != players.end(); iterator++)
     {
-       printf("----------------------\n%s\n",players[i].str().c_str());
+       printf("----------------------\n%s\n", (iterator->second).str().c_str());
        yarp::os::Bottle msgPlayer;
-       msgPlayer.addInt(players[i].getId());
-       msgPlayer.addString(players[i].getName());
-       msgPlayer.addInt(players[i].getHealth());
-       msgPlayer.addInt(players[i].getMaxHealth());
-       msgPlayer.addInt(players[i].getTeamId());
-       msgPlayer.addInt(players[i].getScore());
+       msgPlayer.addInt( (iterator->second).getId() );
+       msgPlayer.addString( (iterator->second).getName() );
+       msgPlayer.addInt( (iterator->second).getHealth() );
+       msgPlayer.addInt( (iterator->second).getMaxHealth() );
+       msgPlayer.addInt( (iterator->second).getTeamId() );
+       msgPlayer.addInt( (iterator->second).getScore() );
        msgBroadcast.addList() = msgPlayer;
     }
 
