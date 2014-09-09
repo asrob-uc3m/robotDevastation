@@ -67,6 +67,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     players.push_back( RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0) );
     mentalMap->updatePlayers(players);
 
+    mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
+
     //-- Init input manager
     inputManager = RdInputManager::getInputManager();
     inputManager->addInputEventListener(this);
@@ -126,6 +128,7 @@ bool rd::RobotDevastation::onKeyPressed(rd::RdKey k)
         if ( k.getValue() == RdKey::KEY_SPACE)
         {
             //-- Do things to shoot
+            mentalMap->shoot();
             RD_SUCCESS("Shoot!\n");
         }
         else if ( k.getValue() == RdKey::KEY_ESCAPE)
@@ -138,7 +141,12 @@ bool rd::RobotDevastation::onKeyPressed(rd::RdKey k)
     {
         RD_SUCCESS( "Key \"%c\" was pressed!\n", k.getChar() );
 
-        if ( k.getChar() == 'q')
+        if ( k.getChar() == 'r')
+        {
+            RD_SUCCESS("Reload!\n");
+            mentalMap->reload();
+        }
+        else if ( k.getChar() == 'q')
         {
             RD_SUCCESS("Exit!\n");
             this->interruptModule();
@@ -176,6 +184,12 @@ bool rd::RobotDevastation::initSound()
         return false;
 
     if ( ! audioManager->load(rdRootStr+"/share/sounds/15_explosion.wav", "explosion", 1) )
+        return false;
+
+    if ( ! audioManager->load(rdRootStr+"/share/sounds/03_clip.wav", "noAmmo", 1) )
+        return false;
+
+    if ( ! audioManager->load(rdRootStr+"/share/sounds/04_milaction.wav", "reload", 1) )
         return false;
 
     return true;

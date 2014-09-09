@@ -11,8 +11,6 @@ rd::RdWeapon::RdWeapon()
     damage = -1;
     max_ammo = -1;
     current_ammo = -1;
-
-    audioManager = RdAudioManager::getAudioManager();
 }
 
 rd::RdWeapon::RdWeapon(std::string name, int damage, int max_ammo)
@@ -21,43 +19,31 @@ rd::RdWeapon::RdWeapon(std::string name, int damage, int max_ammo)
     this->damage = damage;
     this->max_ammo = max_ammo;
     this->current_ammo = max_ammo;
-
-    audioManager = RdAudioManager::getAudioManager();
 }
 
-bool rd::RdWeapon::shoot(rd::RdTarget &target, RdPlayer& player)
+bool rd::RdWeapon::shoot(rd::RdTarget &target)
 {
-    if (current_ammo > 0)
+    //-- Calculate target limits:
+    int target_top_left_x = target.getPos().x - target.getDimensions().x / 2;
+    int target_top_left_y = target.getPos().y - target.getDimensions().y / 2;
+
+    int target_bottom_right_x = target.getPos().x + target.getDimensions().x / 2;
+    int target_bottom_right_y = target.getPos().y + target.getDimensions().y / 2;
+
+    //-- Check if the scope is within target limits:
+    if ( target_top_left_x <= SCOPE_X && target_top_left_y <= SCOPE_Y
+         && target_bottom_right_x >= SCOPE_X && target_bottom_right_y >= SCOPE_Y)
     {
-        //-- Play sound
-        audioManager->playSound("shoot", false);
-
-        if ( checkCollision(target) )
-        {
-            //-- Decrease player's life:
-            RD_SUCCESS("Target %s was hit!\n", player.getName().c_str());
-            player.setHealth(player.getHealth()-damage);
-
-            //-- Decrease ammo
-            current_ammo--;
-
-        }
-        else
-        {
-            RD_INFO("Missed!\n");
-        }
+        return true;
     }
     else
-    {
-            //-- Play sound
-            audioManager->playSound("noAmmo", false);
-            RD_WARNING("No ammo! Reload!\n");
-    }
+        return false;
 }
 
 bool rd::RdWeapon::reload()
 {
     current_ammo = max_ammo;
+    return true;
 }
 
 std::string rd::RdWeapon::getName()
@@ -75,26 +61,13 @@ int rd::RdWeapon::getCurrentAmmo()
     return current_ammo;
 }
 
+bool rd::RdWeapon::setCurrentAmmo(int current_ammo)
+{
+    this->current_ammo = current_ammo;
+    return true;
+}
+
 int rd::RdWeapon::getMaxAmmo()
 {
     return max_ammo;
-}
-
-bool rd::RdWeapon::checkCollision(rd::RdTarget &target)
-{
-    //-- Calculate target limits:
-    int target_top_left_x = target.getPos().x - target.getDimensions().x / 2;
-    int target_top_left_y = target.getPos().y - target.getDimensions().y / 2;
-
-    int target_bottom_right_x = target.getPos().x + target.getDimensions().x / 2;
-    int target_bottom_right_y = target.getPos().y + target.getDimensions().y / 2;
-
-    //-- Check if the scope is within target limits:
-    if ( target_top_left_x <= SCOPE_X && target_top_left_y <= SCOPE_Y
-         && target_bottom_right_x >= SCOPE_X && target_bottom_right_y >= SCOPE_Y)
-    {
-        return true;
-    }
-    else
-        return false;
 }

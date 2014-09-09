@@ -5,6 +5,8 @@ rd::RdMentalMap * rd::RdMentalMap::mentalMapInstance = NULL;
 
 rd::RdMentalMap::RdMentalMap()
 {
+    current_weapon = 0;
+    audioManager = RdAudioManager::getAudioManager();
 }
 
 rd::RdMentalMap *rd::RdMentalMap::getMentalMap()
@@ -103,6 +105,58 @@ rd::RdPlayer rd::RdMentalMap::getMyself()
     {
         return *myself;
     }
+}
+
+bool rd::RdMentalMap::addWeapon(RdWeapon weapon)
+{
+    weapons.push_back(weapon);
+}
+
+bool rd::RdMentalMap::shoot()
+{
+    bool hit = false;
+    int current_ammo = weapons[current_weapon].getCurrentAmmo();
+    if ( current_ammo > 0)
+    {
+        //-- Play sound
+        audioManager->playSound("shoot", false);
+
+        //-- Decrease ammo
+        current_ammo--;
+        weapons[current_weapon].setCurrentAmmo(current_ammo);
+
+        //-- Check for collision with any target:
+        for( std::map<int, RdTarget>::iterator it = targets.begin(); it != targets.end(); ++it)
+        {
+            if ( weapons[current_weapon].shoot(it->second) )
+            {
+                //-- Decrease player's life:
+                RdPlayer * player = &players[it->second.getPlayerId()];
+                RD_SUCCESS("Target %s was hit!\n", player->getName().c_str());
+                player->setHealth(player->getHealth()-weapons[current_weapon].getDamage());
+
+                hit = true;
+            }
+            else
+            {
+                RD_INFO("Missed!\n");
+            }
+        }
+    }
+    else
+    {
+            //-- Play sound
+            audioManager->playSound("noAmmo", false);
+            RD_WARNING("No ammo! Reload!\n");
+    }
+
+    return hit;
+}
+
+bool rd::RdMentalMap::reload()
+{
+    audioManager->playSound("reload", false);
+    return weapons[current_weapon].reload();
 }
 
 bool rd::RdMentalMap::updatePlayers(std::vector<rd::RdPlayer> new_player_vector)

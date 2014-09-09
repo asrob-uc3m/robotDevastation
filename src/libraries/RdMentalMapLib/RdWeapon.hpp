@@ -17,26 +17,25 @@ public:
     RdWeapon();
     RdWeapon(std::string name, int damage, int max_ammo);
 
-    bool shoot(RdTarget& target, RdPlayer& player);
+    bool shoot(RdTarget& target);
     bool reload();
 
     std::string getName();
     int getDamage();
     int getCurrentAmmo();
+    bool setCurrentAmmo(int current_ammo);
     int getMaxAmmo();
 
     static const int SCOPE_X;
     static const int SCOPE_Y;
 
 private:
-    bool checkCollision(RdTarget &target);
+
 
     std::string name;
     int damage;
     int current_ammo;
     int max_ammo;
-
-    RdAudioManager * audioManager;
 };
 
 }

@@ -9,6 +9,7 @@
 
 #include "RdPlayer.hpp"
 #include "RdTarget.hpp"
+#include "RdWeapon.hpp"
 #include "RdUtils.hpp"
 
 namespace rd{
@@ -27,6 +28,9 @@ class RdMentalMap
         RdPlayer getPlayer(const int& id = -1);
         RdPlayer getMyself();
 
+        bool addWeapon(RdWeapon weapon);
+        bool shoot();
+        bool reload();
 
         bool updatePlayers(std::vector<RdPlayer> new_player_vector);
         bool updateTargets(std::vector<RdTarget> new_target_detections);
@@ -41,9 +45,13 @@ class RdMentalMap
 
         std::map<int, RdTarget> targets;
         std::map<int, RdPlayer> players;
+        std::vector<RdWeapon> weapons;
+        int current_weapon;
 
         int my_id;
         RdPlayer* myself;
+
+        RdAudioManager * audioManager;
 
 };
 
