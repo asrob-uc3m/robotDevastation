@@ -11,6 +11,8 @@ rd::RdWeapon::RdWeapon()
     damage = -1;
     max_ammo = -1;
     current_ammo = -1;
+
+    audioManager = RdAudioManager::getAudioManager();
 }
 
 rd::RdWeapon::RdWeapon(std::string name, int damage, int max_ammo)
@@ -19,12 +21,17 @@ rd::RdWeapon::RdWeapon(std::string name, int damage, int max_ammo)
     this->damage = damage;
     this->max_ammo = max_ammo;
     this->current_ammo = max_ammo;
+
+    audioManager = RdAudioManager::getAudioManager();
 }
 
 bool rd::RdWeapon::shoot(rd::RdTarget &target, RdPlayer& player)
 {
     if (current_ammo > 0)
     {
+        //-- Play sound
+        audioManager->playSound("shoot", false);
+
         if ( checkCollision(target) )
         {
             //-- Decrease player's life:
@@ -33,6 +40,7 @@ bool rd::RdWeapon::shoot(rd::RdTarget &target, RdPlayer& player)
 
             //-- Decrease ammo
             current_ammo--;
+
         }
         else
         {
@@ -41,6 +49,8 @@ bool rd::RdWeapon::shoot(rd::RdTarget &target, RdPlayer& player)
     }
     else
     {
+            //-- Play sound
+            audioManager->playSound("noAmmo", false);
             RD_WARNING("No ammo! Reload!\n");
     }
 }

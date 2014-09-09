@@ -125,7 +125,7 @@ bool rd::RobotDevastation::onKeyPressed(rd::RdKey k)
 
         if ( k.getValue() == RdKey::KEY_SPACE)
         {
-            audioManager->playSound("shoot", false);
+            //-- Do things to shoot
             RD_SUCCESS("Shoot!\n");
         }
         else if ( k.getValue() == RdKey::KEY_ESCAPE)

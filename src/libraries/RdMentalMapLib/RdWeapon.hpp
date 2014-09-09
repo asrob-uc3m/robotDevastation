@@ -7,6 +7,7 @@
 #include "RdUtils.hpp"
 #include "RdTarget.hpp"
 #include "RdPlayer.hpp"
+#include "RdAudioManager.hpp"
 
 namespace rd {
 
@@ -35,6 +36,7 @@ private:
     int current_ammo;
     int max_ammo;
 
+    RdAudioManager * audioManager;
 };
 
 }
