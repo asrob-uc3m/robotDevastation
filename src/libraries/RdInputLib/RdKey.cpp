@@ -98,7 +98,7 @@ const std::map< SDLKey, char> rd::RdKey::sdl_printable_map = { {SDLK_0, '0'}, {S
                                                                {SDLK_SPACE, ' '},
                                                              };
 
-const std::map< SDLKey, int> rd::RdKey::sdl_control_map = { {SDLK_SPACE, rd::RdKey::KEY_SPACE},
+const std::map< SDLKey, int> rd::RdKey::sdl_control_map = {  {SDLK_SPACE, rd::RdKey::KEY_SPACE},
                                                              {SDLK_ESCAPE, rd::RdKey::KEY_ESCAPE},
                                                              {SDLK_BACKSPACE, rd::RdKey::KEY_BACKSPACE},
                                                              {SDLK_UP, rd::RdKey::KEY_ARROW_UP},

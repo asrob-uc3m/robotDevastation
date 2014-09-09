@@ -22,5 +22,5 @@ add_subdirectory(RdMusicLib)
 add_subdirectory(RdMentalMapLib)
 add_subdirectory(RdUserInterfaceLib)
 add_subdirectory(RdInputLib)
-
+add_subdirectory(RdNetworkLib)
 
