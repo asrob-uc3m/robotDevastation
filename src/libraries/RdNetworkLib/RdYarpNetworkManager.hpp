@@ -6,6 +6,9 @@
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/Semaphore.h>
+#include <yarp/os/RpcClient.h>
+#include <yarp/os/Time.h>
+#include <yarp/os/Network.h>
 
 #include "RdUtils.hpp"
 #include "RdNetworkManager.hpp"
@@ -14,25 +17,30 @@
 namespace rd{
 
 class RdYarpNetworkManager: public RdNetworkManager,
-        public yarp::os::BufferedPort<yarp::os::Bottle>
+                            public yarp::os::BufferedPort<yarp::os::Bottle>
 
 {
     public:
+        //-- Singleton functions to get an instance / remove it
         static RdNetworkManager * getNetworkManager();
         static bool destroyNetworkManager();
 
         ~RdYarpNetworkManager();
 
+        //-- User interface to access to the server
+        virtual bool sendPlayerHit(RdPlayer player, int damage);
+        virtual bool login(RdPlayer player);
+        virtual bool logout(RdPlayer player);
 
     protected:
-        virtual bool sendPlayer(RdPlayer player);
+        //-- Yarp event for incoming messages
         void onRead(yarp::os::Bottle& b);
 
     private:
+        bool start(int id);
         RdYarpNetworkManager();
 
-        static RdNetworkManager * networkManagerInstance;
-
+        yarp::os::RpcClient rpcClient;
 
 };
 

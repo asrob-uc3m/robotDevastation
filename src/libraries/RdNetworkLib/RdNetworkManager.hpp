@@ -3,7 +3,6 @@
 #ifndef __RD_NETWORK_MANAGER_HPP__
 #define __RD_NETWORK_MANAGER_HPP__
 
-#include "RdMacros.hpp"
 #include "RdPlayer.hpp"
 #include "RdNetworkEventListener.hpp"
 
@@ -12,24 +11,15 @@ namespace rd{
 class RdNetworkManager
 {
     public:
-        static RdNetworkManager * getNetworkManager();
-        static bool destroyNetworkManager();
-
-        ~RdNetworkManager();
-
         bool addNetworkEventListener( RdNetworkEventListener * listener );
 
+        virtual bool sendPlayerHit(RdPlayer player, int damage) = 0;
+        virtual bool login(RdPlayer player) = 0;
+        virtual bool logout(RdPlayer player) = 0;
+
     protected:
-        virtual bool sendPlayer(RdPlayer player);
         std::vector<RdNetworkEventListener *> listeners;
         static RdNetworkManager * networkManagerInstance;
-
-    private:
-        RdNetworkManager();
-
-
-
-
 };
 
 }

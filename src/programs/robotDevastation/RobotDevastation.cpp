@@ -195,7 +195,8 @@ bool rd::RobotDevastation::initSound()
     return true;
 }
 
-bool rd::RobotDevastation::interruptModule() {
+bool rd::RobotDevastation::interruptModule()
+{
     RD_INFO("Logout...\n");
     yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_LOGOUT);
