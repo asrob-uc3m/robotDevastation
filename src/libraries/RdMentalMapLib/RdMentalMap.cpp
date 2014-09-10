@@ -9,6 +9,17 @@ rd::RdMentalMap::RdMentalMap()
     audioManager = RdAudioManager::getAudioManager();
 }
 
+bool rd::RdMentalMap::onDataArrived(rd::RdPlayer player)
+{
+    RD_ERROR("Not implemented yet! Sorry!\n");
+    return false;
+}
+
+bool rd::RdMentalMap::onDataArrived(std::vector<rd::RdPlayer> players)
+{
+    return updatePlayers(players);
+}
+
 rd::RdMentalMap *rd::RdMentalMap::getMentalMap()
 {
     if (mentalMapInstance == NULL)
@@ -29,12 +40,6 @@ bool rd::RdMentalMap::destroyMentalMap()
 }
 
 bool rd::RdMentalMap::configure(const int &player_id)
-{
-    this->my_id = player_id;
-    this->myself = NULL;
-}
-
-rd::RdMentalMap::RdMentalMap(const int &player_id)
 {
     this->my_id = player_id;
     this->myself = NULL;

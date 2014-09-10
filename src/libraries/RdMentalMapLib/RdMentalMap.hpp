@@ -11,10 +11,11 @@
 #include "RdTarget.hpp"
 #include "RdWeapon.hpp"
 #include "RdUtils.hpp"
+#include "RdNetworkEventListener.hpp"
 
 namespace rd{
 
-class RdMentalMap
+class RdMentalMap : public RdNetworkEventListener
 {
     public:
         static RdMentalMap * getMentalMap();
@@ -39,9 +40,7 @@ class RdMentalMap
 
     private:
         static RdMentalMap * mentalMapInstance;
-
         RdMentalMap();
-        RdMentalMap(const int& player_id);
 
         std::map<int, RdTarget> targets;
         std::map<int, RdPlayer> players;
@@ -52,6 +51,9 @@ class RdMentalMap
         RdPlayer* myself;
 
         RdAudioManager * audioManager;
+
+        bool onDataArrived(RdPlayer player);
+        bool onDataArrived(std::vector<RdPlayer> players);
 
 };
 
