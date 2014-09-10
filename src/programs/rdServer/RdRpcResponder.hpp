@@ -8,7 +8,7 @@
 #include <yarp/os/Time.h>
 #include <yarp/os/Vocab.h>
 
-#include <vector>
+#include <map>
 
 #include "RdUtils.hpp"
 #include "RdPlayer.hpp"
@@ -26,8 +26,8 @@ class RdRpcResponder : public yarp::os::PortReader {
     yarp::os::Port* rdBroadcast;
 
   public:
-    std::vector <RdPlayer>* players;
-    void setPlayers(std::vector<RdPlayer> *value);
+    std::map <int,RdPlayer>* players;
+    void setPlayers(std::map<int,RdPlayer> *value);
 };
 
 }

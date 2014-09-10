@@ -211,6 +211,10 @@ bool rd::RobotDevastation::interruptModule() {
     RdMentalMap::destroyMentalMap();
     mentalMap = NULL;
 
+    //-- Closing mental map:
+    RdInputManager::destroyInputManager();
+    inputManager = NULL;
+
     callbackPort.disableCallback();
     // interrupt ports
     inImg.interrupt();
