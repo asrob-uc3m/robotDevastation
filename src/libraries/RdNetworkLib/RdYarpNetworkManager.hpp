@@ -13,11 +13,13 @@
 #include "RdUtils.hpp"
 #include "RdNetworkManager.hpp"
 #include "RdNetworkEventListener.hpp"
+#include "RdMentalMapEventListener.hpp"
 
 namespace rd{
 
 class RdYarpNetworkManager: public RdNetworkManager,
-                            public yarp::os::BufferedPort<yarp::os::Bottle>
+                            public yarp::os::BufferedPort<yarp::os::Bottle>,
+                            public RdMentalMapEventListener
 
 {
     public:
@@ -42,6 +44,8 @@ class RdYarpNetworkManager: public RdNetworkManager,
 
         yarp::os::RpcClient rpcClient;
 
+        //-- Implementation of RdMentalMapEventListener interface
+        bool onTargetHit(RdTarget target, RdPlayer player, RdWeapon weapon);
 };
 
 }

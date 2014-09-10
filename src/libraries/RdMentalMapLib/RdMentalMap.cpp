@@ -141,6 +141,11 @@ bool rd::RdMentalMap::shoot()
                 player->setHealth(player->getHealth()-weapons[current_weapon].getDamage());
 
                 hit = true;
+
+                //-- Update listeners
+                for (int i = 0; i < listeners.size(); i++)
+                    listeners[i]->onTargetHit(it->second, *player, weapons[current_weapon]);
+
             }
             else
             {
@@ -202,7 +207,8 @@ bool rd::RdMentalMap::updateTargets(std::vector<RdTarget> new_target_detections)
     return true;
 }
 
-bool rd::RdMentalMap::destroy()
+bool rd::RdMentalMap::addMentalMapEventListener(rd::RdMentalMapEventListener *listener)
 {
+    listeners.push_back(listener);
     return true;
 }

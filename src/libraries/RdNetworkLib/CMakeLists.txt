@@ -13,7 +13,7 @@ list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH})
 include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} RdNetworkManager.cpp RdYarpNetworkManager.cpp)
-target_link_libraries(${KEYWORD} ${YARP_LIBRARIES})
+target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${RD_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
