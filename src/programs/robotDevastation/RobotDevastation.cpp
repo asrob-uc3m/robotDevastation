@@ -93,29 +93,16 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     rateThreadProcess.setInImg(&inImg);
     rateThreadProcess.init(rf);
 
-    //-----------------OPEN LOCAL PORTS------------//
+    //-- Init network manager
+    networkManager = RdYarpNetworkManager::getNetworkManager();
+    networkManager->login(mentalMap->getMyself());
+
+    //-----------------OPEN REMAINING LOCAL PORTS------------//
+    /// \todo Encapsulate this
     std::ostringstream s;
     s << mentalMap->getMyself().getId();
     inImg.open(("/img/"+s.str()).c_str());
-    rpcClient.open(("/rpc/"+s.str()).c_str());
-    callbackPort.open(("/callback/"+s.str()).c_str());
-    callbackPort.useCallback();
 
-    while(1){
-        if(rpcClient.getOutputCount() > 0) break;
-        printf("Waiting for rpc to be connected to server...\n");
-        yarp::os::Time::delay(0.5);
-        yarp::os::Network::connect( ("/rpc/"+s.str()).c_str() , "/rdServer" );
-    }
-    yarp::os::Network::connect( "/rdBroadcast", ("/callback/"+s.str()).c_str() );
-
-    yarp::os::Bottle msgRdPlayer,res;
-    msgRdPlayer.addVocab(VOCAB_RD_LOGIN);
-    msgRdPlayer.addInt(mentalMap->getMyself().getId());
-    msgRdPlayer.addString(mentalMap->getMyself().getName().c_str());
-    msgRdPlayer.addInt(mentalMap->getMyself().getTeamId());
-    rpcClient.write(msgRdPlayer,res);
-    RD_INFO("rdServer response from login: %s\n",res.toString().c_str());
     return true;
 }
 
@@ -197,12 +184,12 @@ bool rd::RobotDevastation::initSound()
 
 bool rd::RobotDevastation::interruptModule()
 {
-    RD_INFO("Logout...\n");
-    yarp::os::Bottle msgRdPlayer,res;
-    msgRdPlayer.addVocab(VOCAB_RD_LOGOUT);
-    msgRdPlayer.addInt(mentalMap->getMyself().getId());
-    rpcClient.write(msgRdPlayer,res);
     RD_INFO("Closing program...\n");
+
+    //-- Closing network system
+    networkManager->logout(mentalMap->getMyself());
+    RdYarpNetworkManager::destroyNetworkManager();
+    networkManager = NULL;
 
     //-- Closing audio system:
     RdAudioManager::destroyAudioManager();
@@ -212,17 +199,14 @@ bool rd::RobotDevastation::interruptModule()
     RdMentalMap::destroyMentalMap();
     mentalMap = NULL;
 
-    //-- Closing mental map:
+    //-- Closing input manager:
     RdInputManager::destroyInputManager();
     inputManager = NULL;
 
-    callbackPort.disableCallback();
-    // interrupt ports
+    //-- Close img related ports:
     inImg.interrupt();
-    callbackPort.interrupt();
-    // close ports
     inImg.close();
-    callbackPort.close();
+
     return true;
 }
 

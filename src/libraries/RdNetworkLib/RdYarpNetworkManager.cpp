@@ -91,6 +91,8 @@ rd::RdYarpNetworkManager::RdYarpNetworkManager()
 rd::RdYarpNetworkManager::~RdYarpNetworkManager()
 {
     rpcClient.close();
+
+    this->disableCallback();
     this->interrupt();
     this->close();
 }
