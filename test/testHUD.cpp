@@ -8,6 +8,7 @@
 #include "RdMentalMap.hpp"
 #include "RdTarget.hpp"
 #include "RdPlayer.hpp"
+#include "RdWeapon.hpp"
 #include "RdGameScreen.hpp"
 
 
@@ -35,7 +36,7 @@ int main(void)
     mentalMap->configure(0);
 
     std::vector<RdPlayer> players;
-    players.push_back(RdPlayer(0, "Myself", 90, 100, 0, 0));
+    players.push_back(RdPlayer(0, "Myself", 50, 100, 0, 0));
     players.push_back(RdPlayer(1, "Enemy1", 50, 100, 1, 0));
     players.push_back(RdPlayer(2, "Enemy2", 75, 100, 1, 0));
     mentalMap->updatePlayers(players);
@@ -49,6 +50,7 @@ int main(void)
 
     mentalMap->updateTargets(targets);
 
+    mentalMap->addWeapon(RdWeapon("Machine gun", 10, 250));
 
     RdGameScreen gameScreen;
 

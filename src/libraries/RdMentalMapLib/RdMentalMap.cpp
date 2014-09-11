@@ -112,6 +112,18 @@ rd::RdPlayer rd::RdMentalMap::getMyself()
     }
 }
 
+rd::RdWeapon rd::RdMentalMap::getCurrentWeapon()
+{
+    if ( weapons.size() >= current_weapon)
+        return weapons[current_weapon];
+    else
+    {
+        RD_ERROR("No weapons added yet!\n");
+        RD_ERROR("Returning standard weapon\n");
+        return RdWeapon();
+    }
+}
+
 bool rd::RdMentalMap::addWeapon(RdWeapon weapon)
 {
     weapons.push_back(weapon);

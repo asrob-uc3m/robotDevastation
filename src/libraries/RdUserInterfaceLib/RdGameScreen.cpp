@@ -3,6 +3,7 @@
 
 const SDL_Color rd::RdGameScreen::greencolor = {0, 255, 0, 0};
 const SDL_Color rd::RdGameScreen::redcolor =   {255, 0, 0, 0};
+const SDL_Color rd::RdGameScreen::bluecolor =  {0, 0, 255, 0};
 
 rd::RdGameScreen::RdGameScreen()
 {
@@ -63,6 +64,51 @@ void rd::RdGameScreen::show(SDL_Surface *screen)
 
     //-- Draw scope:
     drawScope(screen);
+
+    //-- Draw user interface with user health, weapon and ammo
+    RdPlayer me = mentalMap->getMyself();
+    RdWeapon weapon = mentalMap->getCurrentWeapon();
+    drawUserUI(screen, me, weapon);
+}
+
+bool rd::RdGameScreen::drawUserUI(SDL_Surface *screen, rd::RdPlayer user, rd::RdWeapon weapon)
+{
+    //-- User health bar:
+    static const int USER_HEALTH_MARGIN_X = 10;
+    static const int USER_HEALTH_MARGIN_Y = 10;
+    static const int USER_HEALTH_W = 20;
+    static const int USER_HEALTH_BOTTOM_Y = 50;
+
+    int bar_height = SCREEN_HEIGHT - USER_HEALTH_MARGIN_Y - USER_HEALTH_BOTTOM_Y;
+    int current_bar_height = (int)( user.getHealth() / (float) user.getMaxHealth() * bar_height);
+
+    SDL_Rect health_bar = { SCREEN_WIDTH - USER_HEALTH_MARGIN_X - USER_HEALTH_W, USER_HEALTH_MARGIN_Y,
+                            USER_HEALTH_W, bar_height};
+    SDL_Rect current_health_bar = { health_bar.x, health_bar.y + (bar_height-current_bar_height),
+                                    health_bar.w, current_bar_height};
+
+    SDL_FillRect(screen, &health_bar, SDL_MapRGB(screen->format, 0, 0, 127));
+    SDL_FillRect(screen, &current_health_bar, SDL_MapRGB(screen->format, 0, 0, 255));
+
+    //-- Weapon data:
+    static const int AMMO_BAR_MARGIN_X =20;
+    static const int AMMO_BAR_MARGIN_Y = 20;
+    static const int AMMO_BAR_W = 150;
+    static const int AMMO_BAR_H = 15;
+
+    int current_ammo_width = (int)( weapon.getCurrentAmmo() / (float) weapon.getMaxAmmo() * AMMO_BAR_W);
+
+    SDL_Rect ammo_bar = { health_bar.x - AMMO_BAR_MARGIN_X - AMMO_BAR_W,
+                          health_bar.y + health_bar.h + AMMO_BAR_MARGIN_Y,
+                          AMMO_BAR_W, AMMO_BAR_H };
+    SDL_Rect current_ammo_bar = { ammo_bar.x + (AMMO_BAR_W - current_ammo_width),
+                                  ammo_bar.y,
+                                  current_ammo_width, ammo_bar.h};
+
+    SDL_FillRect(screen, &ammo_bar, SDL_MapRGB(screen->format, 0, 0, 127));
+    SDL_FillRect(screen, &current_ammo_bar, SDL_MapRGB(screen->format, 0, 0, 255));
+
+    return true;
 }
 
 bool rd::RdGameScreen::drawPlayerUI(SDL_Surface *screen, RdPlayer player, int x, int y)

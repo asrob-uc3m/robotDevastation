@@ -13,6 +13,7 @@
 #include "RdMentalMap.hpp"
 #include "RdTarget.hpp"
 #include "RdPlayer.hpp"
+#include "RdWeapon.hpp"
 
 
 namespace rd{
@@ -24,6 +25,7 @@ class RdGameScreen
         void show( SDL_Surface * screen );
 
     private:
+        bool drawUserUI(SDL_Surface * screen, RdPlayer user, RdWeapon weapon);
         bool drawPlayerUI( SDL_Surface * screen, RdPlayer player, int x, int y);
         bool drawTargetUI( SDL_Surface * screen, RdTarget target, RdPlayer player_data);
         bool drawScope( SDL_Surface * screen );
@@ -54,8 +56,10 @@ class RdGameScreen
         static const int SCOPE_HORIZ_W_SPACE = 20;
 
         TTF_Font *player_font, *target_font;
+
         static const SDL_Color greencolor;
         static const SDL_Color redcolor;
+        static const SDL_Color bluecolor;
 
         RdMentalMap * mentalMap;
 

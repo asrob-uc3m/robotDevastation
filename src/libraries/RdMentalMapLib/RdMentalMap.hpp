@@ -33,6 +33,7 @@ class RdMentalMap : public RdNetworkEventListener
         RdTarget getTarget(const int& id = -1);
         RdPlayer getPlayer(const int& id = -1);
         RdPlayer getMyself();
+        RdWeapon getCurrentWeapon();
 
         //-- Weapon interface
         bool addWeapon(RdWeapon weapon);
