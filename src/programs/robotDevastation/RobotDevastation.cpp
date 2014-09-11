@@ -96,6 +96,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Init network manager
     networkManager = RdYarpNetworkManager::getNetworkManager();
     networkManager->addNetworkEventListener(mentalMap);
+    mentalMap->addMentalMapEventListener((RdYarpNetworkManager *)networkManager);
     networkManager->login(mentalMap->getMyself());
 
     //-----------------OPEN REMAINING LOCAL PORTS------------//
