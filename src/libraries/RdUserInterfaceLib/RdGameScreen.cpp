@@ -42,6 +42,13 @@ rd::RdGameScreen::RdGameScreen()
         return;
     }
 
+    weapon_font = TTF_OpenFont(font_name, 12);
+    if (weapon_font == NULL)
+    {
+        RD_ERROR("Unable to load font: %s %s \n", font_name, TTF_GetError());
+        return;
+    }
+
     mentalMap = RdMentalMap::getMentalMap();
 }
 
@@ -74,11 +81,7 @@ void rd::RdGameScreen::show(SDL_Surface *screen)
 bool rd::RdGameScreen::drawUserUI(SDL_Surface *screen, rd::RdPlayer user, rd::RdWeapon weapon)
 {
     //-- User health bar:
-    static const int USER_HEALTH_MARGIN_X = 10;
-    static const int USER_HEALTH_MARGIN_Y = 10;
-    static const int USER_HEALTH_W = 20;
-    static const int USER_HEALTH_BOTTOM_Y = 50;
-
+    //--------------------------------------------------------------------------------------------
     int bar_height = SCREEN_HEIGHT - USER_HEALTH_MARGIN_Y - USER_HEALTH_BOTTOM_Y;
     int current_bar_height = (int)( user.getHealth() / (float) user.getMaxHealth() * bar_height);
 
@@ -91,11 +94,8 @@ bool rd::RdGameScreen::drawUserUI(SDL_Surface *screen, rd::RdPlayer user, rd::Rd
     SDL_FillRect(screen, &current_health_bar, SDL_MapRGB(screen->format, 0, 0, 255));
 
     //-- Weapon data:
-    static const int AMMO_BAR_MARGIN_X =20;
-    static const int AMMO_BAR_MARGIN_Y = 20;
-    static const int AMMO_BAR_W = 150;
-    static const int AMMO_BAR_H = 15;
-
+    //---------------------------------------------------------------------------------------------
+    //-- Ammo bar:
     int current_ammo_width = (int)( weapon.getCurrentAmmo() / (float) weapon.getMaxAmmo() * AMMO_BAR_W);
 
     SDL_Rect ammo_bar = { health_bar.x - AMMO_BAR_MARGIN_X - AMMO_BAR_W,
@@ -107,6 +107,20 @@ bool rd::RdGameScreen::drawUserUI(SDL_Surface *screen, rd::RdPlayer user, rd::Rd
 
     SDL_FillRect(screen, &ammo_bar, SDL_MapRGB(screen->format, 0, 0, 127));
     SDL_FillRect(screen, &current_ammo_bar, SDL_MapRGB(screen->format, 0, 0, 255));
+
+    //-- Weapon name & ammo text
+    SDL_Surface * name_surface = TTF_RenderText_Solid(weapon_font, weapon.getName().c_str(), bluecolor);
+    SDL_Rect name_rect = { ammo_bar.x, ammo_bar.y - 5 - WEAPON_NAME_HEIGHT, WEAPON_NAME_WIDTH, WEAPON_NAME_HEIGHT};
+    SDL_Rect text_rect_src = {0, 0, WEAPON_NAME_WIDTH, WEAPON_NAME_HEIGHT};
+    SDL_BlitSurface(name_surface, &text_rect_src, screen, &name_rect);
+
+    std::stringstream sstream;
+    sstream << weapon.getCurrentAmmo() << "/" << weapon.getMaxAmmo();
+    SDL_Surface * ammo_surface = TTF_RenderText_Solid(weapon_font, sstream.str().c_str(), bluecolor);
+    SDL_Rect ammo_rect = { ammo_bar.x + ammo_bar.w - AMMO_TEXT_WIDTH, ammo_bar.y - 5 - AMMO_TEXT_HEIGHT,
+                           AMMO_TEXT_WIDTH, AMMO_TEXT_HEIGHT};
+    SDL_Rect ammo_rect_src = {0, 0, AMMO_TEXT_WIDTH, AMMO_TEXT_HEIGHT};
+    SDL_BlitSurface(ammo_surface, &ammo_rect_src, screen, &ammo_rect);
 
     return true;
 }

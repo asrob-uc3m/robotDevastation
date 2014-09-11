@@ -55,7 +55,25 @@ class RdGameScreen
         static const int SCOPE_HORIZ_H = 4;
         static const int SCOPE_HORIZ_W_SPACE = 20;
 
-        TTF_Font *player_font, *target_font;
+        //-- User info display constants
+        static const int USER_HEALTH_MARGIN_X = 10;
+        static const int USER_HEALTH_MARGIN_Y = 20;
+        static const int USER_HEALTH_W = 20;
+        static const int USER_HEALTH_BOTTOM_Y = 50;
+
+        static const int AMMO_BAR_MARGIN_X =20;
+        static const int AMMO_BAR_MARGIN_Y = 20;
+        static const int AMMO_BAR_W = 200;
+        static const int AMMO_BAR_H = 15;
+
+        static const int WEAPON_NAME_WIDTH = 100;
+        static const int WEAPON_NAME_HEIGHT = 10;
+
+        static const int AMMO_TEXT_WIDTH = 50;
+        static const int AMMO_TEXT_HEIGHT = 10;
+
+        //-- Fonts and colors
+        TTF_Font *player_font, *target_font, *weapon_font;
 
         static const SDL_Color greencolor;
         static const SDL_Color redcolor;
