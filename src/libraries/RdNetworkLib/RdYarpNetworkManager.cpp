@@ -52,7 +52,7 @@ void rd::RdYarpNetworkManager::onRead(yarp::os::Bottle &b)
 
 bool rd::RdYarpNetworkManager::start(int id)
 {
-    yarp::os::Network yarp; /// \todo Ask Juan about this
+    yarp::os::NetworkBase::initMinimum();
 
     //-- Open the rcpClient port with this player's id
     std::ostringstream s;
@@ -78,10 +78,9 @@ bool rd::RdYarpNetworkManager::start(int id)
         RD_ERROR("Timeout!\n");
         return false;
     }
-    else
-    {
-        return true;
-    }
+
+    return true;
+
 }
 
 rd::RdYarpNetworkManager::RdYarpNetworkManager()
@@ -100,6 +99,8 @@ rd::RdYarpNetworkManager::~RdYarpNetworkManager()
     this->disableCallback();
     this->interrupt();
     this->close();
+
+    yarp::os::NetworkBase::finiMinimum();
 }
 
 bool rd::RdYarpNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)

@@ -188,6 +188,9 @@ bool rd::RobotDevastation::interruptModule()
 {
     RD_INFO("Closing program...\n");
 
+    rateThreadOutput.stop();
+    rateThreadProcess.stop();
+
     //-- Closing network system
     networkManager->logout(mentalMap->getMyself());
     RdYarpNetworkManager::destroyNetworkManager();
