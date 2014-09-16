@@ -20,8 +20,10 @@ bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
         int hitId = in.get(1).asInt();
         int damage = in.get(2).asInt();
 
-        int currHealth = players->at( hitId ).getHealth();
-        players->at( hitId ).setHealth( currHealth - damage );
+        int newHealth = players->at( hitId ).getHealth() - damage;
+        if (newHealth < 0)
+            newHealth = 0;
+        players->at( hitId ).setHealth( newHealth );
 
         out.addVocab(VOCAB_RD_OK);
     }
