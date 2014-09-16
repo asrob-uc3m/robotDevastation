@@ -27,14 +27,22 @@ bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
     }
     else if((in.get(0).asString() == "login")||(in.get(0).asVocab() == VOCAB_RD_LOGIN))  //-- login
     {
-        int id = in.get(1).asInt();
+        int loginId = in.get(1).asInt();
 
-        //-- RdPlayer( int id, std::string name, int health, int max_health, int team_id, int score);
-        RdPlayer rdPlayer( id, in.get(2).asString(),100,100,in.get(3).asInt(),0);
+        if ( players->find(loginId) == players->end() )  // if not found, we can create
+        {
+            //-- RdPlayer( int id, std::string name, int health, int max_health, int team_id, int score);
+            RdPlayer rdPlayer( loginId, in.get(2).asString(),100,100,in.get(3).asInt(),0);
 
-        players->operator[](id) = rdPlayer;
+            players->operator[](loginId) = rdPlayer;
 
-        out.addVocab(VOCAB_RD_OK);
+            out.addVocab(VOCAB_RD_OK);
+        }
+        else
+        {
+            RD_ERROR("Already logged, id: %d.\n",loginId);
+            out.addVocab(VOCAB_RD_FAIL);
+        }
     }
     else if ((in.get(0).asString() == "logout")||(in.get(0).asVocab() == VOCAB_RD_LOGOUT)) //-- logout
     {
