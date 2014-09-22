@@ -150,7 +150,8 @@ bool rd::RdMentalMap::shoot()
                 //-- Decrease player's life:
                 RdPlayer * player = &players[it->second.getPlayerId()];
                 RD_SUCCESS("Target %s was hit!\n", player->getName().c_str());
-                player->setHealth(player->getHealth()-weapons[current_weapon].getDamage());
+
+                //player->setHealth(player->getHealth()-weapons[current_weapon].getDamage());
 
                 hit = true;
 
