@@ -58,8 +58,8 @@ bool rd::RdYarpNetworkManager::start(int id)
     std::ostringstream s;
     s << id;
     rpcClient.open(("/rpc/"+s.str()).c_str());
-    this->open(("/callback/"+s.str()).c_str());
-    this->useCallback();
+    callbackPort.open(("/callback/"+s.str()).c_str());
+    callbackPort.useCallback(*this);
 
     //-- Try to connect to the server until timeout
     int tries = 0;
@@ -96,9 +96,9 @@ rd::RdYarpNetworkManager::~RdYarpNetworkManager()
 {
     rpcClient.close();
 
-    this->disableCallback();
-    this->interrupt();
-    this->close();
+    callbackPort.disableCallback();
+    callbackPort.interrupt();
+    callbackPort.close();
 
     yarp::os::NetworkBase::finiMinimum();
 }

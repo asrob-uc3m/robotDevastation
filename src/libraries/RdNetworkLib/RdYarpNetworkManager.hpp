@@ -18,8 +18,8 @@
 namespace rd{
 
 class RdYarpNetworkManager: public RdNetworkManager,
-                            public yarp::os::BufferedPort<yarp::os::Bottle>,
-                            public RdMentalMapEventListener
+                            public RdMentalMapEventListener,
+                            public yarp::os::TypedReaderCallback<yarp::os::Bottle>
 
 {
     public:
@@ -43,6 +43,7 @@ class RdYarpNetworkManager: public RdNetworkManager,
         RdYarpNetworkManager();
 
         yarp::os::RpcClient rpcClient;
+        yarp::os::BufferedPort<yarp::os::Bottle> callbackPort;
 
         //-- Implementation of RdMentalMapEventListener interface
         bool onTargetHit(RdTarget target, RdPlayer player, RdWeapon weapon);
