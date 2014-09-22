@@ -17,15 +17,25 @@ bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
     }
     else if((in.get(0).asString() == "hit")||(in.get(0).asVocab() == VOCAB_RD_HIT))  //-- hit
     {
+        //-- Extract data
         int hitId = in.get(1).asInt();
         int damage = in.get(2).asInt();
 
-        int newHealth = players->at( hitId ).getHealth() - damage;
-        if (newHealth < 0)
-            newHealth = 0;
-        players->at( hitId ).setHealth( newHealth );
+        //-- Check if the player hit is logged in the game
+        if ( players->find(hitId) != players->end() )
+        {
+            int newHealth = players->at( hitId ).getHealth() - damage;
+            if (newHealth < 0)
+                newHealth = 0;
+            players->at( hitId ).setHealth( newHealth );
 
-        out.addVocab(VOCAB_RD_OK);
+            out.addVocab(VOCAB_RD_OK);
+        }
+        else
+        {
+            RD_ERROR("Player with id: %d not logged in!\n",hitId);
+            out.addVocab(VOCAB_RD_FAIL);
+        }
     }
     else if((in.get(0).asString() == "login")||(in.get(0).asVocab() == VOCAB_RD_LOGIN))  //-- login
     {
