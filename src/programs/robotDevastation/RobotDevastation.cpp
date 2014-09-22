@@ -191,6 +191,15 @@ bool rd::RobotDevastation::interruptModule()
     rateThreadOutput.stop();
     rateThreadProcess.stop();
 
+    //-- Detach listeners to avoid segmentation faults
+    inputManager->removeInputEventListeners();
+    networkManager->removeNetworkEventListeners();
+    mentalMap->removeMentalMapEventListeners();
+
+    //-- Closing input manager:
+    RdInputManager::destroyInputManager();
+    inputManager = NULL;
+
     //-- Closing network system
     networkManager->logout(mentalMap->getMyself());
     RdYarpNetworkManager::destroyNetworkManager();
@@ -204,9 +213,7 @@ bool rd::RobotDevastation::interruptModule()
     RdMentalMap::destroyMentalMap();
     mentalMap = NULL;
 
-    //-- Closing input manager:
-    RdInputManager::destroyInputManager();
-    inputManager = NULL;
+
 
     //-- Close img related ports:
     inImg.interrupt();

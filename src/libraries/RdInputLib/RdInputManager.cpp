@@ -42,6 +42,13 @@ bool rd::RdInputManager::start()
 bool rd::RdInputManager::addInputEventListener(rd::RdInputEventListener *listener)
 {
     listeners.push_back(listener);
+    return true;
+}
+
+bool rd::RdInputManager::removeInputEventListeners()
+{
+    listeners.clear();
+    return true;
 }
 
 rd::RdInputManager::RdInputManager()

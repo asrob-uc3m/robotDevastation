@@ -12,6 +12,7 @@ class RdNetworkManager
 {
     public:
         bool addNetworkEventListener( RdNetworkEventListener * listener );
+        bool removeNetworkEventListeners();
 
         virtual bool sendPlayerHit(RdPlayer player, int damage) = 0;
         virtual bool login(RdPlayer player) = 0;

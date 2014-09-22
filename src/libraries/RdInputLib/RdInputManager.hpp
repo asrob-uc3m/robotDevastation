@@ -23,6 +23,7 @@ class RdInputManager
         bool start();
 
         bool addInputEventListener( RdInputEventListener * listener );
+        bool removeInputEventListeners();
 
     private:
         RdInputManager();

@@ -46,6 +46,7 @@ class RdMentalMap : public RdNetworkEventListener
 
         //-- Listeners
         bool addMentalMapEventListener( RdMentalMapEventListener * listener);
+        bool removeMentalMapEventListeners();
 
     private:
         static RdMentalMap * mentalMapInstance;

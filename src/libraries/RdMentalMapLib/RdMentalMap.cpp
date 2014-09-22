@@ -225,3 +225,9 @@ bool rd::RdMentalMap::addMentalMapEventListener(rd::RdMentalMapEventListener *li
     listeners.push_back(listener);
     return true;
 }
+
+bool rd::RdMentalMap::removeMentalMapEventListeners()
+{
+    listeners.clear();
+    return true;
+}
