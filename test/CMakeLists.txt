@@ -21,3 +21,6 @@ target_link_libraries(testRdInputManager ${RD_LIBRARIES} RdInputLib gtest gtest_
 
 add_executable(testRdYarpNetworkManager testRdYarpNetworkManager.cpp)
 target_link_libraries(testRdYarpNetworkManager ${RD_LIBRARIES} RdNetworkLib gtest gtest_main)
+
+add_executable(testLoadSharedLibraries testLoadSharedLibraries.cpp)
+target_link_libraries(testLoadSharedLibraries ${RD_LIBRARIES} gtest gtest_main)

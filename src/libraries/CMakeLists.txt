@@ -23,4 +23,5 @@ add_subdirectory(RdMentalMapLib)
 add_subdirectory(RdUserInterfaceLib)
 add_subdirectory(RdInputLib)
 add_subdirectory(RdNetworkLib)
+add_subdirectory(RdRobotLib)
 
