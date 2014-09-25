@@ -51,8 +51,6 @@ class RdRobotManager
         static std::map<std::string, RdRobotManager*> robotManagerRegistry;
 
 };
-
-RdRobotManager global_robotManager;
 }
 
 

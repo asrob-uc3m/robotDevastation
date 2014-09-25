@@ -1,5 +1,7 @@
 #include "RdTextualRobotManager.hpp"
 
+//#include <yarp/os/SharedLibraryClass.h>
+//YARP_DEFINE_DEFAULT_SHARED_CLASS(rd::RdTextualRobotManager)
 
 bool rd::RdTextualRobotManager::moveForward(int time, int velocity)
 {
