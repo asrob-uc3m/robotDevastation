@@ -18,8 +18,8 @@ bool PwmBot::velocityMove(int j, double sp) {
     RD_INFO("(%d)\n",j);
 
     // Clear and start again
-    clear_channel_gpio(j, gpios[j]);
-    add_channel_pulse(j, gpios[j], 0, sp / PULSE_WIDTH_INCREMENT_GRANULARITY_US_DEFAULT);
+    clear_channel_gpio(0, gpios[j]);
+    add_channel_pulse(0, gpios[j], 0, sp / PULSE_WIDTH_INCREMENT_GRANULARITY_US_DEFAULT);
 
     return true;
 }
