@@ -43,7 +43,7 @@ class RdTestEventListener : public RdInputEventListener
             RdAudioManager::destroyAudioManager();
         }
 
-        virtual bool onKeyPressed(RdKey k)
+        virtual bool onKeyDown(RdKey k)
         {
             if ( k.isControlKey() )
             {
@@ -108,6 +108,11 @@ class RdTestEventListener : public RdInputEventListener
                     RD_SUCCESS("Exit!\n");
                 }
             }
+        }
+
+        virtual bool onKeyUp(RdKey k)
+        {
+
         }
 
     private:

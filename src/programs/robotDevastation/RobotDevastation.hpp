@@ -22,7 +22,8 @@ class RobotDevastation : public yarp::os::RFModule, public RdInputEventListener
     public:
         bool configure(yarp::os::ResourceFinder &rf);
 
-        virtual bool onKeyPressed(RdKey k);
+        virtual bool onKeyUp(RdKey k);
+        virtual bool onKeyDown(RdKey k);
 
     private:
         RateThreadOutput rateThreadOutput;

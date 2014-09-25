@@ -43,28 +43,33 @@ bool rd::RdKeyboardManager::update()
     //-- Check for event
     RdKey key;
     SDL_Event event;
-    bool event_ocurred = false;
+    //bool event_ocurred = false;
 
     while( SDL_PollEvent( &event ) )
     {
-        event_ocurred = true;
+        //event_ocurred = true;
 
         if (event.type == SDL_KEYDOWN )
         {
             if ( !key.setFromKeyCode(event.key.keysym.sym) )
             {
-
                 return false;
             }
+
+            for ( int i = 0; i < (int)listeners->size(); i++)
+                listeners->at(i)->onKeyDown(key);
         }
-//        else if (event.type == SDL_KEYUP )
-//        {
-//            if ( !key.setFromKeyCode(event.key.keysym.sym) )
-//            {
-//                RD_WARNING("Key not supported!\n");
-//                return false;
-//            }
-//        }
+        else if (event.type == SDL_KEYUP )
+        {
+            if ( !key.setFromKeyCode(event.key.keysym.sym) )
+            {
+                RD_WARNING("Key not supported!\n");
+                return false;
+            }
+
+            for ( int i = 0; i < (int)listeners->size(); i++)
+                listeners->at(i)->onKeyUp(key);
+        }
         else
         {
 //          RD_WARNING("Unkown event ocurred! (Event is not supported yet)\n");
@@ -73,9 +78,8 @@ bool rd::RdKeyboardManager::update()
     }
 
     //-- Call listeners when event occured
-    if (event_ocurred)
-        for ( int i = 0; i < (int)listeners->size(); i++)
-            listeners->at(i)->onKeyPressed(key);
+    // if (event_ocurred)
+
 
     return true;
 }

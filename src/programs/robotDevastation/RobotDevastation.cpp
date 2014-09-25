@@ -108,7 +108,12 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     return true;
 }
 
-bool rd::RobotDevastation::onKeyPressed(rd::RdKey k)
+bool rd::RobotDevastation::onKeyUp(rd::RdKey k)
+{
+
+}
+
+bool rd::RobotDevastation::onKeyDown(rd::RdKey k)
 {
     if ( k.isControlKey() )
     {

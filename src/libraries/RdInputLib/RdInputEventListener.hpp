@@ -10,8 +10,8 @@ namespace rd{
 class RdInputEventListener
 {
     public:
-        virtual bool onKeyPressed( RdKey k ) = 0;
-
+        virtual bool onKeyDown( RdKey k ) = 0;
+        virtual bool onKeyUp( RdKey k ) = 0;
 
 };
 
