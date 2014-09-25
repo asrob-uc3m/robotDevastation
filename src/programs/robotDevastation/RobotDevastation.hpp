@@ -13,6 +13,8 @@
 #include "RdInputManager.hpp"
 #include "RdInputEventListener.hpp"
 #include "RdYarpNetworkManager.hpp"
+#include "RdRobotManager.hpp"
+#include "RdRd1RobotManager.hpp"
 
 namespace rd
 {
@@ -32,6 +34,7 @@ class RobotDevastation : public yarp::os::RFModule, public RdInputEventListener
         RdAudioManager * audioManager;
         RdMentalMap * mentalMap;
         RdNetworkManager * networkManager;
+        RdRobotManager * robotManager;
 
         yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > inImg;
 

@@ -99,6 +99,11 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     mentalMap->addMentalMapEventListener((RdYarpNetworkManager *)networkManager);
     networkManager->login(mentalMap->getMyself());
 
+    //-- Init robot
+    robotManager = new RdRd1RobotManager();
+    if( ! robotManager->connect() )
+        return false;
+
     //-----------------OPEN REMAINING LOCAL PORTS------------//
     /// \todo Encapsulate this
     std::ostringstream s;
@@ -110,7 +115,27 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
 bool rd::RobotDevastation::onKeyUp(rd::RdKey k)
 {
+if (k.isPrintable() )
+    {
+        RD_SUCCESS( "Key \"%c\" was pressed!\n", k.getChar() );
 
+        if ( k.getChar() == 'w')
+        {
+            robotManager->stopMovement();
+        }
+        else if ( k.getChar() == 'a')
+        {
+            robotManager->stopMovement();
+        }
+        else if ( k.getChar() == 's')
+        {
+            robotManager->stopMovement();
+        }
+        else if ( k.getChar() == 'd')
+        {
+            robotManager->stopMovement();
+        }
+    }
 }
 
 bool rd::RobotDevastation::onKeyDown(rd::RdKey k)
@@ -144,6 +169,22 @@ bool rd::RobotDevastation::onKeyDown(rd::RdKey k)
         {
             RD_SUCCESS("Exit!\n");
             this->interruptModule();
+        }
+        else if ( k.getChar() == 'w')
+        {
+            robotManager->moveForward();
+        }
+        else if ( k.getChar() == 'a')
+        {
+            robotManager->turnLeft();
+        }
+        else if ( k.getChar() == 'd')
+        {
+            robotManager->turnRight();
+        }
+        else if ( k.getChar() == 's')
+        {
+            robotManager->moveBackwards();
         }
     }
 }
@@ -223,6 +264,8 @@ bool rd::RobotDevastation::interruptModule()
     //-- Close img related ports:
     inImg.interrupt();
     inImg.close();
+
+    robotManager->disconnect();
 
     return true;
 }

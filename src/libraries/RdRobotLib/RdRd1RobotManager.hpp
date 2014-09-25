@@ -9,15 +9,16 @@
 
 namespace rd{
 
-class RdRd1RobotManager : RdRobotManager
+class RdRd1RobotManager : public RdRobotManager
 {
     public:
+
         //-- Robot movement related functions    
         virtual bool moveForward(int velocity = UNUSED);
         virtual bool moveBackwards(int velocity = UNUSED);
         virtual bool turnLeft(int velocity = UNUSED);
         virtual bool turnRight(int velocity = UNUSED);
-        virtual bool stopMovement() = 0;
+        virtual bool stopMovement();
 
         //-- Robot camera related functions
         virtual bool tiltUp(int velocity = UNUSED);
@@ -30,6 +31,8 @@ class RdRd1RobotManager : RdRobotManager
         virtual bool disconnect();
         virtual bool test();
         virtual bool ping();
+
+        virtual void onDestroy();
 
     protected:
 

@@ -39,7 +39,7 @@ class RdRobotManager
         //-- Constants
         static const int UNUSED = -1;
 
-        RdRobotManager();
+        RdRobotManager() {}
 };
 
 }

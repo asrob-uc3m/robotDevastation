@@ -5,13 +5,13 @@
 namespace rd{
 
 bool RdRd1RobotManager::moveForward(int velocity) {
-    double velocities[] = {1000,2000};
+    double velocities[] = {2000,1000};
     vel->velocityMove(velocities);
     return true;
 }
 
 bool RdRd1RobotManager::moveBackwards(int velocity) {
-    double velocities[] = {2000,1000};
+    double velocities[] = {1000,2000};
     vel->velocityMove(velocities);
     return true;
 }
@@ -77,4 +77,8 @@ bool RdRd1RobotManager::ping()  {
     return true;
 }
 
+void RdRd1RobotManager::onDestroy(){
+    return;
 }
+
+} //rd
