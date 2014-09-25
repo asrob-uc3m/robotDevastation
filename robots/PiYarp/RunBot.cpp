@@ -29,9 +29,12 @@ bool RunBot::configure(ResourceFinder &rf) {
 
     if( camera == "on" )
     {
+        std::string cameraPortName(prefixWithSlash);
+        cameraPortName += "/img:o";
         Property cameraOptions;
         cameraOptions.put("device","grabber");
         cameraOptions.put("subdevice","opencv_grabber");
+        cameraOptions.put("name",cameraPortName);
         cameraDevice.open(cameraOptions);
     }    
 
