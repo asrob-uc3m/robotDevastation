@@ -6,19 +6,25 @@
 
 bool PwmBot::open(Searchable& config) {
 
-    numMotors = config.check("pwmPins",Value(DEFAULT_NUM_MOTORS),"Number of motors").asInt();
+    Bottle gpiosBottle = config.findGroup("gpios").tail();  //-- e.g. 17 27
 
-    //Bottle ids = config.findGroup("ids").tail();  //-- e.g. 15
+    printf(BOLDBLUE);
+    printf("PwmBot options:\n");
+    printf("\t--gpios %s\n",gpiosBottle.toString().c_str());
+    printf(RESET);
 
     if ( config.check("pcm") )
-    {
         setup(PULSE_WIDTH_INCREMENT_GRANULARITY_US_DEFAULT, DELAY_VIA_PCM);
-        RD_INFO("Using pcm.\n");
-    }
     else
-    {
         setup(PULSE_WIDTH_INCREMENT_GRANULARITY_US_DEFAULT, DELAY_VIA_PWM);
-        RD_INFO("Using std pwm.\n");
+
+    for(int j=0; j < gpiosBottle.size(); j++)
+    {
+        int gpio = gpiosBottle.get(j).asInt();
+        init_channel(j, SUBCYCLE_TIME_US_DEFAULT);  //10ms;
+        print_channel(j);
+        gpios.push_back( gpiosBottle.get(j).asInt() );
+        RD_SUCCESS("Configured gpio %d on channel %d.\n",gpio,j);
     }
     
     return true;

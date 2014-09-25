@@ -8,6 +8,7 @@
 #include <yarp/dev/Drivers.h>
 #include <yarp/dev/PolyDriver.h>
 
+#include <vector>
 #include <stdlib.h>  // just for exit()
 
 #include "../RdMacros.hpp"
@@ -281,7 +282,7 @@ class PwmBot : public DeviceDriver, public IPositionControl, public IVelocityCon
          */
         bool indexWithinRange(const int& idx);
 
-        int numMotors;
+        std::vector< int > gpios;
 
 };
 

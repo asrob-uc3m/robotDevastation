@@ -17,7 +17,9 @@ bool PwmBot::setVelocityMode() {
 bool PwmBot::velocityMove(int j, double sp) {
     RD_INFO("(%d)\n",j);
 
-    RD_WARNING("Not implemented yet.\n");
+    // Clear and start again
+    clear_channel_gpio(j, gpios[j]);
+    add_channel_pulse(j, gpios[j], 0, sp / PULSE_WIDTH_INCREMENT_GRANULARITY_US_DEFAULT);
 
     return true;
 }
@@ -28,7 +30,7 @@ bool PwmBot::velocityMove(const double *sp) {
     RD_INFO("\n");
 
     bool ok = true;
-    for(int j=0; j<numMotors; j++)
+    for(int j=0; j<gpios.size(); j++)
     {
         ok &= this->velocityMove(j,sp[j]);
     }

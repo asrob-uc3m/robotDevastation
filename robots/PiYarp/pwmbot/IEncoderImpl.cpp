@@ -44,7 +44,7 @@ bool PwmBot::setEncoders(const double *vals) {
     RD_INFO("\n");
 
     bool ok = true;
-    for(unsigned int i=0; i < numMotors; i++)
+    for(unsigned int i=0; i < gpios.size(); i++)
         ok &= setEncoder(i,vals[i]);
     return ok;
 }
@@ -66,7 +66,7 @@ bool PwmBot::getEncoders(double *encs) {
     //RD_INFO("\n");  //-- Too verbose in stream.
 
     bool ok = true;
-    for(unsigned int i=0; i < numMotors; i++)
+    for(unsigned int i=0; i < gpios.size(); i++)
         ok &= getEncoder(i,&encs[i]);
     return ok;
 }
@@ -90,7 +90,7 @@ bool PwmBot::getEncoderSpeeds(double *spds) {
     RD_INFO("\n");
 
     bool ok = true;
-    for(unsigned int i=0;i<numMotors;i++)
+    for(unsigned int i=0;i<gpios.size();i++)
         ok &= getEncoderSpeed(i,&spds[i]);
     return ok;
 }

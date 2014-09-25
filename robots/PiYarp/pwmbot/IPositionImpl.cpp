@@ -5,7 +5,7 @@
 // ------------------ IPosition Related ----------------------------------------
 
 bool PwmBot::getAxes(int *axes) {
-    *axes = numMotors;
+    *axes = gpios.size();
     return true;
 }
 
@@ -78,7 +78,7 @@ bool PwmBot::checkMotionDone(bool *flag) {
     RD_INFO("\n");
 
     bool ok = true;
-    for(int j=0; j<numMotors; j++)
+    for(int j=0; j<gpios.size(); j++)
     {
         ok &= this->checkMotionDone(j,&flag[j]);
     }
@@ -102,7 +102,7 @@ bool PwmBot::setRefSpeeds(const double *spds) {
     RD_INFO("\n");
 
     bool ok = true;
-    for(unsigned int i=0;i<numMotors;i++)
+    for(unsigned int i=0;i<gpios.size();i++)
         ok &= setRefSpeed(i,spds[i]);
     return ok;
 }
@@ -126,7 +126,7 @@ bool PwmBot::setRefAccelerations(const double *accs) {
     RD_INFO("\n");
 
     bool ok = true;
-    for(unsigned int i=0;i<numMotors;i++)
+    for(unsigned int i=0;i<gpios.size();i++)
         ok &= setRefAcceleration(i,accs[i]);
     return ok;
 }
@@ -150,7 +150,7 @@ bool PwmBot::getRefSpeeds(double *spds) {
     RD_INFO("\n");
 
     bool ok = true;
-    for(unsigned int i=0;i<numMotors;i++)
+    for(unsigned int i=0;i<gpios.size();i++)
         ok &= getRefSpeed(i,&spds[i]);
     return ok;
 }
@@ -174,7 +174,7 @@ bool PwmBot::getRefAccelerations(double *accs) {
     RD_INFO("\n");
 
     bool ok = true;
-    for(unsigned int i=0;i<numMotors;i++)
+    for(unsigned int i=0;i<gpios.size();i++)
         ok &= getRefAcceleration(i,&accs[i]);
     return ok;
 }
@@ -198,7 +198,7 @@ bool PwmBot::stop() {
     RD_INFO("\n");
 
     bool ok = true;
-    for(unsigned int i=0;i<numMotors;i++)
+    for(unsigned int i=0;i<gpios.size();i++)
         ok &= stop(i);
     return ok;
 }

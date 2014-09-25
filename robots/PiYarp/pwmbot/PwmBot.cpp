@@ -5,8 +5,8 @@
 // -----------------------------------------------------------------------------
 
 bool PwmBot::indexWithinRange(const int& idx) {
-    if (idx >= numMotors ){
-        RD_WARNING("Index out of range!! (%d >= %d)!!!\n",idx,numMotors);
+    if (idx >= gpios.size() ){
+        RD_WARNING("Index out of range!! (%d >= %d)!!!\n",idx,gpios.size());
         return false;
     }
     return true;
