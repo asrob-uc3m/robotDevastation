@@ -36,6 +36,13 @@ bool RunBot::configure(ResourceFinder &rf) {
         cameraOptions.put("subdevice","opencv_grabber");
         cameraOptions.put("name",cameraPortName);
         cameraDevice.open(cameraOptions);
+
+        if (!cameraDevice.isValid())
+        {
+            RD_ERROR("Camera class instantiation not worked.\n");
+            // cameraDevice.close();  // un-needed?
+            return false;
+        }
     }    
 
     Property robotOptions;
@@ -46,8 +53,9 @@ bool RunBot::configure(ResourceFinder &rf) {
 
     robotDevice.open(robotOptions);
     
-    if (!robotDevice.isValid()) {
-        RD_ERROR("Class instantiation not worked.\n");
+    if (!robotDevice.isValid())
+    {
+        RD_ERROR("Robot class instantiation not worked.\n");
         RD_ERROR("Be sure CMake \"ENABLE_PiYarp_%s\" variable is set \"ON\"\n",type.c_str());
         RD_ERROR("\"SKIP_%s is set\" --> should be --> \"ENABLE_%s is set\"\n",type.c_str(),type.c_str());
         RD_ERROR("Also check raspi-motor communications.\n");
