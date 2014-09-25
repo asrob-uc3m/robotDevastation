@@ -10,10 +10,12 @@ IF (NOT SKIP_pwmbot)
 
   find_package(YARP REQUIRED)
 
+  set ( CMAKE_CXX_FLAGS "-fpermissive")
+
   # Include any directories needed for YARP
   include_directories(${YARP_INCLUDE_DIRS})
 
-  yarp_add_plugin(pwmbot PwmBot.cpp IDeviceImpl.cpp IEncoderImpl.cpp IPositionImpl.cpp IVelocityImpl.cpp )
+  yarp_add_plugin(pwmbot PwmBot.cpp IDeviceImpl.cpp IEncoderImpl.cpp IPositionImpl.cpp IVelocityImpl.cpp pwm.cpp )
   TARGET_LINK_LIBRARIES(pwmbot ${YARP_LIBRARIES})
   #install(TARGETS pwmbot DESTINATION lib)
 

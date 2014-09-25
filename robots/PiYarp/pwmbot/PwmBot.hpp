@@ -12,6 +12,8 @@
 
 #include "../RdMacros.hpp"
 
+#include "pwm.hpp"
+
 #define DEFAULT_NUM_MOTORS 2
 
 using namespace yarp::os;
