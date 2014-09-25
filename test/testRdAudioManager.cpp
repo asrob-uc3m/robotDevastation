@@ -45,16 +45,16 @@ TEST_F( RdAudioManagerTest, AudioManagerIsSingleton)
 TEST_F( RdAudioManagerTest, AudioManagerLoadsAudio)
 {
     ASSERT_NE((RdAudioManager *)NULL, audioManager);
-    ASSERT_TRUE(audioManager->load(sound_bso, "bso", 0));
-    ASSERT_TRUE(audioManager->load(sound_shoot, "shoot", 1));
-    ASSERT_TRUE(audioManager->load(sound_explosion, "explosion", 1));
+    ASSERT_TRUE(audioManager->load(sound_bso, "bso", RdAudioManager::MUSIC));
+    ASSERT_TRUE(audioManager->load(sound_shoot, "shoot", RdAudioManager::FX));
+    ASSERT_TRUE(audioManager->load(sound_explosion, "explosion", RdAudioManager::FX));
 }
 
 TEST_F( RdAudioManagerTest, AudioManagerPlaysOneSound )
 {
     ASSERT_NE((RdAudioManager *)NULL, audioManager);
 
-    ASSERT_TRUE(audioManager->load(sound_bso, "bso", 0));
+    ASSERT_TRUE(audioManager->load(sound_bso, "bso", RdAudioManager::MUSIC));
 
     EXPECT_TRUE(audioManager->playMusic("bso", true));
     sleep(2);
@@ -65,8 +65,8 @@ TEST_F( RdAudioManagerTest, AudioManagerPlaysFx )
 {
     ASSERT_NE((RdAudioManager *)NULL, audioManager);
 
-    ASSERT_TRUE(audioManager->load(sound_shoot, "shoot", 1));
-    ASSERT_TRUE(audioManager->load(sound_explosion, "explosion", 1));
+    ASSERT_TRUE(audioManager->load(sound_shoot, "shoot", RdAudioManager::FX));
+    ASSERT_TRUE(audioManager->load(sound_explosion, "explosion", RdAudioManager::FX));
 
     EXPECT_TRUE(audioManager->playSound("shoot", false));
     sleep(1);
@@ -78,9 +78,9 @@ TEST_F( RdAudioManagerTest, AudioManagerPlaysAllSounds )
 {
     ASSERT_NE((RdAudioManager *)NULL, audioManager);
 
-    ASSERT_TRUE(audioManager->load(sound_bso, "bso", 0));
-    ASSERT_TRUE(audioManager->load(sound_shoot, "shoot", 1));
-    ASSERT_TRUE(audioManager->load(sound_explosion, "explosion", 1));
+    ASSERT_TRUE(audioManager->load(sound_bso, "bso", RdAudioManager::MUSIC));
+    ASSERT_TRUE(audioManager->load(sound_shoot, "shoot", RdAudioManager::FX));
+    ASSERT_TRUE(audioManager->load(sound_explosion, "explosion", RdAudioManager::FX));
 
     EXPECT_TRUE(audioManager->playMusic("bso", true));
     EXPECT_TRUE(audioManager->playSound("shoot", true));

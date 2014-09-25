@@ -6,7 +6,7 @@
 #include <yarp/os/RFModule.h>
 #include <yarp/os/RpcServer.h>
 
-#include <vector>
+#include <map>
 
 #include "RdUtils.hpp"
 #include "RdRpcResponder.hpp"
@@ -41,7 +41,7 @@ class RdServer : public yarp::os::RFModule
 
         int serverStatus;
 
-        std::vector <RdPlayer> players;
+        std::map <int, RdPlayer> players;
 
         yarp::os::RpcServer rpcServer;
         RdRpcResponder rdRpcResponder;

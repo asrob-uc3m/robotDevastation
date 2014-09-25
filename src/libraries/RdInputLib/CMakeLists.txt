@@ -2,21 +2,25 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (ENABLE_RdMentalMapLib)
+IF (ENABLE_RdInputLib)
 
-set(KEYWORD "RdMentalMapLib")
+set(KEYWORD "RdInputLib")
+find_package(YARP REQUIRED) # \TODO I think it is better to move this to the highest CMakelist.txt in the hierarchy
+list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH})
 
 include_directories(${RD_INCLUDE_DIRS})
+include_directories(${YARP_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdMentalMap.cpp RdPlayer.cpp RdTarget.cpp RdWeapon.cpp)
-target_link_libraries(${KEYWORD} RdMusicLib)
+add_library(${KEYWORD} RdInputManager.cpp RdKeyboardManager.cpp RdKey.cpp)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+target_link_libraries(${KEYWORD} SDL ${YARP_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
 #set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
 set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
 
-ENDIF (ENABLE_RdMentalMapLib)
+ENDIF (ENABLE_RdInputLib)
 
 
 

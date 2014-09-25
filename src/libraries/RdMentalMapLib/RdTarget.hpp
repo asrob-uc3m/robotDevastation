@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __RD_ENEMY_HPP__
-#define __RD_ENEMY_HPP__
+#ifndef __RD_TARGET_HPP__
+#define __RD_TARGET_HPP__
 
 #include "RdPlayer.hpp"
 #include "RdVector2dBase.hpp"
@@ -37,4 +37,4 @@ private:
 };
 }
 
-#endif //__RD_ENEMY_HPP__
+#endif //__RD_TARGET_HPP__

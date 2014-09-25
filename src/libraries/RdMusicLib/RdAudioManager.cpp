@@ -4,6 +4,10 @@
 //-- This is very important:
 rd::RdAudioManager * rd::RdAudioManager::audioManagerInstance = NULL;
 
+//-- C++ forces us to initialize constants here:
+const int rd::RdAudioManager::MUSIC = 0;
+const int rd::RdAudioManager::FX = 1;
+
 rd::RdAudioManager::RdAudioManager()
 {
     if(SDL_Init(SDL_INIT_AUDIO)==-1)

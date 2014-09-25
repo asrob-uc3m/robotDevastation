@@ -3,6 +3,7 @@
 
 const SDL_Color rd::RdGameScreen::greencolor = {0, 255, 0, 0};
 const SDL_Color rd::RdGameScreen::redcolor =   {255, 0, 0, 0};
+const SDL_Color rd::RdGameScreen::bluecolor =  {0, 0, 255, 0};
 
 rd::RdGameScreen::RdGameScreen()
 {
@@ -41,6 +42,13 @@ rd::RdGameScreen::RdGameScreen()
         return;
     }
 
+    weapon_font = TTF_OpenFont(font_name, 12);
+    if (weapon_font == NULL)
+    {
+        RD_ERROR("Unable to load font: %s %s \n", font_name, TTF_GetError());
+        return;
+    }
+
     mentalMap = RdMentalMap::getMentalMap();
 }
 
@@ -63,6 +71,58 @@ void rd::RdGameScreen::show(SDL_Surface *screen)
 
     //-- Draw scope:
     drawScope(screen);
+
+    //-- Draw user interface with user health, weapon and ammo
+    RdPlayer me = mentalMap->getMyself();
+    RdWeapon weapon = mentalMap->getCurrentWeapon();
+    drawUserUI(screen, me, weapon);
+}
+
+bool rd::RdGameScreen::drawUserUI(SDL_Surface *screen, rd::RdPlayer user, rd::RdWeapon weapon)
+{
+    //-- User health bar:
+    //--------------------------------------------------------------------------------------------
+    int bar_height = SCREEN_HEIGHT - USER_HEALTH_MARGIN_Y - USER_HEALTH_BOTTOM_Y;
+    int current_bar_height = (int)( user.getHealth() / (float) user.getMaxHealth() * bar_height);
+
+    SDL_Rect health_bar = { SCREEN_WIDTH - USER_HEALTH_MARGIN_X - USER_HEALTH_W, USER_HEALTH_MARGIN_Y,
+                            USER_HEALTH_W, bar_height};
+    SDL_Rect current_health_bar = { health_bar.x, health_bar.y + (bar_height-current_bar_height),
+                                    health_bar.w, current_bar_height};
+
+    SDL_FillRect(screen, &health_bar, SDL_MapRGB(screen->format, 0, 0, 127));
+    SDL_FillRect(screen, &current_health_bar, SDL_MapRGB(screen->format, 0, 0, 255));
+
+    //-- Weapon data:
+    //---------------------------------------------------------------------------------------------
+    //-- Ammo bar:
+    int current_ammo_width = (int)( weapon.getCurrentAmmo() / (float) weapon.getMaxAmmo() * AMMO_BAR_W);
+
+    SDL_Rect ammo_bar = { health_bar.x - AMMO_BAR_MARGIN_X - AMMO_BAR_W,
+                          health_bar.y + health_bar.h + AMMO_BAR_MARGIN_Y,
+                          AMMO_BAR_W, AMMO_BAR_H };
+    SDL_Rect current_ammo_bar = { ammo_bar.x + (AMMO_BAR_W - current_ammo_width),
+                                  ammo_bar.y,
+                                  current_ammo_width, ammo_bar.h};
+
+    SDL_FillRect(screen, &ammo_bar, SDL_MapRGB(screen->format, 0, 0, 127));
+    SDL_FillRect(screen, &current_ammo_bar, SDL_MapRGB(screen->format, 0, 0, 255));
+
+    //-- Weapon name & ammo text
+    SDL_Surface * name_surface = TTF_RenderText_Solid(weapon_font, weapon.getName().c_str(), bluecolor);
+    SDL_Rect name_rect = { ammo_bar.x, ammo_bar.y - 5 - WEAPON_NAME_HEIGHT, WEAPON_NAME_WIDTH, WEAPON_NAME_HEIGHT};
+    SDL_Rect text_rect_src = {0, 0, WEAPON_NAME_WIDTH, WEAPON_NAME_HEIGHT};
+    SDL_BlitSurface(name_surface, &text_rect_src, screen, &name_rect);
+
+    std::stringstream sstream;
+    sstream << weapon.getCurrentAmmo() << "/" << weapon.getMaxAmmo();
+    SDL_Surface * ammo_surface = TTF_RenderText_Solid(weapon_font, sstream.str().c_str(), bluecolor);
+    SDL_Rect ammo_rect = { ammo_bar.x + ammo_bar.w - AMMO_TEXT_WIDTH, ammo_bar.y - 5 - AMMO_TEXT_HEIGHT,
+                           AMMO_TEXT_WIDTH, AMMO_TEXT_HEIGHT};
+    SDL_Rect ammo_rect_src = {0, 0, AMMO_TEXT_WIDTH, AMMO_TEXT_HEIGHT};
+    SDL_BlitSurface(ammo_surface, &ammo_rect_src, screen, &ammo_rect);
+
+    return true;
 }
 
 bool rd::RdGameScreen::drawPlayerUI(SDL_Surface *screen, RdPlayer player, int x, int y)

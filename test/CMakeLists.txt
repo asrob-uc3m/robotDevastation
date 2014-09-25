@@ -15,3 +15,9 @@ target_link_libraries(testMentalMap ${RD_LIBRARIES} RdMentalMapLib gtest gtest_m
 
 add_executable(testHUD testHUD.cpp)
 target_link_libraries(testHUD ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
+
+add_executable(testRdInputManager testRdInputManager.cpp)
+target_link_libraries(testRdInputManager ${RD_LIBRARIES} RdInputLib gtest gtest_main)
+
+add_executable(testRdYarpNetworkManager testRdYarpNetworkManager.cpp)
+target_link_libraries(testRdYarpNetworkManager ${RD_LIBRARIES} RdNetworkLib gtest gtest_main)

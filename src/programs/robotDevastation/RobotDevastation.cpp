@@ -4,7 +4,7 @@
 
 bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 {
-
+    //-- Show help
     //printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
         printf("RobotDevastation options:\n");
@@ -16,6 +16,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     }
     printf("RobotDevastation using no additional special options.\n");
 
+    //-- Get player data
+    //-----------------------------------------------------------------------------
     rdRoot = ::getenv ("RD_ROOT");
     if (rdRoot!=NULL)
     {
@@ -57,6 +59,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         return false;
     }
 
+    //-- Init mentalMap
     mentalMap = RdMentalMap::getMentalMap();
     mentalMap->configure( rf.find("id").asInt() );
 
@@ -64,43 +67,80 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     players.push_back( RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0) );
     mentalMap->updatePlayers(players);
 
+    mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
+
+    //-- Init input manager
+    inputManager = RdInputManager::getInputManager();
+    inputManager->addInputEventListener(this);
+    if (!inputManager->start() )
+    {
+        RD_ERROR("Could not init inputManager!\n");
+        return false;
+    }
+
+    //-- Init sound
     if( ! initSound() )
         return false;
 
     audioManager->playMusic("bso", -1);
 
+    //-- Init output thread
     rateThreadOutput.setRdRoot(rdRoot);
     rateThreadOutput.setInImg(&inImg);
     rateThreadOutput.init(rf);
 
+    //-- Init process thread
     rateThreadProcess.setInImg(&inImg);
     rateThreadProcess.init(rf);
-    eventInput.start();   
 
-    //-----------------OPEN LOCAL PORTS------------//
+    //-- Init network manager
+    networkManager = RdYarpNetworkManager::getNetworkManager();
+    networkManager->addNetworkEventListener(mentalMap);
+    mentalMap->addMentalMapEventListener((RdYarpNetworkManager *)networkManager);
+    networkManager->login(mentalMap->getMyself());
+
+    //-----------------OPEN REMAINING LOCAL PORTS------------//
+    /// \todo Encapsulate this
     std::ostringstream s;
     s << mentalMap->getMyself().getId();
     inImg.open(("/img/"+s.str()).c_str());
-    rpcClient.open(("/rpc/"+s.str()).c_str());
-    callbackPort.open(("/callback/"+s.str()).c_str());
-    callbackPort.useCallback();
 
-    while(1){
-        if(rpcClient.getOutputCount() > 0) break;
-        printf("Waiting for rpc to be connected to server...\n");
-        yarp::os::Time::delay(0.5);
-        yarp::os::Network::connect( ("/rpc/"+s.str()).c_str() , "/rdServer" );
-    }
-    yarp::os::Network::connect( "/rdBroadcast", ("/callback/"+s.str()).c_str() );
-
-    yarp::os::Bottle msgRdPlayer,res;
-    msgRdPlayer.addVocab(VOCAB_RD_LOGIN);
-    msgRdPlayer.addInt(mentalMap->getMyself().getId());
-    msgRdPlayer.addString(mentalMap->getMyself().getName().c_str());
-    msgRdPlayer.addInt(mentalMap->getMyself().getTeamId());
-    rpcClient.write(msgRdPlayer,res);
-    RD_INFO("rdServer response from login: %s\n",res.toString().c_str());
     return true;
+}
+
+bool rd::RobotDevastation::onKeyPressed(rd::RdKey k)
+{
+    if ( k.isControlKey() )
+    {
+        RD_SUCCESS( "Control key with code %d pressed!\n", k.getValue() );
+
+        if ( k.getValue() == RdKey::KEY_SPACE)
+        {
+            //-- Do things to shoot
+            mentalMap->shoot();
+            RD_SUCCESS("Shoot!\n");
+        }
+        else if ( k.getValue() == RdKey::KEY_ESCAPE)
+        {
+            RD_SUCCESS("Exit!\n");
+            this->interruptModule();
+        }
+    }
+    else if (k.isPrintable() )
+    {
+        RD_SUCCESS( "Key \"%c\" was pressed!\n", k.getChar() );
+
+        if ( k.getChar() == 'r')
+        {
+            RD_SUCCESS("Reload!\n");
+            mentalMap->reload();
+        }
+        else if ( k.getChar() == 'q')
+        {
+            RD_SUCCESS("Exit!\n");
+            this->interruptModule();
+        }
+    }
 }
 
 double rd::RobotDevastation::getPeriod()
@@ -135,16 +175,35 @@ bool rd::RobotDevastation::initSound()
     if ( ! audioManager->load(rdRootStr+"/share/sounds/15_explosion.wav", "explosion", 1) )
         return false;
 
+    if ( ! audioManager->load(rdRootStr+"/share/sounds/03_clip.wav", "noAmmo", 1) )
+        return false;
+
+    if ( ! audioManager->load(rdRootStr+"/share/sounds/04_milaction.wav", "reload", 1) )
+        return false;
+
     return true;
 }
 
-bool rd::RobotDevastation::interruptModule() {
-    RD_INFO("Logout...\n");
-    yarp::os::Bottle msgRdPlayer,res;
-    msgRdPlayer.addVocab(VOCAB_RD_LOGOUT);
-    msgRdPlayer.addInt(mentalMap->getMyself().getId());
-    rpcClient.write(msgRdPlayer,res);
+bool rd::RobotDevastation::interruptModule()
+{
     RD_INFO("Closing program...\n");
+
+    rateThreadOutput.stop();
+    rateThreadProcess.stop();
+
+    //-- Detach listeners to avoid segmentation faults
+    inputManager->removeInputEventListeners();
+    networkManager->removeNetworkEventListeners();
+    mentalMap->removeMentalMapEventListeners();
+
+    //-- Closing input manager:
+    RdInputManager::destroyInputManager();
+    inputManager = NULL;
+
+    //-- Closing network system
+    networkManager->logout(mentalMap->getMyself());
+    RdYarpNetworkManager::destroyNetworkManager();
+    networkManager = NULL;
 
     //-- Closing audio system:
     RdAudioManager::destroyAudioManager();
@@ -154,13 +213,12 @@ bool rd::RobotDevastation::interruptModule() {
     RdMentalMap::destroyMentalMap();
     mentalMap = NULL;
 
-    callbackPort.disableCallback();
-    // interrupt ports
+
+
+    //-- Close img related ports:
     inImg.interrupt();
-    callbackPort.interrupt();
-    // close ports
     inImg.close();
-    callbackPort.close();
+
     return true;
 }
 
