@@ -47,7 +47,7 @@ rdClient
 
 #include <yarp/os/Network.h>
 
-#include "RdMacros.hpp"
+#include "RdUtils.hpp"
 #include "RobotDevastation.hpp"
 
 int main(int argc, char *argv[]) {

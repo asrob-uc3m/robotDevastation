@@ -8,7 +8,7 @@ set(KEYWORD "RdRobotLib")
 
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdRobotManager.cpp)
+add_library(${KEYWORD} RdRobotManager.cpp RdRd1RobotManager.cpp)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
