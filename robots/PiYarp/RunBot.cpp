@@ -19,15 +19,29 @@ bool RunBot::configure(ResourceFinder &rf) {
     std::string prefixWithSlash("/");
     prefixWithSlash += prefix;
 
+    std::string camera = rf.check("camera",Value(DEFAULT_CAMERA),"Camera on or off").asString();
+    if( camera == "on" )
+        printf("\t--camera on (Camera on or off)\n" );
+    else
+        printf("\t--camera off (Camera on or off)\n" );
+
     printf(RESET);
 
-    Property options;
-    options.fromString(rf.toString());
-    options.put("device","controlboard");
-    options.put("subdevice",type);
-    options.put("name",prefixWithSlash);
+    if( camera == "on" )
+    {
+        Property cameraOptions;
+        cameraOptions.put("device","grabber");
+        cameraOptions.put("subdevice","opencv_grabber");
+        cameraDevice.open(cameraOptions);
+    }    
 
-    robotDevice.open(options);
+    Property robotOptions;
+    robotOptions.fromString(rf.toString());
+    robotOptions.put("device","controlboard");
+    robotOptions.put("subdevice",type);
+    robotOptions.put("name",prefixWithSlash);
+
+    robotDevice.open(robotOptions);
     
     if (!robotDevice.isValid()) {
         RD_ERROR("Class instantiation not worked.\n");

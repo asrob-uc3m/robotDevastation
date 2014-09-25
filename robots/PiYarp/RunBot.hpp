@@ -15,6 +15,7 @@
 
 #define DEFAULT_TYPE "pwmbot"
 #define DEFAULT_PREFIX "raspi"
+#define DEFAULT_CAMERA "off"
 
 using namespace yarp::os;
 using namespace yarp::dev;
@@ -27,6 +28,7 @@ using namespace yarp::dev;
  */
 class RunBot : public RFModule {
 protected:
+    yarp::dev::PolyDriver cameraDevice;
     yarp::dev::PolyDriver robotDevice;
 
 //    double getPeriod();
