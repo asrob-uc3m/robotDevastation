@@ -23,6 +23,7 @@ bool PwmBot::open(Searchable& config) {
         int gpio = gpiosBottle.get(j).asInt();
         init_channel(j, SUBCYCLE_TIME_US_DEFAULT);  //10ms;
         print_channel(j);
+        add_channel_pulse(j, gpio, 0);
         gpios.push_back( gpiosBottle.get(j).asInt() );
         RD_SUCCESS("Configured gpio %d on channel %d.\n",gpio,j);
     }
