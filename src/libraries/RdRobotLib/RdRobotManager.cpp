@@ -3,6 +3,19 @@
 //-- This is very important:
 rd::RdRobotManager * rd::RdRobotManager::robotManager = NULL;
 
+
+void rd::RdRobotManager::registerManager(std::string name, rd::RdRobotManager *manager)
+{
+    if ( robotManagerRegistry.find(name) == robotManagerRegistry.end() )
+    {
+        robotManagerRegistry[name] = manager;
+    }
+    else
+    {
+        RD_ERROR("RdManager with name \"%s\" already exists!\n", name.c_str());
+    }
+}
+
 std::vector<std::string> rd::RdRobotManager::listAll()
 {
     std::vector<std::string> robot_manager_list;
@@ -15,8 +28,36 @@ std::vector<std::string> rd::RdRobotManager::listAll()
     return robot_manager_list;
 }
 
-rd::RdRobotManager *rd::RdRobotManager::getRobotManager()
+rd::RdRobotManager *rd::RdRobotManager::getRobotManager(std::string name)
 {
-    //-- Work in progress
-    return NULL;
+    if (robotManager == NULL)
+    {
+        if ( robotManagerRegistry.find(name) != robotManagerRegistry.end() )
+        {
+            robotManager = robotManagerRegistry[name];
+        }
+        else
+        {
+            RD_ERROR("RdRobotManager requested (\"%s\") does not exist.\n", name.c_str());
+        }
+    }
+
+    return robotManager;
+}
+
+bool rd::RdRobotManager::destroyRobotManager()
+{
+    if (robotManager == NULL)
+        return false;
+
+    delete robotManager;
+    robotManager = NULL;
+
+    return true;
+}
+
+
+rd::RdRobotManager::~RdRobotManager()
+{
+    this->onDestroy();
 }

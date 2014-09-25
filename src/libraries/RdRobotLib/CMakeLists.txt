@@ -9,13 +9,27 @@ set(KEYWORD "RdRobotLib")
 include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} RdRobotManager.cpp)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
 #set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
 set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
 
-ENDIF (ENABLE_RdRobotLib)
+ENDIF()
 
+IF(ENABLE_RdRobotLib AND ENABLE_RdRobotPlugins)
 
+# Save previous output dir to restore it later:
+set(OLD_LIBRARY_PATH ${LIBRARY_OUTPUT_PATH})
+set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/plugins)
 
+# RdTextualRobot shared lib
+add_library(RdTextualRobot SHARED RdTextualRobotManager.cpp)
+target_link_libraries(RdTextualRobot RdRobotLib)
+install(TARGETS RdTextualRobot DESTINATION ${CMAKE_SOURCE_DIR}/plugins)
+
+# Restore previous dir:
+set(LIBRARY_OUTPUT_PATH ${OLD_LIBRARY_PATH})
+
+ENDIF()
