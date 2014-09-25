@@ -19,7 +19,7 @@ bool RunBot::configure(ResourceFinder &rf) {
     std::string prefixWithSlash("/");
     prefixWithSlash += prefix;
 
-    std::string camera = rf.check("camera",Value(DEFAULT_CAMERA),"Camera on or off").asString();
+    camera = rf.check("camera",Value(DEFAULT_CAMERA),"Camera on or off").asString();
     if( camera == "on" )
         printf("\t--camera on (Camera on or off)\n" );
     else
@@ -59,8 +59,24 @@ bool RunBot::configure(ResourceFinder &rf) {
 }
 
 /************************************************************************/
+
 bool RunBot::updateModule() {
-//    printf("Alive\n");
+    RD_INFO("Alive\n");
     return true;
 }
+
+/************************************************************************/
+
+bool RunBot::close() {
+    if( camera == "on" )
+    {
+        cameraDevice.close();
+    }    
+
+    robotDevice.close();
+
+    return true;
+}
+
+/************************************************************************/
 

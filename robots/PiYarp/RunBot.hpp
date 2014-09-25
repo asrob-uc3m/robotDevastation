@@ -27,18 +27,24 @@ using namespace yarp::dev;
  * 
  */
 class RunBot : public RFModule {
-protected:
-    yarp::dev::PolyDriver cameraDevice;
-    yarp::dev::PolyDriver robotDevice;
 
-//    double getPeriod();
-    bool updateModule();
-//    bool interruptModule();
-//    int period;
+    public:
+        RunBot();
+        bool configure(ResourceFinder &rf);
 
-public:
-    RunBot();
-    bool configure(ResourceFinder &rf);
+    protected:
+        yarp::dev::PolyDriver cameraDevice;
+        yarp::dev::PolyDriver robotDevice;
+
+        virtual bool updateModule();
+        virtual bool close();
+
+//        double getPeriod();
+//        bool interruptModule();
+//        int period;
+
+        std::string camera;
+
 };
 
 #endif  // __RUN_BOT__
