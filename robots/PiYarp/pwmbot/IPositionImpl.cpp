@@ -187,7 +187,9 @@ bool PwmBot::stop(int j) {
     //-- Check index within range
     if ( ! this->indexWithinRange(j) ) return false;
 
-    RD_WARNING("Not implemented yet.\n");
+    // Clear and start again
+    clear_channel_gpio(0, gpios[j]);
+    add_channel_pulse(0, gpios[j], 0, 0);
 
     return true;
 }
