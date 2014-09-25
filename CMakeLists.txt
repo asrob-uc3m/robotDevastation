@@ -23,6 +23,7 @@ option(ENABLE_RdMentalMapLib "Choose if you want to compile RdMentalMapLib" TRUE
 option(ENABLE_RdUserInterfaceLib "Choose if you want to compile RdUserInterfaceLib" TRUE)
 option(ENABLE_RdInputLib "Choose if you want to compile RdInputLib" TRUE)
 option(ENABLE_RdNetworkLib "Choose if you want to compile RdNetworkLib" TRUE)
+option(ENABLE_RdRobotLib "Choose if you want to compile RdRobotLib" TRUE)
 
 ##### program options
 option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" TRUE)
