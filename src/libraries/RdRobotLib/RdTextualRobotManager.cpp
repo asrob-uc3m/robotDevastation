@@ -3,6 +3,8 @@
 //#include <yarp/os/SharedLibraryClass.h>
 //YARP_DEFINE_DEFAULT_SHARED_CLASS(rd::RdTextualRobotManager)
 
+rd::RdRobotManager * rd::RdTextualRobotManager::localInstance = NULL;
+
 bool rd::RdTextualRobotManager::moveForward(int time, int velocity)
 {
     std::stringstream sstream_time, sstream_velocity;
@@ -212,8 +214,25 @@ void rd::RdTextualRobotManager::onDestroy()
     disconnect();
 }
 
+bool rd::RdTextualRobotManager::load()
+{
+    if (localInstance == NULL)
+    {
+        localInstance = new RdTextualRobotManager();
+        RdRobotManager::registerManager("textual", localInstance);
+        return true;
+    }
+
+    return false;
+}
+
 rd::RdTextualRobotManager::RdTextualRobotManager()
 {
     connection_status = DISCONNECTED;
-    RdRobotManager::registerManager("textualRobot", this);
+}
+
+
+bool something()
+{
+     std::cout << "Testing library" << std::endl; return true;
 }

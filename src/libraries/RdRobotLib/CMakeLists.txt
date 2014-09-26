@@ -25,8 +25,8 @@ set(OLD_LIBRARY_PATH ${LIBRARY_OUTPUT_PATH})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/plugins)
 
 # RdTextualRobot shared lib
-add_library(RdTextualRobot SHARED RdTextualRobotManager.cpp)
-target_link_libraries(RdTextualRobot RdRobotLib)
+add_library(RdTextualRobot SHARED RdTextualRobotManager.hpp RdTextualRobotManager.cpp RdRobotManager.cpp )
+#target_link_libraries(RdTextualRobot RdRobotLib)
 install(TARGETS RdTextualRobot DESTINATION ${CMAKE_SOURCE_DIR}/plugins)
 
 # Restore previous dir:

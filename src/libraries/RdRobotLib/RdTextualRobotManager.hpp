@@ -6,6 +6,7 @@
 #include "RdRobotManager.hpp"
 
 #include "RdMacros.hpp"
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -38,16 +39,20 @@ class RdTextualRobotManager : public RdRobotManager
         virtual void onDestroy();
         ~RdTextualRobotManager();
 
-        RdTextualRobotManager();
+        static bool load();
 
     private:
+        RdTextualRobotManager();
+        static RdRobotManager * localInstance;
+
         static const int DISCONNECTED = 0;
         static const int CONNECTED = 1;
         int connection_status;
 };
-
-RdTextualRobotManager globalRdTextualRobotManager;
-
 }
+
+bool (*load)(void) = &(rd::RdTextualRobotManager::load);
+bool something(void);
+
 
 #endif //-- __RD_TEXTUAL_ROBOT_MANAGER_HPP__

@@ -2,6 +2,7 @@
 
 //-- This is very important:
 rd::RdRobotManager * rd::RdRobotManager::robotManager = NULL;
+std::map<std::string, rd::RdRobotManager *> rd::RdRobotManager::robotManagerRegistry = std::map<std::string, rd::RdRobotManager *>();
 
 
 void rd::RdRobotManager::registerManager(std::string name, rd::RdRobotManager *manager)
@@ -50,6 +51,7 @@ bool rd::RdRobotManager::destroyRobotManager()
     if (robotManager == NULL)
         return false;
 
+    robotManager->onDestroy();
     delete robotManager;
     robotManager = NULL;
 
@@ -57,7 +59,4 @@ bool rd::RdRobotManager::destroyRobotManager()
 }
 
 
-rd::RdRobotManager::~RdRobotManager()
-{
-    this->onDestroy();
-}
+rd::RdRobotManager::~RdRobotManager() {}

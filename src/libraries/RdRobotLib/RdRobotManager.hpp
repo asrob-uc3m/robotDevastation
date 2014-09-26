@@ -14,22 +14,22 @@ class RdRobotManager
 {
     public:
         //-- Robot movement related functions    
-        virtual bool moveForward(int time = UNUSED, int velocity = UNUSED) {}
-        virtual bool moveBackwards(int time = UNUSED, int velocity = UNUSED){}
-        virtual bool turnLeft(int time = UNUSED, int velocity = UNUSED){}
-        virtual bool turnRight(int time = UNUSED, int velocity = UNUSED){}
+        virtual bool moveForward(int time = UNUSED, int velocity = UNUSED) = 0;
+        virtual bool moveBackwards(int time = UNUSED, int velocity = UNUSED) = 0;
+        virtual bool turnLeft(int time = UNUSED, int velocity = UNUSED) = 0;
+        virtual bool turnRight(int time = UNUSED, int velocity = UNUSED) = 0;
 
         //-- Robot camera related functions
-        virtual bool tiltUp(int time = UNUSED, int velocity = UNUSED){}
-        virtual bool tiltDown(int time = UNUSED, int velocity = UNUSED){}
-        virtual bool panLeft(int time = UNUSED, int velocity = UNUSED){}
-        virtual bool panRight(int time = UNUSED, int velocity = UNUSED){}
+        virtual bool tiltUp(int time = UNUSED, int velocity = UNUSED) = 0;
+        virtual bool tiltDown(int time = UNUSED, int velocity = UNUSED) = 0;
+        virtual bool panLeft(int time = UNUSED, int velocity = UNUSED) = 0;
+        virtual bool panRight(int time = UNUSED, int velocity = UNUSED) = 0;
         
         //-- Robot connection related functions
-        virtual bool connect(){}
-        virtual bool disconnect(){}
-        virtual bool test(){}
-        virtual bool ping(){}
+        virtual bool connect() = 0;
+        virtual bool disconnect() = 0;
+        virtual bool test() = 0;
+        virtual bool ping() = 0;
 
         //-- Singleton related functions
         static void registerManager(std::string name, RdRobotManager * manager);
@@ -38,7 +38,7 @@ class RdRobotManager
         static bool destroyRobotManager();
 
         //-- Other
-        virtual void onDestroy(){}
+        virtual void onDestroy() = 0;
         ~RdRobotManager();
 
         //-- Constants
