@@ -1,0 +1,21 @@
+/**
+  * \mainpage Robot Devastation - The software side
+
+\htmlonly
+<center><a href="http://asrob.uc3m.es/index.php/Robot_Devastation">
+<img src="http://asrob.uc3m.es/images/thumb/2/24/Devastation-thin.png/800px-Devastation-thin.png" />
+</a></center>
+\endhtmlonly
+
+Welcome to Robot Devastation! If you're lost, you probably just want to go back to the <a class="el" href="http://asrob.uc3m.es/index.php/Robot_Devastation">Robot Devastation Wiki</a>.
+Or stay for the fun!
+
+ \li \ref rd_programs
+
+ \li \ref install_on_ubuntu
+
+ \li <a href="https://github.com/asrob-uc3m/robotDevastation" class="el">Browse the Robot Devastation Software Repository</a>
+
+This page can be edited at $RD_ROOT/doc/main.dox.
+
+*/
