@@ -1,5 +1,5 @@
 # Class Diagram #
-<img src="https://raw.githubusercontent.com/asrob-uc3m/robotDevastation/architecture_proposal/doc/Class%20Diagram.png" alt="Class diagram" width="800" />
+<img src="https://raw.githubusercontent.com/asrob-uc3m/robotDevastation/simpleApproach/doc/Class%20Diagram.png" alt="Class diagram" width="800" />
 
 # Class Explanation #
 ## Game ##
