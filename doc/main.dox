@@ -10,10 +10,12 @@
 Welcome to Robot Devastation! If you're lost, you probably just want to go back to the <a class="el" href="http://asrob.uc3m.es/index.php/Robot_Devastation">Robot Devastation Wiki</a>.
 Or stay for the fun!
 
- \li \ref rd_programs
-
  \li \ref install_on_ubuntu
+ \li \ref post_install
 
+Other internal links of interest:
+
+ \li \ref rd_programs
  \li <a href="https://github.com/asrob-uc3m/robotDevastation" class="el">Browse the Robot Devastation Software Repository</a>
 
 This page can be edited at $RD_ROOT/doc/main.dox.
