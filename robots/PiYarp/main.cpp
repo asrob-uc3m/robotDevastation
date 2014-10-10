@@ -9,7 +9,7 @@
 #include <yarp/dev/all.h>
 
 #include "RdMacros.hpp"
-#include "RunBot.hpp"
+#include "LaunchRd1.hpp"
 
 using namespace yarp::os;
 using namespace yarp::dev;
@@ -22,8 +22,8 @@ int main(int argc, char *argv[]) {
 
     ResourceFinder rf;
     rf.setVerbose(false);
-    rf.setDefaultContext("runBot/conf");
-    rf.setDefaultConfigFile("runBot.ini");
+    rf.setDefaultContext("launchRd1/conf");
+    rf.setDefaultConfigFile("launchRd1.ini");
     rf.configure("PI_YARP_ROOT", argc, argv);
 
     RD_INFO("Checking for yarp network...\n");
@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     }
     RD_SUCCESS("Found yarp network.\n");
 
-    RunBot mod;
+    LaunchRd1 mod;
     return mod.runModule(rf);
 }
 

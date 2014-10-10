@@ -21,15 +21,15 @@ using namespace yarp::os;
 using namespace yarp::dev;
 
 /**
- * @ingroup RunBot
+ * @ingroup LaunchRd1
  *
- * The RunBot class tests the Pwm class as a controlboard.
+ * The LaunchRd1 class tests the Pwm class as a controlboard.
  * 
  */
-class RunBot : public RFModule {
+class LaunchRd1 : public RFModule {
 
     public:
-        RunBot();
+        LaunchRd1();
         bool configure(ResourceFinder &rf);
 
     protected:

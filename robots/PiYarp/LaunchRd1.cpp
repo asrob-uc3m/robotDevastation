@@ -1,15 +1,15 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#include "RunBot.hpp"
+#include "LaunchRd1.hpp"
 
 /************************************************************************/
-RunBot::RunBot() { }
+LaunchRd1::LaunchRd1() { }
 
 /************************************************************************/
-bool RunBot::configure(ResourceFinder &rf) {
+bool LaunchRd1::configure(ResourceFinder &rf) {
 
     printf(BOLDBLUE);
-    printf("RunBot options:\n");
+    printf("LaunchRd1 options:\n");
 
     std::string type = rf.check("type",Value(DEFAULT_TYPE),"Name of robot type").asString();
     printf("\t--type %s (Name of robot type)\n", type.c_str() );
@@ -68,14 +68,14 @@ bool RunBot::configure(ResourceFinder &rf) {
 
 /************************************************************************/
 
-bool RunBot::updateModule() {
+bool LaunchRd1::updateModule() {
     RD_INFO("Alive\n");
     return true;
 }
 
 /************************************************************************/
 
-bool RunBot::close() {
+bool LaunchRd1::close() {
     if( camera == "on" )
     {
         cameraDevice.close();
