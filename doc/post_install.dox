@@ -29,6 +29,14 @@ It depends on your robot. A well programmed robot will automatically set everyth
 [gamer PC, terminal 1] /home/pi/PiYarp/build/launchRd1
 \endverbatim
 
+@section post_install_init_game Initializing Robot Devastation
+
+That should be easy!
+
+\verbatim
+[gamer PC, terminal 2] robotDevastation
+\endverbatim
+
 <hr>
 
 This page can be edited at $RD_ROOT/main/doc/post_install.dox.
