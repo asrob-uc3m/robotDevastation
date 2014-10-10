@@ -21,17 +21,12 @@ Only one Robot Devastation server is required per game.
 
 @section post_install_init_robot Initializing a robot
 
-It depends on your robot. A well programmed robot will automatically set everything up on startup. In our case, we can ssh into the robot:
+It depends on your robot. A well programmed robot will automatically set everything up on startup. For the Rd1 robot, we can ssh into the robot and launch the program that initializes motors and camera:
 
 \verbatim
 [gamer PC, terminal 1] ssh pi@222.1.1.22
-\endverbatim
-
-And start the robot motor and camera support:
-
-\verbatim
 [gamer PC, terminal 1] sudo su
-[gamer PC, terminal 1] /home/pi/PiYarp/build/runBot --camera on
+[gamer PC, terminal 1] /home/pi/PiYarp/build/launchRd1
 \endverbatim
 
 <hr>
