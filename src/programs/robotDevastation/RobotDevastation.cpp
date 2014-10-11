@@ -107,8 +107,10 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-----------------OPEN REMAINING LOCAL PORTS------------//
     /// \todo Encapsulate this
     std::ostringstream s;
+    s << "/";
     s << mentalMap->getMyself().getId();
-    inImg.open(("/img/"+s.str()).c_str());
+    s << "/img:i";
+    inImg.open(s.str().c_str());
 
     return true;
 }
