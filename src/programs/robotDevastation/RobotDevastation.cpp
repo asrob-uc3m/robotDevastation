@@ -106,11 +106,21 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     //-----------------OPEN REMAINING LOCAL PORTS------------//
     /// \todo Encapsulate this
-    std::ostringstream s;
-    s << "/";
-    s << mentalMap->getMyself().getId();
-    s << "/robot/img:i";
-    inImg.open(s.str().c_str());
+    std::ostringstream local_img;
+    local_img << "/";
+    local_img << mentalMap->getMyself().getId();
+    local_img << "/robot/img:i";
+    inImg.open(local_img.str().c_str());
+    std::ostringstream remote_img;
+    remote_img << "/";
+    remote_img << mentalMap->getMyself().getId();
+    remote_img << "/raspi/img:o";
+    if(! yarp::os::Network::connect( remote_img.str().c_str(), local_img.str().c_str(), "mjpeg" ) )
+    {
+        RD_ERROR("Could not connect to robot camera.\n");
+        return false;
+    }
+    RD_SUCCESS("Connected to robot camera.\n");
 
     return true;
 }

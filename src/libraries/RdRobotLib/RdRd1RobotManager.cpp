@@ -69,8 +69,14 @@ bool RdRd1RobotManager::connect()  {
 
     bool ok = true;
     ok &= robotDevice.view(vel);
+    if(!ok)
+    {
+        RD_ERROR("Could not connect to robot motors.\n");
+        return false;
+    }
+    RD_SUCCESS("Connected to robot motors.\n");
 
-    return ok;
+    return true;
 }
 
 bool RdRd1RobotManager::disconnect()  {
