@@ -82,6 +82,8 @@ echo "export RD_DIR=$RD_ROOT/build" >> ~/.profile
 echo "export RD_DIR=$RD_ROOT/build" >> ~/.bashrc
 \endverbatim
 
+\ref post_install
+
 <hr>
 
  * @subsection rd_organization Project Organization
