@@ -15,6 +15,7 @@
 #include "RdYarpNetworkManager.hpp"
 #include "RdRobotManager.hpp"
 #include "RdRd1RobotManager.hpp"
+#include "RdStateMachine.hpp"
 
 namespace rd
 {
@@ -35,6 +36,7 @@ class RobotDevastation : public yarp::os::RFModule, public RdInputEventListener
         RdMentalMap * mentalMap;
         RdNetworkManager * networkManager;
         RdRobotManager * robotManager;
+        RdStateMachine * stateMachine;
 
         yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > inImg;
 
