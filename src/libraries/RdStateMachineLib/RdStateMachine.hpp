@@ -5,6 +5,20 @@
 
 namespace rd{
 
+/**
+ * @ingroup rd_libraries
+ *
+ * \defgroup RdStateMachineLib
+ *
+ * @brief The RdStateMachineLib library contains the \ref RdStateMachine base class and derived classes.
+ */
+
+/**
+ * @ingroup RdStateMachineLib
+ *
+ * @brief A base class for State Machines.
+ *
+ */
 class RdStateMachine {
 
     RdStateMachine();

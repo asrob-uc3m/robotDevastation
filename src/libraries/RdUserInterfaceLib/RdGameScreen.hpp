@@ -15,9 +15,22 @@
 #include "RdPlayer.hpp"
 #include "RdWeapon.hpp"
 
-
 namespace rd{
 
+/**
+ * @ingroup rd_libraries
+ *
+ * \defgroup RdUserInterfaceLib
+ *
+ * @brief The RdUserInterfaceLib library contains the \ref RdGameScreen class.
+ */
+
+/**
+ * @ingroup RdUserInterfaceLib
+ *
+ * @brief A User Interface.
+ *
+ */
 class RdGameScreen
 {
     public:

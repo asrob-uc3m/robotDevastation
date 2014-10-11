@@ -12,6 +12,20 @@
 
 namespace rd{
 
+/**
+ * @ingroup rd_libraries
+ *
+ * \defgroup RdInputManagerLib
+ *
+ * @brief The RdInputManagerLib library contains the \ref RdInputManager base class and derived classes.
+ */
+
+/**
+ * @ingroup RdInputManagerLib
+ *
+ * @brief A base class for Input Managers.
+ *
+ */
 class RdInputManager
 {
     public:

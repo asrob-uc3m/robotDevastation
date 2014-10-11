@@ -5,7 +5,7 @@
  * @ingroup rd_programs
  * \defgroup robotDevastation robotDevastation
  *
- * @brief The Robot Devastation PC client.
+ * @brief The Robot Devastation PC client. Creates an instance of the RobotDevastation class.
  *
  * @section legal Legal
  *

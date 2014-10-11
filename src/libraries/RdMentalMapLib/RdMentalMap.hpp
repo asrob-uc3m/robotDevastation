@@ -15,9 +15,22 @@
 #include "RdNetworkEventListener.hpp"
 #include "RdNetworkManager.hpp"
 
-
 namespace rd{
 
+/**
+ * @ingroup rd_libraries
+ *
+ * \defgroup RdMentalMapLib
+ *
+ * @brief The RdMentalMapLib library contains the \ref RdMentalMap base class and derived classes.
+ */
+
+/**
+ * @ingroup RdMentalMapLib
+ *
+ * @brief A base class for Mental Maps.
+ *
+ */
 class RdMentalMap : public RdNetworkEventListener
 {
     public:

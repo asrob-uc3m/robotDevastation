@@ -9,9 +9,22 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_mixer.h"
 
-
 namespace rd{
 
+/**
+ * @ingroup rd_libraries
+ *
+ * \defgroup RdMusicLib
+ *
+ * @brief The RdMusicLib library contains the \ref RdAudioManager class.
+ */
+
+/**
+ * @ingroup RdMusicLib
+ *
+ * @brief A Music class.
+ *
+ */
 class RdAudioManager
 {
     public:

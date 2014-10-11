@@ -20,12 +20,20 @@
 namespace rd
 {
 
+/**
+ * @ingroup robotDevastation
+ * @brief The parent Robot Devastation class of the \ref robotDevastation program.
+ */
 class RobotDevastation : public yarp::os::RFModule, public RdInputEventListener
 {
     public:
-        bool configure(yarp::os::ResourceFinder &rf);
+        /** Called on initialization. */
+        virtual bool configure(yarp::os::ResourceFinder &rf);
 
+        /** Released keyboard key. */
         virtual bool onKeyUp(RdKey k);
+
+        /** Pressed keyboard key. */
         virtual bool onKeyDown(RdKey k);
 
     private:

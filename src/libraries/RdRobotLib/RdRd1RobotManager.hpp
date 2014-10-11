@@ -9,6 +9,12 @@
 
 namespace rd{
 
+/**
+ * @ingroup RdRobotManagerLib
+ *
+ * @brief The Robot Manager for the Rd1 robot.
+ *
+ */
 class RdRd1RobotManager : public RdRobotManager
 {
     public:

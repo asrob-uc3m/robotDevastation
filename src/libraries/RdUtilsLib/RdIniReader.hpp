@@ -12,21 +12,12 @@
 #include <vector>
 #include <map>
 
-/**
- * @ingroup rd_libraries
- *
- * \defgroup RdIniReaderLib
- *
- * @brief The RdIniReaderLib library contains the \ref RdIniReader class.
- */
-
-namespace rdlib{
+namespace rd{
 
 /**
- * @ingroup RdIniReaderLib
+ * @ingroup RdUtilsLib
  *
- * @brief A class to read ini files.
- *
+ * @brief A template-based class to read ini files.
  */
 template < class T1, class T2 >
 class RdIniReader {
@@ -95,7 +86,7 @@ class RdIniReader {
         }
 };
 
-} //rdlib
+} //rd
 
 #endif  // __RD_INI_READER_HPP__
 

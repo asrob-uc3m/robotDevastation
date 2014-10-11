@@ -8,6 +8,20 @@
 
 namespace rd{
 
+/**
+ * @ingroup rd_libraries
+ *
+ * \defgroup RdNetworkLib
+ *
+ * @brief The RdNetworkLib library contains the \ref RdNetworkManager base class and derived classes.
+ */
+
+/**
+ * @ingroup RdNetworkLib
+ *
+ * @brief A base class for Network Managers.
+ *
+ */
 class RdNetworkManager
 {
     public:

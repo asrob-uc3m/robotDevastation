@@ -18,7 +18,7 @@ namespace rd{
 
 /**
  * @ingroup rdServer
- * @brief The main \ref rdServer program class.
+ * @brief The parent Robot Devastation class of the \ref rdServer program.
  */
 class RdServer : public yarp::os::RFModule
 {
