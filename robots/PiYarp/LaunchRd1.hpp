@@ -14,8 +14,8 @@
 #include "RdMacros.hpp"
 
 #define DEFAULT_TYPE "pwmbot"
-#define DEFAULT_PREFIX "raspi"
-#define DEFAULT_CAMERA "off"
+#define DEFAULT_PREFIX "1/raspi"
+#define DEFAULT_CAMERA "on"
 
 using namespace yarp::os;
 using namespace yarp::dev;
