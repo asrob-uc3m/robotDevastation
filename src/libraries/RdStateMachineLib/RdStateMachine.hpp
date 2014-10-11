@@ -7,6 +7,8 @@ namespace rd{
 
 class RdStateMachine {
 
+    RdStateMachine();
+
 };
 
 }
