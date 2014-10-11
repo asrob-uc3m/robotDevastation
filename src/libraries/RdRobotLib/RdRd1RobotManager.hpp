@@ -5,6 +5,8 @@
 
 #include <yarp/dev/all.h>
 
+#include <sstream>
+
 #include "RdRobotManager.hpp"
 
 namespace rd{
@@ -18,6 +20,8 @@ namespace rd{
 class RdRd1RobotManager : public RdRobotManager
 {
     public:
+
+        RdRd1RobotManager(const int& playerId) : RdRobotManager(playerId) { }
 
         //-- Robot movement related functions    
         virtual bool moveForward(int velocity = UNUSED);

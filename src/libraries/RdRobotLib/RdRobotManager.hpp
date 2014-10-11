@@ -53,7 +53,12 @@ class RdRobotManager
         //-- Constants
         static const int UNUSED = -1;
 
-        RdRobotManager() {}
+        RdRobotManager(const int& playerId) {
+            this->playerId = playerId;
+        }
+
+    protected:
+        int playerId;
 };
 
 }

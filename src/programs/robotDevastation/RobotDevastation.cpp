@@ -100,7 +100,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     networkManager->login(mentalMap->getMyself());
 
     //-- Init robot
-    robotManager = new RdRd1RobotManager();
+    robotManager = new RdRd1RobotManager(rf.find("id").asInt());
     if( ! robotManager->connect() )
         return false;
 
@@ -109,7 +109,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     std::ostringstream s;
     s << "/";
     s << mentalMap->getMyself().getId();
-    s << "/img:i";
+    s << "/robot/img:i";
     inImg.open(s.str().c_str());
 
     return true;

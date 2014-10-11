@@ -51,10 +51,14 @@ bool RdRd1RobotManager::panRight(int velocity) {
         
 bool RdRd1RobotManager::connect()  {
 
+    std::ostringstream local_s;
+    local_s << "/";
+    local_s << playerId;
+    local_s << "/robot";
+
     yarp::os::Property robotOptions;
-    robotOptions.put("device","controlboard");
-    robotOptions.put("subdevice","remote_controlboard");
-    robotOptions.put("local","/pleaseChangeMyName");
+    robotOptions.put("device","remote_controlboard");
+    robotOptions.put("local", local_s.str().c_str() );
     robotOptions.put("remote","/raspi");
     robotDevice.open(robotOptions);
 
