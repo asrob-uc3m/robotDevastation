@@ -67,35 +67,37 @@ void rd::RateThreadProcess::run()
     }
     zbar::Image image(cameraWidth, cameraHeight, "Y800", rimage, cameraWidth * cameraHeight);
 
-    int n = scanner.scan(image);
-    //printf("How many detected QR: %d\n",n);
-
+    int numDetected = scanner.scan(image);
+    //RD_DEBUG("How many detected QR: %d\n",numDetected);
 
     std::vector< RdTarget > targets;
 
     // extract results
     for(zbar::Image::SymbolIterator symbol = image.symbol_begin(); symbol != image.symbol_end(); ++symbol)
     {
-        std::vector<cv::Point> vp;
-        // do something useful with results
-        RD_INFO("[%s]: %s\n", symbol->get_type_name().c_str(), symbol->get_data().c_str());
-        int n = symbol->get_location_size();
-        for(int i=0;i<n;i++){
-            vp.push_back(cv::Point(symbol->get_location_x(i),symbol->get_location_y(i)));
-        }
-        cv::RotatedRect r = minAreaRect(vp);
-        cv::Point2f pts[4];
-        r.points(pts);
-
+        //-- Obtain id from QR.
         std::stringstream identifier_str(symbol->get_data());
         int identifier_int;
         identifier_str >> identifier_int;
         RD_INFO("QR id: %d.\n",identifier_int);
 
+        //-- Obtain coordinates from QR.
+        std::vector< RdVector2d > coords;
+        int n = symbol->get_location_size();
+        for(int i=0;i<n;i++)
+        {
+             RdVector2d coord(symbol->get_location_x(i),symbol->get_location_y(i));
+             //-- Check the following output if things ever start to fail.
+             //RD_DEBUG("%d: %d %d\n",i,coord.x,coord.y);
+             coords.push_back(coord);
+        }
+        int qrWidth = fabs(coords[2].x - coords[1].x);
+        int qrHeight = fabs(coords[1].y - coords[0].y);
+        RdVector2d qrCenter(coords[0].x+(qrWidth/2), coords[0].y+(qrHeight/2) );
 
         RdTarget target( identifier_int,
-                       RdVector2d(r.center.x,r.center.y),
-                       RdVector2d(r.size.width, r.size.height) );
+                         qrCenter,
+                         RdVector2d(qrWidth, qrHeight) );
         targets.push_back(target);
 
     }
