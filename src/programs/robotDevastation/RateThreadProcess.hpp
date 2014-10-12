@@ -12,9 +12,7 @@
 
 #include <yarp/sig/Image.h>
 
-// tmp use of opencv
-#include <opencv2/opencv.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
+#include <math.h>  //-- Just for fabs to make it a bit failproof.
 
 #include <zbar.h>
 
@@ -32,9 +30,6 @@ class RateThreadProcess : public yarp::os::RateThread {
         //
         int rateMs;
         //
-        int cameraDepth;  // the depth of the surface in bits
-        int cameraChannels;  // R G B
-        int cameraWidthstep; // the length of a row of pixels in bytes 1920 for 640x480
         int cameraWidth;
         int cameraHeight;
         bool cameraInitialized;

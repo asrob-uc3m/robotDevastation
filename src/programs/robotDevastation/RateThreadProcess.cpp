@@ -24,8 +24,6 @@ void rd::RateThreadProcess::init(yarp::os::ResourceFinder &rf)
 
     scanner.set_config( zbar::ZBAR_NONE, zbar::ZBAR_CFG_ENABLE, 1);
 
-    //cv::namedWindow("OpenCV", CV_WINDOW_NORMAL);  //opencv viewer//
-
     this->setRate(rateMs);
     this->start();
 
