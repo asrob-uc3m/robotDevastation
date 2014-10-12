@@ -6,10 +6,16 @@ IF (ENABLE_RdMusicLib)
 
 set(KEYWORD "RdMusicLib")
 
+find_package(YARP REQUIRED)
+find_package(SDL REQUIRED)
+find_package(SDL_mixer REQUIRED)
+
+include_directories(${SDL_INCLUDE_DIR})
+include_directories(${SDL_MIXER_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} RdAudioManager.cpp)
-target_link_libraries(${KEYWORD} SDL SDL_mixer)
+target_link_libraries(${KEYWORD} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...

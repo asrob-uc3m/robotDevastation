@@ -6,10 +6,13 @@ IF (ENABLE_RdMentalMapLib)
 
 set(KEYWORD "RdMentalMapLib")
 
+find_package(YARP REQUIRED)
+
+include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} RdMentalMap.cpp RdPlayer.cpp RdTarget.cpp RdWeapon.cpp)
-target_link_libraries(${KEYWORD} RdMusicLib)
+target_link_libraries(${KEYWORD})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...

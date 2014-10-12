@@ -6,10 +6,9 @@ IF (ENABLE_RdNetworkLib)
 
 set(KEYWORD "RdNetworkLib")
 
-# Find YARP.  Point the YARP_DIR environment variable at your build.
 find_package(YARP REQUIRED)
-list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH})
 
+include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} RdNetworkManager.cpp RdYarpNetworkManager.cpp)
