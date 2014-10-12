@@ -43,37 +43,33 @@ void rd::RateThreadProcess::run()
     
     if(!cameraInitialized)
     {
-        cameraDepth=8;  // the depth of the surface in bits
-        cameraChannels=3;  // R G B
-        cameraWidthstep = inYarpImg->getRowSize(); // the length of a row of pixels in bytes 1920 for 640x480
         cameraWidth = inYarpImg->width();
         cameraHeight = inYarpImg->height();
         cameraInitialized = true;
     }
 
-    //void *raw = (void *)inYarpImg->getRawImage();
+    //-- Convert from YARP rgb to zbar b/w.
+    unsigned char* rimage = (unsigned char*)malloc( cameraWidth * cameraHeight );
 
-    //-- Use opencv for now
-    IplImage *iplImage = cvCreateImage(cvSize(cameraWidth, cameraHeight), IPL_DEPTH_8U, 3 );
-    cvCvtColor((IplImage*)inYarpImg->getIplImage(), iplImage, CV_RGB2BGR);
-    cv::Mat cvimage = iplImage;
-    cv::Mat cvimagetreat;
-    cvtColor(cvimage,cvimagetreat,CV_BGR2GRAY);
-    //cv::imshow("OpenCV", cvimagetreat);  //opencv viewer//
-    //cv::waitKey( 1 );  //opencv viewer//
+    for( unsigned y = 0; y < cameraHeight; y++ )
+    {
+        for( unsigned x = 0; x < cameraWidth; x++ )
+        {
+            //Convert to Y800
+            int data = inYarpImg->pixel(x,y).r + inYarpImg->pixel(x,y).g + inYarpImg->pixel(x,y).b;
+            data/=3;
+            if( data < 0 )
+                data = 0;
+            if( data > 255 )
+                data = 255;
+            rimage[x+y*cameraWidth] = data/3;
+        }
+    }
+    zbar::Image image(cameraWidth, cameraHeight, "Y800", rimage, cameraWidth * cameraHeight);
 
-    uchar *raw = (uchar *)cvimagetreat.data;
-
-    // wrap image data
-    zbar::Image image(cameraWidth, cameraHeight, "Y800", raw, cameraWidth * cameraHeight);
-
-    //zbar::Image image(cameraWidth, cameraHeight, "GREY", raw, cameraWidth * cameraHeight);  //remove//
-    //image.convert( *(int*)"Y800",cameraWidth, cameraHeight);  //remove//
     int n = scanner.scan(image);
-    //printf("%d\n",n);
+    //printf("How many detected QR: %d\n",n);
 
-    //cvimagetreat.release();  // not required
-    cvReleaseImage(&iplImage);  // needed!!
 
     std::vector< RdTarget > targets;
 
