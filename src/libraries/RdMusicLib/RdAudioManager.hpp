@@ -3,11 +3,12 @@
 #ifndef __RD_AUDIO_MANAGER_HPP__
 #define __RD_AUDIO_MANAGER_HPP__
 
-#include "RdMacros.hpp"
+#include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
 #include <iostream>
 #include <map>
-#include "SDL/SDL.h"
-#include "SDL/SDL_mixer.h"
+
+#include "RdMacros.hpp"
 
 namespace rd{
 

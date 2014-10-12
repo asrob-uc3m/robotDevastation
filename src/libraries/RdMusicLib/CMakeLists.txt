@@ -10,8 +10,9 @@ find_package(YARP REQUIRED)
 find_package(SDL REQUIRED)
 find_package(SDL_mixer REQUIRED)
 
+include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${SDL_INCLUDE_DIR})
-include_directories(${SDL_MIXER_INCLUDE_DIRS})
+include_directories(${SDL_MIXER_INCLUDE_DIRS} ${SDLMIXER_INCLUDE_DIR})  # SDLMIXER_INCLUDE_DIR for old
 include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} RdAudioManager.cpp)

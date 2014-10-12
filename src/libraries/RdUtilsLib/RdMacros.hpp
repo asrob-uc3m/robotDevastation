@@ -32,6 +32,13 @@ namespace rdlib{
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
+#ifdef WIN32
+#define RD_ERROR printf
+#define RD_WARNING printf
+#define RD_SUCCESS printf
+#define RD_INFO printf
+#define RD_DEBUG printf
+#else //linux
 // http://en.wikipedia.org/wiki/Variadic_macro
 // http://stackoverflow.com/questions/15549893/modify-printfs-via-macro-to-include-file-and-line-number-information
 #define RD_ERROR(...) { fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
@@ -48,6 +55,8 @@ namespace rdlib{
 
 #define RD_DEBUG(...) { fprintf(stderr,BLUE); do{printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
                            printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET); }
+
+#endif
 
 } //rdlib
 

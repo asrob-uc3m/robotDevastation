@@ -3,12 +3,14 @@
 #ifndef __RD_INPUT_MANAGER_HPP__
 #define __RD_INPUT_MANAGER_HPP__
 
+#include <SDL/SDL.h>
+
+#include <vector>
+
 #include "RdUtils.hpp"
 #include "RdInputEventListener.hpp"
 #include "RdKeyboardManager.hpp"
 
-#include <vector>
-#include "SDL/SDL.h"
 
 namespace rd{
 
