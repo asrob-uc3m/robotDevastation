@@ -43,7 +43,7 @@ rd::RdAudioManager::~RdAudioManager()
 
 bool rd::RdAudioManager::load(const std::string &music_filepath, const std::string &id, const int &type)
 {
-    if(type == 0)
+    if(type == MUSIC)
       {
         Mix_Music* pMusic = Mix_LoadMUS(music_filepath.c_str());
 
@@ -56,7 +56,7 @@ bool rd::RdAudioManager::load(const std::string &music_filepath, const std::stri
         music_sounds[id] = pMusic;
         return true;
       }
-      else if(type == 1)
+      else if(type == FX)
       {
         Mix_Chunk* pChunk = Mix_LoadWAV(music_filepath.c_str());
         if(pChunk == 0)
