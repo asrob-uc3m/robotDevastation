@@ -18,7 +18,7 @@ rd::RdKeyboardManager::~RdKeyboardManager()
     this->stop();
 
     //-- Close SDL
-
+    //! @todo Close SDL for keyboard input
 }
 
 bool rd::RdKeyboardManager::start()
@@ -43,12 +43,9 @@ bool rd::RdKeyboardManager::update()
     //-- Check for event
     RdKey key;
     SDL_Event event;
-    //bool event_ocurred = false;
 
     while( SDL_PollEvent( &event ) )
     {
-        //event_ocurred = true;
-
         if (event.type == SDL_KEYDOWN )
         {
             if ( !key.setFromKeyCode(event.key.keysym.sym) )
@@ -76,10 +73,6 @@ bool rd::RdKeyboardManager::update()
             return false;
         }
     }
-
-    //-- Call listeners when event occured
-    // if (event_ocurred)
-
 
     return true;
 }
