@@ -2,7 +2,3 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (ENABLE_RdUtilsLib)
-
-ENDIF (ENABLE_RdUtilsLib)
-

@@ -2,8 +2,6 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (ENABLE_RdRobotLib)
-
 set(KEYWORD "RdRobotLib")
 
 find_package(YARP REQUIRED)
@@ -19,4 +17,3 @@ install(TARGETS ${KEYWORD} DESTINATION lib)
 #set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
 set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
 
-ENDIF()
