@@ -8,10 +8,14 @@
 #include <map>
 #include <string>
 
+#include <yarp/os/BufferedPort.h>
+#include <yarp/os/Network.h>
+#include <yarp/os/Semaphore.h>
+
 #include "RdUtils.hpp"
 #include "RdImageManager.hpp"
 #include "RdImageEventListener.hpp"
-#include <yarp/sig/Image.h>
+
 
 
 namespace rd{
@@ -31,7 +35,8 @@ namespace rd{
  * along with the reference to the manager that triggered them to be able to access the image
  *
  */
-class RdYarpImageManager : public RdImageManager
+class RdYarpImageManager : public RdImageManager,
+                           public yarp::os::TypedReaderCallback<RdImage>
 {
     public:
         virtual bool start();
@@ -52,9 +57,20 @@ class RdYarpImageManager : public RdImageManager
         //! @brief String that identifies this manager
         static const std::string id;
 
+    protected:
+        //-- Yarp event for incoming messages
+        void onRead(RdImage& image);
+
     private:
         //! @brief Reference to this manager (unique instance)
         static RdYarpImageManager * uniqueInstance;
+
+        //---
+        yarp::os::Semaphore semaphore;
+        RdImage image;
+        yarp::os::BufferedPort<RdImage> imagePort;
+        std::string local_port_name;
+        std::string remote_port_name;
 };
 
 

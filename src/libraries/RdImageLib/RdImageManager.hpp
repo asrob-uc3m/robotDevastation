@@ -16,6 +16,7 @@
 namespace rd{
 
 typedef yarp::sig::ImageOf<yarp::sig::PixelRgb> RdImage;
+
 /**
  * @ingroup rd_libraries
  *
@@ -101,6 +102,9 @@ class RdImageManager
 
         static bool Register( RdImageManager * manager, std::string id);
 
+        //! @brief Observers registered to be notified of image events
+        std::vector<RdImageEventListener *> listeners;
+
     private:
         //! \brief Stores the unique instance of the RdInputManager
         static RdImageManager * imageManagerInstance;
@@ -111,9 +115,6 @@ class RdImageManager
         //! \brief Stores all the RdImageManager that have been registered
         static std::map< std::string, RdImageManager * > imageManagerRegistry;
 
-
-        //! @brief Observers registered to be notified of image events
-        std::vector<RdImageEventListener *> listeners;
 
 };
 
