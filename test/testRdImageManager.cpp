@@ -5,14 +5,23 @@
 
 using namespace rd;
 
+
+/**
+ * @brief Dummy image manager used for testing
+ *
+ * The required pure virtual members are left with their function body empty.
+ *
+ * This is the minimum implementation possible for the RdImageManager interface.
+ *
+ */
 class BasicImageManager : public RdImageManager
 {
     public:
         virtual bool start() {}
         virtual bool stop() {}
-        virtual yarp::sig::ImageOf<yarp::sig::PixelRgb> getImage()
+        virtual RdImage getImage()
         {
-            return yarp::sig::ImageOf<yarp::sig::PixelRgb>();
+            return RdImage();
         }
 
         //-- This function is needed to register this Manager on the RdImageManager registry

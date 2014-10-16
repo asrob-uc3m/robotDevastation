@@ -15,6 +15,7 @@
 
 namespace rd{
 
+typedef yarp::sig::ImageOf<yarp::sig::PixelRgb> RdImage;
 /**
  * @ingroup rd_libraries
  *
@@ -77,17 +78,20 @@ class RdImageManager
         virtual bool stop() = 0;
 
 
-        //----------------------------------- Read image -------------------------------------------------------------//
+        //------------------------------- Read image ------------------------------------------------------------------//
         //! @brief Return the last received image
-        virtual yarp::sig::ImageOf<yarp::sig::PixelRgb> getImage() = 0;
+        virtual RdImage getImage() = 0;
 
 
 
-        //----------------------------------- Listeners --------------------------------------------------------------//
+        //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Adds a RdImageEventListener to the list of observers to be notified of events
         bool addImageEventListener( RdImageEventListener * listener );
         //! @brief Unregisters all the RdImageEventListener stored
         bool removeImageEventListeners();
+
+        //! @brief Configures a parameter with a value
+        virtual bool configure(std::string parameter, std::string value);
 
 
 
@@ -115,4 +119,4 @@ class RdImageManager
 
 }
 
-#endif //-- __RD_INPUT_MANAGER_HPP__
+#endif //-- __RD_IMAGE_MANAGER_HPP__

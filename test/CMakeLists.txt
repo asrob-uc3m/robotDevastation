@@ -24,3 +24,6 @@ target_link_libraries(testRdYarpNetworkManager ${RD_LIBRARIES} RdNetworkLib gtes
 
 add_executable(testRdImageManager testRdImageManager.cpp)
 target_link_libraries(testRdImageManager ${RD_LIBRARIES} RdImageLib gtest gtest_main)
+
+add_executable(testRdYarpImageManager testRdYarpImageManager.cpp)
+target_link_libraries(testRdYarpImageManager ${RD_LIBRARIES} RdImageLib gtest gtest_main)

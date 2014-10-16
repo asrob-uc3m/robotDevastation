@@ -99,6 +99,11 @@ bool rd::RdImageManager::removeImageEventListeners()
     return true;
 }
 
+bool rd::RdImageManager::configure(std::string parameter, std::string value)
+{
+    return true;
+}
+
 rd::RdImageManager::RdImageManager()
 {
 
