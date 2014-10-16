@@ -24,6 +24,7 @@ option(ENABLE_RdUserInterfaceLib "Choose if you want to compile RdUserInterfaceL
 option(ENABLE_RdInputLib "Choose if you want to compile RdInputLib" TRUE)
 option(ENABLE_RdNetworkLib "Choose if you want to compile RdNetworkLib" TRUE)
 option(ENABLE_RdRobotLib "Choose if you want to compile RdRobotLib" TRUE)
+option(ENABLE_RdImageLib "Choose if you want to compile RdImageLib" TRUE)
 option(ENABLE_RdStateMachineLib "Choose if you want to compile RdStateMachineLib" TRUE)
 
 ##### program options
