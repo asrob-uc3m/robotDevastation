@@ -58,10 +58,10 @@ class RdImageManager
          */
         static RdImageManager * getImageManager(std::string id);
 
-        //! @brief Deallocate the RdImageManager
+        //! @brief Deallocate all the registered ImageManager
         static bool destroyImageManager();
 
-        ~RdImageManager();
+        virtual ~RdImageManager();
 
 
 
@@ -75,7 +75,6 @@ class RdImageManager
 
         //! @brief Stop capturing images
         virtual bool stop() = 0;
-
 
 
         //----------------------------------- Read image -------------------------------------------------------------//
@@ -96,11 +95,14 @@ class RdImageManager
     protected:
         RdImageManager();
 
-        bool Register( RdImageManager * manager, std::string id);
+        static bool Register( RdImageManager * manager, std::string id);
 
     private:
         //! \brief Stores the unique instance of the RdInputManager
         static RdImageManager * imageManagerInstance;
+
+        //! \brief Stores the id of the current unique instance used
+        static std::string currentId;
 
         //! \brief Stores all the RdImageManager that have been registered
         static std::map< std::string, RdImageManager * > imageManagerRegistry;
