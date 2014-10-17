@@ -16,6 +16,8 @@ endif(COMMAND cmake_policy)
 
 project(robotDevastation)
 
+option(ENABLE_tests "Choose if you want to compile tests" TRUE)
+
 ##### library options
 
 ##### program options
@@ -67,7 +69,9 @@ set(RD_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
 
 # add main contents
 add_subdirectory(src)
-add_subdirectory(test)
+if (ENABLE_tests)
+    add_subdirectory(test)
+endif (ENABLE_tests)
 
 # export our variables to a RDConfig.cmake creation
 set(RD_LINK_DIRS ${RD_LINK_DIRS} ${LIBRARY_OUTPUT_PATH})
