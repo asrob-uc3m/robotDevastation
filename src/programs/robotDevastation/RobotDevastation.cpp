@@ -136,6 +136,7 @@ if (k.isPrintable() )
             robotManager->stopMovement();
         }
     }
+	return true;
 }
 
 bool rd::RobotDevastation::onKeyDown(rd::RdKey k)
@@ -187,6 +188,7 @@ bool rd::RobotDevastation::onKeyDown(rd::RdKey k)
             robotManager->moveBackwards();
         }
     }
+	return true;
 }
 
 double rd::RobotDevastation::getPeriod()

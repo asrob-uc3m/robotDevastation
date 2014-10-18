@@ -58,6 +58,7 @@ mark_as_advanced(CMAKE_BACKWARDS_COMPATIBILITY)
 
 # Pick up our scripts - they are all in the cmake conf subdirectory
 set(RD_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${RD_MODULE_PATH})
 
 #set_property(GLOBAL PROPERTY RD_INCLUDE_DIRS)
 #set_property(GLOBAL PROPERTY RD_LINK_DIRS)

@@ -5,15 +5,17 @@ cmake_minimum_required(VERSION 2.6)
 set(KEYWORD "RdImageLib")
 
 find_package(YARP REQUIRED)
+find_package(ZBar REQUIRED)
 
 include_directories(${YARP_INCLUDE_DIRS})
+include_directories(${ZBAR_INCLUDE_DIR})
 include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} RdImageManager.cpp RdImageEventListener.hpp RdYarpImageManager.cpp RdProcessorImageEventListener.cpp RdProcessorImageEventListener.hpp)
-target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${RD_LIBRARIES} zbar)
+target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${ZBAR_LIBRARIES} ${RD_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
-#set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
-set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
+set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${ZBAR_INCLUDE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
+set(RD_LIBRARIES ${RD_LIBRARIES} ${ZBAR_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
 

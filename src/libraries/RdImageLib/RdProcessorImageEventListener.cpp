@@ -68,8 +68,8 @@ bool rd::RdProcessorImageEventListener::onImageArrived( RdImageManager * manager
              //RD_DEBUG("%d: %d %d\n",i,coord.x,coord.y);
              coords.push_back(coord);
         }
-        int qrWidth = fabs(coords[2].x - coords[1].x);
-        int qrHeight = fabs(coords[1].y - coords[0].y);
+        int qrWidth = fabs(float(coords[2].x - coords[1].x));
+		int qrHeight = fabs(float(coords[1].y - coords[0].y));
         RdVector2d qrCenter(coords[0].x+(qrWidth/2), coords[0].y+(qrHeight/2) );
 
         RdTarget target( identifier_int,
