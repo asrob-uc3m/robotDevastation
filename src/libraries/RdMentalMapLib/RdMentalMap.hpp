@@ -38,7 +38,7 @@ class RdMentalMap : public RdNetworkEventListener
         static RdMentalMap * getMentalMap();
         static bool destroyMentalMap();
 
-        void configure(const int& player_id );
+        bool configure(const int& player_id );
 
         //-- Interface to get data
         std::vector<RdTarget> getTargets();

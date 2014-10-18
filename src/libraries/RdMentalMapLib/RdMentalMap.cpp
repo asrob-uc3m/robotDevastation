@@ -39,10 +39,11 @@ bool rd::RdMentalMap::destroyMentalMap()
     return true;
 }
 
-void rd::RdMentalMap::configure(const int &player_id)
+bool rd::RdMentalMap::configure(const int &player_id)
 {
     this->my_id = player_id;
     this->myself = NULL;
+    return true;
 }
 
 std::vector<rd::RdTarget> rd::RdMentalMap::getTargets()
