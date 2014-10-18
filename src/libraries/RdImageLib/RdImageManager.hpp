@@ -20,13 +20,13 @@ typedef yarp::sig::ImageOf<yarp::sig::PixelRgb> RdImage;
 /**
  * @ingroup rd_libraries
  *
- * \defgroup RdImageManagerLib
+ * \defgroup RdImageLib
  *
- * @brief The RdImageManagerLib library contains classes related to image input (from cameras, etc)
+ * @brief The RdImageLib library contains classes related to image input (from cameras, etc)
  */
 
 /**
- * @ingroup RdImageManager
+ * @ingroup RdImageLib
  *
  * @brief Generic image input manager
  *
