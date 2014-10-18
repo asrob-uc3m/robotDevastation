@@ -71,7 +71,7 @@ bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
     }
     else
     {
-        RD_ERROR("Unkown command: %s.\n",in.toString().c_str())
+		RD_ERROR("Unkown command: %s.\n", in.toString().c_str());
         out.addVocab(VOCAB_RD_FAIL);
     }
     return out.write(*returnToSender);
