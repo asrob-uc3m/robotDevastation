@@ -38,7 +38,7 @@ class RdMentalMap : public RdNetworkEventListener
         static RdMentalMap * getMentalMap();
         static bool destroyMentalMap();
 
-        bool configure(const int& player_id );
+        void configure(const int& player_id );
 
         //-- Interface to get data
         std::vector<RdTarget> getTargets();
@@ -49,7 +49,7 @@ class RdMentalMap : public RdNetworkEventListener
         RdWeapon getCurrentWeapon();
 
         //-- Weapon interface
-        bool addWeapon(RdWeapon weapon);
+        void addWeapon(RdWeapon weapon);
         bool shoot();
         bool reload();
 

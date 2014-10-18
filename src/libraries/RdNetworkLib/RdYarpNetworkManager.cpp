@@ -95,7 +95,7 @@ rd::RdYarpNetworkManager::RdYarpNetworkManager()
 
 bool rd::RdYarpNetworkManager::onTargetHit(rd::RdTarget target, rd::RdPlayer player, rd::RdWeapon weapon)
 {
-    sendPlayerHit(player, weapon.getDamage());
+    return sendPlayerHit(player, weapon.getDamage());
 }
 
 rd::RdYarpNetworkManager::~RdYarpNetworkManager()

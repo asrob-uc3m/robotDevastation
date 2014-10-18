@@ -39,7 +39,7 @@ bool rd::RdMentalMap::destroyMentalMap()
     return true;
 }
 
-bool rd::RdMentalMap::configure(const int &player_id)
+void rd::RdMentalMap::configure(const int &player_id)
 {
     this->my_id = player_id;
     this->myself = NULL;
@@ -114,7 +114,7 @@ rd::RdPlayer rd::RdMentalMap::getMyself()
 
 rd::RdWeapon rd::RdMentalMap::getCurrentWeapon()
 {
-    if ( weapons.size() >= current_weapon)
+    if ( (int)weapons.size() >= current_weapon)
         return weapons[current_weapon];
     else
     {
@@ -124,7 +124,7 @@ rd::RdWeapon rd::RdMentalMap::getCurrentWeapon()
     }
 }
 
-bool rd::RdMentalMap::addWeapon(RdWeapon weapon)
+void rd::RdMentalMap::addWeapon(RdWeapon weapon)
 {
     weapons.push_back(weapon);
 }
@@ -156,7 +156,7 @@ bool rd::RdMentalMap::shoot()
                 hit = true;
 
                 //-- Update listeners
-                for (int i = 0; i < listeners.size(); i++)
+                for (size_t i = 0; i < listeners.size(); i++)
                     listeners[i]->onTargetHit(it->second, *player, weapons[current_weapon]);
 
             }

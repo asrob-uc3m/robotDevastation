@@ -29,7 +29,7 @@ endforeach(header_file ${folder_header})
 # Inclue any directories needed
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${SDL_INCLUDE_DIR})
-include_directories(${SDL_IMAGE_INCLUDE_DIRS})
+include_directories(${SDL_IMAGE_INCLUDE_DIRS} ${SDL_IMAGE_INCLUDE_DIR} ${SDLIMAGE_INCLUDE_DIR})  # SDLIMAGE_INCLUDE_DIR for old
 include_directories(${RD_INCLUDE_DIRS})
 
 # Set up our main executable.
