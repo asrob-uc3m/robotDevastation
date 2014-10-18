@@ -7,7 +7,6 @@
 #include <yarp/os/Module.h>
 #include <yarp/os/Network.h>
 #include <yarp/os/Port.h>
-#include <yarp/os/BufferedPort.h>
 #include <yarp/os/RateThread.h>
 
 #include <yarp/sig/all.h>
@@ -18,6 +17,7 @@
 
 #include "RdMacros.hpp"
 #include "RdGameScreen.hpp"
+#include "RdImageManager.hpp"
 
 #define DEFAULT_RATE_MS 20
 
@@ -26,10 +26,7 @@ namespace rd
 
 class RateThreadOutput : public yarp::os::RateThread {
     private:
-        yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > *pInImg;
-        //BufferedPort<ImageOf<PixelRgb> > *pOutImg;  // for testing
-        //Port *pOutPort;
-        //
+
         int rateMs;
         char* rdRoot;
         //
@@ -44,13 +41,12 @@ class RateThreadOutput : public yarp::os::RateThread {
 
         RdGameScreen gameScreen;
 
+        RdImageManager * imageManager;
+
     public:
         RateThreadOutput() : RateThread(DEFAULT_RATE_MS) {}
 
         void setRdRoot(char *value);
-        void setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pInImg);
-        //void setOutImg(BufferedPort<ImageOf<PixelRgb> > * _pOutImg);
-        //void setOutPort(Port *_pOutPort);
         void init(yarp::os::ResourceFinder &rf);
         void run();  // The periodical function
 };

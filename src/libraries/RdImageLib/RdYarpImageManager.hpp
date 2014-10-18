@@ -16,8 +16,6 @@
 #include "RdImageManager.hpp"
 #include "RdImageEventListener.hpp"
 
-
-
 namespace rd{
 
 /**

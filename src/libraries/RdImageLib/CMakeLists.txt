@@ -9,8 +9,8 @@ find_package(YARP REQUIRED)
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdImageManager.cpp RdImageEventListener.hpp RdYarpImageManager.cpp)
-target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${RD_LIBRARIES})
+add_library(${KEYWORD} RdImageManager.cpp RdImageEventListener.hpp RdYarpImageManager.cpp RdProcessorImageEventListener.cpp RdProcessorImageEventListener.hpp)
+target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${RD_LIBRARIES} zbar)
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
