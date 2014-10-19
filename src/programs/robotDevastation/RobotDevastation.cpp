@@ -84,15 +84,6 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     audioManager->playMusic("bso", -1);
 
-    //-- Init output thread
-    rateThreadOutput.setRdRoot(rdRoot);
-    rateThreadOutput.setInImg(&inImg);
-    rateThreadOutput.init(rf);
-
-    //-- Init process thread
-    rateThreadProcess.setInImg(&inImg);
-    rateThreadProcess.init(rf);
-
     //-- Init network manager
     networkManager = RdYarpNetworkManager::getNetworkManager();
     networkManager->addNetworkEventListener(mentalMap);
@@ -104,23 +95,20 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     if( ! robotManager->connect() )
         return false;
 
-    //-----------------OPEN REMAINING LOCAL PORTS------------//
-    /// \todo Encapsulate this
-    std::ostringstream local_img;
-    local_img << "/";
-    local_img << mentalMap->getMyself().getId();
-    local_img << "/robot/img:i";
-    inImg.open(local_img.str().c_str());
-    std::ostringstream remote_img;
-    remote_img << "/";
-    remote_img << mentalMap->getMyself().getId();
-    remote_img << "/raspi/img:o";
-    if(! yarp::os::Network::connect( remote_img.str().c_str(), local_img.str().c_str(), "mjpeg" ) )
-    {
-        RD_ERROR("Could not connect to robot camera.\n");
+    //-- Init image manager
+    RdYarpImageManager::RegisterManager();
+    imageManager = RdImageManager::getImageManager(RdYarpImageManager::id);
+    //-- Add the image processing listener to the image manager
+    imageManager->addImageEventListener(&processorImageEventListener);
+    //-- Configure the camera port
+    imageManager->configure("remote_img_port", "/1/raspi/img:o" );
+    imageManager->configure("local_img_port", "/1/robot/img:i" ); //-- Name given by me
+    if( ! imageManager->start() )
         return false;
-    }
-    RD_SUCCESS("Connected to robot camera.\n");
+
+    //-- Init output thread
+    rateThreadOutput.setRdRoot(rdRoot);
+    rateThreadOutput.init(rf);
 
     return true;
 }
@@ -148,6 +136,7 @@ if (k.isPrintable() )
             robotManager->stopMovement();
         }
     }
+	return true;
 }
 
 bool rd::RobotDevastation::onKeyDown(rd::RdKey k)
@@ -199,6 +188,7 @@ bool rd::RobotDevastation::onKeyDown(rd::RdKey k)
             robotManager->moveBackwards();
         }
     }
+	return true;
 }
 
 double rd::RobotDevastation::getPeriod()
@@ -247,7 +237,6 @@ bool rd::RobotDevastation::interruptModule()
     RD_INFO("Closing program...\n");
 
     rateThreadOutput.stop();
-    rateThreadProcess.stop();
 
     //-- Detach listeners to avoid segmentation faults
     inputManager->removeInputEventListeners();

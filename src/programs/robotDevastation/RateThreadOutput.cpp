@@ -22,6 +22,8 @@ void rd::RateThreadOutput::init(yarp::os::ResourceFinder &rf)
         ::exit(1);
     }
 
+    imageManager = RdImageManager::getImageManager();
+
     // http://gameprogrammingtutorials.blogspot.com.es/2010/01/sdl-tutorial-series-part-3-your-first.html
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
@@ -46,27 +48,26 @@ void rd::RateThreadOutput::init(yarp::os::ResourceFinder &rf)
 
 void rd::RateThreadOutput::run()
 {
-    //printf("[RateThreadOutput] run()\n");
+    //RD_DEBUG("[RateThreadOutput] run()\n");
 
-
-    yarp::sig::ImageOf<yarp::sig::PixelRgb> *inYarpImg = pInImg->read(false);
-    if (inYarpImg==NULL) {
-        //printf("No img yet...\n");
+    yarp::sig::ImageOf<yarp::sig::PixelRgb> inYarpImg = imageManager->getImage();
+    if (inYarpImg.width()==0) {
+        //RD_DEBUG("No img yet...\n");
         return;
     };
-    
+
     if(!cameraInitialized)
     {
         cameraDepth=8;  // the depth of the surface in bits
         cameraChannels=3;  // R G B
-        cameraWidthstep = inYarpImg->getRowSize(); // the length of a row of pixels in bytes 1920 for 640x480
-        cameraWidth = inYarpImg->width();
-        cameraHeight = inYarpImg->height();
+        cameraWidthstep = inYarpImg.getRowSize(); // the length of a row of pixels in bytes 1920 for 640x480
+        cameraWidth = inYarpImg.width();
+        cameraHeight = inYarpImg.height();
         cameraInitialized = true;
     }
 
     // http://stackoverflow.com/1questions/393954/how-to-convert-an-opencv-iplimage-to-an-sdl-surface
-    SDL_Surface *surface = SDL_CreateRGBSurfaceFrom( (void*)inYarpImg->getRawImage(),
+    SDL_Surface *surface = SDL_CreateRGBSurfaceFrom( (void*)inYarpImg.getRawImage(),
                                                      cameraWidth, cameraHeight,
                                                      cameraDepth*cameraChannels,
                                                      cameraWidthstep,
@@ -89,11 +90,6 @@ void rd::RateThreadOutput::run()
 
     //SDL_FreeSurface(surface); // needed? seems not from checking free.
 
-}
-
-void rd::RateThreadOutput::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * pInImg)
-{
-    this->pInImg = pInImg;
 }
 
 void rd::RateThreadOutput::setRdRoot(char *value)

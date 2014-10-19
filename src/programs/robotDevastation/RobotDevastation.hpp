@@ -7,7 +7,6 @@
 
 #include "RdUtils.hpp"
 #include "RateThreadOutput.hpp"
-#include "RateThreadProcess.hpp"
 #include "RdAudioManager.hpp"
 #include "RdMentalMap.hpp"
 #include "RdInputManager.hpp"
@@ -16,6 +15,9 @@
 #include "RdRobotManager.hpp"
 #include "RdRd1RobotManager.hpp"
 #include "RdStateMachine.hpp"
+#include "RdImageManager.hpp"
+#include "RdYarpImageManager.hpp"
+#include "RdProcessorImageEventListener.hpp"
 
 namespace rd
 {
@@ -38,13 +40,14 @@ class RobotDevastation : public yarp::os::RFModule, public RdInputEventListener
 
     private:
         RateThreadOutput rateThreadOutput;
-        RateThreadProcess rateThreadProcess;
         RdInputManager *  inputManager;
         RdAudioManager * audioManager;
         RdMentalMap * mentalMap;
         RdNetworkManager * networkManager;
         RdRobotManager * robotManager;
         RdStateMachine * stateMachine;
+        RdImageManager * imageManager;
+        RdProcessorImageEventListener processorImageEventListener;
 
         yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > inImg;
 

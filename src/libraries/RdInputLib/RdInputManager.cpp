@@ -36,7 +36,7 @@ bool rd::RdInputManager::start()
     keyboardManager->setInputEventListeners(&listeners);
 
     //-- Start submodules:
-    keyboardManager->start();
+    return keyboardManager->start();
 }
 
 bool rd::RdInputManager::addInputEventListener(rd::RdInputEventListener *listener)

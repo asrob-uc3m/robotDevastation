@@ -24,18 +24,20 @@ rd::RdKeyboardManager::~RdKeyboardManager()
 bool rd::RdKeyboardManager::start()
 {
     //-- Start input thread
-    yarp::os::RateThread::start();
+    return yarp::os::RateThread::start();
 }
 
 bool rd::RdKeyboardManager::stop()
 {
     //-- Stop input thread
     yarp::os::RateThread::stop();
+	return true;
 }
 
 bool rd::RdKeyboardManager::setInputEventListeners(std::vector<rd::RdInputEventListener *> *listeners)
 {
     this->listeners = listeners;
+	return true;
 }
 
 bool rd::RdKeyboardManager::update()

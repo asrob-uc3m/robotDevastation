@@ -17,9 +17,9 @@ namespace rd{
 /**
  * @ingroup rd_libraries
  *
- * \defgroup RdInputManagerLib
+ * \defgroup RdInputLib
  *
- * @brief The RdInputManagerLib library contains classes related to user input (keyboard, mouse, etc).
+ * @brief The RdInputLib library contains classes related to user input (keyboard, mouse, etc).
  */
 
 /**

@@ -1,48 +1,27 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#include "RateThreadProcess.hpp"
+#include "RdProcessorImageEventListener.hpp"
 
-void rd::RateThreadProcess::init(yarp::os::ResourceFinder &rf)
+rd::RdProcessorImageEventListener::RdProcessorImageEventListener()
 {
-    rateMs = DEFAULT_RATE_MS;
+    //images_arrived = 0;
     cameraInitialized = false;
 
-    printf("--------------------------------------------------------------\n");
-    if (rf.check("help")) {
-        printf("RateThreadProcess options:\n");
-        printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        printf("\t--rateMs (default: \"%d\")\n",rateMs);
-    }
-    if (rf.check("rateMs")) rateMs = rf.find("rateMs").asInt();
-
-    printf("RateThreadProcess using rateMs: %d.\n", rateMs);
-
-    printf("--------------------------------------------------------------\n");
-    if(rf.check("help")) {
-        ::exit(1);
-    }
+    mentalMap = RdMentalMap::getMentalMap();
 
     scanner.set_config( zbar::ZBAR_NONE, zbar::ZBAR_CFG_ENABLE, 1);
-
-    this->setRate(rateMs);
-    this->start();
-
 }
 
-void rd::RateThreadProcess::run()
+bool rd::RdProcessorImageEventListener::onImageArrived( RdImageManager * manager )
 {
-    //printf("[RateThreadProcess] run()\n");
+    stored_image = manager->getImage();
+    //images_arrived++;
+    //RD_DEBUG("%d\n",images_arrived);
 
-    yarp::sig::ImageOf<yarp::sig::PixelRgb> *inYarpImg = pInImg->read(false);
-    if (inYarpImg==NULL) {
-        //printf("No img yet...\n");
-        return;
-    };
-    
     if(!cameraInitialized)
     {
-        cameraWidth = inYarpImg->width();
-        cameraHeight = inYarpImg->height();
+        cameraWidth = stored_image.width();
+        cameraHeight = stored_image.height();
         cameraInitialized = true;
     }
 
@@ -54,7 +33,7 @@ void rd::RateThreadProcess::run()
         for( unsigned x = 0; x < cameraWidth; x++ )
         {
             //Convert to Y800
-            int data = inYarpImg->pixel(x,y).r + inYarpImg->pixel(x,y).g + inYarpImg->pixel(x,y).b;
+            int data = stored_image.pixel(x,y).r + stored_image.pixel(x,y).g + stored_image.pixel(x,y).b;
             data/=3;
             if( data < 0 )
                 data = 0;
@@ -89,8 +68,8 @@ void rd::RateThreadProcess::run()
              //RD_DEBUG("%d: %d %d\n",i,coord.x,coord.y);
              coords.push_back(coord);
         }
-        int qrWidth = fabs(coords[2].x - coords[1].x);
-        int qrHeight = fabs(coords[1].y - coords[0].y);
+        int qrWidth = fabs(float(coords[2].x - coords[1].x));
+		int qrHeight = fabs(float(coords[1].y - coords[0].y));
         RdVector2d qrCenter(coords[0].x+(qrWidth/2), coords[0].y+(qrHeight/2) );
 
         RdTarget target( identifier_int,
@@ -104,7 +83,18 @@ void rd::RateThreadProcess::run()
 
 }
 
-void rd::RateThreadProcess::setInImg(yarp::os::BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * pInImg)
+int rd::RdProcessorImageEventListener::getImagesArrived()
 {
-    this->pInImg = pInImg;
+    return images_arrived;
 }
+
+void rd::RdProcessorImageEventListener::resetImagesArrived()
+{
+    images_arrived = 0;
+}
+
+rd::RdImage rd::RdProcessorImageEventListener::getStoredImage()
+{
+    return stored_image;
+}
+

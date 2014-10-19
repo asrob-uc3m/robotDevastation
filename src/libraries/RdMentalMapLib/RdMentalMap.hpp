@@ -49,7 +49,7 @@ class RdMentalMap : public RdNetworkEventListener
         RdWeapon getCurrentWeapon();
 
         //-- Weapon interface
-        bool addWeapon(RdWeapon weapon);
+        void addWeapon(RdWeapon weapon);
         bool shoot();
         bool reload();
 

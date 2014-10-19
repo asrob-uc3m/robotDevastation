@@ -29,13 +29,13 @@ endforeach(header_file ${folder_header})
 # Inclue any directories needed
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${SDL_INCLUDE_DIR})
-include_directories(${SDL_IMAGE_INCLUDE_DIRS})
+include_directories(${SDL_IMAGE_INCLUDE_DIRS} ${SDL_IMAGE_INCLUDE_DIR} ${SDLIMAGE_INCLUDE_DIR})  # SDLIMAGE_INCLUDE_DIR for old
 include_directories(${RD_INCLUDE_DIRS})
 
 # Set up our main executable.
 if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES} ${SDL_LIBRARY} ${SDL_IMAGE_LIBRARIES} zbar)
+  target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES} ${SDL_LIBRARY} ${SDL_IMAGE_LIBRARIES})
   install(TARGETS ${KEYWORD} DESTINATION bin)
   install(DIRECTORY ${PROJECT_SOURCE_DIR}/share/${KEYWORD} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/robotDevastation )  # Uninstall does not delete empty dirs.
 else (folder_source)
