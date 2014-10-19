@@ -61,9 +61,9 @@ class RdKey
         bool control;
 
         //! @brief Map storing the correspondence between SDLKeys and their corresponding char respresentation
-        static const std::map< SDLKey, char> sdl_printable_map;
+        std::map< SDLKey, char> sdl_printable_map;
         //! @brief Map storing the correspondence between SDL_Keys and their corresponding control key value
-        static const std::map< SDLKey, int> sdl_control_map;
+        std::map< SDLKey, int> sdl_control_map;
 };
 
 }
