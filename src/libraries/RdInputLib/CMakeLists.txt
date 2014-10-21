@@ -11,7 +11,7 @@ include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${SDL_INCLUDE_DIR})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdInputManager.cpp RdKeyboardManager.cpp RdKey.cpp)
+add_library(${KEYWORD} RdInputManager.cpp RdKeyboardManager.cpp RdKey.cpp RdSDLKey.cpp)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 target_link_libraries(${KEYWORD} ${SDL_LIBRARY} ${YARP_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)

@@ -25,11 +25,6 @@ namespace rd{
 class RdKey
 {
     public:
-        //! @brief Default constructor that creates a dummy key not bound to any real key of a keyboard
-        RdKey();
-        //! @brief Configures the RdKey internal state from a SDL key code
-        bool setFromKeyCode(SDLKey keycode);
-
         bool isControlKey();
         bool isPrintable();
 
@@ -49,7 +44,9 @@ class RdKey
         static const int KEY_ARROW_LEFT;
         static const int KEY_ARROW_RIGHT;
 
-    private:
+    protected:
+        RdKey();
+
         //! @brief Stores the char representation of a key
         char char_value;
         //! @brief Stores the control key value of a key
@@ -59,11 +56,6 @@ class RdKey
         bool printable;
         //! @brief Stores whether the key is a control key or not
         bool control;
-
-        //! @brief Map storing the correspondence between SDLKeys and their corresponding char respresentation
-        std::map< SDLKey, char> sdl_printable_map;
-        //! @brief Map storing the correspondence between SDL_Keys and their corresponding control key value
-        std::map< SDLKey, int> sdl_control_map;
 };
 
 }

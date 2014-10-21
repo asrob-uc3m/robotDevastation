@@ -5,6 +5,8 @@
 
 #include "RdUtils.hpp"
 #include "RdInputEventListener.hpp"
+#include "RdKey.hpp"
+#include "RdSDLKey.hpp"
 
 #include <vector>
 

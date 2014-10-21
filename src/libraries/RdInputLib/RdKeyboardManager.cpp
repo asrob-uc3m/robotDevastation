@@ -43,31 +43,40 @@ bool rd::RdKeyboardManager::setInputEventListeners(std::vector<rd::RdInputEventL
 bool rd::RdKeyboardManager::update()
 {
     //-- Check for event
-    RdKey key;
+    RdKey * key = NULL;
     SDL_Event event;
 
     while( SDL_PollEvent( &event ) )
     {
         if (event.type == SDL_KEYDOWN )
         {
-            if ( !key.setFromKeyCode(event.key.keysym.sym) )
+            key = new RdSDLKey(event.key.keysym.sym);
+
+            if ( !(key->isPrintable() || key->isControlKey()) )
             {
+                delete key;
+                key = NULL;
                 return false;
             }
 
             for ( int i = 0; i < (int)listeners->size(); i++)
-                listeners->at(i)->onKeyDown(key);
+                listeners->at(i)->onKeyDown(*key);
+
         }
         else if (event.type == SDL_KEYUP )
         {
-            if ( !key.setFromKeyCode(event.key.keysym.sym) )
-            {
-                RD_WARNING("Key not supported!\n");
-                return false;
-            }
+             key = new RdSDLKey(event.key.keysym.sym);
+
+             if ( !(key->isPrintable() || key->isControlKey()) )
+             {
+                 delete key;
+                 key = NULL;
+                 return false;
+             }
 
             for ( int i = 0; i < (int)listeners->size(); i++)
-                listeners->at(i)->onKeyUp(key);
+                listeners->at(i)->onKeyUp(*key);
+
         }
         else
         {
@@ -76,6 +85,8 @@ bool rd::RdKeyboardManager::update()
         }
     }
 
+    delete key;
+    key = NULL;
     return true;
 }
 
