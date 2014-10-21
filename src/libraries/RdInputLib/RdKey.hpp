@@ -44,6 +44,8 @@ class RdKey
         static const int KEY_ARROW_LEFT;
         static const int KEY_ARROW_RIGHT;
 
+        virtual ~RdKey();
+
     protected:
         RdKey();
 

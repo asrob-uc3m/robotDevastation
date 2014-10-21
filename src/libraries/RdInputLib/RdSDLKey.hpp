@@ -14,13 +14,9 @@ namespace rd{
 /**
  * @ingroup RdInputLib
  *
- * @brief Class that represents a keyboard key
+ * @brief Class that represents a keyboard key, implemented with SDL
  *
- * Keys are classified in two groups: printable keys, which are keys that have a char representation,
- * such as the 'a' key or the '7' key, and control keys, which are keys that perform an action, such
- * as the arrow keys, the escape key or the backspace key. The space case is a special case, because
- * it is considered both printable and control key.
- *
+ * This key is created from a SDL keycode, usually obtained by the SDL event
  *
  */
 class RdSDLKey: public RdKey

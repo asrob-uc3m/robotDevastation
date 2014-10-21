@@ -25,6 +25,10 @@ int rd::RdKey::getValue()
     return key_value;
 }
 
+rd::RdKey::~RdKey()
+{
+}
+
 
 const int rd::RdKey::KEY_UNKNOWN = -1;
 const int rd::RdKey::KEY_PRINTABLE = 0;
