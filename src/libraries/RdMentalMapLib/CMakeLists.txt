@@ -9,7 +9,7 @@ find_package(YARP REQUIRED)
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdMentalMap.cpp RdPlayer.cpp RdTarget.cpp RdWeapon.cpp)
+add_library(${KEYWORD} RdMentalMap.cpp RdMentalMapEventListener.hpp RdPlayer.cpp RdTarget.cpp RdWeapon.cpp)
 target_link_libraries(${KEYWORD})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 

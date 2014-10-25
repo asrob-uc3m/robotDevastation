@@ -9,17 +9,6 @@ rd::RdMentalMap::RdMentalMap()
     audioManager = RdAudioManager::getAudioManager();
 }
 
-bool rd::RdMentalMap::onDataArrived(rd::RdPlayer player)
-{
-    RD_ERROR("Not implemented yet! Sorry!\n");
-    return false;
-}
-
-bool rd::RdMentalMap::onDataArrived(std::vector<rd::RdPlayer> players)
-{
-    return updatePlayers(players);
-}
-
 rd::RdMentalMap *rd::RdMentalMap::getMentalMap()
 {
     if (mentalMapInstance == NULL)
@@ -231,4 +220,15 @@ bool rd::RdMentalMap::removeMentalMapEventListeners()
 {
     listeners.clear();
     return true;
+}
+
+bool rd::RdMentalMap::onDataArrived(rd::RdPlayer player)
+{
+    RD_ERROR("Not implemented yet! Sorry!\n");
+    return false;
+}
+
+bool rd::RdMentalMap::onDataArrived(std::vector<rd::RdPlayer> players)
+{
+    return updatePlayers(players);
 }

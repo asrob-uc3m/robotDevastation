@@ -1,5 +1,26 @@
 #include "RdPlayer.hpp"
 
+rd::RdPlayer::RdPlayer()
+{
+    //-- Default values
+    this->id = -1;
+    this->name = "Dummy";
+    this->health = -1;
+    this->max_health = -1;
+    this->team_id = -1;
+    this->score = -1;
+}
+
+rd::RdPlayer::RdPlayer(int id, std::string name, int health, int max_health, int team_id, int score)
+{
+    this->id = id;
+    this->name = name;
+    this->health = health;
+    this->max_health = max_health;
+    this->team_id = team_id;
+    this->score = score;
+}
+
 int rd::RdPlayer::getId() const
 {
     return id;
@@ -70,25 +91,4 @@ std::string rd::RdPlayer::str()
     sstream << "Score: " << score;
 
     return sstream.str();
-}
-
-rd::RdPlayer::RdPlayer()
-{
-    //-- Default values
-    this->id = -1;
-    this->name = "Dummy";
-    this->health = -1;
-    this->max_health = -1;
-    this->team_id = -1;
-    this->score = -1;
-}
-
-rd::RdPlayer::RdPlayer(int id, std::string name, int health, int max_health, int team_id, int score)
-{
-    this->id = id;
-    this->name = name;
-    this->health = health;
-    this->max_health = max_health;
-    this->team_id = team_id;
-    this->score = score;
 }
