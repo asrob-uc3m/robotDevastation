@@ -4,6 +4,14 @@
 #ifndef __RD_VECTOR_BASE_HPP__
 #define __RD_VECTOR_BASE_HPP__
 
+/**
+ * @ingroup RdUtilsLib
+ *
+ * @brief Class representing a 2D vector
+ *
+ * Includes basic functions for comparison and basic operations
+ */
+
 template< class T>
 class RdVector2dBase {
     public:
@@ -16,6 +24,8 @@ class RdVector2dBase {
 
         RdVector2dBase& operator+=( const RdVector2dBase<T>& a ) { x+=a.x; y+=a.y; return *this;}
 };
+
+//! @brief Default 2D vector
 typedef RdVector2dBase<int> RdVector2d;
 
 #endif // __RD_VECTOR_BASE_HPP__

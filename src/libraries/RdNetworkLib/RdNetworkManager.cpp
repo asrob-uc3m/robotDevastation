@@ -1,7 +1,9 @@
 #include "RdNetworkManager.hpp"
 
-//-- This is very important:
+//-- This is very important (for the singleton to work correctly)
 rd::RdNetworkManager * rd::RdNetworkManager::networkManagerInstance = NULL;
+
+rd::RdNetworkManager::~RdNetworkManager() { }
 
 bool rd::RdNetworkManager::addNetworkEventListener(rd::RdNetworkEventListener *listener)
 {

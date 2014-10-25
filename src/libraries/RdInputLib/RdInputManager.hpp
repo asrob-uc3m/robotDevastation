@@ -45,7 +45,8 @@ class RdInputManager
 {
     public:
         //! @brief Get a reference to RdInputManager
-        static RdInputManager * getInputManager();        
+        static RdInputManager * getInputManager();
+
         //! @brief Deallocate the RdInputManager
         static bool destroyInputManager();
 
@@ -60,6 +61,7 @@ class RdInputManager
 
         //! @brief Adds a RdInputEventListener to the list of observers to be notified of events
         bool addInputEventListener( RdInputEventListener * listener );
+
         //! @brief Unregisters all the RdInputEventListener stored
         bool removeInputEventListeners();
 
@@ -72,7 +74,7 @@ class RdInputManager
          */
         RdInputManager();
 
-        //! \brief Stores the unique instance of the RdInputManager
+        //! @brief Stores the unique instance of the RdInputManager
         static RdInputManager * inputManagerInstance;
 
         //! @brief Reference to the submodule in charge of keyboard events

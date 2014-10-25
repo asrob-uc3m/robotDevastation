@@ -8,9 +8,16 @@
 
 namespace rd{
 
+/**
+ * @ingroup RdMentalMapLib
+ *
+ * @brief Class that represents a player of this game, with a 'unique' id, name, health, team id and score.
+ *
+ */
 class RdPlayer
 {
 public:
+    //! @brief Constructs a default, dummy player. (That is invalid for the game, by the way)
     RdPlayer();
     RdPlayer( int id, std::string name, int health, int max_health, int team_id, int score);
 
@@ -32,6 +39,7 @@ public:
     int getScore() const;
     void setScore(int value);
 
+    //! @brief Returns a string representing this object
     std::string str();
 
 private:
