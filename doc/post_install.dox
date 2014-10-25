@@ -26,7 +26,7 @@ It depends on your robot. A well programmed robot will automatically set everyth
 \verbatim
 [gamer PC, terminal 1] ssh pi@222.1.1.22
 [gamer PC, terminal 1] sudo su
-[gamer PC, terminal 1] /home/pi/PiYarp/build/launchRd1
+[gamer PC, terminal 1] launchRd1
 \endverbatim
 
 @section post_install_init_game Initializing Robot Devastation
