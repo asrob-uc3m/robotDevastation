@@ -49,8 +49,6 @@ class RobotDevastation : public yarp::os::RFModule, public RdInputEventListener
         RdImageManager * imageManager;
         RdProcessorImageEventListener processorImageEventListener;
 
-        yarp::os::BufferedPort< yarp::sig::ImageOf < yarp::sig::PixelRgb> > inImg;
-
         bool interruptModule();
         double getPeriod();
         bool updateModule();
