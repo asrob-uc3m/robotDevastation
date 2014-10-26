@@ -83,16 +83,26 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     audioManager->playMusic("bso", -1);
 
+    //-- Init robot
+    if( rf.find("robot").asString() == "rd1")
+        robotManager = new RdRd1RobotManager(rf.find("id").asInt());
+    else if( rf.find("robot").asString() == "ecro")
+        robotManager = new RdEcroRobotManager(rf.find("id").asInt());
+    else {
+        RD_ERROR("Unknown robot type \"%s\"!\n", rf.find("robot").asString().c_str());
+        return false;
+    }
+    if( ! robotManager->connect() ) {
+        RD_ERROR("Could not connect to robot id \"%d\" type \"%s\"!\n",rf.find("id").asInt(),rf.find("robot").asString().c_str());
+        RD_ERROR("Use syntax: robotDevastation --id %d --robot %s\n",rf.find("id").asInt(),rf.find("robot").asString().c_str());
+        return false;
+    }
+
     //-- Init network manager
     networkManager = RdYarpNetworkManager::getNetworkManager();
     networkManager->addNetworkEventListener(mentalMap);
     mentalMap->addMentalMapEventListener((RdYarpNetworkManager *)networkManager);
     networkManager->login(mentalMap->getMyself());
-
-    //-- Init robot
-    robotManager = new RdRd1RobotManager(rf.find("id").asInt());
-    if( ! robotManager->connect() )
-        return false;
 
     //-- Init image manager
     RdYarpImageManager::RegisterManager();
