@@ -59,12 +59,12 @@ bool RdRd1RobotManager::connect()  {
     std::ostringstream remote_s;
     remote_s << "/";
     remote_s << playerId;
-    remote_s << "/raspi";
+    remote_s << "/rd1";
 
     yarp::os::Property robotOptions;
     robotOptions.put("device","remote_controlboard");
     robotOptions.put("local", local_s.str().c_str() );
-    robotOptions.put("remote", remote_s.str().c_str());
+    robotOptions.put("remote", remote_s.str().c_str() );
     robotDevice.open(robotOptions);
 
     bool ok = true;

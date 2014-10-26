@@ -12,6 +12,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         printf("\t--id integer\n");
         printf("\t--name string\n");
         printf("\t--team integer\n");
+        printf("\t--robot string\n");
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
     printf("RobotDevastation using no additional special options.\n");
@@ -29,35 +30,33 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         rdRoot="../..";  //-- Allow to run from build/bin
     }
 
-    if(rf.check("id"))
-    {
-        RD_INFO("id: %d\n",rf.find("id").asInt());
-    }
-    else
+    if( ! rf.check("id") )
     {
         RD_ERROR("No id!\n");
         return false;
     }
+    RD_INFO("id: %d\n",rf.find("id").asInt());
 
-    if(rf.check("name"))
-    {
-        RD_INFO("name: %s\n",rf.find("name").asString().c_str());
-    }
-    else
+    if( ! rf.check("name") )
     {
         RD_ERROR("No name!\n");
         return false;
     }
+    RD_INFO("name: %s\n",rf.find("name").asString().c_str());
 
-    if(rf.check("team"))
-    {
-        RD_INFO("team: %d\n",rf.find("team").asInt());
-    }
-    else
+    if( ! rf.check("team") )
     {
         RD_ERROR("No team!\n");
         return false;
     }
+    RD_INFO("team: %d\n",rf.find("team").asInt());
+
+    if( ! rf.check("robot") )
+    {
+        RD_ERROR("No robot!\n");
+        return false;
+    }
+    RD_INFO("robot: %s\n",rf.find("robot").asString().c_str());
 
     //-- Init mentalMap
     mentalMap = RdMentalMap::getMentalMap();
@@ -101,8 +100,18 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Add the image processing listener to the image manager
     imageManager->addImageEventListener(&processorImageEventListener);
     //-- Configure the camera port
-    imageManager->configure("remote_img_port", "/1/raspi/img:o" );
-    imageManager->configure("local_img_port", "/1/robot/img:i" ); //-- Name given by me
+    std::ostringstream remoteCameraPortName;  //-- Default looks like "/0/rd1/img:o"
+    remoteCameraPortName << "/";
+    remoteCameraPortName << rf.find("id").asInt();
+    remoteCameraPortName << "/";
+    remoteCameraPortName << rf.find("robot").asString();
+    remoteCameraPortName << "/img:o";
+    imageManager->configure("remote_img_port", remoteCameraPortName.str() );
+    std::ostringstream localCameraPortName;  //-- Default should look like "/0/robot/img:i"
+    localCameraPortName << "/";
+    localCameraPortName << rf.find("id").asInt();
+    localCameraPortName << "/robot/img:i";
+    imageManager->configure("local_img_port", localCameraPortName.str() ); //-- Name given by me
     if( ! imageManager->start() )
         return false;
 
@@ -259,8 +268,6 @@ bool rd::RobotDevastation::interruptModule()
     //-- Closing mental map:
     RdMentalMap::destroyMentalMap();
     mentalMap = NULL;
-
-
 
     //-- Close img related ports:
     inImg.interrupt();

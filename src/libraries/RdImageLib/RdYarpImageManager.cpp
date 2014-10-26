@@ -10,24 +10,8 @@ bool rd::RdYarpImageManager::start()
 {
     yarp::os::Network::init();
 
-//    std::ostringstream image_port_name;
-//    image_port_name << "/";
-//    image_port_name << id;
-//    image_port_name << "/robot/img:i";
-//    imagePort.open( image_port_name.str().c_str());
     imagePort.open(local_port_name.c_str());
     imagePort.useCallback(*this);
-
-//    std::ostringstream robot_port_name;
-//    robot_port_name << "/";
-//    robot_port_name << id;
-//    robot_port_name << "/raspi/img:o";
-
-//    if(! yarp::os::Network::connect( robot_port_name.str().c_str(), image_port_name.str().c_str(), "mjpeg" ) )
-//    {
-//        RD_ERROR("Could not connect to robot camera.\n");
-//        return false;
-//    }
 
     if(! yarp::os::Network::connect( remote_port_name.c_str(), local_port_name.c_str(), "mjpeg" ) )
     {
