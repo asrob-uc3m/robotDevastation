@@ -32,8 +32,9 @@ typedef yarp::sig::ImageOf<yarp::sig::PixelRgb> RdImage;
  *
  * RdImageManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
- * class, we first get the reference to the RdImageManager with getImageManager() and then we
- * access the manager with that reference.
+ * class, we first register the needed subclasses of this class. This way, we can later get the reference
+ * to the RdImageManager with getImageManager and the name of the desired registered subclass. Later calls
+ * to getImageManager() will return that selected subclass.
  *
  * When the program finishes, the RdImageManager can be deallocated using destroyImageManager().
  *
@@ -44,7 +45,6 @@ typedef yarp::sig::ImageOf<yarp::sig::PixelRgb> RdImage;
 class RdImageManager
 {
     public:
-
         //------------------------------ Construction & destruction ---------------------------------------------------//
         /**
          * @brief Get a reference to the RdImageManager
@@ -66,7 +66,6 @@ class RdImageManager
         virtual ~RdImageManager();
 
 
-
         //------------------------------ Manager Startup & Halting ----------------------------------------------------//
         /**
          * @brief Start to capture images
@@ -84,7 +83,6 @@ class RdImageManager
         virtual RdImage getImage() = 0;
 
 
-
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Adds a RdImageEventListener to the list of observers to be notified of events
         bool addImageEventListener( RdImageEventListener * listener );
@@ -95,11 +93,11 @@ class RdImageManager
         virtual bool configure(std::string parameter, std::string value);
 
 
-
-
     protected:
-        RdImageManager();
-
+        /**
+         * @brief This function allows subclasses to install their unique instances in the singleton register to be
+         * selected later by the user
+         */
         static bool Register( RdImageManager * manager, std::string id);
 
         //! @brief Observers registered to be notified of image events

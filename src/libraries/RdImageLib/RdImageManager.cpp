@@ -104,11 +104,6 @@ bool rd::RdImageManager::configure(std::string parameter, std::string value)
     return true;
 }
 
-rd::RdImageManager::RdImageManager()
-{
-
-}
-
 bool rd::RdImageManager::Register(rd::RdImageManager *manager, std::string id)
 {
     if ( imageManagerRegistry.find(id) == imageManagerRegistry.end())

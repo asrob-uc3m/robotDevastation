@@ -17,6 +17,7 @@ using namespace rd;
  * This mockup object allows to access the received image and has a counter of
  * the incoming images received
  *
+ *  @todo Move this class to RdImageLib, set it to be compiled only with the tests
  */
 class RdMockupImageEventListener : public RdImageEventListener
 {

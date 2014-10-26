@@ -13,6 +13,7 @@ using namespace rd;
  *
  * This is the minimum implementation possible for the RdImageManager interface.
  *
+ *  @todo Move this class to RdImageLib, set it to be compiled only with the tests
  */
 class BasicImageManager : public RdImageManager
 {

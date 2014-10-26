@@ -89,3 +89,8 @@ void rd::RdYarpImageManager::onRead(rd::RdImage &image)
         listeners[i]->onImageArrived(this);
     }
 }
+
+rd::RdYarpImageManager::RdYarpImageManager()
+{
+
+}

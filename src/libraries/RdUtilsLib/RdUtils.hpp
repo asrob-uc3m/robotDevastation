@@ -3,7 +3,7 @@
  *
  * \defgroup RdUtilsLib
  *
- * @brief The RdUtilsLib library contains macros and utilities such as the \ref RdIniReader class.
+ * @brief The RdUtilsLib library contains miscellaneous macros and utilities
  */
 #include "RdVocabs.hpp"
 #include "RdMacros.hpp"

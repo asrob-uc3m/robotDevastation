@@ -251,6 +251,7 @@ bool rd::RobotDevastation::interruptModule()
     inputManager->removeInputEventListeners();
     networkManager->removeNetworkEventListeners();
     mentalMap->removeMentalMapEventListeners();
+    imageManager->removeImageEventListeners();
 
     //-- Closing input manager:
     RdInputManager::destroyInputManager();
@@ -270,8 +271,9 @@ bool rd::RobotDevastation::interruptModule()
     mentalMap = NULL;
 
     //-- Close img related ports:
-    inImg.interrupt();
-    inImg.close();
+    imageManager->stop();
+    RdImageManager::destroyImageManager();
+    imageManager = NULL;
 
     robotManager->disconnect();
 
