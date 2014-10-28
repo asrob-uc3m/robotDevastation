@@ -29,7 +29,7 @@ bool rd::RdServer::updateModule()
        printf("----------------------\n%s\n", (iterator->second).str().c_str());
        yarp::os::Bottle msgPlayer;
        msgPlayer.addInt( (iterator->second).getId() );
-       msgPlayer.addString( (iterator->second).getName() );
+       msgPlayer.addString( (iterator->second).getName().c_str() );
        msgPlayer.addInt( (iterator->second).getHealth() );
        msgPlayer.addInt( (iterator->second).getMaxHealth() );
        msgPlayer.addInt( (iterator->second).getTeamId() );

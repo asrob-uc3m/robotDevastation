@@ -14,7 +14,7 @@ include_directories(${SDL_MIXER_INCLUDE_DIRS} ${SDLMIXER_INCLUDE_DIR})  # SDLMIX
 include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} RdAudioManager.cpp)
-target_link_libraries(${KEYWORD} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES})
+target_link_libraries(${KEYWORD} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDLMIXER_LIBRARY})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
