@@ -74,5 +74,6 @@ class RdSDLInputManager : public RdInputManager,
         //! @brief Period in milliseconds between keyboard event updates
         static const int UPDATE_RATE_MS;
 };
+}
 
 #endif // __RD_SDL_INPUT_MANAGER_HPP__

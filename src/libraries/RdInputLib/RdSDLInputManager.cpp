@@ -3,15 +3,19 @@
 //-- Initialize static members
 rd::RdSDLInputManager * rd::RdSDLInputManager::uniqueInstance = NULL;
 const std::string rd::RdSDLInputManager::id = "SDL";
+const int rd::RdSDLInputManager::UPDATE_RATE_MS = 20;
 
 bool rd::RdSDLInputManager::start()
-{
-
+{  
+    //-- Start input thread
+    return yarp::os::RateThread::start();
 }
 
 bool rd::RdSDLInputManager::stop()
 {
-
+    //-- Stop input thread
+    yarp::os::RateThread::stop();
+    return true;
 }
 
 bool rd::RdSDLInputManager::configure(std::string parameter, std::string value)
@@ -31,12 +35,13 @@ bool rd::RdSDLInputManager::RegisterManager()
 
 rd::RdSDLInputManager::~RdSDLInputManager()
 {
+    //-- Stop this thread
+    this->stop();
     uniqueInstance = NULL;
 }
 
-rd::RdSDLInputManager::RdSDLInputManager()
+rd::RdSDLInputManager::RdSDLInputManager() : RateThread(UPDATE_RATE_MS)
 {
-
 }
 
 bool rd::RdSDLInputManager::update()
@@ -58,8 +63,8 @@ bool rd::RdSDLInputManager::update()
                 return false;
             }
 
-            for ( int i = 0; i < (int)listeners->size(); i++)
-                listeners->at(i)->onKeyDown(*key);
+            for ( int i = 0; i < (int)listeners.size(); i++)
+                listeners.at(i)->onKeyDown(*key);
 
         }
         else if (event.type == SDL_KEYUP )
@@ -73,8 +78,8 @@ bool rd::RdSDLInputManager::update()
                  return false;
              }
 
-            for ( int i = 0; i < (int)listeners->size(); i++)
-                listeners->at(i)->onKeyUp(*key);
+            for ( int i = 0; i < (int)listeners.size(); i++)
+                listeners.at(i)->onKeyUp(*key);
 
         }
         else

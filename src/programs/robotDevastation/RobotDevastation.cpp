@@ -69,7 +69,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
 
     //-- Init input manager
-    inputManager = RdInputManager::getInputManager();
+    RdSDLInputManager::RegisterManager();
+    inputManager = RdInputManager::getInputManager("SDL");
     inputManager->addInputEventListener(this);
     if (!inputManager->start() )
     {

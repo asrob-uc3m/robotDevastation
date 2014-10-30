@@ -71,7 +71,7 @@ class RdInputManager
          *
          * This function is supposed to be called after RdInputManager configuration.
          */
-        bool start() = 0;
+        virtual bool start() = 0;
 
         //! @brief Stop capturing input events
         virtual bool stop() = 0;

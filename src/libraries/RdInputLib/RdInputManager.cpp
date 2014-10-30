@@ -4,7 +4,7 @@
 //-- This is very important:
 rd::RdInputManager * rd::RdInputManager::inputManagerInstance = NULL;
 std::string rd::RdInputManager::currentId = "";
-std::map<std::string, rd::RdInputManager *> rd::RdInputManager::imageManagerRegistry = std::map<std::string, rd::RdInputManager *>();
+std::map<std::string, rd::RdInputManager *> rd::RdInputManager::inputManagerRegistry = std::map<std::string, rd::RdInputManager *>();
 
 
 rd::RdInputManager *rd::RdInputManager::getInputManager()
@@ -83,9 +83,6 @@ bool rd::RdInputManager::destroyInputManager()
 
 rd::RdInputManager::~RdInputManager()
 {
-    //-- Destroy submodules:
-    delete keyboardManager;
-    keyboardManager = NULL;
 }
 
 bool rd::RdInputManager::addInputEventListener(rd::RdInputEventListener *listener)
