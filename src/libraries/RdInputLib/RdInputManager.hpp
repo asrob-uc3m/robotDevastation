@@ -3,14 +3,12 @@
 #ifndef __RD_INPUT_MANAGER_HPP__
 #define __RD_INPUT_MANAGER_HPP__
 
-#include <SDL/SDL.h>
+
 
 #include <vector>
 
 #include "RdUtils.hpp"
 #include "RdInputEventListener.hpp"
-#include "RdKeyboardManager.hpp"
-
 
 namespace rd{
 
@@ -44,44 +42,67 @@ namespace rd{
 class RdInputManager
 {
     public:
-        //! @brief Get a reference to RdInputManager
+        //------------------------------ Construction & destruction ---------------------------------------------------//
+        /**
+         * @brief Get a reference to the RdInputManager
+         * @return By default, if no id is specified, this will return a reference to the first
+         * RdInputManager that it can find in the registry, or NULL if no RdInputManager was registered.
+         */
         static RdInputManager * getInputManager();
 
-        //! @brief Deallocate the RdInputManager
+        /**
+         * @brief Get a reference to the RdInputManager
+         * @return The RdInputManager registered with the given id, NULL if the id is not found in
+         * the registry.
+         */
+        static RdInputManager * getInputManager(std::string id);
+
+        //! @brief Deallocate all the registered RdInputManager
         static bool destroyInputManager();
 
-        ~RdInputManager();
+        virtual ~RdInputManager();
 
+
+        //------------------------------ Manager Startup & Halting ----------------------------------------------------//
         /**
          * @brief Start to capture input events
          *
          * This function is supposed to be called after RdInputManager configuration.
          */
-        bool start();
+        virtual bool start() = 0;
 
+        //! @brief Stop capturing input events
+        virtual bool stop() = 0;
+
+        //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Adds a RdInputEventListener to the list of observers to be notified of events
         bool addInputEventListener( RdInputEventListener * listener );
 
         //! @brief Unregisters all the RdInputEventListener stored
         bool removeInputEventListeners();
 
-    private:
+        //! @brief Configures a parameter with a value
+        virtual bool configure(std::string parameter, std::string value);
+
+    protected:
         /**
-         * @brief Constructor
-         *
-         * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getInputManager() method
+         * @brief This function allows subclasses to install their unique instances in the singleton register to be
+         * selected later by the user
          */
-        RdInputManager();
-
-        //! @brief Stores the unique instance of the RdInputManager
-        static RdInputManager * inputManagerInstance;
-
-        //! @brief Reference to the submodule in charge of keyboard events
-        RdKeyboardManager * keyboardManager;
+        static bool Register( RdInputManager * manager, std::string id);
 
         //! @brief Observers registered to be notified of input events
         std::vector<RdInputEventListener *> listeners;
+
+    private:
+        //! @brief Stores the unique instance of the RdInputManager
+        static RdInputManager * inputManagerInstance;
+
+        //! \brief Stores the id of the current unique instance used
+        static std::string currentId;
+
+        //! \brief Stores all the RdInputManager that have been registered
+        static std::map< std::string, RdInputManager * > inputManagerRegistry;
 
 };
 

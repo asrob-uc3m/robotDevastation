@@ -10,6 +10,7 @@
 #include "RdAudioManager.hpp"
 #include "RdMentalMap.hpp"
 #include "RdInputManager.hpp"
+#include "RdSDLInputManager.hpp"
 #include "RdInputEventListener.hpp"
 #include "RdYarpNetworkManager.hpp"
 #include "RdRobotManager.hpp"

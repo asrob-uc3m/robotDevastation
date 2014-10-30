@@ -10,6 +10,7 @@
  *
  ***/
 #include <RdInputManager.hpp>
+#include <RdSDLInputManager.hpp>
 #include <RdInputEventListener.hpp>
 #include <RdAudioManager.hpp>
 
@@ -135,8 +136,9 @@ int main(void)
         return false;
     }
 
-    //-- Get a inputManager
-    RdInputManager * inputManager = RdInputManager::getInputManager();
+    //-- Get a (SDL) inputManager
+    RdSDLInputManager::RegisterManager();
+    RdInputManager * inputManager = RdInputManager::getInputManager("SDL");
     if (inputManager == NULL)
     {
         RD_ERROR("Could not get AudioManager\n");
