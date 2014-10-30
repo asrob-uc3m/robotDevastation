@@ -42,6 +42,9 @@ rd::RdSDLInputManager::~RdSDLInputManager()
 
 rd::RdSDLInputManager::RdSDLInputManager() : RateThread(UPDATE_RATE_MS)
 {
+    //-- Init SDL
+    if (SDL_WasInit( SDL_INIT_EVENTTHREAD) == 0)
+        SDL_Init(SDL_INIT_EVENTTHREAD);
 }
 
 bool rd::RdSDLInputManager::update()

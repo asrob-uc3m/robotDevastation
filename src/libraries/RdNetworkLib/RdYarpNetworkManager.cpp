@@ -77,13 +77,22 @@ bool rd::RdYarpNetworkManager::start(int id)
         yarp::os::Time::delay(0.5);
         yarp::os::Network::connect( rpc_s.str().c_str() , "/rdServer" );
     }
-    yarp::os::Network::connect( "/rdBroadcast", call_s.str().c_str() );
 
     if (tries == 10)
     {
         RD_ERROR("Timeout!\n");
         return false;
     }
+
+    RD_SUCCESS("Connected to Server (outgoing)!\n")
+
+    if ( !yarp::os::Network::connect( "/rdBroadcast", call_s.str().c_str() ))
+    {
+        RD_ERROR("Error connecting to server (incoming)!\n");
+        return false;
+    }
+
+   RD_SUCCESS("Connected to Server (incoming)!\n")
 
     return true;
 
