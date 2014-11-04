@@ -1,4 +1,2 @@
-robotDevastation
-================
+[![Image](share/images/800px-Devastation-thin.png)](./) 
 
-Robot Devastation
