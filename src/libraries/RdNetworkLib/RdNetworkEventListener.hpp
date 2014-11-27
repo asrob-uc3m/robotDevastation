@@ -11,7 +11,6 @@ namespace rd{
 class RdNetworkEventListener
 {
     public:
-        virtual bool onDataArrived(RdPlayer player) = 0;
         virtual bool onDataArrived(std::vector<RdPlayer> players) = 0;
 };
 

@@ -147,9 +147,6 @@ class RdMentalMap : public RdNetworkEventListener
 
         //-- Implementation of RdNetworkEventListener functions
         //--------------------------------------------------------------------------------------------
-        //! @brief This currently does nothing. (Yeah, I know, don't judge us)
-        bool onDataArrived(RdPlayer player);
-
         //! @brief Updates the local information about the players with the new data received by the RdNetworkManager.
         bool onDataArrived(std::vector<RdPlayer> players);
 };
