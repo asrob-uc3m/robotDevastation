@@ -14,7 +14,7 @@
 #include "RdInputEventListener.hpp"
 #include "RdYarpNetworkManager.hpp"
 #include "RdRobotManager.hpp"
-#include "RdRd1RobotManager.hpp"
+#include "RdYarpRobotManager.hpp"
 #include "RdStateMachine.hpp"
 #include "RdImageManager.hpp"
 #include "RdYarpImageManager.hpp"
