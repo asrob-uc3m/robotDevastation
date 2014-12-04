@@ -4,52 +4,52 @@
 
 namespace rd{
 
-bool RdRd1RobotManager::moveForward(int velocity) {
+bool RdYarpRobotManager::moveForward(int velocity) {
     double velocities[] = {2000,1000};
     vel->velocityMove(velocities);
     return true;
 }
 
-bool RdRd1RobotManager::moveBackwards(int velocity) {
+bool RdYarpRobotManager::moveBackwards(int velocity) {
     double velocities[] = {1000,2000};
     vel->velocityMove(velocities);
     return true;
 }
 
-bool RdRd1RobotManager::turnLeft(int velocity) {
+bool RdYarpRobotManager::turnLeft(int velocity) {
     double velocities[] = {1000,1000};
     vel->velocityMove(velocities);
     return true;
 }
 
-bool RdRd1RobotManager::turnRight(int velocity) {
+bool RdYarpRobotManager::turnRight(int velocity) {
     double velocities[] = {2000,2000};
     vel->velocityMove(velocities);
     return true;
 }
 
-bool RdRd1RobotManager::stopMovement() {
+bool RdYarpRobotManager::stopMovement() {
     vel->stop();
     return true;
 }
 
-bool RdRd1RobotManager::tiltUp(int velocity) {
+bool RdYarpRobotManager::tiltUp(int velocity) {
     return true;
 }
 
-bool RdRd1RobotManager::tiltDown(int velocity) {
+bool RdYarpRobotManager::tiltDown(int velocity) {
     return true;
 }
 
-bool RdRd1RobotManager::panLeft(int velocity) {
+bool RdYarpRobotManager::panLeft(int velocity) {
     return true;
 }
 
-bool RdRd1RobotManager::panRight(int velocity) {
+bool RdYarpRobotManager::panRight(int velocity) {
     return true;
 }
         
-bool RdRd1RobotManager::connect()  {
+bool RdYarpRobotManager::connect()  {
 
     std::ostringstream local_s;
     local_s << "/";
@@ -79,20 +79,20 @@ bool RdRd1RobotManager::connect()  {
     return true;
 }
 
-bool RdRd1RobotManager::disconnect()  {
+bool RdYarpRobotManager::disconnect()  {
     robotDevice.close();
     return true;
 }
 
-bool RdRd1RobotManager::test()  {
+bool RdYarpRobotManager::test()  {
     return true;
 }
 
-bool RdRd1RobotManager::ping()  {
+bool RdYarpRobotManager::ping()  {
     return true;
 }
 
-void RdRd1RobotManager::onDestroy(){
+void RdYarpRobotManager::onDestroy(){
     return;
 }
 

@@ -17,11 +17,11 @@ namespace rd{
  * @brief The Robot Manager for the Rd1 robot.
  *
  */
-class RdRd1RobotManager : public RdRobotManager
+class RdYarpRobotManager : public RdRobotManager
 {
     public:
 
-        RdRd1RobotManager(const int& playerId) : RdRobotManager(playerId) { }
+        RdYarpRobotManager(const int& playerId) : RdRobotManager(playerId) { }
 
         //-- Robot movement related functions    
         virtual bool moveForward(int velocity = UNUSED);
