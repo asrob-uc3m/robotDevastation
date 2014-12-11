@@ -19,6 +19,6 @@ install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
 set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${SDL_INCLUDE_DIR} ${SDL_MIXER_INCLUDE_DIRS} ${SDLMIXER_INCLUDE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
-set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
+set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDLMIXER_LIBRARY} CACHE INTERNAL "appended libraries") # Not for now as it is a header
 
 
