@@ -2,32 +2,20 @@
 /**
  * \page install_on_ubuntu Robot Devastation - Installation from Source Code (Ubuntu)
 
-  \li \ref install_cmake
-  \li \ref install_opencv
+  \li \ref install_deps
 
   \li \ref install_rd
 
 
- * @section install_cmake Install CMake
+ * @section install_deps Install CMake, OpenCV, ZBar and SDL
 
 Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
-sudo apt-get install cmake
-sudo apt-get install cmake-curses-gui  # Needed for ccmake.
-\endverbatim
-
- * @section install_opencv Install OpenCV
-
-We'll do this from source to assure the CMake file is created.
-
-\verbatim
-sudo apt-get install libavformat-dev libavcodec-dev libswscale-dev
-svn co https://code.ros.org/svn/opencv/trunk/opencv
-cd opencv; mkdir build; cd build
-cmake ..  # Make sure you see Video I/O: -- FFMPEG: YES
-make -j3; sudo make install
-cd ../..
+sudo apt-get install cmake cmake-curses-gui
+sudo apt-get install libcv-dev
+sudo apt-get install libzbar-dev
+sudo apt-get install libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
 \endverbatim
 
  * @section install_rd Download, Configure, Compile and Install the Robot Devastation software
@@ -98,7 +86,7 @@ The project is organized in such a way that you will find:
 
 <hr>
 
-This page can be edited at $RD_ROOT/doc/install.dox.
+This page can be edited at $RD_ROOT/doc/install_on_ubuntu.dox.
 
 *
 */
