@@ -17,3 +17,13 @@ install(TARGETS ${KEYWORD} DESTINATION lib)
 #set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
 set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
 
+# Tiny Yarp Plugin library
+list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH})
+include(YarpPlugin)
+
+yarp_begin_plugin_library(RdYarp)
+add_subdirectory(SerialServoBoard)
+yarp_end_plugin_library(RdYarp)
+
+yarp_add_plugin_library_executable(testRdYarp RdYarp)
+target_link_libraries(testRdYarp ${YARP_LIBRARIES})
