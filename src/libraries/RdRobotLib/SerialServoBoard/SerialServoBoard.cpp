@@ -57,7 +57,7 @@ bool SerialServoBoard::positionMove(int j, double ref) {
 
     cmd[0]=0x51;
     cmd[1]= (char) j;
-    cmd[2]= (char)( (int) ref);
+    cmd[2]= (char)( (int) ref + 90);
 
     serial->send(cmd, 3);
 
@@ -66,11 +66,12 @@ bool SerialServoBoard::positionMove(int j, double ref) {
 
 
 bool SerialServoBoard::positionMove(const double *refs) {
+
     char cmd[3];
 
     cmd[0]=0x50;
-    cmd[1] = (char)( (int) refs[0]);
-    cmd[2] = (char)( (int) refs[1]);
+    cmd[1] = (char)( (int) refs[0] + 90);
+    cmd[2] = (char)( (int) refs[1] + 90);
 
     serial->send(cmd, 3);
 
@@ -119,7 +120,7 @@ bool SerialServoBoard::setRefSpeed(int j, double sp) {
 
 
 bool SerialServoBoard::setRefSpeeds(const double *spds) {
-    for(int k=0; k<32; k++) {
+    for(int k=0; k<2; k++) {
         setRefSpeed(k, spds[k]);
     }
 
@@ -145,7 +146,7 @@ bool SerialServoBoard::getRefSpeed(int j, double *ref) {
 
 
 bool SerialServoBoard::getRefSpeeds(double *spds) {
-    for(int k=0; k<32; k++) {
+    for(int k=0; k<2; k++) {
         spds[k]=speeds[k];
     }
 
@@ -212,9 +213,9 @@ bool SerialServoBoard::open(Searchable &config) {
 
     char comport[80];
 
-    strcpy(comport, config.check("comport", yarp::os::Value("/dev/ttyS0")).asString().c_str());
+    strcpy(comport, config.check("comport", yarp::os::Value("/dev/ttyACM0")).asString().c_str());
 
-    int baudrate = config.check("baudrate", yarp::os::Value(38400)).asInt();
+    int baudrate = config.check("baudrate", yarp::os::Value(57600)).asInt();
 
     Property conf;
     // no arguments, use a default
@@ -237,8 +238,8 @@ bool SerialServoBoard::open(Searchable &config) {
     }
 
 
-    positions=(double *)malloc(sizeof(double)*32);
-    speeds=(double *)malloc(sizeof(double)*32);
+    positions=(double *)malloc(sizeof(double)*2);
+    speeds=(double *)malloc(sizeof(double)*2);
 
     return true;
 }
