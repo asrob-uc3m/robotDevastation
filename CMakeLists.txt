@@ -19,6 +19,7 @@ project(robotDevastation)
 option(ENABLE_tests "Choose if you want to compile tests" TRUE)
 
 ##### library options
+option(ENABLE_RdYarp_RdSerialServoBoard "Choose if you want to compile RdYarp_RdSerialServoBoard" TRUE)
 
 ##### program options
 option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" TRUE)
