@@ -1,24 +1,16 @@
 
 /**
- * \page install_on_ubuntu Robot Devastation - Installation from Source Code (Ubuntu)
+ * \page rd_install_on_ubuntu_14_10 Robot Devastation - Installation from Source Code (Ubuntu 14.10)
 
-  \li \ref install_deps
+  \li \ref rd_install_cmake_on_ubuntu_14_10
+  \li \ref rd_install_opencv_on_ubuntu_14_10
+  \li \ref rd_install_zbar_on_ubuntu_14_10
+  \li \ref rd_install_sdl_on_ubuntu_14_10
+  \li \ref rd_install_yarp_on_ubuntu_14_10
 
-  \li \ref install_rd
+  \li \ref rd_main_install_on_ubuntu_14_10
 
-
- * @section install_deps Install CMake, OpenCV, ZBar and SDL
-
-Note that you will be prompted for your password upon using '''sudo''' a couple of times:
-
-\verbatim
-sudo apt-get install cmake cmake-curses-gui
-sudo apt-get install libcv-dev
-sudo apt-get install libzbar-dev
-sudo apt-get install libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
-\endverbatim
-
- * @section install_rd Download, Configure, Compile and Install the Robot Devastation software
+ * @section rd_main_install_on_ubuntu_14_10 Download, Configure, Compile and Install the Robot Devastation software
 
  * @subsection download_rd Download the Robot Devastation software from the repository
 

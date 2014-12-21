@@ -10,7 +10,7 @@
 Welcome to Robot Devastation! If you're lost, you probably just want to go back to the <a class="el" href="http://asrob.uc3m.es/index.php/Robot_Devastation">Robot Devastation Wiki</a>.
 Or stay for the fun!
 
- \li \ref install_on_ubuntu
+ \li \ref rd_install_on_ubuntu_14_10
  \li \ref post_install
 
 Other internal links of interest:
