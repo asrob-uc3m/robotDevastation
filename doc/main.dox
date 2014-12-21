@@ -11,12 +11,14 @@ Welcome to Robot Devastation! If you're lost, you probably just want to go back 
 Or stay for the fun!
 
  \li \ref rd_install_on_ubuntu_14_10
- \li \ref post_install
+ \li \ref rd_post_install
 
 Other internal links of interest:
 
  \li \ref rd_programs
  \li <a href="https://github.com/asrob-uc3m/robotDevastation" class="el">Browse the Robot Devastation Software Repository</a>
+
+<hr>
 
 This page can be edited at $RD_ROOT/doc/main.dox.
 

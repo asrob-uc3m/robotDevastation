@@ -2,83 +2,28 @@
 /**
  * \page rd_install_on_ubuntu_14_10 Robot Devastation - Installation from Source Code (Ubuntu 14.10)
 
+ * @section rd_install_deps_on_ubuntu_14_10 Install the Robot Devastation software dependencies
+
   \li \ref rd_install_cmake_on_ubuntu_14_10
   \li \ref rd_install_opencv_on_ubuntu_14_10
   \li \ref rd_install_zbar_on_ubuntu_14_10
   \li \ref rd_install_sdl_on_ubuntu_14_10
   \li \ref rd_install_yarp_on_ubuntu_14_10
 
-  \li \ref rd_main_install_on_ubuntu_14_10
-
  * @section rd_main_install_on_ubuntu_14_10 Download, Configure, Compile and Install the Robot Devastation software
 
- * @subsection download_rd Download the Robot Devastation software from the repository
-
 \verbatim
-git clone https://github.com/asrob-uc3m/robotDevastation.git
+git clone https://github.com/asrob-uc3m/robotDevastation.git  # Download the Robot Devastation software from the repository
+cd robotDevastation; mkdir build; cd build; cmake ..  # Configure the Robot Devastation software
+make  # Compile
+sudo make install  # Install :-)
 \endverbatim
 
- * @subsection configure_rd Configure the Robot Devastation software
-
-Set the RD_ROOT environment variable to ''robotDevastation''. There are two ways of doing this:
-
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). For this option, type:
- 
-\verbatim
-echo "export RD_ROOT=$PWD/robotDevastation" >> ~/.profile
-\endverbatim
-
- 2) Through ~/.baschrc (parsed inside each terminal). For this other option, type:
- 
-\verbatim
-echo "export RD_ROOT=$PWD/robotDevastation" >> ~/.bashrc
-\endverbatim
-
-Now let's configure which modules we want to enable:
-
-\verbatim
-cd robotDevastation; mkdir build; cd build; cmake ..
-\endverbatim
-
- * @subsection compile_rd Compile and Install the Robot Devastation modules and libraries
-
-Finally compile with:
-
-\verbatim
-make
-\endverbatim
-
-Set the RD_DIR environment variable to ''$RD_ROOT/build''. There are two ways of doing this:
-
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). For this option, type:
- 
-\verbatim
-echo "export RD_DIR=$RD_ROOT/build" >> ~/.profile
-\endverbatim
-
- 2) Through ~/.baschrc (parsed inside each terminal). For this other option, type:
- 
-\verbatim
-echo "export RD_DIR=$RD_ROOT/build" >> ~/.bashrc
-\endverbatim
-
-\ref post_install
+  \li \ref rd_post_install
 
 <hr>
 
- * @subsection rd_organization Project Organization
-
-The project is organized in such a way that you will find:
-
- The ''programs'' in $RD_DIR/bin
-
- The ''libraries'' in $RD_DIR/lib --> Will be empty upon basic installation
-
- The ''shared files'' in $RD_ROOT/app --> Models, config files
-
-<hr>
-
-This page can be edited at $RD_ROOT/doc/install_on_ubuntu.dox.
+This page can be edited at $RD_ROOT/doc/rd_install_on_ubuntu.dox.
 
 *
 */
