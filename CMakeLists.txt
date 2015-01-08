@@ -16,8 +16,6 @@ endif(COMMAND cmake_policy)
 
 project(robotDevastation)
 
-option(ENABLE_tests "Choose if you want to compile tests" TRUE)
-
 ##### library options
 option(ENABLE_RdYarp_RdSerialServoBoard "Choose if you want to compile RdYarp_RdSerialServoBoard" TRUE)
 
@@ -25,6 +23,8 @@ option(ENABLE_RdYarp_RdSerialServoBoard "Choose if you want to compile RdYarp_Rd
 option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" TRUE)
 option(ENABLE_rdServer "Choose if you want to compile rdServer" TRUE)
 
+##### tests options
+option(ENABLE_tests "Choose if you want to compile tests" TRUE)
 
 if(MSVC)
   MESSAGE(STATUS "Running on windows")    
