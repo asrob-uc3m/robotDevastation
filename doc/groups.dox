@@ -1,3 +1,9 @@
+
+/**
+@brief A catch-all namespace for Robot Devastation programs and libraries.
+ */
+namespace rd {}
+
 /**
 * \defgroup rd_programs List of Robot Devastation programs
 *
