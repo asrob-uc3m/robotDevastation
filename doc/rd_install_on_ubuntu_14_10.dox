@@ -23,7 +23,7 @@ sudo make install  # Install :-)
 
 <hr>
 
-This page can be edited at $RD_ROOT/doc/rd_install_on_ubuntu.dox.
+This page can be edited at robotDevastation/doc/rd_install_on_ubuntu.dox.
 
 *
 */

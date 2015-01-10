@@ -40,7 +40,7 @@ export PATH=$PATH:/your/full/path/to/robotDevastation/build/bin
 
 <hr>
 
-This page can be edited at $RD_ROOT/doc/rd_environment_variables.dox.
+This page can be edited at robotDevastation/doc/rd_environment_variables.dox.
 
 *
 */

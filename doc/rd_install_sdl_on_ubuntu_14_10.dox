@@ -10,7 +10,7 @@ sudo apt-get install libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsd
 
 <br><hr>
 
-This page can be edited at $RD_ROOT/main/doc/rd_install_sdl_on_ubuntu_14_10.dox.
+This page can be edited at robotDevastation/doc/rd_install_sdl_on_ubuntu_14_10.dox.
 
 *
 */
