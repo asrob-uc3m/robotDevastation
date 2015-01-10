@@ -70,6 +70,7 @@ set(RD_LINK_DIRS CACHE INTERNAL "appended link dirs" FORCE)
 set(RD_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
 
 # add main contents
+add_subdirectory(share)
 add_subdirectory(src)
 if (ENABLE_tests)
     add_subdirectory(test)
