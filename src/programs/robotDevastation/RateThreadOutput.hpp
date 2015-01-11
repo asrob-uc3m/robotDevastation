@@ -28,7 +28,6 @@ class RateThreadOutput : public yarp::os::RateThread {
     private:
 
         int rateMs;
-        char* rdRoot;
         //
         SDL_Surface* display;
         //
@@ -46,7 +45,6 @@ class RateThreadOutput : public yarp::os::RateThread {
     public:
         RateThreadOutput() : RateThread(DEFAULT_RATE_MS) {}
 
-        void setRdRoot(char *value);
         void init(yarp::os::ResourceFinder &rf);
         void run();  // The periodical function
 };

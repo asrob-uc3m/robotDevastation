@@ -69,10 +69,10 @@ int main(int argc, char *argv[]) {
     std::cout << "--------------------------------------------------------------" << std::endl;
 
     yarp::os::ResourceFinder rf;
-    rf.setVerbose(false);
-    rf.setDefaultContext("robotDevastation/conf");
+    rf.setVerbose(true);
+    rf.setDefaultContext("robotDevastation");
     rf.setDefaultConfigFile("robotDevastation.ini");
-    rf.configure("RD_ROOT", argc, argv);
+    rf.configure(argc, argv);
 
     rd::RobotDevastation robotDevastation;
     if(rf.check("help")) {

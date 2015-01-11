@@ -67,10 +67,10 @@ int main(int argc, char *argv[]) {
     std::cout << "--------------------------------------------------------------" << std::endl;
 
     yarp::os::ResourceFinder rf;
-    rf.setVerbose(false);
-    rf.setDefaultContext("robotDevastation/conf");
-    rf.setDefaultConfigFile("robotDevastation.ini");
-    rf.configure("RD_ROOT", argc, argv);
+    rf.setVerbose(true);
+    rf.setDefaultContext("rdServer");
+    rf.setDefaultConfigFile("rdServer.ini");
+    rf.configure(argc, argv);
 
     rd::RdServer rdServer;
     if(rf.check("help")) {

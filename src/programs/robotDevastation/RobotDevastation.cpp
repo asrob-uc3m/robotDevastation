@@ -19,17 +19,6 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     //-- Get player data
     //-----------------------------------------------------------------------------
-    rdRoot = ::getenv ("RD_ROOT");
-    if (rdRoot!=NULL)
-    {
-        RD_INFO("The RD_ROOT is: %s\n",rdRoot);
-    }
-    else
-    {
-        RD_WARNING("No RD_ROOT environment variable!\n");
-        rdRoot="../..";  //-- Allow to run from build/bin
-    }
-
     if( ! rf.check("id") )
     {
         RD_ERROR("No id!\n");
@@ -79,7 +68,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     }
 
     //-- Init sound
-    if( ! initSound() )
+    if( ! initSound( rf ) )
         return false;
 
     if( ! rf.check("noMusic") )
@@ -126,7 +115,6 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         return false;
 
     //-- Init output thread
-    rateThreadOutput.setRdRoot(rdRoot);
     rateThreadOutput.init(rf);
 
     return true;
@@ -227,25 +215,28 @@ bool rd::RobotDevastation::updateModule()
     return true;
 }
 
-bool rd::RobotDevastation::initSound()
+bool rd::RobotDevastation::initSound(yarp::os::ResourceFinder &rf)
 {
-    std::string rdRootStr(rdRoot);
-
     audioManager = RdAudioManager::getAudioManager();
 
-    if ( ! audioManager->load(rdRootStr+"/share/sounds/RobotDevastationBSO.mp3", "bso", 0) )
+    std::string bsoStr( rf.findFileByName("../sounds/RobotDevastationBSO.mp3") );
+    if ( ! audioManager->load(bsoStr, "bso", 0) )
         return false;
 
-    if ( ! audioManager->load(rdRootStr+"/share/sounds/01_milshot.wav", "shoot", 1) )
+    std::string shootStr( rf.findFileByName("../sounds/01_milshot.wav") );
+    if ( ! audioManager->load(shootStr, "shoot", 1) )
         return false;
 
-    if ( ! audioManager->load(rdRootStr+"/share/sounds/15_explosion.wav", "explosion", 1) )
+    std::string explosionStr( rf.findFileByName("../sounds/15_explosion.wav") );
+    if ( ! audioManager->load(explosionStr, "explosion", 1) )
         return false;
 
-    if ( ! audioManager->load(rdRootStr+"/share/sounds/03_clip.wav", "noAmmo", 1) )
+    std::string noAmmoStr( rf.findFileByName("../sounds/03_clip.wav") );
+    if ( ! audioManager->load(noAmmoStr, "noAmmo", 1) )
         return false;
 
-    if ( ! audioManager->load(rdRootStr+"/share/sounds/04_milaction.wav", "reload", 1) )
+    std::string reloadStr( rf.findFileByName("../sounds/04_milaction.wav") );
+    if ( ! audioManager->load(reloadStr, "reload", 1) )
         return false;
 
     return true;

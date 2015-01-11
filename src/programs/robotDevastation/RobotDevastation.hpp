@@ -54,10 +54,7 @@ class RobotDevastation : public yarp::os::RFModule, public RdInputEventListener
         double getPeriod();
         bool updateModule();
 
-        bool initSound();
-
-        char* rdRoot;
-
+        bool initSound(yarp::os::ResourceFinder &rf);
 };
 
 }  // namespace rd

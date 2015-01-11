@@ -91,8 +91,3 @@ void rd::RateThreadOutput::run()
     //SDL_FreeSurface(surface); // needed? seems not from checking free.
 
 }
-
-void rd::RateThreadOutput::setRdRoot(char *value)
-{
-    rdRoot = value;
-}
