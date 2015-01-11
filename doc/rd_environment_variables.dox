@@ -21,7 +21,7 @@ __Add the following line__ at the end of __the selected file, substituting '/you
 export RD_DIR=/your/full/path/to/robotDevastation/build
 \endverbatim
 
-@section rd_without_installing Using Robot Devastation without installing (warning: not implemented as of 2014/01/09)
+@section rd_without_installing Using Robot Devastation without installing
 
 You will need YARP_DATA_DIRS for finding the share folder. You also probably want build/bin in your PATH.
 
