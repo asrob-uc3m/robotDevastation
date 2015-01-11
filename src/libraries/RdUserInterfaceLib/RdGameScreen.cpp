@@ -27,7 +27,7 @@ rd::RdGameScreen::RdGameScreen()
     }
 
     //-- Load the font(s)
-    char * font_name = "/usr/share/fonts/truetype/freefont/FreeMono.ttf";
+    const char * font_name = "/usr/share/fonts/truetype/freefont/FreeMono.ttf";
     player_font = TTF_OpenFont(font_name, 12);
     if (player_font == NULL)
     {

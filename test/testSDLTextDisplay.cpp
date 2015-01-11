@@ -35,7 +35,7 @@ int main(void)
     }
 
     //-- Load the font
-    char * font_name = "/usr/share/fonts/truetype/freefont/FreeMono.ttf";
+    const char * font_name = "/usr/share/fonts/truetype/freefont/FreeMono.ttf";
     TTF_Font *font = TTF_OpenFont(font_name, 28);
     if (font == NULL){
         printf("Unable to load font: %s %s \n", font_name, TTF_GetError());
