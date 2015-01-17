@@ -115,7 +115,7 @@ FULL_PATH_NAMES        = YES
 # path to strip.
 
 # WARNING, THIS IS TOTALLY MACHINE-DEPENDANT
-STRIP_FROM_PATH        = /home/asibot/svn/software
+STRIP_FROM_PATH        = 
 # WARNING, THIS IS TOTALLY MACHINE-DEPENDANT
 
 # The STRIP_FROM_INC_PATH tag can be used to strip a user-defined part of
