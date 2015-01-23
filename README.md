@@ -9,3 +9,5 @@ Installation Guide: http://asrob.uc3m.es/rddoc/rd_install_on_ubuntu_14_10.html
 Link to Doxygen documentation: http://asrob.uc3m.es/rddoc/index.html
 
 Link to Wiki: http://asrob.uc3m.es/index.php/Robot_Devastation
+
+[![Build Status (Linux/OSX)](https://travis-ci.org/asrob-uc3m/robotDevastation.svg?branch=master)](https://travis-ci.org/asrob-uc3m/robotDevastation)
