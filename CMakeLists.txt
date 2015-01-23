@@ -2,8 +2,9 @@
 #     (http://asrob.uc3m.es) RD Project
 #
 # Authors:
-# <a href="http://roboticslab.uc3m.es/roboticslab/persona_publ.php?id_pers=72">Juan G. Victores</a>.
-# <a href="http://www.mendeley.com/profiles/santiago-morante-cendrero/">Santiago Morante</a>,
+# <a href="https://plus.google.com/+davidestevezfernandez">David Estevez</a> (2014-present),
+# <a href="http://roboticslab.uc3m.es/roboticslab/people/jg-victores">Juan G. Victores</a> (2012-present),
+# <a href="http://www.mendeley.com/profiles/santiago-morante-cendrero/">Santiago Morante</a> (2012-2014).
 #
 # CopyPolicy: Released under the terms of the LGPLv2.1 or later, see $RD_ROOT/main/doc/LGPL.TXT
 
