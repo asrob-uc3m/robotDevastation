@@ -12,4 +12,6 @@ Link to Wiki: http://asrob.uc3m.es/index.php/Robot_Devastation
 
 [![Build Status (Linux/OSX)](https://img.shields.io/travis/asrob-uc3m/robotDevastation/master.svg?label=Build Status (Linux/OSX))](https://travis-ci.org/asrob-uc3m/robotDevastation)
 
+[![Coverage Status](https://coveralls.io/repos/asrob-uc3m/robotDevastation/badge.svg)](https://coveralls.io/r/asrob-uc3m/robotDevastation)
+
 [![Issues](https://img.shields.io/github/issues/asrob-uc3m/robotDevastation.svg?label=Issues)](https://github.com/asrob-uc3m/robotDevastation/issues)
