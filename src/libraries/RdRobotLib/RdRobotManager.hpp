@@ -48,7 +48,7 @@ class RdRobotManager
 
         //-- Other
         virtual void onDestroy() = 0;
-        ~RdRobotManager();
+        virtual ~RdRobotManager() {}
 
         //-- Constants
         static const int UNUSED = -1;
