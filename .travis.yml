@@ -60,11 +60,16 @@ script:
   - cmake --build .
   - sudo make install
   - bin/testMentalMap
+  - bin/testRdAudioManager
+  - bin/testRdImageManager
+  - bin/testRdYarpNetworkManager
 
 after_success:
   #  - cd ${TRAVIS_BUILD_DIR}
   # capture coverage info
   - if [ "$CXX" = "g++" ]; then lcov --directory . --capture --output-file coverage.info; fi
+  # filter out system and test code
+  - if [ "$CXX" = "g++" ]; then lcov --remove coverage.info 'test/*' --output-file coverage.info; fi
   # debug before upload
   - if [ "$CXX" = "g++" ]; then lcov --list coverage.info; fi
   # uploads to coveralls
