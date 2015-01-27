@@ -60,9 +60,9 @@ script:
   - cmake --build .
   - sudo make install
   - bin/testMentalMap
-  - bin/testRdAudioManager
+  # - bin/testRdAudioManager  #-- Travis cannot open the AudioMixer.
   - bin/testRdImageManager
-  - bin/testRdYarpNetworkManager
+  # - bin/testRdYarpNetworkManager  #-- Will fail without a server.
 
 after_success:
   #  - cd ${TRAVIS_BUILD_DIR}
