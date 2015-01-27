@@ -59,15 +59,16 @@ script:
 
   - cmake --build .
   - sudo make install
-  - sudo make uninstall
+  - bin/testMentalMap
 
 after_success:
   #  - cd ${TRAVIS_BUILD_DIR}
   # capture coverage info
   - if [ "$CXX" = "g++" ]; then lcov --directory . --capture --output-file coverage.info; fi
-  # filter out system and test code
-  - if [ "$CXX" = "g++" ]; then lcov --remove coverage.info 'test/*' --output-file coverage.info; fi
   # debug before upload
   - if [ "$CXX" = "g++" ]; then lcov --list coverage.info; fi
   # uploads to coveralls
   - if [ "$CXX" = "g++" ]; then coveralls-lcov --source-encoding=ISO-8859-1 --repo-token InWqFy6VWMrEUzr2Rn8XV0cGqv3wXWo2d coverage.info; fi
+
+  - sudo make uninstall
+
