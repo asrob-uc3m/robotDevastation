@@ -71,7 +71,7 @@ set(RD_LINK_DIRS CACHE INTERNAL "appended link dirs" FORCE)
 set(RD_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage") # enabling coverage
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage") # enabling coverage
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 # add main contents
