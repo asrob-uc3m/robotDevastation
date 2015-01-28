@@ -61,7 +61,7 @@ script:
   - sudo make install
   - bin/testMentalMap
   # - bin/testRdAudioManager  #-- Travis cannot open the AudioMixer.
-  - bin/testRdImageManager
+  # - bin/testRdImageManager  #-- 'Illegal Instruction' with clang compiler distro on travis (2015/01/28).
   # - bin/testRdYarpNetworkManager  #-- Will fail without a server.
 
 after_success:
