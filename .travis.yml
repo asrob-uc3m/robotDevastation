@@ -73,7 +73,8 @@ after_success:
   # debug before upload
   - if [ "$CXX" = "g++" ]; then lcov --list coverage.info; fi
   # uploads to coveralls
-  - if [ "$CXX" = "g++" ]; then coveralls-lcov --source-encoding=ISO-8859-1 --repo-token InWqFy6VWMrEUzr2Rn8XV0cGqv3wXWo2d coverage.info; fi
+  #- if [ "$CXX" = "g++" ]; then coveralls-lcov --source-encoding=ISO-8859-1 --repo-token InWqFy6VWMrEUzr2Rn8XV0cGqv3wXWo2d coverage.info; fi
+  - if [ "$CXX" = "g++" ]; then coveralls-lcov --source-encoding=ISO-8859-1 coverage.info; fi
 
   - sudo make uninstall
 
