@@ -40,7 +40,7 @@ class BasicImageManager : public RdImageManager
         //-- The local static reference must be reseted after destroying this manager
         ~BasicImageManager()
         {
-            RD_INFO("Hey, I'm a destructor!\n");
+            //RD_INFO("Hey, I'm a destructor!\n");
             uniqueInstance = NULL;
         }
 
