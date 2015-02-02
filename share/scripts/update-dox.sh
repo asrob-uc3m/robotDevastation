@@ -9,7 +9,7 @@ echo "Update RD repo..."
 cd $RD_ROOT
 git pull
 
-echo "Doxy teo-main..."
+echo "Doxy robotDevastation..."
 cd doc
 rm -r html
 /usr/local/bin/doxygen
