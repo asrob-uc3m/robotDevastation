@@ -71,6 +71,7 @@ bool RdYarpRobotManager::connect()  {
         RD_ERROR("Could not connect to remote robot.\n");
         return false;
     }
+    RD_SUCCESS("Connected to remote robot.\n");
 
     if(! robotDevice.view(vel) )
     {
