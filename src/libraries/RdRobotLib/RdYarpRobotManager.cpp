@@ -67,14 +67,17 @@ bool RdYarpRobotManager::connect()  {
     robotOptions.put("remote", remote_s.str().c_str() );
     robotDevice.open(robotOptions);
 
-    bool ok = true;
-    ok &= robotDevice.view(vel);
-    if(!ok)
-    {
-        RD_ERROR("Could not connect to robot motors.\n");
+    if( ! robotDevice.isValid() ) {
+        RD_ERROR("Could not connect to remote robot.\n");
         return false;
     }
-    RD_SUCCESS("Connected to robot motors.\n");
+
+    if(! robotDevice.view(vel) )
+    {
+        RD_ERROR("Could not aquire robot motor velocity interface.\n");
+        return false;
+    }
+    RD_SUCCESS("Acquired robot motor velocity interface.\n");
 
     return true;
 }
