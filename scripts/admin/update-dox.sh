@@ -5,8 +5,8 @@
 # crontab -e
 # 30 2 * * * /your/command
 
-echo "Update RD repo..."
-cd $RD_ROOT
+echo "Update robotDevastation repo..."
+cd $HOME/robotDevastation
 git pull
 
 echo "Doxy robotDevastation..."
