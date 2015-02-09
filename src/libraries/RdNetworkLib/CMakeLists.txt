@@ -9,7 +9,7 @@ find_package(YARP REQUIRED)
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdNetworkManager.cpp RdYarpNetworkManager.cpp RdNetworkEventListener.hpp)
+add_library(${KEYWORD} RdNetworkManager.cpp RdYarpNetworkManager.cpp RdNetworkEventListener.hpp MockupNetworkManager.cpp)
 target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${RD_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 

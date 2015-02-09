@@ -3,6 +3,9 @@
 #ifndef __RD_NETWORK_MANAGER_HPP__
 #define __RD_NETWORK_MANAGER_HPP__
 
+#include <map>
+
+#include "RdUtils.hpp"
 #include "RdPlayer.hpp"
 #include "RdNetworkEventListener.hpp"
 
@@ -35,19 +38,49 @@ namespace rd{
 class RdNetworkManager
 {
     public:
-        //-- Creation and configuration
-        //--------------------------------------------------------------------------------------------
-        //! @todo Change this singleton to the new singleton implementation with Register()
+        //------------------------------ Construction & destruction ---------------------------------------------------//
+        /**
+         * @brief Get a reference to the RdNetworkManager
+         * @return By default, if no id is specified, this will return a reference to the first
+         * RdImageManager that it can find in the registry, or NULL if no RdNetworkManager was registered.
+         */
+       static rd::RdNetworkManager *getNetworkManager();
+
+        /**
+         * @brief Get a reference to the RdNetworkManager
+         * @return The RdNetworkManager registered with the given id, NULL if the id is not found in
+         * the registry.
+         */
+        static rd::RdNetworkManager *getNetworkManager(std::string id);
+
+        //! @brief Deallocate all the registered RdNetworkManager
+        static bool destroyNetworkManager();
 
         virtual ~RdNetworkManager();
 
-        //-- Listeners
-        //--------------------------------------------------------------------------------------------
+
+        //------------------------------ Manager Startup & Halting ----------------------------------------------------//
+        /**
+         * @brief Start the network manager
+         *
+         * This function is supposed to be called after RdNetworkManager configuration.
+         */
+        virtual bool start() = 0;
+
+        //! @brief Stop the network manager
+        virtual bool stop() = 0;
+
+
+        //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Adds a RdInputEventListener to the list of observers to be notified of events
         bool addNetworkEventListener( RdNetworkEventListener * listener );
 
         //! @brief Unregisters all the RdInputEventListener stored
         bool removeNetworkEventListeners();
+
+        //! @brief Configures a parameter with a value
+        virtual bool configure(std::string parameter, std::string value);
+
 
 
         //-- Network API
@@ -61,12 +94,27 @@ class RdNetworkManager
         //! @brief Log the user out of the network
         virtual bool logout(RdPlayer player) = 0;
 
-    protected:
-        //! @brief Stores the unique instance of the RdNetworkManager
-        static RdNetworkManager * networkManagerInstance;
+
+protected:
+        /**
+         * @brief This function allows subclasses to install their unique instances in the singleton register to be
+         * selected later by the user
+         */
+        static bool Register(RdNetworkManager *manager, std::string id);
 
         //! @brief Observers registered to be notified of network events
         std::vector<RdNetworkEventListener *> listeners;
+
+
+    private:
+        //! \brief Stores the unique instance of the RdInputManager
+        static RdNetworkManager * networkManagerInstance;
+
+        //! \brief Stores the id of the current unique instance used
+        static std::string currentId;
+
+        //! \brief Stores all the RdImageManager that have been registered
+        static std::map< std::string, RdNetworkManager * > networkManagerRegistry;
 
 
 };

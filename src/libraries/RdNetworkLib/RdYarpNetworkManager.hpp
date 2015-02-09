@@ -41,13 +41,21 @@ class RdYarpNetworkManager: public RdNetworkManager,
     public:
         //-- Creation and configuration
         //--------------------------------------------------------------------------------------------
-        //! @brief Get a reference to RdNetworkManager
-        static RdNetworkManager * getNetworkManager();
-
-        //! @brief Deallocate the RdNetworkManager
-        static bool destroyNetworkManager();
+        /**
+         * @brief Register this manager in the RdNetworkManager registry so that can be used
+         *
+         * It ensures that only one manager of this type is created (unique instance)
+         */
+        static bool RegisterManager();
 
         ~RdYarpNetworkManager();
+
+        //! @brief String that identifies this manager
+        static const std::string id;
+
+        //------------------------------ Manager Startup & Halting ----------------------------------------------------//
+        virtual bool start();
+        virtual bool stop();
 
         //-- RdServer API
         //--------------------------------------------------------------------------------------------
@@ -64,9 +72,14 @@ class RdYarpNetworkManager: public RdNetworkManager,
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getMentalMap() method
+         * and the instantiation is done at the getNetworkManager() method
          */
         RdYarpNetworkManager();
+
+
+        //! @brief Reference to this manager (unique instance)
+        static RdYarpNetworkManager * uniqueInstance;
+
 
         /**
          * @brief Start the NetworkManager communications with the RdServer

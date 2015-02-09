@@ -15,8 +15,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-//#define round(x) ((x)>=0?(int)((x)+0.5):(int)((x)-0.5))
-//#define FABS(x) (x>=0?x:-x)
+#define round(x) ((x)>=0?(int)((x)+0.5):(int)((x)-0.5))
+#define FABS(x) (x>=0?x:-x)
 
 #define SSC32 1
 #define MINISSC 2

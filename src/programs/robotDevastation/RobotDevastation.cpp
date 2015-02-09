@@ -88,7 +88,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     }
 
     //-- Init network manager
-    networkManager = RdYarpNetworkManager::getNetworkManager();
+    RdYarpNetworkManager::RegisterManager();
+    networkManager = RdYarpNetworkManager::getNetworkManager(RdYarpNetworkManager::id);
     networkManager->addNetworkEventListener(mentalMap);
     mentalMap->addMentalMapEventListener((RdYarpNetworkManager *)networkManager);
     networkManager->login(mentalMap->getMyself());
@@ -260,7 +261,8 @@ bool rd::RobotDevastation::interruptModule()
 
     //-- Closing network system
     networkManager->logout(mentalMap->getMyself());
-    RdYarpNetworkManager::destroyNetworkManager();
+    networkManager->stop();
+    RdNetworkManager::destroyNetworkManager();
     networkManager = NULL;
 
     //-- Closing audio system:

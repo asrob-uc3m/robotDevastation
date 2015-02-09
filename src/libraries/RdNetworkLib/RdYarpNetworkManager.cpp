@@ -1,24 +1,30 @@
 #include "RdYarpNetworkManager.hpp"
 
 
-rd::RdNetworkManager *rd::RdYarpNetworkManager::getNetworkManager()
-{
-    if( networkManagerInstance == NULL )
-        networkManagerInstance = new RdYarpNetworkManager();
+//-- Initialize static members
+rd::RdYarpNetworkManager * rd::RdYarpNetworkManager::uniqueInstance = NULL;
+const std::string rd::RdYarpNetworkManager::id = "YARP";
 
-    return networkManagerInstance;
+bool rd::RdYarpNetworkManager::RegisterManager()
+{
+    if (uniqueInstance == NULL)
+    {
+        uniqueInstance = new RdYarpNetworkManager();
+    }
+
+    return Register( uniqueInstance, id);
 }
 
-bool rd::RdYarpNetworkManager::destroyNetworkManager()
+rd::RdYarpNetworkManager::~RdYarpNetworkManager()
 {
-    if (networkManagerInstance == NULL)
-        return false;
-
-    delete (RdYarpNetworkManager *) networkManagerInstance;
-    networkManagerInstance = NULL;
-
-    return true;
+    uniqueInstance = NULL;
 }
+
+bool rd::RdYarpNetworkManager::start()
+{
+
+}
+
 
 void rd::RdYarpNetworkManager::onRead(yarp::os::Bottle &b)
 {
@@ -49,6 +55,8 @@ void rd::RdYarpNetworkManager::onRead(yarp::os::Bottle &b)
     }
 
 }
+
+
 
 bool rd::RdYarpNetworkManager::start(int id)
 {
@@ -107,15 +115,17 @@ bool rd::RdYarpNetworkManager::onTargetHit(rd::RdTarget target, rd::RdPlayer pla
     return sendPlayerHit(player, weapon.getDamage());
 }
 
-rd::RdYarpNetworkManager::~RdYarpNetworkManager()
+bool rd::RdYarpNetworkManager::stop()
 {
     rpcClient.close();
 
-    callbackPort.disableCallback();
-    callbackPort.interrupt();
-    callbackPort.close();
+     callbackPort.disableCallback();
+     callbackPort.interrupt();
+     callbackPort.close();
 
-    yarp::os::NetworkBase::finiMinimum();
+     yarp::os::NetworkBase::finiMinimum();
+
+     return true;
 }
 
 bool rd::RdYarpNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)
