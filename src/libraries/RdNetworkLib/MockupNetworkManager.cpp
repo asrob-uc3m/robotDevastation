@@ -37,17 +37,82 @@ bool rd::MockupNetworkManager::configure(std::string parameter, std::string valu
 
 bool rd::MockupNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)
 {
-    return false;
+    int id = player.getId();
+
+    if (!logged_in)
+    {
+        RD_ERROR("Not logged in, id: %d.\n",id);
+        return false;
+    }
+
+    if ( players_dic.find(id) != players_dic.end() )  // if found, we can shoot
+    {
+        int new_health = players_dic.operator[](id).getHealth() - damage;
+
+        if (new_health < 0)
+            new_health = 0;
+
+        players_dic.operator[](id).setHealth(new_health);
+
+    }
+    else
+    {
+        RD_ERROR("Target does not exist, id: %d.\n",id);
+        return false;
+    }
+
+    return true;
 }
 
 bool rd::MockupNetworkManager::login(rd::RdPlayer player)
 {
-    return false;
+
+    int loginId = player.getId();
+
+    if (logged_in)
+    {
+        RD_ERROR("Already logged, id: %d.\n",loginId);
+        return false;
+    }
+
+    if ( players_dic.find(loginId) == players_dic.end() )  // if not found, we can create
+    {
+        players_dic.operator[](loginId) = player;
+        logged_in = true;
+    }
+    else
+    {
+        RD_ERROR("Already logged, id: %d.\n",loginId);
+        return false;
+    }
+
+    return true;
 }
 
 bool rd::MockupNetworkManager::logout(rd::RdPlayer player)
 {
-    return false;
+    int id = player.getId();
+
+    if (!logged_in)
+    {
+        RD_ERROR("Not logged in, id: %d.\n",id);
+        return false;
+    }
+
+    std::map<int, RdPlayer>::iterator it = players_dic.find(id);
+
+    if ( it != players_dic.end() )  // if  found, we can erase it
+    {
+        players_dic.erase(it);
+        logged_in = false;
+    }
+    else
+    {
+        RD_ERROR("Not logged in, id: %d.\n",id);
+        return false;
+    }
+
+    return true;
 }
 
 bool rd::MockupNetworkManager::isLoggedIn()
@@ -62,23 +127,52 @@ bool rd::MockupNetworkManager::isStopped()
 
 bool rd::MockupNetworkManager::setPlayerData(std::vector<rd::RdPlayer> players)
 {
-    this->players = players;
+    players_dic.clear();
+
+    for (int i = 0; i < (int) players.size(); i++)
+    {
+        int id = players[i].getId();
+        this->players_dic[id] = players[i];
+    }
+
+    return true;
 }
 
 std::vector<rd::RdPlayer> rd::MockupNetworkManager::getPlayerData()
 {
-    return players;
+    std::vector<RdPlayer> player_vector;
+
+    for( std::map<int, RdPlayer>::const_iterator it = players_dic.begin(); it != players_dic.end(); ++it)
+    {
+        player_vector.push_back(it->second);
+    }
+
+    return player_vector;
 }
 
 bool rd::MockupNetworkManager::sendPlayerData()
 {
     //-- Notify listeners
     for(int i = 0; i < listeners.size(); i++)
-        listeners[i]->onDataArrived(players);
+        listeners[i]->onDataArrived(this->getPlayerData());
+}
+
+bool rd::MockupNetworkManager::setLoggedIn(bool logged_in)
+{
+    if (this->logged_in != logged_in)
+    {
+        this->logged_in = logged_in;
+        return true;
+    }
+    else
+    {
+        RD_WARNING("Already in that state: %d", logged_in);
+        return false;
+    }
 }
 
 rd::MockupNetworkManager::MockupNetworkManager()
 {
-
+    logged_in = false;
 }
 

@@ -65,6 +65,7 @@ class MockupNetworkManager : RdNetworkManager
         bool setPlayerData(std::vector<RdPlayer> players);
         std::vector<RdPlayer> getPlayerData();
         bool sendPlayerData();
+        bool setLoggedIn(bool logged_in);
 
 
     private:
@@ -83,6 +84,8 @@ class MockupNetworkManager : RdNetworkManager
         bool logged_in;
         bool stopped;
         std::vector<RdPlayer> players;
+
+        std::map <int, RdPlayer> players_dic;
 
 };
 }

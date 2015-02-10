@@ -87,7 +87,7 @@ TEST_F(MockupNetworkManagerTest, PlayerCreatedWhenLogin)
 
 
     std::vector<RdPlayer> players = networkManager->getPlayerData();
-    EXPECT_EQ(1, players.size());
+    ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
 
     ASSERT_TRUE(networkManager->stop());
@@ -103,14 +103,14 @@ TEST_F(MockupNetworkManagerTest, ErrorLoginTwice)
     ASSERT_TRUE(networkManager->isLoggedIn());
 
     std::vector<RdPlayer> players = networkManager->getPlayerData();
-    EXPECT_EQ(1, players.size());
+    ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
 
     ASSERT_FALSE(networkManager->login(other_player));
     ASSERT_TRUE(networkManager->isLoggedIn());
 
     players = networkManager->getPlayerData();
-    EXPECT_EQ(1, players.size());
+    ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
 
     ASSERT_TRUE(networkManager->stop());
@@ -126,14 +126,14 @@ TEST_F(MockupNetworkManagerTest, PlayerRemovedOnLogout)
     ASSERT_TRUE(networkManager->isLoggedIn());
 
     std::vector<RdPlayer> players = networkManager->getPlayerData();
-    EXPECT_EQ(1, players.size());
+    ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
 
     ASSERT_TRUE(networkManager->logout(me));
     EXPECT_FALSE(networkManager->isLoggedIn());
 
     players = networkManager->getPlayerData();
-    EXPECT_EQ(0, players.size());
+    ASSERT_EQ(0, players.size());
 
     ASSERT_TRUE(networkManager->stop());
     ASSERT_TRUE(networkManager->isStopped());
@@ -148,14 +148,14 @@ TEST_F(MockupNetworkManagerTest, ErrorLogoutTwice)
     ASSERT_TRUE(networkManager->isLoggedIn());
 
     std::vector<RdPlayer> players = networkManager->getPlayerData();
-    EXPECT_EQ(1, players.size());
+    ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
 
     ASSERT_TRUE(networkManager->logout(me));
     EXPECT_FALSE(networkManager->isLoggedIn());
 
     players = networkManager->getPlayerData();
-    EXPECT_EQ(0, players.size());
+    ASSERT_EQ(0, players.size());
 
     EXPECT_FALSE(networkManager->logout(me));
     EXPECT_FALSE(networkManager->isLoggedIn());
@@ -194,6 +194,7 @@ TEST_F(MockupNetworkManagerTest, PlayerDamagedWhenShot)
     players.push_back(other_player);
 
     EXPECT_TRUE(networkManager->setPlayerData(players));
+    ASSERT_TRUE(networkManager->setLoggedIn(true));
 
     players = networkManager->getPlayerData();
     ASSERT_EQ(2, players.size());
@@ -225,7 +226,7 @@ TEST_F(MockupNetworkManagerTest, ListenersNotifiedOnEvent)
     std::vector<RdPlayer> players = listener.getStoredPlayers();
 
     EXPECT_EQ(1, listener.getDataArrived());
-    EXPECT_EQ(1, players.size());
+    ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
 
     ASSERT_TRUE(networkManager->stop());
