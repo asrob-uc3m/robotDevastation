@@ -1,54 +1,8 @@
-/*
- * Cases:
- * If login then a player is created
- * If login twice returns an error
- * If logout player is removed
- * if logout twice returns an error
- * Check player upload with setPlayer
- * Check damaged player with sendPlayerHit
- * Check listener when data is sent <- (remaining case)
- */
-
 #include "gtest/gtest.h"
 #include "MockupNetworkManager.hpp"
-#include "RdNetworkEventListener.hpp"
+#include "MockupNetworkEventListener.hpp"
 
 using namespace rd;
-
-/**
- * @brief Dummy RdNetworkEventListener used for testing
- *
- * The required pure virtual members are left with their function body empty.
- *
- * This mockup object allows to access the received data and has a counter of
- * the incoming messages received
- *
- *  @todo Move this class to RdNetworkLib, set it to be compiled only with the tests
- */
-class MockupNetworkEventListener : public RdNetworkEventListener
-{
-    public:
-        MockupNetworkEventListener()
-        {
-            data_arrived = 0;
-        }
-
-        virtual bool onDataArrived(std::vector<RdPlayer> players)
-        {
-            stored_players = players;
-            data_arrived++;
-        }
-
-        int getDataArrived() { return data_arrived; }
-        void resetDataArrived() { data_arrived = 0; }
-
-        std::vector<RdPlayer> getStoredPlayers() { return stored_players; }
-
-
-    private:
-        int data_arrived;
-        std::vector<RdPlayer> stored_players;
-};
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
@@ -74,6 +28,7 @@ class MockupNetworkManagerTest : public testing::Test
         MockupNetworkManager * networkManager;
         RdPlayer me, other_player;
 };
+
 
 //-- Things that are being tested
 //-----------------------------------------------------------------------------------------------------
