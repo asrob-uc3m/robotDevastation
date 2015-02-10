@@ -30,6 +30,11 @@ bool rd::MockupNetworkManager::stop()
     stopped = true;
 }
 
+bool rd::MockupNetworkManager::configure(std::string parameter, std::string value)
+{
+    return true;
+}
+
 bool rd::MockupNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)
 {
     return false;
@@ -70,5 +75,10 @@ bool rd::MockupNetworkManager::sendPlayerData()
     //-- Notify listeners
     for(int i = 0; i < listeners.size(); i++)
         listeners[i]->onDataArrived(players);
+}
+
+rd::MockupNetworkManager::MockupNetworkManager()
+{
+
 }
 
