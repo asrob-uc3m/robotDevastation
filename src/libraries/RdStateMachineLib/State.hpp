@@ -3,12 +3,12 @@
 #ifndef __STATE_HPP__
 #define __STATE_HPP__
 
-#include "string"
+#include <string>
 
 namespace rd{
 
 /**
- * @ingroup RdStateMachineLib
+ * @ingroup StateMachineLib
  *
  * @brief A base class for States for a Finite State Machine.
  *

@@ -83,6 +83,33 @@ class FSMTestEnvironment : public testing::Environment
 const std::string FSMTestEnvironment::debug_port_name = "/debug";
 
 
+//-- Dummy State for testing
+//-- Behaviour:
+//--     Outputs each transition to a state through the debugPort
+//--     Saves the value received in the commandPort and returns
+//--     it at condition evaluation
+
+class MockupState : public State, public yarp::os::PortReader
+{
+    public:
+        MockupState(int id);
+
+        virtual bool setup();
+        virtual bool loop();
+        virtual bool cleanup();
+        virtual int evaluateConditions();
+
+    protected:
+        virtual bool read(yarp::os::ConnectionReader& connection);
+
+    private:
+        static const std::string debug_port_name;
+
+        yarp::os::Port debugPort;
+        yarp::os::Port commandPort;
+};
+
+const std::string MockupState::debug_port_name = "/testState";
 
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)
