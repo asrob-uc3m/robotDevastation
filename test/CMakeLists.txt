@@ -30,3 +30,6 @@ target_link_libraries(testRdYarpImageManager ${RD_LIBRARIES} RdImageLib gtest gt
 
 add_executable(testMockupNetworkManager testMockupNetworkManager.cpp)
 target_link_libraries(testMockupNetworkManager ${RD_LIBRARIES} RdNetworkLib gtest gtest_main)
+
+add_executable(testFSM testFSM.cpp)
+target_link_libraries(testFSM ${RD_LIBRARIES} StateMachineLib gtest gtest_main)

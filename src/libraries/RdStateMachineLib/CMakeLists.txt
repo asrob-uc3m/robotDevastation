@@ -2,11 +2,11 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-set(KEYWORD "RdStateMachineLib")
+set(KEYWORD "StateMachineLib")
 
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdStateMachine.cpp)
+add_library(${KEYWORD} RdStateMachine.cpp Hub.cpp State.cpp)
 target_link_libraries(${KEYWORD})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
