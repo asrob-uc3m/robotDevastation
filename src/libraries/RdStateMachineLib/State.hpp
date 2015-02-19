@@ -19,14 +19,11 @@ class State
         State();
 
         virtual bool setup() = 0;
-        virtual bool run() = 0;
+        virtual bool loop() = 0;
         virtual bool cleanup() = 0;
         virtual int evaluateConditions() = 0;
 
-        bool start();
-        bool stop();
-
-        std::string getStateId();
+        std::string getStateId() { return state_id; }
 
    protected:
         //-- Name of the current state
