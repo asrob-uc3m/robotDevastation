@@ -53,8 +53,8 @@ class FSMTestEnvironment : public testing::Environment
             yarp::os::Network::runNameServer(argc, argv);
 
             //-- Setup yarp ports
-            debugPort.open(debug_port_name + '/status:i');
-            commandPort.open(debug_port_name + '/command:o');
+            debugPort.open(debug_port_name + "/status:i");
+            commandPort.open(debug_port_name + "/command:o");
         }
 
         virtual void TearDown()
