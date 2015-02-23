@@ -10,6 +10,7 @@
 #include <yarp/os/Network.h>
 #include <yarp/os/Bottle.h>
 #include <yarp/os/Port.h>
+
 #include <yarp/os/Time.h>
 
 using namespace rd;
@@ -134,6 +135,7 @@ class FSMTestEnvironment : public testing::Environment
 
 const std::string FSMTestEnvironment::debug_port_name = "/debug";
 
+
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
 class FSMTest : public testing::Test
@@ -252,6 +254,7 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
     debugPort.read(debugMsg);
     EXPECT_STREQ("cleanup", debugMsg.get(0).asString());
 }
+
 
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)
