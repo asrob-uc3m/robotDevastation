@@ -80,11 +80,11 @@ int main(int argc, char *argv[]) {
     }
 
     printf("Run \"%s --help\" for options.\n",argv[0]);
-    printf("%s checking for yarp network... ",argv[0]);
+    printf("%s checking for yarp network...\n ",argv[0]);
     fflush(stdout);
     yarp::os::Network yarp;
     if (!yarp.checkNetwork()) {
-        fprintf(stderr,"[fail]\n%s found no yarp network (try running \"yarpserver &\"), bye!\n",argv[0]);
+        RD_ERROR("%s found no yarp network (try running \"yarpserver &\"), bye!\n",argv[0]);
         return -1;
     } else printf("[ok]\n");
 
