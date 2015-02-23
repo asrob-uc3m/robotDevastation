@@ -6,7 +6,7 @@ set(KEYWORD "StateMachineLib")
 
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdStateMachine.cpp Hub.cpp State.cpp)
+add_library(${KEYWORD} RdStateMachine.cpp Hub.cpp State.cpp DummyState.cpp)
 target_link_libraries(${KEYWORD})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
