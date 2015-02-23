@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __DUMMY_STATE_HPP__
-#define __DUMMY_STATE_HPP__
+#ifndef __MOCKUP_STATE_HPP__
+#define __MOCKUP_STATE_HPP__
 
 #include "State.hpp"
 #include "RdUtils.hpp"
@@ -42,7 +42,8 @@ class MockupState : public State, public yarp::os::BufferedPort<yarp::os::Bottle
         void closeNetwork();
 
         int id;
-        int status;
+        int internal_variable;
+        bool first_loop;
 
         static const std::string debug_port_name;
 

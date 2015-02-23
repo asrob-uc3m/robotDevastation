@@ -19,6 +19,7 @@ class State
         State();
         virtual ~State() {}
 
+
         virtual bool setup() = 0;
         virtual bool loop() = 0;
         virtual bool cleanup() = 0;
