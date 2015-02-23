@@ -35,13 +35,24 @@ class FSMTestEnvironment : public testing::Environment
             yarp::os::Network::init();
             //yarp::os::Network::runNameServer(argc, argv);
 
+            initPorts();
+        }
 
+        virtual void TearDown()
+        {
+            closePorts();
+
+            yarp::os::Network::fini();
+        }
+
+        static void initPorts()
+        {
             //-- Setup yarp ports
             debugPort.open(debug_port_name + "/status:i");
             commandPort.open(debug_port_name + "/command:o");
         }
 
-        virtual void TearDown()
+        static void closePorts()
         {
             //-- Close yarp ports
             debugPort.interrupt();
@@ -49,14 +60,12 @@ class FSMTestEnvironment : public testing::Environment
 
             debugPort.close();
             commandPort.close();
-
-            yarp::os::Network::fini();
         }
 
         static const std::string debug_port_name;
 
-        yarp::os::Port debugPort;
-        yarp::os::Port commandPort;
+        static yarp::os::Port debugPort;
+        static yarp::os::Port commandPort;
 
     private:
         int argc;
@@ -135,14 +144,14 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
 
     //-- Check that the init state passed through setup and init states:
     yarp::os::Bottle debugMsg;
-    debugPort.read(debugMsg);
+    FSMTestEnvironment::debugPort.read(debugMsg);
     EXPECT_STREQ("setup", debugMsg.get(0).asString());
     EXPECT_STREQ("loop", debugMsg.get(1).asString());
 
     //-- Send command to pass to state 2
     yarp::os::Bottle state2Cmd;
     state2Cmd.addInt(2);
-    commandPort.write(state2Cmd);
+    FSMTestEnvironment::commandPort.write(state2Cmd);
     yarp::os::Time::delay(0.2);
 
     //-- Check that state 2 is active
@@ -152,7 +161,7 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
 
     //-- Check that the state 1 passed through cleanup
     debugMsg.clear();
-    debugPort.read(debugMsg);
+    FSMTestEnvironment::debugPort.read(debugMsg);
     EXPECT_STREQ("cleanup", debugMsg.get(0).asString());
     EXPECT_STREQ("setup", debugMsg.get(1).asString());
     EXPECT_STREQ("loop", debugMsg.get(2).asString());
@@ -160,7 +169,7 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
     //-- Send command to pass to state 3
     yarp::os::Bottle state3Cmd;
     state3Cmd.addInt(3);
-    commandPort.write(state3Cmd);
+    FSMTestEnvironment::commandPort.write(state3Cmd);
     yarp::os::Time::delay(0.2);
 
     //-- Check that state 2 is active
@@ -170,7 +179,7 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
 
     //-- Check that the state 2 passed through cleanup
     debugMsg.clear();
-    debugPort.read(debugMsg);
+    FSMTestEnvironment::debugPort.read(debugMsg);
     EXPECT_STREQ("cleanup", debugMsg.get(0).asString());
     EXPECT_STREQ("setup", debugMsg.get(1).asString());
     EXPECT_STREQ("loop", debugMsg.get(2).asString());
@@ -181,7 +190,7 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
 
     //-- Check that the state 2 passed through cleanup
     debugMsg.clear();
-    debugPort.read(debugMsg);
+    FSMTestEnvironment::debugPort.read(debugMsg);
     EXPECT_STREQ("cleanup", debugMsg.get(0).asString());
 }
 
