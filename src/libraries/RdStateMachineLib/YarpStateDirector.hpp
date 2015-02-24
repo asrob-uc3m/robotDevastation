@@ -1,22 +1,28 @@
 #ifndef YARPSTATEDIRECTOR_HPP
 #define YARPSTATEDIRECTOR_HPP
 
+#include <yarp/os/RateThread.h>
+
 #include "StateDirector.hpp"
+
 
 namespace rd {
 
 
-class YarpStateDirector : public StateDirector
+class YarpStateDirector : public StateDirector, private yarp::os::RateThread
 {
 public:
-    YarpStateDirector(State * state) : StateDirector(state) {}
+    YarpStateDirector(State * state);
 
 
-    virtual bool start() {return false;}
-    virtual bool stop() {return false;}
+    virtual bool start();
+    virtual bool stop();
 
-    virtual bool addTransition( StateDirector * nextState, int condition) {return false;}
+    void run();  // The periodical function
 
+    virtual bool addTransition( StateDirector * nextState, int condition);
+
+    static const int DEFAULT_RATE_MS;
 };
 
 }
