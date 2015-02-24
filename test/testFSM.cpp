@@ -69,11 +69,41 @@ class FSMTest : public testing::Test
             stateDirector3 = new YarpStateDirector(state3);
 
             //-- Connect states to yarp
+            if (!yarp::os::Network::connect(debug_port_name + "/status:i", "/testState/1/status:0"))
+            {
+                RD_WARNING("Could not connect debug ports.\n");
+            }
+
+            if (!yarp::os::Network::connect(debug_port_name + "/status:i", "/testState/2/status:0"))
+            {
+                RD_WARNING("Could not connect debug ports.\n");
+            }
+
+            if (!yarp::os::Network::connect(debug_port_name + "/status:i", "/testState/3/status:0"))
+            {
+                RD_WARNING("Could not connect debug ports.\n");
+            }
+
+            if (!yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/1/command:i"))
+            {
+                RD_WARNING("Could not connect command ports.\n");
+            }
+
+            if (!yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/2/command:i"))
+            {
+                RD_WARNING("Could not connect command ports.\n");
+            }
+
+            if (!yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/3/command:i"))
+            {
+                RD_WARNING("Could not connect command ports.\n");
+            }
         }
 
         virtual void TearDown()
         {
             //-- Disconnect states from yarp
+            closePorts();
 
             delete stateDirector1;
             delete stateDirector2;
@@ -92,7 +122,6 @@ class FSMTest : public testing::Test
             state3 = NULL;
 
 
-            closePorts();
         }
 
     void initPorts()
