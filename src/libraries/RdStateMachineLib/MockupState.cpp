@@ -5,7 +5,13 @@ const std::string rd::MockupState::debug_port_name = "/testState";
 
 rd::MockupState::MockupState(int id)
 {
+    //-- Set class parameters:
     this->id = id;
+
+    std::stringstream ss;
+    ss << "MockupState #" << id;
+    state_id = ss.str();
+
     internal_variable = -1;
     first_loop = true;
 

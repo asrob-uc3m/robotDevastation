@@ -15,12 +15,10 @@ public:
     YarpStateDirector(State * state);
 
 
-    virtual bool start();
-    virtual bool stop();
+    virtual bool Start();
+    virtual bool Stop();
 
     void run();  // The periodical function
-
-    virtual bool addTransition( StateDirector * nextState, int condition);
 
     static const int DEFAULT_RATE_MS;
 };

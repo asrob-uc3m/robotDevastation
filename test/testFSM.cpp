@@ -69,35 +69,15 @@ class FSMTest : public testing::Test
             stateDirector3 = new YarpStateDirector(state3);
 
             //-- Connect states to yarp
-            if (!yarp::os::Network::connect(debug_port_name + "/status:i", "/testState/1/status:0"))
-            {
-                RD_WARNING("Could not connect debug ports.\n");
-            }
+            ASSERT_TRUE(yarp::os::Network::connect("/testState/1/status:o", debug_port_name + "/status:i" ));
+            ASSERT_TRUE(yarp::os::Network::connect( "/testState/2/status:o", debug_port_name + "/status:i"));
+            ASSERT_TRUE(yarp::os::Network::connect("/testState/3/status:o", debug_port_name + "/status:i"));
 
-            if (!yarp::os::Network::connect(debug_port_name + "/status:i", "/testState/2/status:0"))
-            {
-                RD_WARNING("Could not connect debug ports.\n");
-            }
 
-            if (!yarp::os::Network::connect(debug_port_name + "/status:i", "/testState/3/status:0"))
-            {
-                RD_WARNING("Could not connect debug ports.\n");
-            }
+            ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/1/command:i"));
+            ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/2/command:i"));
+            ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/3/command:i"));
 
-            if (!yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/1/command:i"))
-            {
-                RD_WARNING("Could not connect command ports.\n");
-            }
-
-            if (!yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/2/command:i"))
-            {
-                RD_WARNING("Could not connect command ports.\n");
-            }
-
-            if (!yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/3/command:i"))
-            {
-                RD_WARNING("Could not connect command ports.\n");
-            }
         }
 
         virtual void TearDown()
@@ -127,8 +107,8 @@ class FSMTest : public testing::Test
     void initPorts()
     {
         //-- Setup yarp ports
-        debugPort.open(debug_port_name + "/status:i");
-        commandPort.open(debug_port_name + "/command:o");
+        ASSERT_TRUE(debugPort.open(debug_port_name + "/status:i"));
+        ASSERT_TRUE(commandPort.open(debug_port_name + "/command:o"));
     }
 
     void closePorts()
@@ -159,6 +139,7 @@ const std::string FSMTest::debug_port_name = "/debug";
 //--- Tests ------------------------------------------------------------------------------------------
 TEST_F(FSMTest, StateMachineFlowIsCorrect )
 {
+    RD_INFO("Test Starts!\nAssigning transitions...\n");
 
     //-- Setup state machine
     stateDirector1->addTransition(stateDirector2, 2);
@@ -167,7 +148,9 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
     stateDirector3->addTransition(stateDirector1, 1);
 
     //-- Start state machine
-    ASSERT_TRUE(stateDirector1->start());
+    ASSERT_TRUE(stateDirector1->Start());
+
+    RD_WARNING("Activated thread\n");
 
     //-- Check that init state is active
     ASSERT_TRUE(stateDirector1->isActive());
@@ -180,10 +163,13 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
     EXPECT_STREQ("setup", debugMsg.get(0).asString().c_str());
     EXPECT_STREQ("loop", debugMsg.get(1).asString().c_str());
 
+    RD_WARNING("Received data. %d elements.\n", debugMsg.size());
+
     //-- Send command to pass to state 2
     yarp::os::Bottle state2Cmd;
     state2Cmd.addInt(2);
     commandPort.write(state2Cmd);
+    RD_WARNING("Sent command.\n");
     yarp::os::Time::delay(0.2);
 
     //-- Check that state 2 is active
@@ -217,7 +203,7 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
     EXPECT_STREQ("loop", debugMsg.get(2).asString().c_str());
 
     //-- Stop current state
-    ASSERT_TRUE(stateDirector3->stop());
+    ASSERT_TRUE(stateDirector3->Stop());
     yarp::os::Time::delay(0.2);
 
     //-- Check that the state 2 passed through cleanup

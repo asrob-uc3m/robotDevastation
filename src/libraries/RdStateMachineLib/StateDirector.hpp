@@ -5,6 +5,7 @@
 
 #include <map>
 #include <State.hpp>
+#include <RdUtils.hpp>
 
 namespace rd{
 
@@ -19,16 +20,16 @@ class StateDirector
     public:
         StateDirector(State * state);
 
-        virtual bool start() = 0;
-        virtual bool stop() = 0;
+        virtual bool Start() = 0;
+        virtual bool Stop() = 0;
 
-        virtual bool addTransition( StateDirector * nextState, int condition) = 0;
+        virtual bool addTransition( StateDirector * nextState, int condition);
 
         virtual bool isActive();
 
     protected:
         State * state;
-        int active;
+        bool active;
         std::map<int, StateDirector * > nextStates;
 };
 }
