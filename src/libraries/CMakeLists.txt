@@ -25,5 +25,5 @@ add_subdirectory(RdInputLib)
 add_subdirectory(RdNetworkLib)
 add_subdirectory(RdRobotLib)
 add_subdirectory(RdImageLib)
-add_subdirectory(RdStateMachineLib)
+add_subdirectory(StateMachineLib)
 

@@ -15,7 +15,7 @@
 #include "RdYarpNetworkManager.hpp"
 #include "RdRobotManager.hpp"
 #include "RdYarpRobotManager.hpp"
-#include "RdStateMachine.hpp"
+#include "StateMachine.hpp"
 #include "RdImageManager.hpp"
 #include "RdYarpImageManager.hpp"
 #include "RdProcessorImageEventListener.hpp"
@@ -46,7 +46,7 @@ class RobotDevastation : public yarp::os::RFModule, public RdInputEventListener
         RdMentalMap * mentalMap;
         RdNetworkManager * networkManager;
         RdRobotManager * robotManager;
-        RdStateMachine * stateMachine;
+        FiniteStateMachine * stateMachine;
         RdImageManager * imageManager;
         RdProcessorImageEventListener processorImageEventListener;
 
