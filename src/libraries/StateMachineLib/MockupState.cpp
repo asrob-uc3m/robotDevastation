@@ -32,11 +32,15 @@ rd::MockupState::~MockupState()
 bool rd::MockupState::setup()
 {
     RD_INFO("State with id %d entered in setup() function\n", id);
-    yarp::os::Bottle outMsg;
-    outMsg.addString("setup");
-    debugPort.write(outMsg);
 
     internal_variable = 0;
+
+    yarp::os::Bottle& outMsg = debugPort.prepare();
+    outMsg.clear();
+    outMsg.addString("setup");
+    debugPort.writeStrict();
+
+    return true;
 }
 
 bool rd::MockupState::loop()
@@ -44,22 +48,31 @@ bool rd::MockupState::loop()
     RD_INFO("State with id %d entered in loop() function\n", id);
     if(first_loop)
     {
-        yarp::os::Bottle outMsg;
-        outMsg.addString("loop");
-        debugPort.write(outMsg);
+        RD_DEBUG("First loop (id %d)\n", id);
         first_loop = false;
+
+        yarp::os::Bottle& outMsg = debugPort.prepare();
+        outMsg.clear();
+        outMsg.addString("loop");
+        debugPort.writeStrict();
     }
+
+    return true;
 }
 
 bool rd::MockupState::cleanup()
 {
     RD_INFO("State with id %d entered in cleanup() function\n", id);
-    yarp::os::Bottle outMsg;
-    outMsg.addString("cleanup");
-    debugPort.write(outMsg);
 
     internal_variable = -1;
     first_loop = true;
+
+    yarp::os::Bottle& outMsg = debugPort.prepare();
+    outMsg.clear();
+    outMsg.addString("cleanup");
+    debugPort.writeStrict();
+
+    return true;
 }
 
 int rd::MockupState::evaluateConditions()
@@ -69,10 +82,14 @@ int rd::MockupState::evaluateConditions()
 
 void rd::MockupState::onRead(yarp::os::Bottle &b)
 {
-    int new_status = b.get(0).asInt();
-    internal_variable = new_status;
+    if (internal_variable != -1)
+    {
+        int new_status = b.get(0).asInt();
+        internal_variable = new_status;
 
-    RD_INFO("Received: %d\n", new_status);
+        RD_INFO("Received: %d at state %s\n", new_status, state_id.c_str());
+    }
+
 }
 
 bool rd::MockupState::startNetwork(int id)
@@ -90,6 +107,7 @@ bool rd::MockupState::startNetwork(int id)
 
     if(!commandPort->open(debug_port_ss.str() + "/command:i"))
         return false;
+    commandPort->useCallback(*commandPort);
 
     return true;
 }
@@ -99,6 +117,8 @@ void rd::MockupState::closeNetwork()
     RD_INFO("Closing ports...\n");
 
     //-- Close yarp ports
+    commandPort->disableCallback();
+
     debugPort.interrupt();
     commandPort->interrupt();
 

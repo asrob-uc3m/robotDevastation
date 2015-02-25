@@ -73,11 +73,16 @@ class FSMTest : public testing::Test
             ASSERT_TRUE(yarp::os::Network::connect( "/testState/2/status:o", debug_port_name + "/status:i"));
             ASSERT_TRUE(yarp::os::Network::connect("/testState/3/status:o", debug_port_name + "/status:i"));
 
-
             ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/1/command:i"));
             ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/2/command:i"));
             ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/3/command:i"));
 
+//            ASSERT_TRUE(yarp::os::Network::connect("/testState/1/status:o", "/input"));
+//            ASSERT_TRUE(yarp::os::Network::connect("/output", "/testState/1/command:i"));
+//            ASSERT_TRUE(yarp::os::Network::connect("/testState/2/status:o", "/input"));
+//            ASSERT_TRUE(yarp::os::Network::connect("/output", "/testState/2/command:i"));
+//            ASSERT_TRUE(yarp::os::Network::connect("/testState/3/status:o", "/input"));
+//            ASSERT_TRUE(yarp::os::Network::connect("/output", "/testState/3/command:i"));
         }
 
         virtual void TearDown()
@@ -129,7 +134,7 @@ class FSMTest : public testing::Test
 
         static const std::string debug_port_name;
 
-        yarp::os::Port debugPort;
+        yarp::os::BufferedPort<yarp::os::Bottle> debugPort;
         yarp::os::Port commandPort;
 };
 
@@ -150,66 +155,64 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
     //-- Start state machine
     ASSERT_TRUE(stateDirector1->Start());
 
-    RD_WARNING("Activated thread\n");
-
     //-- Check that init state is active
     ASSERT_TRUE(stateDirector1->isActive());
     ASSERT_FALSE(stateDirector2->isActive());
     ASSERT_FALSE(stateDirector3->isActive());
 
     //-- Check that the init state passed through setup and init states:
-    yarp::os::Bottle debugMsg;
-    debugPort.read(debugMsg);
-    EXPECT_STREQ("setup", debugMsg.get(0).asString().c_str());
-    EXPECT_STREQ("loop", debugMsg.get(1).asString().c_str());
+    yarp::os::Bottle *debugMsg = debugPort.read();
+    EXPECT_STREQ("setup", debugMsg->get(0).asString().c_str());
 
-    RD_WARNING("Received data. %d elements.\n", debugMsg.size());
+    debugMsg = debugPort.read();
+    EXPECT_STREQ("loop", debugMsg->get(0).asString().c_str());
 
     //-- Send command to pass to state 2
     yarp::os::Bottle state2Cmd;
     state2Cmd.addInt(2);
     commandPort.write(state2Cmd);
-    RD_WARNING("Sent command.\n");
-    yarp::os::Time::delay(0.2);
+
+    debugMsg = debugPort.read();
+    EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
 
     //-- Check that state 2 is active
     ASSERT_FALSE(stateDirector1->isActive());
     ASSERT_TRUE(stateDirector2->isActive());
     ASSERT_FALSE(stateDirector3->isActive());
 
-    //-- Check that the state 1 passed through cleanup
-    debugMsg.clear();
-    debugPort.read(debugMsg);
-    EXPECT_STREQ("cleanup", debugMsg.get(0).asString().c_str());
-    EXPECT_STREQ("setup", debugMsg.get(1).asString().c_str());
-    EXPECT_STREQ("loop", debugMsg.get(2).asString().c_str());
+    //-- Check that the state 1 passed through setup and init states:
+
+    debugMsg = debugPort.read();
+    EXPECT_STREQ("setup", debugMsg->get(0).asString().c_str());
+
+    debugMsg = debugPort.read();
+    EXPECT_STREQ("loop", debugMsg->get(0).asString().c_str());
 
     //-- Send command to pass to state 3
     yarp::os::Bottle state3Cmd;
     state3Cmd.addInt(3);
     commandPort.write(state3Cmd);
-    yarp::os::Time::delay(0.2);
+    debugMsg = debugPort.read();
+    EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
 
     //-- Check that state 2 is active
     ASSERT_FALSE(stateDirector1->isActive());
     ASSERT_FALSE(stateDirector2->isActive());
     ASSERT_TRUE(stateDirector3->isActive());
 
-    //-- Check that the state 2 passed through cleanup
-    debugMsg.clear();
-    debugPort.read(debugMsg);
-    EXPECT_STREQ("cleanup", debugMsg.get(0).asString().c_str());
-    EXPECT_STREQ("setup", debugMsg.get(1).asString().c_str());
-    EXPECT_STREQ("loop", debugMsg.get(2).asString().c_str());
+    //-- Check that the state 2 passed through setup and init states:
+    debugMsg = debugPort.read();
+    EXPECT_STREQ("setup", debugMsg->get(0).asString().c_str());
+
+    debugMsg = debugPort.read();
+    EXPECT_STREQ("loop", debugMsg->get(0).asString().c_str());
 
     //-- Stop current state
     ASSERT_TRUE(stateDirector3->Stop());
-    yarp::os::Time::delay(0.2);
 
     //-- Check that the state 2 passed through cleanup
-    debugMsg.clear();
-    debugPort.read(debugMsg);
-    EXPECT_STREQ("cleanup", debugMsg.get(0).asString().c_str());
+    debugMsg = debugPort.read();
+    EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
 }
 
 //--- Main -------------------------------------------------------------------------------------------

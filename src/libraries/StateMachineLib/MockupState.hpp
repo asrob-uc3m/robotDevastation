@@ -47,7 +47,7 @@ class MockupState : public State, public yarp::os::BufferedPort<yarp::os::Bottle
 
         static const std::string debug_port_name;
 
-        yarp::os::Port debugPort;
+        yarp::os::BufferedPort<yarp::os::Bottle> debugPort;
         yarp::os::BufferedPort<yarp::os::Bottle> *commandPort;
 };
 
