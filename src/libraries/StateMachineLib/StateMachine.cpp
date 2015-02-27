@@ -6,3 +6,13 @@ rd::FiniteStateMachine::FiniteStateMachine()
 {
 }
 
+bool rd::FiniteStateMachine::start()
+{
+    return false;
+}
+
+bool rd::FiniteStateMachine::stop()
+{
+    return false;
+}
+

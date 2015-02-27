@@ -21,10 +21,11 @@ namespace rd{
  */
 class FiniteStateMachine
 {
+    public:
+        FiniteStateMachine();
 
-    FiniteStateMachine();
-
-
+        bool start();
+        bool stop();
 };
 
 }

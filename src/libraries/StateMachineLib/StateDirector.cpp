@@ -7,6 +7,14 @@ rd::StateDirector::StateDirector(rd::State *state)
     active = false;
 }
 
+rd::StateDirector::~StateDirector()
+{
+    nextStates.clear();
+
+    delete state;
+    state = NULL;
+}
+
 bool rd::StateDirector::addTransition(rd::StateDirector *nextState, int condition)
 {
     if ( nextStates.find(condition) == nextStates.end())

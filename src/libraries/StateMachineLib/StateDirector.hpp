@@ -19,6 +19,7 @@ class StateDirector
 {
     public:
         StateDirector(State * state);
+        virtual ~StateDirector();
 
         virtual bool Start() = 0;
         virtual bool Stop() = 0;
