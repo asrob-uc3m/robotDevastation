@@ -59,56 +59,15 @@ class FSMBuilderTest : public testing::Test
     public:
         virtual void SetUp()
         {
-
             initPorts();
-
-            state1 = new MockupState(1);
-            state2 = new MockupState(2);
-            state3 = new MockupState(3);
-
-            stateDirector1 = new YarpStateDirector(state1);
-            stateDirector2 = new YarpStateDirector(state2);
-            stateDirector3 = new YarpStateDirector(state3);
-
-            //-- Connect states to yarp
-            ASSERT_TRUE(yarp::os::Network::connect("/testState/1/status:o", debug_port_name + "/status:i" ));
-            ASSERT_TRUE(yarp::os::Network::connect( "/testState/2/status:o", debug_port_name + "/status:i"));
-            ASSERT_TRUE(yarp::os::Network::connect("/testState/3/status:o", debug_port_name + "/status:i"));
-
-            ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/1/command:i"));
-            ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/2/command:i"));
-            ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/3/command:i"));
-
-//            ASSERT_TRUE(yarp::os::Network::connect("/testState/1/status:o", "/input"));
-//            ASSERT_TRUE(yarp::os::Network::connect("/output", "/testState/1/command:i"));
-//            ASSERT_TRUE(yarp::os::Network::connect("/testState/2/status:o", "/input"));
-//            ASSERT_TRUE(yarp::os::Network::connect("/output", "/testState/2/command:i"));
-//            ASSERT_TRUE(yarp::os::Network::connect("/testState/3/status:o", "/input"));
-//            ASSERT_TRUE(yarp::os::Network::connect("/output", "/testState/3/command:i"));
+            fsm = NULL;
         }
 
         virtual void TearDown()
         {
-            //-- Disconnect states from yarp
             closePorts();
-
-            delete stateDirector1;
-            delete stateDirector2;
-            delete stateDirector3;
-
-            stateDirector1 = NULL;
-            stateDirector2 = NULL;
-            stateDirector3 = NULL;
-
-            delete state1;
-            delete state2;
-            delete state3;
-
-            state1 = NULL;
-            state2 = NULL;
-            state3 = NULL;
-
-
+            delete fsm;
+            fsm = NULL;
         }
 
     void initPorts()
@@ -131,8 +90,7 @@ class FSMBuilderTest : public testing::Test
 
 
     protected:
-        State *state1, *state2, *state3;
-        StateDirector *stateDirector1, *stateDirector2, *stateDirector3;
+        FiniteStateMachine *fsm;
 
         static const std::string debug_port_name;
 
@@ -153,7 +111,7 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect )
     int state1_id = builder.addState(new MockupState(1));
     ASSERT_NE(-1, state1_id);
 
-    int state2_id = builder.addState(new MockupState(1));
+    int state2_id = builder.addState(new MockupState(2));
     ASSERT_NE(-1, state2_id);
 
     int state3_id = builder.addState(new MockupState(3));
@@ -164,8 +122,19 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect )
     ASSERT_TRUE(builder.addTransition(state2_id, state3_id, 3));
     ASSERT_TRUE(builder.addTransition(state3_id, state1_id, 1));
 
-    FiniteStateMachine *fsm = builder.buildStateMachine();
+    ASSERT_TRUE(builder.setInitialState(state1_id));
+
+    fsm = builder.buildStateMachine();
     ASSERT_NE((FiniteStateMachine*)NULL, fsm);
+
+    //-- Connect states to yarp
+    ASSERT_TRUE(yarp::os::Network::connect("/testState/1/status:o", debug_port_name + "/status:i" ));
+    ASSERT_TRUE(yarp::os::Network::connect( "/testState/2/status:o", debug_port_name + "/status:i"));
+    ASSERT_TRUE(yarp::os::Network::connect("/testState/3/status:o", debug_port_name + "/status:i"));
+
+    ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/1/command:i"));
+    ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/2/command:i"));
+    ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/3/command:i"));
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());

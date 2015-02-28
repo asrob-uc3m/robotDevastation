@@ -21,6 +21,8 @@ class StateDirector
         StateDirector(State * state);
         virtual ~StateDirector();
 
+        std::string getStateId();
+
         virtual bool Start() = 0;
         virtual bool Stop() = 0;
 

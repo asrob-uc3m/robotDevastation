@@ -3,6 +3,8 @@
 #ifndef __FINITE_STATE_MACHINE_HPP__
 #define __FINITE_STATE_MACHINE_HPP__
 
+#include "StateDirector.hpp"
+
 namespace rd{
 
 /**
@@ -22,10 +24,17 @@ namespace rd{
 class FiniteStateMachine
 {
     public:
-        FiniteStateMachine();
+        FiniteStateMachine(std::vector<StateDirector *> stateDirectors, int initial_state_id);
+        ~FiniteStateMachine();
+
+        bool setInitialState(int );
 
         bool start();
         bool stop();
+
+    private:
+        std::vector<StateDirector *> stateDirectors;
+        int initial_state_id;
 };
 
 }

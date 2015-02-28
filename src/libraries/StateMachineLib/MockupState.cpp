@@ -17,6 +17,8 @@ rd::MockupState::MockupState(int id)
 
     commandPort = dynamic_cast<yarp::os::BufferedPort<yarp::os::Bottle> *>(this);
 
+    RD_DEBUG("Creating MockupState with id: %s\n", state_id.c_str());
+
     if (!startNetwork(id))
     {
         RD_ERROR("Could not start network\n");
@@ -103,10 +105,16 @@ bool rd::MockupState::startNetwork(int id)
     debug_port_ss << debug_port_name << "/" << id;
 
     if (!debugPort.open(debug_port_ss.str() + "/status:o"))
+    {
+        RD_ERROR("Could not open yarp port: %s\n", (debug_port_ss.str() + "/status:o").c_str() );
         return false;
+    }
 
     if(!commandPort->open(debug_port_ss.str() + "/command:i"))
+    {
+        RD_ERROR("Could not open yarp port: %s\n", (debug_port_ss.str() +"/command:i").c_str() );
         return false;
+    }
     commandPort->useCallback(*commandPort);
 
     return true;
