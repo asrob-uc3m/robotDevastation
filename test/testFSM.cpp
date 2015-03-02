@@ -97,16 +97,6 @@ class FSMTest : public testing::Test
             stateDirector1 = NULL;
             stateDirector2 = NULL;
             stateDirector3 = NULL;
-
-            delete state1;
-            delete state2;
-            delete state3;
-
-            state1 = NULL;
-            state2 = NULL;
-            state3 = NULL;
-
-
         }
 
     void initPorts()
