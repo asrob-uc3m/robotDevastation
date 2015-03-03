@@ -34,7 +34,11 @@ bool rd::YarpStateDirector::Stop()
 void rd::YarpStateDirector::run()
 {
     //RD_DEBUG("Entering loop in StateDirector with id %s\n", state->getStateId().c_str());
-    state->loop();
+    if ( !state->loop() )
+    {
+        RD_ERROR("Error in loop. Stopping this state...\n");
+        this->Stop();
+    }
     int condition = state->evaluateConditions();
 
     if (nextStates.find(condition) != nextStates.end())
