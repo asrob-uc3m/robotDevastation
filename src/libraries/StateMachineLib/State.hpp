@@ -10,23 +10,48 @@ namespace rd{
 /**
  * @ingroup StateMachineLib
  *
- * @brief A base class for States for a Finite State Machine.
+ * @brief A base class for States of a Finite State Machine.
  *
  */
 class State
 {
     public:
-        virtual ~State() {}
+        State();
+        virtual ~State();
 
+        /**
+         * @brief Function executed just before the loop function, when the state is enabled
+         * @return False if some problem ocurred
+         */
         virtual bool setup() = 0;
+
+        /**
+         * @brief Function executed periodically when the state is active
+         * @return False if some problem ocurred
+         */
         virtual bool loop() = 0;
+
+        /**
+         * @brief Function excuted when this state is going to be stopped (due to an error or a transition)
+         * @return False if some problem ocurred
+         */
         virtual bool cleanup() = 0;
+
+        /**
+         * @brief This function is called after each call to loop() in order to know the transition to make
+         *
+         * An integer value is assigned to each possible transition to identify them
+         *
+         * @return Transition selected depending on the conditions of the state
+         */
         virtual int evaluateConditions() = 0;
 
-        std::string getStateId() { return state_id; }
+
+        //! @brief Returns the string that identifies the state
+        std::string getStateId();
 
    protected:
-        //-- Name of the current state
+        //! @variable Name of the current state
         std::string state_id;
 
 };

@@ -14,7 +14,7 @@ bool rd::YarpStateDirector::Start()
     active = true;
     if (!state->setup())
     {
-        RD_ERROR("Error in state setup for id %s\n", state->getStateId.c_str());
+        RD_ERROR("Error in state setup for id %s\n", state->getStateId().c_str());
         return false;
     }
 
