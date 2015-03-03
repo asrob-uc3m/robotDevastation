@@ -12,7 +12,11 @@ bool rd::YarpStateDirector::Start()
 {
     RD_DEBUG("Starting StateDirector for id %s\n", state->getStateId().c_str());
     active = true;
-    state->setup();
+    if (!state->setup())
+    {
+        RD_ERROR("Error in state setup for id %s\n", state->getStateId.c_str());
+        return false;
+    }
 
     return yarp::os::RateThread::start();
 }
