@@ -26,4 +26,5 @@ add_subdirectory(RdNetworkLib)
 add_subdirectory(RdRobotLib)
 add_subdirectory(RdImageLib)
 add_subdirectory(StateMachineLib)
+add_subdirectory(GameStatesLib)
 
