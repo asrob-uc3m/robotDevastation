@@ -12,13 +12,14 @@ class MockupInputManagerTest : public testing::Test
     public:
         virtual void SetUp()
         {
-            MockupInputManager::RegisterManager();
+            ASSERT_TRUE(MockupInputManager::RegisterManager());
             inputManager = (MockupInputManager *) MockupInputManager::getInputManager(MockupInputManager::id);
+            ASSERT_TRUE(inputManager);
         }
 
         virtual void TearDown()
         {
-            MockupInputManager::destroyInputManager();
+            ASSERT_TRUE(MockupInputManager::destroyInputManager());
         }
 
 

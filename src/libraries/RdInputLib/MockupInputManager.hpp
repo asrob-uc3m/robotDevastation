@@ -21,6 +21,7 @@ class MockupInputManager : public RdInputManager
 
         //------------------------------ Construction & destruction ---------------------------------------------------//
         MockupInputManager();
+        ~MockupInputManager();
 
         /**
          * @brief Register this manager in the RdInputManager registry so that can be used
@@ -33,12 +34,15 @@ class MockupInputManager : public RdInputManager
         static const std::string id;
 
         //------------------------------ Manager Startup & Halting ----------------------------------------------------//
-        virtual bool start() = 0;
-        virtual bool stop() = 0;
+        virtual bool start();
+        virtual bool stop();
+        virtual bool isStopped();
 
    private:
         //! @brief Reference to this manager (unique instance)
         static MockupInputManager * uniqueInstance;
+
+        bool stopped;
 };
 }
 #endif // __MOCKUP_INPUT_MANAGER_HPP__
