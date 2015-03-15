@@ -14,8 +14,12 @@ target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} SDL SDL_image SDL_ttf)
 add_executable(testHUD testHUD.cpp)
 target_link_libraries(testHUD ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
 
+# Input manager related
 add_executable(testRdInputManager testRdInputManager.cpp)
 target_link_libraries(testRdInputManager ${RD_LIBRARIES} RdInputLib gtest gtest_main)
+
+add_executable(testMockupInputManager testMockupInputManager.cpp)
+target_link_libraries(testMockupInputManager ${RD_LIBRARIES} RdInputLib gtest gtest_main)
 
 # Mental Map related
 add_executable(testMentalMap testMentalMap.cpp)
