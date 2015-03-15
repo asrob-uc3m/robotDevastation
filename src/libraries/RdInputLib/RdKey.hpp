@@ -43,6 +43,7 @@ class RdKey
         static const int KEY_ARROW_DOWN;
         static const int KEY_ARROW_LEFT;
         static const int KEY_ARROW_RIGHT;
+        static const int KEY_ENTER;
 
         virtual ~RdKey();
 

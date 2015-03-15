@@ -39,3 +39,4 @@ const int rd::RdKey::KEY_ARROW_UP = 4;
 const int rd::RdKey::KEY_ARROW_DOWN = 5;
 const int rd::RdKey::KEY_ARROW_LEFT = 6;
 const int rd::RdKey::KEY_ARROW_RIGHT = 7;
+const int rd::RdKey::KEY_ENTER = 8;

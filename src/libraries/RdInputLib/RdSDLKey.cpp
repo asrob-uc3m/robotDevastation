@@ -70,6 +70,7 @@ bool rd::RdSDLKey::initLookupTables()
         sdl_printable_map[SDLK_y] = 'y'; sdl_printable_map[SDLK_z] = 'z';
 
         sdl_printable_map[SDLK_SPACE] = ' ';
+        sdl_printable_map[SDLK_RETURN] = '\n';
 
         sdl_control_map[SDLK_SPACE] = rd::RdKey::KEY_SPACE;
         sdl_control_map[SDLK_ESCAPE] = rd::RdKey::KEY_ESCAPE;
@@ -78,6 +79,7 @@ bool rd::RdSDLKey::initLookupTables()
         sdl_control_map[SDLK_DOWN] = rd::RdKey::KEY_ARROW_DOWN;
         sdl_control_map[SDLK_LEFT] = rd::RdKey::KEY_ARROW_LEFT;
         sdl_control_map[SDLK_RIGHT] = rd::RdKey::KEY_ARROW_RIGHT;
+        sdl_control_map[SDLK_RETURN] = rd::RdKey::KEY_ENTER;
 
         initialized = true;
     }
