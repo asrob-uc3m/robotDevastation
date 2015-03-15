@@ -18,6 +18,11 @@ bool rd::RdSDLInputManager::stop()
     return true;
 }
 
+bool rd::RdSDLInputManager::isStopped()
+{
+    return this->isStopped();
+}
+
 bool rd::RdSDLInputManager::configure(std::string parameter, std::string value)
 {
     return RdInputManager::configure(parameter, value);

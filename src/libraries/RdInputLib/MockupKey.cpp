@@ -29,7 +29,7 @@ rd::MockupKey::MockupKey(int control_key)
         printable = true;
         char_value = ' ';
     }
-    else if ( control_key == KEY_ENTER)
+    else if (control_key == KEY_ENTER)
     {
         printable = true;
         char_value = '\n';

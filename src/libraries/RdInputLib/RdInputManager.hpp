@@ -74,6 +74,9 @@ class RdInputManager
         //! @brief Stop capturing input events
         virtual bool stop() = 0;
 
+        //! @brief True if the manager is not active
+        virtual bool isStopped() = 0;
+
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Adds a RdInputEventListener to the list of observers to be notified of events
         bool addInputEventListener( RdInputEventListener * listener );

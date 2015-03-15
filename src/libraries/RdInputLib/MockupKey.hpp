@@ -25,5 +25,5 @@ class MockupKey : public RdKey
     private:
         MockupKey() {}
 };
-
+}
 #endif // __MOCKUP_KEY_HPP__

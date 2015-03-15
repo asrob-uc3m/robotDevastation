@@ -38,6 +38,8 @@ class RdSDLInputManager : public RdInputManager,
     public:
         virtual bool start();
         virtual bool stop();
+        virtual bool isStopped();
+
         virtual bool configure(std::string parameter, std::string value);
 
         /**

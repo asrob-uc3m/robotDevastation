@@ -17,8 +17,8 @@ class MockupInputEventListener : public RdInputEventListener
     public:
         MockupInputEventListener();
 
-        virtual bool onKeyDown( RdKey k ) = 0;
-        virtual bool onKeyUp( RdKey k ) = 0;
+        virtual bool onKeyDown( RdKey k );
+        virtual bool onKeyUp( RdKey k );
 
         int getNumKeyDownPresses();
         int getNumKeyUpPresses();
