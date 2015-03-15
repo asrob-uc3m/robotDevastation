@@ -19,14 +19,16 @@ class RdYarpNetworkManagerTest : public testing::Test
     public:
         virtual void SetUp()
         {
+            ASSERT_TRUE(RdYarpNetworkManager::RegisterManager());
             networkManager = RdYarpNetworkManager::getNetworkManager();
+            ASSERT_TRUE(networkManager);
 
             me = new RdPlayer(0, "Myself", 100, 100, 0, 0);
         }
 
         virtual void TearDown()
         {
-            RdYarpNetworkManager::destroyNetworkManager();
+            ASSERT_TRUE(RdYarpNetworkManager::destroyNetworkManager());
             delete me;
             me = NULL;
         }

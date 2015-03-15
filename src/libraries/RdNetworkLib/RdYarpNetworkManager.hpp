@@ -39,8 +39,7 @@ class RdYarpNetworkManager: public RdNetworkManager,
 
 {
     public:
-        //-- Creation and configuration
-        //--------------------------------------------------------------------------------------------
+        //------------------ Creation and configuration --------------------------------------------------------------//
         /**
          * @brief Register this manager in the RdNetworkManager registry so that can be used
          *
@@ -53,12 +52,15 @@ class RdYarpNetworkManager: public RdNetworkManager,
         //! @brief String that identifies this manager
         static const std::string id;
 
-        //------------------------------ Manager Startup & Halting ----------------------------------------------------//
+        //------------------ Manager Startup & Halting ---------------------------------------------------------------//
         virtual bool start();
         virtual bool stop();
 
-        //-- RdServer API
-        //--------------------------------------------------------------------------------------------
+        //------------------------------ Configuration & Listeners ----------------------------------------------------//
+        //! @brief Configures a parameter with a value
+        virtual bool configure(std::string parameter, std::string value);
+
+        //------------------ RdServer API ----------------------------------------------------------------------------//
         virtual bool sendPlayerHit(RdPlayer player, int damage);
         virtual bool login(RdPlayer player);
         virtual bool logout(RdPlayer player);
@@ -86,7 +88,6 @@ class RdYarpNetworkManager: public RdNetworkManager,
          * @param id Id of the player corresponding to the user
          * @return
          */
-        bool start(int id);
 
 
         yarp::os::RpcClient rpcClient;
@@ -94,6 +95,9 @@ class RdYarpNetworkManager: public RdNetworkManager,
 
         //! @brief Implementation of RdMentalMapEventListener interface
         bool onTargetHit(RdTarget target, RdPlayer player, RdWeapon weapon);
+
+        //! @brief Identifier for the player
+        int player_id;
 };
 
 }

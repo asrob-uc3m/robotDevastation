@@ -12,13 +12,13 @@ rd::RdNetworkManager *rd::RdNetworkManager::getNetworkManager()
     {
         if(!networkManagerRegistry.empty() )
         {
-            //-- Install the first RdImageManger found
+            //-- Install the first RdNetworkManager found
             currentId = networkManagerRegistry.begin()->first;
             networkManagerInstance = networkManagerRegistry.begin()->second;
         }
         else
         {
-            RD_ERROR("No RdImageManager registered!! Returning null\n");
+            RD_ERROR("No RdNetworkManager registered!! Returning null\n");
         }
     }
 
