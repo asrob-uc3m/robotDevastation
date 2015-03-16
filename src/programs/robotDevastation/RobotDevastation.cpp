@@ -77,6 +77,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Init robot
     if( rf.find("robot").asString() == "rd1")
         robotManager = new RdYarpRobotManager(rf.find("id").asInt());
+    else if( rf.find("robot").asString() == "mockup")
+        robotManager = new RdMockupRobotManager(rf.find("id").asInt());
     else {
         RD_ERROR("Unknown robot type \"%s\"!\n", rf.find("robot").asString().c_str());
         return false;

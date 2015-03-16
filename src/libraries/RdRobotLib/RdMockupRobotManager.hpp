@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __RD_RD1_ROBOT_MANAGER_HPP__
-#define __RD_RD1_ROBOT_MANAGER_HPP__
+#ifndef __RD_MOCKUP_ROBOT_MANAGER_HPP__
+#define __RD_MOCKUP_ROBOT_MANAGER_HPP__
 
 #include <yarp/dev/all.h>
 
@@ -55,4 +55,4 @@ class RdMockupRobotManager : public RdRobotManager
 
 
 
-#endif //-- __RD_RD1_ROBOT_MANAGER_HPP__
+#endif //-- __RD_MOCKUP_ROBOT_MANAGER_HPP__

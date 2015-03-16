@@ -15,6 +15,7 @@
 #include "RdYarpNetworkManager.hpp"
 #include "RdRobotManager.hpp"
 #include "RdYarpRobotManager.hpp"
+#include "RdMockupRobotManager.hpp"
 #include "StateMachine.hpp"
 #include "RdImageManager.hpp"
 #include "RdYarpImageManager.hpp"
