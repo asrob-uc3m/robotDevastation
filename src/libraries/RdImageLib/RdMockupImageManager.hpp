@@ -11,6 +11,7 @@
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/Network.h>
 #include <yarp/os/Semaphore.h>
+#include <yarp/sig/ImageDraw.h>
 
 #include "RdUtils.hpp"
 #include "RdImageManager.hpp"
@@ -57,7 +58,7 @@ class RdMockupImageManager : public RdImageManager,
 
     protected:
         //-- Yarp event for incoming messages
-        void onRead(RdImage& image);
+        void run();
 
     private:
         /**
@@ -77,14 +78,6 @@ class RdMockupImageManager : public RdImageManager,
         //! @brief Last image received
         RdImage image;
 
-        //! @brief Yarp port to communicate with the remote camera
-        yarp::os::BufferedPort<RdImage> imagePort;
-
-        //! @brief Name of the local yarp port
-        std::string local_port_name;
-
-        //! @brief Name of the camera (remote) yarp port
-        std::string remote_port_name;
 };
 
 
