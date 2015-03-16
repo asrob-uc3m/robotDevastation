@@ -97,8 +97,13 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     networkManager->login(mentalMap->getMyself());
 
     //-- Init image manager
-    RdYarpImageManager::RegisterManager();
-    imageManager = RdImageManager::getImageManager(RdYarpImageManager::id);
+    if( rf.find("image").asString() == "mockup") {
+        RdMockupImageManager::RegisterManager();
+        imageManager = RdImageManager::getImageManager(RdMockupImageManager::id);
+    } else {
+        RdYarpImageManager::RegisterManager();
+        imageManager = RdImageManager::getImageManager(RdYarpImageManager::id);
+    }
     //-- Add the image processing listener to the image manager
     imageManager->addImageEventListener(&processorImageEventListener);
     //-- Configure the camera port

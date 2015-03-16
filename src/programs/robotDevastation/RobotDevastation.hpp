@@ -19,6 +19,7 @@
 #include "StateMachine.hpp"
 #include "RdImageManager.hpp"
 #include "RdYarpImageManager.hpp"
+#include "RdMockupImageManager.hpp"
 #include "RdProcessorImageEventListener.hpp"
 
 namespace rd
