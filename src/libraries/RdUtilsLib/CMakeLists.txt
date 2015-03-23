@@ -8,9 +8,9 @@ include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} Hub.cpp RdIniReader.hpp RdMacros.hpp RdUtils.hpp RdVector2dBase.hpp RdVocabs.hpp)
-target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${RD_LIBRARIES} RdInputLib RdMentalMapLib)
+target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${RD_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
-set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} CACHE INTERNAL "appended header dirs") # done in parent
+set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
 set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header

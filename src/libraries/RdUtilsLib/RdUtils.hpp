@@ -9,5 +9,4 @@
 #include "RdMacros.hpp"
 #include "RdVector2dBase.hpp"
 #include "RdIniReader.hpp"
-#include "Hub.hpp"
 
