@@ -225,7 +225,8 @@ bool rd::RobotDevastation::updateModule()
 
 bool rd::RobotDevastation::initSound(yarp::os::ResourceFinder &rf)
 {
-    audioManager = RdAudioManager::getAudioManager();
+    SDLAudioManager::RegisterManager();
+    audioManager = AudioManager::getAudioManager("SDL");
 
     std::string bsoStr( rf.findFileByName("../sounds/RobotDevastationBSO.mp3") );
     if ( ! audioManager->load(bsoStr, "bso", 0) )
@@ -273,7 +274,7 @@ bool rd::RobotDevastation::interruptModule()
     networkManager = NULL;
 
     //-- Closing audio system:
-    RdAudioManager::destroyAudioManager();
+    AudioManager::destroyAudioManager();
     audioManager = NULL;
 
     //-- Closing mental map:

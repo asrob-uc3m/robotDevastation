@@ -14,6 +14,7 @@
 #include "RdMentalMapEventListener.hpp"
 #include "RdNetworkEventListener.hpp"
 #include "RdNetworkManager.hpp"
+#include "AudioManager.hpp"
 
 namespace rd{
 
@@ -137,8 +138,8 @@ class RdMentalMap : public RdNetworkEventListener
         RdPlayer* myself;
 
 
-        //! @brief Reference to the RdAudioManager
-        RdAudioManager * audioManager;
+        //! @brief Reference to the AudioManager
+        AudioManager * audioManager;
 
 
         //! @brief Observers registered to be notified of data change events

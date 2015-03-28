@@ -7,7 +7,7 @@
 
 #include "RdUtils.hpp"
 #include "RateThreadOutput.hpp"
-#include "RdAudioManager.hpp"
+#include "SDLAudioManager.hpp" //-- Should be AudioManager.hpp
 #include "RdMentalMap.hpp"
 #include "RdInputManager.hpp"
 #include "RdSDLInputManager.hpp"
@@ -44,7 +44,7 @@ class RobotDevastation : public yarp::os::RFModule, public RdInputEventListener
     private:
         RateThreadOutput rateThreadOutput;
         RdInputManager *  inputManager;
-        RdAudioManager * audioManager;
+        AudioManager * audioManager;
         RdMentalMap * mentalMap;
         RdNetworkManager * networkManager;
         RdRobotManager * robotManager;

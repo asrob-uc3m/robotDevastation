@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __RD_AUDIO_MANAGER_HPP__
-#define __RD_AUDIO_MANAGER_HPP__
+#ifndef __SDL_AUDIO_MANAGER_HPP__
+#define __SDL_AUDIO_MANAGER_HPP__
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
@@ -9,41 +9,20 @@
 #include <map>
 
 #include "RdMacros.hpp"
+#include "AudioManager.hpp"
 
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup RdMusicLib
- *
- * @brief The RdMusicLib library contains classes related to game music and sound effects
-
-/**
  * @ingroup RdMusicLib
  *
- * @brief Music and sound effects manager
+ * @brief Music and sound effects manager using SDL libraries
  *
- * RdAudioManger can load several audio files and assign them a string for identification,
- * so that they can be played later.
- *
- * RdAudioManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
- * one instance of this object can exist, that is is shared by all the users). To use this
- * class, we first get the reference to the RdAudioManager with getAudioManager() and then we
- * access the manager with that reference.
- *
- * When the program finishes, the RdAudioManager can be deallocated using destroAudioManager().
  */
-class RdAudioManager
+class SDLAudioManager : public AudioManager
 {
     public:
-        //! @brief Get a reference to the RdAudioManager
-        static RdAudioManager * getAudioManager();
-        //! @brief Deallocate the RdAudioManager
-        static bool destroyAudioManager();
-
-        ~RdAudioManager();
-
+        //---------------- Audio-related Stuff ----------------------------------------------------------------------//
         //! \brief Identifier for music tracks
         static const int MUSIC;
         //! \brief Identifier for sound effect tracks
@@ -81,6 +60,26 @@ class RdAudioManager
          */
         bool stopMusic();
 
+
+        //---------------- Manager Stuff ----------------------------------------------------------------------//
+        virtual bool start();
+        virtual bool stop();
+
+        /**
+         * @brief Register this manager in the RdImageManager registry so that can be used
+         *
+         * It ensures that only one manager of this type is created (unique instance)
+         */
+        static bool RegisterManager();
+
+        //! @brief Destructor. Used to reset the local static reference after destroying this manager
+        ~SDLAudioManager();
+
+
+        //! @brief String that identifies this manager
+        static const std::string id;
+
+
     private:
         /**
          * @brief Constructor
@@ -88,10 +87,10 @@ class RdAudioManager
          * Constructor for this class is private, since the singleton can only be instantiated once,
          * and the instantiation is done at the getAudioManager() method
          */
-        RdAudioManager();
+        SDLAudioManager();
 
         //! \brief Stores the unique instance of the RdAudioManager
-        static RdAudioManager * audioManagerInstance;
+        static SDLAudioManager * uniqueInstance;
 
         //! \brief Dictionary for the sound effects
         std::map<std::string, Mix_Chunk*> fx_sounds;
@@ -103,4 +102,4 @@ class RdAudioManager
 
 }
 
-#endif //-- __RD_AUDIO_MANAGER_HPP__
+#endif //-- __SDL_AUDIO_MANAGER_HPP__

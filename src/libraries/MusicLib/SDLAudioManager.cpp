@@ -1,14 +1,15 @@
 
-#include "RdAudioManager.hpp"
+#include "SDLAudioManager.hpp"
 
 //-- This is very important:
-rd::RdAudioManager * rd::RdAudioManager::audioManagerInstance = NULL;
+rd::SDLAudioManager * rd::SDLAudioManager::uniqueInstance = NULL;
+const std::string rd::SDLAudioManager::id = "SDL";
 
 //-- C++ forces us to initialize constants here:
-const int rd::RdAudioManager::MUSIC = 0;
-const int rd::RdAudioManager::FX = 1;
+const int rd::SDLAudioManager::MUSIC = 0;
+const int rd::SDLAudioManager::FX = 1;
 
-rd::RdAudioManager::RdAudioManager()
+rd::SDLAudioManager::SDLAudioManager()
 {
     if(SDL_Init(SDL_INIT_AUDIO)==-1)
         RD_ERROR("SDL Audio subsystem could not be initialized!\n");
@@ -17,31 +18,8 @@ rd::RdAudioManager::RdAudioManager()
         RD_ERROR("AudioMixer could not be opened!\n");
 }
 
-rd::RdAudioManager *rd::RdAudioManager::getAudioManager()
-{
-    if (audioManagerInstance == NULL)
-        audioManagerInstance = new RdAudioManager();
 
-    return audioManagerInstance;
-}
-
-bool rd::RdAudioManager::destroyAudioManager()
-{
-    if (audioManagerInstance == NULL)
-        return false;
-
-    delete audioManagerInstance;
-    audioManagerInstance = NULL;
-
-    return true;
-}
-
-rd::RdAudioManager::~RdAudioManager()
-{
-    Mix_CloseAudio();
-}
-
-bool rd::RdAudioManager::load(const std::string &music_filepath, const std::string &id, const int &type)
+bool rd::SDLAudioManager::load(const std::string &music_filepath, const std::string &id, const int &type)
 {
     if(type == MUSIC)
       {
@@ -71,7 +49,7 @@ bool rd::RdAudioManager::load(const std::string &music_filepath, const std::stri
       return false;
 }
 
-bool rd::RdAudioManager::playMusic(const std::string &id, int loop)
+bool rd::SDLAudioManager::playMusic(const std::string &id, int loop)
 {
     if (Mix_PlayMusic(music_sounds[id], loop) == -1)
     {
@@ -82,7 +60,7 @@ bool rd::RdAudioManager::playMusic(const std::string &id, int loop)
     return true;
 }
 
-bool rd::RdAudioManager::playSound(const std::string &id, int loop)
+bool rd::SDLAudioManager::playSound(const std::string &id, int loop)
 {
     if( Mix_PlayChannel(-1, fx_sounds[id], loop) == -1 )
     {
@@ -93,7 +71,7 @@ bool rd::RdAudioManager::playSound(const std::string &id, int loop)
     return true;
 }
 
-bool rd::RdAudioManager::stopMusic()
+bool rd::SDLAudioManager::stopMusic()
 {
     if ( Mix_PlayingMusic() )
         if(Mix_HaltMusic() == -1)
@@ -103,4 +81,32 @@ bool rd::RdAudioManager::stopMusic()
         }
 
     return true;
+}
+
+bool rd::SDLAudioManager::start()
+{
+    return true;
+}
+
+bool rd::SDLAudioManager::stop()
+{
+    Mix_CloseAudio();
+    return true;
+}
+
+bool rd::SDLAudioManager::RegisterManager()
+{
+    if (uniqueInstance == NULL)
+    {
+        uniqueInstance = new SDLAudioManager();
+    }
+
+    return Register( uniqueInstance, id);
+}
+
+rd::SDLAudioManager::~SDLAudioManager()
+{
+    //-- Stop this manager
+    this->stop();
+    uniqueInstance = NULL;
 }

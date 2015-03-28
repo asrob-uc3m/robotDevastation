@@ -12,7 +12,7 @@
 #include <RdInputManager.hpp>
 #include <RdSDLInputManager.hpp>
 #include <RdInputEventListener.hpp>
-#include <RdAudioManager.hpp>
+#include <SDLAudioManager.hpp>
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
@@ -28,7 +28,8 @@ class RdTestEventListener : public RdInputEventListener
     public:
         RdTestEventListener()
         {
-            audioManager = RdAudioManager::getAudioManager();
+            SDLAudioManager::RegisterManager();
+            audioManager = AudioManager::getAudioManager("SDL");
 
             if (audioManager == NULL)
             {
@@ -36,12 +37,12 @@ class RdTestEventListener : public RdInputEventListener
                 exit(1);
             }
 
-            audioManager->load( "../../share/sounds/01_milshot.wav", "shoot", RdAudioManager::FX);
+            audioManager->load( "../../share/sounds/01_milshot.wav", "shoot", SDLAudioManager::FX);
         }
 
         ~RdTestEventListener()
         {
-            RdAudioManager::destroyAudioManager();
+            SDLAudioManager::destroyAudioManager();
         }
 
         virtual bool onKeyDown(RdKey k)
@@ -117,7 +118,7 @@ class RdTestEventListener : public RdInputEventListener
         }
 
     private:
-        RdAudioManager * audioManager;
+        AudioManager * audioManager;
 };
 
 int main(void)

@@ -18,7 +18,7 @@ FOREACH(subdir ${SUBDIRS})
 ENDFOREACH()
 
 add_subdirectory(RdUtilsLib)
-add_subdirectory(RdMusicLib)
+add_subdirectory(MusicLib)
 add_subdirectory(RdMentalMapLib)
 add_subdirectory(RdUserInterfaceLib)
 add_subdirectory(RdInputLib)

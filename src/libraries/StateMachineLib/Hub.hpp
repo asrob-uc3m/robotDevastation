@@ -5,7 +5,7 @@
 #define __MANAGER_HUB_HPP__
 
 #include "RdImageManager.hpp"
-#include "RdAudioManager.hpp"
+#include "SDLAudioManager.hpp" //-- Should be AudioManager.hpp
 #include "RdInputManager.hpp"
 #include "RdMentalMap.hpp"
 #include "RdNetworkManager.hpp"
