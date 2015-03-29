@@ -5,8 +5,8 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} ${RD_INCLUDE
 link_directories(${RD_LINK_DIRS})
 
 # UI related
-add_executable(testRdAudioManager testRdAudioManager.cpp)
-target_link_libraries(testRdAudioManager ${RD_LIBRARIES} RdMusicLib gtest gtest_main)
+add_executable(testSDLAudioManager testSDLAudioManager.cpp)
+target_link_libraries(testSDLAudioManager ${RD_LIBRARIES} MusicLib gtest gtest_main)
 
 add_executable(testSDLTextDisplay testSDLTextDisplay.cpp)
 target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} SDL SDL_image SDL_ttf)

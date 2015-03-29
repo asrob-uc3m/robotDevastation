@@ -23,11 +23,6 @@ class SDLAudioManager : public AudioManager
 {
     public:
         //---------------- Audio-related Stuff ----------------------------------------------------------------------//
-        //! \brief Identifier for music tracks
-        static const int MUSIC;
-        //! \brief Identifier for sound effect tracks
-        static const int FX;
-
         /**
          * @brief Loads an audio file, assigning it a string as identifier
          * @param music_filepath Path to the file to be loaded
@@ -38,21 +33,8 @@ class SDLAudioManager : public AudioManager
          */
         bool load( const std::string& music_filepath, const std::string& id, const int& type);
 
-        /**
-         * @brief Plays a music file previously loaded
-         * @param id String that identifies the music track
-         * @param loop Number of times the music is played. -1 means play the music forever.
-         * @return True if sound was played successfully, false otherwise
-         */
-        bool playMusic(const std::string& id, int loop);
-
-        /**
-         * @brief Plays a sound effect file previously loaded
-         * @param id String that identifies the sound effect track
-         * @param loop Number of times the effect is played. -1 means play the effect forever.
-         * @return True if sound was played successfully, false otherwise
-         */
-        bool playSound(const std::string& id, int loop);
+        //! @brief Plays a music/sound effect file previously loaded
+        bool play(const std::string &id, int loop);
 
         /**
          * @brief Stops the music being played currently

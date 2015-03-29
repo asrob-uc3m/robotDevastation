@@ -67,6 +67,12 @@ class AudioManager
         //! @brief Stops the AudioManager
         virtual bool stop() = 0;
 
+
+        //------------------------------ Configuration ----------------------------------------------------------------//
+        //! @brief Configures a parameter with a value
+        virtual bool configure(std::string parameter, std::string value);
+
+
         //------------------------------- Audio Manager functions -----------------------------------------------------//
         /**
          * @brief Loads an audio file, assigning it a string as identifier
@@ -79,20 +85,12 @@ class AudioManager
         virtual bool load( const std::string& music_filepath, const std::string& id, const int& type) = 0;
 
         /**
-         * @brief Plays a music file previously loaded
-         * @param id String that identifies the music track
+         * @brief Plays a music/sound effect file previously loaded
+         * @param id String that identifies the music / sound effect track
          * @param loop Number of times the music is played. -1 means play the music forever.
          * @return True if sound was played successfully, false otherwise
          */
-        virtual bool playMusic(const std::string& id, int loop) = 0;
-
-        /**
-         * @brief Plays a sound effect file previously loaded
-         * @param id String that identifies the sound effect track
-         * @param loop Number of times the effect is played. -1 means play the effect forever.
-         * @return True if sound was played successfully, false otherwise
-         */
-        virtual bool playSound(const std::string& id, int loop) = 0;
+        virtual bool play(const std::string& id, int loop = 1) = 0;
 
         /**
          * @brief Stops the music being played currently
@@ -100,10 +98,10 @@ class AudioManager
          */
         virtual bool stopMusic() = 0;
 
-
-        //------------------------------ Configuration ----------------------------------------------------------------//
-        //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, std::string value);
+        //! \brief Identifier for music tracks
+        static const int MUSIC;
+        //! \brief Identifier for sound effect tracks
+        static const int FX;
 
     protected:
         /**

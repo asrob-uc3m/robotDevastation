@@ -57,7 +57,7 @@ TEST_F( SDLAudioManagerTest, AudioManagerPlaysOneSound )
 
     ASSERT_TRUE(audioManager->load(sound_bso, "bso", SDLAudioManager::MUSIC));
 
-    EXPECT_TRUE(audioManager->playMusic("bso", true));
+    EXPECT_TRUE(audioManager->play("bso", true));
     sleep(2);
     EXPECT_TRUE(audioManager->stopMusic());
 }
@@ -69,9 +69,9 @@ TEST_F( SDLAudioManagerTest, AudioManagerPlaysFx )
     ASSERT_TRUE(audioManager->load(sound_shoot, "shoot", SDLAudioManager::FX));
     ASSERT_TRUE(audioManager->load(sound_explosion, "explosion", SDLAudioManager::FX));
 
-    EXPECT_TRUE(audioManager->playSound("shoot", false));
+    EXPECT_TRUE(audioManager->play("shoot", false));
     sleep(1);
-    EXPECT_TRUE(audioManager->playSound("explosion", false));
+    EXPECT_TRUE(audioManager->play("explosion", false));
     sleep(2);
 }
 
@@ -83,10 +83,10 @@ TEST_F( SDLAudioManagerTest, AudioManagerPlaysAllSounds )
     ASSERT_TRUE(audioManager->load(sound_shoot, "shoot", SDLAudioManager::FX));
     ASSERT_TRUE(audioManager->load(sound_explosion, "explosion", SDLAudioManager::FX));
 
-    EXPECT_TRUE(audioManager->playMusic("bso", true));
-    EXPECT_TRUE(audioManager->playSound("shoot", true));
+    EXPECT_TRUE(audioManager->play("bso", true));
+    EXPECT_TRUE(audioManager->play("shoot", true));
     sleep(1);
-    EXPECT_TRUE(audioManager->playSound("explosion", false));
+    EXPECT_TRUE(audioManager->play("explosion", false));
     sleep(4);
     EXPECT_TRUE(audioManager->stopMusic());
 }

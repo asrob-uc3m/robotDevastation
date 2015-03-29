@@ -5,10 +5,6 @@
 rd::SDLAudioManager * rd::SDLAudioManager::uniqueInstance = NULL;
 const std::string rd::SDLAudioManager::id = "SDL";
 
-//-- C++ forces us to initialize constants here:
-const int rd::SDLAudioManager::MUSIC = 0;
-const int rd::SDLAudioManager::FX = 1;
-
 rd::SDLAudioManager::SDLAudioManager()
 {
     if(SDL_Init(SDL_INIT_AUDIO)==-1)
@@ -46,25 +42,32 @@ bool rd::SDLAudioManager::load(const std::string &music_filepath, const std::str
         fx_sounds[id] = pChunk;
         return true;
       }
-      return false;
+    return false;
 }
 
-bool rd::SDLAudioManager::playMusic(const std::string &id, int loop)
+bool rd::SDLAudioManager::play(const std::string &id, int loop)
 {
-    if (Mix_PlayMusic(music_sounds[id], loop) == -1)
+    if (music_sounds.find(id) != music_sounds.end())
     {
-        RD_ERROR( "Error playing sound \"%s\"\n", id.c_str());
-        return false;
+        //-- Play music
+        if (Mix_PlayMusic(music_sounds[id], loop) == -1)
+        {
+            RD_ERROR( "Error playing music \"%s\"\n", id.c_str());
+            return false;
+        }
     }
-
-    return true;
-}
-
-bool rd::SDLAudioManager::playSound(const std::string &id, int loop)
-{
-    if( Mix_PlayChannel(-1, fx_sounds[id], loop) == -1 )
+    else if (fx_sounds.find(id) != fx_sounds.end())
     {
-        RD_ERROR( "Error playing sound \"%s\"\n", id.c_str());
+        //-- Play fx sound:
+        if( Mix_PlayChannel(-1, fx_sounds[id], loop) == -1 )
+        {
+            RD_ERROR( "Error playing sound \"%s\"\n", id.c_str());
+            return false;
+        }
+    }
+    else
+    {
+        RD_ERROR( "Sound \"%s\" not found (maybe it was not loaded?)\n", id.c_str());
         return false;
     }
 

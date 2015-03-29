@@ -126,7 +126,7 @@ bool rd::RdMentalMap::shoot()
     if ( current_ammo > 0)
     {
         //-- Play sound
-        audioManager->playSound("shoot", false);
+        audioManager->play("shoot", false);
 
         //-- Decrease ammo
         current_ammo--;
@@ -159,7 +159,7 @@ bool rd::RdMentalMap::shoot()
     else
     {
             //-- Play sound
-            audioManager->playSound("noAmmo", false);
+            audioManager->play("noAmmo", false);
             RD_WARNING("No ammo! Reload!\n");
     }
 
@@ -168,7 +168,7 @@ bool rd::RdMentalMap::shoot()
 
 bool rd::RdMentalMap::reload()
 {
-    audioManager->playSound("reload", false);
+    audioManager->play("reload", false);
     return weapons[current_weapon].reload();
 }
 

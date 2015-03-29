@@ -5,6 +5,10 @@ rd::AudioManager * rd::AudioManager::audioManagerInstance = NULL;
 std::string rd::AudioManager::currentId = "";
 std::map<std::string, rd::AudioManager *> rd::AudioManager::audioManagerRegistry = std::map<std::string, rd::AudioManager *>();
 
+//-- C++ forces us to initialize constants here:
+const int rd::AudioManager::MUSIC = 0;
+const int rd::AudioManager::FX = 1;
+
 rd::AudioManager *rd::AudioManager::getAudioManager()
 {
     if (audioManagerInstance == NULL )

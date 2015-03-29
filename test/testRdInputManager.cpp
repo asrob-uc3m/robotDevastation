@@ -53,7 +53,7 @@ class RdTestEventListener : public RdInputEventListener
 
                 if ( k.getValue() == RdKey::KEY_SPACE)
                 {
-                    audioManager->playSound("shoot", false);
+                    audioManager->play("shoot", false);
                     RD_SUCCESS("Shoot!\n");
                 }
                 else if ( k.getValue() == RdKey::KEY_ESCAPE)
@@ -101,7 +101,7 @@ class RdTestEventListener : public RdInputEventListener
 
                 if ( k.getChar() == '0')
                 {
-                    audioManager->playSound("shoot", false);
+                    audioManager->play("shoot", false);
                     RD_SUCCESS("Shoot!\n");
                 }
                 else if ( k.getChar() == 'q')

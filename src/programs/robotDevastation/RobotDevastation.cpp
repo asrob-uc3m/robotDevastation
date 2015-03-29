@@ -72,7 +72,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         return false;
 
     if( ! rf.check("noMusic") )
-        audioManager->playMusic("bso", -1);
+        audioManager->play("bso", -1);
 
     //-- Init robot
     if( rf.find("robot").asString() == "rd1")
