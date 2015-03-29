@@ -13,7 +13,7 @@ include_directories(${SDL_INCLUDE_DIR})
 include_directories(${SDL_MIXER_INCLUDE_DIRS} ${SDLMIXER_INCLUDE_DIR})  # SDLMIXER_INCLUDE_DIR for old
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} AudioManager.cpp SDLAudioManager.cpp)
+add_library(${KEYWORD} AudioManager.cpp SDLAudioManager.cpp MockupAudioManager.cpp)
 target_link_libraries(${KEYWORD} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDLMIXER_LIBRARY})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 

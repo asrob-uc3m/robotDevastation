@@ -5,14 +5,18 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} ${RD_INCLUDE
 link_directories(${RD_LINK_DIRS})
 
 # UI related
-add_executable(testSDLAudioManager testSDLAudioManager.cpp)
-target_link_libraries(testSDLAudioManager ${RD_LIBRARIES} MusicLib gtest gtest_main)
-
 add_executable(testSDLTextDisplay testSDLTextDisplay.cpp)
 target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} SDL SDL_image SDL_ttf)
 
 add_executable(testHUD testHUD.cpp)
 target_link_libraries(testHUD ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
+
+# Audio manager related
+add_executable(testMockupAudioManager testMockupAudioManager.cpp)
+target_link_libraries(testMockupAudioManager ${RD_LIBRARIES} MusicLib gtest gtest_main)
+
+add_executable(testSDLAudioManager testSDLAudioManager.cpp)
+target_link_libraries(testSDLAudioManager ${RD_LIBRARIES} MusicLib gtest gtest_main)
 
 # Input manager related
 add_executable(testRdInputManager testRdInputManager.cpp)
