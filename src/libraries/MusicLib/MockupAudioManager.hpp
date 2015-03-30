@@ -8,6 +8,9 @@
 #include "RdMacros.hpp"
 #include "AudioManager.hpp"
 
+#include <yarp/os/RateThread.h>
+#include <yarp/os/Mutex.h>
+
 namespace rd{
 
 /**
@@ -16,7 +19,8 @@ namespace rd{
  * @brief Mockup music and sound effects manager for testing purposes
  *
  */
-class MockupAudioManager : public AudioManager
+class MockupAudioManager : public AudioManager,
+                           public yarp::os::RateThread
 {
     public:
         //---------------- Mockup interface -------------------------------------------------------------------------//
@@ -49,10 +53,14 @@ class MockupAudioManager : public AudioManager
         //! @brief Destructor. Used to reset the local static reference after destroying this manager
         ~MockupAudioManager();
 
-
         //! @brief String that identifies this manager
         static const std::string id;
 
+        //! @brief Default duration (s)
+        static const int AUDIO_DURATION = 30;
+
+        //! @brief Thread update period (ms)
+        static const int UPDATE_PERIOD = 1000;
 
     private:
         /**
@@ -63,14 +71,19 @@ class MockupAudioManager : public AudioManager
          */
         MockupAudioManager();
 
+        //! @brief Method called periodically from the RateThread class. It simply calls the update() method.
+        void run();
+
         //! \brief Stores the unique instance of the RdAudioManager
         static MockupAudioManager * uniqueInstance;
 
-        //! \brief Dictionary for the sound effects
-        std::map<std::string, bool> fx_sounds;
+        //! \brief Dictionary for sound durations:
+        yarp::os::Mutex durations_mutex;
+        std::map<std::string, int> durations;
 
-        //! \brief Dictionary for the music tracks
-        std::map<std::string, bool> music_sounds;
+        //! \brief Dictionary for loop times
+        yarp::os::Mutex loop_times_mutex;
+        std::map<std::string, int> loop_times;
 
 };
 

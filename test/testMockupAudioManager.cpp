@@ -3,6 +3,8 @@
 
 #include "MockupAudioManager.hpp"
 
+#include <yarp/os/Time.h>
+
 using namespace rd;
 
 class MockupAudioManagerTest : public testing::Test
@@ -60,12 +62,14 @@ TEST_F( MockupAudioManagerTest, AudioManagerPlaysOneSound )
     ASSERT_NE((AudioManager *)NULL, audioManager);
 
     ASSERT_TRUE(audioManager->load(sound_bso, "bso", AudioManager::MUSIC));
+    ASSERT_TRUE(audioManager->start());
 
     EXPECT_TRUE(audioManager->play("bso", true));
     EXPECT_TRUE(mockupManager->isPlaying("bso"));
-    sleep(2);
+    yarp::os::Time::delay(2);
     EXPECT_TRUE(audioManager->stopMusic());
     EXPECT_FALSE(mockupManager->isPlaying("bso"));
+    EXPECT_TRUE(audioManager->stop());
 }
 
 TEST_F( MockupAudioManagerTest, AudioManagerPlaysFx )
@@ -74,11 +78,13 @@ TEST_F( MockupAudioManagerTest, AudioManagerPlaysFx )
 
     ASSERT_TRUE(audioManager->load(sound_shoot, "shoot", AudioManager::FX));
     ASSERT_TRUE(audioManager->load(sound_explosion, "explosion", AudioManager::FX));
+    ASSERT_TRUE(audioManager->start());
 
     EXPECT_TRUE(audioManager->play("shoot", false));
-    sleep(1);
+    yarp::os::Time::delay(1);
     EXPECT_TRUE(audioManager->play("explosion", false));
-    sleep(2);
+    yarp::os::Time::delay(2);
+    EXPECT_TRUE(audioManager->stop());
 }
 
 TEST_F( MockupAudioManagerTest, AudioManagerPlaysAllSounds )
@@ -88,20 +94,20 @@ TEST_F( MockupAudioManagerTest, AudioManagerPlaysAllSounds )
     ASSERT_TRUE(audioManager->load(sound_bso, "bso", AudioManager::MUSIC));
     ASSERT_TRUE(audioManager->load(sound_shoot, "shoot", AudioManager::FX));
     ASSERT_TRUE(audioManager->load(sound_explosion, "explosion", AudioManager::FX));
+    ASSERT_TRUE(audioManager->start());
 
     EXPECT_TRUE(audioManager->play("bso", true));
     EXPECT_TRUE(audioManager->play("shoot", true));
     EXPECT_TRUE(mockupManager->isPlaying("bso"));
     EXPECT_TRUE(mockupManager->isPlaying("shoot"));
-    sleep(1);
-
+    yarp::os::Time::delay(1);
     EXPECT_TRUE(audioManager->play("explosion", false));
     EXPECT_TRUE(mockupManager->isPlaying("explosion"));
-    sleep(4);
+    yarp::os::Time::delay(4);
 
     EXPECT_TRUE(audioManager->stopMusic());
     EXPECT_FALSE(mockupManager->isPlaying("bso"));
     EXPECT_FALSE(mockupManager->isPlaying("shoot"));
     EXPECT_FALSE(mockupManager->isPlaying("explosion"));
-
+    EXPECT_TRUE(audioManager->stop());
 }
