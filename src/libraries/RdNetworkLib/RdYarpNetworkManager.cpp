@@ -56,7 +56,7 @@ bool rd::RdYarpNetworkManager::start()
 
     if (tries == 10)
     {
-        RD_ERROR("Timeout!\n");
+        RD_ERROR("Timeout for rpc to be connected to server!\n");
         return false;
     }
 

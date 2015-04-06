@@ -12,7 +12,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         printf("\t--id integer\n");
         printf("\t--name string\n");
         printf("\t--team integer\n");
-        printf("\t--robot string\n");
+        printf("\t--robotName string\n");
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
     printf("RobotDevastation using no additional special options.\n");
@@ -40,12 +40,12 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     }
     RD_INFO("team: %d\n",rf.find("team").asInt());
 
-    if( ! rf.check("robot") )
+    if( ! rf.check("robotName") )
     {
-        RD_ERROR("No robot!\n");
+        RD_ERROR("No robotName!\n");
         return false;
     }
-    RD_INFO("robot: %s\n",rf.find("robot").asString().c_str());
+    RD_INFO("robotName: %s\n",rf.find("robotName").asString().c_str());
 
     //-- Init mentalMap
     mentalMap = RdMentalMap::getMentalMap();
@@ -75,17 +75,14 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         audioManager->play("bso", -1);
 
     //-- Init robot
-    if( rf.find("robot").asString() == "rd1")
-        robotManager = new RdYarpRobotManager(rf.find("id").asInt());
-    else if( rf.find("robot").asString() == "mockup")
-        robotManager = new RdMockupRobotManager(rf.find("id").asInt());
-    else {
-        RD_ERROR("Unknown robot type \"%s\"!\n", rf.find("robot").asString().c_str());
-        return false;
+    if( rf.check("mockupRobotManager") ) {
+        robotManager = new RdMockupRobotManager(rf.find("robotName").asString());
+    } else {
+        robotManager = new RdYarpRobotManager(rf.find("robotName").asString());
     }
     if( ! robotManager->connect() ) {
-        RD_ERROR("Could not connect to robot id \"%d\" type \"%s\"!\n",rf.find("id").asInt(),rf.find("robot").asString().c_str());
-        RD_ERROR("Use syntax: robotDevastation --id %d --robot %s\n",rf.find("id").asInt(),rf.find("robot").asString().c_str());
+        RD_ERROR("Could not connect to robotName \"%s\"!\n",rf.find("robotName").asString().c_str());
+        RD_ERROR("Use syntax: robotDevastation --robotName %s\n",rf.find("robotName").asString().c_str());
         return false;
     }
 

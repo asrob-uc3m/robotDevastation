@@ -4,6 +4,7 @@
 #define __RD_YARP_ROBOT_MANAGER_HPP__
 
 #include <yarp/dev/all.h>
+#include <yarp/os/Run.h>
 
 #include <sstream>
 
@@ -21,7 +22,7 @@ class RdYarpRobotManager : public RdRobotManager
 {
     public:
 
-        RdYarpRobotManager(const int& playerId) : RdRobotManager(playerId) { }
+        RdYarpRobotManager(const std::string& robotName) : RdRobotManager(robotName) { }
 
         //-- Robot movement related functions    
         virtual bool moveForward(int velocity = UNUSED);

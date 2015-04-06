@@ -53,12 +53,12 @@ class RdRobotManager
         //-- Constants
         static const int UNUSED = -1;
 
-        RdRobotManager(const int& playerId) {
-            this->playerId = playerId;
+        RdRobotManager(const std::string& robotName) {
+            this->robotName = robotName;
         }
 
     protected:
-        int playerId;
+        std::string robotName;
 };
 
 }
