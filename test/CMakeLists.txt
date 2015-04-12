@@ -49,3 +49,7 @@ target_link_libraries(testFSM ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
 
 add_executable(testFSMBuilder testFSMBuilder.cpp)
 target_link_libraries(testFSMBuilder ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
+
+# Game States related
+add_executable(testInitState testInitState.cpp)
+target_link_libraries(testInitState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
