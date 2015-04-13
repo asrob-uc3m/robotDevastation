@@ -94,7 +94,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     networkManager->login(mentalMap->getMyself());
 
     //-- Init image manager
-    if( rf.find("image").asString() == "mockup") {
+    if( rf.check("mockupImageManager") ) {
         RdMockupImageManager::RegisterManager();
         imageManager = RdImageManager::getImageManager(RdMockupImageManager::id);
     } else {
@@ -106,9 +106,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Configure the camera port
     std::ostringstream remoteCameraPortName;  //-- Default looks like "/0/rd1/img:o"
     remoteCameraPortName << "/";
-    remoteCameraPortName << rf.find("id").asInt();
-    remoteCameraPortName << "/";
-    remoteCameraPortName << rf.find("robot").asString();
+    remoteCameraPortName << rf.find("robotName").asString();
     remoteCameraPortName << "/img:o";
     imageManager->configure("remote_img_port", remoteCameraPortName.str() );
     std::ostringstream localCameraPortName;  //-- Default should look like "/0/robot/img:i"

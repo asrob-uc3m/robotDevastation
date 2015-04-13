@@ -51,20 +51,35 @@ bool RdYarpRobotManager::panRight(int velocity) {
         
 bool RdYarpRobotManager::connect()  {
 
-    std::string line("(on /");
-    line += robotName;
-    line += ") (as launcher) (cmd \"sudo launchRd1Yarp --device pwmbot --name /";
-    line += robotName;
-    line += " --gpios 17 27\")";
-    yarp::os::Property yarpRunOptions;
-    yarpRunOptions.fromString(line);
-    int ret = yarp::os::Run::client(yarpRunOptions);
-    if (ret != 0)
+    std::string launchRobotOptionsStr("(on /");
+    launchRobotOptionsStr += robotName;
+    launchRobotOptionsStr += ") (as launcher) (cmd \"sudo launchRd1Yarp --device pwmbot --name /";
+    launchRobotOptionsStr += robotName;
+    launchRobotOptionsStr += " --gpios 17 27\")";
+    yarp::os::Property launchRobotOptions;
+    launchRobotOptions.fromString(launchRobotOptionsStr);
+    int robotRet = yarp::os::Run::client(launchRobotOptions);
+    if (robotRet != 0)
     {
         RD_ERROR("Could not start robot launch on robot side.\n");
         return false;
     }
     RD_SUCCESS("Started robot launch on robot side.\n");
+
+    std::string launchCameraOptionsStr("(on /");
+    launchCameraOptionsStr += robotName;
+    launchCameraOptionsStr += ") (as launcher) (cmd \"yarpdev --device opencv_grabber --name /";
+    launchCameraOptionsStr += robotName;
+    launchCameraOptionsStr += "/img:o\")";
+    yarp::os::Property launchCameraOptions;
+    launchCameraOptions.fromString(launchCameraOptionsStr);
+    int cameraRet = yarp::os::Run::client(launchCameraOptions);
+    if (cameraRet != 0)
+    {
+        RD_ERROR("Could not start camera launch on robot side.\n");
+        return false;
+    }
+    RD_SUCCESS("Started camera launch on robot side.\n");
 
     std::string local_s("/robotDevastation/");
     local_s += robotName;
