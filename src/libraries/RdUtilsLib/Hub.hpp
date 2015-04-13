@@ -7,14 +7,16 @@
 #include "RdImageManager.hpp"
 #include "SDLAudioManager.hpp" //-- Should be AudioManager.hpp
 #include "RdInputManager.hpp"
+#include "RdKey.hpp"
 #include "RdMentalMap.hpp"
+#include "RdWeapon.hpp"
 #include "RdNetworkManager.hpp"
 #include "RdRobotManager.hpp"
 
 namespace rd{
 
 /**
- * @ingroup RdStateMachineLib
+ * @ingroup RdUtils
  *
  * @brief A classs to interface all the robot devastation managers
  *
@@ -22,6 +24,11 @@ namespace rd{
 class ManagerHub
 {
     public:
+    ManagerHub();
+
+    ManagerHub(RdNetworkManager * networkManager, RdImageManager * imageManager,
+               RdInputManager * inputManager, RdMentalMap * mentalMap, RdRobotManager * robotManager);
+
         bool setNetworkManager(RdNetworkManager * networkManager);
         bool setImageManager(RdImageManager * imageManager);
         bool setInputManager(RdInputManager * inputManager);
@@ -37,6 +44,11 @@ class ManagerHub
         RdRobotManager * robotManager;
 
 };
+
+
+
+
+
 }
 
 #endif //-- __MANAGER_HUB_HPP__

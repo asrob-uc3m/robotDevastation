@@ -2,13 +2,13 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-set(KEYWORD "StateMachineLib")
+set(KEYWORD "GameStatesLib")
 
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} StateMachine.cpp StateMachineBuilder.cpp State.cpp MockupState.cpp StateDirector.cpp YarpStateDirector.cpp)
+add_library(${KEYWORD} InitState.cpp)
 
-target_link_libraries(${KEYWORD})
+target_link_libraries(${KEYWORD} StateMachineLib RdUtilsLib)
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...

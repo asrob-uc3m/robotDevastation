@@ -31,3 +31,17 @@ class InitStateTest : public testing::Test
     protected:
         FiniteStateMachine *fsm;
 };
+
+//--- Tests ------------------------------------------------------------------------------------------
+TEST_F(InitStateTest, InitStateWorksCorrectly )
+{
+    //-- Create mockup objects
+
+
+    //-- Create fsm with InitState
+    StateMachineBuilder builder;
+    ASSERT_TRUE(builder.setDirectorType("YARP"));
+
+    int init_state_id = builder.addState(new InitState())
+
+}
