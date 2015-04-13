@@ -12,6 +12,7 @@
 #include "RdWeapon.hpp"
 #include "RdNetworkManager.hpp"
 #include "RdRobotManager.hpp"
+#include "AudioManager.hpp"
 
 namespace rd{
 
@@ -27,13 +28,15 @@ class ManagerHub
     ManagerHub();
 
     ManagerHub(RdNetworkManager * networkManager, RdImageManager * imageManager,
-               RdInputManager * inputManager, RdMentalMap * mentalMap, RdRobotManager * robotManager);
+               RdInputManager * inputManager, RdMentalMap * mentalMap,
+               RdRobotManager * robotManager, AudioManager * audioManager);
 
         bool setNetworkManager(RdNetworkManager * networkManager);
         bool setImageManager(RdImageManager * imageManager);
         bool setInputManager(RdInputManager * inputManager);
         bool setMentalMap(RdMentalMap * mentalMap);
         bool setRobotManager(RdRobotManager * robotManager);
+        bool setAudioManager(AudioManager * audioManager);
 
    protected:
         //-- Pointers to everything important in the game:
@@ -42,7 +45,7 @@ class ManagerHub
         RdInputManager * inputManager;
         RdMentalMap * mentalMap;
         RdRobotManager * robotManager;
-
+        AudioManager * audioManager;
 };
 
 
