@@ -31,9 +31,10 @@ namespace rd{
 class InitState : public State, public ManagerHub
 {
     public:
-        InitState();
+        //InitState();
         InitState(RdNetworkManager * networkManager, RdImageManager * imageManager,
-                  RdInputManager * inputManager, RdMentalMap * mentalMap, RdRobotManager * robotManager);
+                  RdInputManager * inputManager, RdMentalMap * mentalMap,
+                  RdRobotManager * robotManager, AudioManager * audioManager);
         virtual ~InitState();
         virtual bool setup();
         virtual bool loop();

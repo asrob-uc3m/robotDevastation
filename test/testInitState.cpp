@@ -28,58 +28,81 @@ class InitStateTest : public testing::Test
             //-- Start YARP network
             yarp::os::Network::init();
 
+            //-- Register managers to be used:
+            MockupNetworkManager::RegisterManager();
+            RdMockupImageManager::RegisterManager();
+            MockupInputManager::RegisterManager();
+            MockupAudioManager::RegisterManager();
+
+            //-- Create managers
+            networkManager = RdNetworkManager::getNetworkManager("MOCKUP");
+            mockupNetworkManager = dynamic_cast<MockupNetworkManager *>(networkManager);
+
+            imageManager = RdImageManager::getImageManager("MOCKUP");
+            mockupImageManager = dynamic_cast<RdMockupImageManager *>(imageManager);
+
+            inputManager = RdInputManager::getInputManager("MOCKUP");
+            mockupInputManager = dynamic_cast<MockupInputManager *>(inputManager);
+
+            audioManager = AudioManager::getAudioManager("MOCKUP");
+            mockupAudioManager = dynamic_cast<MockupAudioManager *>(audioManager);
+
+            mentalMap = RdMentalMap::getMentalMap();
+
+            mockupRobotManager = new RdMockupRobotManager(0);
+            robotManager = (RdRobotManager *) mockupRobotManager;
+
         }
 
         virtual void TearDown()
         {
             //-- Close YARP network
             yarp::os::Network::fini();
+
+
+            //-- Delete things
+            RdNetworkManager::destroyNetworkManager();
+            networkManager = NULL;
+            mockupNetworkManager = NULL;
+            RdImageManager::destroyImageManager();
+            imageManager = NULL;
+            mockupImageManager = NULL;
+            RdInputManager::destroyInputManager();
+            AudioManager::destroyAudioManager();
+
         }
 
     protected:
         FiniteStateMachine *fsm;
+
+        RdNetworkManager * networkManager;
+        MockupNetworkManager * mockupNetworkManager;
+
+        RdImageManager * imageManager;
+        RdMockupImageManager * mockupImageManager;
+
+        RdInputManager * inputManager;
+        MockupInputManager * mockupInputManager;
+
+        AudioManager * audioManager;
+        MockupAudioManager * mockupAudioManager;
+
+        RdMentalMap * mentalMap = RdMentalMap::getMentalMap();
+
+        RdMockupRobotManager * mockupRobotManager;
+        RdRobotManager * robotManager;
 };
 
 //--- Tests ------------------------------------------------------------------------------------------
 TEST_F(InitStateTest, InitStateWorksCorrectly )
 {
-    //-- Register managers to be used:
-    MockupNetworkManager::RegisterManager();
-    RdMockupImageManager::RegisterManager();
-    MockupInputManager::RegisterManager();
-    MockupAudioManager::RegisterManager();
 
-    //-- Create managers
-    RdNetworkManager * networkManager = RdNetworkManager::getNetworkManager("MOCKUP");
-    MockupNetworkManager * mockupNetworkManager = dynamic_cast<MockupNetworkManager *>(networkManager);
-
-    RdImageManager * imageManager = RdImageManager::getImageManager("MOCKUP");
-    RdMockupImageManager * mockupImageManager = dynamic_cast<RdMockupImageManager *>(imageManager);
-
-    RdInputManager * inputManager = RdInputManager::getInputManager("MOCKUP");
-    MockupInputManager * mockupInputManager = dynamic_cast<MockupInputManager *>(inputManager);
-
-    AudioManager * audioManager = AudioManager::getAudioManager("MOCKUP");
-    MockupAudioManager * mockupAudioManager = dynamic_cast<MockupAudioManager *>(audioManager);
-
-    RdMentalMap * mentalMap = RdMentalMap::getMentalMap();
-
-    RdMockupRobotManager * mockupRobotManager = new RdMockupRobotManager(0);
 
     //-- Create fsm with InitState
     StateMachineBuilder builder;
     ASSERT_TRUE(builder.setDirectorType("YARP"));
 
-    int init_state_id = builder.addState(new InitState());
-
-    //-- Delete things
-    RdNetworkManager::destroyNetworkManager();
-    networkManager = NULL;
-    mockupNetworkManager = NULL;
-    RdImageManager::destroyImageManager();
-    imageManager = NULL;
-    mockupImageManager = NULL;
-    RdInputManager::destroyInputManager();
-    AudioManager::destroyAudioManager();
+    int init_state_id = builder.addState(new InitState(networkManager, imageManager, inputManager, mentalMap,
+                                                       robotManager, audioManager));
 
 }
