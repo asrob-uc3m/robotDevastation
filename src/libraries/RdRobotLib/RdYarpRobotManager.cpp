@@ -5,25 +5,25 @@
 namespace rd{
 
 bool RdYarpRobotManager::moveForward(int velocity) {
-    double velocities[] = {2000,1000};
+    double velocities[] = {100,100};
     vel->velocityMove(velocities);
     return true;
 }
 
 bool RdYarpRobotManager::moveBackwards(int velocity) {
-    double velocities[] = {1000,2000};
+    double velocities[] = {-100,-100};
     vel->velocityMove(velocities);
     return true;
 }
 
 bool RdYarpRobotManager::turnLeft(int velocity) {
-    double velocities[] = {1000,1000};
+    double velocities[] = {-100,100};
     vel->velocityMove(velocities);
     return true;
 }
 
 bool RdYarpRobotManager::turnRight(int velocity) {
-    double velocities[] = {2000,2000};
+    double velocities[] = {100,-100};
     vel->velocityMove(velocities);
     return true;
 }
@@ -53,9 +53,9 @@ bool RdYarpRobotManager::connect()  {
 
     std::string launchRobotOptionsStr("(on /");
     launchRobotOptionsStr += robotName;
-    launchRobotOptionsStr += ") (as launcher) (cmd \"sudo launchRd1Yarp --device pwmbot --name /";
+    launchRobotOptionsStr += ") (as launcher) (cmd \"sudo launchRaspiYarp --device TwoPwmMotors --name /";
     launchRobotOptionsStr += robotName;
-    launchRobotOptionsStr += " --gpios 17 27\")";
+    launchRobotOptionsStr += " --gpios 17 27 23 24\")";
     yarp::os::Property launchRobotOptions;
     launchRobotOptions.fromString(launchRobotOptionsStr);
     int robotRet = yarp::os::Run::client(launchRobotOptions);
