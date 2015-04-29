@@ -53,9 +53,9 @@ bool RdYarpRobotManager::connect()  {
 
     std::string launchRobotOptionsStr("(on /");
     launchRobotOptionsStr += robotName;
-    launchRobotOptionsStr += ") (as launcher) (cmd \"sudo launchRaspiYarp --device TwoPwmMotors --name /";
+    launchRobotOptionsStr += ") (as roblauncher) (cmd \"sudo launchRaspiYarp --device OnePwmMotors --name /";
     launchRobotOptionsStr += robotName;
-    launchRobotOptionsStr += " --gpios 17 27 23 24\")";
+    launchRobotOptionsStr += " --gpios 17 27\")";
     yarp::os::Property launchRobotOptions;
     launchRobotOptions.fromString(launchRobotOptionsStr);
     int robotRet = yarp::os::Run::client(launchRobotOptions);
