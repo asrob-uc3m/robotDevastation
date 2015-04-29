@@ -87,7 +87,7 @@ class InitStateTest : public testing::Test
         AudioManager * audioManager;
         MockupAudioManager * mockupAudioManager;
 
-        RdMentalMap * mentalMap = RdMentalMap::getMentalMap();
+        RdMentalMap * mentalMap;
 
         RdMockupRobotManager * mockupRobotManager;
         RdRobotManager * robotManager;
@@ -96,13 +96,53 @@ class InitStateTest : public testing::Test
 //--- Tests ------------------------------------------------------------------------------------------
 TEST_F(InitStateTest, InitStateWorksCorrectly )
 {
-
-
     //-- Create fsm with InitState
     StateMachineBuilder builder;
     ASSERT_TRUE(builder.setDirectorType("YARP"));
 
     int init_state_id = builder.addState(new InitState(networkManager, imageManager, inputManager, mentalMap,
                                                        robotManager, audioManager));
+    int end_state_id = builder.addState(State::getEndState());
+
+    ASSERT_NE(-1, init_state_id);
+    ASSERT_TRUE(builder.addTransition(init_state_id, end_state_id, InitState::LOGIN_SUCCESSFUL));
+    ASSERT_TRUE(builder.setInitialState(init_state_id));
+
+    fsm = builder.buildStateMachine();
+    ASSERT_NE((FiniteStateMachine*)NULL, fsm);
+
+    //-- Start state machine
+    ASSERT_TRUE(fsm->start());
+
+    //-- Check things that should happen in initial state before login
+    ASSERT_FALSE(mockupAudioManager->isStopped());
+    ASSERT_TRUE(mockupAudioManager->isPlaying());
+
+    ASSERT_FALSE(mockupNetworkManager->isStopped());
+    ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
+
+    ASSERT_TRUE(mockupImageManager->isStopped());
+
+    ASSERT_FALSE(mockupInputManager->isStopped());
+
+    ASSERT_FALSE(mockupRobotManager->isStopped());
+    ASSERT_FALSE(mockupRobotManager->isConnected());
+
+    //-- When enter is pressed, the system should log in and go to next state:
+    mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_ENTER));
+
+    //-- Check that it has logged in and it is in the next state (fsm finished)
+    ASSERT_FALSE(mockupAudioManager->isStopped());
+    ASSERT_FALSE(mockupAudioManager->isPlaying());
+
+    ASSERT_FALSE(mockupNetworkManager->isStopped());
+    ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
+
+    ASSERT_FALSE(mockupImageManager->isStopped());
+
+    ASSERT_FALSE(mockupInputManager->isStopped());
+
+    ASSERT_FALSE(mockupRobotManager->isStopped());
+    ASSERT_TRUE(mockupRobotManager->isConnected());
 
 }
