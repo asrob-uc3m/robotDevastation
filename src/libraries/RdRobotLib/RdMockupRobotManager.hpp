@@ -21,7 +21,7 @@ class RdMockupRobotManager : public RdRobotManager
 {
     public:
 
-        RdMockupRobotManager(const int& playerId) : RdRobotManager(playerId) { }
+        RdMockupRobotManager(const std::string& robotName) : RdRobotManager(robotName) { }
 
         //-- Robot movement related functions    
         virtual bool moveForward(int velocity = UNUSED);

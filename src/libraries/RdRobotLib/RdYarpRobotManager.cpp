@@ -5,25 +5,25 @@
 namespace rd{
 
 bool RdYarpRobotManager::moveForward(int velocity) {
-    double velocities[] = {2000,1000};
+    double velocities[] = {100,100};
     vel->velocityMove(velocities);
     return true;
 }
 
 bool RdYarpRobotManager::moveBackwards(int velocity) {
-    double velocities[] = {1000,2000};
+    double velocities[] = {-100,-100};
     vel->velocityMove(velocities);
     return true;
 }
 
 bool RdYarpRobotManager::turnLeft(int velocity) {
-    double velocities[] = {1000,1000};
+    double velocities[] = {-100,100};
     vel->velocityMove(velocities);
     return true;
 }
 
 bool RdYarpRobotManager::turnRight(int velocity) {
-    double velocities[] = {2000,2000};
+    double velocities[] = {100,-100};
     vel->velocityMove(velocities);
     return true;
 }
@@ -51,26 +51,63 @@ bool RdYarpRobotManager::panRight(int velocity) {
         
 bool RdYarpRobotManager::connect()  {
 
-    std::ostringstream local_s;
-    local_s << "/";
-    local_s << playerId;
-    local_s << "/robot";
+    std::string launchRobotOptionsStr("(on /");
+    launchRobotOptionsStr += robotName;
+    launchRobotOptionsStr += ") (as launcher) (cmd \"sudo launchRaspiYarp --device TwoPwmMotors --name /";
+    launchRobotOptionsStr += robotName;
+    launchRobotOptionsStr += " --gpios 17 27 23 24\")";
+    yarp::os::Property launchRobotOptions;
+    launchRobotOptions.fromString(launchRobotOptionsStr);
+    int robotRet = yarp::os::Run::client(launchRobotOptions);
+    if (robotRet != 0)
+    {
+        RD_ERROR("Could not start robot launch on robot side.\n");
+        return false;
+    }
+    RD_SUCCESS("Started robot launch on robot side.\n");
 
-    std::ostringstream remote_s;
-    remote_s << "/";
-    remote_s << playerId;
-    remote_s << "/rd1";
+    std::string launchCameraOptionsStr("(on /");
+    launchCameraOptionsStr += robotName;
+    launchCameraOptionsStr += ") (as launcher) (cmd \"yarpdev --device opencv_grabber --name /";
+    launchCameraOptionsStr += robotName;
+    launchCameraOptionsStr += "/img:o\")";
+    yarp::os::Property launchCameraOptions;
+    launchCameraOptions.fromString(launchCameraOptionsStr);
+    int cameraRet = yarp::os::Run::client(launchCameraOptions);
+    if (cameraRet != 0)
+    {
+        RD_ERROR("Could not start camera launch on robot side.\n");
+        return false;
+    }
+    RD_SUCCESS("Started camera launch on robot side.\n");
+
+    std::string local_s("/robotDevastation/");
+    local_s += robotName;
+
+    std::string remote_s("/");
+    remote_s += robotName;
 
     yarp::os::Property robotOptions;
     robotOptions.put("device","remote_controlboard");
-    robotOptions.put("local", local_s.str().c_str() );
-    robotOptions.put("remote", remote_s.str().c_str() );
-    robotDevice.open(robotOptions);
+    robotOptions.put("local", local_s );
+    robotOptions.put("remote", remote_s );
 
-    if( ! robotDevice.isValid() ) {
-        RD_ERROR("Could not connect to remote robot.\n");
+    int tries = 0;
+    while(tries++ < 10)
+    {
+        if( !! robotDevice.isValid() )
+            break;
+        RD_DEBUG("Wait to connect to remote robot, try %d...\n",tries);
+        yarp::os::Time::delay(0.5);
+        robotDevice.open(robotOptions);
+    }
+
+    if (tries == 11)
+    {
+        RD_ERROR("Timeout on connect to remote robot!\n");
         return false;
     }
+
     RD_SUCCESS("Connected to remote robot.\n");
 
     if(! robotDevice.view(vel) )

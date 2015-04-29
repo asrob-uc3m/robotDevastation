@@ -2,7 +2,8 @@
 
 #include "RdMockupRobotManager.hpp"
 
-namespace rd{
+namespace rd
+{
 
 bool RdMockupRobotManager::moveForward(int velocity) {
     RD_DEBUG("(%d)\n",velocity)
