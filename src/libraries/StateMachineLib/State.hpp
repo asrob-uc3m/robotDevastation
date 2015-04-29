@@ -50,6 +50,8 @@ class State
         //! @brief Returns the string that identifies the state
         std::string getStateId();
 
+        static State *getEndState();
+
    protected:
         //! @variable Name of the current state
         std::string state_id;

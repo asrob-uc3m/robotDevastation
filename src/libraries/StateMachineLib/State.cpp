@@ -15,3 +15,8 @@ std::string rd::State::getStateId()
 {
     return state_id;
 }
+
+rd::State *rd::State::getEndState()
+{
+    return (rd::State *)NULL;
+}

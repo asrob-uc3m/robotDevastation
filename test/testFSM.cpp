@@ -67,6 +67,7 @@ class FSMTest : public testing::Test
             stateDirector1 = new YarpStateDirector(state1);
             stateDirector2 = new YarpStateDirector(state2);
             stateDirector3 = new YarpStateDirector(state3);
+            nullStateDirector = new YarpStateDirector(State::getEndState());
 
             //-- Connect states to yarp
             ASSERT_TRUE(yarp::os::Network::connect("/testState/1/status:o", debug_port_name + "/status:i" ));
@@ -93,10 +94,12 @@ class FSMTest : public testing::Test
             delete stateDirector1;
             delete stateDirector2;
             delete stateDirector3;
+            delete nullStateDirector;
 
             stateDirector1 = NULL;
             stateDirector2 = NULL;
             stateDirector3 = NULL;
+            nullStateDirector = NULL;
         }
 
     void initPorts()
@@ -120,7 +123,8 @@ class FSMTest : public testing::Test
 
     protected:
         State *state1, *state2, *state3;
-        StateDirector *stateDirector1, *stateDirector2, *stateDirector3;
+        StateDirector *stateDirector1, *stateDirector2, *stateDirector3,
+        *nullStateDirector;
 
         static const std::string debug_port_name;
 
@@ -170,8 +174,7 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
     ASSERT_TRUE(stateDirector2->isActive());
     ASSERT_FALSE(stateDirector3->isActive());
 
-    //-- Check that the state 1 passed through setup and init states:
-
+    //-- Check that the state 2 passed through setup and init states:
     debugMsg = debugPort.read();
     EXPECT_STREQ("setup", debugMsg->get(0).asString().c_str());
 
@@ -203,6 +206,39 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
     //-- Check that the state 2 passed through cleanup
     debugMsg = debugPort.read();
     EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
+}
+
+TEST_F(FSMTest, StateMachineStopsAtNULL )
+{
+    RD_INFO("Test Starts!\nAssigning transitions...\n");
+
+    //-- Setup state machine
+
+    stateDirector1->addTransition(nullStateDirector, 2);
+
+    //-- Start state machine
+    ASSERT_TRUE(stateDirector1->Start());
+
+    //-- Check that init state is active
+    ASSERT_TRUE(stateDirector1->isActive());
+
+    //-- Check that the init state passed through setup and init states:
+    yarp::os::Bottle *debugMsg = debugPort.read();
+    EXPECT_STREQ("setup", debugMsg->get(0).asString().c_str());
+
+    debugMsg = debugPort.read();
+    EXPECT_STREQ("loop", debugMsg->get(0).asString().c_str());
+
+    //-- Send command to pass to state  null (and therefore finish)
+    yarp::os::Bottle state2Cmd;
+    state2Cmd.addInt(2);
+    commandPort.write(state2Cmd);
+
+    debugMsg = debugPort.read();
+    EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
+
+    //-- Check that state 1 is not active
+    ASSERT_FALSE(stateDirector1->isActive());
 }
 
 //--- Main -------------------------------------------------------------------------------------------

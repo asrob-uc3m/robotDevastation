@@ -10,6 +10,12 @@ rd::YarpStateDirector::YarpStateDirector(rd::State *state) : StateDirector(state
 
 bool rd::YarpStateDirector::Start()
 {
+    if (state == NULL)
+    {
+        RD_DEBUG("Null state. Exiting...\n");
+        return this->Stop();
+    }
+
     RD_DEBUG("Starting StateDirector for id %s\n", state->getStateId().c_str());
     active = true;
     if (!state->setup())
@@ -23,14 +29,16 @@ bool rd::YarpStateDirector::Start()
 
 bool rd::YarpStateDirector::Stop()
 {
-    RD_DEBUG("Stopping StateDirector for id %s\n", state->getStateId().c_str());
+    if (state != NULL)
+        RD_DEBUG("Stopping StateDirector for id %s\n", state->getStateId().c_str());
 
     active = false;
 
     yarp::os::RateThread::askToStop();
     yarp::os::RateThread::stop();
 
-    state->cleanup();
+    if (state != NULL)
+        state->cleanup();
 
     return true;
 }
