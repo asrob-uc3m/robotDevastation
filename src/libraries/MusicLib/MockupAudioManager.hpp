@@ -42,6 +42,7 @@ class MockupAudioManager : public AudioManager,
         //---------------- Manager Stuff ----------------------------------------------------------------------//
         virtual bool start();
         virtual bool stop();
+        virtual bool isStopped();
 
         /**
          * @brief Register this manager in the RdImageManager registry so that can be used
@@ -85,6 +86,7 @@ class MockupAudioManager : public AudioManager,
         yarp::os::Mutex loop_times_mutex;
         std::map<std::string, int> loop_times;
 
+        bool stopped;
 };
 
 }

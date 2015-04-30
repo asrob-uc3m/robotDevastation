@@ -142,6 +142,11 @@ bool rd::MockupAudioManager::stop()
     return true;
 }
 
+bool rd::MockupAudioManager::isStopped()
+{
+    return stopped;
+}
+
 bool rd::MockupAudioManager::RegisterManager()
 {
     if (uniqueInstance == NULL)

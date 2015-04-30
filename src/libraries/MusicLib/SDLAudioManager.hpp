@@ -46,6 +46,7 @@ class SDLAudioManager : public AudioManager
         //---------------- Manager Stuff ----------------------------------------------------------------------//
         virtual bool start();
         virtual bool stop();
+        virtual bool isStopped();
 
         /**
          * @brief Register this manager in the RdImageManager registry so that can be used
@@ -79,6 +80,8 @@ class SDLAudioManager : public AudioManager
 
         //! \brief Dictionary for the music tracks
         std::map<std::string, Mix_Music*> music_sounds;
+
+        bool stopped;
 
 };
 

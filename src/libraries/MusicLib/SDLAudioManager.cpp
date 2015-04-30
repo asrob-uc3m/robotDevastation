@@ -12,6 +12,8 @@ rd::SDLAudioManager::SDLAudioManager()
 
     if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096)==-1)
         RD_ERROR("AudioMixer could not be opened!\n");
+
+    stopped = false;
 }
 
 
@@ -88,13 +90,20 @@ bool rd::SDLAudioManager::stopMusic()
 
 bool rd::SDLAudioManager::start()
 {
+    stopped = false;
     return true;
 }
 
 bool rd::SDLAudioManager::stop()
 {
     Mix_CloseAudio();
+    stopped = true;
     return true;
+}
+
+bool rd::SDLAudioManager::isStopped()
+{
+    return stopped;
 }
 
 bool rd::SDLAudioManager::RegisterManager()
