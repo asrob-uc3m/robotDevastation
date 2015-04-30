@@ -43,6 +43,7 @@ class InitState : public State, public ManagerHub
         //! @brief Returns the internal variable value as condition evaluation result
         virtual int evaluateConditions();
 
+        static const int LOGIN_SUCCESSFUL;
     protected:
 
 };

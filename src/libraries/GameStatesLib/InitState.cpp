@@ -1,5 +1,7 @@
 #include "InitState.hpp"
 
+const int rd::InitState::LOGIN_SUCCESSFUL = 1;
+
 rd::InitState::InitState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
                          rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
                          rd::RdRobotManager *robotManager, AudioManager *audioManager) :

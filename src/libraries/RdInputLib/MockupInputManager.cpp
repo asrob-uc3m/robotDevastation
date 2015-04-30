@@ -4,7 +4,7 @@
 rd::MockupInputManager * rd::MockupInputManager::uniqueInstance = NULL;
 const std::string rd::MockupInputManager::id = "MOCKUP";
 
-bool rd::MockupInputManager::sendKeyPress(rd::RdKey &key)
+bool rd::MockupInputManager::sendKeyPress(RdKey key)
 {
     if (stopped)
         return false;

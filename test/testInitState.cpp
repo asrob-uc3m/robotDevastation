@@ -123,7 +123,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
 
     //-- Check things that should happen in initial state before login (loop):
     ASSERT_FALSE(mockupAudioManager->isStopped());
-    ASSERT_TRUE(mockupAudioManager->isPlaying());
+    ASSERT_TRUE(mockupAudioManager->isPlaying("RD_THEME"));
 
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
@@ -140,7 +140,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
 
     //-- Check that it has logged in and it is in the next state (cleanup):
     ASSERT_FALSE(mockupAudioManager->isStopped());
-    ASSERT_FALSE(mockupAudioManager->isPlaying());
+    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_THEME"));
 
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
