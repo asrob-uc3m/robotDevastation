@@ -7,6 +7,7 @@ const std::string rd::MockupAudioManager::id = "MOCKUP";
 
 rd::MockupAudioManager::MockupAudioManager() : yarp::os::RateThread(UPDATE_PERIOD)
 {
+    stopped = true;
 }
 
 void rd::MockupAudioManager::run()
@@ -131,6 +132,7 @@ bool rd::MockupAudioManager::stopMusic()
 
 bool rd::MockupAudioManager::start()
 {
+    stopped = false;
     return yarp::os::RateThread::start();
 }
 
@@ -139,6 +141,7 @@ bool rd::MockupAudioManager::stop()
     durations_mutex.unlock();
     loop_times_mutex.unlock();
     yarp::os::RateThread::askToStop();
+    stopped = true;
     return true;
 }
 

@@ -13,7 +13,7 @@ rd::SDLAudioManager::SDLAudioManager()
     if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096)==-1)
         RD_ERROR("AudioMixer could not be opened!\n");
 
-    stopped = false;
+    stopped = true;
 }
 
 
