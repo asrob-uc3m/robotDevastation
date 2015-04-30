@@ -111,10 +111,17 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     fsm = builder.buildStateMachine();
     ASSERT_NE((FiniteStateMachine*)NULL, fsm);
 
+    //-- Check things that should happen before fsm starts (before setup):
+    ASSERT_TRUE(mockupAudioManager->isStopped());
+    ASSERT_TRUE(mockupNetworkManager->isStopped());
+    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_TRUE(mockupInputManager->isStopped());
+    ASSERT_TRUE(mockupRobotManager->isStopped());
+
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
 
-    //-- Check things that should happen in initial state before login
+    //-- Check things that should happen in initial state before login (loop):
     ASSERT_FALSE(mockupAudioManager->isStopped());
     ASSERT_TRUE(mockupAudioManager->isPlaying());
 
@@ -131,7 +138,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     //-- When enter is pressed, the system should log in and go to next state:
     mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_ENTER));
 
-    //-- Check that it has logged in and it is in the next state (fsm finished)
+    //-- Check that it has logged in and it is in the next state (cleanup):
     ASSERT_FALSE(mockupAudioManager->isStopped());
     ASSERT_FALSE(mockupAudioManager->isPlaying());
 
