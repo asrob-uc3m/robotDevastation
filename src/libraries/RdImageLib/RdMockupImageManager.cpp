@@ -12,6 +12,7 @@ bool rd::RdMockupImageManager::start()
     image.resize(640,480);
     yarp::sig::PixelRgb blue(0,0,255);
     yarp::sig::draw::addCircle(image,blue,320,240,10);
+    stopped = false;
     return true;
 
 }
@@ -19,7 +20,13 @@ bool rd::RdMockupImageManager::start()
 bool rd::RdMockupImageManager::stop()
 {
     RD_DEBUG("\n");
+    stopped = true;
     return true;
+}
+
+bool rd::RdMockupImageManager::isStopped()
+{
+    return stopped;
 }
 
 bool rd::RdMockupImageManager::configure(std::string parameter, std::string value)
@@ -59,5 +66,5 @@ void rd::RdMockupImageManager::run()
 
 rd::RdMockupImageManager::RdMockupImageManager()
 {
-
+    stopped = true;
 }

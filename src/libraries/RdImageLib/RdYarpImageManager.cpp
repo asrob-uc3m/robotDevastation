@@ -24,6 +24,8 @@ bool rd::RdYarpImageManager::start()
 	}
 
     RD_SUCCESS("Connected to robot camera.\n");
+
+    stopped = false;
     return true;
 
 }
@@ -34,7 +36,14 @@ bool rd::RdYarpImageManager::stop()
     imagePort.interrupt();
     imagePort.close();
 
+    stopped = true;
+
     return true;
+}
+
+bool rd::RdYarpImageManager::isStopped()
+{
+    return stopped;
 }
 
 bool rd::RdYarpImageManager::configure(std::string parameter, std::string value)
@@ -92,5 +101,5 @@ void rd::RdYarpImageManager::onRead(rd::RdImage &image)
 
 rd::RdYarpImageManager::RdYarpImageManager()
 {
-
+    stopped = true;
 }

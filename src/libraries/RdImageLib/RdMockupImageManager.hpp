@@ -40,6 +40,7 @@ class RdMockupImageManager : public RdImageManager,
     public:
         virtual bool start();
         virtual bool stop();
+        virtual bool isStopped();
         virtual bool configure(std::string parameter, std::string value);
         virtual RdImage getImage();
 
@@ -78,6 +79,7 @@ class RdMockupImageManager : public RdImageManager,
         //! @brief Last image received
         RdImage image;
 
+        bool stopped;
 };
 
 

@@ -39,6 +39,7 @@ class RdYarpImageManager : public RdImageManager,
     public:
         virtual bool start();
         virtual bool stop();
+        virtual bool isStopped();
         virtual bool configure(std::string parameter, std::string value);
         virtual RdImage getImage();
 
@@ -85,6 +86,8 @@ class RdYarpImageManager : public RdImageManager,
 
         //! @brief Name of the camera (remote) yarp port
         std::string remote_port_name;
+
+        bool stopped;
 };
 
 

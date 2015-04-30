@@ -77,6 +77,8 @@ class RdImageManager
         //! @brief Stop capturing images
         virtual bool stop() = 0;
 
+        //! @brief True if the manager is not active
+        virtual bool isStopped() = 0;
 
         //------------------------------- Read image ------------------------------------------------------------------//
         //! @brief Return the last received image
