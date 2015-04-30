@@ -127,7 +127,7 @@ bool rd::MockupAudioManager::stopMusic()
     durations_mutex.unlock();
     loop_times_mutex.unlock();
 
-    return false;
+    return true;
 }
 
 bool rd::MockupAudioManager::start()
