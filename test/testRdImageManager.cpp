@@ -18,8 +18,11 @@ using namespace rd;
 class BasicImageManager : public RdImageManager
 {
     public:
-        virtual bool start() {}
-        virtual bool stop() {}
+        BasicImageManager() {stopped = true;}
+        virtual bool start() {stopped = false;}
+        virtual bool stop() {stopped = true;}
+        virtual bool isStopped() {return stopped;}
+
         virtual RdImage getImage()
         {
             return RdImage();
@@ -50,6 +53,8 @@ class BasicImageManager : public RdImageManager
     private:
         //-- Store a reference to this manager (unique instance)
         static BasicImageManager * uniqueInstance;
+
+        bool stopped;
 };
 
 

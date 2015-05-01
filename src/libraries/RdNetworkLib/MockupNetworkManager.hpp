@@ -27,7 +27,7 @@ namespace rd{
  *
  */
 
-class MockupNetworkManager : RdNetworkManager
+class MockupNetworkManager : public RdNetworkManager
 {
     public:
         //-- Creation and configuration
