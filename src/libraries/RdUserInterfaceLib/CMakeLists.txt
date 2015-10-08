@@ -13,7 +13,7 @@ include_directories(${SDL_INCLUDE_DIR})
 include_directories(${SDL_TTF_INCLUDE_DIRS} ${SDLTTF_INCLUDE_DIR}) #SDLTTF_INCLUDE_DIR older
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdGameScreen.cpp)
+add_library(${KEYWORD} RdGameScreen.cpp RdScreen.cpp InitScreen.cpp)
 target_link_libraries(${KEYWORD} ${SDL_LIBRARY} ${SDL_IMAGE_LIBRARIES} ${SDL_TTF_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
