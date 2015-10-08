@@ -35,7 +35,7 @@ include_directories(${RD_INCLUDE_DIRS})
 # Set up our main executable.
 if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES} ${SDL_LIBRARY} ${SDL_IMAGE_LIBRARIES})
+  target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES} ${SDL_LIBRARY} ${SDL_IMAGE_LIBRARY})
   install(TARGETS ${KEYWORD} DESTINATION bin)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
