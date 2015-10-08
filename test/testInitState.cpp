@@ -15,6 +15,7 @@
 #include "MockupAudioManager.hpp"
 
 #include <yarp/os/Network.h>
+#include <yarp/os/Time.h>
 
 using namespace rd;
 
@@ -54,6 +55,7 @@ class InitStateTest : public testing::Test
             mockupAudioManager = dynamic_cast<MockupAudioManager *>(audioManager);
             ASSERT_NE((AudioManager*) NULL, audioManager);
             ASSERT_NE((MockupAudioManager*) NULL, mockupAudioManager);
+            mockupAudioManager->load("RD_THEME","RD_THEME", AudioManager::MUSIC);
 
             mentalMap = RdMentalMap::getMentalMap();
             ASSERT_NE((RdMentalMap*) NULL, mentalMap);
@@ -137,6 +139,8 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_TRUE(fsm->start());
 
     //-- Check things that should happen in initial state before login (loop):
+
+    //yarp::os::Time::delay(1);
     ASSERT_FALSE(mockupAudioManager->isStopped());
     ASSERT_TRUE(mockupAudioManager->isPlaying("RD_THEME"));
 
@@ -152,6 +156,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
 
     //-- When enter is pressed, the system should log in and go to next state:
     mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_ENTER));
+    yarp::os::Time::delay(0.5);
 
     //-- Check that it has logged in and it is in the next state (cleanup):
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -160,7 +165,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
 
-    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_TRUE(mockupImageManager->isStopped());
 
     ASSERT_FALSE(mockupInputManager->isStopped());
 
