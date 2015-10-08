@@ -4,8 +4,11 @@
 #define __INIT_STATE_HPP__
 
 #include "State.hpp"
+#include "StateDirector.hpp"
 #include "RdUtils.hpp"
 #include "Hub.hpp"
+#include "RdYarpNetworkManager.hpp"
+#include "InitScreen.hpp"
 
 #include <string>
 #include <sstream>
@@ -28,7 +31,7 @@ namespace rd{
 * starts the game
 *  - It also plays music (important)
 */
-class InitState : public State, public ManagerHub
+class InitState : public State, public ManagerHub, public RdInputEventListener
 {
     public:
         //InitState();
@@ -44,7 +47,16 @@ class InitState : public State, public ManagerHub
         virtual int evaluateConditions();
 
         static const int LOGIN_SUCCESSFUL;
+
+        //-- RdInputEventListener interface:
+        virtual bool onKeyDown(RdKey k);
+        virtual bool onKeyUp(RdKey k);
+
     protected:
+        InitScreen screen;
+        bool login;
+        bool logged_in;
+
 
 };
 

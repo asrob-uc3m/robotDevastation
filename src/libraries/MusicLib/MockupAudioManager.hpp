@@ -61,7 +61,7 @@ class MockupAudioManager : public AudioManager,
         static const int AUDIO_DURATION = 30;
 
         //! @brief Thread update period (ms)
-        static const int UPDATE_PERIOD = 1000;
+        static const int UPDATE_PERIOD = 100;
 
     private:
         /**

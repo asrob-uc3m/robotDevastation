@@ -8,7 +8,7 @@ include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} InitState.cpp)
 
-target_link_libraries(${KEYWORD} StateMachineLib RdUtilsLib)
+target_link_libraries(${KEYWORD} ${RD_LIBRARIES} RdUserInterfaceLib StateMachineLib RdUtilsLib)
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...

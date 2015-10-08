@@ -6,6 +6,7 @@ set(KEYWORD "RdUserInterfaceLib")
 
 find_package(YARP REQUIRED)
 find_package(SDL REQUIRED)
+find_package(SDL REQUIRED)
 find_package(SDL_ttf REQUIRED)
 
 include_directories(${YARP_INCLUDE_DIRS})
@@ -13,8 +14,8 @@ include_directories(${SDL_INCLUDE_DIR})
 include_directories(${SDL_TTF_INCLUDE_DIRS} ${SDLTTF_INCLUDE_DIR}) #SDLTTF_INCLUDE_DIR older
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdGameScreen.cpp)
-target_link_libraries(${KEYWORD} ${SDL_LIBRARY} ${SDL_IMAGE_LIBRARIES} ${SDL_TTF_LIBRARIES})
+add_library(${KEYWORD} RdGameScreen.cpp RdScreen.cpp InitScreen.cpp)
+target_link_libraries(${KEYWORD} ${SDL_LIBRARY} ${SDL_IMAGE_LIBRARY} ${SDL_TTF_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
