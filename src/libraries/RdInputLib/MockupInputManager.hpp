@@ -39,6 +39,9 @@ class MockupInputManager : public RdInputManager
         virtual bool stop();
         virtual bool isStopped();
 
+        //------------------------------ Listeners---------------------------------------------------------------------//
+        int getNumListeners();
+
    private:
         //! @brief Reference to this manager (unique instance)
         static MockupInputManager * uniqueInstance;

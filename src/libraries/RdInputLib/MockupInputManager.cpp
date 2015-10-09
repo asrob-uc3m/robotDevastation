@@ -49,6 +49,11 @@ bool rd::MockupInputManager::isStopped()
     return stopped;
 }
 
+int rd::MockupInputManager::getNumListeners()
+{
+    return listeners.size();
+}
+
 
 bool rd::MockupInputManager::start()
 {
