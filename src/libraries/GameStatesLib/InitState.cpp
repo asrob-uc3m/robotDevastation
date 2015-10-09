@@ -53,6 +53,7 @@ bool rd::InitState::cleanup()
 {
     RD_DEBUG("Cleanup!!\n");
     audioManager->stopMusic();
+    inputManager->removeInputEventListeners();
 
     return true;
 }
