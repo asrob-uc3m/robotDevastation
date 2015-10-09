@@ -150,6 +150,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_TRUE(mockupImageManager->isStopped());
 
     ASSERT_FALSE(mockupInputManager->isStopped());
+    ASSERT_EQ(1, mockupInputManager->getNumListeners());
 
 //    ASSERT_FALSE(mockupRobotManager->isStopped());
 //    ASSERT_FALSE(mockupRobotManager->isConnected());
@@ -168,6 +169,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_TRUE(mockupImageManager->isStopped());
 
     ASSERT_FALSE(mockupInputManager->isStopped());
+    ASSERT_EQ(0, mockupInputManager->getNumListeners());
 
 //    ASSERT_FALSE(mockupRobotManager->isStopped());
 //    ASSERT_TRUE(mockupRobotManager->isConnected());
