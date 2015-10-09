@@ -66,5 +66,8 @@ target_link_libraries(testFSMBuilder ${RD_LIBRARIES} StateMachineLib gtest gtest
 add_executable(testInitState testInitState.cpp)
 target_link_libraries(testInitState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
 
+add_executable(testGameState testGameState.cpp)
+target_link_libraries(testGameState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
+
 add_executable(testDeadState testDeadState.cpp)
 target_link_libraries(testDeadState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
