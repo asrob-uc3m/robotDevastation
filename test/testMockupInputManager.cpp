@@ -35,6 +35,7 @@ TEST_F(MockupInputManagerTest, SingleControlKeyPressSentAndReceivedCorrectly)
     MockupInputEventListener listener;
     RdInputEventListener * plistener = (RdInputEventListener *) &listener;
     ASSERT_TRUE(((RdInputManager*)inputManager)->addInputEventListener(plistener));
+    ASSERT_EQ(1, inputManager->getNumListeners());
 
     ASSERT_TRUE(inputManager->start());
     ASSERT_FALSE(inputManager->isStopped());
@@ -58,6 +59,7 @@ TEST_F(MockupInputManagerTest, SingleControlKeyPressSentAndReceivedCorrectly)
 
     //-- Cleanup
     ASSERT_TRUE(inputManager->removeInputEventListeners());
+    ASSERT_EQ(0, inputManager->getNumListeners());
     ASSERT_TRUE(inputManager->stop());
     ASSERT_TRUE(inputManager->isStopped());
 }
