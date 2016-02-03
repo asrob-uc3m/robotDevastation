@@ -14,6 +14,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         printf("\t--robotName string\n");
         printf("RobotDevastation optional parameters:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
+        printf("\t--mockupRobotManager  //-- Fake robot motors\n");
+        printf("\t--mockupImageManager  //-- Fake robot camera\n");
         ::exit(0);
     }
 
