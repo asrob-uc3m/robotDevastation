@@ -14,7 +14,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         printf("\t--robotName string\n");
         printf("RobotDevastation optional parameters:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        // Do not exit: let last layer exit so we get help from the complete chain.
+        ::exit(0);
     }
 
     //-- Get player data
