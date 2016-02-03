@@ -75,6 +75,8 @@ bool RdYarpRobotManager::connect()  {
     launchCameraOptionsStr += "/img:o\")";
     yarp::os::Property launchCameraOptions;
     launchCameraOptions.fromString(launchCameraOptionsStr);
+    RD_INFO("Attempting to start camera launch on robot side...\n");
+    RD_INFO("If you prefer a fake robot with a fake camera, launch 'robotDevastation --mockupRobotManager --mockupImageManager'\n");
     int cameraRet = yarp::os::Run::client(launchCameraOptions);
     if (cameraRet != 0)
     {
