@@ -58,6 +58,8 @@ bool RdYarpRobotManager::connect()  {
     launchRobotOptionsStr += " --gpios 17 27\")";
     yarp::os::Property launchRobotOptions;
     launchRobotOptions.fromString(launchRobotOptionsStr);
+    RD_INFO("Attempting to start robot launch on robot side...\n");
+    RD_INFO("If you prefer a fake robot with a fake camera, launch 'robotDevastation --mockupRobotManager --mockupImageManager'\n");
     int robotRet = yarp::os::Run::client(launchRobotOptions);
     if (robotRet != 0)
     {
