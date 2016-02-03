@@ -7,42 +7,46 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Show help
     //printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
-        printf("RobotDevastation options:\n");
-        printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
+        printf("RobotDevastation mandatory parameters:\n");
         printf("\t--id integer\n");
         printf("\t--name string\n");
         printf("\t--team integer\n");
         printf("\t--robotName string\n");
+        printf("RobotDevastation optional parameters:\n");
+        printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
-    printf("RobotDevastation using no additional special options.\n");
 
     //-- Get player data
     //-----------------------------------------------------------------------------
     if( ! rf.check("id") )
     {
-        RD_ERROR("No id!\n");
+        RD_ERROR("No id! Please invoke with this parameter, as in 'robotDevastation --id integer --name string --team integer --robotName string'.\n");
+        RD_ERROR("Type 'robotDevastation --help' for help.\n");
         return false;
     }
     RD_INFO("id: %d\n",rf.find("id").asInt());
 
     if( ! rf.check("name") )
     {
-        RD_ERROR("No name!\n");
+        RD_ERROR("No name! Please invoke with this parameter, as in 'robotDevastation --id integer --name string --team integer --robotName string'.\n");
+        RD_ERROR("Type 'robotDevastation --help' for help.\n");
         return false;
     }
     RD_INFO("name: %s\n",rf.find("name").asString().c_str());
 
     if( ! rf.check("team") )
     {
-        RD_ERROR("No team!\n");
+        RD_ERROR("No team! Please invoke with this parameter, as in 'robotDevastation --id integer --name string --team integer --robotName string'.\n");
+        RD_ERROR("Type 'robotDevastation --help' for help.\n");
         return false;
     }
     RD_INFO("team: %d\n",rf.find("team").asInt());
 
     if( ! rf.check("robotName") )
     {
-        RD_ERROR("No robotName!\n");
+        RD_ERROR("No robotName! Please invoke with this parameter, as in 'robotDevastation --id integer --name string --team integer --robotName string'.\n");
+        RD_ERROR("Type 'robotDevastation --help' for help.\n");
         return false;
     }
     RD_INFO("robotName: %s\n",rf.find("robotName").asString().c_str());
