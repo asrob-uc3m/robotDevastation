@@ -12,7 +12,7 @@ add_executable(testHUD testHUD.cpp)
 target_link_libraries(testHUD ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
 
 add_executable(testInitScreen testInitScreen.cpp)
-target_link_libraries(testInitScreen ${RD_LIBRARIES} RdUserInterfaceLib SDL SDL_image SDL_ttf gtest gtest_main)
+target_link_libraries(testInitScreen ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
 
 # Audio manager related
 add_executable(testMockupAudioManager testMockupAudioManager.cpp)

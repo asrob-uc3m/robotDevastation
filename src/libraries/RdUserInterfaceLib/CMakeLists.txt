@@ -6,7 +6,7 @@ set(KEYWORD "RdUserInterfaceLib")
 
 find_package(YARP REQUIRED)
 find_package(SDL REQUIRED)
-find_package(SDL REQUIRED)
+find_package(SDL_image REQUIRED)
 find_package(SDL_ttf REQUIRED)
 
 include_directories(${YARP_INCLUDE_DIRS})
