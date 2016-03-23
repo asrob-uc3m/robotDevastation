@@ -50,6 +50,9 @@ rd::RdSDLInputManager::RdSDLInputManager() : RateThread(UPDATE_RATE_MS)
     //-- Init SDL
     if (SDL_WasInit( SDL_INIT_EVENTTHREAD) == 0)
         SDL_Init(SDL_INIT_EVENTTHREAD);
+
+    //-- Init X11 threads
+    XInitThreads();
 }
 
 bool rd::RdSDLInputManager::update()

@@ -5,6 +5,7 @@
 #include "RdMentalMap.hpp"
 #include "RdTarget.hpp"
 #include "RdPlayer.hpp"
+#include "SDLAudioManager.hpp"
 
 using namespace rd;
 
@@ -13,6 +14,7 @@ class RdMentalMapTest : public testing::Test
     public:
         virtual void SetUp()
         {
+            SDLAudioManager::RegisterManager();
             mentalMap = RdMentalMap::getMentalMap();
 
             player1 = new RdPlayer(0, "Myself", 100, 100, 0, 0);
@@ -26,6 +28,7 @@ class RdMentalMapTest : public testing::Test
         virtual void TearDown()
         {
             RdMentalMap::destroyMentalMap();
+            SDLAudioManager::destroyAudioManager();
 
             delete player1; player1 = NULL;
             delete player2; player2 = NULL;

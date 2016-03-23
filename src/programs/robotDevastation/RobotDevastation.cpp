@@ -53,15 +53,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     }
     RD_INFO("robotName: %s\n",rf.find("robotName").asString().c_str());
 
-    //-- Init mentalMap
-    mentalMap = RdMentalMap::getMentalMap();
-    mentalMap->configure( rf.find("id").asInt() );
 
-    std::vector< RdPlayer > players;
-    players.push_back( RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0) );
-    mentalMap->updatePlayers(players);
-
-    mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
 
     //-- Init input manager
     RdSDLInputManager::RegisterManager();
@@ -92,13 +84,6 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         return false;
     }
 
-    //-- Init network manager
-    RdYarpNetworkManager::RegisterManager();
-    networkManager = RdYarpNetworkManager::getNetworkManager(RdYarpNetworkManager::id);
-    networkManager->addNetworkEventListener(mentalMap);
-    mentalMap->addMentalMapEventListener((RdYarpNetworkManager *)networkManager);
-    networkManager->login(mentalMap->getMyself());
-
     //-- Init image manager
     if( rf.check("mockupImageManager") ) {
         RdMockupImageManager::RegisterManager();
@@ -122,6 +107,23 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     imageManager->configure("local_img_port", localCameraPortName.str() ); //-- Name given by me
     if( ! imageManager->start() )
         return false;
+
+    //-- Init mentalMap
+    mentalMap = RdMentalMap::getMentalMap();
+    mentalMap->configure( rf.find("id").asInt() );
+
+    std::vector< RdPlayer > players;
+    players.push_back( RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0) );
+    mentalMap->updatePlayers(players);
+
+    mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
+
+    //-- Init network manager
+    RdYarpNetworkManager::RegisterManager();
+    networkManager = RdYarpNetworkManager::getNetworkManager(RdYarpNetworkManager::id);
+    networkManager->addNetworkEventListener(mentalMap);
+    mentalMap->addMentalMapEventListener((RdYarpNetworkManager *)networkManager);
+    networkManager->login(mentalMap->getMyself());
 
     //-- Init output thread
     rateThreadOutput.init(rf);

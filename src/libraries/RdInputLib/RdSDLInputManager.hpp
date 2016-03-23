@@ -4,6 +4,7 @@
 #define __RD_SDL_INPUT_MANAGER_HPP__
 
 #include <SDL/SDL.h>
+#include <X11/Xlib.h>
 #include <yarp/os/RateThread.h>
 
 #include "RdInputManager.hpp"

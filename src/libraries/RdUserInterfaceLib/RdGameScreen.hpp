@@ -5,6 +5,7 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
+#include <X11/Xlib.h>
 #include <cstdlib> // For some useful functions such as atexit :)
 #include <iostream>
 #include <string>
