@@ -34,7 +34,7 @@ class RdMockupImageManagerTest : public testing::Test
 
 };
 
-const std::string RdMockupImageManagerTest::image_filename = "~/frame000.ppm";
+const std::string RdMockupImageManagerTest::image_filename = "/home/def/frame000.ppm";
 
 //-- Class for the setup of the enviroment for all the tests
 //----------------------------------------------------------------------------------------
@@ -82,30 +82,8 @@ TEST_F(RdMockupImageManagerTest, RdMockupImageManagerNotificationWorks)
     listener.resetImagesArrived();
     ASSERT_TRUE(imageManager->start());
 
-    //-- Wait for an image to arrive
-    usleep(1e6);
-
-    //-- Check that an image arrived
-    EXPECT_LE(1, listener.getImagesArrived());
-
-    //-- Dettach the listener
-    EXPECT_TRUE(imageManager->removeImageEventListeners());
-}
-
-TEST_F(RdMockupImageManagerTest, RdMockupImageManagerReadsImage)
-{
-    //-- Create a mockup listener
-    RdMockupImageEventListener listener;
-
-    //-- Add the listener to the manager
-    ASSERT_TRUE(imageManager->addImageEventListener(&listener));
-
-    //-- Start the imageManager
-    listener.resetImagesArrived();
-    ASSERT_TRUE(imageManager->start());
-
     //-- Check that an image didn't arrive
-    EXPECT_LE(0, listener.getImagesArrived());
+    EXPECT_EQ(0, listener.getImagesArrived());
 
     //-- Load test image
     RdImage test_image;
@@ -115,7 +93,7 @@ TEST_F(RdMockupImageManagerTest, RdMockupImageManagerReadsImage)
     EXPECT_TRUE(((RdMockupImageManager *) imageManager)->receiveImage(test_image));
 
     //-- Check that the correct image arrived
-    EXPECT_LE(1, listener.getImagesArrived());
+    EXPECT_EQ(1, listener.getImagesArrived());
     RdImage received_image = listener.getStoredImage();
 
     ASSERT_EQ(received_image.width(), test_image.width());

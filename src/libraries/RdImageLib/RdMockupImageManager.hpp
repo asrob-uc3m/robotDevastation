@@ -5,11 +5,8 @@
 
 
 #include <vector>
-#include <map>
 #include <string>
 
-#include <yarp/os/BufferedPort.h>
-#include <yarp/os/Network.h>
 #include <yarp/os/Semaphore.h>
 #include <yarp/sig/ImageDraw.h>
 
@@ -34,8 +31,7 @@ namespace rd{
  * along with the reference to the manager that triggered them to be able to access the image
  *
  */
-class RdMockupImageManager : public RdImageManager,
-                           public yarp::os::TypedReaderCallback<RdImage>
+class RdMockupImageManager : public RdImageManager
 {
     public:
         virtual bool start();
@@ -59,11 +55,6 @@ class RdMockupImageManager : public RdImageManager,
 
         //! @brief Simulate image has been received from device
         bool receiveImage(RdImage received_image);
-
-
-    protected:
-        //-- Yarp event for incoming messages
-        void run();
 
     private:
         /**
