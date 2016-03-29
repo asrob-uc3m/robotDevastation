@@ -57,6 +57,10 @@ class RdMockupImageManager : public RdImageManager,
         //! @brief String that identifies this manager
         static const std::string id;
 
+        //! @brief Simulate image has been received from device
+        bool receiveImage(RdImage received_image);
+
+
     protected:
         //-- Yarp event for incoming messages
         void run();

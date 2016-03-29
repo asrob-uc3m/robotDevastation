@@ -55,6 +55,11 @@ rd::RdMockupImageManager::~RdMockupImageManager()
     uniqueInstance = NULL;
 }
 
+bool rd::RdMockupImageManager::receiveImage(rd::RdImage received_image)
+{
+    return false;
+}
+
 void rd::RdMockupImageManager::run()
 {
     //-- Notify listeners
