@@ -17,6 +17,8 @@ namespace rd{
 
 typedef yarp::sig::ImageOf<yarp::sig::PixelRgb> RdImage;
 
+class RdImageEventListener; //-- Required to avoid recurrent loops in dependencies
+
 /**
  * @ingroup rd_libraries
  *

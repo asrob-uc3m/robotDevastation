@@ -9,9 +9,6 @@ const std::string rd::RdMockupImageManager::id = "MOCKUP";
 bool rd::RdMockupImageManager::start()
 {
     RD_DEBUG("\n");
-    image.resize(640,480);
-    yarp::sig::PixelRgb blue(0,0,255);
-    yarp::sig::draw::addCircle(image,blue,320,240,10);
     stopped = false;
     return true;
 
@@ -31,13 +28,17 @@ bool rd::RdMockupImageManager::isStopped()
 
 bool rd::RdMockupImageManager::configure(std::string parameter, std::string value)
 {
-    RD_DEBUG("\n");
+    RD_DEBUG("Configure called for parameter: \"%s\" with value: \"%s\"\n", parameter.c_str(), value.c_str());
     return RdImageManager::configure(parameter, value);
 }
 
 rd::RdImage rd::RdMockupImageManager::getImage()
 {
-    return image;
+    semaphore.wait();
+    RdImage return_image(image);
+    semaphore.post();
+
+    return return_image;
 }
 
 bool rd::RdMockupImageManager::RegisterManager()
@@ -47,7 +48,7 @@ bool rd::RdMockupImageManager::RegisterManager()
         uniqueInstance = new RdMockupImageManager();
     }
 
-    return Register( uniqueInstance, id);
+    return Register(uniqueInstance, id);
 }
 
 rd::RdMockupImageManager::~RdMockupImageManager()
@@ -55,13 +56,19 @@ rd::RdMockupImageManager::~RdMockupImageManager()
     uniqueInstance = NULL;
 }
 
-void rd::RdMockupImageManager::run()
+bool rd::RdMockupImageManager::receiveImage(rd::RdImage received_image)
 {
+    semaphore.wait();
+    image = received_image;
+    semaphore.post();
+
     //-- Notify listeners
     for (int i = 0; i < listeners.size(); i++)
     {
         listeners[i]->onImageArrived(this);
     }
+
+    return true;
 }
 
 rd::RdMockupImageManager::RdMockupImageManager()

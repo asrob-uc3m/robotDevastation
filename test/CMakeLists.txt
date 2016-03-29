@@ -46,6 +46,9 @@ target_link_libraries(testRdImageManager ${RD_LIBRARIES} RdImageLib gtest gtest_
 add_executable(testRdYarpImageManager testRdYarpImageManager.cpp)
 target_link_libraries(testRdYarpImageManager ${RD_LIBRARIES} RdImageLib gtest gtest_main)
 
+add_executable(testRdMockupImageManager testRdMockupImageManager.cpp)
+target_link_libraries(testRdMockupImageManager ${RD_LIBRARIES} RdImageLib gtest gtest_main)
+
 # State machine related
 add_executable(testFSM testFSM.cpp)
 target_link_libraries(testFSM ${RD_LIBRARIES} StateMachineLib gtest gtest_main)

@@ -5,44 +5,10 @@
 
 #include "RdImageManager.hpp"
 #include "RdYarpImageManager.hpp"
-#include "RdImageEventListener.hpp"
+#include "RdMockupImageEventListener.hpp"
 
 using namespace rd;
 
-/**
- * @brief Dummy RdImageEventListener used for testing
- *
- * The required pure virtual members are left with their function body empty.
- *
- * This mockup object allows to access the received image and has a counter of
- * the incoming images received
- *
- *  @todo Move this class to RdImageLib, set it to be compiled only with the tests
- */
-class RdMockupImageEventListener : public RdImageEventListener
-{
-    public:
-        RdMockupImageEventListener()
-        {
-            images_arrived = 0;
-        }
-
-        virtual bool onImageArrived( RdImageManager * manager )
-        {
-            stored_image = manager->getImage();
-            images_arrived++;
-        }
-
-        int getImagesArrived() { return images_arrived; }
-        void resetImagesArrived() { images_arrived = 0; }
-
-        RdImage getStoredImage() { return stored_image; }
-
-
-    private:
-        int images_arrived;
-        RdImage stored_image;
-};
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
