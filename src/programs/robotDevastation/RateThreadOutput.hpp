@@ -18,6 +18,7 @@
 #include "RdMacros.hpp"
 #include "RdGameScreen.hpp"
 #include "RdImageManager.hpp"
+#include "SDLUtils.hpp"
 
 #define DEFAULT_RATE_MS 20
 

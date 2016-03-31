@@ -101,5 +101,22 @@ bool rd::DeadScreen::update(std::string parameter, std::string value)
 
 bool rd::DeadScreen::update(std::string parameter, rd::RdImage value)
 {
+    if (parameter == PARAM_LAST_CAMERA_FRAME)
+    {
+        last_camera_frame = RdImage(value);
+
+        //-- Convert from RdImage to SDL
+
+
+        //-- Set new window size:
+        //-- Screen surface
+        screen = SDL_SetVideoMode(image->w, image->h, 16, SDL_DOUBLEBUF);
+        if (!screen)
+        {
+            RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
+            return false;
+        }
+
+    }
  return false;
 }

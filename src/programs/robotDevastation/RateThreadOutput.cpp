@@ -50,30 +50,9 @@ void rd::RateThreadOutput::run()
 {
     //RD_DEBUG("[RateThreadOutput] run()\n");
 
-    yarp::sig::ImageOf<yarp::sig::PixelRgb> inYarpImg = imageManager->getImage();
-    if (inYarpImg.width()==0) {
-        //RD_DEBUG("No img yet...\n");
+    SDL_Surface *surface = RdImage2SDLImage(imageManager->getImage());
+    if (surface == NULL)
         return;
-    };
-
-    if(!cameraInitialized)
-    {
-        cameraDepth=8;  // the depth of the surface in bits
-        cameraChannels=3;  // R G B
-        cameraWidthstep = inYarpImg.getRowSize(); // the length of a row of pixels in bytes 1920 for 640x480
-        cameraWidth = inYarpImg.width();
-        cameraHeight = inYarpImg.height();
-        cameraInitialized = true;
-    }
-
-    // http://stackoverflow.com/1questions/393954/how-to-convert-an-opencv-iplimage-to-an-sdl-surface
-    SDL_Surface *surface = SDL_CreateRGBSurfaceFrom( (void*)inYarpImg.getRawImage(),
-                                                     cameraWidth, cameraHeight,
-                                                     cameraDepth*cameraChannels,
-                                                     cameraWidthstep,
-                                                     0x0000ff, 0x00ff00, 0xff0000, 0
-                                                   );
-
 
     //http://gameprogrammingtutorials.blogspot.com.es/2010/01/sdl-tutorial-series-part-4-how-to-load.html
 
