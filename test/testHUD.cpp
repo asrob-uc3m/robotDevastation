@@ -73,6 +73,7 @@ int main(void)
     //-- Show interface
     SDL_Flip(screen);
     SDL_Delay(2000);
+    std::cout << "Input \"end\" to finish test>";
     std::cin.get();
 
     //Free the text_surface surface
