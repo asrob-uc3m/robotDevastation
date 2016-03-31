@@ -37,6 +37,7 @@ class DeadScreen : public RdScreen
         TTF_Font * font;
         SDL_Surface * text_surface;
         SDL_Surface * image;
+        static const SDL_Color TEXT_COLOR;
 
         std::string remaining_time;
         RdImage last_camera_frame;

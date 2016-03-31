@@ -8,8 +8,14 @@ const std::string rd::DeadScreen::PARAM_LAST_CAMERA_FRAME = "last_camera_frame";
 const std::string rd::DeadScreen::SKULL_PATH = "../../share/images/skull.png";
 const std::string rd::DeadScreen::FONT_PATH = "/usr/share/fonts/truetype/freefont/FreeMono.ttf";
 
+//-- Private
+const SDL_Color rd::DeadScreen::TEXT_COLOR = {0,255,0,0};
+
 rd::DeadScreen::DeadScreen()
 {
+    //-- Default values:
+    this->update(PARAM_REMAINING_TIME, "10");
+
     //-- Init SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -48,12 +54,8 @@ rd::DeadScreen::DeadScreen()
         return;
     }
 
-    //-- Create text from font
-    SDL_Color text_color = {0,255,0,0};
-    text_surface = TTF_RenderText_Solid(font, "Respawn in: Xs", text_color);
-
     //-- Screen surface
-    screen = SDL_SetVideoMode(image->w, image->h+text_surface->h, 16, SDL_DOUBLEBUF);
+    screen = SDL_SetVideoMode(image->w, image->h, 16, SDL_DOUBLEBUF);
     if (!screen)
     {
         RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
@@ -70,8 +72,8 @@ bool rd::DeadScreen::show()
     SDL_Rect splash_rect = {0,0, image->w, image->h};
     SDL_BlitSurface(image, NULL, screen, &splash_rect);
 
-    //-- Draw text
-    SDL_Rect text_rect = {(image->w-text_surface->w)/2,image->h, text_surface->w, text_surface->h};
+    //-- Draw text    
+    SDL_Rect text_rect = {(image->w-text_surface->w)/2,image->h-text_surface->h, text_surface->w, text_surface->h};
     SDL_BlitSurface(text_surface, NULL, screen, &text_rect);
 
     SDL_Flip(screen); //Refresh the screen
@@ -87,7 +89,14 @@ rd::DeadScreen::~DeadScreen()
 
 bool rd::DeadScreen::update(std::string parameter, std::string value)
 {
-    return false;
+    if (parameter == PARAM_REMAINING_TIME)
+    {
+        //-- Create new text from font
+        remaining_time = value;
+        text_surface = TTF_RenderText_Solid(font, ("Respawn in: "+remaining_time+"s").c_str(), TEXT_COLOR);
+    }
+
+    return true;
 }
 
 bool rd::DeadScreen::update(std::string parameter, rd::RdImage value)
