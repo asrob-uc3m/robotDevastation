@@ -12,6 +12,7 @@
 #include "RdScreen.hpp"
 
 #include "RdUtils.hpp"
+#include "SDLUtils.hpp"
 
 namespace rd {
 
@@ -36,7 +37,8 @@ class DeadScreen : public RdScreen
         SDL_Surface * screen;
         TTF_Font * font;
         SDL_Surface * text_surface;
-        SDL_Surface * image;
+        SDL_Surface * skull_image;
+        SDL_Surface * camera_frame;
         static const SDL_Color TEXT_COLOR;
 
         std::string remaining_time;
