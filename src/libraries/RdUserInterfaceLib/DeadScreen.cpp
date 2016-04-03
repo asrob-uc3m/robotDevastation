@@ -139,6 +139,8 @@ bool rd::DeadScreen::update(std::string parameter, rd::RdImage value)
             return false;
         }
 
+        return true;
     }
+
  return false;
 }
