@@ -7,7 +7,7 @@ set(KEYWORD "RdUtilsLib")
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} Hub.cpp RdIniReader.hpp RdMacros.hpp RdUtils.hpp RdVector2dBase.hpp RdVocabs.hpp SDLUtils.hpp)
+add_library(${KEYWORD} Hub.cpp RdIniReader.hpp RdMacros.hpp RdUtils.hpp RdVector2dBase.hpp RdVocabs.hpp SDLUtils.cpp)
 target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${RD_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
