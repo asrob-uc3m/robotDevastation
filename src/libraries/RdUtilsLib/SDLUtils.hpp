@@ -8,7 +8,7 @@
 
 namespace rd {
 
-SDL_Surface * RdImage2SDLImage(RdImage image);
+SDL_Surface * RdImage2SDLImage(const RdImage & image);
 
 }
 

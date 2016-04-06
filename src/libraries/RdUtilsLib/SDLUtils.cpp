@@ -1,6 +1,6 @@
 #include "SDLUtils.hpp"
 
-SDL_Surface * rd::RdImage2SDLImage(rd::RdImage image)
+SDL_Surface * rd::RdImage2SDLImage(const RdImage & image)
 {
     if (image.width()==0)
         return NULL;
