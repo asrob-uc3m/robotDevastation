@@ -216,14 +216,19 @@ double rd::RobotDevastation::getPeriod()
 
 bool rd::RobotDevastation::updateModule()
 {
-    printf("===robotDevastation===\n");
-    printf("Number of players: %zd\n",mentalMap->getPlayers().size());
-    for(size_t i=0;i<mentalMap->getPlayers().size();i++)
+    if (mentalMap != NULL)
     {
-       printf("----------------------\n%s\n",mentalMap->getPlayers().at(i).str().c_str());
+        printf("===robotDevastation===\n");
+        printf("Number of players: %zd\n",mentalMap->getPlayers().size());
+        for(size_t i=0;i<mentalMap->getPlayers().size();i++)
+        {
+           printf("----------------------\n%s\n",mentalMap->getPlayers().at(i).str().c_str());
+        }
+        //printf("======================\n");
+        return true;
     }
-    //printf("======================\n");
-    return true;
+    else
+        return true;
 }
 
 bool rd::RobotDevastation::initSound(yarp::os::ResourceFinder &rf)
