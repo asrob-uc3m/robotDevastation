@@ -48,8 +48,8 @@ class RdYarpImageManagerEnvironment : public testing::Environment
         virtual void SetUp()
         {
             //-- Init yarp network & server
-            yarp::os::Network::init();
             yarp::os::NetworkBase::setLocalMode(true);
+            yarp::os::Network::init();
 
             //-- Setup yarp camera
             yarp::os::Property cameraOptions;
