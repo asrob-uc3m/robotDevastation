@@ -13,7 +13,7 @@ rd::RdInputManager *rd::RdInputManager::getInputManager()
     {
         if(!inputManagerRegistry.empty() )
         {
-            //-- Install the first RdImageManger found
+            //-- Install the first RdInputManager found
             currentId = inputManagerRegistry.begin()->first;
             inputManagerInstance = inputManagerRegistry.begin()->second;
         }
@@ -37,7 +37,7 @@ rd::RdInputManager *rd::RdInputManager::getInputManager(std::string id)
         }
         else
         {
-            RD_ERROR("RdImageManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            RD_ERROR("RdInputManager %s not found! (Maybe it was not registered?)\n", id.c_str());
         }
     }
 
