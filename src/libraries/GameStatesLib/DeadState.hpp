@@ -26,7 +26,6 @@ namespace rd{
 class DeadState : public State, public ManagerHub, public RdInputEventListener
 {
 public:
-    //DeadState();
     DeadState(RdNetworkManager * networkManager, RdImageManager * imageManager,
               RdInputManager * inputManager, RdMentalMap * mentalMap,
               RdRobotManager * robotManager, AudioManager * audioManager);
@@ -38,6 +37,7 @@ public:
     //! @brief Returns the internal variable value as condition evaluation result
     virtual int evaluateConditions();
 
+    //enum DeadStateOption {RESPAWN_SELECTED, EXIT_SELECTED};
     static const int RESPAWN_SELECTED;
     static const int EXIT_SELECTED;
 
@@ -46,7 +46,7 @@ public:
     virtual bool onKeyUp(RdKey k);
 
 protected:
-    DeadState screen;
+    DeadScreen screen;
     int last_transition; //-- Stores the transition that triggered the cleanup
 };
 }
