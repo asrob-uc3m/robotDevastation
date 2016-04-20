@@ -132,23 +132,35 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
     //-- Check things that should happen before fsm starts (before setup):
     // Player is dead
     // Stuff is enabled
+    ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
+    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupInputManager->isStopped());
+    ASSERT_EQ(1, mockupInputManager->getNumListeners());
+    ASSERT_FALSE(mockupAudioManager->isStopped());
+    ASSERT_TRUE(mockupAudioManager->isPlaying("RD_THEME");
+    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_DEAD");
+    ASSERT_FALSE(mockupNetworkManager->isStopped());
+    ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
+    //ASSERT_FALSE(DeadStateTest.mockupRobotManager->isStopped()); //-- Not correctly implemented
+    //ASSERT_FALSE(mockupRobotManager->isConnected());
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
 
-    //-- Check things that should happen in dead state before time runs out (loop):
+    //-- Check things that should happen in dead state before time runs out (setup):
 
     //yarp::os::Time::delay(1);
+    ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
+    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupInputManager->isStopped());
+    ASSERT_EQ(0, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupAudioManager->isStopped());
-    ASSERT_TRUE(mockupAudioManager->isPlaying("RD_THEME"));
-
+    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_THEME");
+    ASSERT_TRUE(mockupAudioManager->isPlaying("RD_DEAD");
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
-
-    ASSERT_TRUE(mockupImageManager->isStopped());
-
-    ASSERT_FALSE(mockupInputManager->isStopped());
-    ASSERT_EQ(1, mockupInputManager->getNumListeners());
+    //ASSERT_FALSE(DeadStateTest.mockupRobotManager->isStopped()); //-- Not correctly implemented
+    //ASSERT_FALSE(mockupRobotManager->isConnected());
 
 //    ASSERT_FALSE(mockupRobotManager->isStopped());
 //    ASSERT_FALSE(mockupRobotManager->isConnected());
