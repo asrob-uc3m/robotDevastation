@@ -7,6 +7,7 @@ rd::InitState::InitState(rd::RdNetworkManager *networkManager, rd::RdImageManage
                          rd::RdRobotManager *robotManager, AudioManager *audioManager) :
     ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager, audioManager)
 {
+    state_id = "InitState";
     login = false;
     logged_in = false;
 }
