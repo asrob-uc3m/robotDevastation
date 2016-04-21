@@ -20,6 +20,38 @@
 
 using namespace rd;
 
+//-- Class for the setup of the enviroment for all the tests
+//----------------------------------------------------------------------------------------
+//-- This is required since MockupStates are used (and require yarp ports to be open)
+
+class DeadStateTestEnvironment : public testing::Environment
+{
+    public:
+        DeadStateTestEnvironment(int argc, char ** argv)
+        {
+            this->argc = argc;
+            this->argv = argv;
+        }
+
+        virtual void SetUp()
+        {
+            //-- Init yarp network & server
+            yarp::os::NetworkBase::setLocalMode(true);
+            yarp::os::Network::init();
+        }
+
+        virtual void TearDown()
+        {
+            yarp::os::Network::fini();
+        }
+
+
+    private:
+        int argc;
+        char ** argv;
+
+};
+
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
 class DeadStateTest : public testing::Test
@@ -278,4 +310,12 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
 
     //-- Check that end state is active
     ASSERT_EQ(exit_state_id, fsm->getCurrentState());
+}
+
+//--- Main -------------------------------------------------------------------------------------------
+int main(int argc, char **argv)
+{
+  testing::InitGoogleTest(&argc, argv);
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new DeadStateTestEnvironment(argc, argv));
+  return RUN_ALL_TESTS();
 }
