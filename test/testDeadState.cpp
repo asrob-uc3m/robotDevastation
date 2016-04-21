@@ -25,6 +25,7 @@
 #include "RdMockupRobotManager.hpp"
 #include "MockupAudioManager.hpp"
 #include "MockupState.hpp"
+#include "MockupInputEventListener.hpp"
 
 #include <yarp/os/Network.h>
 #include <yarp/os/Time.h>
@@ -103,6 +104,13 @@ class DeadStateTest : public testing::Test
 
             mentalMap = RdMentalMap::getMentalMap();
             ASSERT_NE((RdMentalMap*) NULL, mentalMap);
+            ASSERT_TRUE(mentalMap->configure(1));
+
+            //-- Insert dead player for testing
+            std::vector<RdPlayer> players;
+            players.push_back(RdPlayer(1,"test_player", 0,MAX_HEALTH,0,0) );
+            ASSERT_TRUE(mentalMap->updatePlayers(players));
+            mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
 
             mockupRobotManager = new RdMockupRobotManager("MOCKUP");
             robotManager = (RdRobotManager *) mockupRobotManager;
@@ -121,6 +129,13 @@ class DeadStateTest : public testing::Test
             initState->cleanup();
             delete initState;
             initState = NULL;
+
+            //-- Finish setup of the modules that start at game state:
+            mockupImageManager->start();
+            listener = new MockupInputEventListener;
+            mockupInputManager->addInputEventListener(listener);
+            //RD_DEBUG("%d\n", mockupInputManager->getNumListeners());
+
         }
 
         virtual void TearDown()
@@ -144,7 +159,12 @@ class DeadStateTest : public testing::Test
             delete mockupRobotManager;
             mockupRobotManager = NULL;
 
+            delete listener;
+            listener=NULL;
+
         }
+
+    static const int MAX_HEALTH;
 
     protected:
         FiniteStateMachine *fsm;
@@ -165,7 +185,11 @@ class DeadStateTest : public testing::Test
 
         RdMockupRobotManager * mockupRobotManager;
         RdRobotManager * robotManager;
+
+        MockupInputEventListener * listener;
 };
+
+const int DeadStateTest::MAX_HEALTH = 100;
 
 //--- Tests ------------------------------------------------------------------------------------------
 TEST_F(DeadStateTest, DeadStateGoesToRespawn)
@@ -236,7 +260,7 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
 
     //-- Check that it has restored things (health, enable stuff)
     //-- and it is in the game state (cleanup):
-    ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
+    ASSERT_EQ(DeadStateTest::MAX_HEALTH, mentalMap->getMyself().getHealth());
     ASSERT_FALSE(mockupImageManager->isStopped());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
