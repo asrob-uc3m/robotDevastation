@@ -154,6 +154,8 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect )
     debugMsg = debugPort.read();
     EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
 
+    //-- Check that state2 is active
+    ASSERT_EQ(state2_id, fsm->getCurrentState());
 
     //-- Check that the state 2 passed through setup and init states:
     debugMsg = debugPort.read();
@@ -169,7 +171,10 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect )
     debugMsg = debugPort.read();
     EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
 
-    //-- Check that the state 2 passed through setup and init states:
+    //-- Check that state3 is active
+    ASSERT_EQ(state3_id, fsm->getCurrentState());
+
+    //-- Check that the state 3 passed through setup and init states:
     debugMsg = debugPort.read();
     EXPECT_STREQ("setup", debugMsg->get(0).asString().c_str());
 
@@ -179,7 +184,7 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect )
     //-- Stop current state
     ASSERT_TRUE(fsm->stop());
 
-    //-- Check that the state 2 passed through cleanup
+    //-- Check that the state 3 passed through cleanup
     debugMsg = debugPort.read();
     EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
 }

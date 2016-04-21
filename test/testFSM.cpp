@@ -188,12 +188,12 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
     debugMsg = debugPort.read();
     EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
 
-    //-- Check that state 2 is active
+    //-- Check that state 3 is active
     ASSERT_FALSE(stateDirector1->isActive());
     ASSERT_FALSE(stateDirector2->isActive());
     ASSERT_TRUE(stateDirector3->isActive());
 
-    //-- Check that the state 2 passed through setup and init states:
+    //-- Check that the state 3 passed through setup and init states:
     debugMsg = debugPort.read();
     EXPECT_STREQ("setup", debugMsg->get(0).asString().c_str());
 
@@ -203,7 +203,7 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect )
     //-- Stop current state
     ASSERT_TRUE(stateDirector3->Stop());
 
-    //-- Check that the state 2 passed through cleanup
+    //-- Check that the state 3 passed through cleanup
     debugMsg = debugPort.read();
     EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
 }
