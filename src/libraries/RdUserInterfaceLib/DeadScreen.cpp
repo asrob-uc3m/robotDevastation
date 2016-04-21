@@ -13,10 +13,6 @@ const SDL_Color rd::DeadScreen::TEXT_COLOR = {0,255,0,0};
 
 rd::DeadScreen::DeadScreen()
 {
-    //-- Default values:
-    this->update(PARAM_REMAINING_TIME, "10");
-    this->camera_frame = NULL;
-
     //-- Init SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -62,6 +58,10 @@ rd::DeadScreen::DeadScreen()
         RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
         return;
     }
+
+    //-- Default values:
+    this->camera_frame = NULL;
+    this->update(PARAM_REMAINING_TIME, "10");
 }
 
 bool rd::DeadScreen::show()
