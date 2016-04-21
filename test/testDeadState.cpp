@@ -132,9 +132,12 @@ class DeadStateTest : public testing::Test
 
             //-- Finish setup of the modules that start at game state:
             mockupImageManager->start();
+
             listener = new MockupInputEventListener;
             mockupInputManager->addInputEventListener(listener);
-            //RD_DEBUG("%d\n", mockupInputManager->getNumListeners());
+
+            audioManager->start();
+            audioManager->play("RD_THEME", -1);
 
         }
 
