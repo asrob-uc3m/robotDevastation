@@ -37,3 +37,15 @@ bool rd::FiniteStateMachine::stop()
     return true;
 }
 
+int rd::FiniteStateMachine::getCurrentState()
+{
+    int i = 0;
+    while (i < stateDirectors.size())
+    {
+        if ( stateDirectors[i]->isActive())
+            return i;
+        i++;
+    }
+    return -1;
+}
+
