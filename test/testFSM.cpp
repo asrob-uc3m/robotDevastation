@@ -32,8 +32,8 @@ class FSMTestEnvironment : public testing::Environment
         virtual void SetUp()
         {
             //-- Init yarp network & server
+            yarp::os::NetworkBase::setLocalMode(true);
             yarp::os::Network::init();
-            //yarp::os::Network::runNameServer(argc, argv);
         }
 
         virtual void TearDown()
