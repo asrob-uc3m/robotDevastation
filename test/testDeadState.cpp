@@ -1,3 +1,13 @@
+/***
+ * testDeadState
+ * ------------------------
+ * Test that DeadState works correctly
+ *
+ * Note: to setup the initial conditions for the DeadState, the InitState is used in the test.
+ * Therefore, please check InitState test if any error related to the initial conditions is found.
+ *
+ */
+
 #include "gtest/gtest.h"
 #include <string>
 #include <vector>
@@ -6,6 +16,7 @@
 #include "StateMachineBuilder.hpp"
 #include "RdUtils.hpp"
 #include "DeadState.hpp"
+#include "InitState.hpp"
 
 #include "MockupNetworkManager.hpp"
 #include "RdMockupImageManager.hpp"
@@ -97,6 +108,19 @@ class DeadStateTest : public testing::Test
             robotManager = (RdRobotManager *) mockupRobotManager;
             ASSERT_NE((RdMockupRobotManager*) NULL, mockupRobotManager);
             ASSERT_NE((RdRobotManager*) NULL, robotManager);
+
+            //-- Setup managers to the required initial state:
+            //-- Note: For simplicity, I'm using InitState here and manually calling
+            //-- the correct initialization sequence. The testInitState allows to test
+            //-- if InitState works correctly.
+            State * initState = new InitState(networkManager, imageManager, inputManager,
+                                              mentalMap, robotManager, audioManager);
+            initState->setup();
+            dynamic_cast<RdInputEventListener *>(initState)->onKeyUp(MockupKey(RdKey::KEY_ENTER));
+            initState->loop();
+            initState->cleanup();
+            delete initState;
+            initState = NULL;
         }
 
         virtual void TearDown()
