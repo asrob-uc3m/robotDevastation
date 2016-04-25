@@ -101,6 +101,7 @@ class DeadStateTest : public testing::Test
             ASSERT_NE((AudioManager*) NULL, audioManager);
             ASSERT_NE((MockupAudioManager*) NULL, mockupAudioManager);
             mockupAudioManager->load("RD_THEME","RD_THEME", AudioManager::MUSIC);
+            mockupAudioManager->load("RD_DEAD","RD_DEAD", AudioManager::MUSIC);
 
             mentalMap = RdMentalMap::getMentalMap();
             ASSERT_NE((RdMentalMap*) NULL, mentalMap);
