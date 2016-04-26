@@ -46,6 +46,7 @@ public:
     virtual bool onKeyUp(RdKey k);
 
     static const int DEFAULT_RATE_MS;
+    static const int MAX_HEALTH;
 
 protected:
     DeadScreen screen;

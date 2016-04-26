@@ -271,9 +271,9 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
     ASSERT_EQ(DeadStateTest::MAX_HEALTH, mentalMap->getMyself().getHealth());
     ASSERT_FALSE(mockupImageManager->isStopped());
     ASSERT_FALSE(mockupInputManager->isStopped());
-    ASSERT_EQ(1, mockupInputManager->getNumListeners());
+    ASSERT_EQ(0, mockupInputManager->getNumListeners()); //-- Game sets its own listener
     ASSERT_FALSE(mockupAudioManager->isStopped());
-    ASSERT_TRUE(mockupAudioManager->isPlaying("RD_THEME"));
+    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_THEME"));
     ASSERT_FALSE(mockupAudioManager->isPlaying("RD_DEAD"));
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());

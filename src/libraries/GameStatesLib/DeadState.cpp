@@ -3,6 +3,7 @@
 const int rd::DeadState::RESPAWN_SELECTED = 1;
 const int rd::DeadState::EXIT_SELECTED = 2;
 const int rd::DeadState::DEFAULT_RATE_MS = 100;
+const int rd::DeadState::MAX_HEALTH = 100;
 
 
 rd::DeadState::DeadState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
@@ -74,20 +75,76 @@ bool rd::DeadState::loop()
 
 bool rd::DeadState::cleanup()
 {
-    return false;
+    if (received_respawn)
+    {
+        //-- Restore things (health, enable stuff)
+        //-- Note: this is a workaround because one cannot modify player¡s health through
+        //-- mentalMap directly (yet)
+        std::vector<RdPlayer> players = mentalMap->getPlayers();
+        int id = mentalMap->getMyself().getId();
+        for (int i = 0; i < players.size(); i++)
+            if (players[i].getId() == id)
+            {
+                players[i].setHealth(MAX_HEALTH);
+                break;
+            }
+        mentalMap->updatePlayers(players);
+
+        //-- Enable camera images
+        imageManager->start();
+
+        //-- Remove this input listener (game will setup its own listener)
+        inputManager->removeInputEventListeners();
+
+        //-- Stop dead theme
+        audioManager->stopMusic();
+
+        return true;
+
+    }
+    else if (received_exit)
+    {
+        //-- Stop things to exit game (logout)
+        return true;
+    }
+    else
+        return false;
 }
 
 int rd::DeadState::evaluateConditions()
 {
-    return false;
+    if (received_respawn)
+        return RESPAWN_SELECTED;
+
+    if (received_exit)
+        return EXIT_SELECTED;
+
+    return -1;
 }
 
 bool rd::DeadState::onKeyDown(rd::RdKey k)
 {
-    return false;
+    return true;
 }
 
 bool rd::DeadState::onKeyUp(rd::RdKey k)
 {
+    if (received_respawn || received_exit)
+        return false;
+
+    if (k.getValue() == RdKey::KEY_ENTER)
+    {
+        RD_DEBUG("Enter was pressed!\n");
+        received_respawn = true;
+        return true;
+    }
+
+    if (k.getValue() == RdKey::KEY_ESCAPE)
+    {
+        RD_DEBUG("Escape was pressed!\n");
+        received_exit = true;
+        return true;
+    }
+
     return false;
 }
