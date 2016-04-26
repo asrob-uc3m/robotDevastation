@@ -297,6 +297,7 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
     int game_state_id = builder.addState(new MockupState(1));
     ASSERT_NE(-1, game_state_id);
     int exit_state_id = builder.addState(State::getEndState());
+    ASSERT_NE(-1, exit_state_id);
 
     ASSERT_TRUE(builder.addTransition(dead_state_id, game_state_id, DeadState::RESPAWN_SELECTED));
     ASSERT_TRUE(builder.addTransition(dead_state_id, exit_state_id, DeadState::EXIT_SELECTED));
@@ -352,7 +353,7 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has stopped things and it is in the final state (cleanup):
-    ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
+    ASSERT_EQ(0, mentalMap->getMyself().getHealth());
     ASSERT_TRUE(mockupImageManager->isStopped());
     ASSERT_TRUE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
@@ -365,7 +366,7 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
     //ASSERT_FALSE(mockupRobotManager->isConnected());
 
     //-- Check that end state is active
-    ASSERT_EQ(exit_state_id, fsm->getCurrentState());
+    ASSERT_EQ(-1, fsm->getCurrentState()); //-- (When FSM is ended, no state is active, hence -1)
 }
 
 //--- Main -------------------------------------------------------------------------------------------

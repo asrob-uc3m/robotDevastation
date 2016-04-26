@@ -78,7 +78,7 @@ bool rd::DeadState::cleanup()
     if (received_respawn)
     {
         //-- Restore things (health, enable stuff)
-        //-- Note: this is a workaround because one cannot modify player¡s health through
+        //-- Note: this is a workaround because one cannot modify player's health through
         //-- mentalMap directly (yet)
         std::vector<RdPlayer> players = mentalMap->getPlayers();
         int id = mentalMap->getMyself().getId();
@@ -105,6 +105,13 @@ bool rd::DeadState::cleanup()
     else if (received_exit)
     {
         //-- Stop things to exit game (logout)
+        imageManager->stop();
+        inputManager->stop();
+        inputManager->removeInputEventListeners();
+        audioManager->stopMusic();
+        audioManager->stop();
+        networkManager->logout(mentalMap->getMyself()); //-- This is kind of weird, but it is supposed to be done like this
+        networkManager->stop();
         return true;
     }
     else
