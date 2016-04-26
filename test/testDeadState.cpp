@@ -90,6 +90,10 @@ class DeadStateTest : public testing::Test
             mockupImageManager = dynamic_cast<RdMockupImageManager *>(imageManager);
             ASSERT_NE((RdImageManager*) NULL, imageManager);
             ASSERT_NE((RdMockupImageManager*) NULL, mockupImageManager);
+            //-- Load test image
+            RdImage test_frame;
+            yarp::sig::file::read(test_frame, "../../share/images/test_frame.ppm");
+            mockupImageManager->receiveImage(test_frame);
 
             inputManager = RdInputManager::getInputManager("MOCKUP");
             mockupInputManager = dynamic_cast<MockupInputManager *>(inputManager);
