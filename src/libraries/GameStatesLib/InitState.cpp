@@ -75,6 +75,8 @@ bool rd::InitState::onKeyDown(rd::RdKey k)
 bool rd::InitState::onKeyUp(rd::RdKey k)
 {
     if (k.getValue() == RdKey::KEY_ENTER)
+    {
         RD_DEBUG("Enter was pressed!\n");
         login = true;
+    }
 }
