@@ -45,9 +45,15 @@ public:
     virtual bool onKeyDown(RdKey k);
     virtual bool onKeyUp(RdKey k);
 
+    static const int DEFAULT_RATE_MS;
+
 protected:
     DeadScreen screen;
     int last_transition; //-- Stores the transition that triggered the cleanup
+    bool received_respawn;
+    bool received_exit;
+    int elapsed_time; //-- Time elapsed in ms
+    int timer; //-- Countdown timer in s
 };
 }
 #endif // __DEAD_STATE_HPP__
