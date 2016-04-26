@@ -7,6 +7,7 @@ rd::InitState::InitState(rd::RdNetworkManager *networkManager, rd::RdImageManage
                          rd::RdRobotManager *robotManager, AudioManager *audioManager) :
     ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager, audioManager)
 {
+    state_id = "InitState";
     login = false;
     logged_in = false;
 }
@@ -74,6 +75,8 @@ bool rd::InitState::onKeyDown(rd::RdKey k)
 bool rd::InitState::onKeyUp(rd::RdKey k)
 {
     if (k.getValue() == RdKey::KEY_ENTER)
+    {
         RD_DEBUG("Enter was pressed!\n");
         login = true;
+    }
 }

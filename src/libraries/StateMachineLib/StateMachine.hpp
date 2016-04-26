@@ -36,6 +36,9 @@ class FiniteStateMachine
         bool start();
         bool stop();
 
+        //! @brief Returns current active state id
+        int getCurrentState();
+
     private:
         FiniteStateMachine();
 

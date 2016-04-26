@@ -174,5 +174,6 @@ bool rd::MockupNetworkManager::setLoggedIn(bool logged_in)
 rd::MockupNetworkManager::MockupNetworkManager()
 {
     logged_in = false;
+    stopped = true;
 }
 

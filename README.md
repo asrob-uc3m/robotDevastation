@@ -15,3 +15,6 @@ Link to Wiki: http://asrob.uc3m.es/index.php/Robot_Devastation
 [![Coverage Status](https://coveralls.io/repos/asrob-uc3m/robotDevastation/badge.svg)](https://coveralls.io/r/asrob-uc3m/robotDevastation)
 
 [![Issues](https://img.shields.io/github/issues/asrob-uc3m/robotDevastation.svg?label=Issues)](https://github.com/asrob-uc3m/robotDevastation/issues)
+
+Credits:
+* [Skull image by Sev](https://openclipart.org/detail/211414/skull-and-crossbones)

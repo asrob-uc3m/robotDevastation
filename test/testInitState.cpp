@@ -59,6 +59,12 @@ class InitStateTest : public testing::Test
 
             mentalMap = RdMentalMap::getMentalMap();
             ASSERT_NE((RdMentalMap*) NULL, mentalMap);
+            ASSERT_TRUE(mentalMap->configure(1));
+
+            std::vector<RdPlayer> players;
+            players.push_back(RdPlayer(1,"test_player",100,100,0,0) );
+            ASSERT_TRUE(mentalMap->updatePlayers(players));
+            mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
 
             mockupRobotManager = new RdMockupRobotManager("MOCKUP");
             robotManager = (RdRobotManager *) mockupRobotManager;

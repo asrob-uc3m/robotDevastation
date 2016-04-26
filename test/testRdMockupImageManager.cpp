@@ -34,7 +34,7 @@ class RdMockupImageManagerTest : public testing::Test
 
 };
 
-const std::string RdMockupImageManagerTest::image_filename = "/home/def/frame000.ppm";
+const std::string RdMockupImageManagerTest::image_filename = "../../share/images/test_frame.ppm";
 
 //-- Class for the setup of the enviroment for all the tests
 //----------------------------------------------------------------------------------------
