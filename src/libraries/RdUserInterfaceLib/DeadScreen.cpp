@@ -124,6 +124,12 @@ bool rd::DeadScreen::update(std::string parameter, std::string value)
 
 bool rd::DeadScreen::update(std::string parameter, rd::RdImage value)
 {
+    if (value.width() == 0 || value.height() == 0)
+    {
+        RD_ERROR("Invalid image");
+        return false;
+    }
+
     if (parameter == PARAM_LAST_CAMERA_FRAME)
     {
         last_camera_frame = RdImage(value);
