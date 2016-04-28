@@ -81,11 +81,21 @@ bool rd::GameScreen::show()
         SDL_BlitSurface(camera_frame_surface, NULL, screen, &camera_frame_rect);
 
         //-- Draw enemies
-//        for (int i = 0; i < (int) targets.size(); i++)
-//        {
-//            RdPlayer player_data = mentalMap->getPlayer(targets[i].getPlayerId());
-//            drawTargetUI(screen, targets[i], player_data);
-//        }
+        for (int i = 0; i < (int) targets.size(); i++)
+        {
+            int target_id = targets[i].getPlayerId();
+            int player_index = -1;
+
+            for (int j = 0; j < (int) players.size(); j++)
+                if (target_id == players[j].getId())
+                    player_index = j;
+
+            //-- If not found, ignore current target on HUD
+            if (player_index == -1)
+                continue;
+
+            drawTargetUI(screen, targets[i], players[player_index]);
+        }
 
         //-- Draw players
         for ( int i = 0; i < (int) players.size(); i++)
