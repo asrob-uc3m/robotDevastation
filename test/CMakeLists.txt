@@ -14,6 +14,9 @@ target_link_libraries(testHUD ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_
 add_executable(testInitScreen testInitScreen.cpp)
 target_link_libraries(testInitScreen ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
 
+add_executable(testGameScreen testGameScreen.cpp)
+target_link_libraries(testGameScreen ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
+
 add_executable(testDeadScreen testDeadScreen.cpp)
 target_link_libraries(testDeadScreen ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
 
