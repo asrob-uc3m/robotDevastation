@@ -1,7 +1,5 @@
 #include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
-#include <cstdlib> // For some useful functions such as atexit :)
-#include <iostream>
+#include <yarp/sig/all.h>
 #include <string>
 #include <vector>
 
@@ -40,6 +38,11 @@ int main(void)
     screen.update(GameScreen::PARAM_PLAYERS, mentalMap->getPlayers());
     screen.update(GameScreen::PARAM_TARGETS, mentalMap->getTargets());
     screen.update(GameScreen::PARAM_WEAPON, mentalMap->getCurrentWeapon());
+
+    //-- Load test image
+    RdImage frame;
+    yarp::sig::file::read(frame, "../../share/images/test_frame.ppm");
+    screen.update(GameScreen::PARAM_CAMERA_FRAME, frame);
 
     for (int i = 0; i < 200; i++)
     {

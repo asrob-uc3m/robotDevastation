@@ -1,10 +1,11 @@
 
 #include "GameScreen.hpp"
 
-const std::string rd::GameScreen::PARAM_MYSELF = "";
-const std::string rd::GameScreen::PARAM_PLAYERS = "";
-const std::string rd::GameScreen::PARAM_TARGETS = "";
-const std::string rd::GameScreen::PARAM_WEAPON = "";
+const std::string rd::GameScreen::PARAM_FRAME = "frame";
+const std::string rd::GameScreen::PARAM_MYSELF = "myself";
+const std::string rd::GameScreen::PARAM_PLAYERS = "players";
+const std::string rd::GameScreen::PARAM_TARGETS = "targets";
+const std::string rd::GameScreen::PARAM_WEAPON = "weapon";
 
 const SDL_Color rd::GameScreen::greencolor = {0, 255, 0, 0};
 const SDL_Color rd::GameScreen::redcolor =   {255, 0, 0, 0};

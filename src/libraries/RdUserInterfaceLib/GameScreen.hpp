@@ -48,6 +48,7 @@ class GameScreen : public RdScreen
         virtual bool update(std::string parameter, RdWeapon value);
 
         //-- Screen interface parameters
+        static const std::string PARAM_FRAME;
         static const std::string PARAM_MYSELF;
         static const std::string PARAM_PLAYERS;
         static const std::string PARAM_TARGETS;
