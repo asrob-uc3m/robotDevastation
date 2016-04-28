@@ -117,9 +117,11 @@ bool rd::DeadScreen::update(std::string parameter, std::string value)
         //-- Create new text from font
         remaining_time = value;
         text_surface = TTF_RenderText_Solid(font, ("Respawn in: "+remaining_time+"s").c_str(), TEXT_COLOR);
+        return true;
     }
 
-    return true;
+    RD_ERROR("No string parameter %s exists.\n", parameter.c_str());
+    return false;
 }
 
 bool rd::DeadScreen::update(std::string parameter, rd::RdImage value)
@@ -148,5 +150,6 @@ bool rd::DeadScreen::update(std::string parameter, rd::RdImage value)
         return true;
     }
 
- return false;
+    RD_ERROR("No RdImage parameter %s exists.\n", parameter.c_str());
+    return false;
 }

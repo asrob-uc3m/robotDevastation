@@ -1,7 +1,7 @@
 
 #include "GameScreen.hpp"
 
-const std::string rd::GameScreen::PARAM_FRAME = "frame";
+const std::string rd::GameScreen::PARAM_CAMERA_FRAME = "camera_frame";
 const std::string rd::GameScreen::PARAM_MYSELF = "myself";
 const std::string rd::GameScreen::PARAM_PLAYERS = "players";
 const std::string rd::GameScreen::PARAM_TARGETS = "targets";
@@ -55,35 +55,56 @@ rd::GameScreen::GameScreen()
         return;
     }
 
-    mentalMap = RdMentalMap::getMentalMap();
+    update_required = true;
 }
 
 bool rd::GameScreen::show()
 {
-//    //-- Get a copy of the enemies stored & draw them:
-//    std::vector<RdTarget> targets_stored  = mentalMap->getTargets();
-//    for (int i = 0; i < (int) targets_stored.size(); i++)
-//    {
-//        RdPlayer player_data = mentalMap->getPlayer(targets_stored[i].getPlayerId());
-//        drawTargetUI(screen, targets_stored[i], player_data);
-//    }
+    if (update_required)
+    {
+        //-- Convert from RdImage to SDL
+        SDL_Surface * camera_frame_surface = RdImage2SDLImage(camera_frame);
 
-//    //-- Get a copy of the players stored & draw them:
-//    std::vector<RdPlayer> players_stored = mentalMap->getPlayers();
-//    for ( int i = 0; i < (int) players_stored.size(); i++)
-//    {
-//        drawPlayerUI(screen, players_stored[i], 5, 10+i*(PLAYER_NAME_H+3));
-//    }
+        //-- Set new window size
+        screen = SDL_SetVideoMode(camera_frame_surface->w, camera_frame_surface->h, 16, SDL_DOUBLEBUF);
+        if (!screen)
+        {
+            RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
+            return false;
+        }
 
-//    //-- Draw scope:
-//    drawScope(screen);
+        //-- Clear screen
+        SDL_FillRect(screen, NULL, 0x00000000);
 
-//    //-- Draw user interface with user health, weapon and ammo
-//    RdPlayer me = mentalMap->getMyself();
-//    RdWeapon weapon = mentalMap->getCurrentWeapon();
-    //    drawUserUI(screen, me, weapon);
+        //-- Draw camera frame
+        SDL_Rect camera_frame_rect = {0,0, camera_frame_surface->w, camera_frame_surface->h};
+        SDL_BlitSurface(camera_frame_surface, NULL, screen, &camera_frame_rect);
 
-    return false;
+        //-- Draw enemies
+//        for (int i = 0; i < (int) targets.size(); i++)
+//        {
+//            RdPlayer player_data = mentalMap->getPlayer(targets[i].getPlayerId());
+//            drawTargetUI(screen, targets[i], player_data);
+//        }
+
+        //-- Draw players
+        for ( int i = 0; i < (int) players.size(); i++)
+        {
+            drawPlayerUI(screen, players[i], 5, 10+i*(PLAYER_NAME_H+3));
+        }
+
+        //-- Draw scope:
+        drawScope(screen);
+
+        //-- Draw user interface with user health, weapon and ammo
+        drawUserUI(screen, myself, current_weapon);
+
+        SDL_Flip(screen); //Refresh the screen
+        SDL_Delay(20); //Wait a bit :)
+        update_required = false;
+    }
+
+    return true;
 }
 
 rd::GameScreen::~GameScreen()
@@ -93,26 +114,77 @@ rd::GameScreen::~GameScreen()
 
 bool rd::GameScreen::update(std::string parameter, std::string value)
 {
+    RD_ERROR("No string parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
 bool rd::GameScreen::update(std::string parameter, rd::RdPlayer value)
 {
+    if (parameter == PARAM_MYSELF)
+    {
+        myself = value;
+        update_required = true;
+        return true;
+    }
+
+    RD_ERROR("No RdPlayer parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
 bool rd::GameScreen::update(std::string parameter, std::vector<rd::RdPlayer> value)
 {
+    if (parameter == PARAM_PLAYERS)
+    {
+        players = value;
+        update_required = true;
+        return true;
+    }
+
+    RD_ERROR("No vector<RdPlayer> parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
 bool rd::GameScreen::update(std::string parameter, std::vector<rd::RdTarget> value)
 {
+    if (parameter == PARAM_TARGETS)
+    {
+        targets = value;
+        update_required = true;
+        return true;
+    }
+
+    RD_ERROR("No vector<RdTarget> parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
 bool rd::GameScreen::update(std::string parameter, rd::RdWeapon value)
 {
+    if (parameter == PARAM_WEAPON)
+    {
+        current_weapon = value;
+        update_required = true;
+        return true;
+    }
+
+    RD_ERROR("No RdWeapom parameter %s exists.\n", parameter.c_str());
+    return false;
+}
+
+bool rd::GameScreen::update(std::string parameter, rd::RdImage value)
+{    if (value.width() == 0 || value.height() == 0)
+    {
+        RD_ERROR("Invalid image");
+        return false;
+    }
+
+    if (parameter == PARAM_CAMERA_FRAME)
+    {
+        camera_frame = RdImage(value);
+        update_required = true;
+        return true;
+    }
+
+    RD_ERROR("No RdImage parameter %s exists.\n", parameter.c_str());
     return false;
 }
 

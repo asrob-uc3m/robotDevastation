@@ -46,9 +46,10 @@ class GameScreen : public RdScreen
         virtual bool update(std::string parameter, std::vector<RdPlayer> value);
         virtual bool update(std::string parameter, std::vector<RdTarget> value);
         virtual bool update(std::string parameter, RdWeapon value);
+        virtual bool update(std::string parameter, RdImage value);
 
         //-- Screen interface parameters
-        static const std::string PARAM_FRAME;
+        static const std::string PARAM_CAMERA_FRAME;
         static const std::string PARAM_MYSELF;
         static const std::string PARAM_PLAYERS;
         static const std::string PARAM_TARGETS;
@@ -102,14 +103,22 @@ class GameScreen : public RdScreen
         static const int AMMO_TEXT_WIDTH = 50;
         static const int AMMO_TEXT_HEIGHT = 10;
 
-        //-- Fonts and colors
+        //-- Refresh control
+        bool update_required;
+
+        //-- SDL stuff
+        SDL_Surface * screen;
         TTF_Font *player_font, *target_font, *weapon_font;
 
         static const SDL_Color greencolor;
         static const SDL_Color redcolor;
         static const SDL_Color bluecolor;
 
-        RdMentalMap * mentalMap;
+        RdPlayer myself;
+        std::vector<RdPlayer> players;
+        std::vector<RdTarget> targets;
+        RdWeapon current_weapon;
+        RdImage camera_frame;
 
 };
 
