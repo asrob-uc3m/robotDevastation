@@ -35,13 +35,14 @@ bool rd::RdYarpNetworkManager::start()
     rpc_str << "/";
     rpc_str << id;
     rpc_str << "/rdServer/rpc:o";
-    rpcClient.open( rpc_str.str().c_str() );
+    rpcClient.open( rpc_str.str() );
+
     //-- Open the callback port with this player's id
     std::ostringstream callback_str;
     callback_str << "/";
     callback_str << id;
     callback_str << "/rdServer/command:i";
-    callbackPort.open( callback_str.str().c_str());
+    callbackPort.open( callback_str.str() );
 
     //-- Try to connect to the server until timeout
     int tries = 0;
