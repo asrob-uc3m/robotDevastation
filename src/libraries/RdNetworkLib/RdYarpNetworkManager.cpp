@@ -51,7 +51,7 @@ bool rd::RdYarpNetworkManager::start()
             break;
         RD_INFO("Waiting for rpc to be connected to server...\n");
         yarp::os::Time::delay(0.5);
-        yarp::os::Network::connect( rpc_s.str().c_str() , "/rdServer" );
+        yarp::os::Network::connect( rpc_s.str() , "/rdServer" );
     }
 
     if (tries == 10)
@@ -62,7 +62,7 @@ bool rd::RdYarpNetworkManager::start()
 
     RD_SUCCESS("Rpc connected to Server (outgoing)!\n")
 
-    if ( !yarp::os::Network::connect( "/rdBroadcast", call_s.str().c_str() ))
+    if ( !yarp::os::Network::connect( "/rdBroadcast", call_s.str() ))
     {
         RD_ERROR("Error connecting to server (incoming broadcast).\n");
         return false;
