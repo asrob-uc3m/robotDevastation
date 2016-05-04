@@ -123,7 +123,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     networkManager = RdYarpNetworkManager::getNetworkManager(RdYarpNetworkManager::id);
     networkManager->addNetworkEventListener(mentalMap);
     mentalMap->addMentalMapEventListener((RdYarpNetworkManager *)networkManager);
-    networkManager->login(mentalMap->getMyself());
+    if( ! networkManager->login(mentalMap->getMyself()) )
+        return false;
 
     //-- Init output thread
     rateThreadOutput.init(rf);

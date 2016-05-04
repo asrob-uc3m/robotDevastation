@@ -31,44 +31,46 @@ bool rd::RdYarpNetworkManager::start()
     yarp::os::NetworkBase::initMinimum();
 
     //-- Open the rcpClient port with this player's id
-    std::ostringstream rpc_s;
-    rpc_s << "/";
-    rpc_s << id;
-    rpc_s << "/rdServer/rpc:o";
-    rpcClient.open( rpc_s.str().c_str() );
-    std::ostringstream call_s;
-    call_s << "/";
-    call_s << id;
-    call_s << "/rdServer/command:i";
-    callbackPort.open( call_s.str().c_str());
-    callbackPort.useCallback(*this);
+    std::ostringstream rpc_str;
+    rpc_str << "/";
+    rpc_str << id;
+    rpc_str << "/rdServer/rpc:o";
+    rpcClient.open( rpc_str.str() );
 
-    //-- Try to connect to the server until timeout
+    //-- Open the callback port with this player's id
+    std::ostringstream callback_str;
+    callback_str << "/";
+    callback_str << id;
+    callback_str << "/rdServer/command:i";
+    callbackPort.open( callback_str.str() );
+
+    //-- Try to rpc connect to the server until timeout
     int tries = 0;
     while(tries++ < 10)
     {
         if(rpcClient.getOutputCount() > 0)
             break;
-        RD_INFO("Waiting for rpc to be connected to server...\n");
+        RD_INFO("Waiting for rpc to be connected to rdServer (launch 'rdServer' if not already launched). Attempt: %d\n",tries);
         yarp::os::Time::delay(0.5);
-        yarp::os::Network::connect( rpc_s.str().c_str() , "/rdServer" );
+        yarp::os::Network::connect( rpc_str.str() , "/rdServer" );
     }
-
-    if (tries == 10)
+    if (tries == 11)  //-- 11 allows  10 attempts
     {
-        RD_ERROR("Timeout for rpc to be connected to server!\n");
+        RD_ERROR("Timeout for rpc to be connected to server.\n");
+        return false;
+    }
+    RD_SUCCESS("Rpc connected to Server (outgoing)!\n")
+
+    //-- Try to connect to the broadcast server until timeout
+    if ( !yarp::os::Network::connect( "/rdBroadcast", callback_str.str() ))
+    {
+        RD_ERROR("Error connecting to server (incoming broadcast).\n");
         return false;
     }
 
-    RD_SUCCESS("Connected to Server (outgoing)!\n")
+    RD_SUCCESS("Connected to Server (incoming broadcast)!\n")
 
-    if ( !yarp::os::Network::connect( "/rdBroadcast", call_s.str().c_str() ))
-    {
-        RD_ERROR("Error connecting to server (incoming)!\n");
-        return false;
-    }
-
-   RD_SUCCESS("Connected to Server (incoming)!\n")
+    callbackPort.useCallback(*this);
 
     return true;
 }
@@ -163,7 +165,7 @@ bool rd::RdYarpNetworkManager::login(rd::RdPlayer player)
 
     if( !start())
     {
-        RD_ERROR("RdNetworkManager could not be started for player %d", player.getId() );
+        RD_ERROR("RdNetworkManager could not be started for player %d\n", player.getId() );
         return false;
     }
 
