@@ -44,7 +44,7 @@ bool rd::RdYarpNetworkManager::start()
     callback_str << "/rdServer/command:i";
     callbackPort.open( callback_str.str() );
 
-    //-- Try to connect to the server until timeout
+    //-- Try to rpc connect to the server until timeout
     int tries = 0;
     while(tries++ < 10)
     {
@@ -54,15 +54,14 @@ bool rd::RdYarpNetworkManager::start()
         yarp::os::Time::delay(0.5);
         yarp::os::Network::connect( rpc_str.str() , "/rdServer" );
     }
-
     if (tries == 10)
     {
         RD_ERROR("Timeout for rpc to be connected to server.\n");
         return false;
     }
-
     RD_SUCCESS("Rpc connected to Server (outgoing)!\n")
 
+    //-- Try to connect to the broadcast server until timeout
     if ( !yarp::os::Network::connect( "/rdBroadcast", callback_str.str() ))
     {
         RD_ERROR("Error connecting to server (incoming broadcast).\n");
