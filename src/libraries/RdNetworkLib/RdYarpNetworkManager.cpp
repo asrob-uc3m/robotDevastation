@@ -36,6 +36,7 @@ bool rd::RdYarpNetworkManager::start()
     rpc_s << id;
     rpc_s << "/rdServer/rpc:o";
     rpcClient.open( rpc_s.str().c_str() );
+    //-- Open the callback port with this player's id
     std::ostringstream call_s;
     call_s << "/";
     call_s << id;
