@@ -165,7 +165,7 @@ bool rd::RdYarpNetworkManager::login(rd::RdPlayer player)
 
     if( !start())
     {
-        RD_ERROR("RdNetworkManager could not be started for player %d", player.getId() );
+        RD_ERROR("RdNetworkManager could not be started for player %d\n", player.getId() );
         return false;
     }
 
