@@ -31,17 +31,17 @@ bool rd::RdYarpNetworkManager::start()
     yarp::os::NetworkBase::initMinimum();
 
     //-- Open the rcpClient port with this player's id
-    std::ostringstream rpc_s;
-    rpc_s << "/";
-    rpc_s << id;
-    rpc_s << "/rdServer/rpc:o";
-    rpcClient.open( rpc_s.str().c_str() );
+    std::ostringstream rpc_str;
+    rpc_str << "/";
+    rpc_str << id;
+    rpc_str << "/rdServer/rpc:o";
+    rpcClient.open( rpc_str.str().c_str() );
     //-- Open the callback port with this player's id
-    std::ostringstream call_s;
-    call_s << "/";
-    call_s << id;
-    call_s << "/rdServer/command:i";
-    callbackPort.open( call_s.str().c_str());
+    std::ostringstream callback_str;
+    callback_str << "/";
+    callback_str << id;
+    callback_str << "/rdServer/command:i";
+    callbackPort.open( callback_str.str().c_str());
 
     //-- Try to connect to the server until timeout
     int tries = 0;
@@ -51,7 +51,7 @@ bool rd::RdYarpNetworkManager::start()
             break;
         RD_INFO("Waiting for rpc to be connected to server...\n");
         yarp::os::Time::delay(0.5);
-        yarp::os::Network::connect( rpc_s.str() , "/rdServer" );
+        yarp::os::Network::connect( rpc_str.str() , "/rdServer" );
     }
 
     if (tries == 10)
@@ -62,7 +62,7 @@ bool rd::RdYarpNetworkManager::start()
 
     RD_SUCCESS("Rpc connected to Server (outgoing)!\n")
 
-    if ( !yarp::os::Network::connect( "/rdBroadcast", call_s.str() ))
+    if ( !yarp::os::Network::connect( "/rdBroadcast", callback_str.str() ))
     {
         RD_ERROR("Error connecting to server (incoming broadcast).\n");
         return false;
