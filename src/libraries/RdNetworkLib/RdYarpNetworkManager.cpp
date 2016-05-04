@@ -42,7 +42,6 @@ bool rd::RdYarpNetworkManager::start()
     call_s << id;
     call_s << "/rdServer/command:i";
     callbackPort.open( call_s.str().c_str());
-    callbackPort.useCallback(*this);
 
     //-- Try to connect to the server until timeout
     int tries = 0;
@@ -70,6 +69,8 @@ bool rd::RdYarpNetworkManager::start()
     }
 
    RD_SUCCESS("Connected to Server (incoming)!\n")
+
+    callbackPort.useCallback(*this);
 
     return true;
 }
