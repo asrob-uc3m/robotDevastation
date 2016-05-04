@@ -50,11 +50,11 @@ bool rd::RdYarpNetworkManager::start()
     {
         if(rpcClient.getOutputCount() > 0)
             break;
-        RD_INFO("Waiting for rpc to be connected to server...\n");
+        RD_INFO("Waiting for rpc to be connected to rdServer (launch 'rdServer' if not already launched). Attempt: %d\n",tries);
         yarp::os::Time::delay(0.5);
         yarp::os::Network::connect( rpc_str.str() , "/rdServer" );
     }
-    if (tries == 10)
+    if (tries == 11)  //-- 11 allows  10 attempts
     {
         RD_ERROR("Timeout for rpc to be connected to server.\n");
         return false;
