@@ -56,19 +56,19 @@ bool rd::RdYarpNetworkManager::start()
 
     if (tries == 10)
     {
-        RD_ERROR("Timeout for rpc to be connected to server!\n");
+        RD_ERROR("Timeout for rpc to be connected to server.\n");
         return false;
     }
 
-    RD_SUCCESS("Connected to Server (outgoing)!\n")
+    RD_SUCCESS("Rpc connected to Server (outgoing)!\n")
 
     if ( !yarp::os::Network::connect( "/rdBroadcast", call_s.str().c_str() ))
     {
-        RD_ERROR("Error connecting to server (incoming)!\n");
+        RD_ERROR("Error connecting to server (incoming broadcast).\n");
         return false;
     }
 
-   RD_SUCCESS("Connected to Server (incoming)!\n")
+    RD_SUCCESS("Connected to Server (incoming broadcast)!\n")
 
     callbackPort.useCallback(*this);
 
