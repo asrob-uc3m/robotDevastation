@@ -23,7 +23,7 @@ class RdMockupRobotManagerTest : public testing::Test
         static const std::string robot_name;
 
     protected:
-        RdRobotManager * robotManager;
+        RdMockupRobotManager * robotManager;
 
 };
 
@@ -55,7 +55,7 @@ TEST_F(RdMockupRobotManagerTest, RdMockupRobotMoves)
     //-- Moving backwards (and stop)
     EXPECT_TRUE(robotManager->moveBackwards());
     EXPECT_TRUE(robotManager->isMoving());
-    EXPECT_EQ(RdMockupRobotManager::BACKWARDS, robotManager-getMovementDirection());
+    EXPECT_EQ(RdMockupRobotManager::BACKWARDS, robotManager->getMovementDirection());
     EXPECT_TRUE(robotManager->stopMovement());
     EXPECT_FALSE(robotManager->isMoving());
     EXPECT_EQ(RdMockupRobotManager::NONE, robotManager->getMovementDirection());

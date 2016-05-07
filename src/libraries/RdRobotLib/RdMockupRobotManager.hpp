@@ -48,7 +48,23 @@ class RdMockupRobotManager : public RdRobotManager
 
         //-- Mockup functionality
         //-----------------------------------------------------
-        
+	bool isConnected();
+
+	bool isMoving();
+	int getMovementDirection();
+	static const int FORWARD;
+	static const int BACKWARDS;
+	static const int LEFT;
+	static const int RIGHT;
+ 	static const int NONE;
+
+	bool isCameraMoving();
+	int getCameraMovementDirection();
+	static const int CAMERA_UP;
+	static const int CAMERA_DOWN;
+	static const int CAMERA_LEFT;
+	static const int CAMERA_RIGHT;
+ 	static const int CAMERA_NONE;        
 };
 
 }
