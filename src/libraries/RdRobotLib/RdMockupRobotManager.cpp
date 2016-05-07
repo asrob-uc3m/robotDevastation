@@ -19,31 +19,77 @@ namespace rd
 RdMockupRobotManager:: RdMockupRobotManager(const std::string& robotName): RdRobotManager(robotName)
 { 
     connected = false;
+    movement_direction = NONE;
 }
 
-bool RdMockupRobotManager::moveForward(int velocity) {
-    RD_DEBUG("(%d)\n",velocity)
-    return false;
+bool RdMockupRobotManager::moveForward(int velocity) 
+{
+    if (connected)
+    {
+        movement_direction = FORWARD;
+        return true;
+    }
+    else
+    {
+        RD_DEBUG("Not connected\n");
+        return false;
+    }
 }
 
-bool RdMockupRobotManager::moveBackwards(int velocity) {
-    RD_DEBUG("(%d)\n",velocity)
-    return false;
+bool RdMockupRobotManager::moveBackwards(int velocity)
+{
+    if (connected)
+    {
+        movement_direction = BACKWARDS;
+        return true;
+    }
+    else
+    {
+        RD_DEBUG("Not connected\n");
+        return false;
+    }
 }
 
-bool RdMockupRobotManager::turnLeft(int velocity) {
-    RD_DEBUG("(%d)\n",velocity)
-    return false;
+bool RdMockupRobotManager::turnLeft(int velocity) 
+{
+    if (connected)
+    {
+        movement_direction = LEFT;
+        return true;
+    }
+    else
+    {
+        RD_DEBUG("Not connected\n");
+        return false;
+    }
 }
 
-bool RdMockupRobotManager::turnRight(int velocity) {
-    RD_DEBUG("(%d)\n",velocity)
-    return false;
+bool RdMockupRobotManager::turnRight(int velocity)
+{
+    if (connected)
+    {
+        movement_direction = RIGHT;
+        return true;
+    }
+    else
+    {
+        RD_DEBUG("Not connected\n");
+        return false;
+    }
 }
 
-bool RdMockupRobotManager::stopMovement() {
-    RD_DEBUG("\n");
-    return false;
+bool RdMockupRobotManager::stopMovement()
+{
+    if (connected)
+    {
+        movement_direction = NONE;
+        return true;
+    }
+    else
+    {
+        RD_DEBUG("Not connected\n");
+        return false;
+    }
 }
 
 bool RdMockupRobotManager::tiltUp(int velocity) {
@@ -117,12 +163,14 @@ bool RdMockupRobotManager::isConnected() {
     return connected;
 }
 
-bool RdMockupRobotManager::isMoving() {
-    return false;
+bool RdMockupRobotManager::isMoving() 
+{
+    return movement_direction!=NONE;
 }
 
-int RdMockupRobotManager::getMovementDirection() {
-    return -1;
+int RdMockupRobotManager::getMovementDirection() 
+{
+    return movement_direction;
 }
 
 bool RdMockupRobotManager::isCameraMoving() {
