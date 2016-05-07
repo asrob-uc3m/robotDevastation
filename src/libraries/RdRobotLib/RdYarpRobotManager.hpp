@@ -36,6 +36,7 @@ class RdYarpRobotManager : public RdRobotManager
         virtual bool tiltDown(int velocity = UNUSED);
         virtual bool panLeft(int velocity = UNUSED);
         virtual bool panRight(int velocity = UNUSED);
+        virtual bool stopCameraMovement();
         
         //-- Robot connection related functions
         virtual bool connect();

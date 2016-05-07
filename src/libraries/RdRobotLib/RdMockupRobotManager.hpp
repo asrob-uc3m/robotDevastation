@@ -3,7 +3,6 @@
 #ifndef __RD_MOCKUP_ROBOT_MANAGER_HPP__
 #define __RD_MOCKUP_ROBOT_MANAGER_HPP__
 
-#include <yarp/dev/all.h>
 
 #include <sstream>
 
@@ -14,15 +13,17 @@ namespace rd{
 /**
  * @ingroup RdRobotManagerLib
  *
- * @brief The Robot Manager for the Rd1 robot.
+ * @brief The Robot Manager for testing
  *
  */
 class RdMockupRobotManager : public RdRobotManager
 {
     public:
 
-        RdMockupRobotManager(const std::string& robotName) : RdRobotManager(robotName) { }
+        RdMockupRobotManager(const std::string& robotName);
 
+	//-- RdRobotManager interface
+        //-----------------------------------------------------
         //-- Robot movement related functions    
         virtual bool moveForward(int velocity = UNUSED);
         virtual bool moveBackwards(int velocity = UNUSED);
@@ -35,6 +36,7 @@ class RdMockupRobotManager : public RdRobotManager
         virtual bool tiltDown(int velocity = UNUSED);
         virtual bool panLeft(int velocity = UNUSED);
         virtual bool panRight(int velocity = UNUSED);
+        virtual bool stopCameraMovement();
         
         //-- Robot connection related functions
         virtual bool connect();
@@ -44,11 +46,30 @@ class RdMockupRobotManager : public RdRobotManager
 
         virtual void onDestroy();
 
-    protected:
+        //-- Mockup functionality
+        //-----------------------------------------------------
+	bool isConnected();
 
-        yarp::dev::PolyDriver robotDevice;
-        yarp::dev::IVelocityControl *vel;
+	bool isMoving();
+	int getMovementDirection();
+	static const int FORWARD;
+	static const int BACKWARDS;
+	static const int LEFT;
+	static const int RIGHT;
+ 	static const int NONE;
 
+	bool isCameraMoving();
+	int getCameraMovementDirection();
+	static const int CAMERA_UP;
+	static const int CAMERA_DOWN;
+	static const int CAMERA_LEFT;
+	static const int CAMERA_RIGHT;
+ 	static const int CAMERA_NONE;     
+
+    private:
+	bool connected;
+	int movement_direction;
+        int camera_movement_direction;
 };
 
 }

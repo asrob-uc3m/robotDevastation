@@ -39,6 +39,7 @@ class RdRobotManager
         virtual bool tiltDown(int velocity = UNUSED) = 0;
         virtual bool panLeft(int velocity = UNUSED) = 0;
         virtual bool panRight(int velocity = UNUSED) = 0;
+        virtual bool stopCameraMovement() = 0;
         
         //-- Robot connection related functions
         virtual bool connect() = 0;
