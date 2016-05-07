@@ -16,6 +16,10 @@ const int rd::RdMockupRobotManager::CAMERA_NONE = 0;
 
 namespace rd
 {
+RdMockupRobotManager:: RdMockupRobotManager(const std::string& robotName): RdRobotManager(robotName)
+{ 
+    connected = false;
+}
 
 bool RdMockupRobotManager::moveForward(int velocity) {
     RD_DEBUG("(%d)\n",velocity)
@@ -66,14 +70,32 @@ bool RdMockupRobotManager::stopCameraMovement() {
     return false;
 }
         
-bool RdMockupRobotManager::connect()  {
-    RD_DEBUG("\n");
-    return false;
+bool RdMockupRobotManager::connect()  
+{
+    if (!connected)
+    {
+	connected = true;
+        return true;
+    }
+    else
+    {
+        RD_DEBUG("Already connected\n");
+        return false;
+    }
 }
 
-bool RdMockupRobotManager::disconnect()  {
-    RD_DEBUG("\n");
-    return false;
+bool RdMockupRobotManager::disconnect()  
+{
+    if (connected)
+    {
+	connected = false;
+        return true;
+    }
+    else
+    {
+        RD_DEBUG("Not connected\n");
+        return false;
+    }
 }
 
 bool RdMockupRobotManager::test()  {
@@ -92,7 +114,7 @@ void RdMockupRobotManager::onDestroy(){
 }
 
 bool RdMockupRobotManager::isConnected() {
-    return false;
+    return connected;
 }
 
 bool RdMockupRobotManager::isMoving() {

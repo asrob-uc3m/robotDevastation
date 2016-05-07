@@ -20,7 +20,7 @@ class RdMockupRobotManager : public RdRobotManager
 {
     public:
 
-        RdMockupRobotManager(const std::string& robotName) : RdRobotManager(robotName) { }
+        RdMockupRobotManager(const std::string& robotName);
 
 	//-- RdRobotManager interface
         //-----------------------------------------------------
@@ -64,7 +64,10 @@ class RdMockupRobotManager : public RdRobotManager
 	static const int CAMERA_DOWN;
 	static const int CAMERA_LEFT;
 	static const int CAMERA_RIGHT;
- 	static const int CAMERA_NONE;        
+ 	static const int CAMERA_NONE;     
+
+    private:
+	bool connected;
 };
 
 }
