@@ -48,6 +48,10 @@ bool RdYarpRobotManager::panLeft(int velocity) {
 bool RdYarpRobotManager::panRight(int velocity) {
     return true;
 }
+
+bool RdYarpRobotManager::stopCameraMovement() {
+    return true;
+}
         
 bool RdYarpRobotManager::connect()  {
 
