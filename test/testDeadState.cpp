@@ -27,6 +27,7 @@
 #include "MockupState.hpp"
 #include "MockupInputEventListener.hpp"
 
+#include <yarp/sig/all.h>
 #include <yarp/os/Network.h>
 #include <yarp/os/Time.h>
 

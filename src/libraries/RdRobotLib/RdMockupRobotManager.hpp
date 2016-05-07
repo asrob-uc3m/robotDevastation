@@ -3,7 +3,6 @@
 #ifndef __RD_MOCKUP_ROBOT_MANAGER_HPP__
 #define __RD_MOCKUP_ROBOT_MANAGER_HPP__
 
-#include <yarp/dev/all.h>
 
 #include <sstream>
 
@@ -14,7 +13,7 @@ namespace rd{
 /**
  * @ingroup RdRobotManagerLib
  *
- * @brief The Robot Manager for the Rd1 robot.
+ * @brief The Robot Manager for testing
  *
  */
 class RdMockupRobotManager : public RdRobotManager
@@ -23,6 +22,8 @@ class RdMockupRobotManager : public RdRobotManager
 
         RdMockupRobotManager(const std::string& robotName) : RdRobotManager(robotName) { }
 
+	//-- RdRobotManager interface
+        //-----------------------------------------------------
         //-- Robot movement related functions    
         virtual bool moveForward(int velocity = UNUSED);
         virtual bool moveBackwards(int velocity = UNUSED);
@@ -44,11 +45,9 @@ class RdMockupRobotManager : public RdRobotManager
 
         virtual void onDestroy();
 
-    protected:
-
-        yarp::dev::PolyDriver robotDevice;
-        yarp::dev::IVelocityControl *vel;
-
+        //-- Mockup functionality
+        //-----------------------------------------------------
+        
 };
 
 }
