@@ -69,6 +69,7 @@ class RdMockupRobotManager : public RdRobotManager
     private:
 	bool connected;
 	int movement_direction;
+        int camera_movement_direction;
 };
 
 }

@@ -20,6 +20,7 @@ RdMockupRobotManager:: RdMockupRobotManager(const std::string& robotName): RdRob
 { 
     connected = false;
     movement_direction = NONE;
+    camera_movement_direction = CAMERA_NONE;
 }
 
 bool RdMockupRobotManager::moveForward(int velocity) 
@@ -31,7 +32,7 @@ bool RdMockupRobotManager::moveForward(int velocity)
     }
     else
     {
-        RD_DEBUG("Not connected\n");
+        RD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -45,7 +46,7 @@ bool RdMockupRobotManager::moveBackwards(int velocity)
     }
     else
     {
-        RD_DEBUG("Not connected\n");
+        RD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -59,7 +60,7 @@ bool RdMockupRobotManager::turnLeft(int velocity)
     }
     else
     {
-        RD_DEBUG("Not connected\n");
+        RD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -73,7 +74,7 @@ bool RdMockupRobotManager::turnRight(int velocity)
     }
     else
     {
-        RD_DEBUG("Not connected\n");
+        RD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -87,33 +88,79 @@ bool RdMockupRobotManager::stopMovement()
     }
     else
     {
-        RD_DEBUG("Not connected\n");
+        RD_ERROR("Not connected\n");
         return false;
     }
 }
 
-bool RdMockupRobotManager::tiltUp(int velocity) {
-    RD_DEBUG("(%d)\n",velocity)
-    return false;
+bool RdMockupRobotManager::tiltUp(int velocity)
+{
+    if (connected)
+    {
+        camera_movement_direction = CAMERA_UP;
+        return true;
+    }
+    else
+    {
+        RD_ERROR("Not connected\n");
+        return false;
+    }
 }
 
-bool RdMockupRobotManager::tiltDown(int velocity) {
-    RD_DEBUG("(%d)\n",velocity)
-    return false;
+bool RdMockupRobotManager::tiltDown(int velocity)
+{
+    if (connected)
+    {
+        camera_movement_direction = CAMERA_DOWN;
+        return true;
+    }
+    else
+    {
+        RD_ERROR("Not connected\n");
+        return false;
+    }
 }
 
-bool RdMockupRobotManager::panLeft(int velocity) {
-    RD_DEBUG("(%d)\n",velocity)
-    return false;
+bool RdMockupRobotManager::panLeft(int velocity)
+{
+    if (connected)
+    {
+        camera_movement_direction = CAMERA_LEFT;
+        return true;
+    }
+    else
+    {
+        RD_ERROR("Not connected\n");
+        return false;
+    }
 }
 
-bool RdMockupRobotManager::panRight(int velocity) {
-    RD_DEBUG("(%d)\n",velocity)
-    return false;
+bool RdMockupRobotManager::panRight(int velocity)
+{
+    if (connected)
+    {
+        camera_movement_direction = CAMERA_RIGHT;
+        return true;
+    }
+    else
+    {
+        RD_ERROR("Not connected\n");
+        return false;
+    }
 }
 
-bool RdMockupRobotManager::stopCameraMovement() {
-    return false;
+bool RdMockupRobotManager::stopCameraMovement()
+{
+    if (connected)
+    {
+        camera_movement_direction = NONE;
+        return true;
+    }
+    else
+    {
+        RD_ERROR("Not connected\n");
+        return false;
+    }
 }
         
 bool RdMockupRobotManager::connect()  
@@ -125,7 +172,7 @@ bool RdMockupRobotManager::connect()
     }
     else
     {
-        RD_DEBUG("Already connected\n");
+        RD_ERROR("Already connected\n");
         return false;
     }
 }
@@ -139,7 +186,7 @@ bool RdMockupRobotManager::disconnect()
     }
     else
     {
-        RD_DEBUG("Not connected\n");
+        RD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -159,7 +206,8 @@ void RdMockupRobotManager::onDestroy(){
     return;
 }
 
-bool RdMockupRobotManager::isConnected() {
+bool RdMockupRobotManager::isConnected()
+{
     return connected;
 }
 
@@ -173,12 +221,14 @@ int RdMockupRobotManager::getMovementDirection()
     return movement_direction;
 }
 
-bool RdMockupRobotManager::isCameraMoving() {
-    return false;
+bool RdMockupRobotManager::isCameraMoving()
+{
+    return camera_movement_direction != NONE;
 }
 
-int RdMockupRobotManager::getCameraMovementDirection() {
-    return -1;
+int RdMockupRobotManager::getCameraMovementDirection()
+{
+    return camera_movement_direction;
 }
 
 } //rd
