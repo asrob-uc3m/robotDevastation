@@ -40,6 +40,21 @@ TEST_F(RdMockupRobotManagerTest, RdMockupRobotConnectionIsOk)
     ASSERT_FALSE(robotManager->isConnected());
 }
 
+TEST_F(RdMockupRobotManagerTest, RdMockupRobotCannotMoveIfDisconnected)
+{
+    EXPECT_FALSE(robotManager->moveForward());
+    EXPECT_FALSE(robotManager->moveBackwards());
+    EXPECT_FALSE(robotManager->turnLeft());
+    EXPECT_FALSE(robotManager->turnRight());
+    EXPECT_FALSE(robotManager->stopMovement());
+
+    EXPECT_FALSE(robotManager->tiltUp());
+    EXPECT_FALSE(robotManager->tiltDown());
+    EXPECT_FALSE(robotManager->panLeft());
+    EXPECT_FALSE(robotManager->panRight());
+    EXPECT_FALSE(robotManager->isCameraMoving());
+}
+
 TEST_F(RdMockupRobotManagerTest, RdMockupRobotMoves)
 {
     ASSERT_TRUE(robotManager->connect());
