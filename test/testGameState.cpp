@@ -42,12 +42,15 @@ class GameStateTest : public testing::Test
             mockupNetworkManager = dynamic_cast<MockupNetworkManager *>(networkManager);
             ASSERT_NE((RdNetworkManager*) NULL, networkManager);
             ASSERT_NE((MockupNetworkManager*) NULL, mockupNetworkManager);
-            RdPlayer me = RdPlayer(0, "TEST_PLAYER", 100, 100, 0, 0);
 
             imageManager = RdImageManager::getImageManager("MOCKUP");
             mockupImageManager = dynamic_cast<RdMockupImageManager *>(imageManager);
             ASSERT_NE((RdImageManager*) NULL, imageManager);
             ASSERT_NE((RdMockupImageManager*) NULL, mockupImageManager);
+            //-- Load test images
+            yarp::sig::file::read(test_frame_no_target, FRAME_NO_TARGET_PATH);
+            yarp::sig::file::read(test_frame_with_target, FRAME_WITH_TARGET_PATH);
+            mockupImageManager->receiveImage(test_frame_no_target);
 
             inputManager = RdInputManager::getInputManager("MOCKUP");
             mockupInputManager = dynamic_cast<MockupInputManager *>(inputManager);
@@ -62,13 +65,31 @@ class GameStateTest : public testing::Test
 
             mentalMap = RdMentalMap::getMentalMap();
             ASSERT_NE((RdMentalMap*) NULL, mentalMap);
-
-
+            mentalMap->addWeapon(RdWeapon("Machine gun", 10, MAX_AMMO));
+            ASSERT_TRUE(mentalMap->configure(1));
+            //-- Insert players for testing
+            std::vector<RdPlayer> players;
+            players.push_back(RdPlayer(1,"test_player", MAX_HEALTH, MAX_HEALTH, 0, 0));
+            players.push_back(RdPlayer(2,"enemy", MAX_HEALTH, MAX_HEALTH, 0, 0) );
+            ASSERT_TRUE(mentalMap->updatePlayers(players));
 
             mockupRobotManager = new RdMockupRobotManager("MOCKUP");
             robotManager = (RdRobotManager *) mockupRobotManager;
             ASSERT_NE((RdMockupRobotManager*) NULL, mockupRobotManager);
             ASSERT_NE((RdRobotManager*) NULL, robotManager);
+
+            //-- Setup managers to the required initial state:
+            //-- Note: For simplicity, I'm using InitState here and manually calling
+            //-- the correct initialization sequence. The testInitState allows to test
+            //-- if InitState works correctly.
+            State * initState = new InitState(networkManager, imageManager, inputManager,
+                                              mentalMap, robotManager, audioManager);
+            initState->setup();
+            dynamic_cast<RdInputEventListener *>(initState)->onKeyUp(MockupKey(RdKey::KEY_ENTER));
+            initState->loop();
+            initState->cleanup();
+            delete initState;
+            initState = NULL;
         }
 
         virtual void TearDown()
@@ -94,6 +115,9 @@ class GameStateTest : public testing::Test
 
         }
 
+    static const int MAX_HEALTH;
+    static const int MAX_AMMO;
+
     protected:
         FiniteStateMachine *fsm;
 
@@ -113,7 +137,18 @@ class GameStateTest : public testing::Test
 
         RdMockupRobotManager * mockupRobotManager;
         RdRobotManager * robotManager;
+
+        RdImage test_frame_no_target;
+        RdImage test_frame_with_target;
+
+        static const std::string FRAME_NO_TARGET_PATH;
+        static const std::string FRAME_WITH_TARGET_PATH;
 };
+
+const int GameStateTest::MAX_HEALTH = 100;
+const int GameStateTest::MAX_AMMO = 10;
+const std::string GameStateTest::FRAME_NO_TARGET_PATH = "../../share/images/test_frame_qr.ppm";
+const std::string GameStateTest::FRAME_WITH_TARGET_PATH = "../../share/images/test_frame_qr_centered.ppm";
 
 //--- Tests ------------------------------------------------------------------------------------------
 TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
@@ -165,29 +200,47 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
 
     //-- Testing game flow
     //-----------------------------------------------------------------------------
+    //-- Check that GameState is active
+    ASSERT_EQ(game_state_id, fsm->getCurrentState());
+
     //-- If my robot is hit, health decreases
     ASSERT_TRUE(mockupNetworkManager->sendPlayerHit(mentalMap->getMyself(), 50));
     ASSERT_EQ(50, mentalMap->getMyself().getHealth());
 
     //-- If I send move commands, robot moves
-    //-- (Insert code here)
+//    mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_ARROW_LEFT));
 
     //-- If I shoot with no target in the scope, the enemies life is kept equal
-    //-- (Insert code here)
+    std::vector<RdPlayer> players_before = mentalMap->getPlayers();
+    mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_SPACE));
+    std::vector<RdPlayer> players_after = mentalMap->getPlayers();
+    ASSERT_EQ(players_before.size(), players_after.size());
+    for(int i = 0; i < players_before.size(); i++)
+        EXPECT_EQ(players_before[i].getHealth(), players_after[i].getHealth());
 
     //-- If I shoot all ammo, I cannot shoot until reloading
-    //-- (Insert code here)
+    for(int i = 0; i < GameStateTest::MAX_AMMO; i++)
+        mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_SPACE));
+    ASSERT_EQ(0, mentalMap->getCurrentWeapon().getCurrentAmmo());
 
     //-- After reloading, I can shoot again
-    //-- (Insert code here)
+    mockupInputManager->sendKeyPress(MockupKey('r'));
+    ASSERT_EQ(GameStateTest::MAX_AMMO, mentalMap->getCurrentWeapon().getCurrentAmmo());
 
     //-- If I hit other robot, other robot health decreases
-    //-- (Insert code here)
+    mockupImageManager->receiveImage(test_frame_with_target);
+    players_before = mentalMap->getPlayers();
+    mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_SPACE));
+    players_after = mentalMap->getPlayers();
+    ASSERT_EQ(players_before.size(), players_after.size());
+    for(int i = 0; i < players_before.size(); i++)
+        if (players_before[i].getId() != mentalMap->getMyself().getId())
+            EXPECT_LT(players_before[i].getHealth(), players_after[i].getHealth());
 
     //-- If I lose all health, game is over
     ASSERT_TRUE(mockupNetworkManager->sendPlayerHit(mentalMap->getMyself(), 50));
     ASSERT_EQ(0, mentalMap->getMyself().getHealth());
-
+    yarp::os::Time::delay(0.5);
 
     //-- Check things that should occur before going to dead state (cleanup)
     //------------------------------------------------------------------------------
@@ -204,6 +257,9 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
     //ASSERT_FALSE(mockupRobotManager->isStopped()); //-- Not correctly implemented
     //ASSERT_FALSE(mockupRobotManager->isConnected());
+
+    //-- Check that deadState is active
+    ASSERT_EQ(dead_state_id, fsm->getCurrentState());
 }
 
 TEST_F(GameStateTest, GameStateQuitsWhenRequested )

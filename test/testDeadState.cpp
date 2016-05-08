@@ -280,7 +280,7 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
     //ASSERT_FALSE(mockupRobotManager->isStopped()); //-- Not correctly implemented
     //ASSERT_FALSE(mockupRobotManager->isConnected());
 
-    //-- Check that deadState is active
+    //-- Check that gameState is active
     ASSERT_EQ(game_state_id, fsm->getCurrentState());
 
 }
