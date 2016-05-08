@@ -33,7 +33,6 @@ namespace rd{
 class GameState : public State, public ManagerHub, public RdInputEventListener
 {
     public:
-        //GameState();
         GameState(RdNetworkManager * networkManager, RdImageManager * imageManager,
                   RdInputManager * inputManager, RdMentalMap * mentalMap,
                   RdRobotManager * robotManager, AudioManager * audioManager);
@@ -46,7 +45,7 @@ class GameState : public State, public ManagerHub, public RdInputEventListener
         virtual int evaluateConditions();
 
         static const int KILLED;
-        static const int LOGOUT_REQUESTED;
+        static const int QUIT_REQUESTED;
 
         //-- RdInputEventListener interface:
         virtual bool onKeyDown(RdKey k);

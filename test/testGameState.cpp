@@ -14,8 +14,10 @@
 #include "RdMentalMap.hpp"
 #include "RdMockupRobotManager.hpp"
 #include "MockupAudioManager.hpp"
+#include "MockupState.hpp"
 
 #include <yarp/os/Network.h>
+#include <yarp/os/Time.h>
 
 using namespace rd;
 
