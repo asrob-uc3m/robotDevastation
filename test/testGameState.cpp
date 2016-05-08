@@ -114,60 +114,72 @@ class GameStateTest : public testing::Test
 };
 
 //--- Tests ------------------------------------------------------------------------------------------
-TEST_F(GameStateTest, GameStateWorksCorrectlyToKilled )
+TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
 {
-    //-- Create fsm with InitState
+    //-- Create fsm with GameState
     StateMachineBuilder builder;
     ASSERT_TRUE(builder.setDirectorType("YARP"));
 
-    int init_state_id = builder.addState(new InitState(networkManager, imageManager, inputManager, mentalMap,
-                                                       robotManager, audioManager));
     int game_state_id = builder.addState(new GameState(networkManager, imageManager, inputManager, mentalMap,
                                                        robotManager, audioManager));
+    ASSERT_NE(-1, game_state_id);
+    int dead_state_id = builder.addState(new MockupState(1));
+    ASSERT_NE(-1, dead_state_id);
     int end_state_id = builder.addState(State::getEndState());
 
-    ASSERT_NE(-1, init_state_id);
-    ASSERT_TRUE(builder.addTransition(init_state_id, game_state_id, InitState::LOGIN_SUCCESSFUL));
-    ASSERT_TRUE(builder.addTransition(game_state_id, end_state_id, GameState::KILLED));
-    ASSERT_TRUE(builder.setInitialState(init_state_id));
+    ASSERT_TRUE(builder.addTransition(game_state_id, dead_state_id, GameState::KILLED));
+    ASSERT_TRUE(builder.addTransition(game_state_id, end_state_id, GameState::QUIT_REQUESTED));
+    ASSERT_TRUE(builder.setInitialState(game_state_id));
 
     fsm = builder.buildStateMachine();
     ASSERT_NE((FiniteStateMachine*)NULL, fsm);
 
-    //-- Start state machine
-    ASSERT_TRUE(fsm->start());
-
-    //-- Jump from init to game state
-    mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_ENTER));
-    yarp::os::Time::delay(0.5);
-
-    //-- Check things that should happen before fsm starts (before setup)
+    //-- Check things that should happen before fsm starts (before setup):
     //----------------------------------------------------------------------------
     ASSERT_FALSE(mockupAudioManager->isStopped());
     ASSERT_FALSE(mockupAudioManager->isPlaying("RD_THEME"));
-
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
-
     ASSERT_TRUE(mockupImageManager->isStopped());
-
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
-
 //    ASSERT_FALSE(mockupRobotManager->isStopped());
 //    ASSERT_TRUE(mockupRobotManager->isConnected());
 
-    //-- Check things that should happen in game state before killed (loop)
-    //-----------------------------------------------------------------------------
+    //-- Start state machine
+    ASSERT_TRUE(fsm->start());
 
+    //-- Check things that should happen just after the fsm starts (after setup)
+    //----------------------------------------------------------------------------
+    ASSERT_FALSE(mockupAudioManager->isStopped());
+    ASSERT_TRUE(mockupAudioManager->isPlaying("RD_THEME"));
+    ASSERT_FALSE(mockupNetworkManager->isStopped());
+    ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
+    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupInputManager->isStopped());
+    ASSERT_EQ(1, mockupInputManager->getNumListeners());
+//    ASSERT_FALSE(mockupRobotManager->isStopped());
+//    ASSERT_TRUE(mockupRobotManager->isConnected());
+
+    //-- Testing game flow
+    //-----------------------------------------------------------------------------
     //-- If my robot is hit, health decreases
     ASSERT_TRUE(mockupNetworkManager->sendPlayerHit(mentalMap->getMyself(), 50));
     ASSERT_EQ(50, mentalMap->getMyself().getHealth());
 
-    //-- If I hit other robot, other robot health decreases
+    //-- If I send move commands, robot moves
     //-- (Insert code here)
 
-    //-- If I send move commands, robot moves
+    //-- If I shoot with no target in the scope, the enemies life is kept equal
+    //-- (Insert code here)
+
+    //-- If I shoot all ammo, I cannot shoot until reloading
+    //-- (Insert code here)
+
+    //-- After reloading, I can shoot again
+    //-- (Insert code here)
+
+    //-- If I hit other robot, other robot health decreases
     //-- (Insert code here)
 
     //-- If I lose all health, game is over
@@ -175,67 +187,24 @@ TEST_F(GameStateTest, GameStateWorksCorrectlyToKilled )
     ASSERT_EQ(0, mentalMap->getMyself().getHealth());
 
 
-    //-- Check things that should occur before going to killed state (cleanup)
+    //-- Check things that should occur before going to dead state (cleanup)
     //------------------------------------------------------------------------------
-
-    //-- Insert asserts here
-
-}
-
-TEST_F(GameStateTest, GameStateWorksCorrectlyToLogout )
-{
-    //-- Create fsm with InitState
-    StateMachineBuilder builder;
-    ASSERT_TRUE(builder.setDirectorType("YARP"));
-
-    int init_state_id = builder.addState(new InitState(networkManager, imageManager, inputManager, mentalMap,
-                                                       robotManager, audioManager));
-    int game_state_id = builder.addState(new GameState(networkManager, imageManager, inputManager, mentalMap,
-                                                       robotManager, audioManager));
-    int end_state_id = builder.addState(State::getEndState());
-
-    ASSERT_NE(-1, init_state_id);
-    ASSERT_TRUE(builder.addTransition(init_state_id, game_state_id, InitState::LOGIN_SUCCESSFUL));
-    ASSERT_TRUE(builder.addTransition(game_state_id, end_state_id, GameState::KILLED));
-    ASSERT_TRUE(builder.setInitialState(init_state_id));
-
-    fsm = builder.buildStateMachine();
-    ASSERT_NE((FiniteStateMachine*)NULL, fsm);
-
-    //-- Start state machine
-    ASSERT_TRUE(fsm->start());
-
-    //-- Jump from init to game state
-    mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_ENTER));
-    yarp::os::Time::delay(0.5);
-
-    //-- Check things that should happen before fsm starts (before setup)
-    //----------------------------------------------------------------------------
+    // Player is dead
+    // Stuff is enabled
+    ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
+    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupInputManager->isStopped());
+    ASSERT_EQ(1, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupAudioManager->isStopped());
-    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_THEME"));
-
+    ASSERT_TRUE(mockupAudioManager->isPlaying("RD_THEME"));
+    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_DEAD"));
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
+    //ASSERT_FALSE(mockupRobotManager->isStopped()); //-- Not correctly implemented
+    //ASSERT_FALSE(mockupRobotManager->isConnected());
+}
 
-    ASSERT_TRUE(mockupImageManager->isStopped());
-
-    ASSERT_FALSE(mockupInputManager->isStopped());
-    ASSERT_EQ(0, mockupInputManager->getNumListeners());
-
-//    ASSERT_FALSE(mockupRobotManager->isStopped());
-//    ASSERT_TRUE(mockupRobotManager->isConnected());
-
-    //-- Check that logs out if esc is pressed (loop)
-    //-----------------------------------------------------------------------------
-
-    //-- If my robot is hit, health decreases
-    ASSERT_TRUE(mockupInputManager->sendKeyPress(MockupKey::KEY_ESCAPE));
-    yarp::os::Time::delay(0.5);
-
-
-    //-- Check things that should occur before going to logout state (cleanup)
-    //------------------------------------------------------------------------------
-
-    //-- Insert asserts here
-
+TEST_F(GameStateTest, GameStateQuitsWhenRequested )
+{
+    ASSERT_TRUE(false);
 }
