@@ -177,7 +177,6 @@ TEST_F(MockupNetworkManagerTest, ListenersNotifiedOnEvent)
     ASSERT_TRUE(networkManager->isLoggedIn());
 
     /* Check that data > 0 and check contents */
-    ASSERT_TRUE(networkManager->sendPlayerData());
     std::vector<RdPlayer> players = listener.getStoredPlayers();
 
     EXPECT_EQ(1, listener.getDataArrived());

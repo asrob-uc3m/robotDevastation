@@ -61,6 +61,8 @@ bool rd::MockupNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)
         return false;
     }
 
+    sendPlayerData();
+
     return true;
 }
 
@@ -85,6 +87,8 @@ bool rd::MockupNetworkManager::login(rd::RdPlayer player)
         RD_ERROR("Already logged, id: %d.\n",loginId);
         return false;
     }
+
+    sendPlayerData();
 
     return true;
 }
@@ -112,6 +116,8 @@ bool rd::MockupNetworkManager::logout(rd::RdPlayer player)
         return false;
     }
 
+    sendPlayerData();
+
     return true;
 }
 
@@ -135,6 +141,7 @@ bool rd::MockupNetworkManager::setPlayerData(std::vector<rd::RdPlayer> players)
         this->players_dic[id] = players[i];
     }
 
+    sendPlayerData();
     return true;
 }
 
