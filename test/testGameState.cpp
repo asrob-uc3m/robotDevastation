@@ -290,7 +290,6 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupAudioManager->isStopped());
     ASSERT_TRUE(mockupAudioManager->isPlaying("RD_THEME"));
-    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_DEAD"));
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
     //ASSERT_FALSE(mockupRobotManager->isStopped()); //-- Not correctly implemented
