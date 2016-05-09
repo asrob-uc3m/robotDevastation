@@ -186,3 +186,8 @@ TEST_F(MockupNetworkManagerTest, ListenersNotifiedOnEvent)
     ASSERT_TRUE(networkManager->stop());
     ASSERT_TRUE(networkManager->isStopped());
 }
+
+TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
+{
+    ASSERT_FALSE(true);
+}
