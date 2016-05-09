@@ -94,7 +94,10 @@ class GameStateTest : public testing::Test
             mockupAudioManager = dynamic_cast<MockupAudioManager *>(audioManager);
             ASSERT_NE((AudioManager*) NULL, audioManager);
             ASSERT_NE((MockupAudioManager*) NULL, mockupAudioManager);
-            mockupAudioManager->load("RD_THEME","RD_THEME", AudioManager::MUSIC);
+            ASSERT_TRUE(mockupAudioManager->load("RD_THEME","RD_THEME", AudioManager::MUSIC));
+            ASSERT_TRUE(mockupAudioManager->load("shoot", "shoot", AudioManager::FX));
+            ASSERT_TRUE(mockupAudioManager->load("noAmmo", "noAmmo", AudioManager::FX));
+            ASSERT_TRUE(mockupAudioManager->load("reload", "reload", AudioManager::FX));
 
             mentalMap = RdMentalMap::getMentalMap();
             ASSERT_NE((RdMentalMap*) NULL, mentalMap);
@@ -218,6 +221,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
+    yarp::os::Time::delay(0.5);
 
     //-- Check things that should happen just after the fsm starts (after setup)
     //----------------------------------------------------------------------------
@@ -238,6 +242,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
 
     //-- If my robot is hit, health decreases
     ASSERT_TRUE(mockupNetworkManager->sendPlayerHit(mentalMap->getMyself(), 50));
+    yarp::os::Time::delay(0.5);
     ASSERT_EQ(50, mentalMap->getMyself().getHealth());
 
     //-- If I send move commands, robot moves
@@ -251,7 +256,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     for(int i = 0; i < players_before.size(); i++)
         EXPECT_EQ(players_before[i].getHealth(), players_after[i].getHealth());
 
-    //-- If I shoot all ammo, I cannot shoot until reloading
+    //-- If I shoot all ammo, I run out of ammo, and I cannot shoot until reloading
     for(int i = 0; i < GameStateTest::MAX_AMMO; i++)
         mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_SPACE));
     ASSERT_EQ(0, mentalMap->getCurrentWeapon().getCurrentAmmo());
