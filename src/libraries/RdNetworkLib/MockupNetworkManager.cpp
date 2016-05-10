@@ -178,6 +178,11 @@ bool rd::MockupNetworkManager::setLoggedIn(bool logged_in)
     }
 }
 
+bool rd::MockupNetworkManager::onTargetHit(rd::RdTarget target, rd::RdPlayer player, rd::RdWeapon weapon)
+{
+    return sendPlayerHit(player, weapon.getDamage());
+}
+
 rd::MockupNetworkManager::MockupNetworkManager()
 {
     logged_in = false;
