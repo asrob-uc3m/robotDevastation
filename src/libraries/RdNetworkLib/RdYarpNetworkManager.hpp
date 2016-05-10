@@ -13,7 +13,6 @@
 #include "RdUtils.hpp"
 #include "RdNetworkManager.hpp"
 #include "RdNetworkEventListener.hpp"
-#include "RdMentalMapEventListener.hpp"
 
 namespace rd{
 
@@ -34,7 +33,6 @@ namespace rd{
  *
  */
 class RdYarpNetworkManager: public RdNetworkManager,
-                            public RdMentalMapEventListener,
                             public yarp::os::TypedReaderCallback<yarp::os::Bottle>
 
 {
@@ -92,9 +90,6 @@ class RdYarpNetworkManager: public RdNetworkManager,
 
         yarp::os::RpcClient rpcClient;
         yarp::os::BufferedPort<yarp::os::Bottle> callbackPort;
-
-        //! @brief Implementation of RdMentalMapEventListener interface
-        bool onTargetHit(RdTarget target, RdPlayer player, RdWeapon weapon);
 
         //! @brief Identifier for the player
         int player_id;

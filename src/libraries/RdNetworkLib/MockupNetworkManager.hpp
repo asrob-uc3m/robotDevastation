@@ -6,7 +6,6 @@
 #include "RdUtils.hpp"
 #include "RdNetworkManager.hpp"
 #include "RdNetworkEventListener.hpp"
-#include "RdMentalMapEventListener.hpp"
 #include "RdPlayer.hpp"
 
 namespace rd{
@@ -28,7 +27,7 @@ namespace rd{
  *
  */
 
-class MockupNetworkManager : public RdNetworkManager, public RdMentalMapEventListener
+class MockupNetworkManager : public RdNetworkManager
 {
     public:
         //-- Creation and configuration
@@ -68,8 +67,6 @@ class MockupNetworkManager : public RdNetworkManager, public RdMentalMapEventLis
         bool sendPlayerData();
         bool setLoggedIn(bool logged_in);
 
-        //-- MentalMap listener API
-        bool onTargetHit(rd::RdTarget target, rd::RdPlayer player, rd::RdWeapon weapon);
     private:
         /**
          * @brief Constructor
