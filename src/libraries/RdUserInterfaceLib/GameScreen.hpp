@@ -35,7 +35,7 @@ namespace rd{
  * @brief A User Interface.
  *
  */
-class GameScreen : public RdScreen
+class GameScreen : public RdScreen, public RdImageEventListener
 {
     public:
         GameScreen();
@@ -54,6 +54,9 @@ class GameScreen : public RdScreen
         static const std::string PARAM_PLAYERS;
         static const std::string PARAM_TARGETS;
         static const std::string PARAM_WEAPON;
+
+        //-- ImageEventListener interface
+        virtual bool onImageArrived( RdImageManager * manager);
 
     private:
         bool drawUserUI(SDL_Surface * screen, RdPlayer user, RdWeapon weapon);

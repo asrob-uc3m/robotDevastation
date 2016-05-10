@@ -8,7 +8,8 @@
 #include "RdUtils.hpp"
 #include "Hub.hpp"
 #include "RdYarpNetworkManager.hpp"
-#include "InitScreen.hpp"
+#include "GameScreen.hpp"
+#include "RdProcessorImageEventListener.hpp"
 
 #include <string>
 #include <sstream>
@@ -52,9 +53,10 @@ class GameState : public State, public ManagerHub, public RdInputEventListener
         virtual bool onKeyUp(RdKey k);
 
     protected:
-        RdScreen * screen;
+        GameScreen screen;
         bool login;
         bool logged_in;
+        RdProcessorImageEventListener processorImageEventListener;
 
 
 };

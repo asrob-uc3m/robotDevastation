@@ -83,7 +83,6 @@ class GameStateTest : public testing::Test
             //-- Load test images
             yarp::sig::file::read(test_frame_no_target, FRAME_NO_TARGET_PATH);
             yarp::sig::file::read(test_frame_with_target, FRAME_WITH_TARGET_PATH);
-            mockupImageManager->receiveImage(test_frame_no_target);
 
             inputManager = RdInputManager::getInputManager("MOCKUP");
             mockupInputManager = dynamic_cast<MockupInputManager *>(inputManager);
@@ -106,7 +105,7 @@ class GameStateTest : public testing::Test
             //-- Insert players for testing
             std::vector<RdPlayer> players;
             players.push_back(RdPlayer(1,"test_player", MAX_HEALTH, MAX_HEALTH, 0, 0));
-            players.push_back(RdPlayer(2,"enemy", MAX_HEALTH, MAX_HEALTH, 0, 0) );
+            players.push_back(RdPlayer(0,"enemy", MAX_HEALTH, MAX_HEALTH, 0, 0) );
             ASSERT_TRUE(mentalMap->updatePlayers(players));
 
             mockupRobotManager = new RdMockupRobotManager("MOCKUP");
@@ -249,6 +248,8 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
 //    mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_ARROW_LEFT));
 
     //-- If I shoot with no target in the scope, the enemies life is kept equal
+    mockupImageManager->receiveImage(test_frame_no_target);
+    yarp::os::Time::delay(0.5);
     std::vector<RdPlayer> players_before = mentalMap->getPlayers();
     mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_SPACE));
     std::vector<RdPlayer> players_after = mentalMap->getPlayers();
@@ -267,13 +268,14 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
 
     //-- If I hit other robot, other robot health decreases
     mockupImageManager->receiveImage(test_frame_with_target);
+    yarp::os::Time::delay(0.5);
     players_before = mentalMap->getPlayers();
     mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_SPACE));
     players_after = mentalMap->getPlayers();
     ASSERT_EQ(players_before.size(), players_after.size());
     for(int i = 0; i < players_before.size(); i++)
         if (players_before[i].getId() != mentalMap->getMyself().getId())
-            EXPECT_LT(players_before[i].getHealth(), players_after[i].getHealth());
+            EXPECT_LT(players_after[i].getHealth(), players_before[i].getHealth());
 
     //-- If I lose all health, game is over
     ASSERT_TRUE(mockupNetworkManager->sendPlayerHit(mentalMap->getMyself(), 50));

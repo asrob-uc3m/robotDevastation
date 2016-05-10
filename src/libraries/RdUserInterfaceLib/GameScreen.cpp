@@ -62,23 +62,41 @@ bool rd::GameScreen::show()
 {
     if (update_required)
     {
-        //-- Convert from RdImage to SDL
-        SDL_Surface * camera_frame_surface = RdImage2SDLImage(camera_frame);
-
-        //-- Set new window size
-        screen = SDL_SetVideoMode(camera_frame_surface->w, camera_frame_surface->h, 16, SDL_DOUBLEBUF);
-        if (!screen)
+        if (camera_frame.width()==0 || camera_frame.height()==0)
         {
-            RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
-            return false;
+            RD_WARNING("No camera frame received yet\n");
+
+            //-- Set default window size
+            screen = SDL_SetVideoMode(640, 480, 16, SDL_DOUBLEBUF);
+            if (!screen)
+            {
+                RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
+                return false;
+            }
+
+            //-- Clear screen
+            SDL_FillRect(screen, NULL, 0x00000000);
         }
+        else
+        {
+            //-- Convert from RdImage to SDL
+            SDL_Surface * camera_frame_surface = RdImage2SDLImage(camera_frame);
 
-        //-- Clear screen
-        SDL_FillRect(screen, NULL, 0x00000000);
+            //-- Set new window size
+            screen = SDL_SetVideoMode(camera_frame_surface->w, camera_frame_surface->h, 16, SDL_DOUBLEBUF);
+            if (!screen)
+            {
+                RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
+                return false;
+            }
 
-        //-- Draw camera frame
-        SDL_Rect camera_frame_rect = {0,0, camera_frame_surface->w, camera_frame_surface->h};
-        SDL_BlitSurface(camera_frame_surface, NULL, screen, &camera_frame_rect);
+            //-- Clear screen
+            SDL_FillRect(screen, NULL, 0x00000000);
+
+            //-- Draw camera frame
+            SDL_Rect camera_frame_rect = {0,0, camera_frame_surface->w, camera_frame_surface->h};
+            SDL_BlitSurface(camera_frame_surface, NULL, screen, &camera_frame_rect);
+        }
 
         //-- Draw enemies
         for (int i = 0; i < (int) targets.size(); i++)
@@ -195,10 +213,13 @@ bool rd::GameScreen::update(std::string parameter, rd::RdImage value)
     }
 
     RD_ERROR("No RdImage parameter %s exists.\n", parameter.c_str());
-    return false;
+     return false;
 }
 
-
+bool rd::GameScreen::onImageArrived(rd::RdImageManager *manager)
+{
+    return this->update(PARAM_CAMERA_FRAME, manager->getImage());
+}
 
 bool rd::GameScreen::drawUserUI(SDL_Surface *screen, rd::RdPlayer user, rd::RdWeapon weapon)
 {

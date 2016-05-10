@@ -18,10 +18,19 @@ rd::GameState::~GameState()
 
 bool rd::GameState::setup()
 {
-    //-- Connect mentalMap to networkManager to receive updates
+    //-- Show Robot Devastation game screen:
+    //-- Set info elements on GameScreen
+    screen.update(GameScreen::PARAM_MYSELF, mentalMap->getMyself());
+    screen.update(GameScreen::PARAM_PLAYERS, mentalMap->getPlayers());
+    screen.update(GameScreen::PARAM_TARGETS, mentalMap->getTargets());
+    screen.update(GameScreen::PARAM_WEAPON, mentalMap->getCurrentWeapon());
+    screen.show();
+
+    //-- Connect mentalMap to networkManager to receive updates (and vice-versa)
     if (mentalMap!=NULL && networkManager!=NULL)
     {
         networkManager->addNetworkEventListener(mentalMap);
+        mentalMap->addMentalMapEventListener(networkManager);
     }
     else
     {
@@ -33,6 +42,7 @@ bool rd::GameState::setup()
     if (imageManager!=NULL)
     {
         imageManager->start();
+        imageManager->addImageEventListener(&processorImageEventListener);
     }
     else
     {
@@ -70,6 +80,12 @@ bool rd::GameState::setup()
 
 bool rd::GameState::loop()
 {
+    //-- Set info elements on GameScreen
+    screen.update(GameScreen::PARAM_MYSELF, mentalMap->getMyself());
+    screen.update(GameScreen::PARAM_PLAYERS, mentalMap->getPlayers());
+    screen.update(GameScreen::PARAM_TARGETS, mentalMap->getTargets());
+    screen.update(GameScreen::PARAM_WEAPON, mentalMap->getCurrentWeapon());
+    screen.show();
     return true;
 }
 
