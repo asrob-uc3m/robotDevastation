@@ -200,18 +200,25 @@ TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
     RdMentalMap * mentalMap = RdMentalMap::getMentalMap();
     ASSERT_NE((RdMentalMap*) NULL, mentalMap);
     mentalMap->addWeapon(RdWeapon("Machine gun", 10, 10));
-    ASSERT_TRUE(mentalMap->configure(1));
+    ASSERT_TRUE(mentalMap->configure(me.getId()));
     std::vector<RdPlayer> players;
-    players.push_back(RdPlayer(1,"test_player", 100, 100, 0, 0));
-    players.push_back(RdPlayer(2,"enemy", 100, 100, 1, 0) );
+    players.push_back(me);
+    players.push_back(other_player);
     ASSERT_TRUE(mentalMap->updatePlayers(players));
     std::vector<RdTarget> targets;
-    targets.push_back(RdTarget(2, RdVector2d(RdWeapon::SCOPE_X, RdWeapon::SCOPE_Y),
+    targets.push_back(RdTarget(other_player.getId(), RdVector2d(RdWeapon::SCOPE_X, RdWeapon::SCOPE_Y),
                                RdVector2d(50, 50)));
     ASSERT_TRUE(mentalMap->updateTargets(targets));
 
     //-- Attach mental map to networkManager
     mentalMap->addMentalMapEventListener(networkManager);
+
+    //-- Start networkManager
+    ASSERT_TRUE(networkManager->start());
+    ASSERT_FALSE(networkManager->isStopped());
+
+    ASSERT_TRUE(networkManager->login(me));
+    ASSERT_TRUE(networkManager->isLoggedIn());
 
     //-- Push notification from mental map
     mentalMap->shoot();
@@ -221,4 +228,9 @@ TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
     for(int i = 0; i < players_after.size(); i++)
         if (players_after[i].getId() == 2)
             ASSERT_LT(players_after[i].getHealth(), 100);
+
+    //-- Cleanup
+    ASSERT_TRUE(networkManager->stop());
+    ASSERT_TRUE(networkManager->isStopped());
+    RdMentalMap::destroyMentalMap();
 }
