@@ -31,7 +31,8 @@ namespace rd{
 *  - When user presses the Esc key, logs out
 *  - It also plays music (important)
 */
-class GameState : public State, public ManagerHub, public RdInputEventListener
+class GameState : public State, public ManagerHub,
+                  public RdInputEventListener, public RdImageEventListener
 {
     public:
         GameState(RdNetworkManager * networkManager, RdImageManager * imageManager,
@@ -52,11 +53,15 @@ class GameState : public State, public ManagerHub, public RdInputEventListener
         virtual bool onKeyDown(RdKey k);
         virtual bool onKeyUp(RdKey k);
 
+        //-- ImageEventListener interface
+        virtual bool onImageArrived(RdImageManager * manager);
+
     protected:
         GameScreen screen;
         bool login;
         bool logged_in;
         RdProcessorImageEventListener processorImageEventListener;
+        RdImage last_camera_frame;
 
 
 };

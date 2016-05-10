@@ -18,14 +18,6 @@ rd::GameState::~GameState()
 
 bool rd::GameState::setup()
 {
-    //-- Show Robot Devastation game screen:
-    //-- Set info elements on GameScreen
-    screen.update(GameScreen::PARAM_MYSELF, mentalMap->getMyself());
-    screen.update(GameScreen::PARAM_PLAYERS, mentalMap->getPlayers());
-    screen.update(GameScreen::PARAM_TARGETS, mentalMap->getTargets());
-    screen.update(GameScreen::PARAM_WEAPON, mentalMap->getCurrentWeapon());
-    screen.show();
-
     //-- Connect mentalMap to networkManager to receive updates (and vice-versa)
     if (mentalMap!=NULL && networkManager!=NULL)
     {
@@ -43,6 +35,7 @@ bool rd::GameState::setup()
     {
         imageManager->start();
         imageManager->addImageEventListener(&processorImageEventListener);
+        imageManager->addImageEventListener(this);
     }
     else
     {
@@ -74,6 +67,14 @@ bool rd::GameState::setup()
     }
 
     //-- Robot Startup goes here
+
+    //-- Show Robot Devastation game screen:
+    //-- Set info elements on GameScreen
+    screen.update(GameScreen::PARAM_MYSELF, mentalMap->getMyself());
+    screen.update(GameScreen::PARAM_PLAYERS, mentalMap->getPlayers());
+    screen.update(GameScreen::PARAM_TARGETS, mentalMap->getTargets());
+    screen.update(GameScreen::PARAM_WEAPON, mentalMap->getCurrentWeapon());
+    screen.show();
 
     return true;
 }
@@ -124,4 +125,10 @@ bool rd::GameState::onKeyDown(rd::RdKey k)
 bool rd::GameState::onKeyUp(rd::RdKey k)
 {
     return false;
+}
+
+bool rd::GameState::onImageArrived(rd::RdImageManager *manager)
+{
+    //-- Don't know if this is safe enough or some mutex is required
+    screen.update(GameScreen::PARAM_CAMERA_FRAME, manager->getImage());
 }

@@ -216,11 +216,6 @@ bool rd::GameScreen::update(std::string parameter, rd::RdImage value)
      return false;
 }
 
-bool rd::GameScreen::onImageArrived(rd::RdImageManager *manager)
-{
-    return this->update(PARAM_CAMERA_FRAME, manager->getImage());
-}
-
 bool rd::GameScreen::drawUserUI(SDL_Surface *screen, rd::RdPlayer user, rd::RdWeapon weapon)
 {
     //-- User health bar:

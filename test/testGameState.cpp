@@ -261,6 +261,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     for(int i = 0; i < GameStateTest::MAX_AMMO; i++)
         mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_SPACE));
     ASSERT_EQ(0, mentalMap->getCurrentWeapon().getCurrentAmmo());
+    yarp::os::Time::delay(0.5);
 
     //-- After reloading, I can shoot again
     mockupInputManager->sendKeyPress(MockupKey('r'));
@@ -271,11 +272,15 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     yarp::os::Time::delay(0.5);
     players_before = mentalMap->getPlayers();
     mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_SPACE));
+    yarp::os::Time::delay(0.5);
     players_after = mentalMap->getPlayers();
     ASSERT_EQ(players_before.size(), players_after.size());
     for(int i = 0; i < players_before.size(); i++)
         if (players_before[i].getId() != mentalMap->getMyself().getId())
+        {
+            ASSERT_EQ(players_before[i].getId(), players_after[i].getId());
             EXPECT_LT(players_after[i].getHealth(), players_before[i].getHealth());
+        }
 
     //-- If I lose all health, game is over
     ASSERT_TRUE(mockupNetworkManager->sendPlayerHit(mentalMap->getMyself(), 50));
