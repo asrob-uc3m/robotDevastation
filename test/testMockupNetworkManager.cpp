@@ -205,6 +205,10 @@ TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
     players.push_back(RdPlayer(1,"test_player", 100, 100, 0, 0));
     players.push_back(RdPlayer(2,"enemy", 100, 100, 0, 0) );
     ASSERT_TRUE(mentalMap->updatePlayers(players));
+    std::vector<RdTarget> targets;
+    targets.push_back(RdTarget(2, RdVector2d(RdWeapon::SCOPE_X, RdWeapon::SCOPE_Y),
+                               RdVector2d(50, 50)));
+    ASSERT_TRUE(mentalMap->updateTargets(targets));
 
     //-- Attach mental map to networkManager
     mentalMap->addMentalMapEventListener(networkManager);
@@ -216,5 +220,5 @@ TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
     std::vector<RdPlayer> players_after = mentalMap->getPlayers();
     for(int i = 0; i < players_after.size(); i++)
         if (players_after[i].getId() == 2)
-            EXPECT_LT(100, players_after[i].getHealth());
+            ASSERT_LT(players_after[i].getHealth(), 100);
 }
