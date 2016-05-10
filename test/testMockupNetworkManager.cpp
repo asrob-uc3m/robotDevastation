@@ -203,7 +203,7 @@ TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
     ASSERT_TRUE(mentalMap->configure(1));
     std::vector<RdPlayer> players;
     players.push_back(RdPlayer(1,"test_player", 100, 100, 0, 0));
-    players.push_back(RdPlayer(2,"enemy", 100, 100, 0, 0) );
+    players.push_back(RdPlayer(2,"enemy", 100, 100, 1, 0) );
     ASSERT_TRUE(mentalMap->updatePlayers(players));
     std::vector<RdTarget> targets;
     targets.push_back(RdTarget(2, RdVector2d(RdWeapon::SCOPE_X, RdWeapon::SCOPE_Y),
