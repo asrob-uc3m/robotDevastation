@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "MockupNetworkManager.hpp"
 #include "MockupNetworkEventListener.hpp"
+#include "RdMentalMap.hpp"
 
 using namespace rd;
 
@@ -189,5 +190,31 @@ TEST_F(MockupNetworkManagerTest, ListenersNotifiedOnEvent)
 
 TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
 {
-    ASSERT_FALSE(true);
+    //-------------------------------------------------------------------------------------
+    //-- This tests integration between MockupNetworkManager and MentalMap
+    //-- More precisely, that targets are updated in MentalMap when shot, with information
+    //-- going from MentalMap to NetworkManager and then back to MentalMap
+    //-------------------------------------------------------------------------------------
+
+    //-- Create a mental map with player & weapon info
+    RdMentalMap * mentalMap = RdMentalMap::getMentalMap();
+    ASSERT_NE((RdMentalMap*) NULL, mentalMap);
+    mentalMap->addWeapon(RdWeapon("Machine gun", 10, 10));
+    ASSERT_TRUE(mentalMap->configure(1));
+    std::vector<RdPlayer> players;
+    players.push_back(RdPlayer(1,"test_player", 100, 100, 0, 0));
+    players.push_back(RdPlayer(2,"enemy", 100, 100, 0, 0) );
+    ASSERT_TRUE(mentalMap->updatePlayers(players));
+
+    //-- Attach mental map to networkManager
+    mentalMap->addMentalMapEventListener(networkManager);
+
+    //-- Push notification from mental map
+    mentalMap->shoot();
+
+    //-- Check everything worked as expected
+    std::vector<RdPlayer> players_after = mentalMap->getPlayers();
+    for(int i = 0; i < players_after.size(); i++)
+        if (players_after[i].getId() == 2)
+            EXPECT_LT(100, players_after[i].getHealth());
 }
