@@ -101,11 +101,11 @@ class GameStateTest : public testing::Test
             mentalMap = RdMentalMap::getMentalMap();
             ASSERT_NE((RdMentalMap*) NULL, mentalMap);
             mentalMap->addWeapon(RdWeapon("Machine gun", 10, MAX_AMMO));
-            ASSERT_TRUE(mentalMap->configure(1));
+            ASSERT_TRUE(mentalMap->configure(0));
             //-- Insert players for testing
             std::vector<RdPlayer> players;
-            players.push_back(RdPlayer(1,"test_player", MAX_HEALTH, MAX_HEALTH, 0, 0));
-            players.push_back(RdPlayer(0,"enemy", MAX_HEALTH, MAX_HEALTH, 0, 0) );
+            players.push_back(RdPlayer(0,"test_player", MAX_HEALTH, MAX_HEALTH, 0, 0));
+            players.push_back(RdPlayer(1,"enemy", MAX_HEALTH, MAX_HEALTH, 0, 0) );
             ASSERT_TRUE(mentalMap->updatePlayers(players));
 
             mockupRobotManager = new RdMockupRobotManager("MOCKUP");
