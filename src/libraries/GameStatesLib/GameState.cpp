@@ -67,7 +67,8 @@ bool rd::GameState::setup()
         return false;
     }
 
-    //-- Robot Startup goes here
+    //-- Robot Startup
+    robotManager->setEnabled(true);
 
     //-- Show Robot Devastation game screen:
     //-- Set info elements on GameScreen
@@ -103,6 +104,8 @@ bool rd::GameState::cleanup()
         audioManager->stop();
         networkManager->logout(mentalMap->getMyself()); //-- This is kind of weird, but it is supposed to be done like this
         networkManager->stop();
+        robotManager->setEnabled(false);
+        robotManager->disconnect();
         return true;
     }
     else
@@ -142,11 +145,63 @@ bool rd::GameState::onKeyDown(rd::RdKey k)
         return true;
     }
 
+    //-- Movement control
+    if (k.getValue() == RdKey::KEY_ARROW_LEFT)
+    {
+        RD_DEBUG("Left arrow was pressed!\n");
+        robotManager->turnLeft();
+        return true;
+    }
+    if (k.getValue() == RdKey::KEY_ARROW_RIGHT)
+    {
+        RD_DEBUG("Right arrow was pressed!\n");
+        robotManager->turnRight();
+        return true;
+    }
+    if (k.getValue() == RdKey::KEY_ARROW_UP)
+    {
+        RD_DEBUG("Up arrow was pressed!\n");
+        robotManager->moveForward();
+        return true;
+    }
+    if (k.getValue() == RdKey::KEY_ARROW_DOWN)
+    {
+        RD_DEBUG("Down arrow was pressed!\n");
+        robotManager->moveBackwards();
+        return true;
+    }
+
     return false;
 }
 
 bool rd::GameState::onKeyUp(rd::RdKey k)
 {
+    //-- Movement control
+    if (k.getValue() == RdKey::KEY_ARROW_LEFT)
+    {
+        RD_DEBUG("Left arrow was released!\n");
+        robotManager->stopMovement();
+        return true;
+    }
+    if (k.getValue() == RdKey::KEY_ARROW_RIGHT)
+    {
+        RD_DEBUG("Right arrow was released!\n");
+        robotManager->stopMovement();
+        return true;
+    }
+    if (k.getValue() == RdKey::KEY_ARROW_UP)
+    {
+        RD_DEBUG("Up arrow was released!\n");
+        robotManager->stopMovement();
+        return true;
+    }
+    if (k.getValue() == RdKey::KEY_ARROW_DOWN)
+    {
+        RD_DEBUG("Down arrow was released!\n");
+        robotManager->stopMovement();
+        return true;
+    }
+
     return false;
 }
 
