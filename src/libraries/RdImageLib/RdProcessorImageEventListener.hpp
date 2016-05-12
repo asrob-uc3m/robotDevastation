@@ -36,6 +36,8 @@ class RdProcessorImageEventListener : public RdImageEventListener
 
 
     private:
+        bool isInteger(std::string s);
+
         int images_arrived;
         RdImage stored_image;
 
