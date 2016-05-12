@@ -19,6 +19,8 @@ class MockupInputManager : public RdInputManager
     public:
         //------------------------------ Testing Interface ------------------------------------------------------------//
         bool sendKeyPress(RdKey key);
+        bool sendKeyUp(RdKey key);
+        bool sendKeyDown(RdKey key);
 
         //------------------------------ Construction & destruction ---------------------------------------------------//
         MockupInputManager();

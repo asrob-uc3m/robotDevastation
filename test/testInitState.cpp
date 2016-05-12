@@ -139,7 +139,8 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_TRUE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupImageManager->isStopped());
     ASSERT_TRUE(mockupInputManager->isStopped());
-//    ASSERT_TRUE(mockupRobotManager->isStopped());
+    ASSERT_FALSE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isEnabled());
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
@@ -158,8 +159,8 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
 
-//    ASSERT_FALSE(mockupRobotManager->isStopped());
-//    ASSERT_FALSE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isEnabled());
 
     //-- When enter is pressed, the system should log in and go to next state:
     mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_ENTER));
@@ -177,7 +178,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
 
-//    ASSERT_FALSE(mockupRobotManager->isStopped());
-//    ASSERT_TRUE(mockupRobotManager->isConnected());
+    ASSERT_TRUE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isEnabled());
 
 }

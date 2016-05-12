@@ -137,8 +137,9 @@ bool RdYarpRobotManager::test()  {
     return true;
 }
 
-bool RdYarpRobotManager::ping()  {
-    return true;
+void RdYarpRobotManager::setEnabled(bool enabled)
+{
+
 }
 
 void RdYarpRobotManager::onDestroy(){

@@ -22,9 +22,9 @@ class RdMockupRobotManager : public RdRobotManager
 
         RdMockupRobotManager(const std::string& robotName);
 
-	//-- RdRobotManager interface
+        //-- RdRobotManager interface
         //-----------------------------------------------------
-        //-- Robot movement related functions    
+        //-- Robot movement related functions
         virtual bool moveForward(int velocity = UNUSED);
         virtual bool moveBackwards(int velocity = UNUSED);
         virtual bool turnLeft(int velocity = UNUSED);
@@ -37,38 +37,40 @@ class RdMockupRobotManager : public RdRobotManager
         virtual bool panLeft(int velocity = UNUSED);
         virtual bool panRight(int velocity = UNUSED);
         virtual bool stopCameraMovement();
-        
+
         //-- Robot connection related functions
         virtual bool connect();
         virtual bool disconnect();
         virtual bool test();
-        virtual bool ping();
+        virtual void setEnabled(bool enabled);
 
         virtual void onDestroy();
 
         //-- Mockup functionality
         //-----------------------------------------------------
-	bool isConnected();
+        bool isConnected();
+        bool isEnabled();
 
-	bool isMoving();
-	int getMovementDirection();
-	static const int FORWARD;
-	static const int BACKWARDS;
-	static const int LEFT;
-	static const int RIGHT;
- 	static const int NONE;
+        bool isMoving();
+        int getMovementDirection();
+        static const int FORWARD;
+        static const int BACKWARDS;
+        static const int LEFT;
+        static const int RIGHT;
+        static const int NONE;
 
-	bool isCameraMoving();
-	int getCameraMovementDirection();
-	static const int CAMERA_UP;
-	static const int CAMERA_DOWN;
-	static const int CAMERA_LEFT;
-	static const int CAMERA_RIGHT;
- 	static const int CAMERA_NONE;     
+        bool isCameraMoving();
+        int getCameraMovementDirection();
+        static const int CAMERA_UP;
+        static const int CAMERA_DOWN;
+        static const int CAMERA_LEFT;
+        static const int CAMERA_RIGHT;
+        static const int CAMERA_NONE;
 
     private:
-	bool connected;
-	int movement_direction;
+        bool connected;
+        bool enabled;
+        int movement_direction;
         int camera_movement_direction;
 };
 

@@ -167,3 +167,47 @@ TEST_F(MockupInputManagerTest, SeveralPrintableKeyPressesSentAndReceivedCorrectl
     ASSERT_TRUE(inputManager->stop());
     ASSERT_TRUE(inputManager->isStopped());
 }
+
+TEST_F(MockupInputManagerTest, KeyUpAndKeyDownSentAndReceivedCorrectly)
+{
+    MockupInputEventListener listener;
+    RdInputEventListener * plistener = (RdInputEventListener *) &listener;
+    ASSERT_TRUE(((RdInputManager*)inputManager)->addInputEventListener(plistener));
+
+    ASSERT_TRUE(inputManager->start());
+    ASSERT_FALSE(inputManager->isStopped());
+
+    //-- Fake a key down
+    MockupKey enter_key(RdKey::KEY_ENTER);
+    MockupKey d_key('d');
+    ASSERT_TRUE(inputManager->sendKeyDown(enter_key));
+    ASSERT_TRUE(inputManager->sendKeyDown(d_key));
+
+    //-- Check if keypress was received
+    ASSERT_EQ(2,listener.getNumKeyDownPresses());
+    ASSERT_EQ(0,listener.getNumKeyUpPresses());
+
+    //-- Fake a key up
+    ASSERT_TRUE(inputManager->sendKeyUp(enter_key));
+    ASSERT_TRUE(inputManager->sendKeyUp(d_key));
+
+    //-- Check if keypress was received
+    ASSERT_EQ(2,listener.getNumKeyDownPresses());
+    ASSERT_EQ(2,listener.getNumKeyUpPresses());
+
+    //-- Check if keypress received is correct
+    std::vector<RdKey> keys_down_received = listener.getStoredKeyDownPresses();
+    std::vector<RdKey> keys_up_received = listener.getStoredKeyDownPresses();
+    ASSERT_EQ(2,keys_down_received.size());
+    ASSERT_EQ(2,keys_up_received.size());
+
+    ASSERT_EQ(enter_key.getValue(), keys_down_received[0].getValue());
+    ASSERT_EQ(enter_key.getValue(), keys_up_received[0].getValue());
+    ASSERT_EQ(d_key.getChar(), keys_down_received[1].getChar());
+    ASSERT_EQ(d_key.getChar(), keys_up_received[1].getChar());
+
+    //-- Cleanup
+    ASSERT_TRUE(inputManager->removeInputEventListeners());
+    ASSERT_TRUE(inputManager->stop());
+    ASSERT_TRUE(inputManager->isStopped());
+}
