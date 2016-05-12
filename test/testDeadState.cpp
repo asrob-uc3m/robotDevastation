@@ -93,7 +93,7 @@ class DeadStateTest : public testing::Test
             ASSERT_NE((RdMockupImageManager*) NULL, mockupImageManager);
             //-- Load test image
             RdImage test_frame;
-            yarp::sig::file::read(test_frame, "../../share/images/test_frame.ppm");
+            yarp::sig::file::read(test_frame, "../../share/images/test_frame_qr.ppm");
             mockupImageManager->receiveImage(test_frame);
 
             inputManager = RdInputManager::getInputManager("MOCKUP");
@@ -320,7 +320,7 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
     ASSERT_TRUE(mockupRobotManager->isConnected());
-    ASSERT_FALSE(mockupRobotManager->isEnabled());
+    ASSERT_TRUE(mockupRobotManager->isEnabled());
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
@@ -354,7 +354,6 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has stopped things and it is in the final state (cleanup):
-    ASSERT_EQ(0, mentalMap->getMyself().getHealth());
     ASSERT_TRUE(mockupImageManager->isStopped());
     ASSERT_TRUE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());

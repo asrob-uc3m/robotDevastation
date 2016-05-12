@@ -44,6 +44,9 @@ bool rd::DeadState::setup()
     audioManager->stopMusic();
     audioManager->play("RD_DEAD");
 
+    //-- Disable robot controls
+    robotManager->setEnabled(false);
+
     return true;
 }
 
@@ -112,6 +115,8 @@ bool rd::DeadState::cleanup()
         audioManager->stop();
         networkManager->logout(mentalMap->getMyself()); //-- This is kind of weird, but it is supposed to be done like this
         networkManager->stop();
+        robotManager->setEnabled(false);
+        robotManager->disconnect();
         return true;
     }
     else
