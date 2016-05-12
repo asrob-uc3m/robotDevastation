@@ -20,12 +20,24 @@ bool rd::MockupInputManager::sendKeyPress(RdKey key)
 
 bool rd::MockupInputManager::sendKeyUp(rd::RdKey key)
 {
-    return false;
+    if (stopped)
+        return false;
+
+    for ( int i = 0; i < (int)listeners.size(); i++)
+        listeners.at(i)->onKeyUp(key);
+
+    return true;
 }
 
 bool rd::MockupInputManager::sendKeyDown(rd::RdKey key)
 {
-    return false;
+    if (stopped)
+        return false;
+
+    for ( int i = 0; i < (int)listeners.size(); i++)
+        listeners.at(i)->onKeyDown(key);
+
+    return true;
 }
 
 rd::MockupInputManager::MockupInputManager()
