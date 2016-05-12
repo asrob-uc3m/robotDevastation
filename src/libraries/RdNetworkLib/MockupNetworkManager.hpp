@@ -67,7 +67,6 @@ class MockupNetworkManager : public RdNetworkManager
         bool sendPlayerData();
         bool setLoggedIn(bool logged_in);
 
-
     private:
         /**
          * @brief Constructor

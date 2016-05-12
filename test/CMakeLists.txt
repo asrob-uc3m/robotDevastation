@@ -55,6 +55,9 @@ target_link_libraries(testRdYarpImageManager ${RD_LIBRARIES} RdImageLib gtest gt
 add_executable(testRdMockupImageManager testRdMockupImageManager.cpp)
 target_link_libraries(testRdMockupImageManager ${RD_LIBRARIES} RdImageLib gtest gtest_main)
 
+add_executable(testRdProcessorImageEventListener testRdProcessorImageEventListener.cpp)
+target_link_libraries(testRdProcessorImageEventListener ${RD_LIBRARIES} RdImageLib gtest gtest_main)
+
 # Robot manager related
 add_executable(testRdMockupRobotManager testRdMockupRobotManager.cpp)
 target_link_libraries(testRdMockupRobotManager ${RD_LIBRARIES} RdRobotLib gtest gtest_main)
@@ -69,6 +72,9 @@ target_link_libraries(testFSMBuilder ${RD_LIBRARIES} StateMachineLib gtest gtest
 # Game States related
 add_executable(testInitState testInitState.cpp)
 target_link_libraries(testInitState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
+
+add_executable(testGameState testGameState.cpp)
+target_link_libraries(testGameState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
 
 add_executable(testDeadState testDeadState.cpp)
 target_link_libraries(testDeadState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)

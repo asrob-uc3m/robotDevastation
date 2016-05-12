@@ -111,11 +111,6 @@ rd::RdYarpNetworkManager::RdYarpNetworkManager()
     player_id = -1;
 }
 
-bool rd::RdYarpNetworkManager::onTargetHit(rd::RdTarget target, rd::RdPlayer player, rd::RdWeapon weapon)
-{
-    return sendPlayerHit(player, weapon.getDamage());
-}
-
 bool rd::RdYarpNetworkManager::stop()
 {
     rpcClient.close();

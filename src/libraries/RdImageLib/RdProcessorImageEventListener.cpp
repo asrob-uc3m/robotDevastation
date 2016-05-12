@@ -53,10 +53,18 @@ bool rd::RdProcessorImageEventListener::onImageArrived( RdImageManager * manager
     for(zbar::Image::SymbolIterator symbol = image.symbol_begin(); symbol != image.symbol_end(); ++symbol)
     {
         //-- Obtain id from QR.
-        std::stringstream identifier_str(symbol->get_data());
         int identifier_int;
-        identifier_str >> identifier_int;
-        RD_INFO("QR id: %d.\n",identifier_int);
+        std::stringstream identifier_str(symbol->get_data());
+        if (isInteger(identifier_str.str()))
+        {
+            identifier_str >> identifier_int;
+            RD_INFO("QR id: %d.\n",identifier_int);
+        }
+        else
+        {
+            RD_WARNING("Ignoring QR with id:\"%s\".\n", identifier_str.str().c_str());
+            continue;
+        }
 
         //-- Obtain coordinates from QR.
         std::vector< RdVector2d > coords;
@@ -96,5 +104,16 @@ void rd::RdProcessorImageEventListener::resetImagesArrived()
 rd::RdImage rd::RdProcessorImageEventListener::getStoredImage()
 {
     return stored_image;
+}
+
+bool rd::RdProcessorImageEventListener::isInteger(std::string s)
+{
+    //-- Code adapted from: http://stackoverflow.com/questions/2844817/how-do-i-check-if-a-c-string-is-an-int
+   if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false ;
+
+   char * p ;
+   strtol(s.c_str(), &p, 10) ;
+
+   return (*p == 0) ;
 }
 

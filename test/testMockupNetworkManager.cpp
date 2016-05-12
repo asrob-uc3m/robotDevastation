@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "MockupNetworkManager.hpp"
 #include "MockupNetworkEventListener.hpp"
+#include "RdMentalMap.hpp"
 
 using namespace rd;
 
@@ -177,7 +178,6 @@ TEST_F(MockupNetworkManagerTest, ListenersNotifiedOnEvent)
     ASSERT_TRUE(networkManager->isLoggedIn());
 
     /* Check that data > 0 and check contents */
-    ASSERT_TRUE(networkManager->sendPlayerData());
     std::vector<RdPlayer> players = listener.getStoredPlayers();
 
     EXPECT_EQ(1, listener.getDataArrived());
@@ -186,4 +186,51 @@ TEST_F(MockupNetworkManagerTest, ListenersNotifiedOnEvent)
 
     ASSERT_TRUE(networkManager->stop());
     ASSERT_TRUE(networkManager->isStopped());
+}
+
+TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
+{
+    //-------------------------------------------------------------------------------------
+    //-- This tests integration between MockupNetworkManager and MentalMap
+    //-- More precisely, that targets are updated in MentalMap when shot, with information
+    //-- going from MentalMap to NetworkManager and then back to MentalMap
+    //-------------------------------------------------------------------------------------
+
+    //-- Create a mental map with player & weapon info
+    RdMentalMap * mentalMap = RdMentalMap::getMentalMap();
+    ASSERT_NE((RdMentalMap*) NULL, mentalMap);
+    mentalMap->addWeapon(RdWeapon("Machine gun", 10, 10));
+    ASSERT_TRUE(mentalMap->configure(me.getId()));
+    std::vector<RdPlayer> players;
+    players.push_back(me);
+    players.push_back(other_player);
+    ASSERT_TRUE(mentalMap->updatePlayers(players));
+    std::vector<RdTarget> targets;
+    targets.push_back(RdTarget(other_player.getId(), RdVector2d(RdWeapon::SCOPE_X, RdWeapon::SCOPE_Y),
+                               RdVector2d(50, 50)));
+    ASSERT_TRUE(mentalMap->updateTargets(targets));
+
+    //-- Attach mental map to networkManager
+    mentalMap->addMentalMapEventListener(networkManager);
+
+    //-- Start networkManager
+    ASSERT_TRUE(networkManager->start());
+    ASSERT_FALSE(networkManager->isStopped());
+
+    ASSERT_TRUE(networkManager->login(me));
+    ASSERT_TRUE(networkManager->isLoggedIn());
+
+    //-- Push notification from mental map
+    mentalMap->shoot();
+
+    //-- Check everything worked as expected
+    std::vector<RdPlayer> players_after = mentalMap->getPlayers();
+    for(int i = 0; i < players_after.size(); i++)
+        if (players_after[i].getId() == 2)
+            ASSERT_LT(players_after[i].getHealth(), 100);
+
+    //-- Cleanup
+    ASSERT_TRUE(networkManager->stop());
+    ASSERT_TRUE(networkManager->isStopped());
+    RdMentalMap::destroyMentalMap();
 }

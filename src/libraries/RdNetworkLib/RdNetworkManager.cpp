@@ -100,6 +100,11 @@ bool rd::RdNetworkManager::configure(std::string parameter, std::string value)
     return true;
 }
 
+bool rd::RdNetworkManager::onTargetHit(rd::RdTarget target, rd::RdPlayer player, rd::RdWeapon weapon)
+{
+    return sendPlayerHit(player, weapon.getDamage());
+}
+
 bool rd::RdNetworkManager::Register(rd::RdNetworkManager *manager, std::string id)
 {
     if ( networkManagerRegistry.find(id) == networkManagerRegistry.end())

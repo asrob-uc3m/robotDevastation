@@ -8,6 +8,7 @@
 #include "RdUtils.hpp"
 #include "RdPlayer.hpp"
 #include "RdNetworkEventListener.hpp"
+#include "RdMentalMapEventListener.hpp"
 
 namespace rd{
 
@@ -35,7 +36,7 @@ namespace rd{
  * along with the data relevant to the event triggered (i.e. data that just arrived)
  *
  */
-class RdNetworkManager
+class RdNetworkManager: public RdMentalMapEventListener
 {
     public:
         //------------------------------ Construction & destruction ---------------------------------------------------//
@@ -93,6 +94,11 @@ class RdNetworkManager
 
         //! @brief Log the user out of the network
         virtual bool logout(RdPlayer player) = 0;
+
+        //-- MentalMap listener API
+        //-------------------------------------------------------------------------------------------
+        //! @brief Implementation of RdMentalMapEventListener interface
+        bool onTargetHit(rd::RdTarget target, rd::RdPlayer player, rd::RdWeapon weapon);
 
 
 protected:
