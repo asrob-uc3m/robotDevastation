@@ -26,8 +26,12 @@ class RdProcessorImageEventListenerTest : public testing::Test
             mentalMap = RdMentalMap::getMentalMap();
             ASSERT_NE((RdMentalMap*)NULL, mentalMap);
 
-            //-- Load test image
+            //-- Load test images
             yarp::sig::file::read(test_image, image_filename);
+            ASSERT_NE(0, test_image.width());
+            ASSERT_NE(0, test_image.height());
+
+            yarp::sig::file::read(bad_image, bad_image_filename);
             ASSERT_NE(0, test_image.width());
             ASSERT_NE(0, test_image.height());
         }
@@ -42,6 +46,7 @@ class RdProcessorImageEventListenerTest : public testing::Test
         }
 
         static const std::string image_filename;
+        static const std::string bad_image_filename;
 
     protected:
         RdImageManager * imageManager;
@@ -49,9 +54,11 @@ class RdProcessorImageEventListenerTest : public testing::Test
         RdProcessorImageEventListener processor;
 
         RdImage test_image;
+        RdImage bad_image;
 };
 
 const std::string RdProcessorImageEventListenerTest::image_filename = "../../share/images/test_target.ppm";
+const std::string RdProcessorImageEventListenerTest::bad_image_filename = "../../share/images/test_target_bad.ppm";
 
 void compare_targets(RdTarget target1, RdTarget target2, int threshold = 20)
 {
@@ -88,4 +95,16 @@ TEST_F(RdProcessorImageEventListenerTest, TargetDetectionWorks)
         compare_targets(target2, targets_detected[0]);
     }
 
+}
+
+TEST_F(RdProcessorImageEventListenerTest, BadQRsAreIgnored)
+{
+    //-- Send image to image manager
+    ASSERT_TRUE(imageManager->start());
+    ASSERT_TRUE(((RdMockupImageManager *)imageManager)->receiveImage(bad_image));
+    yarp::os::Time::delay(0.5);
+
+    //-- Check detected targets:
+    std::vector<RdTarget> targets_detected = RdProcessorImageEventListenerTest::mentalMap->getTargets();
+    ASSERT_EQ(0, targets_detected.size());
 }
