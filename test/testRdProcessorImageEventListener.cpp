@@ -53,13 +53,13 @@ class RdProcessorImageEventListenerTest : public testing::Test
 
 const std::string RdProcessorImageEventListenerTest::image_filename = "../../share/images/test_target.ppm";
 
-void compare_targets(RdTarget target1, RdTarget target2)
+void compare_targets(RdTarget target1, RdTarget target2, int threshold = 20)
 {
     ASSERT_EQ(target1.getPlayerId(), target2.getPlayerId());
-    ASSERT_NEAR(target1.getPos().x, target2.getPos().x, 10);
-    ASSERT_NEAR(target1.getPos().y, target2.getPos().y, 10);
-    ASSERT_NEAR(target1.getDimensions().x, target2.getDimensions().x, 10);
-    ASSERT_NEAR(target1.getDimensions().y, target2.getDimensions().y, 10);
+    ASSERT_NEAR(target1.getPos().x, target2.getPos().x, threshold);
+    ASSERT_NEAR(target1.getPos().y, target2.getPos().y, threshold);
+    ASSERT_NEAR(target1.getDimensions().x, target2.getDimensions().x, threshold);
+    ASSERT_NEAR(target1.getDimensions().y, target2.getDimensions().y, threshold);
 }
 
 TEST_F(RdProcessorImageEventListenerTest, TargetDetectionWorks)
