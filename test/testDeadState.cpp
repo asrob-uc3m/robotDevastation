@@ -137,13 +137,13 @@ class DeadStateTest : public testing::Test
             initState = NULL;
 
             //-- Finish setup of the modules that start at game state:
+            //-- Note: we can change this to use GameState (as previously) if we want someday
             mockupImageManager->start();
-
             listener = new MockupInputEventListener;
             mockupInputManager->addInputEventListener(listener);
-
             audioManager->start();
             audioManager->play("RD_THEME", -1);
+            mockupRobotManager->setEnabled(true);
 
         }
 
@@ -233,8 +233,8 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
     ASSERT_FALSE(mockupAudioManager->isPlaying("RD_DEAD"));
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
-    //ASSERT_FALSE(mockupRobotManager->isStopped()); //-- Not correctly implemented
-    //ASSERT_FALSE(mockupRobotManager->isConnected());
+    ASSERT_TRUE(mockupRobotManager->isConnected());
+    ASSERT_TRUE(mockupRobotManager->isEnabled());
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
@@ -249,8 +249,8 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
     ASSERT_TRUE(mockupAudioManager->isPlaying("RD_DEAD"));
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
-    //ASSERT_TRUE(mockupRobotManager->isStopped()); //-- Not correctly implemented
-    //ASSERT_FALSE(mockupRobotManager->isConnected());
+    ASSERT_TRUE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isEnabled());
 
     //-- Check that deadState is active
     ASSERT_EQ(dead_state_id, fsm->getCurrentState());
@@ -278,8 +278,8 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
     ASSERT_FALSE(mockupAudioManager->isPlaying("RD_DEAD"));
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
-    //ASSERT_FALSE(mockupRobotManager->isStopped()); //-- Not correctly implemented
-    //ASSERT_FALSE(mockupRobotManager->isConnected());
+    ASSERT_TRUE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isEnabled());
 
     //-- Check that gameState is active
     ASSERT_EQ(game_state_id, fsm->getCurrentState());
@@ -319,8 +319,8 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
     ASSERT_FALSE(mockupAudioManager->isPlaying("RD_DEAD"));
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
-    //ASSERT_FALSE(mockupRobotManager->isStopped()); //-- Not correctly implemented
-    //ASSERT_FALSE(mockupRobotManager->isConnected());
+    ASSERT_TRUE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isEnabled());
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
@@ -335,8 +335,8 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
     ASSERT_TRUE(mockupAudioManager->isPlaying("RD_DEAD"));
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
-    //ASSERT_TRUE(mockupRobotManager->isStopped()); //-- Not correctly implemented
-    //ASSERT_FALSE(mockupRobotManager->isConnected());
+    ASSERT_TRUE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isEnabled());
 
     //-- Check that deadState is active
     ASSERT_EQ(dead_state_id, fsm->getCurrentState());
@@ -363,8 +363,8 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
     ASSERT_FALSE(mockupAudioManager->isPlaying("RD_DEAD"));
     ASSERT_TRUE(mockupNetworkManager->isStopped());
     ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
-    //ASSERT_FALSE(mockupRobotManager->isStopped()); //-- Not correctly implemented
-    //ASSERT_FALSE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isEnabled());
 
     //-- Check that end state is active
     ASSERT_EQ(-1, fsm->getCurrentState()); //-- (When FSM is ended, no state is active, hence -1)
