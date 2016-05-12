@@ -19,6 +19,7 @@ namespace rd
 RdMockupRobotManager:: RdMockupRobotManager(const std::string& robotName): RdRobotManager(robotName)
 { 
     connected = false;
+    enabled = false;
     movement_direction = NONE;
     camera_movement_direction = CAMERA_NONE;
 }
@@ -196,9 +197,10 @@ bool RdMockupRobotManager::test()  {
     return false;
 }
 
-bool RdMockupRobotManager::ping()  {
+void RdMockupRobotManager::setEnabled(bool enabled)
+{
     RD_DEBUG("\n");
-    return false;
+    return;
 }
 
 void RdMockupRobotManager::onDestroy(){
@@ -209,6 +211,11 @@ void RdMockupRobotManager::onDestroy(){
 bool RdMockupRobotManager::isConnected()
 {
     return connected;
+}
+
+bool RdMockupRobotManager::isEnabled()
+{
+    return enabled;
 }
 
 bool RdMockupRobotManager::isMoving() 

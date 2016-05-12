@@ -42,7 +42,7 @@ class RdYarpRobotManager : public RdRobotManager
         virtual bool connect();
         virtual bool disconnect();
         virtual bool test();
-        virtual bool ping();
+        virtual void setEnabled(bool enabled);
 
         virtual void onDestroy();
 
