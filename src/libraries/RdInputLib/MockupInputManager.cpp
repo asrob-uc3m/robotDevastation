@@ -18,6 +18,16 @@ bool rd::MockupInputManager::sendKeyPress(RdKey key)
     return true;
 }
 
+bool rd::MockupInputManager::sendKeyUp(rd::RdKey key)
+{
+    return false;
+}
+
+bool rd::MockupInputManager::sendKeyDown(rd::RdKey key)
+{
+    return false;
+}
+
 rd::MockupInputManager::MockupInputManager()
 {
     stopped = true;
