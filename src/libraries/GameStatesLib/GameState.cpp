@@ -1,7 +1,7 @@
 #include "GameState.hpp"
 
 const int rd::GameState::KILLED = 1;
-const int rd::GameState::QUIT_REQUESTED = 2;
+const int rd::GameState::EXIT_REQUESTED = 2;
 
 rd::GameState::GameState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
                          rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
@@ -9,6 +9,7 @@ rd::GameState::GameState(rd::RdNetworkManager *networkManager, rd::RdImageManage
                     ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager, audioManager)
 {
     this->state_id = "GameState";
+    received_exit = false;
 }
 
 rd::GameState::~GameState()
@@ -92,15 +93,30 @@ bool rd::GameState::loop()
 
 bool rd::GameState::cleanup()
 {
-    return false;
+    if (received_exit)
+    {
+        //-- Stop things to exit game (logout)
+        imageManager->stop();
+        inputManager->stop();
+        inputManager->removeInputEventListeners();
+        audioManager->stopMusic();
+        audioManager->stop();
+        networkManager->logout(mentalMap->getMyself()); //-- This is kind of weird, but it is supposed to be done like this
+        networkManager->stop();
+        return true;
+    }
+    else
+        return false;
+
 }
 
 int rd::GameState::evaluateConditions()
 {
     if (mentalMap->getMyself().getHealth()==0)
-    {
         return KILLED;
-    }
+
+    if (received_exit)
+        return EXIT_REQUESTED;
 
     return -1;
 }
@@ -116,6 +132,13 @@ bool rd::GameState::onKeyDown(rd::RdKey k)
     if (k.getChar()=='r')
     {
         mentalMap->reload();
+        return true;
+    }
+
+    if (k.getValue() == RdKey::KEY_ESCAPE)
+    {
+        RD_DEBUG("Escape was pressed!\n");
+        received_exit = true;
         return true;
     }
 

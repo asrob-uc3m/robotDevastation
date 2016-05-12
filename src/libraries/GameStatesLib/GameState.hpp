@@ -47,7 +47,7 @@ class GameState : public State, public ManagerHub,
         virtual int evaluateConditions();
 
         static const int KILLED;
-        static const int QUIT_REQUESTED;
+        static const int EXIT_REQUESTED;
 
         //-- RdInputEventListener interface:
         virtual bool onKeyDown(RdKey k);
@@ -58,8 +58,7 @@ class GameState : public State, public ManagerHub,
 
     protected:
         GameScreen screen;
-        bool login;
-        bool logged_in;
+        bool received_exit;
         RdProcessorImageEventListener processorImageEventListener;
         RdImage last_camera_frame;
 

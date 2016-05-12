@@ -201,7 +201,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     int end_state_id = builder.addState(State::getEndState());
 
     ASSERT_TRUE(builder.addTransition(game_state_id, dead_state_id, GameState::KILLED));
-    ASSERT_TRUE(builder.addTransition(game_state_id, end_state_id, GameState::QUIT_REQUESTED));
+    ASSERT_TRUE(builder.addTransition(game_state_id, end_state_id, GameState::EXIT_REQUESTED));
     ASSERT_TRUE(builder.setInitialState(game_state_id));
 
     fsm = builder.buildStateMachine();
@@ -321,7 +321,7 @@ TEST_F(GameStateTest, GameStateQuitsWhenRequested )
     int end_state_id = builder.addState(State::getEndState());
 
     ASSERT_TRUE(builder.addTransition(game_state_id, dead_state_id, GameState::KILLED));
-    ASSERT_TRUE(builder.addTransition(game_state_id, end_state_id, GameState::QUIT_REQUESTED));
+    ASSERT_TRUE(builder.addTransition(game_state_id, end_state_id, GameState::EXIT_REQUESTED));
     ASSERT_TRUE(builder.setInitialState(game_state_id));
 
     fsm = builder.buildStateMachine();
