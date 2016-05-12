@@ -44,6 +44,8 @@ bool rd::InitState::loop()
     {
         //-- Log in
         networkManager->login(mentalMap->getMyself());
+        robotManager->connect();
+        robotManager->setEnabled(false);
         logged_in = true;
     }
 

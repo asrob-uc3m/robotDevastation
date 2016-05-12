@@ -159,7 +159,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
 
-    ASSERT_TRUE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isConnected());
     ASSERT_FALSE(mockupRobotManager->isEnabled());
 
     //-- When enter is pressed, the system should log in and go to next state:
