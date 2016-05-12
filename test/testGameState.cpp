@@ -309,9 +309,75 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
 
 TEST_F(GameStateTest, GameStateQuitsWhenRequested )
 {
-    ASSERT_TRUE(false);
-}
+    //-- Create fsm with GameState
+    StateMachineBuilder builder;
+    ASSERT_TRUE(builder.setDirectorType("YARP"));
 
+    int game_state_id = builder.addState(new GameState(networkManager, imageManager, inputManager, mentalMap,
+                                                       robotManager, audioManager));
+    ASSERT_NE(-1, game_state_id);
+    int dead_state_id = builder.addState(new MockupState(1));
+    ASSERT_NE(-1, dead_state_id);
+    int end_state_id = builder.addState(State::getEndState());
+
+    ASSERT_TRUE(builder.addTransition(game_state_id, dead_state_id, GameState::KILLED));
+    ASSERT_TRUE(builder.addTransition(game_state_id, end_state_id, GameState::QUIT_REQUESTED));
+    ASSERT_TRUE(builder.setInitialState(game_state_id));
+
+    fsm = builder.buildStateMachine();
+    ASSERT_NE((FiniteStateMachine*)NULL, fsm);
+
+    //-- Check things that should happen before fsm starts (before setup):
+    //----------------------------------------------------------------------------
+    ASSERT_FALSE(mockupAudioManager->isStopped());
+    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_THEME"));
+    ASSERT_FALSE(mockupNetworkManager->isStopped());
+    ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
+    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupInputManager->isStopped());
+    ASSERT_EQ(0, mockupInputManager->getNumListeners());
+//    ASSERT_FALSE(mockupRobotManager->isStopped());
+//    ASSERT_TRUE(mockupRobotManager->isConnected());
+
+    //-- Start state machine
+    ASSERT_TRUE(fsm->start());
+    yarp::os::Time::delay(0.5);
+
+    //-- Check things that should happen just after the fsm starts (after setup)
+    //----------------------------------------------------------------------------
+    ASSERT_FALSE(mockupAudioManager->isStopped());
+    ASSERT_TRUE(mockupAudioManager->isPlaying("RD_THEME"));
+    ASSERT_FALSE(mockupNetworkManager->isStopped());
+    ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
+    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupInputManager->isStopped());
+    ASSERT_EQ(1, mockupInputManager->getNumListeners());
+//    ASSERT_FALSE(mockupRobotManager->isStopped());
+//    ASSERT_TRUE(mockupRobotManager->isConnected());
+
+    //-- Testing exiting game
+    //-----------------------------------------------------------------------------
+    //-- Check that GameState is active
+    ASSERT_EQ(game_state_id, fsm->getCurrentState());
+
+    //-- When esc is pressed, the system should exit the game:
+    mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_ESCAPE));
+    yarp::os::Time::delay(0.5);
+
+    //-- Check that it has stopped things and it is in the final state (cleanup):
+    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_TRUE(mockupInputManager->isStopped());
+    ASSERT_EQ(0, mockupInputManager->getNumListeners());
+    ASSERT_TRUE(mockupAudioManager->isStopped());
+    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_THEME"));
+    ASSERT_TRUE(mockupNetworkManager->isStopped());
+    ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
+    //ASSERT_FALSE(mockupRobotManager->isStopped()); //-- Not correctly implemented
+    //ASSERT_FALSE(mockupRobotManager->isConnected());
+
+    //-- Check that end state is active
+    ASSERT_EQ(-1, fsm->getCurrentState()); //-- (When FSM is ended, no state is active, hence -1)
+}
 
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)
