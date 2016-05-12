@@ -28,8 +28,16 @@ bool RdMockupRobotManager::moveForward(int velocity)
 {
     if (connected)
     {
-        movement_direction = FORWARD;
-        return true;
+        if (enabled)
+        {
+            movement_direction = FORWARD;
+            return true;
+        }
+        else
+        {
+            RD_ERROR("Robot is disabled\n");
+            return false;
+        }
     }
     else
     {
@@ -42,8 +50,16 @@ bool RdMockupRobotManager::moveBackwards(int velocity)
 {
     if (connected)
     {
-        movement_direction = BACKWARDS;
-        return true;
+        if (enabled)
+        {
+            movement_direction = BACKWARDS;
+            return true;
+        }
+        else
+        {
+            RD_ERROR("Robot is disabled\n");
+            return false;
+        }
     }
     else
     {
@@ -56,8 +72,16 @@ bool RdMockupRobotManager::turnLeft(int velocity)
 {
     if (connected)
     {
-        movement_direction = LEFT;
-        return true;
+        if (enabled)
+        {
+            movement_direction = LEFT;
+            return true;
+        }
+        else
+        {
+            RD_ERROR("Robot is disabled\n");
+            return false;
+        }
     }
     else
     {
@@ -70,8 +94,16 @@ bool RdMockupRobotManager::turnRight(int velocity)
 {
     if (connected)
     {
-        movement_direction = RIGHT;
-        return true;
+        if (enabled)
+        {
+            movement_direction = RIGHT;
+            return true;
+        }
+        else
+        {
+            RD_ERROR("Robot is disabled\n");
+            return false;
+        }
     }
     else
     {
@@ -84,8 +116,16 @@ bool RdMockupRobotManager::stopMovement()
 {
     if (connected)
     {
-        movement_direction = NONE;
-        return true;
+        if (enabled)
+        {
+            movement_direction = NONE;
+            return true;
+        }
+        else
+        {
+            RD_ERROR("Robot is disabled\n");
+            return false;
+        }
     }
     else
     {
@@ -98,8 +138,16 @@ bool RdMockupRobotManager::tiltUp(int velocity)
 {
     if (connected)
     {
-        camera_movement_direction = CAMERA_UP;
-        return true;
+        if (enabled)
+        {
+            camera_movement_direction = CAMERA_UP;
+            return true;
+        }
+        else
+        {
+            RD_ERROR("Robot is disabled\n");
+            return false;
+        }
     }
     else
     {
@@ -112,8 +160,16 @@ bool RdMockupRobotManager::tiltDown(int velocity)
 {
     if (connected)
     {
-        camera_movement_direction = CAMERA_DOWN;
-        return true;
+        if (enabled)
+        {
+            camera_movement_direction = CAMERA_DOWN;
+            return true;
+        }
+        else
+        {
+            RD_ERROR("Robot is disabled\n");
+            return false;
+        }
     }
     else
     {
@@ -126,8 +182,16 @@ bool RdMockupRobotManager::panLeft(int velocity)
 {
     if (connected)
     {
-        camera_movement_direction = CAMERA_LEFT;
-        return true;
+        if (enabled)
+        {
+            camera_movement_direction = CAMERA_LEFT;
+            return true;
+        }
+        else
+        {
+            RD_ERROR("Robot is disabled\n");
+            return false;
+        }
     }
     else
     {
@@ -140,8 +204,16 @@ bool RdMockupRobotManager::panRight(int velocity)
 {
     if (connected)
     {
-        camera_movement_direction = CAMERA_RIGHT;
-        return true;
+        if (enabled)
+        {
+            camera_movement_direction = CAMERA_RIGHT;
+            return true;
+        }
+        else
+        {
+            RD_ERROR("Robot is disabled\n");
+            return false;
+        }
     }
     else
     {
@@ -154,8 +226,16 @@ bool RdMockupRobotManager::stopCameraMovement()
 {
     if (connected)
     {
-        camera_movement_direction = NONE;
-        return true;
+        if (enabled)
+        {
+            camera_movement_direction = NONE;
+            return true;
+        }
+        else
+        {
+            RD_ERROR("Robot is disabled\n");
+            return false;
+        }
     }
     else
     {
@@ -199,8 +279,13 @@ bool RdMockupRobotManager::test()  {
 
 void RdMockupRobotManager::setEnabled(bool enabled)
 {
-    RD_DEBUG("\n");
-    return;
+    this->enabled = enabled;
+    if (enabled)
+    {
+        RD_DEBUG("RdMockupRobotManager enabled\n");
+    }
+    else
+        RD_DEBUG("RdMockupRobotManager disabled\n");
 }
 
 void RdMockupRobotManager::onDestroy(){
