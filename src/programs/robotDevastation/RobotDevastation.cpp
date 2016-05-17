@@ -54,46 +54,35 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     RD_INFO("robotName: %s\n",rf.find("robotName").asString().c_str());
 
 
-
     //-- Init input manager
     RdSDLInputManager::RegisterManager();
     inputManager = RdInputManager::getInputManager("SDL");
-    inputManager->addInputEventListener(this);
-    if (!inputManager->start() )
-    {
-        RD_ERROR("Could not init inputManager!\n");
-        return false;
-    }
 
     //-- Init sound
-    if( ! initSound( rf ) )
+    if(!initSound(rf))
         return false;
-
-    if( ! rf.check("noMusic") )
-        audioManager->play("bso", -1);
 
     //-- Init robot
-    if( rf.check("mockupRobotManager") ) {
+    if(rf.check("mockupRobotManager"))
         robotManager = new RdMockupRobotManager(rf.find("robotName").asString());
-    } else {
+    else
         robotManager = new RdYarpRobotManager(rf.find("robotName").asString());
-    }
-    if( ! robotManager->connect() ) {
-        RD_ERROR("Could not connect to robotName \"%s\"!\n",rf.find("robotName").asString().c_str());
-        RD_ERROR("Use syntax: robotDevastation --robotName %s\n",rf.find("robotName").asString().c_str());
-        return false;
-    }
+
+//    RD_ERROR("Could not connect to robotName \"%s\"!\n",rf.find("robotName").asString().c_str());
+//    RD_ERROR("Use syntax: robotDevastation --robotName %s\n",rf.find("robotName").asString().c_str());
 
     //-- Init image manager
-    if( rf.check("mockupImageManager") ) {
+    if(rf.check("mockupImageManager"))
+    {
         RdMockupImageManager::RegisterManager();
         imageManager = RdImageManager::getImageManager(RdMockupImageManager::id);
-    } else {
+    }
+    else
+    {
         RdYarpImageManager::RegisterManager();
         imageManager = RdImageManager::getImageManager(RdYarpImageManager::id);
     }
-    //-- Add the image processing listener to the image manager
-    imageManager->addImageEventListener(&processorImageEventListener);
+
     //-- Configure the camera port
     std::ostringstream remoteCameraPortName;  //-- Default looks like "/0/rd1/img:o"
     remoteCameraPortName << "/";
@@ -105,15 +94,13 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     localCameraPortName << rf.find("id").asInt();
     localCameraPortName << "/robot/img:i";
     imageManager->configure("local_img_port", localCameraPortName.str() ); //-- Name given by me
-    if( ! imageManager->start() )
-        return false;
 
     //-- Init mentalMap
     mentalMap = RdMentalMap::getMentalMap();
-    mentalMap->configure( rf.find("id").asInt() );
+    mentalMap->configure(rf.find("id").asInt());
 
-    std::vector< RdPlayer > players;
-    players.push_back( RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0) );
+    std::vector<RdPlayer> players;
+    players.push_back(RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0));
     mentalMap->updatePlayers(players);
 
     mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
@@ -121,93 +108,12 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Init network manager
     RdYarpNetworkManager::RegisterManager();
     networkManager = RdYarpNetworkManager::getNetworkManager(RdYarpNetworkManager::id);
-    networkManager->addNetworkEventListener(mentalMap);
-    mentalMap->addMentalMapEventListener((RdYarpNetworkManager *)networkManager);
-    if( ! networkManager->login(mentalMap->getMyself()) )
-        return false;
 
-    //-- Init output thread
-    rateThreadOutput.init(rf);
+    //-- Get game FSM and start game
+    gameFSM = initGameFSM();
+    gameFSM->start();
 
-    return true;
-}
-
-bool rd::RobotDevastation::onKeyUp(rd::RdKey k)
-{
-if (k.isPrintable() )
-    {
-        RD_SUCCESS( "Key \"%c\" was pressed!\n", k.getChar() );
-
-        if ( k.getChar() == 'w')
-        {
-            robotManager->stopMovement();
-        }
-        else if ( k.getChar() == 'a')
-        {
-            robotManager->stopMovement();
-        }
-        else if ( k.getChar() == 's')
-        {
-            robotManager->stopMovement();
-        }
-        else if ( k.getChar() == 'd')
-        {
-            robotManager->stopMovement();
-        }
-    }
-	return true;
-}
-
-bool rd::RobotDevastation::onKeyDown(rd::RdKey k)
-{
-    if ( k.isControlKey() )
-    {
-        RD_SUCCESS( "Control key with code %d pressed!\n", k.getValue() );
-
-        if ( k.getValue() == RdKey::KEY_SPACE)
-        {
-            //-- Do things to shoot
-            mentalMap->shoot();
-            RD_SUCCESS("Shoot!\n");
-        }
-        else if ( k.getValue() == RdKey::KEY_ESCAPE)
-        {
-            RD_SUCCESS("Exit!\n");
-            this->interruptModule();
-        }
-    }
-    else if (k.isPrintable() )
-    {
-        RD_SUCCESS( "Key \"%c\" was pressed!\n", k.getChar() );
-
-        if ( k.getChar() == 'r')
-        {
-            RD_SUCCESS("Reload!\n");
-            mentalMap->reload();
-        }
-        else if ( k.getChar() == 'q')
-        {
-            RD_SUCCESS("Exit!\n");
-            this->interruptModule();
-        }
-        else if ( k.getChar() == 'w')
-        {
-            robotManager->moveForward();
-        }
-        else if ( k.getChar() == 'a')
-        {
-            robotManager->turnLeft();
-        }
-        else if ( k.getChar() == 'd')
-        {
-            robotManager->turnRight();
-        }
-        else if ( k.getChar() == 's')
-        {
-            robotManager->moveBackwards();
-        }
-    }
-	return true;
+    return cleanup();
 }
 
 double rd::RobotDevastation::getPeriod()
@@ -238,7 +144,7 @@ bool rd::RobotDevastation::initSound(yarp::os::ResourceFinder &rf)
     audioManager = AudioManager::getAudioManager("SDL");
 
     std::string bsoStr( rf.findFileByName("../sounds/RobotDevastationBSO.mp3") );
-    if ( ! audioManager->load(bsoStr, "bso", 0) )
+    if ( ! audioManager->load(bsoStr, "RD_THEME", 0) )
         return false;
 
     std::string shootStr( rf.findFileByName("../sounds/01_milshot.wav") );
@@ -260,13 +166,65 @@ bool rd::RobotDevastation::initSound(yarp::os::ResourceFinder &rf)
     return true;
 }
 
+rd::FiniteStateMachine *rd::RobotDevastation::initGameFSM()
+{
+    StateMachineBuilder builder;
+    builder.setDirectorType("YARP");
+
+    //-- Create states
+    int init_state_id = builder.addState(new InitState(networkManager, imageManager, inputManager, mentalMap,
+                                                       robotManager, audioManager));
+    int game_state_id = builder.addState(new GameState(networkManager, imageManager, inputManager, mentalMap,
+                                                       robotManager, audioManager));
+    int dead_state_id = builder.addState(new DeadState(networkManager, imageManager, inputManager,
+                                                       mentalMap, robotManager, audioManager));
+    int end_state_id = builder.addState(State::getEndState());
+
+    //-- Add transitions to other states
+    builder.addTransition(init_state_id, game_state_id, InitState::LOGIN_SUCCESSFUL);
+    builder.addTransition(game_state_id, dead_state_id, GameState::KILLED);
+    builder.addTransition(game_state_id, end_state_id, GameState::EXIT_REQUESTED);
+    builder.addTransition(dead_state_id, game_state_id, DeadState::RESPAWN_SELECTED);
+    builder.addTransition(dead_state_id, end_state_id, DeadState::EXIT_SELECTED);
+
+    //-- Set initial state
+    builder.setInitialState(init_state_id);
+
+    return builder.buildStateMachine();
+}
+
+bool rd::RobotDevastation::cleanup()
+{
+    RdInputManager::destroyInputManager();
+    inputManager = NULL;
+
+    RdNetworkManager::destroyNetworkManager();
+    networkManager = NULL;
+
+    //-- Closing audio system:
+    AudioManager::destroyAudioManager();
+    audioManager = NULL;
+
+    //-- Closing mental map:
+    RdMentalMap::destroyMentalMap();
+    mentalMap = NULL;
+
+    //-- Close img related ports:
+    RdImageManager::destroyImageManager();
+    imageManager = NULL;
+
+    //-- Close robot:
+    delete robotManager;
+    robotManager = NULL;
+
+    return true;
+}
+
 bool rd::RobotDevastation::interruptModule()
 {
     RD_INFO("Closing program...\n");
 
-    rateThreadOutput.stop();
-
-    //-- Detach listeners to avoid segmentation faults
+    //-- Detach listeners to avoid segmentation faults (just in case)
     inputManager->removeInputEventListeners();
     networkManager->removeNetworkEventListeners();
     mentalMap->removeMentalMapEventListeners();
@@ -295,6 +253,7 @@ bool rd::RobotDevastation::interruptModule()
     RdImageManager::destroyImageManager();
     imageManager = NULL;
 
+    //-- Close robot:
     robotManager->disconnect();
 
     return true;
