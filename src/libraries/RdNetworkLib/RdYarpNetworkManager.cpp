@@ -23,10 +23,7 @@ rd::RdYarpNetworkManager::~RdYarpNetworkManager()
 bool rd::RdYarpNetworkManager::start()
 {
     if (player_id == -1)
-    {
-        RD_ERROR("NetworkManager not initialized, player id not set\n");
-        return false;
-    }
+        RD_WARNING("NetworkManager not initialized, player id not set\n");
 
     yarp::os::NetworkBase::initMinimum();
 
