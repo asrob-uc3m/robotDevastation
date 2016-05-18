@@ -117,6 +117,7 @@ class DeadStateTest : public testing::Test
             players.push_back(RdPlayer(1,"test_player", 0,MAX_HEALTH,0,0) );
             ASSERT_TRUE(mentalMap->updatePlayers(players));
             mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
+            networkManager->configure("player", players[0]);
 
             mockupRobotManager = new RdMockupRobotManager("MOCKUP");
             robotManager = (RdRobotManager *) mockupRobotManager;
