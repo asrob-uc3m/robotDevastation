@@ -7,16 +7,43 @@
  *
  ***/
 
+#include <yarp/os/Thread.h>
+
 #include "RdYarpNetworkManager.hpp"
 #include "RdNetworkEventListener.hpp"
+#include "RdServer.hpp"
 
 #include "gtest/gtest.h"
 
 using namespace rd;
 
-class RdYarpNetworkManagerTest : public testing::Test
+class RunningRdServerThread: public yarp::os::Thread
 {
     public:
+        RunningRdServerThread(int argc, char** argv) {
+            this->argc = argc;
+            this->argv = argv;
+        }
+
+        virtual void run() {
+            rd::RdServer rdServer;
+            rdServer.runModule(argc, argv);
+        }
+
+    private:
+        int argc;
+        char** argv;
+};
+
+class RdYarpNetworkManagerTest : public testing::Test
+{
+    public:    
+        RdYarpNetworkManagerTest(int argc, char ** argv)
+        {
+            this->argc = argc;
+            this->argv = argv;
+        }
+
         virtual void SetUp()
         {
             ASSERT_TRUE(RdYarpNetworkManager::RegisterManager());
@@ -24,6 +51,8 @@ class RdYarpNetworkManagerTest : public testing::Test
             ASSERT_TRUE(networkManager);
 
             me = new RdPlayer(0, "Myself", 100, 100, 0, 0);
+
+            RunningRdServerThread rdserver(argc, argv);
         }
 
         virtual void TearDown()
@@ -37,7 +66,41 @@ class RdYarpNetworkManagerTest : public testing::Test
 
     protected:
         RdNetworkManager * networkManager;
+
+    private:
+        int argc;
+        char ** argv;
 };
+
+
+//-- Class for the setup of the enviroment for all the tests
+//----------------------------------------------------------------------------------------
+class RdYarpNetworkManagerEnvironment : public testing::Environment
+{
+    public:
+        RdYarpNetworkManagerEnvironment(int argc, char ** argv)
+        {
+            this->argc = argc;
+            this->argv = argv;
+        }
+
+        virtual void SetUp()
+        {
+            //-- Init yarp network & server
+            yarp::os::NetworkBase::setLocalMode(true);
+            yarp::os::Network::init();
+        }
+
+        virtual void TearDown()
+        {
+            yarp::os::Network::fini();
+        }
+
+    private:
+        int argc;
+        char ** argv;
+};
+
 
 TEST_F( RdYarpNetworkManagerTest, NetworkManagerIsSingleton)
 {
@@ -61,4 +124,10 @@ TEST_F( RdYarpNetworkManagerTest, NetworkManagerSendHit)
     ASSERT_TRUE(networkManager->sendPlayerHit(*me, 50));
 }
 
-
+//--- Main -------------------------------------------------------------------------------------------
+int main(int argc, char **argv)
+{
+  testing::InitGoogleTest(&argc, argv);
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new RdYarpNetworkManagerEnvironment(argc, argv));
+  return RUN_ALL_TESTS();
+}
