@@ -48,6 +48,7 @@ TEST_F(MockupNetworkManagerTest, ManagerDoesNotStartIfNotConfigured)
 
 TEST_F(MockupNetworkManagerTest, PlayerCreatedWhenLogin)
 {
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
@@ -65,6 +66,7 @@ TEST_F(MockupNetworkManagerTest, PlayerCreatedWhenLogin)
 
 TEST_F(MockupNetworkManagerTest, ErrorLoginTwice)
 {
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
@@ -88,6 +90,7 @@ TEST_F(MockupNetworkManagerTest, ErrorLoginTwice)
 
 TEST_F(MockupNetworkManagerTest, PlayerRemovedOnLogout)
 {
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
@@ -110,6 +113,7 @@ TEST_F(MockupNetworkManagerTest, PlayerRemovedOnLogout)
 
 TEST_F(MockupNetworkManagerTest, ErrorLogoutTwice)
 {
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
@@ -135,6 +139,7 @@ TEST_F(MockupNetworkManagerTest, ErrorLogoutTwice)
 
 TEST_F(MockupNetworkManagerTest, SetPlayerAddsPlayer)
 {
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
@@ -155,6 +160,7 @@ TEST_F(MockupNetworkManagerTest, SetPlayerAddsPlayer)
 
 TEST_F(MockupNetworkManagerTest, PlayerDamagedWhenShot)
 {
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
@@ -184,6 +190,7 @@ TEST_F(MockupNetworkManagerTest, ListenersNotifiedOnEvent)
     RdNetworkEventListener * plistener = (RdNetworkEventListener *) &listener;
     ASSERT_TRUE(((RdNetworkManager*)networkManager)->addNetworkEventListener(plistener));
 
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
@@ -227,6 +234,7 @@ TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
     mentalMap->addMentalMapEventListener(networkManager);
 
     //-- Start networkManager
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
