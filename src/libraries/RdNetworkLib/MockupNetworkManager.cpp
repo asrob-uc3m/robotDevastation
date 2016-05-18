@@ -22,7 +22,11 @@ rd::MockupNetworkManager::~MockupNetworkManager()
 
 bool rd::MockupNetworkManager::start()
 {
+    if (player.getId() == -1)
+        return false;
+
     stopped = false;
+    return true;
 }
 
 bool rd::MockupNetworkManager::stop()
@@ -32,7 +36,13 @@ bool rd::MockupNetworkManager::stop()
 
 bool rd::MockupNetworkManager::configure(std::string parameter, RdPlayer value)
 {
-    return true;
+    if (parameter.compare("player") == 0)
+    {
+        player = value;
+        return true;
+    }
+
+    return RdNetworkManager::configure(parameter, value);
 }
 
 bool rd::MockupNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)
