@@ -95,7 +95,7 @@ bool rd::RdNetworkManager::removeNetworkEventListeners()
     return true;
 }
 
-bool rd::RdNetworkManager::configure(std::string parameter, std::string value)
+bool rd::RdNetworkManager::configure(std::string parameter, RdPlayer value)
 {
     return true;
 }

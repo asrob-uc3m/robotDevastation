@@ -113,7 +113,7 @@ bool rd::DeadState::cleanup()
         inputManager->removeInputEventListeners();
         audioManager->stopMusic();
         audioManager->stop();
-        networkManager->logout(mentalMap->getMyself()); //-- This is kind of weird, but it is supposed to be done like this
+        networkManager->logout();
         networkManager->stop();
         robotManager->setEnabled(false);
         robotManager->disconnect();

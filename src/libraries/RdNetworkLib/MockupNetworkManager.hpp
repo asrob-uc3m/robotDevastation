@@ -49,20 +49,20 @@ class MockupNetworkManager : public RdNetworkManager
         virtual bool stop();
 
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, std::string value);
+        virtual bool configure(std::string parameter, RdPlayer value);
 
         //-- RdServer API
         //--------------------------------------------------------------------------------------------
         virtual bool sendPlayerHit(RdPlayer player, int damage);
-        virtual bool login(RdPlayer player);
-        virtual bool logout(RdPlayer player);
+        virtual bool login();
+        virtual bool logout();
 
         //-- Mockup object API
         //--------------------------------------------------------------------------------------------
         bool isLoggedIn();
         bool isStopped();
 
-        bool setPlayerData(std::vector<RdPlayer> players);
+        bool setPlayerData(std::vector<RdPlayer> game_players);
         std::vector<RdPlayer> getPlayerData();
         bool sendPlayerData();
         bool setLoggedIn(bool logged_in);
@@ -79,11 +79,12 @@ class MockupNetworkManager : public RdNetworkManager
         //! @brief Reference to this manager (unique instance)
         static MockupNetworkManager * uniqueInstance;
 
+
         //-- Required stuff
         bool logged_in;
         bool stopped;
-        std::vector<RdPlayer> players;
-
+        RdPlayer player;
+        std::vector<RdPlayer> game_players;
         std::map <int, RdPlayer> players_dic;
 
 };

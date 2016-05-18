@@ -235,7 +235,7 @@ bool rd::RobotDevastation::interruptModule()
     inputManager = NULL;
 
     //-- Closing network system
-    networkManager->logout(mentalMap->getMyself());
+    networkManager->logout();
     networkManager->stop();
     RdNetworkManager::destroyNetworkManager();
     networkManager = NULL;

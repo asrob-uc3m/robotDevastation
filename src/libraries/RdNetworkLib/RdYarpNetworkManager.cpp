@@ -22,8 +22,11 @@ rd::RdYarpNetworkManager::~RdYarpNetworkManager()
 
 bool rd::RdYarpNetworkManager::start()
 {
-    if (player_id == -1)
-        RD_WARNING("NetworkManager not initialized, player id not set\n");
+    if (player.getId() == -1)
+    {
+        RD_ERROR("NetworkManager not initialized, player id not set\n");
+        return false;
+    }
 
     yarp::os::NetworkBase::initMinimum();
 
@@ -105,7 +108,6 @@ void rd::RdYarpNetworkManager::onRead(yarp::os::Bottle &b)
 
 rd::RdYarpNetworkManager::RdYarpNetworkManager()
 {
-    player_id = -1;
 }
 
 bool rd::RdYarpNetworkManager::stop()
@@ -121,11 +123,12 @@ bool rd::RdYarpNetworkManager::stop()
      return true;
 }
 
-bool rd::RdYarpNetworkManager::configure(std::string parameter, std::string value)
+bool rd::RdYarpNetworkManager::configure(std::string parameter, RdPlayer value)
 {
-    if (parameter.compare("player_id") == 0)
+    if (parameter.compare("player") == 0)
     {
-        player_id = atoi(value.c_str());
+        player = value;
+        return true;
     }
 
     return RdNetworkManager::configure(parameter, value);
@@ -148,12 +151,11 @@ bool rd::RdYarpNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)
         return false;
 }
 
-bool rd::RdYarpNetworkManager::login(rd::RdPlayer player)
+bool rd::RdYarpNetworkManager::login()
 {
     //-- Start network system
     std::stringstream ss;
     ss << player.getId();
-    configure("player_id", ss.str());
 
     if( !start())
     {
@@ -177,7 +179,7 @@ bool rd::RdYarpNetworkManager::login(rd::RdPlayer player)
         return false;
 }
 
-bool rd::RdYarpNetworkManager::logout(rd::RdPlayer player)
+bool rd::RdYarpNetworkManager::logout()
 {
     RD_INFO("Logout...\n");
     yarp::os::Bottle msgRdPlayer,res;
