@@ -8,6 +8,7 @@
  ***/
 
 #include <yarp/os/Thread.h>
+#include <yarp/os/ResourceFinder.h>
 
 #include "RdYarpNetworkManager.hpp"
 #include "RdNetworkEventListener.hpp"
@@ -26,7 +27,13 @@ class RunningRdServerThread: public yarp::os::Thread
         }
 
         virtual void run() {
-            rdServer.runModule(argc, argv);
+            yarp::os::ResourceFinder rf;
+            rf.setVerbose(true);
+            rf.setDefaultContext("rdServer");
+            rf.setDefaultConfigFile("rdServer.ini");
+            rf.configure(argc, argv);
+
+            rdServer.runModule(rf);
         }
 
         virtual void onStop() {
@@ -42,12 +49,6 @@ class RunningRdServerThread: public yarp::os::Thread
 class RdYarpNetworkManagerTest : public testing::Test
 {
     public:    
-        RdYarpNetworkManagerTest(int argc, char ** argv)
-        {
-            this->argc = argc;
-            this->argv = argv;
-        }
-
         virtual void SetUp()
         {
             ASSERT_TRUE(RdYarpNetworkManager::RegisterManager());
@@ -62,7 +63,7 @@ class RdYarpNetworkManagerTest : public testing::Test
 
         virtual void TearDown()
         {
-            rdserver->stop();
+            rdServer->stop();
             delete rdServer;
             rdServer = NULL;
 
@@ -75,7 +76,7 @@ class RdYarpNetworkManagerTest : public testing::Test
 
     protected:
         RdNetworkManager * networkManager;
-        RunningRdServerThread * rdserver;
+        RunningRdServerThread * rdServer;
 
     private:
         int argc;
@@ -124,13 +125,13 @@ TEST_F( RdYarpNetworkManagerTest, NetworkManagerIsSingleton)
 
 TEST_F( RdYarpNetworkManagerTest, NetworkManagerLoginLogout)
 {
-    ASSERT_TRUE(networkManager->login(*me));
-    ASSERT_TRUE(networkManager->logout(*me));
+    ASSERT_TRUE(networkManager->login());
+    ASSERT_TRUE(networkManager->logout());
 }
 
 TEST_F( RdYarpNetworkManagerTest, NetworkManagerSendHit)
 {
-    ASSERT_TRUE(networkManager->login(*me));
+    ASSERT_TRUE(networkManager->login());
     ASSERT_TRUE(networkManager->sendPlayerHit(*me, 50));
 }
 
