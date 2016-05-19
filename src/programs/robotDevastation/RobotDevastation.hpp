@@ -57,7 +57,7 @@ class RobotDevastation : public yarp::os::RFModule
         bool updateModule();
 
         bool initSound(yarp::os::ResourceFinder &rf);
-        FiniteStateMachine* initGameFSM();
+        bool initGameFSM();
         bool cleanup();
 };
 

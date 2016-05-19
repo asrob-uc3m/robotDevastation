@@ -108,10 +108,11 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Init network manager
     RdYarpNetworkManager::RegisterManager();
     networkManager = RdYarpNetworkManager::getNetworkManager(RdYarpNetworkManager::id);
+    networkManager->configure("player", players[0]);
 
     //-- Get game FSM and start game
-    gameFSM = initGameFSM();
-    gameFSM->start();
+    if(initGameFSM())
+        gameFSM->start();
 
     return cleanup();
 }
@@ -166,7 +167,7 @@ bool rd::RobotDevastation::initSound(yarp::os::ResourceFinder &rf)
     return true;
 }
 
-rd::FiniteStateMachine *rd::RobotDevastation::initGameFSM()
+bool rd::RobotDevastation::initGameFSM()
 {
     StateMachineBuilder builder;
     builder.setDirectorType("YARP");
@@ -189,8 +190,9 @@ rd::FiniteStateMachine *rd::RobotDevastation::initGameFSM()
 
     //-- Set initial state
     builder.setInitialState(init_state_id);
+    gameFSM = builder.buildStateMachine();
 
-    return builder.buildStateMachine();
+    return gameFSM != NULL;
 }
 
 bool rd::RobotDevastation::cleanup()
@@ -216,6 +218,10 @@ bool rd::RobotDevastation::cleanup()
     //-- Close robot:
     delete robotManager;
     robotManager = NULL;
+
+    //-- Delete FSM:
+    delete gameFSM;
+    gameFSM = NULL;
 
     return true;
 }
@@ -255,6 +261,10 @@ bool rd::RobotDevastation::interruptModule()
 
     //-- Close robot:
     robotManager->disconnect();
+
+    //-- Delete FSM:
+    delete gameFSM;
+    gameFSM = NULL;
 
     return true;
 }
