@@ -21,26 +21,25 @@ using namespace rd;
 class RunningRdServerThread: public yarp::os::Thread
 {
     public:
-        RunningRdServerThread(int argc, char** argv) {
-            this->argc = argc;
-            this->argv = argv;
+        RunningRdServerThread(yarp::os::ResourceFinder& rf) {
+            this->rf = rf;
         }
 
         virtual void run() {
-            yarp::os::ResourceFinder rf;
-            rf.setVerbose(true);
-            rf.setDefaultContext("rdServer");
-            rf.setDefaultConfigFile("rdServer.ini");
-            rf.configure(argc, argv);
-
             rdServer.runModule(rf);
+            RD_DEBUG("Run Module!\n");
         }
 
         virtual void onStop() {
-            rdServer.stopModule();
+            RD_DEBUG("Request Module stop\n");
+            rdServer.stopModule(true);
+            RD_DEBUG("Module stopped\n");
         }
 
+        virtual ~RunningRdServerThread() {}
+
     private:
+        yarp::os::ResourceFinder rf;
         rd::RdServer rdServer;
         int argc;
         char** argv;
@@ -57,12 +56,17 @@ class RdYarpNetworkManagerTest : public testing::Test
 
             me = new RdPlayer(0, "Myself", 100, 100, 0, 0);
 
-            rdServer = new RunningRdServerThread(argc, argv);
-            rdServer->run();
+            RD_DEBUG("Running rdServer\n");
+            yarp::os::ResourceFinder rf;
+            rdServer = new RunningRdServerThread(rf);
+            rdServer->start();
+            yarp::os::Time::delay(1);
+            RD_DEBUG("rdServer now running\n");
         }
 
         virtual void TearDown()
         {
+            RD_DEBUG("Stopping rdServer\n");
             rdServer->stop();
             delete rdServer;
             rdServer = NULL;
@@ -91,8 +95,6 @@ class RdYarpNetworkManagerEnvironment : public testing::Environment
     public:
         RdYarpNetworkManagerEnvironment(int argc, char ** argv)
         {
-            this->argc = argc;
-            this->argv = argv;
         }
 
         virtual void SetUp()
@@ -106,21 +108,19 @@ class RdYarpNetworkManagerEnvironment : public testing::Environment
         {
             yarp::os::Network::fini();
         }
-
-    private:
-        int argc;
-        char ** argv;
 };
 
 
 TEST_F( RdYarpNetworkManagerTest, NetworkManagerIsSingleton)
 {
+    RD_WARNING("TEST#1!\n");
     RdNetworkManager * networkManager2 = NULL;
     networkManager2 = RdYarpNetworkManager::getNetworkManager();
 
     ASSERT_NE((RdNetworkManager *)NULL, networkManager);
     ASSERT_NE((RdNetworkManager *)NULL, networkManager2);
     ASSERT_EQ(networkManager, networkManager2);
+    RD_WARNING("TEST#1! - FINISHED\n");
 }
 
 TEST_F( RdYarpNetworkManagerTest, NetworkManagerLoginLogout)

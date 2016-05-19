@@ -31,6 +31,8 @@ class RdServer : public yarp::os::RFModule
          */
         bool configure(yarp::os::ResourceFinder &rf);
 
+        virtual ~RdServer();
+
     protected:
         bool interruptModule();
         double getPeriod();
