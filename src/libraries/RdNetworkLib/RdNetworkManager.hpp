@@ -71,6 +71,9 @@ class RdNetworkManager: public RdMentalMapEventListener
         //! @brief Stop the network manager
         virtual bool stop() = 0;
 
+        //! @brief Returns true if manager is stopped (obviously)
+        virtual bool isStopped() = 0;
+
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Adds a RdInputEventListener to the list of observers to be notified of events
@@ -80,7 +83,7 @@ class RdNetworkManager: public RdMentalMapEventListener
         bool removeNetworkEventListeners();
 
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, std::string value);
+        virtual bool configure(std::string parameter, RdPlayer value);
 
 
 
@@ -90,10 +93,10 @@ class RdNetworkManager: public RdMentalMapEventListener
         virtual bool sendPlayerHit(RdPlayer player, int damage) = 0;
 
         //! @brief Log the user into the network
-        virtual bool login(RdPlayer player) = 0;
+        virtual bool login() = 0;
 
         //! @brief Log the user out of the network
-        virtual bool logout(RdPlayer player) = 0;
+        virtual bool logout() = 0;
 
         //-- MentalMap listener API
         //-------------------------------------------------------------------------------------------

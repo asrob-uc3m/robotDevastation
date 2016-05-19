@@ -15,6 +15,11 @@ bool rd::RdYarpNetworkManager::RegisterManager()
     return Register( uniqueInstance, id);
 }
 
+rd::RdYarpNetworkManager::RdYarpNetworkManager()
+{
+    started = false;
+}
+
 rd::RdYarpNetworkManager::~RdYarpNetworkManager()
 {
     uniqueInstance = NULL;
@@ -22,8 +27,17 @@ rd::RdYarpNetworkManager::~RdYarpNetworkManager()
 
 bool rd::RdYarpNetworkManager::start()
 {
-    if (player_id == -1)
-        RD_WARNING("NetworkManager not initialized, player id not set\n");
+    if (player.getId() == -1)
+    {
+        RD_ERROR("NetworkManager not initialized, player id not set\n");
+        return false;
+    }
+
+    if (started)
+    {
+        RD_ERROR("NetworkManager already started\n");
+        return false;
+    }
 
     yarp::os::NetworkBase::initMinimum();
 
@@ -69,6 +83,7 @@ bool rd::RdYarpNetworkManager::start()
 
     callbackPort.useCallback(*this);
 
+    started = true;
     return true;
 }
 
@@ -103,14 +118,15 @@ void rd::RdYarpNetworkManager::onRead(yarp::os::Bottle &b)
 
 }
 
-rd::RdYarpNetworkManager::RdYarpNetworkManager()
-{
-    player_id = -1;
-}
-
 bool rd::RdYarpNetworkManager::stop()
 {
-    rpcClient.close();
+    if (!started)
+    {
+        RD_ERROR("Already stopped\n");
+        return false;
+    }
+
+     rpcClient.close();
 
      callbackPort.disableCallback();
      callbackPort.interrupt();
@@ -118,14 +134,21 @@ bool rd::RdYarpNetworkManager::stop()
 
      yarp::os::NetworkBase::finiMinimum();
 
+     started = false;
      return true;
 }
 
-bool rd::RdYarpNetworkManager::configure(std::string parameter, std::string value)
+bool rd::RdYarpNetworkManager::isStopped()
 {
-    if (parameter.compare("player_id") == 0)
+    return !started;
+}
+
+bool rd::RdYarpNetworkManager::configure(std::string parameter, RdPlayer value)
+{
+    if (parameter.compare("player") == 0)
     {
-        player_id = atoi(value.c_str());
+        player = value;
+        return true;
     }
 
     return RdNetworkManager::configure(parameter, value);
@@ -133,6 +156,12 @@ bool rd::RdYarpNetworkManager::configure(std::string parameter, std::string valu
 
 bool rd::RdYarpNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)
 {
+    if (!started)
+    {
+        RD_ERROR("NetworkManager has not been started\n");
+        return false;
+    }
+
     //-- Send a message to the server with the player Id and the damage done:
     yarp::os::Bottle msg_player_hit, response;
     msg_player_hit.addVocab(VOCAB_RD_HIT);
@@ -148,18 +177,21 @@ bool rd::RdYarpNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)
         return false;
 }
 
-bool rd::RdYarpNetworkManager::login(rd::RdPlayer player)
+bool rd::RdYarpNetworkManager::login()
 {
+    if (!started)
+    {
+        RD_WARNING("NetworkManager has not been started\n");
+        if(!start())
+        {
+            RD_ERROR("RdNetworkManager could not be started for player %d\n", player.getId() );
+            return false;
+        }
+    }
+
     //-- Start network system
     std::stringstream ss;
     ss << player.getId();
-    configure("player_id", ss.str());
-
-    if( !start())
-    {
-        RD_ERROR("RdNetworkManager could not be started for player %d\n", player.getId() );
-        return false;
-    }
 
     //-- Send login message
     yarp::os::Bottle msgRdPlayer,res;
@@ -177,8 +209,14 @@ bool rd::RdYarpNetworkManager::login(rd::RdPlayer player)
         return false;
 }
 
-bool rd::RdYarpNetworkManager::logout(rd::RdPlayer player)
+bool rd::RdYarpNetworkManager::logout()
 {
+    if (!started)
+    {
+        RD_ERROR("NetworkManager has not been started\n");
+        return false;
+    }
+
     RD_INFO("Logout...\n");
     yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_LOGOUT);

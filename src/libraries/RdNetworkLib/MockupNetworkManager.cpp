@@ -22,7 +22,11 @@ rd::MockupNetworkManager::~MockupNetworkManager()
 
 bool rd::MockupNetworkManager::start()
 {
+    if (player.getId() == -1)
+        return false;
+
     stopped = false;
+    return true;
 }
 
 bool rd::MockupNetworkManager::stop()
@@ -30,9 +34,15 @@ bool rd::MockupNetworkManager::stop()
     stopped = true;
 }
 
-bool rd::MockupNetworkManager::configure(std::string parameter, std::string value)
+bool rd::MockupNetworkManager::configure(std::string parameter, RdPlayer value)
 {
-    return true;
+    if (parameter.compare("player") == 0)
+    {
+        player = value;
+        return true;
+    }
+
+    return RdNetworkManager::configure(parameter, value);
 }
 
 bool rd::MockupNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)
@@ -66,7 +76,7 @@ bool rd::MockupNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)
     return true;
 }
 
-bool rd::MockupNetworkManager::login(rd::RdPlayer player)
+bool rd::MockupNetworkManager::login()
 {
 
     int loginId = player.getId();
@@ -93,7 +103,7 @@ bool rd::MockupNetworkManager::login(rd::RdPlayer player)
     return true;
 }
 
-bool rd::MockupNetworkManager::logout(rd::RdPlayer player)
+bool rd::MockupNetworkManager::logout()
 {
     int id = player.getId();
 
