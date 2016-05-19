@@ -39,8 +39,8 @@ add_executable(testMentalMap testMentalMap.cpp)
 target_link_libraries(testMentalMap ${RD_LIBRARIES} RdMentalMapLib gtest gtest_main)
 
 # Network manager related
-#add_executable(testRdYarpNetworkManager testRdYarpNetworkManager.cpp)
-#target_link_libraries(testRdYarpNetworkManager ${RD_LIBRARIES} RdNetworkLib gtest gtest_main)
+add_executable(testRdYarpNetworkManager testRdYarpNetworkManager.cpp)
+target_link_libraries(testRdYarpNetworkManager ${RD_LIBRARIES} RdNetworkLib gtest gtest_main)
 
 add_executable(testMockupNetworkManager testMockupNetworkManager.cpp)
 target_link_libraries(testMockupNetworkManager ${RD_LIBRARIES} RdNetworkLib gtest gtest_main)

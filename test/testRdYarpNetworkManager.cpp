@@ -26,11 +26,15 @@ class RunningRdServerThread: public yarp::os::Thread
         }
 
         virtual void run() {
-            rd::RdServer rdServer;
             rdServer.runModule(argc, argv);
         }
 
+        virtual void onStop() {
+            rdServer.stopModule();
+        }
+
     private:
+        rd::RdServer rdServer;
         int argc;
         char** argv;
 };
@@ -52,11 +56,16 @@ class RdYarpNetworkManagerTest : public testing::Test
 
             me = new RdPlayer(0, "Myself", 100, 100, 0, 0);
 
-            RunningRdServerThread rdserver(argc, argv);
+            rdServer = new RunningRdServerThread(argc, argv);
+            rdServer->run();
         }
 
         virtual void TearDown()
         {
+            rdserver->stop();
+            delete rdServer;
+            rdServer = NULL;
+
             ASSERT_TRUE(RdYarpNetworkManager::destroyNetworkManager());
             delete me;
             me = NULL;
@@ -66,6 +75,7 @@ class RdYarpNetworkManagerTest : public testing::Test
 
     protected:
         RdNetworkManager * networkManager;
+        RunningRdServerThread * rdserver;
 
     private:
         int argc;
