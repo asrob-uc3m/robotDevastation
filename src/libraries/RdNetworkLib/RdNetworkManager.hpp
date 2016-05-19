@@ -71,6 +71,9 @@ class RdNetworkManager: public RdMentalMapEventListener
         //! @brief Stop the network manager
         virtual bool stop() = 0;
 
+        //! @brief Returns true if manager is stopped (obviously)
+        virtual bool isStopped() = 0;
+
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Adds a RdInputEventListener to the list of observers to be notified of events

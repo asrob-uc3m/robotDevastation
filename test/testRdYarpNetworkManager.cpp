@@ -11,7 +11,7 @@
 #include <yarp/os/ResourceFinder.h>
 
 #include "RdYarpNetworkManager.hpp"
-#include "RdNetworkEventListener.hpp"
+#include "MockupNetworkEventListener.hpp"
 #include "RdServer.hpp"
 
 #include "gtest/gtest.h"
@@ -54,7 +54,8 @@ class RdYarpNetworkManagerTest : public testing::Test
             networkManager = RdYarpNetworkManager::getNetworkManager();
             ASSERT_TRUE(networkManager);
 
-            me = new RdPlayer(0, "Myself", 100, 100, 0, 0);
+            me = RdPlayer(0, "me", 100, 100, 0, 0);
+            other_player = RdPlayer(1, "dummy", 100, 100, 1, 0);
 
             RD_DEBUG("Running rdServer\n");
             yarp::os::ResourceFinder rf;
@@ -72,11 +73,9 @@ class RdYarpNetworkManagerTest : public testing::Test
             rdServer = NULL;
 
             ASSERT_TRUE(RdYarpNetworkManager::destroyNetworkManager());
-            delete me;
-            me = NULL;
         }
 
-        RdPlayer * me;
+        RdPlayer me, other_player;
 
     protected:
         RdNetworkManager * networkManager;
@@ -110,30 +109,81 @@ class RdYarpNetworkManagerEnvironment : public testing::Environment
         }
 };
 
-
-TEST_F( RdYarpNetworkManagerTest, NetworkManagerIsSingleton)
+//-- Things that are being tested
+//-----------------------------------------------------------------------------------------------------
+TEST_F(RdYarpNetworkManagerTest, ManagerDoesNotStartIfNotConfigured)
 {
-    RD_WARNING("TEST#1!\n");
+    ASSERT_FALSE(networkManager->start());
+    ASSERT_TRUE(networkManager->isStopped());
+
+    networkManager->configure("player", me);
+
+    ASSERT_TRUE(networkManager->start());
+    ASSERT_FALSE(networkManager->isStopped());
+    ASSERT_TRUE(networkManager->stop());
+    ASSERT_TRUE(networkManager->isStopped());
+}
+
+TEST_F(RdYarpNetworkManagerTest, NetworkManagerIsSingleton)
+{
     RdNetworkManager * networkManager2 = NULL;
     networkManager2 = RdYarpNetworkManager::getNetworkManager();
 
     ASSERT_NE((RdNetworkManager *)NULL, networkManager);
     ASSERT_NE((RdNetworkManager *)NULL, networkManager2);
     ASSERT_EQ(networkManager, networkManager2);
-    RD_WARNING("TEST#1! - FINISHED\n");
 }
 
-TEST_F( RdYarpNetworkManagerTest, NetworkManagerLoginLogout)
+TEST_F(RdYarpNetworkManagerTest, NetworkManagerAPIWorks)
 {
+    MockupNetworkEventListener listener;
+    RdNetworkEventListener * plistener = (RdNetworkEventListener *) &listener;
+    ASSERT_TRUE(((RdNetworkManager*)networkManager)->addNetworkEventListener(plistener));
+
+    //-- Startup
+    networkManager->configure("player", me);
+    ASSERT_TRUE(networkManager->start());
+    ASSERT_FALSE(networkManager->isStopped());
+
+    //-- Login
     ASSERT_TRUE(networkManager->login());
+    yarp::os::Time::delay(0.5);
+    ASSERT_FALSE(networkManager->login());//--Check that it is not allowed to login twice
+
+    std::vector<RdPlayer> players = listener.getStoredPlayers();
+    EXPECT_LE(1, listener.getDataArrived());
+    ASSERT_EQ(1, players.size());
+    EXPECT_EQ(0, players[0].getId());
+    listener.resetDataArrived();
+
+    //-- Damage player
+    ASSERT_TRUE(networkManager->sendPlayerHit(me, 50));
+    yarp::os::Time::delay(0.5);
+    players = listener.getStoredPlayers();
+
+    EXPECT_LE(1, listener.getDataArrived());
+    ASSERT_EQ(1, players.size());
+    EXPECT_EQ(0, players[0].getId());
+    EXPECT_EQ(50, players[0].getHealth());
+    listener.resetDataArrived();
+
+    //-- Logout
     ASSERT_TRUE(networkManager->logout());
+    yarp::os::Time::delay(0.5);
+    ASSERT_FALSE(networkManager->logout());//--Check that it is not allowed to logout twice
+
+    /* Check that data > 0 and check contents */
+    players = listener.getStoredPlayers();
+
+    EXPECT_LE(1, listener.getDataArrived());
+    ASSERT_EQ(0, players.size());
+    listener.resetDataArrived();
+
+    //-- Stop
+    ASSERT_TRUE(networkManager->stop());
+    ASSERT_TRUE(networkManager->isStopped());
 }
 
-TEST_F( RdYarpNetworkManagerTest, NetworkManagerSendHit)
-{
-    ASSERT_TRUE(networkManager->login());
-    ASSERT_TRUE(networkManager->sendPlayerHit(*me, 50));
-}
 
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)

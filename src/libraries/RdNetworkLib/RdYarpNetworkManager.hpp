@@ -53,6 +53,7 @@ class RdYarpNetworkManager: public RdNetworkManager,
         //------------------ Manager Startup & Halting ---------------------------------------------------------------//
         virtual bool start();
         virtual bool stop();
+        virtual bool isStopped();
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Configures a parameter with a value
@@ -93,6 +94,8 @@ class RdYarpNetworkManager: public RdNetworkManager,
 
         //! @brief Player
         RdPlayer player;
+
+        bool started;
 };
 
 }
