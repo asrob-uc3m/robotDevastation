@@ -54,6 +54,7 @@ class RobotDevastationTest : public testing::Test
             ASSERT_NE((AudioManager*) NULL, audioManager);
             ASSERT_NE((MockupAudioManager*) NULL, mockupAudioManager);
             mockupAudioManager->load("RD_THEME","RD_THEME", AudioManager::MUSIC);
+            mockupAudioManager->load("RD_DEAD","RD_DEAD", AudioManager::MUSIC);
             mockupAudioManager->load("shoot","shoot", AudioManager::FX);
             mockupAudioManager->load("explosion","explosion", AudioManager::FX);
             mockupAudioManager->load("noAmmo","noAmmo", AudioManager::FX);
@@ -78,9 +79,9 @@ class RobotDevastationTest : public testing::Test
             ASSERT_TRUE(mentalMap->configure(1));
 
             std::vector<RdPlayer> players;
-            players.push_back(RdPlayer(1,"test_player",100,100,0,0) );
+            players.push_back(RdPlayer(1,"test_player",MAX_HEALTH,MAX_HEALTH,0,0) );
             ASSERT_TRUE(mentalMap->updatePlayers(players));
-            mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
+            mentalMap->addWeapon(RdWeapon("Default gun", 10, MAX_AMMO));
 
             //-- Init network manager
             MockupNetworkManager::RegisterManager();
@@ -216,18 +217,6 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_ENTER));
     yarp::os::Time::delay(0.5);
 
-    //-- Check that it has logged in and it is in the next state (cleanup):
-    ASSERT_FALSE(mockupAudioManager->isStopped());
-    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_THEME"));
-    ASSERT_FALSE(mockupNetworkManager->isStopped());
-    ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
-    ASSERT_TRUE(mockupImageManager->isStopped());
-    ASSERT_FALSE(mockupInputManager->isStopped());
-    ASSERT_EQ(0, mockupInputManager->getNumListeners());
-    ASSERT_TRUE(mockupRobotManager->isConnected());
-    ASSERT_FALSE(mockupRobotManager->isEnabled());
-    yarp::os::Time::delay(0.5);
-
     //-- Check things that should happen just after the fsm starts (after setup)
     //----------------------------------------------------------------------------
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -326,22 +315,6 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     //-- If I lose all health, game is over
     ASSERT_TRUE(mockupNetworkManager->sendPlayerHit(mentalMap->getMyself(), 50));
     ASSERT_EQ(0, mentalMap->getMyself().getHealth());
-    yarp::os::Time::delay(0.5);
-
-    //-- Check things that should happen before fsm starts (before setup):
-    // Player is dead
-    // Stuff is enabled
-    ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
-    ASSERT_FALSE(mockupImageManager->isStopped());
-    ASSERT_FALSE(mockupInputManager->isStopped());
-    ASSERT_EQ(1, mockupInputManager->getNumListeners());
-    ASSERT_FALSE(mockupAudioManager->isStopped());
-    ASSERT_TRUE(mockupAudioManager->isPlaying("RD_THEME"));
-    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_DEAD"));
-    ASSERT_FALSE(mockupNetworkManager->isStopped());
-    ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
-    ASSERT_TRUE(mockupRobotManager->isConnected());
-    ASSERT_TRUE(mockupRobotManager->isEnabled());
 
     //-- Check that deadState is active
     yarp::os::Time::delay(0.5);
