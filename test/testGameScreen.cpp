@@ -1,4 +1,5 @@
 #include <SDL/SDL.h>
+#include "SDLUtils.hpp"
 #include <yarp/sig/all.h>
 #include <string>
 #include <vector>
@@ -13,7 +14,10 @@ using namespace rd;
 
 int main(void)
 {
+    initSDL();
+
     GameScreen screen;
+    screen.init();
 
     //-- Create a mental map with some info:
     RdMentalMap * mentalMap = RdMentalMap::getMentalMap();
@@ -51,6 +55,8 @@ int main(void)
     }
 
     RdMentalMap::destroyMentalMap();
+    screen.cleanup();
+    cleanupSDL();
 }
 
 
