@@ -24,6 +24,8 @@ namespace rd{
 class RdScreen
 {
     public:
+        virtual bool init() = 0;
+        virtual bool cleanup() = 0;
         virtual bool show() = 0;
         virtual bool update(std::string parameter, std::string value);
         virtual bool update(std::string parameter, RdImage value);

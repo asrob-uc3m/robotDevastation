@@ -13,34 +13,17 @@ const SDL_Color rd::DeadScreen::TEXT_COLOR = {0,255,0,0};
 
 rd::DeadScreen::DeadScreen()
 {
-    //-- Init SDL
-    if(SDL_Init(SDL_INIT_VIDEO) < 0)
-    {
-        RD_ERROR("SDL could not initialize!\n SDL Error: %s\n", SDL_GetError());
-        return;
-    }
-    atexit(SDL_Quit); // Clean it up nicely :)
 
-    //-- Init ttf
-    if (TTF_Init() == -1)
-    {
-      RD_ERROR("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
-      return;
-    }
+}
 
-    //Initialize PNG loading
-    if(!(IMG_Init(IMG_INIT_PNG)&IMG_INIT_PNG))
-    {
-        RD_ERROR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
-        return;
-    }
-
+bool rd::DeadScreen::init()
+{
     //-- Load skull image resource
     skull_image = IMG_Load(SKULL_PATH.c_str());
     if (skull_image == NULL)
     {
         RD_ERROR("Unable to load skull image (resource: %s)!\n SDL_image Error: %s\n", SKULL_PATH.c_str(), IMG_GetError())
-        return;
+        return false;
     }
 
     //-- Load the font
@@ -48,24 +31,44 @@ rd::DeadScreen::DeadScreen()
     if (font == NULL)
     {
         RD_ERROR("Unable to load font: %s %s \n", FONT_PATH.c_str(), TTF_GetError());
-        return;
+        return false;
     }
 
-    //-- Screen surface
-    screen = SDL_SetVideoMode(skull_image->w, skull_image->h, 16, SDL_DOUBLEBUF);
-    if (!screen)
-    {
-        RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
-        return;
-    }
+    screen = NULL;
 
     //-- Default values:
     this->camera_frame = NULL;
     this->update(PARAM_REMAINING_TIME, "10");
+
+    return true;
+}
+
+bool rd::DeadScreen::cleanup()
+{
+    SDL_FreeSurface(screen);
+    SDL_FreeSurface(skull_image);
+    SDL_FreeSurface(text_surface);
+    if (camera_frame)
+        SDL_FreeSurface(camera_frame);
+
+    screen = NULL;
+    skull_image = NULL;
+    camera_frame = NULL;
 }
 
 bool rd::DeadScreen::show()
 {
+    if (screen == NULL)
+    {
+        //-- Init screen
+        screen = SDL_SetVideoMode(skull_image->w, skull_image->h, 16, SDL_DOUBLEBUF);
+        if (!screen)
+        {
+            RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
+            return false;
+        }
+    }
+
     //-- Clear screen
     SDL_FillRect(screen, NULL, 0xFFFFFF);
 
@@ -103,11 +106,7 @@ bool rd::DeadScreen::show()
 
 rd::DeadScreen::~DeadScreen()
 {
-    SDL_FreeSurface(screen);
-    SDL_FreeSurface(skull_image);
-    SDL_FreeSurface(text_surface);
-    if (camera_frame)
-        SDL_FreeSurface(camera_frame);
+
 }
 
 bool rd::DeadScreen::update(std::string parameter, std::string value)

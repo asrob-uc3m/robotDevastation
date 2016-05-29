@@ -5,34 +5,17 @@ const std::string rd::InitScreen::FONT_PATH = "/usr/share/fonts/truetype/freefon
 
 rd::InitScreen::InitScreen()
 {
-    //-- Init SDL
-    if(SDL_Init(SDL_INIT_VIDEO) < 0)
-    {
-        RD_ERROR("SDL could not initialize!\n SDL Error: %s\n", SDL_GetError());
-        return;
-    }
-    atexit(SDL_Quit); // Clean it up nicely :)
 
-    //-- Init ttf
-    if (TTF_Init() == -1)
-    {
-      RD_ERROR("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
-      return;
-    }
+}
 
-    //Initialize PNG loading
-    if(!(IMG_Init(IMG_INIT_PNG)&IMG_INIT_PNG))
-    {
-        RD_ERROR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
-        return;
-    }
-
+bool rd::InitScreen::init()
+{
     //-- Load splash screen resource
     image = IMG_Load(SPLASH_PATH.c_str());
     if (image == NULL)
     {
         RD_ERROR("Unable to load splash screen (resource: %s)!\n SDL_image Error: %s\n", SPLASH_PATH.c_str(), IMG_GetError())
-        return;
+        return false;
     }
 
     //-- Load the font
@@ -40,24 +23,40 @@ rd::InitScreen::InitScreen()
     if (font == NULL)
     {
         RD_ERROR("Unable to load font: %s %s \n", FONT_PATH.c_str(), TTF_GetError());
-        return;
+        return false;
     }
 
     //-- Create text from font
     SDL_Color text_color = {0,255,0,0};
     text_surface = TTF_RenderText_Solid(font, "Press any key to start", text_color);
 
-    //-- Screen surface
-    screen = SDL_SetVideoMode(image->w, image->h+text_surface->h, 16, SDL_DOUBLEBUF);
-    if (!screen)
-    {
-        RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
-        return;
-    }
+    screen = NULL;
+    return true;
+}
+
+bool rd::InitScreen::cleanup()
+{
+    SDL_FreeSurface(screen);
+    SDL_FreeSurface(image);
+    SDL_FreeSurface(text_surface);
+    screen = NULL;
+    image = NULL;
+    text_surface = NULL;
+    return true;
 }
 
 bool rd::InitScreen::show()
 {
+    if (screen == NULL)
+    {
+        //-- Init screen
+        screen = SDL_SetVideoMode(image->w, image->h+text_surface->h, 16, SDL_DOUBLEBUF);
+        if (!screen)
+        {
+            RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
+            return false;
+        }
+    }
     //-- Clear screen
     SDL_FillRect(screen, NULL, 0x000000);
 
@@ -75,7 +74,4 @@ bool rd::InitScreen::show()
 
 rd::InitScreen::~InitScreen()
 {
-    SDL_FreeSurface(screen);
-    SDL_FreeSurface(image);
-    SDL_FreeSurface(text_surface);
 }
