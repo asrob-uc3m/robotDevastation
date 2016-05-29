@@ -20,6 +20,7 @@ rd::InitState::~InitState()
 bool rd::InitState::setup()
 {
     //-- Show Robot Devastation start screen:
+    screen.init();
     screen.show();
 
     //-- Start Robot Devastation music theme:
@@ -57,6 +58,7 @@ bool rd::InitState::cleanup()
     RD_DEBUG("Cleanup!!\n");
     audioManager->stopMusic();
     inputManager->removeInputEventListeners();
+    screen.cleanup();
 
     return true;
 }

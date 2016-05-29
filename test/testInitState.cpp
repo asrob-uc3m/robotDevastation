@@ -5,6 +5,7 @@
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
 #include "RdUtils.hpp"
+#include "SDLUtils.hpp"
 #include "InitState.hpp"
 
 #include "MockupNetworkManager.hpp"
@@ -18,6 +19,33 @@
 #include <yarp/os/Time.h>
 
 using namespace rd;
+
+
+class InitStateTestEnvironment : public testing::Environment
+{
+    public:
+        InitStateTestEnvironment(int argc, char ** argv)
+        {
+            this->argc = argc;
+            this->argv = argv;
+        }
+
+        virtual void SetUp()
+        {
+            initSDL();
+        }
+
+        virtual void TearDown()
+        {
+            cleanupSDL();
+        }
+
+
+    private:
+        int argc;
+        char ** argv;
+
+};
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
@@ -182,4 +210,12 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_TRUE(mockupRobotManager->isConnected());
     ASSERT_FALSE(mockupRobotManager->isEnabled());
 
+}
+
+//--- Main -------------------------------------------------------------------------------------------
+int main(int argc, char **argv)
+{
+  testing::InitGoogleTest(&argc, argv);
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new InitStateTestEnvironment(argc, argv));
+  return RUN_ALL_TESTS();
 }
