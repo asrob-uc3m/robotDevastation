@@ -20,6 +20,8 @@ class DeadScreen : public RdScreen
 {
     public:
         DeadScreen();
+        virtual bool init();
+        virtual bool cleanup();
         virtual bool show();
         virtual ~DeadScreen();
         virtual bool update(std::string parameter, std::string value);

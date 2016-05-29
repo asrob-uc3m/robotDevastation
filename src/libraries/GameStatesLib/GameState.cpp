@@ -71,6 +71,9 @@ bool rd::GameState::setup()
     robotManager->setEnabled(true);
 
     //-- Show Robot Devastation game screen:
+    if (!screen.init())
+        return false;
+
     //-- Set info elements on GameScreen
     screen.update(GameScreen::PARAM_MYSELF, mentalMap->getMyself());
     screen.update(GameScreen::PARAM_PLAYERS, mentalMap->getPlayers());
@@ -94,6 +97,8 @@ bool rd::GameState::loop()
 
 bool rd::GameState::cleanup()
 {
+    screen.cleanup();
+
     if (received_exit)
     {
         //-- Stop things to exit game (logout)

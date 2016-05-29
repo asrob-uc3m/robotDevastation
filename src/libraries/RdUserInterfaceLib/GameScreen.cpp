@@ -13,49 +13,43 @@ const SDL_Color rd::GameScreen::bluecolor =  {0, 0, 255, 0};
 
 rd::GameScreen::GameScreen()
 {
-    /// \todo Fix this (to return something in case of error)
+    update_required = true;
+}
 
-    //-- Setup SDL
-    //----------------------------------------------------------------------------------------
-    // Load SDL
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
-    {
-        RD_ERROR("Unable to initialize SDL: %s\n", SDL_GetError());
-        return;
-    }
-    atexit(SDL_Quit); // Clean it up nicely :)
-
-    //-- Init ttf
-    if (TTF_Init() == -1)
-    {
-      RD_ERROR("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
-      return;
-    }
-
+bool rd::GameScreen::init()
+{
     //-- Load the font(s)
     const char * font_name = "/usr/share/fonts/truetype/freefont/FreeMono.ttf";
     player_font = TTF_OpenFont(font_name, 12);
     if (player_font == NULL)
     {
         RD_ERROR("Unable to load font: %s %s \n", font_name, TTF_GetError());
-        return;
+        return false;
     }
 
     target_font = TTF_OpenFont(font_name, 12);
     if (target_font == NULL)
     {
         RD_ERROR("Unable to load font: %s %s \n", font_name, TTF_GetError());
-        return;
+        return false;
     }
 
     weapon_font = TTF_OpenFont(font_name, 12);
     if (weapon_font == NULL)
     {
         RD_ERROR("Unable to load font: %s %s \n", font_name, TTF_GetError());
-        return;
+        return false;
     }
 
     update_required = true;
+}
+
+bool rd::GameScreen::cleanup()
+{
+    SDL_FreeSurface(screen);
+    screen = NULL;
+
+    return true;
 }
 
 bool rd::GameScreen::show()

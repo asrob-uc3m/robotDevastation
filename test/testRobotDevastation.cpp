@@ -8,6 +8,7 @@
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
 #include "RdUtils.hpp"
+#include "SDLUtils.hpp"
 
 #include "MockupNetworkManager.hpp"
 #include "RdMockupImageManager.hpp"
@@ -25,6 +26,32 @@
 
 
 using namespace rd;
+
+class RobotDevastationTestEnvironment : public testing::Environment
+{
+    public:
+        RobotDevastationTestEnvironment(int argc, char ** argv)
+        {
+            this->argc = argc;
+            this->argv = argv;
+        }
+
+        virtual void SetUp()
+        {
+            initSDL();
+        }
+
+        virtual void TearDown()
+        {
+            cleanupSDL();
+        }
+
+
+    private:
+        int argc;
+        char ** argv;
+
+};
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
@@ -364,4 +391,12 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     //-- Check that end state is active
     ASSERT_EQ(-1, fsm->getCurrentState()); //-- (When FSM is ended, no state is active, hence -1)
 
+}
+
+//--- Main -------------------------------------------------------------------------------------------
+int main(int argc, char **argv)
+{
+  testing::InitGoogleTest(&argc, argv);
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new RobotDevastationTestEnvironment(argc, argv));
+  return RUN_ALL_TESTS();
 }
