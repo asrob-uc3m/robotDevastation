@@ -5,6 +5,7 @@
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
 #include "RdUtils.hpp"
+#include "SDLUtils.hpp"
 #include "InitState.hpp"
 #include "GameState.hpp"
 
@@ -40,11 +41,15 @@ class GameStateTestEnvironment : public testing::Environment
             //-- Init yarp network & server
             yarp::os::NetworkBase::setLocalMode(true);
             yarp::os::Network::init();
+
+            //-- Init SDL
+            initSDL();
         }
 
         virtual void TearDown()
         {
             yarp::os::Network::fini();
+            cleanupSDL();
         }
 
 
