@@ -4,6 +4,8 @@
 
 bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 {
+    initSDL();
+
     //-- Show help
     //printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
@@ -223,6 +225,7 @@ bool rd::RobotDevastation::cleanup()
     delete gameFSM;
     gameFSM = NULL;
 
+    cleanupSDL;
     return true;
 }
 
@@ -266,6 +269,7 @@ bool rd::RobotDevastation::interruptModule()
     delete gameFSM;
     gameFSM = NULL;
 
+    cleanupSDL;
     return true;
 }
 
