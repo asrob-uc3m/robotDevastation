@@ -15,6 +15,7 @@
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
 #include "RdUtils.hpp"
+#include "SDLUtils.hpp"
 #include "DeadState.hpp"
 #include "InitState.hpp"
 
@@ -51,11 +52,15 @@ class DeadStateTestEnvironment : public testing::Environment
             //-- Init yarp network & server
             yarp::os::NetworkBase::setLocalMode(true);
             yarp::os::Network::init();
+
+            //-- Init SDL
+            initSDL();
         }
 
         virtual void TearDown()
         {
             yarp::os::Network::fini();
+            cleanupSDL();
         }
 
 

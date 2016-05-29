@@ -29,6 +29,7 @@ bool rd::DeadState::setup()
     received_exit = false;
 
     //-- Configure & show Robot Devastation dead screen:
+    screen.init();
     RdImage last_camera_frame = imageManager->getImage();
     screen.update(DeadScreen::PARAM_LAST_CAMERA_FRAME, last_camera_frame);
     screen.update(DeadScreen::PARAM_REMAINING_TIME, number2str(timer));
@@ -78,6 +79,8 @@ bool rd::DeadState::loop()
 
 bool rd::DeadState::cleanup()
 {
+    screen.cleanup();
+
     if (received_respawn)
     {
         //-- Restore things (health, enable stuff)
