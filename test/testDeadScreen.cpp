@@ -1,4 +1,5 @@
 #include <SDL/SDL.h>
+#include "SDLUtils.hpp"
 #include <yarp/sig/all.h>
 
 #include "DeadScreen.hpp"
@@ -8,7 +9,10 @@ using namespace rd;
 
 int main()
 {
+    initSDL();
+
     DeadScreen screen;
+    screen.init();
 
     //-- Load test image
     RdImage test_frame;
@@ -24,4 +28,8 @@ int main()
         screen.show();
         SDL_Delay(1000); //Wait a bit :)
     }
+
+    screen.cleanup();
+
+    cleanupSDL();
 }
