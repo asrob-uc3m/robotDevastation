@@ -115,8 +115,6 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Get game FSM and start game
     if(initGameFSM())
         gameFSM->start();
-
-    return cleanup();
 }
 
 double rd::RobotDevastation::getPeriod()
@@ -126,6 +124,13 @@ double rd::RobotDevastation::getPeriod()
 
 bool rd::RobotDevastation::updateModule()
 {
+    //-- Check if FSM has arrived the end-state
+    if (gameFSM->getCurrentState() == -1)
+    {
+        this->stopModule();
+        return true;
+    }
+
     if (mentalMap != NULL)
     {
         printf("===robotDevastation===\n");
@@ -137,8 +142,9 @@ bool rd::RobotDevastation::updateModule()
         //printf("======================\n");
         return true;
     }
-    else
-        return true;
+
+    RD_DEBUG("Current state id: %d\n", gameFSM->getCurrentState());
+    return true;
 }
 
 bool rd::RobotDevastation::initSound(yarp::os::ResourceFinder &rf)
@@ -225,51 +231,13 @@ bool rd::RobotDevastation::cleanup()
     delete gameFSM;
     gameFSM = NULL;
 
-    cleanupSDL;
+    cleanupSDL();
     return true;
 }
 
 bool rd::RobotDevastation::interruptModule()
 {
     RD_INFO("Closing program...\n");
-
-    //-- Detach listeners to avoid segmentation faults (just in case)
-    inputManager->removeInputEventListeners();
-    networkManager->removeNetworkEventListeners();
-    mentalMap->removeMentalMapEventListeners();
-    imageManager->removeImageEventListeners();
-
-    //-- Closing input manager:
-    RdInputManager::destroyInputManager();
-    inputManager = NULL;
-
-    //-- Closing network system
-    networkManager->logout();
-    networkManager->stop();
-    RdNetworkManager::destroyNetworkManager();
-    networkManager = NULL;
-
-    //-- Closing audio system:
-    AudioManager::destroyAudioManager();
-    audioManager = NULL;
-
-    //-- Closing mental map:
-    RdMentalMap::destroyMentalMap();
-    mentalMap = NULL;
-
-    //-- Close img related ports:
-    imageManager->stop();
-    RdImageManager::destroyImageManager();
-    imageManager = NULL;
-
-    //-- Close robot:
-    robotManager->disconnect();
-
-    //-- Delete FSM:
-    delete gameFSM;
-    gameFSM = NULL;
-
-    cleanupSDL;
-    return true;
+    return this->cleanup();
 }
 
