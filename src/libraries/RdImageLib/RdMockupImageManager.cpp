@@ -26,6 +26,11 @@ bool rd::RdMockupImageManager::isStopped()
     return stopped;
 }
 
+bool rd::RdMockupImageManager::setEnabled(bool enabled)
+{
+    return false;
+}
+
 bool rd::RdMockupImageManager::configure(std::string parameter, std::string value)
 {
     RD_DEBUG("Configure called for parameter: \"%s\" with value: \"%s\"\n", parameter.c_str(), value.c_str());

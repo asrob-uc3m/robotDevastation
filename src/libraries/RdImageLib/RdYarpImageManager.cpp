@@ -46,6 +46,11 @@ bool rd::RdYarpImageManager::isStopped()
     return stopped;
 }
 
+bool rd::RdYarpImageManager::setEnabled(bool enabled)
+{
+    return false;
+}
+
 bool rd::RdYarpImageManager::configure(std::string parameter, std::string value)
 {
     if ( parameter.compare("remote_img_port") == 0 && value.compare("") != 0)
