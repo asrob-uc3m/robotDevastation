@@ -235,6 +235,7 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
     ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupRobotManager->isConnected());
@@ -251,6 +252,7 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
     ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_TRUE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
     ASSERT_TRUE(mockupRobotManager->isConnected());
@@ -350,7 +352,8 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
 
     //-- Check things that should happen in dead state before time runs out (setup):
     ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
-    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -378,6 +381,7 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
 
     //-- Check that it has stopped things and it is in the final state (cleanup):
     ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_TRUE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
     ASSERT_TRUE(mockupAudioManager->isStopped());
