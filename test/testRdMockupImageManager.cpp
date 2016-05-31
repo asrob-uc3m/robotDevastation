@@ -115,6 +115,9 @@ TEST_F(RdMockupImageManagerTest, RdMockupImageManagerNotificationWorks)
 
     //-- Dettach the listener
     EXPECT_TRUE(imageManager->removeImageEventListeners());
+    ASSERT_TRUE(imageManager->stop());
+    ASSERT_TRUE(imageManager->isStopped());
+    ASSERT_FALSE(((RdMockupImageManager *) imageManager)->isEnabled());
 }
 
 //--- Main -------------------------------------------------------------------------------------------

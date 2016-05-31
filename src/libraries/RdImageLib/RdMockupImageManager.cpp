@@ -18,6 +18,7 @@ bool rd::RdMockupImageManager::stop()
 {
     RD_DEBUG("\n");
     stopped = true;
+    enabled = false;
     return true;
 }
 
@@ -28,7 +29,13 @@ bool rd::RdMockupImageManager::isStopped()
 
 bool rd::RdMockupImageManager::setEnabled(bool enabled)
 {
-    return false;
+    this->enabled = enabled;
+    return true;
+}
+
+bool rd::RdMockupImageManager::isEnabled()
+{
+    return enabled;
 }
 
 bool rd::RdMockupImageManager::configure(std::string parameter, std::string value)
@@ -68,9 +75,13 @@ bool rd::RdMockupImageManager::receiveImage(rd::RdImage received_image)
     semaphore.post();
 
     //-- Notify listeners
-    for (int i = 0; i < listeners.size(); i++)
+    if (enabled)
+        for (int i = 0; i < listeners.size(); i++)
+            listeners[i]->onImageArrived(this);
+    else
     {
-        listeners[i]->onImageArrived(this);
+        RD_WARNING("MockupImageManager is disabled!\n");
+        return false;
     }
 
     return true;
@@ -79,4 +90,5 @@ bool rd::RdMockupImageManager::receiveImage(rd::RdImage received_image)
 rd::RdMockupImageManager::RdMockupImageManager()
 {
     stopped = true;
+    enabled = false;
 }
