@@ -37,7 +37,7 @@ bool rd::DeadState::setup()
     screen.show();
 
     //-- Disable camera images
-    imageManager->stop();
+    imageManager->setEnabled(false);
 
     //-- Disable input
     inputManager->removeInputEventListeners();
@@ -96,9 +96,6 @@ bool rd::DeadState::cleanup()
                 break;
             }
         mentalMap->updatePlayers(players);
-
-        //-- Enable camera images
-        imageManager->start();
 
         //-- Remove this input listener (game will setup its own listener)
         inputManager->removeInputEventListeners();

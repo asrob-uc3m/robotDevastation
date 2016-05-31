@@ -144,12 +144,16 @@ class DeadStateTest : public testing::Test
 
             //-- Finish setup of the modules that start at game state:
             //-- Note: we can change this to use GameState (as previously) if we want someday
+            //-- Note2: I'm adding here a counter of the times I had problems due to not changing this.
+            //-- If it were to arrive at 2 or 3, please change this.
+            //-- Counter = 1
             mockupImageManager->start();
             listener = new MockupInputEventListener;
             mockupInputManager->addInputEventListener(listener);
             audioManager->start();
             audioManager->play("RD_THEME", -1);
             mockupRobotManager->setEnabled(true);
+            mockupImageManager->setEnabled(true);
 
         }
 
