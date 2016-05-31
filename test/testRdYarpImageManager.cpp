@@ -88,7 +88,7 @@ const std::string RdYarpImageManagerEnvironment::camera_port_name = "/grabber";
 //-- Things that are being tested
 //-----------------------------------------------------------------------------------------------------
 
-TEST_F( RdYarpImageManagerTest, RdYarpImageManagerNotificationWorks)
+TEST_F( RdYarpImageManagerTest, RdYarpImageManagerWorks)
 {
     //-- Create a mockup listener
     RdMockupImageEventListener listener;
@@ -97,8 +97,8 @@ TEST_F( RdYarpImageManagerTest, RdYarpImageManagerNotificationWorks)
     ASSERT_TRUE(imageManager->addImageEventListener(&listener));
 
     //-- Configure the camera port
-    ASSERT_TRUE(imageManager->configure("remote_img_port", RdYarpImageManagerEnvironment::camera_port_name ));
-    ASSERT_TRUE(imageManager->configure("local_img_port", "/asdf" )); //-- Name given by me
+    ASSERT_TRUE(imageManager->configure("remote_img_port", RdYarpImageManagerEnvironment::camera_port_name));
+    ASSERT_TRUE(imageManager->configure("local_img_port", "/asdf")); //-- Name given by me
 
     //-- Start the imageManager
     listener.resetImagesArrived();
@@ -107,42 +107,27 @@ TEST_F( RdYarpImageManagerTest, RdYarpImageManagerNotificationWorks)
     //-- Wait for a image to arrive
     usleep(1e6);
 
-    //-- Check that a image arrived
-    EXPECT_LE( 1, listener.getImagesArrived() );
+    //-- Check that a image didn't arrive
+    EXPECT_EQ(0, listener.getImagesArrived());
 
-    //-- Dettach the listener
-    EXPECT_TRUE(imageManager->removeImageEventListeners());
-}
-
-TEST_F( RdYarpImageManagerTest, RdYarpImageManagerReadsImage)
-{
-    //-- Create a mockup listener
-    RdMockupImageEventListener listener;
-
-    //-- Add the listener to the manager
-    ASSERT_TRUE(imageManager->addImageEventListener(&listener));
-
-    //-- Configure the camera port
-    ASSERT_TRUE(imageManager->configure("remote_img_port", RdYarpImageManagerEnvironment::camera_port_name ));
-    ASSERT_TRUE(imageManager->configure("local_img_port", "/asdf" )); //-- Name given by me
-
-    //-- Start the imageManager
-    listener.resetImagesArrived();
-    ASSERT_TRUE(imageManager->start());
-
-    //-- Wait for a image to arrive
+    //-- Enable and wait for a image to arrive
+    ASSERT_TRUE(imageManager->setEnabled(true));
     usleep(1e6);
 
     //-- Check that a image arrived
-    ASSERT_LE( 1, listener.getImagesArrived() );
+    EXPECT_LE( 1, listener.getImagesArrived());
 
-    //-- Read image
-    RdImage image = imageManager->getImage();
-    EXPECT_NE( 0, image.width());
-    EXPECT_NE( 0, image.height());
+    //-- Check that disabling again works
+    ASSERT_TRUE(imageManager->setEnabled(false));
+    listener.resetImagesArrived();
+    usleep(1e6);
+    EXPECT_EQ(0, listener.getImagesArrived());
 
     //-- Dettach the listener
     EXPECT_TRUE(imageManager->removeImageEventListeners());
+
+    //-- Stop the manager
+    ASSERT_TRUE(imageManager->stop());
 }
 
 //--- Main -------------------------------------------------------------------------------------------
