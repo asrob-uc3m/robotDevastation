@@ -37,6 +37,8 @@ class RdMockupImageManager : public RdImageManager
         virtual bool start();
         virtual bool stop();
         virtual bool isStopped();
+        virtual bool setEnabled(bool enabled);
+        virtual bool isEnabled();
         virtual bool configure(std::string parameter, std::string value);
         virtual RdImage getImage();
 
@@ -75,6 +77,7 @@ class RdMockupImageManager : public RdImageManager
         RdImage image;
 
         bool stopped;
+        bool enabled;
 };
 
 

@@ -26,6 +26,7 @@ bool rd::RdYarpImageManager::start()
     RD_SUCCESS("Connected to robot camera.\n");
 
     stopped = false;
+    enabled = false;
     return true;
 
 }
@@ -37,6 +38,7 @@ bool rd::RdYarpImageManager::stop()
     imagePort.close();
 
     stopped = true;
+    enabled = false;
 
     return true;
 }
@@ -44,6 +46,12 @@ bool rd::RdYarpImageManager::stop()
 bool rd::RdYarpImageManager::isStopped()
 {
     return stopped;
+}
+
+bool rd::RdYarpImageManager::setEnabled(bool enabled)
+{
+    this->enabled = enabled;
+    return true;
 }
 
 bool rd::RdYarpImageManager::configure(std::string parameter, std::string value)
@@ -93,13 +101,17 @@ void rd::RdYarpImageManager::onRead(rd::RdImage &image)
     semaphore.post();
 
     //-- Notify listeners
-    for (int i = 0; i < listeners.size(); i++)
+    if (enabled)
+        for (int i = 0; i < listeners.size(); i++)
+            listeners[i]->onImageArrived(this);
+    else
     {
-        listeners[i]->onImageArrived(this);
+        RD_WARNING("YarpImageManager is disabled!\n");
     }
 }
 
 rd::RdYarpImageManager::RdYarpImageManager()
 {
     stopped = true;
+    enabled = false;
 }

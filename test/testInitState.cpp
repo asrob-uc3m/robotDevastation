@@ -184,6 +184,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
 
     ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
 
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
@@ -202,7 +203,8 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
 
-    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
 
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());

@@ -220,7 +220,8 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     ASSERT_FALSE(mockupAudioManager->isPlaying("RD_THEME"));
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
-    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
     ASSERT_TRUE(mockupRobotManager->isConnected());
@@ -237,6 +238,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
     ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_TRUE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
     ASSERT_TRUE(mockupRobotManager->isConnected());
@@ -336,6 +338,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     // Stuff is enabled
     ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
     ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_TRUE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -375,7 +378,8 @@ TEST_F(GameStateTest, GameStateQuitsWhenRequested )
     ASSERT_FALSE(mockupAudioManager->isPlaying("RD_THEME"));
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
-    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
     ASSERT_TRUE(mockupRobotManager->isConnected());
@@ -392,6 +396,7 @@ TEST_F(GameStateTest, GameStateQuitsWhenRequested )
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
     ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_TRUE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
     ASSERT_TRUE(mockupRobotManager->isConnected());
@@ -408,6 +413,7 @@ TEST_F(GameStateTest, GameStateQuitsWhenRequested )
 
     //-- Check that it has stopped things and it is in the final state (cleanup):
     ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_TRUE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
     ASSERT_TRUE(mockupAudioManager->isStopped());

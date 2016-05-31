@@ -34,7 +34,7 @@ bool rd::GameState::setup()
     //-- Start video
     if (imageManager!=NULL)
     {
-        imageManager->start();
+        imageManager->setEnabled(true);
         imageManager->addImageEventListener(&processorImageEventListener);
         imageManager->addImageEventListener(this);
     }

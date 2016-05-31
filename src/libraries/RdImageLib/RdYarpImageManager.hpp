@@ -40,6 +40,7 @@ class RdYarpImageManager : public RdImageManager,
         virtual bool start();
         virtual bool stop();
         virtual bool isStopped();
+        virtual bool setEnabled(bool enabled);
         virtual bool configure(std::string parameter, std::string value);
         virtual RdImage getImage();
 
@@ -88,6 +89,7 @@ class RdYarpImageManager : public RdImageManager,
         std::string remote_port_name;
 
         bool stopped;
+        bool enabled;
 };
 
 

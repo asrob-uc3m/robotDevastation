@@ -46,9 +46,6 @@ add_executable(testMockupNetworkManager testMockupNetworkManager.cpp)
 target_link_libraries(testMockupNetworkManager ${RD_LIBRARIES} RdNetworkLib gtest gtest_main)
 
 # Image manager related
-add_executable(testRdImageManager testRdImageManager.cpp)
-target_link_libraries(testRdImageManager ${RD_LIBRARIES} RdImageLib gtest gtest_main)
-
 add_executable(testRdYarpImageManager testRdYarpImageManager.cpp)
 target_link_libraries(testRdYarpImageManager ${RD_LIBRARIES} RdImageLib gtest gtest_main)
 

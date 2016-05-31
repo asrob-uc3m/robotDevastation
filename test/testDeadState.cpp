@@ -144,12 +144,16 @@ class DeadStateTest : public testing::Test
 
             //-- Finish setup of the modules that start at game state:
             //-- Note: we can change this to use GameState (as previously) if we want someday
+            //-- Note2: I'm adding here a counter of the times I had problems due to not changing this.
+            //-- If it were to arrive at 2 or 3, please change this.
+            //-- Counter = 1
             mockupImageManager->start();
             listener = new MockupInputEventListener;
             mockupInputManager->addInputEventListener(listener);
             audioManager->start();
             audioManager->play("RD_THEME", -1);
             mockupRobotManager->setEnabled(true);
+            mockupImageManager->setEnabled(true);
 
         }
 
@@ -232,6 +236,7 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
     // Stuff is enabled
     ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
     ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_TRUE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -247,7 +252,8 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
 
     //-- Check things that should happen in dead state before time runs out (setup):
     ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
-    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -277,6 +283,7 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
     //-- and it is in the game state (cleanup):
     ASSERT_EQ(DeadStateTest::MAX_HEALTH, mentalMap->getMyself().getHealth());
     ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners()); //-- Game sets its own listener
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -318,6 +325,7 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
     // Stuff is enabled
     ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
     ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_TRUE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -333,7 +341,8 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
 
     //-- Check things that should happen in dead state before time runs out (setup):
     ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
-    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -361,6 +370,7 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
 
     //-- Check that it has stopped things and it is in the final state (cleanup):
     ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_TRUE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
     ASSERT_TRUE(mockupAudioManager->isStopped());

@@ -49,6 +49,7 @@ bool rd::InitState::loop()
         networkManager->login();
         robotManager->connect();
         robotManager->setEnabled(false);
+        imageManager->start();
         logged_in = true;
     }
 

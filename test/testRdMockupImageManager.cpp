@@ -89,8 +89,15 @@ TEST_F(RdMockupImageManagerTest, RdMockupImageManagerNotificationWorks)
     RdImage test_image;
     ASSERT_TRUE(yarp::sig::file::read(test_image, RdMockupImageManagerTest::image_filename));
 
+    //-- Check that an image didn't arrive
+    EXPECT_FALSE(((RdMockupImageManager *) imageManager)->receiveImage(test_image));
+    EXPECT_EQ(0, listener.getImagesArrived());
+
+    //-- Enable manager
+    ASSERT_TRUE(imageManager->setEnabled(true));
+
     //-- Send test image to mockup manager
-    EXPECT_TRUE(((RdMockupImageManager *) imageManager)->receiveImage(test_image));
+    ASSERT_TRUE(((RdMockupImageManager *) imageManager)->receiveImage(test_image));
 
     //-- Check that the correct image arrived
     EXPECT_EQ(1, listener.getImagesArrived());
@@ -108,6 +115,9 @@ TEST_F(RdMockupImageManagerTest, RdMockupImageManagerNotificationWorks)
 
     //-- Dettach the listener
     EXPECT_TRUE(imageManager->removeImageEventListeners());
+    ASSERT_TRUE(imageManager->stop());
+    ASSERT_TRUE(imageManager->isStopped());
+    ASSERT_FALSE(((RdMockupImageManager *) imageManager)->isEnabled());
 }
 
 //--- Main -------------------------------------------------------------------------------------------
