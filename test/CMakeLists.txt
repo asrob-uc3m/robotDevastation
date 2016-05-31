@@ -8,9 +8,6 @@ link_directories(${RD_LINK_DIRS})
 add_executable(testSDLTextDisplay testSDLTextDisplay.cpp)
 target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} SDL SDL_image SDL_ttf)
 
-add_executable(testHUD testHUD.cpp)
-target_link_libraries(testHUD ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
-
 add_executable(testInitScreen testInitScreen.cpp)
 target_link_libraries(testInitScreen ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
 
