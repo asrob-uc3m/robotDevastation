@@ -89,6 +89,7 @@ class RdYarpImageManager : public RdImageManager,
         std::string remote_port_name;
 
         bool stopped;
+        bool enabled;
 };
 
 
