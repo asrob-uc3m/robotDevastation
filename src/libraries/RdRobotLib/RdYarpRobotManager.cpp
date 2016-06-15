@@ -4,65 +4,67 @@
 
 namespace rd{
 
-bool RdYarpRobotManager::moveForward(int velocity) {
-    double velocities[] = {100,100};
-    vel->velocityMove(velocities);
+bool RdYarpRobotManager::moveForward(int velocity)
+{
     return true;
 }
 
-bool RdYarpRobotManager::moveBackwards(int velocity) {
-    double velocities[] = {-100,-100};
-    vel->velocityMove(velocities);
+bool RdYarpRobotManager::moveBackwards(int velocity)
+{
     return true;
 }
 
-bool RdYarpRobotManager::turnLeft(int velocity) {
-    double velocities[] = {-100,100};
-    vel->velocityMove(velocities);
+bool RdYarpRobotManager::turnLeft(int velocity)
+{
     return true;
 }
 
-bool RdYarpRobotManager::turnRight(int velocity) {
-    double velocities[] = {100,-100};
-    vel->velocityMove(velocities);
+bool RdYarpRobotManager::turnRight(int velocity)
+{
     return true;
 }
 
-bool RdYarpRobotManager::stopMovement() {
-    vel->stop();
+bool RdYarpRobotManager::stopMovement()
+{
     return true;
 }
 
-bool RdYarpRobotManager::tiltUp(int velocity) {
+bool RdYarpRobotManager::tiltUp(int velocity)
+{
     return true;
 }
 
-bool RdYarpRobotManager::tiltDown(int velocity) {
+bool RdYarpRobotManager::tiltDown(int velocity)
+{
     return true;
 }
 
-bool RdYarpRobotManager::panLeft(int velocity) {
+bool RdYarpRobotManager::panLeft(int velocity)
+{
     return true;
 }
 
-bool RdYarpRobotManager::panRight(int velocity) {
+bool RdYarpRobotManager::panRight(int velocity)
+{
     return true;
 }
 
-bool RdYarpRobotManager::stopCameraMovement() {
+bool RdYarpRobotManager::stopCameraMovement()
+{
     return true;
 }
         
-bool RdYarpRobotManager::connect()  {
+bool RdYarpRobotManager::connect()
+{
 
     std::string launchRobotOptionsStr("(on /");
     launchRobotOptionsStr += robotName;
-    launchRobotOptionsStr += ") (as roblauncher) (cmd \"sudo launchRaspiYarp --device OnePwmMotors --name /";
+    launchRobotOptionsStr += ") (as roblauncher) (cmd \"sudo launchRaspiYarp --device RdRobotServer --subdevice RdFakeMotors --name /";  // RdOnePwmMotors or RdFakeMotors
     launchRobotOptionsStr += robotName;
-    launchRobotOptionsStr += " --gpios 17 27\")";
+    launchRobotOptionsStr += "/rpc:s --gpios 17 27\")";
     yarp::os::Property launchRobotOptions;
     launchRobotOptions.fromString(launchRobotOptionsStr);
-    RD_INFO("Attempting to start robot launch on robot side...\n");
+    RD_INFO("Attempting to start robot launch on robot side (%s)...\n",launchRobotOptionsStr.c_str());
     RD_INFO("If you prefer a fake robot with a fake camera, launch 'robotDevastation --mockupRobotManager --mockupImageManager'\n");
     int robotRet = yarp::os::Run::client(launchRobotOptions);
     if (robotRet != 0)
@@ -91,23 +93,19 @@ bool RdYarpRobotManager::connect()  {
 
     std::string local_s("/robotDevastation/");
     local_s += robotName;
+    local_s += "/rpc:c";
 
     std::string remote_s("/");
     remote_s += robotName;
-
-    yarp::os::Property robotOptions;
-    robotOptions.put("device","remote_controlboard");
-    robotOptions.put("local", local_s );
-    robotOptions.put("remote", remote_s );
+    remote_s += "/rpc:s";
 
     int tries = 0;
     while(tries++ < 10)
     {
-        if( !! robotDevice.isValid() )
-            break;
+        yarp::os::Network::connect(local_s,remote_s);
+        if( rpcClient.getOutputCount() > 0) break;
         RD_DEBUG("Wait to connect to remote robot, try %d...\n",tries);
         yarp::os::Time::delay(0.5);
-        robotDevice.open(robotOptions);
     }
 
     if (tries == 11)
@@ -118,18 +116,11 @@ bool RdYarpRobotManager::connect()  {
 
     RD_SUCCESS("Connected to remote robot.\n");
 
-    if(! robotDevice.view(vel) )
-    {
-        RD_ERROR("Could not aquire robot motor velocity interface.\n");
-        return false;
-    }
-    RD_SUCCESS("Acquired robot motor velocity interface.\n");
-
     return true;
 }
 
 bool RdYarpRobotManager::disconnect()  {
-    robotDevice.close();
+    rpcClient.close();
     return true;
 }
 

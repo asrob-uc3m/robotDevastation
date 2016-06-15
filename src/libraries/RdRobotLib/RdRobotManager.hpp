@@ -3,7 +3,6 @@
 #ifndef __RD_ROBOT_MANAGER_HPP__
 #define __RD_ROBOT_MANAGER_HPP__
 
-#include "RdMacros.hpp"
 #include <string>
 #include <vector>
 #include <map>

@@ -5,10 +5,25 @@
 
 #include <yarp/dev/all.h>
 #include <yarp/os/Run.h>
+#include <yarp/os/RpcClient.h>
 
 #include <sstream>
 
 #include "RdRobotManager.hpp"
+
+#include "RdMacros.hpp"
+
+#define VOCAB_MOVE_FORWARD VOCAB4('m','o','v','f')
+#define VOCAB_MOVE_BACKWARDS VOCAB4('m','o','v','b')
+#define VOCAB_TURN_LEFT VOCAB4('t','r','n','l')
+#define VOCAB_TURN_RIGHT VOCAB4('t','r','n','r')
+#define VOCAB_STOP_MOVEMENT VOCAB4('s','t','p','m')
+
+#define VOCAB_TILT_UP VOCAB4('t','l','t','u')
+#define VOCAB_TILT_DOWN VOCAB4('t','l','t','d')
+#define VOCAB_PAN_LEFT VOCAB4('p','a','n','l')
+#define VOCAB_PAN_RIGHT VOCAB4('p','a','n','r')
+#define VOCAB_STOP_CAMERA_MOVEMENT VOCAB4('s','t','p','c')
 
 namespace rd{
 
@@ -48,9 +63,7 @@ class RdYarpRobotManager : public RdRobotManager
 
     protected:
 
-        yarp::dev::PolyDriver robotDevice;
-        yarp::dev::IVelocityControl *vel;
-
+        yarp::os::RpcClient rpcClient;
 };
 
 }
