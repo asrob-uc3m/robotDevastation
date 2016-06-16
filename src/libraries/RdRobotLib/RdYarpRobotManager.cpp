@@ -6,52 +6,52 @@ namespace rd{
 
 bool RdYarpRobotManager::moveForward(int velocity)
 {
-    return true;
+    return send1vocab1int(VOCAB_MOVE_FORWARD,velocity);
 }
 
 bool RdYarpRobotManager::moveBackwards(int velocity)
 {
-    return true;
+    return send1vocab1int(VOCAB_MOVE_BACKWARDS,velocity);
 }
 
 bool RdYarpRobotManager::turnLeft(int velocity)
 {
-    return true;
+    return send1vocab1int(VOCAB_TURN_LEFT,velocity);
 }
 
 bool RdYarpRobotManager::turnRight(int velocity)
 {
-    return true;
+    return send1vocab1int(VOCAB_TURN_RIGHT,velocity);
 }
 
 bool RdYarpRobotManager::stopMovement()
 {
-    return true;
+    return send1vocab(VOCAB_STOP_MOVEMENT);
 }
 
 bool RdYarpRobotManager::tiltUp(int velocity)
 {
-    return true;
+    return send1vocab1int(VOCAB_TILT_UP,velocity);
 }
 
 bool RdYarpRobotManager::tiltDown(int velocity)
 {
-    return true;
+    return send1vocab1int(VOCAB_TILT_DOWN,velocity);
 }
 
 bool RdYarpRobotManager::panLeft(int velocity)
 {
-    return true;
+    return send1vocab1int(VOCAB_PAN_LEFT,velocity);
 }
 
 bool RdYarpRobotManager::panRight(int velocity)
 {
-    return true;
+    return send1vocab1int(VOCAB_PAN_RIGHT,velocity);
 }
 
 bool RdYarpRobotManager::stopCameraMovement()
 {
-    return true;
+    return send1vocab(VOCAB_STOP_CAMERA_MOVEMENT);
 }
         
 bool RdYarpRobotManager::connect()
@@ -64,15 +64,17 @@ bool RdYarpRobotManager::connect()
     launchRobotOptionsStr += " --gpios 17 27\")";
     yarp::os::Property launchRobotOptions;
     launchRobotOptions.fromString(launchRobotOptionsStr);
-    RD_INFO("Attempting to start robot launch on robot side (%s)...\n",launchRobotOptionsStr.c_str());
+    RD_DEBUG("Attempting to start motors on robot side [parameters: %s]...\n",launchRobotOptionsStr.c_str());
     RD_INFO("If you prefer a fake robot with a fake camera, launch 'robotDevastation --mockupRobotManager --mockupImageManager'\n");
     int robotRet = yarp::os::Run::client(launchRobotOptions);
-    if (robotRet != 0)
+    if (robotRet == 0)
     {
-        RD_ERROR("Could not start robot launch on robot side.\n");
-        return false;
+        RD_SUCCESS("Started motors on robot side.\n");
     }
-    RD_SUCCESS("Started robot launch on robot side.\n");
+    else
+    {
+        RD_WARNING("Could not start motors on robot side, but will atempt to connect anyway.\n");
+    }
 
     std::string launchCameraOptionsStr("(on /");
     launchCameraOptionsStr += robotName;
@@ -81,15 +83,17 @@ bool RdYarpRobotManager::connect()
     launchCameraOptionsStr += "/img:o\")";
     yarp::os::Property launchCameraOptions;
     launchCameraOptions.fromString(launchCameraOptionsStr);
-    RD_INFO("Attempting to start camera launch on robot side...\n");
+    RD_DEBUG("Attempting to start camera on robot side [parameters: %s]...\n",launchCameraOptionsStr.c_str());
     RD_INFO("If you prefer a fake robot with a fake camera, launch 'robotDevastation --mockupRobotManager --mockupImageManager'\n");
     int cameraRet = yarp::os::Run::client(launchCameraOptions);
-    if (cameraRet != 0)
+    if (cameraRet == 0)
     {
-        RD_ERROR("Could not start camera launch on robot side.\n");
-        return false;
+        RD_SUCCESS("Started camera on robot side.\n");
     }
-    RD_SUCCESS("Started camera launch on robot side.\n");
+    else
+    {
+        RD_WARNING("Could not start camera on robot side, but will atempt to connect anyway.\n");
+    }
 
     std::string local_s("/robotDevastation/");
     local_s += robotName;
@@ -137,6 +141,29 @@ void RdYarpRobotManager::setEnabled(bool enabled)
 
 void RdYarpRobotManager::onDestroy(){
     return;
+}
+
+bool RdYarpRobotManager::send1vocab1int(int vocab, int integer)
+{
+    yarp::os::Bottle cmd, response;
+    cmd.addVocab(vocab);
+    cmd.addInt(integer);
+    rpcClient.write(cmd,response);
+    if( response.get(0).asVocab() == VOCAB_OK )
+        return true;
+    else
+        return false;
+}
+
+bool RdYarpRobotManager::send1vocab(int vocab)
+{
+    yarp::os::Bottle cmd, response;
+    cmd.addVocab(vocab);
+    rpcClient.write(cmd,response);
+    if( response.get(0).asVocab() == VOCAB_OK )
+        return true;
+    else
+        return false;
 }
 
 } //rd
