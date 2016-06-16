@@ -18,8 +18,13 @@ rd::DeadScreen::DeadScreen()
 
 bool rd::DeadScreen::init()
 {
+    //-- Find the real path to the resources with ResourceFinder
+    yarp::os::ResourceFinder rf;
+    rf.setDefaultContext("robotDevastation");
+    rf.setDefaultConfigFile("robotDevastation.ini");
+
     //-- Load skull image resource
-    skull_image = IMG_Load(SKULL_PATH.c_str());
+    skull_image = IMG_Load(rf.findFileByName(SKULL_PATH).c_str());
     if (skull_image == NULL)
     {
         RD_ERROR("Unable to load skull image (resource: %s)!\n SDL_image Error: %s\n", SKULL_PATH.c_str(), IMG_GetError())

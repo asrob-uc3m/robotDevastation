@@ -1,6 +1,7 @@
 #include <SDL/SDL.h>
 #include "SDLUtils.hpp"
 #include <yarp/sig/all.h>
+#include <yarp/os/ResourceFinder.h>
 
 #include "DeadScreen.hpp"
 #include "RdUtils.hpp"
@@ -9,6 +10,13 @@ using namespace rd;
 
 int main()
 {
+    //-- Find the real path to the resources with ResourceFinder
+    yarp::os::ResourceFinder rf;
+    rf.setDefaultContext("robotDevastation");
+    rf.setDefaultConfigFile("robotDevastation.ini");
+    std::string file_path = rf.findFileByName("../../share/images/test_frame.ppm");
+
+    //-- Initialization
     initSDL();
 
     DeadScreen screen;
@@ -16,7 +24,7 @@ int main()
 
     //-- Load test image
     RdImage test_frame;
-    yarp::sig::file::read(test_frame, "../../share/images/test_frame.ppm");
+    yarp::sig::file::read(test_frame, file_path.c_str());
     screen.update(DeadScreen::PARAM_LAST_CAMERA_FRAME, test_frame);
 
     //-- Setup elapsed time

@@ -8,6 +8,7 @@
 #include <SDL/SDL_ttf.h>
 #include <cstdlib> // For some useful functions such as atexit :)
 #include <string>
+#include <yarp/os/ResourceFinder.h>
 
 #include "RdScreen.hpp"
 
