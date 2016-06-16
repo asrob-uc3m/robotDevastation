@@ -4,6 +4,7 @@
 #include "MockupAudioManager.hpp"
 
 #include <yarp/os/Time.h>
+#include <yarp/os/ResourceFinder.h>
 
 using namespace rd;
 
@@ -15,6 +16,14 @@ class MockupAudioManagerTest : public testing::Test
             MockupAudioManager::RegisterManager();
             audioManager = AudioManager::getAudioManager("MOCKUP");
             mockupManager = (MockupAudioManager *) audioManager;
+
+            //-- Find resources
+            yarp::os::ResourceFinder rf;
+            rf.setDefaultContext("robotDevastation");
+            rf.setDefaultConfigFile("robotDevastation.ini");
+            sound_bso_realpath = rf.findFileByName(sound_bso);
+            sound_shoot_realpath = rf.findFileByName(sound_shoot);
+            sound_explosion_realpath = rf.findFileByName(sound_explosion);
         }
 
         virtual void TearDown()
@@ -31,6 +40,10 @@ class MockupAudioManagerTest : public testing::Test
         static const std::string sound_bso;
         static const std::string sound_shoot;
         static const std::string sound_explosion;
+
+        std::string sound_bso_realpath;
+        std::string sound_shoot_realpath;
+        std::string sound_explosion_realpath;
 };
 
 
@@ -52,16 +65,16 @@ TEST_F( MockupAudioManagerTest, AudioManagerIsSingleton)
 TEST_F( MockupAudioManagerTest, AudioManagerLoadsAudio)
 {
     ASSERT_NE((AudioManager *)NULL, audioManager);
-    ASSERT_TRUE(audioManager->load(sound_bso, "bso", AudioManager::MUSIC));
-    ASSERT_TRUE(audioManager->load(sound_shoot, "shoot", AudioManager::FX));
-    ASSERT_TRUE(audioManager->load(sound_explosion, "explosion", AudioManager::FX));
+    ASSERT_TRUE(audioManager->load(sound_bso_realpath, "bso", AudioManager::MUSIC));
+    ASSERT_TRUE(audioManager->load(sound_shoot_realpath, "shoot", AudioManager::FX));
+    ASSERT_TRUE(audioManager->load(sound_explosion_realpath, "explosion", AudioManager::FX));
 }
 
 TEST_F( MockupAudioManagerTest, AudioManagerPlaysOneSound )
 {
     ASSERT_NE((AudioManager *)NULL, audioManager);
 
-    ASSERT_TRUE(audioManager->load(sound_bso, "bso", AudioManager::MUSIC));
+    ASSERT_TRUE(audioManager->load(sound_bso_realpath, "bso", AudioManager::MUSIC));
     ASSERT_TRUE(audioManager->start());
 
     EXPECT_TRUE(audioManager->play("bso", true));
@@ -76,8 +89,8 @@ TEST_F( MockupAudioManagerTest, AudioManagerPlaysFx )
 {
     ASSERT_NE((AudioManager *)NULL, audioManager);
 
-    ASSERT_TRUE(audioManager->load(sound_shoot, "shoot", AudioManager::FX));
-    ASSERT_TRUE(audioManager->load(sound_explosion, "explosion", AudioManager::FX));
+    ASSERT_TRUE(audioManager->load(sound_shoot_realpath, "shoot", AudioManager::FX));
+    ASSERT_TRUE(audioManager->load(sound_explosion_realpath, "explosion", AudioManager::FX));
     ASSERT_TRUE(audioManager->start());
 
     EXPECT_TRUE(audioManager->play("shoot", false));
@@ -91,9 +104,9 @@ TEST_F( MockupAudioManagerTest, AudioManagerPlaysAllSounds )
 {
     ASSERT_NE((AudioManager *)NULL, audioManager);
 
-    ASSERT_TRUE(audioManager->load(sound_bso, "bso", AudioManager::MUSIC));
-    ASSERT_TRUE(audioManager->load(sound_shoot, "shoot", AudioManager::FX));
-    ASSERT_TRUE(audioManager->load(sound_explosion, "explosion", AudioManager::FX));
+    ASSERT_TRUE(audioManager->load(sound_bso_realpath, "bso", AudioManager::MUSIC));
+    ASSERT_TRUE(audioManager->load(sound_shoot_realpath, "shoot", AudioManager::FX));
+    ASSERT_TRUE(audioManager->load(sound_explosion_realpath, "explosion", AudioManager::FX));
     ASSERT_TRUE(audioManager->start());
 
     EXPECT_TRUE(audioManager->play("bso", true));
