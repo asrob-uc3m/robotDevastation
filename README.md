@@ -18,3 +18,4 @@ Link to Wiki: http://asrob.uc3m.es/index.php/Robot_Devastation
 
 Credits:
 * [Skull image by Sev](https://openclipart.org/detail/211414/skull-and-crossbones)
+* [Freemono by GNU Freefont](http://www.fontspace.com/gnu-freefont/freemono)

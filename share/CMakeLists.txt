@@ -13,4 +13,4 @@ yarp_configure_external_installation(rd)
 add_subdirectory(robotDevastation)
 add_subdirectory(images)
 add_subdirectory(sounds)
-
+add_subdirectory(fonts)
