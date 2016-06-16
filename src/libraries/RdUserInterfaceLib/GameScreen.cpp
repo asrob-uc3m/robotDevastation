@@ -42,6 +42,7 @@ bool rd::GameScreen::init()
     }
 
     update_required = true;
+    return true;
 }
 
 bool rd::GameScreen::cleanup()
