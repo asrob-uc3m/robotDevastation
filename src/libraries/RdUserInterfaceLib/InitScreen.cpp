@@ -10,8 +10,13 @@ rd::InitScreen::InitScreen()
 
 bool rd::InitScreen::init()
 {
+    //-- Find the real path to the resources with ResourceFinder
+    yarp::os::ResourceFinder rf;
+    rf.setDefaultContext("robotDevastation");
+    rf.setDefaultConfigFile("robotDevastation.ini");
+
     //-- Load splash screen resource
-    image = IMG_Load(SPLASH_PATH.c_str());
+    image = IMG_Load(rf.findFileByName(SPLASH_PATH).c_str());
     if (image == NULL)
     {
         RD_ERROR("Unable to load splash screen (resource: %s)!\n SDL_image Error: %s\n", SPLASH_PATH.c_str(), IMG_GetError())
