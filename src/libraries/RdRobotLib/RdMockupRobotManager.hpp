@@ -8,6 +8,8 @@
 
 #include "RdRobotManager.hpp"
 
+#include "RdMacros.hpp"
+
 namespace rd{
 
 /**
