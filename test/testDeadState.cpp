@@ -31,6 +31,7 @@
 #include <yarp/sig/all.h>
 #include <yarp/os/Network.h>
 #include <yarp/os/Time.h>
+#include <yarp/os/ResourceFinder.h>
 
 using namespace rd;
 
@@ -77,6 +78,11 @@ class DeadStateTest : public testing::Test
     public:
         virtual void SetUp()
         {
+            //-- Configure the ResourceFinder to obtain real paths to the resources
+            yarp::os::ResourceFinder rf;
+            rf.setDefaultContext("robotDevastation");
+            rf.setDefaultConfigFile("robotDevastation.ini");
+
             //-- Start YARP network
             yarp::os::Network::init();
 
@@ -98,7 +104,7 @@ class DeadStateTest : public testing::Test
             ASSERT_NE((RdMockupImageManager*) NULL, mockupImageManager);
             //-- Load test image
             RdImage test_frame;
-            yarp::sig::file::read(test_frame, "../../share/images/test_frame_qr.ppm");
+            yarp::sig::file::read(test_frame, rf.findFileByName("../../share/images/test_frame_qr.ppm"));
             mockupImageManager->receiveImage(test_frame);
 
             inputManager = RdInputManager::getInputManager("MOCKUP");

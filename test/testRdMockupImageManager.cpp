@@ -3,6 +3,7 @@
 #include <yarp/dev/PolyDriver.h>
 #include <yarp/os/Network.h>
 #include <yarp/sig/all.h>
+#include <yarp/os/ResourceFinder.h>
 
 #include "RdImageManager.hpp"
 #include "RdMockupImageManager.hpp"
@@ -18,6 +19,12 @@ class RdMockupImageManagerTest : public testing::Test
     public:
         virtual void SetUp()
         {
+            //-- Find the real path to the resources with ResourceFinder
+            yarp::os::ResourceFinder rf;
+            rf.setDefaultContext("robotDevastation");
+            rf.setDefaultConfigFile("robotDevastation.ini");
+            image_filename = rf.findFileByName(image_filename_raw);
+
             RdMockupImageManager::RegisterManager();
             imageManager = RdImageManager::getImageManager(RdMockupImageManager::id);
         }
@@ -27,14 +34,15 @@ class RdMockupImageManagerTest : public testing::Test
             RdImageManager::destroyImageManager();
         }
 
-        static const std::string image_filename;
+        static const std::string image_filename_raw;
+        std::string image_filename;
 
     protected:
         RdImageManager * imageManager;
 
 };
 
-const std::string RdMockupImageManagerTest::image_filename = "../../share/images/test_frame.ppm";
+const std::string RdMockupImageManagerTest::image_filename_raw = "../../share/images/test_frame.ppm";
 
 //-- Class for the setup of the enviroment for all the tests
 //----------------------------------------------------------------------------------------

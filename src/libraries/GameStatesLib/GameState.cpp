@@ -72,7 +72,10 @@ bool rd::GameState::setup()
 
     //-- Show Robot Devastation game screen:
     if (!screen.init())
+    {
+        RD_ERROR("Could not init screen\n");
         return false;
+    }
 
     //-- Set info elements on GameScreen
     screen.update(GameScreen::PARAM_MYSELF, mentalMap->getMyself());

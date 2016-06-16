@@ -1,6 +1,7 @@
 #include <SDL/SDL.h>
 #include "SDLUtils.hpp"
 #include <yarp/sig/all.h>
+#include <yarp/os/ResourceFinder.h>
 #include <string>
 #include <vector>
 
@@ -14,6 +15,12 @@ using namespace rd;
 
 int main(void)
 {
+    //-- Find the real path to the resources with ResourceFinder
+    yarp::os::ResourceFinder rf;
+    rf.setDefaultContext("robotDevastation");
+    rf.setDefaultConfigFile("robotDevastation.ini");
+
+    //-- Initialization
     initSDL();
 
     GameScreen screen;
@@ -45,7 +52,7 @@ int main(void)
 
     //-- Load test image
     RdImage frame;
-    yarp::sig::file::read(frame, "../../share/images/test_frame.ppm");
+    yarp::sig::file::read(frame, rf.findFileByName("../../share/images/test_frame.ppm"));
     screen.update(GameScreen::PARAM_CAMERA_FRAME, frame);
 
     for (int i = 0; i < 200; i++)
