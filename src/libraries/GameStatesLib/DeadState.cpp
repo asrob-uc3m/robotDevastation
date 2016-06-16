@@ -29,13 +29,15 @@ bool rd::DeadState::setup()
     received_exit = false;
 
     //-- Configure & show Robot Devastation dead screen:
+    if(!screen.init())
+        return false;
     RdImage last_camera_frame = imageManager->getImage();
     screen.update(DeadScreen::PARAM_LAST_CAMERA_FRAME, last_camera_frame);
     screen.update(DeadScreen::PARAM_REMAINING_TIME, number2str(timer));
     screen.show();
 
     //-- Disable camera images
-    imageManager->stop();
+    imageManager->setEnabled(false);
 
     //-- Disable input
     inputManager->removeInputEventListeners();
@@ -78,6 +80,8 @@ bool rd::DeadState::loop()
 
 bool rd::DeadState::cleanup()
 {
+    screen.cleanup();
+
     if (received_respawn)
     {
         //-- Restore things (health, enable stuff)
@@ -92,9 +96,6 @@ bool rd::DeadState::cleanup()
                 break;
             }
         mentalMap->updatePlayers(players);
-
-        //-- Enable camera images
-        imageManager->start();
 
         //-- Remove this input listener (game will setup its own listener)
         inputManager->removeInputEventListeners();
@@ -113,7 +114,7 @@ bool rd::DeadState::cleanup()
         inputManager->removeInputEventListeners();
         audioManager->stopMusic();
         audioManager->stop();
-        networkManager->logout(mentalMap->getMyself()); //-- This is kind of weird, but it is supposed to be done like this
+        networkManager->logout();
         networkManager->stop();
         robotManager->setEnabled(false);
         robotManager->disconnect();

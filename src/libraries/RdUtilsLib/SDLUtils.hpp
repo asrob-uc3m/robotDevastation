@@ -4,11 +4,16 @@
 #define __SDL_UTILS_HPP__
 
 #include <RdImageManager.hpp>
+#include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
+#include <cstdlib> // For some useful functions such as atexit :)
 
 namespace rd {
 
 SDL_Surface * RdImage2SDLImage(const RdImage & image);
+bool initSDL();
+bool cleanupSDL();
 
 }
 

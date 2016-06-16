@@ -5,6 +5,7 @@
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
 #include "RdUtils.hpp"
+#include "SDLUtils.hpp"
 #include "InitState.hpp"
 
 #include "MockupNetworkManager.hpp"
@@ -18,6 +19,33 @@
 #include <yarp/os/Time.h>
 
 using namespace rd;
+
+
+class InitStateTestEnvironment : public testing::Environment
+{
+    public:
+        InitStateTestEnvironment(int argc, char ** argv)
+        {
+            this->argc = argc;
+            this->argv = argv;
+        }
+
+        virtual void SetUp()
+        {
+            initSDL();
+        }
+
+        virtual void TearDown()
+        {
+            cleanupSDL();
+        }
+
+
+    private:
+        int argc;
+        char ** argv;
+
+};
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
@@ -65,6 +93,7 @@ class InitStateTest : public testing::Test
             players.push_back(RdPlayer(1,"test_player",100,100,0,0) );
             ASSERT_TRUE(mentalMap->updatePlayers(players));
             mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
+            networkManager->configure("player", players[0]);
 
             mockupRobotManager = new RdMockupRobotManager("MOCKUP");
             robotManager = (RdRobotManager *) mockupRobotManager;
@@ -155,6 +184,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
 
     ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
 
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
@@ -173,7 +203,8 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_FALSE(mockupNetworkManager->isStopped());
     ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
 
-    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
 
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
@@ -181,4 +212,12 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_TRUE(mockupRobotManager->isConnected());
     ASSERT_FALSE(mockupRobotManager->isEnabled());
 
+}
+
+//--- Main -------------------------------------------------------------------------------------------
+int main(int argc, char **argv)
+{
+  testing::InitGoogleTest(&argc, argv);
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new InitStateTestEnvironment(argc, argv));
+  return RUN_ALL_TESTS();
 }

@@ -34,7 +34,7 @@ bool rd::GameState::setup()
     //-- Start video
     if (imageManager!=NULL)
     {
-        imageManager->start();
+        imageManager->setEnabled(true);
         imageManager->addImageEventListener(&processorImageEventListener);
         imageManager->addImageEventListener(this);
     }
@@ -71,6 +71,12 @@ bool rd::GameState::setup()
     robotManager->setEnabled(true);
 
     //-- Show Robot Devastation game screen:
+    if (!screen.init())
+    {
+        RD_ERROR("Could not init screen\n");
+        return false;
+    }
+
     //-- Set info elements on GameScreen
     screen.update(GameScreen::PARAM_MYSELF, mentalMap->getMyself());
     screen.update(GameScreen::PARAM_PLAYERS, mentalMap->getPlayers());
@@ -94,6 +100,8 @@ bool rd::GameState::loop()
 
 bool rd::GameState::cleanup()
 {
+    screen.cleanup();
+
     if (received_exit)
     {
         //-- Stop things to exit game (logout)
@@ -102,7 +110,7 @@ bool rd::GameState::cleanup()
         inputManager->removeInputEventListeners();
         audioManager->stopMusic();
         audioManager->stop();
-        networkManager->logout(mentalMap->getMyself()); //-- This is kind of weird, but it is supposed to be done like this
+        networkManager->logout();
         networkManager->stop();
         robotManager->setEnabled(false);
         robotManager->disconnect();

@@ -21,3 +21,34 @@ SDL_Surface * rd::RdImage2SDLImage(const RdImage & image)
                                          0x0000ff, 0x00ff00, 0xff0000, 0
                                        );
 }
+
+bool rd::initSDL()
+{
+    //-- Init SDL
+    if(SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
+        RD_ERROR("SDL could not initialize!\n SDL Error: %s\n", SDL_GetError());
+        return false;
+    }
+    atexit(SDL_Quit); // Clean it up nicely :)
+
+    //-- Init ttf
+    if (TTF_Init() == -1)
+    {
+      RD_ERROR("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
+      return false;
+    }
+
+    //Initialize PNG loading
+    if(!(IMG_Init(IMG_INIT_PNG)&IMG_INIT_PNG))
+    {
+        RD_ERROR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+        return false;
+    }
+}
+
+bool rd::cleanupSDL()
+{
+    RD_WARNING("SDL cleanup not implemented!\n");
+    return true;
+}

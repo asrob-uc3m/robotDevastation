@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include <yarp/sig/all.h>
 #include <yarp/os/Time.h>
+#include <yarp/os/ResourceFinder.h>
 
 #include "RdImageManager.hpp"
 #include "RdMockupImageManager.hpp"
@@ -18,6 +19,11 @@ class RdProcessorImageEventListenerTest : public testing::Test
     public:
         virtual void SetUp()
         {
+            //-- Configure Resourcefinder to ind the real path to the resources
+            yarp::os::ResourceFinder rf;
+            rf.setDefaultContext("robotDevastation");
+            rf.setDefaultConfigFile("robotDevastation.ini");
+
             RdMockupImageManager::RegisterManager();
             imageManager = RdImageManager::getImageManager(RdMockupImageManager::id);
             ASSERT_NE((RdImageManager*)NULL, imageManager);
@@ -27,11 +33,11 @@ class RdProcessorImageEventListenerTest : public testing::Test
             ASSERT_NE((RdMentalMap*)NULL, mentalMap);
 
             //-- Load test images
-            yarp::sig::file::read(test_image, image_filename);
+            yarp::sig::file::read(test_image, rf.findFileByName(image_filename));
             ASSERT_NE(0, test_image.width());
             ASSERT_NE(0, test_image.height());
 
-            yarp::sig::file::read(bad_image, bad_image_filename);
+            yarp::sig::file::read(bad_image, rf.findFileByName(bad_image_filename));
             ASSERT_NE(0, test_image.width());
             ASSERT_NE(0, test_image.height());
         }
@@ -77,6 +83,7 @@ TEST_F(RdProcessorImageEventListenerTest, TargetDetectionWorks)
 
     //-- Send image to image manager
     ASSERT_TRUE(imageManager->start());
+    ASSERT_TRUE(imageManager->setEnabled(true));
     ASSERT_TRUE(((RdMockupImageManager *)imageManager)->receiveImage(test_image));
     yarp::os::Time::delay(0.5);
 
@@ -101,6 +108,7 @@ TEST_F(RdProcessorImageEventListenerTest, BadQRsAreIgnored)
 {
     //-- Send image to image manager
     ASSERT_TRUE(imageManager->start());
+    ASSERT_TRUE(imageManager->setEnabled(true));
     ASSERT_TRUE(((RdMockupImageManager *)imageManager)->receiveImage(bad_image));
     yarp::os::Time::delay(0.5);
 

@@ -8,6 +8,7 @@
 #include <SDL/SDL_ttf.h>
 #include <cstdlib> // For some useful functions such as atexit :)
 #include <string>
+#include <yarp/os/ResourceFinder.h>
 
 #include "RdScreen.hpp"
 
@@ -20,6 +21,8 @@ class DeadScreen : public RdScreen
 {
     public:
         DeadScreen();
+        virtual bool init();
+        virtual bool cleanup();
         virtual bool show();
         virtual ~DeadScreen();
         virtual bool update(std::string parameter, std::string value);

@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <yarp/os/ResourceFinder.h>
 
 #include "RdMentalMap.hpp"
 #include "RdTarget.hpp"
@@ -39,6 +40,8 @@ class GameScreen : public RdScreen
 {
     public:
         GameScreen();
+        virtual bool init();
+        virtual bool cleanup();
         virtual bool show();
         virtual ~GameScreen();
         virtual bool update(std::string parameter, std::string value);

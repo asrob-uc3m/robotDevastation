@@ -33,12 +33,26 @@ class MockupNetworkManagerTest : public testing::Test
 
 //-- Things that are being tested
 //-----------------------------------------------------------------------------------------------------
+TEST_F(MockupNetworkManagerTest, ManagerDoesNotStartIfNotConfigured)
+{
+    ASSERT_FALSE(networkManager->start());
+    ASSERT_TRUE(networkManager->isStopped());
+
+    networkManager->configure("player", me);
+
+    ASSERT_TRUE(networkManager->start());
+    ASSERT_FALSE(networkManager->isStopped());
+    ASSERT_TRUE(networkManager->stop());
+    ASSERT_TRUE(networkManager->isStopped());
+}
+
 TEST_F(MockupNetworkManagerTest, PlayerCreatedWhenLogin)
 {
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
-    ASSERT_TRUE(networkManager->login(me));
+    ASSERT_TRUE(networkManager->login());
     ASSERT_TRUE(networkManager->isLoggedIn());
 
 
@@ -52,17 +66,18 @@ TEST_F(MockupNetworkManagerTest, PlayerCreatedWhenLogin)
 
 TEST_F(MockupNetworkManagerTest, ErrorLoginTwice)
 {
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
-    ASSERT_TRUE(networkManager->login(me));
+    ASSERT_TRUE(networkManager->login());
     ASSERT_TRUE(networkManager->isLoggedIn());
 
     std::vector<RdPlayer> players = networkManager->getPlayerData();
     ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
 
-    ASSERT_FALSE(networkManager->login(other_player));
+    ASSERT_FALSE(networkManager->login());
     ASSERT_TRUE(networkManager->isLoggedIn());
 
     players = networkManager->getPlayerData();
@@ -75,17 +90,18 @@ TEST_F(MockupNetworkManagerTest, ErrorLoginTwice)
 
 TEST_F(MockupNetworkManagerTest, PlayerRemovedOnLogout)
 {
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
-    ASSERT_TRUE(networkManager->login(me));
+    ASSERT_TRUE(networkManager->login());
     ASSERT_TRUE(networkManager->isLoggedIn());
 
     std::vector<RdPlayer> players = networkManager->getPlayerData();
     ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
 
-    ASSERT_TRUE(networkManager->logout(me));
+    ASSERT_TRUE(networkManager->logout());
     EXPECT_FALSE(networkManager->isLoggedIn());
 
     players = networkManager->getPlayerData();
@@ -97,23 +113,24 @@ TEST_F(MockupNetworkManagerTest, PlayerRemovedOnLogout)
 
 TEST_F(MockupNetworkManagerTest, ErrorLogoutTwice)
 {
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
-    ASSERT_TRUE(networkManager->login(me));
+    ASSERT_TRUE(networkManager->login());
     ASSERT_TRUE(networkManager->isLoggedIn());
 
     std::vector<RdPlayer> players = networkManager->getPlayerData();
     ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
 
-    ASSERT_TRUE(networkManager->logout(me));
+    ASSERT_TRUE(networkManager->logout());
     EXPECT_FALSE(networkManager->isLoggedIn());
 
     players = networkManager->getPlayerData();
     ASSERT_EQ(0, players.size());
 
-    EXPECT_FALSE(networkManager->logout(me));
+    EXPECT_FALSE(networkManager->logout());
     EXPECT_FALSE(networkManager->isLoggedIn());
 
     ASSERT_TRUE(networkManager->stop());
@@ -122,6 +139,7 @@ TEST_F(MockupNetworkManagerTest, ErrorLogoutTwice)
 
 TEST_F(MockupNetworkManagerTest, SetPlayerAddsPlayer)
 {
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
@@ -142,6 +160,7 @@ TEST_F(MockupNetworkManagerTest, SetPlayerAddsPlayer)
 
 TEST_F(MockupNetworkManagerTest, PlayerDamagedWhenShot)
 {
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
@@ -171,10 +190,11 @@ TEST_F(MockupNetworkManagerTest, ListenersNotifiedOnEvent)
     RdNetworkEventListener * plistener = (RdNetworkEventListener *) &listener;
     ASSERT_TRUE(((RdNetworkManager*)networkManager)->addNetworkEventListener(plistener));
 
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
-    ASSERT_TRUE(networkManager->login(me));
+    ASSERT_TRUE(networkManager->login());
     ASSERT_TRUE(networkManager->isLoggedIn());
 
     /* Check that data > 0 and check contents */
@@ -214,10 +234,11 @@ TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
     mentalMap->addMentalMapEventListener(networkManager);
 
     //-- Start networkManager
+    networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
-    ASSERT_TRUE(networkManager->login(me));
+    ASSERT_TRUE(networkManager->login());
     ASSERT_TRUE(networkManager->isLoggedIn());
 
     //-- Push notification from mental map

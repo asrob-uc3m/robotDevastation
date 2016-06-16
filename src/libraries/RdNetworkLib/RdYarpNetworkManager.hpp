@@ -53,15 +53,16 @@ class RdYarpNetworkManager: public RdNetworkManager,
         //------------------ Manager Startup & Halting ---------------------------------------------------------------//
         virtual bool start();
         virtual bool stop();
+        virtual bool isStopped();
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, std::string value);
+        virtual bool configure(std::string parameter, RdPlayer value);
 
         //------------------ RdServer API ----------------------------------------------------------------------------//
         virtual bool sendPlayerHit(RdPlayer player, int damage);
-        virtual bool login(RdPlayer player);
-        virtual bool logout(RdPlayer player);
+        virtual bool login();
+        virtual bool logout();
 
     protected:
         //! @brief Yarp callback for incoming messages
@@ -91,8 +92,10 @@ class RdYarpNetworkManager: public RdNetworkManager,
         yarp::os::RpcClient rpcClient;
         yarp::os::BufferedPort<yarp::os::Bottle> callbackPort;
 
-        //! @brief Identifier for the player
-        int player_id;
+        //! @brief Player
+        RdPlayer player;
+
+        bool started;
 };
 
 }

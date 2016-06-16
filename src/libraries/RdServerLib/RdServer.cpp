@@ -11,6 +11,11 @@ bool rd::RdServer::configure(yarp::os::ResourceFinder &rf)
     return true;
 }
 
+rd::RdServer::~RdServer()
+{
+
+}
+
 double rd::RdServer::getPeriod()
 {
     return 0.1;  // Fixed, in seconds, the slow thread that calls updateModule below

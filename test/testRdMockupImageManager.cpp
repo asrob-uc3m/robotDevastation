@@ -3,6 +3,7 @@
 #include <yarp/dev/PolyDriver.h>
 #include <yarp/os/Network.h>
 #include <yarp/sig/all.h>
+#include <yarp/os/ResourceFinder.h>
 
 #include "RdImageManager.hpp"
 #include "RdMockupImageManager.hpp"
@@ -18,6 +19,12 @@ class RdMockupImageManagerTest : public testing::Test
     public:
         virtual void SetUp()
         {
+            //-- Find the real path to the resources with ResourceFinder
+            yarp::os::ResourceFinder rf;
+            rf.setDefaultContext("robotDevastation");
+            rf.setDefaultConfigFile("robotDevastation.ini");
+            image_filename = rf.findFileByName(image_filename_raw);
+
             RdMockupImageManager::RegisterManager();
             imageManager = RdImageManager::getImageManager(RdMockupImageManager::id);
         }
@@ -27,14 +34,15 @@ class RdMockupImageManagerTest : public testing::Test
             RdImageManager::destroyImageManager();
         }
 
-        static const std::string image_filename;
+        static const std::string image_filename_raw;
+        std::string image_filename;
 
     protected:
         RdImageManager * imageManager;
 
 };
 
-const std::string RdMockupImageManagerTest::image_filename = "../../share/images/test_frame.ppm";
+const std::string RdMockupImageManagerTest::image_filename_raw = "../../share/images/test_frame.ppm";
 
 //-- Class for the setup of the enviroment for all the tests
 //----------------------------------------------------------------------------------------
@@ -89,8 +97,15 @@ TEST_F(RdMockupImageManagerTest, RdMockupImageManagerNotificationWorks)
     RdImage test_image;
     ASSERT_TRUE(yarp::sig::file::read(test_image, RdMockupImageManagerTest::image_filename));
 
+    //-- Check that an image didn't arrive
+    EXPECT_FALSE(((RdMockupImageManager *) imageManager)->receiveImage(test_image));
+    EXPECT_EQ(0, listener.getImagesArrived());
+
+    //-- Enable manager
+    ASSERT_TRUE(imageManager->setEnabled(true));
+
     //-- Send test image to mockup manager
-    EXPECT_TRUE(((RdMockupImageManager *) imageManager)->receiveImage(test_image));
+    ASSERT_TRUE(((RdMockupImageManager *) imageManager)->receiveImage(test_image));
 
     //-- Check that the correct image arrived
     EXPECT_EQ(1, listener.getImagesArrived());
@@ -108,6 +123,9 @@ TEST_F(RdMockupImageManagerTest, RdMockupImageManagerNotificationWorks)
 
     //-- Dettach the listener
     EXPECT_TRUE(imageManager->removeImageEventListeners());
+    ASSERT_TRUE(imageManager->stop());
+    ASSERT_TRUE(imageManager->isStopped());
+    ASSERT_FALSE(((RdMockupImageManager *) imageManager)->isEnabled());
 }
 
 //--- Main -------------------------------------------------------------------------------------------

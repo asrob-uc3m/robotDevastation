@@ -6,8 +6,8 @@
 #include <SDL/SDL.h>
 #include <SDL_image.h>
 #include <SDL/SDL_ttf.h>
-#include <cstdlib> // For some useful functions such as atexit :)
 #include <string>
+#include <yarp/os/ResourceFinder.h>
 
 #include "RdScreen.hpp"
 #include "RdUtils.hpp"
@@ -18,6 +18,8 @@ class InitScreen : public RdScreen
 {
     public:
         InitScreen();
+        virtual bool init();
+        virtual bool cleanup();
         virtual bool show();
         virtual ~InitScreen();
 

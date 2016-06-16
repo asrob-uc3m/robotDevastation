@@ -15,6 +15,7 @@
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
 #include "RdUtils.hpp"
+#include "SDLUtils.hpp"
 #include "DeadState.hpp"
 #include "InitState.hpp"
 
@@ -30,6 +31,7 @@
 #include <yarp/sig/all.h>
 #include <yarp/os/Network.h>
 #include <yarp/os/Time.h>
+#include <yarp/os/ResourceFinder.h>
 
 using namespace rd;
 
@@ -51,11 +53,15 @@ class DeadStateTestEnvironment : public testing::Environment
             //-- Init yarp network & server
             yarp::os::NetworkBase::setLocalMode(true);
             yarp::os::Network::init();
+
+            //-- Init SDL
+            initSDL();
         }
 
         virtual void TearDown()
         {
             yarp::os::Network::fini();
+            cleanupSDL();
         }
 
 
@@ -72,6 +78,11 @@ class DeadStateTest : public testing::Test
     public:
         virtual void SetUp()
         {
+            //-- Configure the ResourceFinder to obtain real paths to the resources
+            yarp::os::ResourceFinder rf;
+            rf.setDefaultContext("robotDevastation");
+            rf.setDefaultConfigFile("robotDevastation.ini");
+
             //-- Start YARP network
             yarp::os::Network::init();
 
@@ -93,7 +104,7 @@ class DeadStateTest : public testing::Test
             ASSERT_NE((RdMockupImageManager*) NULL, mockupImageManager);
             //-- Load test image
             RdImage test_frame;
-            yarp::sig::file::read(test_frame, "../../share/images/test_frame_qr.ppm");
+            yarp::sig::file::read(test_frame, rf.findFileByName("../../share/images/test_frame_qr.ppm"));
             mockupImageManager->receiveImage(test_frame);
 
             inputManager = RdInputManager::getInputManager("MOCKUP");
@@ -117,6 +128,7 @@ class DeadStateTest : public testing::Test
             players.push_back(RdPlayer(1,"test_player", 0,MAX_HEALTH,0,0) );
             ASSERT_TRUE(mentalMap->updatePlayers(players));
             mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
+            networkManager->configure("player", players[0]);
 
             mockupRobotManager = new RdMockupRobotManager("MOCKUP");
             robotManager = (RdRobotManager *) mockupRobotManager;
@@ -138,12 +150,16 @@ class DeadStateTest : public testing::Test
 
             //-- Finish setup of the modules that start at game state:
             //-- Note: we can change this to use GameState (as previously) if we want someday
+            //-- Note2: I'm adding here a counter of the times I had problems due to not changing this.
+            //-- If it were to arrive at 2 or 3, please change this.
+            //-- Counter = 1
             mockupImageManager->start();
             listener = new MockupInputEventListener;
             mockupInputManager->addInputEventListener(listener);
             audioManager->start();
             audioManager->play("RD_THEME", -1);
             mockupRobotManager->setEnabled(true);
+            mockupImageManager->setEnabled(true);
 
         }
 
@@ -226,6 +242,7 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
     // Stuff is enabled
     ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
     ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_TRUE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -241,7 +258,8 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
 
     //-- Check things that should happen in dead state before time runs out (setup):
     ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
-    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -271,6 +289,7 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
     //-- and it is in the game state (cleanup):
     ASSERT_EQ(DeadStateTest::MAX_HEALTH, mentalMap->getMyself().getHealth());
     ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners()); //-- Game sets its own listener
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -312,6 +331,7 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
     // Stuff is enabled
     ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
     ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_TRUE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -327,7 +347,8 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
 
     //-- Check things that should happen in dead state before time runs out (setup):
     ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
-    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_FALSE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
     ASSERT_FALSE(mockupAudioManager->isStopped());
@@ -355,6 +376,7 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
 
     //-- Check that it has stopped things and it is in the final state (cleanup):
     ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
     ASSERT_TRUE(mockupInputManager->isStopped());
     ASSERT_EQ(0, mockupInputManager->getNumListeners());
     ASSERT_TRUE(mockupAudioManager->isStopped());

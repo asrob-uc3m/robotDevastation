@@ -8,9 +8,6 @@ link_directories(${RD_LINK_DIRS})
 add_executable(testSDLTextDisplay testSDLTextDisplay.cpp)
 target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} SDL SDL_image SDL_ttf)
 
-add_executable(testHUD testHUD.cpp)
-target_link_libraries(testHUD ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
-
 add_executable(testInitScreen testInitScreen.cpp)
 target_link_libraries(testInitScreen ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
 
@@ -46,9 +43,6 @@ add_executable(testMockupNetworkManager testMockupNetworkManager.cpp)
 target_link_libraries(testMockupNetworkManager ${RD_LIBRARIES} RdNetworkLib gtest gtest_main)
 
 # Image manager related
-add_executable(testRdImageManager testRdImageManager.cpp)
-target_link_libraries(testRdImageManager ${RD_LIBRARIES} RdImageLib gtest gtest_main)
-
 add_executable(testRdYarpImageManager testRdYarpImageManager.cpp)
 target_link_libraries(testRdYarpImageManager ${RD_LIBRARIES} RdImageLib gtest gtest_main)
 
@@ -78,3 +72,6 @@ target_link_libraries(testGameState ${RD_LIBRARIES} StateMachineLib gtest gtest_
 
 add_executable(testDeadState testDeadState.cpp)
 target_link_libraries(testDeadState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
+
+add_executable(testRobotDevastation testRobotDevastation.cpp)
+target_link_libraries(testRobotDevastation ${RD_LIBRARIES} StateMachineLib gtest gtest_main)

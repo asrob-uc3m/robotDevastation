@@ -20,6 +20,9 @@ rd::InitState::~InitState()
 bool rd::InitState::setup()
 {
     //-- Show Robot Devastation start screen:
+    if(!screen.init())
+        return false;
+
     screen.show();
 
     //-- Start Robot Devastation music theme:
@@ -43,9 +46,10 @@ bool rd::InitState::loop()
     if (login)
     {
         //-- Log in
-        networkManager->login(mentalMap->getMyself());
+        networkManager->login();
         robotManager->connect();
         robotManager->setEnabled(false);
+        imageManager->start();
         logged_in = true;
     }
 
@@ -57,6 +61,7 @@ bool rd::InitState::cleanup()
     RD_DEBUG("Cleanup!!\n");
     audioManager->stopMusic();
     inputManager->removeInputEventListeners();
+    screen.cleanup();
 
     return true;
 }
