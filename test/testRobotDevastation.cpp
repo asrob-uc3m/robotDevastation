@@ -4,6 +4,7 @@
 #include <yarp/os/Network.h>
 #include <yarp/os/Time.h>
 #include <yarp/sig/all.h>
+#include <yarp/os/ResourceFinder.h>
 
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
@@ -60,12 +61,17 @@ class RobotDevastationTest : public testing::Test
     public:
         virtual void SetUp()
         {
+            //-- Configure Resourcefinder to ind the real path to the resources
+            yarp::os::ResourceFinder rf;
+            rf.setDefaultContext("robotDevastation");
+            rf.setDefaultConfigFile("robotDevastation.ini");
+
             //-- Start YARP network
             yarp::os::Network::init();
 
             //-- Load test images
-            yarp::sig::file::read(test_frame_no_target, FRAME_NO_TARGET_PATH);
-            yarp::sig::file::read(test_frame_with_target, FRAME_WITH_TARGET_PATH);
+            yarp::sig::file::read(test_frame_no_target, rf.findFileByName(FRAME_NO_TARGET_PATH));
+            yarp::sig::file::read(test_frame_with_target, rf.findFileByName(FRAME_WITH_TARGET_PATH));
 
             //-- Init input manager
             MockupInputManager::RegisterManager();
