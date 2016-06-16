@@ -61,7 +61,7 @@ bool RdYarpRobotManager::connect()
     launchRobotOptionsStr += robotName;
     launchRobotOptionsStr += ") (as roblauncher) (cmd \"sudo launchRaspiYarp --device RdRobotServer --subdevice RdFakeMotors --name /";  // RdOnePwmMotors or RdFakeMotors
     launchRobotOptionsStr += robotName;
-    launchRobotOptionsStr += "/rpc:s --gpios 17 27\")";
+    launchRobotOptionsStr += " --gpios 17 27\")";
     yarp::os::Property launchRobotOptions;
     launchRobotOptions.fromString(launchRobotOptionsStr);
     RD_INFO("Attempting to start robot launch on robot side (%s)...\n",launchRobotOptionsStr.c_str());
@@ -94,6 +94,8 @@ bool RdYarpRobotManager::connect()
     std::string local_s("/robotDevastation/");
     local_s += robotName;
     local_s += "/rpc:c";
+
+    rpcClient.open(local_s);
 
     std::string remote_s("/");
     remote_s += robotName;
