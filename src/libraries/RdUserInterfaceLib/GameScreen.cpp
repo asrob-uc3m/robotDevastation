@@ -18,26 +18,31 @@ rd::GameScreen::GameScreen()
 
 bool rd::GameScreen::init()
 {
+    //-- Configure Resourcefinder to ind the real path to the resources
+    yarp::os::ResourceFinder rf;
+    rf.setDefaultContext("robotDevastation");
+    rf.setDefaultConfigFile("robotDevastation.ini");
+
     //-- Load the font(s)
-    const char * font_name = "/usr/share/fonts/truetype/freefont/FreeMono.ttf";
-    player_font = TTF_OpenFont(font_name, 12);
+    std::string font_name("../../share/fonts/FreeMono.ttf");
+    player_font = TTF_OpenFont(rf.findFileByName(font_name).c_str(), 12);
     if (player_font == NULL)
     {
-        RD_ERROR("Unable to load font: %s %s \n", font_name, TTF_GetError());
+        RD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(font_name).c_str(), TTF_GetError());
         return false;
     }
 
-    target_font = TTF_OpenFont(font_name, 12);
+    target_font = TTF_OpenFont(rf.findFileByName(font_name).c_str(), 12);
     if (target_font == NULL)
     {
-        RD_ERROR("Unable to load font: %s %s \n", font_name, TTF_GetError());
+        RD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(font_name).c_str(), TTF_GetError());
         return false;
     }
 
-    weapon_font = TTF_OpenFont(font_name, 12);
+    weapon_font = TTF_OpenFont(rf.findFileByName(font_name).c_str(), 12);
     if (weapon_font == NULL)
     {
-        RD_ERROR("Unable to load font: %s %s \n", font_name, TTF_GetError());
+        RD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(font_name).c_str(), TTF_GetError());
         return false;
     }
 

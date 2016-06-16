@@ -6,7 +6,7 @@ const std::string rd::DeadScreen::PARAM_LAST_CAMERA_FRAME = "last_camera_frame";
 
 //-- Protected
 const std::string rd::DeadScreen::SKULL_PATH = "../../share/images/skull.png";
-const std::string rd::DeadScreen::FONT_PATH = "/usr/share/fonts/truetype/freefont/FreeMono.ttf";
+const std::string rd::DeadScreen::FONT_PATH = "../../share/fonts/FreeMono.ttf";
 
 //-- Private
 const SDL_Color rd::DeadScreen::TEXT_COLOR = {0,255,0,0};
@@ -32,10 +32,10 @@ bool rd::DeadScreen::init()
     }
 
     //-- Load the font
-    font = TTF_OpenFont(FONT_PATH.c_str(), 32);
+    font = TTF_OpenFont(rf.findFileByName(FONT_PATH).c_str(), 32);
     if (font == NULL)
     {
-        RD_ERROR("Unable to load font: %s %s \n", FONT_PATH.c_str(), TTF_GetError());
+        RD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(FONT_PATH).c_str(), TTF_GetError());
         return false;
     }
 

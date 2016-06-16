@@ -1,8 +1,8 @@
-
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <cstdlib> // For some useful functions such as atexit :)
 #include <iostream>
+#include <yarp/os/ResourceFinder.h>
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
@@ -13,6 +13,11 @@
 
 int main(void)
 {
+    //-- Configure Resourcefinder to ind the real path to the resources
+    yarp::os::ResourceFinder rf;
+    rf.setDefaultContext("robotDevastation");
+    rf.setDefaultConfigFile("robotDevastation.ini");
+
     // Load SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
@@ -35,10 +40,10 @@ int main(void)
     }
 
     //-- Load the font
-    const char * font_name = "/usr/share/fonts/truetype/freefont/FreeMono.ttf";
-    TTF_Font *font = TTF_OpenFont(font_name, 28);
+    std::string font_name("../../share/fonts/FreeMono.ttf");
+    TTF_Font *font = TTF_OpenFont(rf.findFileByName(font_name).c_str(), 28);
     if (font == NULL){
-        printf("Unable to load font: %s %s \n", font_name, TTF_GetError());
+        printf("Unable to load font: %s %s \n", rf.findFileByName(font_name).c_str(), TTF_GetError());
         return false;
     }
 

@@ -1,7 +1,7 @@
 #include "InitScreen.hpp"
 
 const std::string rd::InitScreen::SPLASH_PATH = "../../share/images/800px-Devastation-thin.png";
-const std::string rd::InitScreen::FONT_PATH = "/usr/share/fonts/truetype/freefont/FreeMono.ttf";
+const std::string rd::InitScreen::FONT_PATH = "../../share/fonts/FreeMono.ttf";
 
 rd::InitScreen::InitScreen()
 {
@@ -24,10 +24,10 @@ bool rd::InitScreen::init()
     }
 
     //-- Load the font
-    font = TTF_OpenFont(FONT_PATH.c_str(), 28);
+    font = TTF_OpenFont(rf.findFileByName(FONT_PATH).c_str(), 28);
     if (font == NULL)
     {
-        RD_ERROR("Unable to load font: %s %s \n", FONT_PATH.c_str(), TTF_GetError());
+        RD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(FONT_PATH).c_str(), TTF_GetError());
         return false;
     }
 

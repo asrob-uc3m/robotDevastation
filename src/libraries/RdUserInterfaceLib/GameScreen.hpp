@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <yarp/os/ResourceFinder.h>
 
 #include "RdMentalMap.hpp"
 #include "RdTarget.hpp"
