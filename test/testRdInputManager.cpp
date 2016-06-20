@@ -37,7 +37,7 @@ class RdTestEventListener : public RdInputEventListener
                 exit(1);
             }
 
-            audioManager->load( "../../share/sounds/01_milshot.wav", "shoot", SDLAudioManager::FX);
+            audioManager->load( "../sounds/01_milshot.wav", "shoot", SDLAudioManager::FX);
         }
 
         ~RdTestEventListener()

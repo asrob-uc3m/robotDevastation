@@ -14,7 +14,7 @@ int main()
     yarp::os::ResourceFinder rf;
     rf.setDefaultContext("robotDevastation");
     rf.setDefaultConfigFile("robotDevastation.ini");
-    std::string file_path = rf.findFileByName("../../share/images/test_frame.ppm");
+    std::string file_path = rf.findFileByName("../images/test_frame.ppm");
 
     //-- Initialization
     initSDL();

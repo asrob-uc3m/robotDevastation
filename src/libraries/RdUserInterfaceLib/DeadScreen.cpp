@@ -5,8 +5,8 @@ const std::string rd::DeadScreen::PARAM_REMAINING_TIME = "remaining_time";
 const std::string rd::DeadScreen::PARAM_LAST_CAMERA_FRAME = "last_camera_frame";
 
 //-- Protected
-const std::string rd::DeadScreen::SKULL_PATH = "../../share/images/skull.png";
-const std::string rd::DeadScreen::FONT_PATH = "../../share/fonts/FreeMono.ttf";
+const std::string rd::DeadScreen::SKULL_PATH = "../images/skull.png";
+const std::string rd::DeadScreen::FONT_PATH = "../fonts/FreeMono.ttf";
 
 //-- Private
 const SDL_Color rd::DeadScreen::TEXT_COLOR = {0,255,0,0};

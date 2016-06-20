@@ -196,8 +196,8 @@ class GameStateTest : public testing::Test
 
 const int GameStateTest::MAX_HEALTH = 100;
 const int GameStateTest::MAX_AMMO = 10;
-const std::string GameStateTest::FRAME_NO_TARGET_PATH = "../../share/images/test_frame_qr.ppm";
-const std::string GameStateTest::FRAME_WITH_TARGET_PATH = "../../share/images/test_frame_qr_centered.ppm";
+const std::string GameStateTest::FRAME_NO_TARGET_PATH = "../images/test_frame_qr.ppm";
+const std::string GameStateTest::FRAME_WITH_TARGET_PATH = "../images/test_frame_qr_centered.ppm";
 
 //--- Tests ------------------------------------------------------------------------------------------
 TEST_F(GameStateTest, GameStateGameFlowIsCorrect)

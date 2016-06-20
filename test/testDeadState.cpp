@@ -104,7 +104,7 @@ class DeadStateTest : public testing::Test
             ASSERT_NE((RdMockupImageManager*) NULL, mockupImageManager);
             //-- Load test image
             RdImage test_frame;
-            yarp::sig::file::read(test_frame, rf.findFileByName("../../share/images/test_frame_qr.ppm"));
+            yarp::sig::file::read(test_frame, rf.findFileByName("../images/test_frame_qr.ppm"));
             mockupImageManager->receiveImage(test_frame);
 
             inputManager = RdInputManager::getInputManager("MOCKUP");

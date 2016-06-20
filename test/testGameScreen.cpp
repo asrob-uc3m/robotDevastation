@@ -52,7 +52,7 @@ int main(void)
 
     //-- Load test image
     RdImage frame;
-    yarp::sig::file::read(frame, rf.findFileByName("../../share/images/test_frame.ppm"));
+    yarp::sig::file::read(frame, rf.findFileByName("../images/test_frame.ppm"));
     screen.update(GameScreen::PARAM_CAMERA_FRAME, frame);
 
     for (int i = 0; i < 200; i++)

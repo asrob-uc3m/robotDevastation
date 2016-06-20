@@ -63,8 +63,8 @@ class RdProcessorImageEventListenerTest : public testing::Test
         RdImage bad_image;
 };
 
-const std::string RdProcessorImageEventListenerTest::image_filename = "../../share/images/test_target.ppm";
-const std::string RdProcessorImageEventListenerTest::bad_image_filename = "../../share/images/test_target_bad.ppm";
+const std::string RdProcessorImageEventListenerTest::image_filename = "../images/test_target.ppm";
+const std::string RdProcessorImageEventListenerTest::bad_image_filename = "../images/test_target_bad.ppm";
 
 void compare_targets(RdTarget target1, RdTarget target2, int threshold = 20)
 {

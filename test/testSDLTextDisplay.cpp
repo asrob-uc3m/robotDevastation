@@ -40,7 +40,7 @@ int main(void)
     }
 
     //-- Load the font
-    std::string font_name("../../share/fonts/FreeMono.ttf");
+    std::string font_name("../fonts/FreeMono.ttf");
     TTF_Font *font = TTF_OpenFont(rf.findFileByName(font_name).c_str(), 28);
     if (font == NULL){
         printf("Unable to load font: %s %s \n", rf.findFileByName(font_name).c_str(), TTF_GetError());

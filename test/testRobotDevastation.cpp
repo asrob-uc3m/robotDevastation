@@ -215,8 +215,8 @@ class RobotDevastationTest : public testing::Test
 
 const int RobotDevastationTest::MAX_HEALTH = 100;
 const int RobotDevastationTest::MAX_AMMO = 10;
-const std::string RobotDevastationTest::FRAME_NO_TARGET_PATH = "../../share/images/test_frame_qr.ppm";
-const std::string RobotDevastationTest::FRAME_WITH_TARGET_PATH = "../../share/images/test_frame_qr_centered.ppm";
+const std::string RobotDevastationTest::FRAME_NO_TARGET_PATH = "../images/test_frame_qr.ppm";
+const std::string RobotDevastationTest::FRAME_WITH_TARGET_PATH = "../images/test_frame_qr_centered.ppm";
 
 
 //--- Tests ------------------------------------------------------------------------------------------

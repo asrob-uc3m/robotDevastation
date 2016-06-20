@@ -42,9 +42,9 @@ class MockupAudioManagerTest : public testing::Test
 };
 
 
-const std::string MockupAudioManagerTest::sound_bso = "../../share/sounds/RobotDevastationBSO.mp3";
-const std::string MockupAudioManagerTest::sound_shoot = "../../share/sounds/01_milshot.wav";
-const std::string MockupAudioManagerTest::sound_explosion = "../../share/sounds/15_explosion.wav";
+const std::string MockupAudioManagerTest::sound_bso = "../sounds/RobotDevastationBSO.mp3";
+const std::string MockupAudioManagerTest::sound_shoot = "../sounds/01_milshot.wav";
+const std::string MockupAudioManagerTest::sound_explosion = "../sounds/15_explosion.wav";
 
 
 TEST_F( MockupAudioManagerTest, AudioManagerIsSingleton)

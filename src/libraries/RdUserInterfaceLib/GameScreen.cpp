@@ -24,7 +24,7 @@ bool rd::GameScreen::init()
     rf.setDefaultConfigFile("robotDevastation.ini");
 
     //-- Load the font(s)
-    std::string font_name("../../share/fonts/FreeMono.ttf");
+    std::string font_name("../fonts/FreeMono.ttf");
     player_font = TTF_OpenFont(rf.findFileByName(font_name).c_str(), 12);
     if (player_font == NULL)
     {
