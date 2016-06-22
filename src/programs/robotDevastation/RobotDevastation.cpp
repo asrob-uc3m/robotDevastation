@@ -4,57 +4,13 @@
 
 bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 {
-    initSDL();
-
-    //-- Show help
-    //printf("--------------------------------------------------------------\n");
-    if (rf.check("help")) {
-        printf("RobotDevastation mandatory parameters:\n");
-        printf("\t--id integer\n");
-        printf("\t--name string\n");
-        printf("\t--team integer\n");
-        printf("\t--robotName string\n");
-        printf("RobotDevastation optional parameters:\n");
-        printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        printf("\t--mockupRobotManager  //-- Fake robot motors\n");
-        printf("\t--mockupImageManager  //-- Fake robot camera\n");
-        ::exit(0);
-    }
-
     //-- Get player data
     //-----------------------------------------------------------------------------
-    if( ! rf.check("id") )
-    {
-        RD_ERROR("No id! Please invoke with this parameter, as in 'robotDevastation --id integer --name string --team integer --robotName string'.\n");
-        RD_ERROR("Type 'robotDevastation --help' for help.\n");
-        return false;
-    }
-    RD_INFO("id: %d\n",rf.find("id").asInt());
+    //-- Request player/robot info
+    initPlayerInfo(rf);
 
-    if( ! rf.check("name") )
-    {
-        RD_ERROR("No name! Please invoke with this parameter, as in 'robotDevastation --id integer --name string --team integer --robotName string'.\n");
-        RD_ERROR("Type 'robotDevastation --help' for help.\n");
-        return false;
-    }
-    RD_INFO("name: %s\n",rf.find("name").asString().c_str());
-
-    if( ! rf.check("team") )
-    {
-        RD_ERROR("No team! Please invoke with this parameter, as in 'robotDevastation --id integer --name string --team integer --robotName string'.\n");
-        RD_ERROR("Type 'robotDevastation --help' for help.\n");
-        return false;
-    }
-    RD_INFO("team: %d\n",rf.find("team").asInt());
-
-    if( ! rf.check("robotName") )
-    {
-        RD_ERROR("No robotName! Please invoke with this parameter, as in 'robotDevastation --id integer --name string --team integer --robotName string'.\n");
-        RD_ERROR("Type 'robotDevastation --help' for help.\n");
-        return false;
-    }
-    RD_INFO("robotName: %s\n",rf.find("robotName").asString().c_str());
-
+    //-- Init graphics
+    initSDL();
 
     //-- Init input manager
     RdSDLInputManager::RegisterManager();
@@ -144,6 +100,70 @@ bool rd::RobotDevastation::updateModule()
     }
 
     RD_DEBUG("Current state id: %d\n", gameFSM->getCurrentState());
+    return true;
+}
+
+bool rd::RobotDevastation::initPlayerInfo(yarp::os::ResourceFinder &rf)
+{
+    if(rf.check("id"))
+    {
+        id = rf.find("id").asInt();
+        std::stringstream question;
+        question << "Insert player id [" << id << "]";
+        getInfoFromUser(question.str(), id);
+    }
+    else
+    {
+        id = -1;
+        getInfoFromUser("Insert player id []", id, true);
+    }
+
+
+    if(!rf.check("name"))
+    {
+        name = rf.find("name").asString();
+        std::stringstream question;
+        question << "Insert name [" << name << "]";
+        getInfoFromUser(question.str(), name);
+    }
+    else
+    {
+        name = "";
+        getInfoFromUser("Insert name []", name, true);
+    }
+
+    if(!rf.check("team"))
+    {
+        team = rf.find("team").asInt();
+        std::stringstream question;
+        question << "Insert team [" << team << "]";
+        getInfoFromUser(question.str(), team);
+    }
+    else
+    {
+        team = -1;
+        getInfoFromUser("Insert team []", team, true);
+    }
+
+    if(!rf.check("robotName"))
+    {
+        robotName = rf.find("robotName").asString();
+        std::stringstream question;
+        question << "Insert robotName [" << robotName << "]";
+        getInfoFromUser(question.str(), robotName);
+    }
+    else
+    {
+        robotName = "";
+        getInfoFromUser("Insert robotName []", robotName, true);
+    }
+
+    printf("\n\n");
+    printf("Player information:\n");
+    printf("\t-id: %d\n", id);
+    printf("\t-name: %s\n", name.c_str());
+    printf("\t-team: %d\n", team);
+    printf("\t-robotName: %s\n", robotName.c_str());
     return true;
 }
 

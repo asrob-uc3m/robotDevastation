@@ -52,42 +52,38 @@ rdClient
 
 int main(int argc, char *argv[]) {
 
-    std::cout << "--------------------------------------------------------------" << std::endl;
-    std::cout << "Robot Devastation @ ASROB 2014 (C) Robotics Society of the Universidad Carlos III de Madrid" << std::endl;
-    std::cout << "Welcome to Robot Devastation v0.2, developed by David Estevez and Juan G Victores." << std::endl;
-    std::cout << "Based on Robot Devastation v0.1, developed by Santiago Morante and Juan G Victores." << std::endl;
+    printf("--------------------------------------------------------------\n");
+    printf("Robot Devastation @ ASROB 2014 (C) Robotics Society of the Universidad Carlos III de Madrid\n");
+    printf("Welcome to Robot Devastation v0.2, developed by David Estevez and Juan G Victores.\n");
+    printf("Based on Robot Devastation v0.1, developed by Santiago Morante and Juan G Victores.\n");
     printf(GREEN);
-    std::cout << " ____       _           _   ____                      _        _   _             " << std::endl;
-    std::cout << "|  _ \\ ___ | |__   ___ | |_|  _ \\  _____   ____ _ ___| |_ __ _| |_(_) ___  _ __  " << std::endl;
-    std::cout << "| |_) / _ \\| '_ \\ / _ \\| __| | | |/ _ \\ \\ / / _` / __| __/ _` | __| |/ _ \\| '_ \\ " << std::endl;
-    std::cout << "|  _ < (_) | |_) | (_) | |_| |_| |  __/\\ V / (_| \\__ \\ || (_| | |_| | (_) | | | |" << std::endl;
-    std::cout << "|_| \\_\\___/|_.__/ \\___/ \\__|____/ \\___| \\_/ \\__,_|___/\\__\\__,_|\\__|_|\\___/|_| |_|" << std::endl;
+    printf(" ____       _           _   ____                      _        _   _             \n");
+    printf("|  _ \\ ___ | |__   ___ | |_|  _ \\  _____   ____ _ ___| |_ __ _| |_(_) ___  _ __  \n");
+    printf("| |_) / _ \\| '_ \\ / _ \\| __| | | |/ _ \\ \\ / / _` / __| __/ _` | __| |/ _ \\| '_ \\ \n");
+    printf("|  _ < (_) | |_) | (_) | |_| |_| |  __/\\ V / (_| \\__ \\ || (_| | |_| | (_) | | | |\n");
+    printf("|_| \\_\\___/|_.__/ \\___/ \\__|____/ \\___| \\_/ \\__,_|___/\\__\\__,_|\\__|_|\\___/|_| |_|\n");
     printf(RESET);
-    std::cout << std::endl;
-    std::cout << "Fire with 'space'. Reload with 'r'. Move with 'a,s,d,w,x'. Run \"robotDevastation --help\" for options." << std::endl;
-    std::cout << "For a full description, please visit http://asrob.uc3m.es/rddoc/group__robotDevastation.html." << std::endl;
-    std::cout << "--------------------------------------------------------------" << std::endl;
+    printf("\n");
+    printf("Fire with 'space'. Reload with 'r'. Move with 'Left, Up, Down, Right'. Run \"robotDevastation --help\" for help.\n");
+    printf("For a full description, please visit http://asrob.uc3m.es/rddoc/group__robotDevastation.html.\n");
+    printf("--------------------------------------------------------------\n");
 
     yarp::os::ResourceFinder rf;
-    rf.setVerbose(true);
+    rf.setVerbose(false);
     rf.setDefaultContext("robotDevastation");
     rf.setDefaultConfigFile("robotDevastation.ini");
     rf.configure(argc, argv);
 
-    rd::RobotDevastation robotDevastation;
-    if(rf.check("help")) {
-        return robotDevastation.runModule(rf);
+    if(rf.check("help"))
+    {
+        printf("RobotDevastation optional parameters:\n");
+        printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
+        printf("\t--mockupRobotManager  //-- Fake robot motors\n");
+        printf("\t--mockupImageManager  //-- Fake robot camera\n");
+        return 0;
     }
 
-    printf("Run \"%s --help\" for options.\n",argv[0]);
-    printf("%s checking for yarp network...\n ",argv[0]);
-    fflush(stdout);
-    yarp::os::Network yarp;
-    if (!yarp.checkNetwork()) {
-        RD_ERROR("%s found no yarp network (try running \"yarpserver &\"), bye!\n",argv[0]);
-        return -1;
-    } else printf("[ok]\n");
-
+    rd::RobotDevastation robotDevastation;
     return robotDevastation.runModule(rf);
 
 }
