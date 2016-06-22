@@ -6,51 +6,61 @@ namespace rd{
 
 bool RdYarpRobotManager::moveForward(int velocity)
 {
+    RD_DEBUG("\n");
     return send1vocab1int(VOCAB_MOVE_FORWARD,velocity);
 }
 
 bool RdYarpRobotManager::moveBackwards(int velocity)
 {
+    RD_DEBUG("\n");
     return send1vocab1int(VOCAB_MOVE_BACKWARDS,velocity);
 }
 
 bool RdYarpRobotManager::turnLeft(int velocity)
 {
+    RD_DEBUG("\n");
     return send1vocab1int(VOCAB_TURN_LEFT,velocity);
 }
 
 bool RdYarpRobotManager::turnRight(int velocity)
 {
+    RD_DEBUG("\n");
     return send1vocab1int(VOCAB_TURN_RIGHT,velocity);
 }
 
 bool RdYarpRobotManager::stopMovement()
 {
+    RD_DEBUG("\n");
     return send1vocab(VOCAB_STOP_MOVEMENT);
 }
 
 bool RdYarpRobotManager::tiltUp(int velocity)
 {
+    RD_DEBUG("\n");
     return send1vocab1int(VOCAB_TILT_UP,velocity);
 }
 
 bool RdYarpRobotManager::tiltDown(int velocity)
 {
+    RD_DEBUG("\n");
     return send1vocab1int(VOCAB_TILT_DOWN,velocity);
 }
 
 bool RdYarpRobotManager::panLeft(int velocity)
 {
+    RD_DEBUG("\n");
     return send1vocab1int(VOCAB_PAN_LEFT,velocity);
 }
 
 bool RdYarpRobotManager::panRight(int velocity)
 {
+    RD_DEBUG("\n");
     return send1vocab1int(VOCAB_PAN_RIGHT,velocity);
 }
 
 bool RdYarpRobotManager::stopCameraMovement()
 {
+    RD_DEBUG("\n");
     return send1vocab(VOCAB_STOP_CAMERA_MOVEMENT);
 }
         
@@ -59,7 +69,7 @@ bool RdYarpRobotManager::connect()
 
     std::string launchRobotOptionsStr("(on /");
     launchRobotOptionsStr += robotName;
-    launchRobotOptionsStr += ") (as roblauncher) (cmd \"sudo launchRaspiYarp --device RdRobotServer --subdevice RdFakeMotors --name /";  // RdOnePwmMotors or RdFakeMotors
+    launchRobotOptionsStr += ") (as roblauncher) (cmd \"sudo launchRaspiYarp --device RdRobotServer --subdevice RdOnePwmMotors --name /";  // RdOnePwmMotors or RdFakeMotors
     launchRobotOptionsStr += robotName;
     launchRobotOptionsStr += " --gpios 17 27\")";
     yarp::os::Property launchRobotOptions;
