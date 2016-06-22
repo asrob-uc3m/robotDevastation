@@ -73,7 +73,7 @@ bool RdYarpRobotManager::connect()
     launchRobotOptionsStr += robotName;
     launchRobotOptionsStr += " --gpios 17 27\")";
     yarp::os::Property launchRobotOptions;
-    launchRobotOptions.fromString(launchRobotOptionsStr);
+    launchRobotOptions.fromString(launchRobotOptionsStr);  //-- Default should look like "/rd1/rpc:s"
     RD_DEBUG("Attempting to start motors on robot side [parameters: %s]...\n",launchRobotOptionsStr.c_str());
     RD_INFO("If you prefer a fake robot with a fake camera, launch 'robotDevastation --mockupRobotManager --mockupImageManager'\n");
     int robotRet = yarp::os::Run::client(launchRobotOptions);
@@ -95,7 +95,7 @@ bool RdYarpRobotManager::connect()
     launchCameraOptions.fromString(launchCameraOptionsStr);
     RD_DEBUG("Attempting to start camera on robot side [parameters: %s]...\n",launchCameraOptionsStr.c_str());
     RD_INFO("If you prefer a fake robot with a fake camera, launch 'robotDevastation --mockupRobotManager --mockupImageManager'\n");
-    int cameraRet = yarp::os::Run::client(launchCameraOptions);
+    int cameraRet = yarp::os::Run::client(launchCameraOptions);  //-- Default should look like "/rd1/img:o"
     if (cameraRet == 0)
     {
         RD_SUCCESS("Started camera on robot side.\n");
@@ -109,7 +109,7 @@ bool RdYarpRobotManager::connect()
     local_s += robotName;
     local_s += "/rpc:c";
 
-    rpcClient.open(local_s);
+    rpcClient.open(local_s);  //-- Default should look like "/robotDevastation/rd1/rpc:c"
 
     std::string remote_s("/");
     remote_s += robotName;
@@ -126,7 +126,7 @@ bool RdYarpRobotManager::connect()
 
     if (tries == 11)
     {
-        RD_ERROR("Timeout on connect to remote robot!\n");
+        RD_ERROR("Timeout on connect to remote robot! If you prefer a fake robot with a fake camera, launch 'robotDevastation --mockupRobotManager --mockupImageManager'\n");
         return false;
     }
 

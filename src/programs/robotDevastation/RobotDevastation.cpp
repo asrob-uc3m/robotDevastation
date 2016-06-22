@@ -86,15 +86,15 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     }
 
     //-- Configure the camera port
-    std::ostringstream remoteCameraPortName;  //-- Default looks like "/0/rd1/img:o"
+    std::ostringstream remoteCameraPortName;  //-- Default looks like "/rd1/img:o"
     remoteCameraPortName << "/";
     remoteCameraPortName << rf.find("robotName").asString();
     remoteCameraPortName << "/img:o";
     imageManager->configure("remote_img_port", remoteCameraPortName.str() );
-    std::ostringstream localCameraPortName;  //-- Default should look like "/0/robot/img:i"
-    localCameraPortName << "/";
-    localCameraPortName << rf.find("id").asInt();
-    localCameraPortName << "/robot/img:i";
+    std::ostringstream localCameraPortName;  //-- Default should look like "/robotDevastation/rd1/img:i"
+    localCameraPortName << "/robotDevastation/";
+    localCameraPortName << rf.find("robotName").asInt();
+    localCameraPortName << "/img:i";
     imageManager->configure("local_img_port", localCameraPortName.str() ); //-- Name given by me
 
     //-- Init mentalMap
