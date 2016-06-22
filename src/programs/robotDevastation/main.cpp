@@ -63,13 +63,13 @@ int main(int argc, char *argv[]) {
     printf("|  _ < (_) | |_) | (_) | |_| |_| |  __/\\ V / (_| \\__ \\ || (_| | |_| | (_) | | | |\n");
     printf("|_| \\_\\___/|_.__/ \\___/ \\__|____/ \\___| \\_/ \\__,_|___/\\__\\__,_|\\__|_|\\___/|_| |_|\n");
     printf(RESET);
-    printf('\n');
+    printf("\n");
     printf("Fire with 'space'. Reload with 'r'. Move with 'Left, Up, Down, Right'. Run \"robotDevastation --help\" for help.\n");
     printf("For a full description, please visit http://asrob.uc3m.es/rddoc/group__robotDevastation.html.\n");
     printf("--------------------------------------------------------------\n");
 
     yarp::os::ResourceFinder rf;
-    rf.setVerbose(true);
+    rf.setVerbose(false);
     rf.setDefaultContext("robotDevastation");
     rf.setDefaultConfigFile("robotDevastation.ini");
     rf.configure(argc, argv);
