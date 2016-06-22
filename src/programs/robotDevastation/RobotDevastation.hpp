@@ -59,6 +59,12 @@ class RobotDevastation : public yarp::os::RFModule
         bool initSound(yarp::os::ResourceFinder &rf);
         bool initGameFSM();
         bool cleanup();
+
+        //-- Player data
+        int id;
+        std::string name;
+        int team;
+        std::string robotName;
 };
 
 }  // namespace rd

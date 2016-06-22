@@ -4,31 +4,25 @@
 
 bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 {
-    initSDL();
-
-    //-- Show help
-    //printf("--------------------------------------------------------------\n");
-    if (rf.check("help")) {
-        printf("RobotDevastation mandatory parameters:\n");
-        printf("\t--id integer\n");
-        printf("\t--name string\n");
-        printf("\t--team integer\n");
-        printf("\t--robotName string\n");
-        printf("RobotDevastation optional parameters:\n");
-        printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        printf("\t--mockupRobotManager  //-- Fake robot motors\n");
-        printf("\t--mockupImageManager  //-- Fake robot camera\n");
-        ::exit(0);
-    }
-
     //-- Get player data
     //-----------------------------------------------------------------------------
-    if( ! rf.check("id") )
+    //-- Request player/robot info
+    int id = -1;
+    if(rf.check("id"))
     {
-        RD_ERROR("No id! Please invoke with this parameter, as in 'robotDevastation --id integer --name string --team integer --robotName string'.\n");
-        RD_ERROR("Type 'robotDevastation --help' for help.\n");
-        return false;
+        id = rf.find("id").asInt();
+        printf("Insert player id [%d]?>", id);
+        std::string answer;
+        std::getline(std::cin, answer);
+        if (!answer.empty())
+
+
     }
+    else
+    {
+        printf("Insert player id []?>");
+    }
+
     RD_INFO("id: %d\n",rf.find("id").asInt());
 
     if( ! rf.check("name") )
@@ -55,6 +49,9 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     }
     RD_INFO("robotName: %s\n",rf.find("robotName").asString().c_str());
 
+
+    //-- Init graphics
+    initSDL();
 
     //-- Init input manager
     RdSDLInputManager::RegisterManager();
