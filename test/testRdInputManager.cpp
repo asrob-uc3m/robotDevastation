@@ -114,7 +114,35 @@ class RdTestEventListener : public RdInputEventListener
 
         virtual bool onKeyUp(RdKey k)
         {
+            if ( k.isControlKey() )
+            {
+                RD_SUCCESS( "Control key with code %d released!\n", k.getValue() );
+                if ( k.getValue() == RdKey::KEY_SPACE)
+                {
+                    RD_SUCCESS("Released shoot!\n");
+                }
+                else if ( k.getValue() == RdKey::KEY_ARROW_LEFT)
+                {
+                    RD_SUCCESS("Released left!\n");
+                }
+                else if ( k.getValue() == RdKey::KEY_ARROW_RIGHT)
+                {
+                    RD_SUCCESS("Released right!\n");
+                }
+                else if ( k.getValue() == RdKey::KEY_ARROW_UP)
+                {
+                    RD_SUCCESS("Released up!\n");
+                }
+                else if ( k.getValue() == RdKey::KEY_ARROW_DOWN)
+                {
+                    RD_SUCCESS("Release down!\n");
+                }
+            }
+            else if (k.isPrintable() )
+            {
+                RD_SUCCESS( "Key \"%c\" was released!\n", k.getChar() );
 
+            }
         }
 
     private:
