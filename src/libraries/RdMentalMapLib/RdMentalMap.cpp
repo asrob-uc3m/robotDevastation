@@ -213,7 +213,8 @@ bool rd::RdMentalMap::updateTargets(std::vector<RdTarget> new_target_detections)
 
 bool rd::RdMentalMap::respawn()
 {
-    return false;
+    myself->setHealth(myself->getMaxHealth());
+    return true;
 }
 
 bool rd::RdMentalMap::addMentalMapEventListener(rd::RdMentalMapEventListener *listener)
