@@ -211,6 +211,11 @@ bool rd::RdMentalMap::updateTargets(std::vector<RdTarget> new_target_detections)
     return true;
 }
 
+bool rd::RdMentalMap::respawn()
+{
+    return false;
+}
+
 bool rd::RdMentalMap::addMentalMapEventListener(rd::RdMentalMapEventListener *listener)
 {
     listeners.push_back(listener);
