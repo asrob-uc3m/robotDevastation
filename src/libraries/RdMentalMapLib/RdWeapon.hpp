@@ -11,6 +11,7 @@
 
 namespace rd {
 
+class RdTarget;
 
 /**
  * @ingroup RdMentalMapLib
@@ -26,7 +27,7 @@ public:
     RdWeapon(std::string name, int damage, int max_ammo);
 
     //! @brief Checks if the target is within the weapon's current range and can be hit by it
-    bool shoot(RdTarget& target);
+    bool canShootTarget(RdTarget& target);
 
     //! @brief Increases the current ammo to max_ammo
     bool reload();

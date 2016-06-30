@@ -5,8 +5,11 @@
 
 #include <string>
 #include <sstream>
+#include "RdWeapon.hpp"
 
 namespace rd{
+
+class RdWeapon;
 
 /**
  * @ingroup RdMentalMapLib
@@ -29,6 +32,9 @@ public:
 
     int getHealth() const;
     void setHealth(int value);
+
+    //! @brief Reduces this player's health by an amount specified by the weapon used
+    bool getDamageFromWeapon(RdWeapon& weapon);
 
     int getMaxHealth() const;
     void setMaxHealth(int value);

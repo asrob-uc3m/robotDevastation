@@ -85,17 +85,7 @@ bool rd::DeadState::cleanup()
     if (received_respawn)
     {
         //-- Restore things (health, enable stuff)
-        //-- Note: this is a workaround because one cannot modify player's health through
-        //-- mentalMap directly (yet)
-        std::vector<RdPlayer> players = mentalMap->getPlayers();
-        int id = mentalMap->getMyself().getId();
-        for (int i = 0; i < players.size(); i++)
-            if (players[i].getId() == id)
-            {
-                players[i].setHealth(MAX_HEALTH);
-                break;
-            }
-        mentalMap->updatePlayers(players);
+        mentalMap->respawn();
 
         //-- Remove this input listener (game will setup its own listener)
         inputManager->removeInputEventListeners();

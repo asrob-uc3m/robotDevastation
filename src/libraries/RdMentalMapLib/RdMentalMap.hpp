@@ -96,6 +96,9 @@ class RdMentalMap : public RdNetworkEventListener
          */
         bool updateTargets(std::vector<RdTarget> new_target_detections);
 
+        //! @brief Restores the health of current player (and does more stuff if needed)
+        bool respawn();
+
 
         //-- Listeners
         //--------------------------------------------------------------------------------------------

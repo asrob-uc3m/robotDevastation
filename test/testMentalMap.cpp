@@ -211,6 +211,32 @@ TEST_F( RdMentalMapTest, MyselfPointsToMe)
 }
 
 
+TEST_F( RdMentalMapTest, RespawnWorks)
+{
+    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
+
+    //-- Configure a mental map for one dead player:
+    const int id = 0;
+    ASSERT_FALSE(!mentalMap->configure(id));
+
+    //-- Update players:
+    player1->setHealth(0);
+    std::vector<RdPlayer> players;
+    players.push_back(*player1);
+
+    ASSERT_TRUE(mentalMap->updatePlayers(players));
+
+    ASSERT_TRUE(mentalMap->respawn());
+
+    //-- Check players stored:
+    std::vector<RdPlayer> players_stored = mentalMap->getPlayers();
+    ASSERT_EQ(1, (int) players_stored.size());
+
+    //-- Check if myself is me:
+    RdPlayer me = mentalMap->getMyself();
+    EXPECT_EQ(0, me.getId());
+    ASSERT_EQ(me.getMaxHealth(), me.getHealth());
+}
 
 //---------------------------------------------------------------------------------------
 //-- Enemy-related
