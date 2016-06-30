@@ -51,6 +51,14 @@ void rd::RdPlayer::setHealth(int value)
     health = value;
 }
 
+bool rd::RdPlayer::getDamageFromWeapon(rd::RdWeapon &weapon)
+{
+    health -= weapon.getDamage();
+    if (health < 0)
+        health = 0;
+    return true;
+}
+
 int rd::RdPlayer::getMaxHealth() const
 {
     return max_health;

@@ -136,13 +136,13 @@ bool rd::RdMentalMap::shoot()
         //-- Check for collision with any target:
         for( std::map<int, RdTarget>::iterator it = targets.begin(); it != targets.end(); ++it)
         {
-            if ( weapons[current_weapon].shoot(it->second) )
+            if ( weapons[current_weapon].canShootTarget(it->second) )
             {
                 //-- Decrease player's life:
                 RdPlayer * player = &players[it->second.getPlayerId()];
                 RD_SUCCESS("Target %s was hit!\n", player->getName().c_str());
 
-                //player->setHealth(player->getHealth()-weapons[current_weapon].getDamage());
+                player->getDamageFromWeapon(weapons[current_weapon]);
 
                 hit = true;
 

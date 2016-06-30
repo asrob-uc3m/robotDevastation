@@ -21,7 +21,7 @@ rd::RdWeapon::RdWeapon(std::string name, int damage, int max_ammo)
     this->current_ammo = max_ammo;
 }
 
-bool rd::RdWeapon::shoot(rd::RdTarget &target)
+bool rd::RdWeapon::canShootTarget(rd::RdTarget &target)
 {
     //-- Calculate target limits:
     int target_top_left_x = target.getPos().x - target.getDimensions().x / 2;
