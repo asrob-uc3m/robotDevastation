@@ -35,6 +35,11 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         RdMockupImageManager::RegisterManager();
         imageManager = RdImageManager::getImageManager(RdMockupImageManager::id);
     }
+    else if(rf.check("yarpLocalImageManager"))
+    {
+        RdYarpLocalImageManager::RegisterManager();
+        imageManager = RdImageManager::getImageManager(RdYarpLocalImageManager::id);
+    }
     else
     {
         RdYarpImageManager::RegisterManager();

@@ -22,6 +22,7 @@
 #include "StateMachine.hpp"
 #include "RdImageManager.hpp"
 #include "RdYarpImageManager.hpp"
+#include "RdYarpLocalImageManager.hpp"
 #include "RdMockupImageManager.hpp"
 #include "RdProcessorImageEventListener.hpp"
 
