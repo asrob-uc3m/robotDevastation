@@ -12,6 +12,8 @@
 #include <yarp/os/Network.h>
 #include <yarp/os/Semaphore.h>
 
+#include <yarp/dev/PolyDriver.h>
+
 #include "RdUtils.hpp"
 #include "RdImageManager.hpp"
 #include "RdImageEventListener.hpp"
@@ -90,6 +92,8 @@ class RdYarpLocalImageManager : public RdImageManager,
 
         bool stopped;
         bool enabled;
+
+        yarp::dev::PolyDriver cameraDevice;
 };
 
 

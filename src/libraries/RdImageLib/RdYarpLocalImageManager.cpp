@@ -10,6 +10,18 @@ bool rd::RdYarpLocalImageManager::start()
 {
     yarp::os::Network::init();
 
+    yarp::os::Property cameraOptions;
+    cameraOptions.put("device","grabber");
+    cameraOptions.put("subdevice","opencv_grabber");
+    cameraOptions.put("name",remote_port_name);
+    cameraDevice.open(cameraOptions);
+    if(!cameraDevice.isValid())
+    {
+        RD_ERROR("Could not open opencv_grabber device.\n");
+        return false;
+    }
+    RD_SUCCESS("Opened opencv_grabber device.\n");
+
     imagePort.open(local_port_name.c_str());
     imagePort.useCallback(*this);
 
@@ -36,6 +48,8 @@ bool rd::RdYarpLocalImageManager::stop()
     imagePort.disableCallback();
     imagePort.interrupt();
     imagePort.close();
+
+    cameraDevice.close();
 
     stopped = true;
     enabled = false;
