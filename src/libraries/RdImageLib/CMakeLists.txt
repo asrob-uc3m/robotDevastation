@@ -11,7 +11,7 @@ include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${ZBAR_INCLUDE_DIR})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdImageManager.cpp RdImageEventListener.hpp RdYarpImageManager.cpp
+add_library(${KEYWORD} RdImageManager.cpp RdImageEventListener.hpp RdYarpImageManager.cpp RdYarpLocalImageManager.hpp RdYarpLocalImageManager.cpp
      RdProcessorImageEventListener.hpp RdProcessorImageEventListener.cpp
      RdMockupImageManager.cpp RdMockupImageEventListener.cpp)
 target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${ZBAR_LIBRARIES} ${RD_LIBRARIES})
