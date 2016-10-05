@@ -26,7 +26,7 @@ yarp_begin_plugin_library(RdYarp)
 add_subdirectory(SerialServoBoard)
 yarp_end_plugin_library(RdYarp)
 
-yarp_add_plugin_library_executable(testRdYarp RdYarp)
+yarp_add_plugin_yarpdev_executable(testRdYarp RdYarp)
 target_link_libraries(testRdYarp ${YARP_LIBRARIES})
 
 
