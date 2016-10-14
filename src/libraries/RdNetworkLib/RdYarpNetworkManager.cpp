@@ -43,7 +43,7 @@ bool rd::RdYarpNetworkManager::start()
 
     if ( ! yarp::os::NetworkBase::checkNetwork() )
     {
-        RD_ERROR("Found no yarp network (try running \"yarpserver &\". Bye!\n");
+        RD_ERROR("Found no yarp network to connect to rdServer (try running 'yarpserver &'). Bye!\n");
         return false;
     }
 
