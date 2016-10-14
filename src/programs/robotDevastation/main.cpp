@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
     }
 
     rd::RobotDevastation robotDevastation;
-    return robotDevastation.runModule(rf);
+    return robotDevastation.runModule(rf);  //-- Internally calls rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
 }
 
