@@ -26,9 +26,6 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     else
         robotManager = new RdYarpRobotManager(rf.find("robotName").asString());
 
-//    RD_ERROR("Could not connect to robotName \"%s\"!\n",rf.find("robotName").asString().c_str());
-//    RD_ERROR("Use syntax: robotDevastation --robotName %s\n",rf.find("robotName").asString().c_str());
-
     //-- Init image manager
     if(rf.check("mockupImageManager"))
     {
