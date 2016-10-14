@@ -45,6 +45,7 @@ bool rd::initSDL()
         RD_ERROR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
         return false;
     }
+    return true;
 }
 
 bool rd::cleanupSDL()
