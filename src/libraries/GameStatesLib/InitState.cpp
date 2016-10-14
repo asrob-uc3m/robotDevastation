@@ -36,7 +36,8 @@ bool rd::InitState::setup()
     //-- Setup network manager
     networkManager->addNetworkEventListener(mentalMap);
     mentalMap->addMentalMapEventListener((RdYarpNetworkManager *)networkManager);
-    networkManager->start();
+    if( ! networkManager->start() )
+        return false;
 
     return true;
 }
