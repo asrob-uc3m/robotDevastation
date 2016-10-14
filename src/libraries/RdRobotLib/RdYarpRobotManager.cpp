@@ -154,7 +154,8 @@ bool RdYarpRobotManager::connect()
 
     if (tries == 11)
     {
-        RD_ERROR("Timeout on connect to remote robot! If you prefer a fake robot with a fake camera, launch 'robotDevastation --mockupRobotManager --mockupImageManager'\n");
+        RD_ERROR("Timeout on connect to remote robot!\n");
+        RD_INFO("If you prefer a fake robot use the '--mockupRobotManager' parameter to run robotDevastation.\n");
         return false;
     }
 
