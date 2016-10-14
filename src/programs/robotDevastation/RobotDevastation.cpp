@@ -7,10 +7,12 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Get player data
     //-----------------------------------------------------------------------------
     //-- Request player/robot info
-    initPlayerInfo(rf);
+    if( ! initPlayerInfo(rf) )
+        return false;
 
     //-- Init graphics
-    initSDL();
+    if( ! initSDL() )
+        return false;
 
     //-- Init input manager
     RdSDLInputManager::RegisterManager();
