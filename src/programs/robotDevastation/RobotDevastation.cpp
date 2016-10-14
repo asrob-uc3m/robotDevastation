@@ -73,8 +73,11 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     networkManager->configure("player", players[0]);
 
     //-- Get game FSM and start game
-    if(initGameFSM())
-        gameFSM->start();
+    if( ! initGameFSM() )
+        return false;
+
+    if( ! gameFSM->start() )
+        return false;
 
     return true;
 }
