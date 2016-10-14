@@ -78,10 +78,11 @@ bool RdYarpRobotManager::connect()
         return true;
     }
 
-    yarp::os::Network::initMinimum();
-    if ( ! yarp::os::Network::checkNetwork() )
+    yarp::os::NetworkBase::initMinimum();
+
+    if ( ! yarp::os::NetworkBase::checkNetwork() )
     {
-        RD_ERROR("Found no yarp network (try running \"yarpserver &\", or \"--mockupRobotManager\" for Fake robot motors. Bye!\n");
+        RD_ERROR("Found no yarp network (try running 'yarpserver &'', or '--mockupRobotManager' for Fake robot motors). Bye!\n");
         return false;
     }
 
