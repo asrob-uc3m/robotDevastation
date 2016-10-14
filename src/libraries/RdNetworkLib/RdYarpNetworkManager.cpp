@@ -73,7 +73,7 @@ bool rd::RdYarpNetworkManager::start()
     }
     if (tries == 11)  //-- 11 allows  10 attempts
     {
-        RD_ERROR("Timeout for rpc to be connected to server.\n");
+        RD_ERROR("Timeout for rpc to be connected to rdServer (launch 'rdServer' if not already launched).\n");
         return false;
     }
     RD_SUCCESS("Rpc connected to Server (outgoing)!\n")
