@@ -37,7 +37,7 @@ class RdYarpRobotManager : public RdRobotManager
 {
     public:
 
-        RdYarpRobotManager(const std::string& robotName) : RdRobotManager(robotName) { }
+        RdYarpRobotManager(const std::string& robotName);
 
         //-- Robot movement related functions    
         virtual bool moveForward(int velocity = UNUSED);

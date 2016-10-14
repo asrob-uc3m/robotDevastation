@@ -66,6 +66,8 @@ class RdRobotManager
 
     protected:
         std::string robotName;
+        bool connected;
+        bool enabled;
 };
 
 }

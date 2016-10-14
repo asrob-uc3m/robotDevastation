@@ -70,8 +70,6 @@ class RdMockupRobotManager : public RdRobotManager
         static const int CAMERA_NONE;
 
     private:
-        bool connected;
-        bool enabled;
         int movement_direction;
         int camera_movement_direction;
 };

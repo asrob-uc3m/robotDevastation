@@ -2,7 +2,13 @@
 
 #include "RdYarpRobotManager.hpp"
 
-namespace rd{
+namespace rd
+{
+RdYarpRobotManager::RdYarpRobotManager(const std::string& robotName): RdRobotManager(robotName)
+{
+    connected = false;
+    enabled = false;
+}
 
 bool RdYarpRobotManager::moveForward(int velocity)
 {
