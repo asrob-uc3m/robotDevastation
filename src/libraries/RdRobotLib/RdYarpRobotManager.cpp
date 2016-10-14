@@ -78,6 +78,13 @@ bool RdYarpRobotManager::connect()
         return true;
     }
 
+    yarp::os::Network::initMinimum();
+    if ( ! yarp::os::Network::checkNetwork() )
+    {
+        RD_ERROR("Found no yarp network (try running \"yarpserver &\", or \"--mockupRobotManager\" for Fake robot motors. Bye!\n");
+        return false;
+    }
+
     std::string launchRobotOptionsStr("(on /");
     launchRobotOptionsStr += robotName;
     launchRobotOptionsStr += ") (as roblauncher) (cmd \"sudo launchRaspiYarp --device RdRobotServer --subdevice RdOnePwmMotors --name /";  // RdOnePwmMotors or RdFakeMotors
