@@ -19,22 +19,22 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     inputManager = RdInputManager::getInputManager("SDL");
 
     //-- Init sound
-    if(!initSound(rf))
+    if( ! initSound(rf) )
         return false;
 
     //-- Init robot
-    if(rf.check("mockupRobotManager"))
+    if( rf.check("mockupRobotManager") )
         robotManager = new RdMockupRobotManager(rf.find("robotName").asString());
     else
         robotManager = new RdYarpRobotManager(rf.find("robotName").asString());
 
     //-- Init image manager
-    if(rf.check("mockupImageManager"))
+    if( rf.check("mockupImageManager") )
     {
         RdMockupImageManager::RegisterManager();
         imageManager = RdImageManager::getImageManager(RdMockupImageManager::id);
     }
-    else if(rf.check("yarpLocalImageManager"))
+    else if( rf.check("yarpLocalImageManager") )
     {
         RdYarpLocalImageManager::RegisterManager();
         imageManager = RdImageManager::getImageManager(RdYarpLocalImageManager::id);
