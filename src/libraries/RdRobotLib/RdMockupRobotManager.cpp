@@ -253,8 +253,8 @@ bool RdMockupRobotManager::connect()
     }
     else
     {
-        RD_ERROR("Already connected\n");
-        return false;
+        RD_WARNING("Already connected\n");
+        return true;
     }
 }
 

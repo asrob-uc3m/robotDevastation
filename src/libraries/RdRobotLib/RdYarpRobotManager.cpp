@@ -72,6 +72,11 @@ bool RdYarpRobotManager::stopCameraMovement()
         
 bool RdYarpRobotManager::connect()
 {
+    if( connected )
+    {
+        RD_WARNING("Already connected\n");
+        return true;
+    }
 
     std::string launchRobotOptionsStr("(on /");
     launchRobotOptionsStr += robotName;
