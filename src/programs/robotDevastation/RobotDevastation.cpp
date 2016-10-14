@@ -76,6 +76,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Get game FSM and start game
     if(initGameFSM())
         gameFSM->start();
+
+    return true;
 }
 
 double rd::RobotDevastation::getPeriod()
