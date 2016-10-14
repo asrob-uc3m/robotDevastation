@@ -20,7 +20,7 @@ rd::InitState::~InitState()
 bool rd::InitState::setup()
 {
     //-- Show Robot Devastation start screen:
-    if(!screen.init())
+    if( ! screen.init() )
         return false;
 
     screen.show();
