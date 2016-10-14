@@ -35,8 +35,8 @@ bool rd::initSDL()
     //-- Init ttf
     if (TTF_Init() == -1)
     {
-      RD_ERROR("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
-      return false;
+        RD_ERROR("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
+        return false;
     }
 
     //Initialize PNG loading
