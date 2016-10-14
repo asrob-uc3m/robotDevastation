@@ -41,6 +41,12 @@ bool rd::RdYarpNetworkManager::start()
 
     yarp::os::NetworkBase::initMinimum();
 
+    if ( ! yarp::os::NetworkBase::checkNetwork() )
+    {
+        RD_ERROR("Found no yarp network (try running \"yarpserver &\". Bye!\n");
+        return false;
+    }
+
     //-- Open the rcpClient port with this player's id
     std::ostringstream rpc_str;
     rpc_str << "/";
