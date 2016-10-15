@@ -55,7 +55,7 @@ rd::RdSDLInputManager::RdSDLInputManager() : RateThread(UPDATE_RATE_MS)
     XInitThreads();
 }
 
-bool rd::RdSDLInputManager::update()
+void rd::RdSDLInputManager::run()
 {
     //-- Check for event
     RdKey * key = NULL;
@@ -71,7 +71,8 @@ bool rd::RdSDLInputManager::update()
             {
                 delete key;
                 key = NULL;
-                return false;
+                //return false;
+                return;
             }
 
             for ( int i = 0; i < (int)listeners.size(); i++)
@@ -86,7 +87,8 @@ bool rd::RdSDLInputManager::update()
              {
                  delete key;
                  key = NULL;
-                 return false;
+                 //return false;
+                 return;
              }
 
             for ( int i = 0; i < (int)listeners.size(); i++)
@@ -96,16 +98,13 @@ bool rd::RdSDLInputManager::update()
         else
         {
 //          RD_WARNING("Unkown event ocurred! (Event is not supported yet)\n");
-            return false;
+            //return false;
+            return;
         }
     }
 
     delete key;
     key = NULL;
-    return true;
-}
-
-void rd::RdSDLInputManager::run()
-{
-    update();
+    //return true;
+    return;
 }

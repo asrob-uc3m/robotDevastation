@@ -65,10 +65,7 @@ class RdSDLInputManager : public RdInputManager,
          */
         RdSDLInputManager();
 
-        //! @brief Method that checks for input events and notifies the listeners when a event occurs.
-        bool update();
-
-        //! @brief Method called periodically from the RateThread class. It simply calls the update() method.
+        //! @brief Method called periodically from the RateThread class. Checks for input events and notifies the listeners when a event occurs.
         virtual void run();
 
         //! @brief Reference to this manager (unique instance)
