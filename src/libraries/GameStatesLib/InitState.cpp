@@ -51,7 +51,8 @@ bool rd::InitState::loop()
         if( ! robotManager->connect() )
             return false;
         robotManager->setEnabled(false);
-        imageManager->start();
+        if( ! imageManager->start() )
+            return false;
         logged_in = true;
     }
 
