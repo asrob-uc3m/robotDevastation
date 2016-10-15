@@ -10,6 +10,12 @@ bool rd::RdYarpImageManager::start()
 {
     yarp::os::NetworkBase::initMinimum();
 
+    if ( ! yarp::os::NetworkBase::checkNetwork() )
+    {
+        RD_ERROR("Found no yarp network (try running 'yarpserver &'', or '--mockupImageManager' or '--yarpLocalImageManager' for Fake robot camera). Bye!\n");
+        return false;
+    }
+
     imagePort.open(local_port_name.c_str());
     imagePort.useCallback(*this);
 
