@@ -48,12 +48,12 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Configure the camera port
     std::ostringstream remoteCameraPortName;  //-- Default looks like "/rd1/img:o"
     remoteCameraPortName << "/";
-    remoteCameraPortName << rf.find("robotName").asString();
+    remoteCameraPortName << robotName;
     remoteCameraPortName << "/img:o";
     imageManager->configure("remote_img_port", remoteCameraPortName.str() );
     std::ostringstream localCameraPortName;  //-- Default should look like "/robotDevastation/rd1/img:i"
     localCameraPortName << "/robotDevastation/";
-    localCameraPortName << rf.find("robotName").asInt();
+    localCameraPortName << robotName;
     localCameraPortName << "/img:i";
     imageManager->configure("local_img_port", localCameraPortName.str() ); //-- Name given by me
 
