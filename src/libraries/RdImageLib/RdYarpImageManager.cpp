@@ -18,7 +18,7 @@ bool rd::RdYarpImageManager::start()
         RD_WARNING("Could not connect to robot camera via mjpeg.\n");
 		if (!yarp::os::Network::connect(remote_port_name.c_str(), local_port_name.c_str()))
 		{
-            RD_WARNING("Could not connect to robot camera.\n");
+            RD_ERROR("Could not connect to robot camera.\n");
             RD_INFO("If you prefer a fake camera use the '--mockupImageManager' or '--yarpLocalImageManager' parameter to run robotDevastation.\n");
             return false;
 		}
