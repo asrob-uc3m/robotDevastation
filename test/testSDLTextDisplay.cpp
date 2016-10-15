@@ -1,5 +1,5 @@
-#include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
+#include <SDL.h>
+#include <SDL_ttf.h>
 #include <cstdlib> // For some useful functions such as atexit :)
 #include <iostream>
 #include <yarp/os/ResourceFinder.h>
@@ -32,8 +32,19 @@ int main(void)
       return false;
     }
 
+    //-- Init screen
+    SDL_Window * window = SDL_CreateWindow("Robot Devastation",
+                              SDL_WINDOWPOS_UNDEFINED,
+                              SDL_WINDOWPOS_UNDEFINED,
+                              SCREEN_WIDTH, SCREEN_HEIGHT,
+                              SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);  // 16, SDL_DOUBLEBUF
+    if (!window) {
+        fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
+        return false;
+    }
     //-- Screen surface
-    SDL_Surface * screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16, SDL_DOUBLEBUF);
+    SDL_Surface * screen = SDL_GetWindowSurface( window );
+
     if (!screen) {
         fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
         return false;
@@ -77,7 +88,7 @@ int main(void)
             //Blit text_surface surface to the screen surface
             SDL_BlitSurface(text_surface, NULL, screen, &rect);
 
-            SDL_Flip(screen); //Refresh the screen
+            SDL_UpdateWindowSurface(window); //Refresh the screen
             SDL_Delay(20); //Wait a bit :)
 
             i++;

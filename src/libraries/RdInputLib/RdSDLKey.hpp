@@ -23,7 +23,7 @@ class RdSDLKey: public RdKey
 {
     public:
         //! @brief Creates a RdKey from a SDL keycode
-        RdSDLKey(SDLKey keycode);
+        RdSDLKey(SDL_Keycode keycode);
 
         //! @brief Initialize the lookup tables
         static bool initLookupTables();
@@ -33,9 +33,9 @@ class RdSDLKey: public RdKey
         static bool initialized;
 
         //! @brief Map storing the correspondence between SDLKeys and their corresponding char respresentation
-        static std::map< SDLKey, char> sdl_printable_map;
+        static std::map< SDL_Keycode, char> sdl_printable_map;
         //! @brief Map storing the correspondence between SDL_Keys and their corresponding control key value
-        static std::map< SDLKey, int> sdl_control_map;
+        static std::map< SDL_Keycode, int> sdl_control_map;
 };
 
 }

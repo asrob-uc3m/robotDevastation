@@ -6,16 +6,16 @@ link_directories(${RD_LINK_DIRS})
 
 # UI related
 add_executable(testSDLTextDisplay testSDLTextDisplay.cpp)
-target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} SDL SDL_image SDL_ttf)
+target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} SDL2 SDL2_image SDL2_ttf)
 
 add_executable(testInitScreen testInitScreen.cpp)
-target_link_libraries(testInitScreen ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
+target_link_libraries(testInitScreen ${RD_LIBRARIES} SDL2 SDL2_image SDL2_ttf gtest gtest_main)
 
 add_executable(testGameScreen testGameScreen.cpp)
-target_link_libraries(testGameScreen ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
+target_link_libraries(testGameScreen ${RD_LIBRARIES} SDL2 SDL2_image SDL2_ttf gtest gtest_main)
 
 add_executable(testDeadScreen testDeadScreen.cpp)
-target_link_libraries(testDeadScreen ${RD_LIBRARIES} SDL SDL_image SDL_ttf gtest gtest_main)
+target_link_libraries(testDeadScreen ${RD_LIBRARIES} SDL2 SDL2_image SDL2_ttf gtest gtest_main)
 
 # Audio manager related
 add_executable(testMockupAudioManager testMockupAudioManager.cpp)

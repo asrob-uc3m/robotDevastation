@@ -1,4 +1,4 @@
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include "SDLUtils.hpp"
 #include "InitScreen.hpp"
 
