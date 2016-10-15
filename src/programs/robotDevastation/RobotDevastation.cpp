@@ -24,9 +24,9 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     //-- Init robot
     if( rf.check("mockupRobotManager") )
-        robotManager = new RdMockupRobotManager(rf.find("robotName").asString());
+        robotManager = new RdMockupRobotManager(robotName);
     else
-        robotManager = new RdYarpRobotManager(rf.find("robotName").asString());
+        robotManager = new RdYarpRobotManager(robotName);
 
     //-- Init image manager
     if( rf.check("mockupImageManager") )
