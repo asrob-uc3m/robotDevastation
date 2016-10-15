@@ -8,7 +8,7 @@ const int rd::RdSDLInputManager::UPDATE_RATE_MS = 20;
 bool rd::RdSDLInputManager::start()
 {  
     //-- Start input thread
-    return yarp::os::RateThread::start();
+    return yarp::os::RateThread::start();  //-- Will eventually call RateThread::run()
 }
 
 bool rd::RdSDLInputManager::stop()
@@ -55,7 +55,7 @@ rd::RdSDLInputManager::RdSDLInputManager() : RateThread(UPDATE_RATE_MS)
     XInitThreads();
 }
 
-void rd::RdSDLInputManager::run()
+void rd::RdSDLInputManager::run()  //-- Will run periodically after start()
 {
     //-- Check for event
     RdKey * key = NULL;
