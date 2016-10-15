@@ -12,7 +12,8 @@ bool rd::RdYarpImageManager::start()
 
     if ( ! yarp::os::NetworkBase::checkNetwork() )
     {
-        RD_ERROR("Found no yarp network (try running 'yarpserver &'', or '--mockupImageManager' or '--yarpLocalImageManager' for Fake robot camera). Bye!\n");
+        RD_ERROR("Found no yarp network. Bye!\n");
+        RD_INFO("try running 'yarpserver &'', or '--mockupImageManager' or '--yarpLocalImageManager' for Fake robot camera.\n");
         return false;
     }
 
