@@ -69,7 +69,7 @@ class RdSDLInputManager : public RdInputManager,
         bool update();
 
         //! @brief Method called periodically from the RateThread class. It simply calls the update() method.
-        void run();
+        virtual void run();
 
         //! @brief Reference to this manager (unique instance)
         static RdSDLInputManager * uniqueInstance;
