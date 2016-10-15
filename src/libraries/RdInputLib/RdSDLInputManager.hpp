@@ -33,8 +33,7 @@ namespace rd{
  * along with the data relevant to the event triggered (i.e. what key was pressed)
  *
  */
-class RdSDLInputManager : public RdInputManager,
-                          public yarp::os::RateThread
+class RdSDLInputManager : public RdInputManager
 {
     public:
         virtual bool start();
@@ -65,14 +64,12 @@ class RdSDLInputManager : public RdInputManager,
          */
         RdSDLInputManager();
 
-        //! @brief Method called periodically from the RateThread class. Checks for input events and notifies the listeners when a event occurs.
-        virtual void run();
+        void inputCallback();
 
         //! @brief Reference to this manager (unique instance)
         static RdSDLInputManager * uniqueInstance;
 
-        //! @brief Period in milliseconds between keyboard event updates
-        static const int UPDATE_RATE_MS;
+        bool stopped;
 };
 }
 
