@@ -128,7 +128,7 @@ bool rd::RobotDevastation::initPlayerInfo(yarp::os::ResourceFinder &rf)
     }
 
 
-    if(!rf.check("name"))
+    if(rf.check("name"))
     {
         name = rf.find("name").asString();
         std::stringstream question;
@@ -141,7 +141,7 @@ bool rd::RobotDevastation::initPlayerInfo(yarp::os::ResourceFinder &rf)
         getInfoFromUser("Insert name []", name, true);
     }
 
-    if(!rf.check("team"))
+    if(rf.check("team"))
     {
         team = rf.find("team").asInt();
         std::stringstream question;
@@ -154,7 +154,7 @@ bool rd::RobotDevastation::initPlayerInfo(yarp::os::ResourceFinder &rf)
         getInfoFromUser("Insert team []", team, true);
     }
 
-    if(!rf.check("robotName"))
+    if(rf.check("robotName"))
     {
         robotName = rf.find("robotName").asString();
         std::stringstream question;
