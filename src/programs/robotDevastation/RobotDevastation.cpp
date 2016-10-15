@@ -59,10 +59,10 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     //-- Init mentalMap
     mentalMap = RdMentalMap::getMentalMap();
-    mentalMap->configure(rf.find("id").asInt());
+    mentalMap->configure(id);
 
     std::vector<RdPlayer> players;
-    players.push_back(RdPlayer(rf.find("id").asInt(),std::string(rf.find("name").asString()),100,100,rf.find("team").asInt(),0));
+    players.push_back(RdPlayer(id,name,100,100,team,0));
     mentalMap->updatePlayers(players);
 
     mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
