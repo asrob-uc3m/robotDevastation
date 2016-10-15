@@ -7,6 +7,7 @@ const std::string rd::RdSDLInputManager::id = "SDL";
 bool rd::RdSDLInputManager::start()
 {  
     //-- Start input callback
+    SDL_AddEventWatch(inputCallback, NULL);
 
     stopped = false;
 

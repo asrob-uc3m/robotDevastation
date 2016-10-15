@@ -3,8 +3,8 @@
 #ifndef __RD_GAME_SCREEN_HPP__
 #define __RD_GAME_SCREEN_HPP__
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
+#include <SDL.h>
+#include <SDL_ttf.h>
 #include <X11/Xlib.h>
 #include <cstdlib> // For some useful functions such as atexit :)
 #include <iostream>
@@ -110,6 +110,7 @@ class GameScreen : public RdScreen
         bool update_required;
 
         //-- SDL stuff
+        SDL_Window * window;
         SDL_Surface * screen;
         TTF_Font *player_font, *target_font, *weapon_font;
 

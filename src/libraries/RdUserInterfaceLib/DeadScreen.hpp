@@ -3,9 +3,9 @@
 #ifndef __DEAD_SCREEN_HPP__
 #define __DEAD_SCREEN_HPP__
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <SDL_image.h>
-#include <SDL/SDL_ttf.h>
+#include <SDL_ttf.h>
 #include <cstdlib> // For some useful functions such as atexit :)
 #include <string>
 #include <yarp/os/ResourceFinder.h>
@@ -37,6 +37,7 @@ class DeadScreen : public RdScreen
         static const std::string FONT_PATH;
 
     private:
+        SDL_Window * window;
         SDL_Surface * screen;
         TTF_Font * font;
         SDL_Surface * text_surface;

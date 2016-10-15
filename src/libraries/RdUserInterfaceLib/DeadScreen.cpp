@@ -66,12 +66,20 @@ bool rd::DeadScreen::show()
     if (screen == NULL)
     {
         //-- Init screen
-        screen = SDL_SetVideoMode(skull_image->w, skull_image->h, 16, SDL_DOUBLEBUF);
-        if (!screen)
+        window = SDL_CreateWindow("Robot Devastation",
+                                  SDL_WINDOWPOS_UNDEFINED,
+                                  SDL_WINDOWPOS_UNDEFINED,
+                                  skull_image->w,
+                                  skull_image->h,
+                                  SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);  // 16, SDL_DOUBLEBUF
+        if (!window)
         {
             RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
             return false;
         }
+
+        //Get window surface
+        screen = SDL_GetWindowSurface( window );
     }
 
     //-- Clear screen
@@ -105,7 +113,7 @@ bool rd::DeadScreen::show()
         SDL_BlitSurface(text_surface, NULL, screen, &text_rect);
     }
 
-    SDL_Flip(screen); //Refresh the screen
+    SDL_UpdateWindowSurface(window); //Refresh the screen
     SDL_Delay(20); //Wait a bit :)
 }
 
@@ -144,12 +152,20 @@ bool rd::DeadScreen::update(std::string parameter, rd::RdImage value)
         camera_frame = RdImage2SDLImage(last_camera_frame);
 
         //-- Set new window size
-        screen = SDL_SetVideoMode(camera_frame->w, camera_frame->h, 16, SDL_DOUBLEBUF);
-        if (!screen)
+        window = SDL_CreateWindow("Robot Devastation",
+                                  SDL_WINDOWPOS_UNDEFINED,
+                                  SDL_WINDOWPOS_UNDEFINED,
+                                  camera_frame->w,
+                                  camera_frame->h,
+                                  SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);  // 16, SDL_DOUBLEBUF
+        if (!window)
         {
             RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
             return false;
         }
+
+        //Get window surface
+        screen = SDL_GetWindowSurface( window );
 
         return true;
     }

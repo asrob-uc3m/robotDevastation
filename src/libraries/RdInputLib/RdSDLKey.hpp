@@ -6,7 +6,7 @@
 
 #include "RdKey.hpp"
 #include <map>
-#include "SDL/SDL.h"
+#include <SDL.h>
 
 
 namespace rd{

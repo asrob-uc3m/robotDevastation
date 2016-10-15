@@ -44,23 +44,33 @@ bool rd::InitScreen::cleanup()
     SDL_FreeSurface(screen);
     SDL_FreeSurface(image);
     SDL_FreeSurface(text_surface);
+    SDL_DestroyWindow(window);
     screen = NULL;
     image = NULL;
     text_surface = NULL;
+    window = NULL;
     return true;
 }
 
 bool rd::InitScreen::show()
 {
-    if (screen == NULL)
+    if (window == NULL)
     {
         //-- Init screen
-        screen = SDL_SetVideoMode(image->w, image->h+text_surface->h, 16, SDL_DOUBLEBUF);
-        if (!screen)
+        window = SDL_CreateWindow("Robot Devastation",
+                                  SDL_WINDOWPOS_UNDEFINED,
+                                  SDL_WINDOWPOS_UNDEFINED,
+                                  image->w,
+                                  image->h+text_surface->h,
+                                  SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);  // 16, SDL_DOUBLEBUF
+        if (!window)
         {
             RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
             return false;
         }
+
+        //Get window surface
+        screen = SDL_GetWindowSurface( window );
     }
     //-- Clear screen
     SDL_FillRect(screen, NULL, 0x000000);
@@ -73,7 +83,7 @@ bool rd::InitScreen::show()
     SDL_Rect text_rect = {(image->w-text_surface->w)/2,image->h, text_surface->w, text_surface->h};
     SDL_BlitSurface(text_surface, NULL, screen, &text_rect);
 
-    SDL_Flip(screen); //Refresh the screen
+    SDL_UpdateWindowSurface(window); //Refresh the screen
     SDL_Delay(20); //Wait a bit :)
 }
 
