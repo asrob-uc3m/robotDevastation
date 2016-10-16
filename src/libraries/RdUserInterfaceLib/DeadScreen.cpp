@@ -39,7 +39,7 @@ bool rd::DeadScreen::init()
         return false;
     }
 
-    screen = NULL;
+    window = NULL;
 
     //-- Default values:
     this->camera_frame = NULL;
@@ -55,15 +55,17 @@ bool rd::DeadScreen::cleanup()
     SDL_FreeSurface(text_surface);
     if (camera_frame)
         SDL_FreeSurface(camera_frame);
+    SDL_DestroyWindow(window);
 
     screen = NULL;
+    window = NULL;
     skull_image = NULL;
     camera_frame = NULL;
 }
 
 bool rd::DeadScreen::show()
 {
-    if (screen == NULL)
+    if (window == NULL)
     {
         //-- Init screen
         window = SDL_CreateWindow("Robot Devastation",
