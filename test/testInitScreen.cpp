@@ -10,7 +10,8 @@ int main()
         return 1;
 
     InitScreen screen;
-    screen.init();
+    if( ! screen.init() )
+        return 1;
 
     for (int i = 0; i < 200; i++)
     {
