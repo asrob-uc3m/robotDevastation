@@ -85,6 +85,8 @@ bool rd::InitScreen::show()
 
     SDL_UpdateWindowSurface(window); //Refresh the screen
     SDL_Delay(20); //Wait a bit :)
+
+    return true;
 }
 
 rd::InitScreen::~InitScreen()
