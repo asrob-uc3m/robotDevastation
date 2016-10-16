@@ -41,7 +41,8 @@ bool rd::InitScreen::init()
     SDL_Color text_color = {0,255,0,0};
     text_surface = TTF_RenderText_Solid(font, "Press any key to start", text_color);
 
-    screen = NULL;
+    window = NULL;
+
     return true;
 }
 
