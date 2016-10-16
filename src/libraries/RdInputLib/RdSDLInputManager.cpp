@@ -62,9 +62,21 @@ rd::RdSDLInputManager::RdSDLInputManager()
     XInitThreads();
 }
 
-void rd::RdSDLInputManager::inputCallback()
+void rd::RdSDLInputManager::inputCallback(SDL_Event *event)
 {
-    RD_DEBUG("Event\n");
+    if (event->type == SDL_KEYDOWN )
+    {
+        RD_DEBUG("Event: Keydown\n");
+    }
+    else if (event->type == SDL_KEYUP )
+    {
+        RD_DEBUG("Event: Keyup\n");
+    }
+    else
+    {
+        RD_DEBUG("Event: Unknown\n");
+    }
+
     //-- Check for event
     /*RdKey * key = NULL;
     SDL_Event event;
