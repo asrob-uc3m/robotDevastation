@@ -16,10 +16,16 @@ bool rd::InitScreen::init()
     rf.setDefaultConfigFile("robotDevastation.ini");
 
     //-- Load splash screen resource
-    image = IMG_Load(rf.findFileByName(SPLASH_PATH).c_str());
+    yarp::os::ConstString splashPath = rf.findFileByName(SPLASH_PATH);
+    if (splashPath == "")
+    {
+        RD_ERROR("Unable to find splash screen (resource: %s)!\n", splashPath.c_str())
+        return false;
+    }
+    image = IMG_Load(splashPath.c_str());
     if (image == NULL)
     {
-        RD_ERROR("Unable to load splash screen (resource: %s)!\n SDL_image Error: %s\n", SPLASH_PATH.c_str(), IMG_GetError())
+        RD_ERROR("Unable to load splash screen (resource: %s)!\n SDL_image Error: %s\n", splashPath.c_str(), IMG_GetError())
         return false;
     }
 
