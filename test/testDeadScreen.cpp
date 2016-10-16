@@ -33,11 +33,14 @@ int main()
     for (int i = 0; i < 10; i++)
     {
         screen.update(DeadScreen::PARAM_REMAINING_TIME, number2str(10-i));
-        screen.show();
+        if( ! screen.show() )
+            return 1;
         SDL_Delay(1000); //Wait a bit :)
     }
 
     screen.cleanup();
 
     cleanupSDL();
+
+    return 0;
 }

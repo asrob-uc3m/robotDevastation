@@ -115,6 +115,8 @@ bool rd::DeadScreen::show()
 
     SDL_UpdateWindowSurface(window); //Refresh the screen
     SDL_Delay(20); //Wait a bit :)
+
+    return true;
 }
 
 rd::DeadScreen::~DeadScreen()
