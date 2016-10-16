@@ -53,7 +53,9 @@ bool rd::GameScreen::init()
 bool rd::GameScreen::cleanup()
 {
     SDL_FreeSurface(screen);
+    SDL_DestroyWindow(window);
     screen = NULL;
+    window = NULL;
 
     return true;
 }
