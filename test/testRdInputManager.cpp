@@ -201,6 +201,8 @@ int main(void)
         //-- Draw dummy screen to enable input events
         SDL_UpdateWindowSurface(window); //Refresh the screen
         SDL_Delay(20); //Wait a bit :)
+
+        SDL_PumpEvents();
     }
 
     RdInputManager::destroyInputManager();

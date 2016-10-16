@@ -64,63 +64,45 @@ rd::RdSDLInputManager::RdSDLInputManager()
 
 void rd::RdSDLInputManager::inputCallback(SDL_Event *event)
 {
+    RdKey * key = NULL;
+
     if (event->type == SDL_KEYDOWN )
     {
-        RD_DEBUG("Event: Keydown\n");
-    }
-    else if (event->type == SDL_KEYUP )
-    {
-        RD_DEBUG("Event: Keyup\n");
-    }
-    else
-    {
-        RD_DEBUG("Event: Unknown\n");
-    }
+        key = new RdSDLKey(event->key.keysym.sym);
 
-    //-- Check for event
-    /*RdKey * key = NULL;
-    SDL_Event event;
-
-    while( SDL_PollEvent( &event ) )
-    {
-        if (event.type == SDL_KEYDOWN )
+        if ( !(key->isPrintable() || key->isControlKey()) )
         {
-            key = new RdSDLKey(event.key.keysym.sym);
-
-            if ( !(key->isPrintable() || key->isControlKey()) )
-            {
-                delete key;
-                key = NULL;
-                //return false;
-                return;
-            }
-
-            for ( int i = 0; i < (int)listeners.size(); i++)
-                listeners.at(i)->onKeyDown(*key);
-
-        }
-        else if (event.type == SDL_KEYUP )
-        {
-             key = new RdSDLKey(event.key.keysym.sym);
-
-             if ( !(key->isPrintable() || key->isControlKey()) )
-             {
-                 delete key;
-                 key = NULL;
-                 //return false;
-                 return;
-             }
-
-            for ( int i = 0; i < (int)listeners.size(); i++)
-                listeners.at(i)->onKeyUp(*key);
-
-        }
-        else
-        {
-//          RD_WARNING("Unkown event ocurred! (Event is not supported yet)\n");
+            delete key;
+            key = NULL;
             //return false;
             return;
         }
+
+        for ( int i = 0; i < (int)listeners.size(); i++)
+            listeners.at(i)->onKeyDown(*key);
+
+    }
+    else if (event->type == SDL_KEYUP )
+    {
+         key = new RdSDLKey(event->key.keysym.sym);
+
+         if ( !(key->isPrintable() || key->isControlKey()) )
+         {
+             delete key;
+             key = NULL;
+             //return false;
+             return;
+         }
+
+        for ( int i = 0; i < (int)listeners.size(); i++)
+            listeners.at(i)->onKeyUp(*key);
+
+    }
+    else
+    {
+//          RD_WARNING("Unkown event ocurred! (Event is not supported yet)\n");
+        //return false;
+        return;
     }
 
     delete key;
