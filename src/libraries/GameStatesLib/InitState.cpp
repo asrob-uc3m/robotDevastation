@@ -23,7 +23,8 @@ bool rd::InitState::setup()
     if( ! screen.init() )
         return false;
 
-    screen.show();
+    if( ! screen.show() )
+        return false;
 
     //-- Start Robot Devastation music theme:
     audioManager->start();

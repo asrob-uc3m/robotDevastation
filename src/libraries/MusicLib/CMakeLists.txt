@@ -5,21 +5,21 @@ cmake_minimum_required(VERSION 2.6)
 set(KEYWORD "MusicLib")
 
 find_package(YARP REQUIRED)
-find_package(SDL REQUIRED)
-find_package(SDL_mixer REQUIRED)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_mixer REQUIRED)
 
 include_directories(${YARP_INCLUDE_DIRS})
-include_directories(${SDL_INCLUDE_DIR})
+include_directories(${SDL2_INCLUDE_DIR})
 include_directories(${SDL_MIXER_INCLUDE_DIRS} ${SDLMIXER_INCLUDE_DIR})  # SDLMIXER_INCLUDE_DIR for old
 include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} AudioManager.cpp SDLAudioManager.cpp MockupAudioManager.cpp)
-target_link_libraries(${KEYWORD} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDLMIXER_LIBRARY})
+target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDLMIXER_LIBRARY})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
-set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${SDL_INCLUDE_DIR} ${SDL_MIXER_INCLUDE_DIRS} ${SDLMIXER_INCLUDE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
-set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDLMIXER_LIBRARY} CACHE INTERNAL "appended libraries") # Not for now as it is a header
+set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL_MIXER_INCLUDE_DIRS} ${SDLMIXER_INCLUDE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
+set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} ${SDL2_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDLMIXER_LIBRARY} CACHE INTERNAL "appended libraries") # Not for now as it is a header
 
 
 

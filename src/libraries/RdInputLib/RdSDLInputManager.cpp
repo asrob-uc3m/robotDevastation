@@ -7,6 +7,7 @@ const std::string rd::RdSDLInputManager::id = "SDL";
 bool rd::RdSDLInputManager::start()
 {  
     //-- Start input callback
+    ///////////////////SDL_AddEventWatch(inputCallback, NULL);
 
     stopped = false;
 
@@ -54,8 +55,8 @@ rd::RdSDLInputManager::RdSDLInputManager()
     stopped = true;
 
     //-- Init SDL
-    if (SDL_WasInit( SDL_INIT_EVENTTHREAD) == 0)
-        SDL_Init(SDL_INIT_EVENTTHREAD);
+    ////////if (SDL_WasInit( SDL_INIT_EVENTTHREAD) == 0)
+    ////////////7    SDL_Init(SDL_INIT_EVENTTHREAD);
 
     //-- Init X11 threads
     XInitThreads();

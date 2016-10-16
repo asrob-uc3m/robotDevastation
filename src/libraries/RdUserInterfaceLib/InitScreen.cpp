@@ -16,10 +16,16 @@ bool rd::InitScreen::init()
     rf.setDefaultConfigFile("robotDevastation.ini");
 
     //-- Load splash screen resource
-    image = IMG_Load(rf.findFileByName(SPLASH_PATH).c_str());
+    yarp::os::ConstString splashPath = rf.findFileByName(SPLASH_PATH);
+    if (splashPath == "")
+    {
+        RD_ERROR("Unable to find splash screen (resource: %s)!\n", splashPath.c_str())
+        return false;
+    }
+    image = IMG_Load(splashPath.c_str());
     if (image == NULL)
     {
-        RD_ERROR("Unable to load splash screen (resource: %s)!\n SDL_image Error: %s\n", SPLASH_PATH.c_str(), IMG_GetError())
+        RD_ERROR("Unable to load splash screen (resource: %s)!\n SDL_image Error: %s\n", splashPath.c_str(), IMG_GetError())
         return false;
     }
 
@@ -35,7 +41,8 @@ bool rd::InitScreen::init()
     SDL_Color text_color = {0,255,0,0};
     text_surface = TTF_RenderText_Solid(font, "Press any key to start", text_color);
 
-    screen = NULL;
+    window = NULL;
+
     return true;
 }
 
@@ -44,23 +51,33 @@ bool rd::InitScreen::cleanup()
     SDL_FreeSurface(screen);
     SDL_FreeSurface(image);
     SDL_FreeSurface(text_surface);
+    SDL_DestroyWindow(window);
     screen = NULL;
     image = NULL;
     text_surface = NULL;
+    window = NULL;
     return true;
 }
 
 bool rd::InitScreen::show()
 {
-    if (screen == NULL)
+    if (window == NULL)
     {
         //-- Init screen
-        screen = SDL_SetVideoMode(image->w, image->h+text_surface->h, 16, SDL_DOUBLEBUF);
-        if (!screen)
+        window = SDL_CreateWindow("Robot Devastation",
+                                  SDL_WINDOWPOS_UNDEFINED,
+                                  SDL_WINDOWPOS_UNDEFINED,
+                                  image->w,
+                                  image->h+text_surface->h,
+                                  0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
+        if (!window)
         {
             RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
             return false;
         }
+
+        //Get window surface
+        screen = SDL_GetWindowSurface( window );
     }
     //-- Clear screen
     SDL_FillRect(screen, NULL, 0x000000);
@@ -73,8 +90,10 @@ bool rd::InitScreen::show()
     SDL_Rect text_rect = {(image->w-text_surface->w)/2,image->h, text_surface->w, text_surface->h};
     SDL_BlitSurface(text_surface, NULL, screen, &text_rect);
 
-    SDL_Flip(screen); //Refresh the screen
+    SDL_UpdateWindowSurface(window); //Refresh the screen
     SDL_Delay(20); //Wait a bit :)
+
+    return true;
 }
 
 rd::InitScreen::~InitScreen()
