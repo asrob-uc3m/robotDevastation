@@ -91,6 +91,8 @@ int main(void)
             SDL_UpdateWindowSurface(window); //Refresh the screen
             SDL_Delay(20); //Wait a bit :)
 
+            SDL_PumpEvents();
+
             i++;
         }
     j++;
