@@ -7,7 +7,7 @@ const std::string rd::RdSDLInputManager::id = "SDL";
 bool rd::RdSDLInputManager::start()
 {  
     //-- Start input callback
-    ///////////////////SDL_AddEventWatch(inputCallback, NULL);
+    SDL_AddEventWatch(staticInputCallback, this);
 
     stopped = false;
 
@@ -64,8 +64,9 @@ rd::RdSDLInputManager::RdSDLInputManager()
 
 void rd::RdSDLInputManager::inputCallback()
 {
+    RD_DEBUG("Event\n");
     //-- Check for event
-    RdKey * key = NULL;
+    /*RdKey * key = NULL;
     SDL_Event event;
 
     while( SDL_PollEvent( &event ) )
@@ -112,6 +113,6 @@ void rd::RdSDLInputManager::inputCallback()
 
     delete key;
     key = NULL;
-    //return true;
+    //return true;*/
     return;
 }

@@ -64,7 +64,17 @@ class RdSDLInputManager : public RdInputManager
          */
         RdSDLInputManager();
 
+        // This static function is the real callback function.  It's compatible
+        // with the C-style CallbackFunctionPtr.  The extra void* is used to
+        // get back into the real object of this class type.
+        static int staticInputCallback(void *userdata, SDL_Event *event)
+        {
+            // Get back into the class by treating p as the "this" pointer.
+            ((RdSDLInputManager *)userdata) -> inputCallback();
+        }
+
         void inputCallback();
+
 
         //! @brief Reference to this manager (unique instance)
         static RdSDLInputManager * uniqueInstance;
