@@ -37,7 +37,7 @@ int main(void)
                               SDL_WINDOWPOS_UNDEFINED,
                               SDL_WINDOWPOS_UNDEFINED,
                               SCREEN_WIDTH, SCREEN_HEIGHT,
-                              SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);  // 16, SDL_DOUBLEBUF
+                              0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
     if (!window) {
         fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
         return false;

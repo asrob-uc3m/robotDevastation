@@ -69,7 +69,7 @@ bool rd::InitScreen::show()
                                   SDL_WINDOWPOS_UNDEFINED,
                                   image->w,
                                   image->h+text_surface->h,
-                                  SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);  // 16, SDL_DOUBLEBUF
+                                  0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
         if (!window)
         {
             RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
