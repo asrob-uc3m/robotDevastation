@@ -6,17 +6,23 @@ using namespace rd;
 
 int main()
 {
-    initSDL();
+    if( ! initSDL() )
+        return 1;
 
     InitScreen screen;
     screen.init();
 
     for (int i = 0; i < 200; i++)
     {
-        screen.show();
+        if( ! screen.show() )
+            return 1;
         SDL_Delay(20); //Wait a bit :)
     }
-    screen.cleanup();
+    if( ! screen.cleanup() )
+        return 1;
 
-    cleanupSDL();
+    if( ! cleanupSDL() )
+        return 1;
+
+    return 0;
 }
