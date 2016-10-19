@@ -85,9 +85,9 @@ bool rd::InitState::onKeyDown(rd::RdKey k)
 
 bool rd::InitState::onKeyUp(rd::RdKey k)
 {
-    if (k.getValue() == RdKey::KEY_ENTER)
+    if (k.isControlKey() || k.isPrintable())
     {
-        RD_DEBUG("Enter was pressed!\n");
+        RD_DEBUG("Key was pressed!\n");
         login = true;
     }
 }
