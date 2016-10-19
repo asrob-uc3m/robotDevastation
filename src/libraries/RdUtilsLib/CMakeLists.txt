@@ -13,9 +13,9 @@ include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
 include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} Hub.cpp RdIniReader.hpp RdMacros.hpp RdUtils.hpp RdVector2dBase.hpp RdVocabs.hpp SDLUtils.cpp)
-target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${YARP_LIBRARIES} ${RD_LIBRARIES})
+target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${YARP_LIBRARIES} ${RD_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
-set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
-set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
+set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR}${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
+set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} CACHE INTERNAL "appended libraries") # Not for now as it is a header

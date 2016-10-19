@@ -4,10 +4,10 @@
 #
 # ::
 #
-#   SDL_TTF_LIBRARIES, the name of the library to link against
-#   SDL_TTF_INCLUDE_DIRS, where to find the headers
-#   SDL_TTF_FOUND, if false, do not try to link against
-#   SDL_F_VERSION_STRING - human-readable string containing the version of SDL_ttf
+#   SDL2_TTF_LIBRARIES, the name of the library to link against
+#   SDL2_TTF_INCLUDE_DIRS, where to find the headers
+#   SDL2_TTF_FOUND, if false, do not try to link against
+#   SDL2_F_VERSION_STRING - human-readable string containing the version of SDL_ttf
 #
 #
 #

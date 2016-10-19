@@ -28,14 +28,13 @@ endforeach(header_file ${folder_header})
 
 # Inclue any directories needed
 include_directories(${YARP_INCLUDE_DIRS})
-include_directories(${SDL2_INCLUDE_DIR})
-include_directories(${SDL_IMAGE_INCLUDE_DIRS} ${SDL_IMAGE_INCLUDE_DIR} ${SDLIMAGE_INCLUDE_DIR})  # SDLIMAGE_INCLUDE_DIR for old
+include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
 # Set up our main executable.
 if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES} ${SDL2_LIBRARY} ${SDL_IMAGE_LIBRARY})
+  target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES})
   install(TARGETS ${KEYWORD} DESTINATION bin)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
