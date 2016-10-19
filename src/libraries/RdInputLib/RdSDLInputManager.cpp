@@ -63,7 +63,7 @@ rd::RdSDLInputManager::RdSDLInputManager()
     XInitThreads();
 }
 
-void rd::RdSDLInputManager::inputCallback(SDL_Event *event)
+bool rd::RdSDLInputManager::inputCallback(SDL_Event *event)
 {
     RdKey * key = NULL;
 
@@ -75,8 +75,7 @@ void rd::RdSDLInputManager::inputCallback(SDL_Event *event)
         {
             delete key;
             key = NULL;
-            //return false;
-            return;
+            return false;
         }
 
         for ( int i = 0; i < (int)listeners.size(); i++)
@@ -91,8 +90,7 @@ void rd::RdSDLInputManager::inputCallback(SDL_Event *event)
          {
              delete key;
              key = NULL;
-             //return false;
-             return;
+             return false;
          }
 
         for ( int i = 0; i < (int)listeners.size(); i++)
@@ -102,12 +100,11 @@ void rd::RdSDLInputManager::inputCallback(SDL_Event *event)
     else
     {
 //          RD_WARNING("Unkown event ocurred! (Event is not supported yet)\n");
-        //return false;
-        return;
+        return false;
     }
 
     delete key;
     key = NULL;
-    //return true;*/
-    return;
+    return true;
+
 }

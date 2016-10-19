@@ -70,10 +70,12 @@ class RdSDLInputManager : public RdInputManager
         static int staticInputCallback(void *userdata, SDL_Event *event)
         {
             // Get back into the class by treating p as the "this" pointer.
-            ((RdSDLInputManager *)userdata) -> inputCallback(event);
+            if( ! ((RdSDLInputManager *)userdata) -> inputCallback(event) )
+                return 1;
+            return 0;
         }
 
-        void inputCallback(SDL_Event* event);
+        bool inputCallback(SDL_Event* event);
 
 
         //! @brief Reference to this manager (unique instance)
