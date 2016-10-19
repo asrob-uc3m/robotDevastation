@@ -17,6 +17,7 @@ bool rd::RdSDLInputManager::start()
 bool rd::RdSDLInputManager::stop()
 {
     //-- Stop input callback
+    SDL_DelEventWatch(staticInputCallback, this);
 
     stopped = true;
 
