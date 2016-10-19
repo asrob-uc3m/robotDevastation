@@ -5,7 +5,7 @@
 
 #include "RdUtils.hpp"
 
-#include "SDL/SDL.h"
+#include <SDL.h>
 #include <map>
 
 namespace rd{

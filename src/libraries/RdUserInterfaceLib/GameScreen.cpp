@@ -53,7 +53,9 @@ bool rd::GameScreen::init()
 bool rd::GameScreen::cleanup()
 {
     SDL_FreeSurface(screen);
+    SDL_DestroyWindow(window);
     screen = NULL;
+    window = NULL;
 
     return true;
 }
@@ -67,12 +69,20 @@ bool rd::GameScreen::show()
             RD_WARNING("No camera frame received yet\n");
 
             //-- Set default window size
-            screen = SDL_SetVideoMode(640, 480, 16, SDL_DOUBLEBUF);
-            if (!screen)
+            window = SDL_CreateWindow("Robot Devastation",
+                                      SDL_WINDOWPOS_UNDEFINED,
+                                      SDL_WINDOWPOS_UNDEFINED,
+                                      640,
+                                      480,
+                                      0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
+            if (!window)
             {
                 RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
                 return false;
             }
+
+            //Get window surface
+            screen = SDL_GetWindowSurface( window );
 
             //-- Clear screen
             SDL_FillRect(screen, NULL, 0x00000000);
@@ -83,12 +93,20 @@ bool rd::GameScreen::show()
             SDL_Surface * camera_frame_surface = RdImage2SDLImage(camera_frame);
 
             //-- Set new window size
-            screen = SDL_SetVideoMode(camera_frame_surface->w, camera_frame_surface->h, 16, SDL_DOUBLEBUF);
-            if (!screen)
+            window = SDL_CreateWindow("Robot Devastation",
+                                      SDL_WINDOWPOS_UNDEFINED,
+                                      SDL_WINDOWPOS_UNDEFINED,
+                                      camera_frame_surface->w,
+                                      camera_frame_surface->h,
+                                      0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
+            if (!window)
             {
                 RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
                 return false;
             }
+
+            //Get window surface
+            screen = SDL_GetWindowSurface( window );
 
             //-- Clear screen
             SDL_FillRect(screen, NULL, 0x00000000);
@@ -127,7 +145,7 @@ bool rd::GameScreen::show()
         //-- Draw user interface with user health, weapon and ammo
         drawUserUI(screen, myself, current_weapon);
 
-        SDL_Flip(screen); //Refresh the screen
+        SDL_UpdateWindowSurface(window); //Refresh the screen
         SDL_Delay(20); //Wait a bit :)
         update_required = false;
     }

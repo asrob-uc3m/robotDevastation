@@ -1,10 +1,10 @@
 #include "RdSDLKey.hpp"
 
 bool rd::RdSDLKey::initialized = false;
-std::map< SDLKey, char> rd::RdSDLKey::sdl_printable_map = std::map<SDLKey, char>();
-std::map< SDLKey, int>  rd::RdSDLKey::sdl_control_map = std::map<SDLKey, int>();
+std::map< SDL_Keycode, char> rd::RdSDLKey::sdl_printable_map = std::map<SDL_Keycode, char>();
+std::map< SDL_Keycode, int>  rd::RdSDLKey::sdl_control_map = std::map<SDL_Keycode, int>();
 
-rd::RdSDLKey::RdSDLKey(SDLKey keycode)
+rd::RdSDLKey::RdSDLKey(SDL_Keycode keycode)
 {
 
     //-- Check if the key maps have been initialized

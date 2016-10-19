@@ -5,22 +5,21 @@ cmake_minimum_required(VERSION 2.6)
 set(KEYWORD "RdUserInterfaceLib")
 
 find_package(YARP REQUIRED)
-find_package(SDL REQUIRED)
-find_package(SDL_image REQUIRED)
-find_package(SDL_ttf REQUIRED)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(SDL2_ttf REQUIRED)
 
 include_directories(${YARP_INCLUDE_DIRS})
-include_directories(${SDL_INCLUDE_DIR})
-include_directories(${SDL_TTF_INCLUDE_DIRS} ${SDLTTF_INCLUDE_DIR}) #SDLTTF_INCLUDE_DIR older
+include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} RdScreen.cpp InitScreen.cpp GameScreen.cpp DeadScreen.cpp)
-target_link_libraries(${KEYWORD} ${SDL_LIBRARY} ${SDL_IMAGE_LIBRARY} ${SDL_TTF_LIBRARIES} ${RD_LIBRARIES})
+target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${RD_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
-set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${SDL_TTF_INCLUDE_DIRS} ${SDLTTF_INCLUDE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
-set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} ${SDL_TTF_LIBRARIES} ${SDLTTF_LIBRARY} CACHE INTERNAL "appended libraries") # Not for now as it is a header
+set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} CACHE INTERNAL "appended header dirs") # done in parent
+set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} CACHE INTERNAL "appended libraries") # Not for now as it is a header
 
 
 

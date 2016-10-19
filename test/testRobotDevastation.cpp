@@ -67,6 +67,7 @@ class RobotDevastationTest : public testing::Test
             rf.setDefaultConfigFile("robotDevastation.ini");
 
             //-- Start YARP network
+            yarp::os::NetworkBase::setLocalMode(true);
             yarp::os::Network::init();
 
             //-- Load test images

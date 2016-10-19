@@ -3,7 +3,7 @@
 #ifndef __RD_SDL_INPUT_MANAGER_HPP__
 #define __RD_SDL_INPUT_MANAGER_HPP__
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <X11/Xlib.h>
 #include <yarp/os/RateThread.h>
 
@@ -33,8 +33,7 @@ namespace rd{
  * along with the data relevant to the event triggered (i.e. what key was pressed)
  *
  */
-class RdSDLInputManager : public RdInputManager,
-                          public yarp::os::RateThread
+class RdSDLInputManager : public RdInputManager
 {
     public:
         virtual bool start();
@@ -65,17 +64,24 @@ class RdSDLInputManager : public RdInputManager,
          */
         RdSDLInputManager();
 
-        //! @brief Method that checks for input events and notifies the listeners when a event occurs.
-        bool update();
+        // This static function is the real callback function.  It's compatible
+        // with the C-style CallbackFunctionPtr.  The extra void* is used to
+        // get back into the real object of this class type.
+        static int staticInputCallback(void *userdata, SDL_Event *event)
+        {
+            // Get back into the class by treating p as the "this" pointer.
+            if( ! ((RdSDLInputManager *)userdata) -> inputCallback(event) )
+                return 1;
+            return 0;
+        }
 
-        //! @brief Method called periodically from the RateThread class. It simply calls the update() method.
-        void run();
+        bool inputCallback(SDL_Event* event);
+
 
         //! @brief Reference to this manager (unique instance)
         static RdSDLInputManager * uniqueInstance;
 
-        //! @brief Period in milliseconds between keyboard event updates
-        static const int UPDATE_RATE_MS;
+        bool stopped;
 };
 }
 

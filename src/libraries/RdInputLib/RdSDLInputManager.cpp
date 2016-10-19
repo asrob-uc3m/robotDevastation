@@ -3,24 +3,30 @@
 //-- Initialize static members
 rd::RdSDLInputManager * rd::RdSDLInputManager::uniqueInstance = NULL;
 const std::string rd::RdSDLInputManager::id = "SDL";
-const int rd::RdSDLInputManager::UPDATE_RATE_MS = 20;
 
 bool rd::RdSDLInputManager::start()
 {  
-    //-- Start input thread
-    return yarp::os::RateThread::start();
+    //-- Start input callback
+    SDL_AddEventWatch(staticInputCallback, this);
+
+    stopped = false;
+
+    return true;
 }
 
 bool rd::RdSDLInputManager::stop()
 {
-    //-- Stop input thread
-    yarp::os::RateThread::stop();
+    //-- Stop input callback
+    SDL_DelEventWatch(staticInputCallback, this);
+
+    stopped = true;
+
     return true;
 }
 
 bool rd::RdSDLInputManager::isStopped()
 {
-    return this->isStopped();
+    return stopped;
 }
 
 bool rd::RdSDLInputManager::configure(std::string parameter, std::string value)
@@ -45,67 +51,60 @@ rd::RdSDLInputManager::~RdSDLInputManager()
     uniqueInstance = NULL;
 }
 
-rd::RdSDLInputManager::RdSDLInputManager() : RateThread(UPDATE_RATE_MS)
+rd::RdSDLInputManager::RdSDLInputManager()
 {
+    stopped = true;
+
     //-- Init SDL
-    if (SDL_WasInit( SDL_INIT_EVENTTHREAD) == 0)
-        SDL_Init(SDL_INIT_EVENTTHREAD);
+    ////////if (SDL_WasInit( SDL_INIT_EVENTTHREAD) == 0)
+    ////////////7    SDL_Init(SDL_INIT_EVENTTHREAD);
 
     //-- Init X11 threads
     XInitThreads();
 }
 
-bool rd::RdSDLInputManager::update()
+bool rd::RdSDLInputManager::inputCallback(SDL_Event *event)
 {
-    //-- Check for event
     RdKey * key = NULL;
-    SDL_Event event;
 
-    while( SDL_PollEvent( &event ) )
+    if (event->type == SDL_KEYDOWN )
     {
-        if (event.type == SDL_KEYDOWN )
+        key = new RdSDLKey(event->key.keysym.sym);
+
+        if ( !(key->isPrintable() || key->isControlKey()) )
         {
-            key = new RdSDLKey(event.key.keysym.sym);
-
-            if ( !(key->isPrintable() || key->isControlKey()) )
-            {
-                delete key;
-                key = NULL;
-                return false;
-            }
-
-            for ( int i = 0; i < (int)listeners.size(); i++)
-                listeners.at(i)->onKeyDown(*key);
-
-        }
-        else if (event.type == SDL_KEYUP )
-        {
-             key = new RdSDLKey(event.key.keysym.sym);
-
-             if ( !(key->isPrintable() || key->isControlKey()) )
-             {
-                 delete key;
-                 key = NULL;
-                 return false;
-             }
-
-            for ( int i = 0; i < (int)listeners.size(); i++)
-                listeners.at(i)->onKeyUp(*key);
-
-        }
-        else
-        {
-//          RD_WARNING("Unkown event ocurred! (Event is not supported yet)\n");
+            delete key;
+            key = NULL;
             return false;
         }
+
+        for ( int i = 0; i < (int)listeners.size(); i++)
+            listeners.at(i)->onKeyDown(*key);
+
+    }
+    else if (event->type == SDL_KEYUP )
+    {
+         key = new RdSDLKey(event->key.keysym.sym);
+
+         if ( !(key->isPrintable() || key->isControlKey()) )
+         {
+             delete key;
+             key = NULL;
+             return false;
+         }
+
+        for ( int i = 0; i < (int)listeners.size(); i++)
+            listeners.at(i)->onKeyUp(*key);
+
+    }
+    else
+    {
+//          RD_WARNING("Unkown event ocurred! (Event is not supported yet)\n");
+        return false;
     }
 
     delete key;
     key = NULL;
     return true;
-}
 
-void rd::RdSDLInputManager::run()
-{
-    update();
 }

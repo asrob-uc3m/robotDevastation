@@ -55,6 +55,7 @@ class InitStateTest : public testing::Test
         virtual void SetUp()
         {
             //-- Start YARP network
+            yarp::os::NetworkBase::setLocalMode(true);
             yarp::os::Network::init();
 
             //-- Register managers to be used:

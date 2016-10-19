@@ -14,8 +14,8 @@
 #include <RdInputEventListener.hpp>
 #include <SDLAudioManager.hpp>
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
+#include <SDL.h>
+#include <SDL_ttf.h>
 
 using namespace rd;
 
@@ -158,12 +158,18 @@ int main(void)
     }
     atexit(SDL_Quit); // Clean it up nicely :)
 
-    //-- Screen surface
-    SDL_Surface * screen = SDL_SetVideoMode(640, 480, 16, SDL_DOUBLEBUF);
-    if (!screen) {
+    //-- Init screen
+    SDL_Window * window = SDL_CreateWindow("Robot Devastation",
+                              SDL_WINDOWPOS_UNDEFINED,
+                              SDL_WINDOWPOS_UNDEFINED,
+                              640, 480,
+                              0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
+    if (!window) {
         fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
         return false;
     }
+    //-- Screen surface
+    SDL_Surface * screen = SDL_GetWindowSurface( window );
 
     //-- Get a (SDL) inputManager
     RdSDLInputManager::RegisterManager();
@@ -193,8 +199,10 @@ int main(void)
         SDL_FillRect(screen, &xbar, SDL_MapRGB(screen->format, 255, 0, 0));
 
         //-- Draw dummy screen to enable input events
-        SDL_Flip(screen); //Refresh the screen
+        SDL_UpdateWindowSurface(window); //Refresh the screen
         SDL_Delay(20); //Wait a bit :)
+
+        SDL_PumpEvents();
     }
 
     RdInputManager::destroyInputManager();
