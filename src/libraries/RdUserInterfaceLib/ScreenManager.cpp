@@ -89,6 +89,31 @@ bool rd::ScreenManager::configure(std::string parameter, std::string value)
     return true;
 }
 
+void rd::ScreenManager::setCurrentScreen(rd::RdScreen *screen)
+{
+    this->screen = screen;
+}
+
+bool rd::ScreenManager::show()
+{
+    return this->screen->show();
+}
+
+bool rd::ScreenManager::update(std::string parameter, std::string value)
+{
+    return this->screen->update(parameter, value);
+}
+
+bool rd::ScreenManager::update(std::string parameter, rd::RdImage value)
+{
+    return this->screen->update(parameter, value);
+}
+
+void *rd::ScreenManager::getScreenWindow()
+{
+    return NULL;
+}
+
 bool rd::ScreenManager::Register(rd::ScreenManager *manager, std::string id)
 {
     if ( screenManagerRegistry.find(id) == screenManagerRegistry.end())

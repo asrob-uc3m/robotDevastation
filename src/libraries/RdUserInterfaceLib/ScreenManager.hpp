@@ -79,13 +79,19 @@ class ScreenManager
 
         //------------------------------- Screen Manager functions -----------------------------------------------------//
         //! @brief Set a RdScreen as current RdScreen
-        virtual void setCurrentScreen(RdScreen* screen) = 0;
+        virtual void setCurrentScreen(RdScreen* screen);
 
         //! @brief Display the current RdScreen on the game window
-        virtual int show() = 0;
+        virtual bool show();
 
         //! @brief Update some RdScreen parameter through the ScreenManager
-        virtual int update(std::string parameter, std::string value) = 0;
+        virtual bool update(std::string parameter, std::string value);
+
+        //! @brief Update some RdScreen parameter through the ScreenManager
+        virtual bool update(std::string parameter, RdImage value);
+
+        //! @brief Returns a reference to the game screen window (each screen will print directly on this window)
+        virtual void *getScreenWindow();
 
     protected:
         /**
