@@ -7,10 +7,10 @@
  *
  ***/
 
-//#include "ScreenManager.hpp"
+#include "ScreenManager.hpp"
 //#include "SDLScreenManager.hpp"
 #include "RdScreen.hpp"
-//#include "MockupRdScreen.hpp"
+#include "MockupScreen.hpp"
 
 #include <yarp/os/Time.h>
 
@@ -25,13 +25,13 @@ int main()
 
 
     //-- Create a RdScreen to check the ScreenManager
-    RdScreen * screen = new MockupRdScreen();
+    RdScreen * screen = new MockupScreen();
     screen->init();
-    screen->update(MockupRdScreen::MESSAGE, "Test screen");
+    screen->update(MockupScreen::PARAM_MESSAGE, "Test screen");
 
-    RdScreen * screen2 = new MockupRdScreen();
+    RdScreen * screen2 = new MockupScreen();
     screen2->init();
-    screen2->update(MockupRdScreen::MESSAGE, "Another test screen");
+    screen2->update(MockupScreen::PARAM_MESSAGE, "Another test screen");
 
     //-- Set the first Screen in the ScreenManager
     screenManager->setCurrentScreen(screen);
