@@ -12,6 +12,8 @@
 #include "RdScreen.hpp"
 //#include "MockupRdScreen.hpp"
 
+#include <yarp/os/Time.h>
+
 using namespace rd;
 
 int main()
@@ -24,27 +26,35 @@ int main()
 
     //-- Create a RdScreen to check the ScreenManager
     RdScreen * screen = new MockupRdScreen();
+    screen->init();
     screen->update(MockupRdScreen::MESSAGE, "Test screen");
 
     RdScreen * screen2 = new MockupRdScreen();
+    screen2->init();
     screen2->update(MockupRdScreen::MESSAGE, "Another test screen");
 
     //-- Set the first Screen in the ScreenManager
     screenManager->setCurrentScreen(screen);
 
-    //-- Lopp to display the first Screen
-
-    //-- (loop goes here)
-    screenManager->show();
+    //-- Loop to display the first Screen
+    for (int i = 0; i < 10; i++)
+    {
+        screenManager->show();
+        yarp::os::Time::delay(0.2);
+    }
 
     //-- Set the second Screen in the ScreenManager
     screenManager->setCurrentScreen(screen2);
 
-    //-- Lopp to display the first second
+    //-- Loop to display the first second
+    for (int i = 0; i < 10; i++)
+    {
+        screenManager->show();
+        yarp::os::Time::delay(0.2);
+    }
 
-    //-- (loop goes here)
-    screenManager->show();
-
+    screen->cleanup();
+    screen2->cleanup();
     SLDScreenManager::cleanSDL();
 
     return 0;
