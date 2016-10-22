@@ -4,6 +4,8 @@
 #define __SDL_SCREEN_MANAGER_HPP__
 
 #include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include <map>
 
@@ -35,10 +37,10 @@ class SDLScreenManager : public ScreenManager
 //        virtual void *getScreenWindow();
 
         //! @brief SDL initialization
-        static int initSDL();
+        static bool initSDL();
 
         //! @brief SDL Cleanup
-        static int cleanSDL();
+        static bool cleanupSDL();
 
         //---------------- Manager Stuff ----------------------------------------------------------------------//
         virtual bool start();
@@ -73,6 +75,7 @@ class SDLScreenManager : public ScreenManager
         static SDLScreenManager * uniqueInstance;
 
         bool stopped;
+        bool sdl_initialized;
 
 };
 
