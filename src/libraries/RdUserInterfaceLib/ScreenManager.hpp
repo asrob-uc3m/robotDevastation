@@ -16,7 +16,7 @@ namespace rd{
  *
  * \defgroup RdUserInterfaceLib
  *
- * @brief The RdMusicLib library contains classes related to the game graphical user interface
+ * @brief The RdUserInterfaceLib library contains classes related to the game graphical user interface
  *
  **/
 

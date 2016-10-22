@@ -8,7 +8,7 @@
  ***/
 
 #include "ScreenManager.hpp"
-//#include "SDLScreenManager.hpp"
+#include "SDLScreenManager.hpp"
 #include "RdScreen.hpp"
 #include "MockupScreen.hpp"
 
@@ -19,10 +19,9 @@ using namespace rd;
 int main()
 {
     //-- Start SDL, Create SDLScreen Manager
-    SDLScreenManager::initSDL();
     SDLScreenManager::RegisterManager();
     ScreenManager * screenManager = ScreenManager::getScreenManager("SDL");
-
+    screenManager->start();
 
     //-- Create a RdScreen to check the ScreenManager
     RdScreen * screen = new MockupScreen();
@@ -53,9 +52,10 @@ int main()
         yarp::os::Time::delay(0.2);
     }
 
+    screenManager->stop();
+
     screen->cleanup();
     screen2->cleanup();
-    SLDScreenManager::cleanSDL();
 
     return 0;
 }
