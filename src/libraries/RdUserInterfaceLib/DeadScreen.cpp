@@ -38,6 +38,7 @@ bool rd::DeadScreen::init()
         RD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(FONT_PATH).c_str(), TTF_GetError());
         return false;
     }
+    TTF_SetFontStyle(font, TTF_STYLE_BOLD);
 
     window = NULL;
 
