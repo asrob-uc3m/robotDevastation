@@ -24,8 +24,8 @@ class SDLScreenManager : public ScreenManager
 {
     public:
         //------------------------------- Screen Manager functions -----------------------------------------------------//
-//        //! @brief Display the current RdScreen on the game window
-//        virtual bool show();
+        //! @brief Display the current RdScreen on the game window
+        virtual bool show();
 
 //        //! @brief Update some RdScreen parameter through the ScreenManager
 //        virtual bool update(std::string parameter, std::string value);
@@ -77,6 +77,7 @@ class SDLScreenManager : public ScreenManager
         bool stopped;
         bool sdl_initialized;
 
+        SDL_Window * window;
 };
 
 }

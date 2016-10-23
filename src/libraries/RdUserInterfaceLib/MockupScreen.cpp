@@ -12,7 +12,7 @@ const SDL_Color rd::MockupScreen::TEXT_COLOR = {255,0,0,0};
 
 rd::MockupScreen::MockupScreen()
 {
-
+    w = 200; h = 100; //-- Arbitrary size initialization
 }
 
 bool rd::MockupScreen::init()
@@ -43,6 +43,8 @@ bool rd::MockupScreen::init()
 
     //-- Default values:
     this->update(PARAM_MESSAGE, "");
+    w = background->w;
+    h = background->h;
 
     return true;
 }
@@ -96,6 +98,25 @@ bool rd::MockupScreen::show()
 
     SDL_UpdateWindowSurface(window); //Refresh the screen
     SDL_Delay(20); //Wait a bit :)
+
+    return true;
+}
+
+bool rd::MockupScreen::drawScreen(void *screen)
+{
+    SDL_Surface * sdl_screen = (SDL_Surface *)screen;
+
+    //-- Clear screen
+    SDL_FillRect(sdl_screen, NULL, 0xFFFFFF);
+
+
+    //-- Draw background
+    SDL_Rect background_rect = {0,0, background->w, background->h};
+    SDL_BlitSurface(background, NULL, sdl_screen, &background_rect);
+
+    //-- Draw text
+    SDL_Rect text_rect = {(background->w-text_surface->w)/2,(background->h-text_surface->h)/2, text_surface->w, text_surface->h};
+    SDL_BlitSurface(text_surface, NULL, sdl_screen, &text_rect);
 
     return true;
 }

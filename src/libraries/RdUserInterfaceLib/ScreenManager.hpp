@@ -100,6 +100,8 @@ class ScreenManager
          */
         static bool Register(ScreenManager * manager, std::string id);
 
+        RdScreen * screen;
+        //Mutex mutex;
 
     private:
         //! @brief Stores the unique instance of the ScreenManager
@@ -111,8 +113,8 @@ class ScreenManager
         //! \brief Stores all the ScreenManager that have been registered
         static std::map< std::string, ScreenManager * > screenManagerRegistry;
 
-        RdScreen * screen;
-        //Mutex mutex;
+
+
 };
 
 }

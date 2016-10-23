@@ -10,6 +10,44 @@ rd::SDLScreenManager::SDLScreenManager()
     sdl_initialized = false;
 }
 
+bool rd::SDLScreenManager::show()
+{
+    //-- Check if window exists (and create window if it doesn't)
+    if (window == NULL)
+    {
+        //-- Init screen
+        window = SDL_CreateWindow("Robot Devastation",
+                                  SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                                  200, 100, //-- Arbitrary initial size
+                                  0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
+        if (!window)
+        {
+            RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
+            return false;
+        }
+    }
+
+    //-- Resize window if required
+    int h, w;
+    SDL_GetWindowSize(window, &w, &h);
+    if (screen->w != w || screen->h != h)
+        SDL_SetWindowSize(window, screen->w, screen->h);
+
+    //-- Get writable surface
+    SDL_Surface * screen_surface = SDL_GetWindowSurface(window);
+
+    //-- Draw current screen on surface
+    if (!screen->drawScreen((void *)screen_surface))
+    {
+        RD_ERROR("Could not draw screen!\n");
+        return false;
+    }
+
+    //-- Show current screen
+    SDL_UpdateWindowSurface(window); //Refresh the screen
+    SDL_Delay(20); //Wait a bit :)
+}
+
 bool rd::SDLScreenManager::initSDL()
 {
     //-- Init SDL

@@ -23,6 +23,7 @@ class MockupScreen : public RdScreen
         virtual bool init();
         virtual bool cleanup();
         virtual bool show();
+        virtual bool drawScreen(void *screen);
         virtual ~MockupScreen();
         virtual bool update(std::string parameter, std::string value);
 
