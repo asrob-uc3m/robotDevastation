@@ -13,6 +13,7 @@ const SDL_Color rd::MockupScreen::TEXT_COLOR = {255,0,0,0};
 rd::MockupScreen::MockupScreen()
 {
     w = 200; h = 100; //-- Arbitrary size initialization
+    screen = NULL;
 }
 
 bool rd::MockupScreen::init()

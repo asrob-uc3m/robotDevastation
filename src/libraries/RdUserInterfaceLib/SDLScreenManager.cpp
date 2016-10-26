@@ -8,6 +8,7 @@ rd::SDLScreenManager::SDLScreenManager()
 {
     stopped = true;
     sdl_initialized = false;
+    window = NULL;
 }
 
 bool rd::SDLScreenManager::show()
@@ -20,7 +21,7 @@ bool rd::SDLScreenManager::show()
                                   SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                   200, 100, //-- Arbitrary initial size
                                   0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
-        if (!window)
+        if (window==NULL)
         {
             RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
             return false;
