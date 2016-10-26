@@ -51,10 +51,17 @@ bool rd::MockupScreen::init()
 
 bool rd::MockupScreen::cleanup()
 {
-    SDL_FreeSurface(screen);
-    SDL_FreeSurface(background);
-    SDL_FreeSurface(text_surface);
-    SDL_DestroyWindow(window);
+    if (screen!=NULL)
+        SDL_FreeSurface(screen);
+
+    if (background!=NULL)
+        SDL_FreeSurface(background);
+
+    if (text_surface!=NULL)
+        SDL_FreeSurface(text_surface);
+
+    if (window!=NULL)
+        SDL_DestroyWindow(window);
 
     screen = NULL;
     window = NULL;
