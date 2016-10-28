@@ -56,5 +56,12 @@ int main()
     screen->cleanup();
     screen2->cleanup();
 
+    delete screen;
+    screen = NULL;
+    delete screen2;
+    screen2 = NULL;
+
+    SDLScreenManager::destroyScreenManager();
+
     return 0;
 }
