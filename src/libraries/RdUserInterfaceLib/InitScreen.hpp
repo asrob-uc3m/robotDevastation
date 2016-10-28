@@ -21,6 +21,7 @@ class InitScreen : public RdScreen
         virtual bool init();
         virtual bool cleanup();
         virtual bool show();
+        virtual bool drawScreen(void *screen);
         virtual ~InitScreen();
 
     protected:

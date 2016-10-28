@@ -5,7 +5,8 @@ const std::string rd::InitScreen::FONT_PATH = "../fonts/FreeMono.ttf";
 
 rd::InitScreen::InitScreen()
 {
-
+    w = 200; h = 100; //-- Arbitrary size initialization
+    screen = NULL;
 }
 
 bool rd::InitScreen::init()
@@ -43,15 +44,27 @@ bool rd::InitScreen::init()
 
     window = NULL;
 
+    //-- Default values:
+    w = image->w;
+    h = image->h;
+
     return true;
 }
 
 bool rd::InitScreen::cleanup()
 {
-    SDL_FreeSurface(screen);
-    SDL_FreeSurface(image);
-    SDL_FreeSurface(text_surface);
-    SDL_DestroyWindow(window);
+    if (screen!=NULL)
+        SDL_FreeSurface(screen);
+
+    if (image!=NULL)
+        SDL_FreeSurface(image);
+
+    if (text_surface!=NULL)
+        SDL_FreeSurface(text_surface);
+
+    if (window!=NULL)
+        SDL_DestroyWindow(window);
+
     screen = NULL;
     image = NULL;
     text_surface = NULL;
@@ -92,6 +105,24 @@ bool rd::InitScreen::show()
 
     SDL_UpdateWindowSurface(window); //Refresh the screen
     SDL_Delay(20); //Wait a bit :)
+
+    return true;
+}
+
+bool rd::InitScreen::drawScreen(void *screen)
+{
+    SDL_Surface * sdl_screen = (SDL_Surface *)screen;
+
+    //-- Clear screen
+    SDL_FillRect(sdl_screen, NULL, 0x000000);
+
+    //-- Draw splash
+    SDL_Rect splash_rect = {0,0, image->w, image->h};
+    SDL_BlitSurface(image, NULL, sdl_screen, &splash_rect);
+
+    //-- Draw text
+    SDL_Rect text_rect = {(image->w-text_surface->w)/2,image->h, text_surface->w, text_surface->h};
+    SDL_BlitSurface(text_surface, NULL, sdl_screen, &text_rect);
 
     return true;
 }

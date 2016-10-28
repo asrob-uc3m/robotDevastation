@@ -68,6 +68,7 @@ bool rd::MockupScreen::cleanup()
     window = NULL;
     background = NULL;
     text_surface = NULL;
+    return true;
 }
 
 bool rd::MockupScreen::show()
