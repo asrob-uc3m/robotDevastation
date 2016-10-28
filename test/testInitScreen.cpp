@@ -1,29 +1,52 @@
-#include <SDL.h>
-#include "SDLUtils.hpp"
+/***
+ * testInitScreen
+ *
+ * Testing InitScreen class, which shows the splash screen and a message to press any key.
+ * This test requires a SDLScreenManager
+ *
+ * This test is NOT AUTOMATIC, not suitable for running it with a CI server
+ *
+ ***/
+
+#include "ScreenManager.hpp"
+#include "SDLScreenManager.hpp"
+#include "RdScreen.hpp"
 #include "InitScreen.hpp"
+
+#include <yarp/os/Time.h>
 
 using namespace rd;
 
 int main()
 {
-    if( ! initSDL() )
-        return 1;
+    //-- Start SDL, Create SDLScreen Manager
+    SDLScreenManager::RegisterManager();
+    ScreenManager * screenManager = ScreenManager::getScreenManager("SDL");
+    screenManager->start();
 
-    InitScreen screen;
-    if( ! screen.init() )
+    RdScreen * screen = new InitScreen();
+
+    if(!screen->init())
         return 1;
+    screenManager->setCurrentScreen(screen);
 
     for (int i = 0; i < 200; i++)
     {
-        if( ! screen.show() )
+        if(!screen->show())
             return 1;
-        SDL_Delay(20); //Wait a bit :)
+        yarp::os::Time::delay(0.002);
     }
-    if( ! screen.cleanup() )
+
+    if(!screenManager->stop())
         return 1;
 
-    if( ! cleanupSDL() )
+    if(!screen->cleanup() )
         return 1;
+
+    delete screen;
+    screen = NULL;
+
+    SDLScreenManager::destroyScreenManager();
 
     return 0;
 }
