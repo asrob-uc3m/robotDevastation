@@ -13,7 +13,8 @@ const SDL_Color rd::DeadScreen::TEXT_COLOR = {0,255,0,0};
 
 rd::DeadScreen::DeadScreen()
 {
-
+    w = 200; h = 100; //-- Arbitrary size initialization
+    screen = NULL;
 }
 
 bool rd::DeadScreen::init()
@@ -43,6 +44,8 @@ bool rd::DeadScreen::init()
     window = NULL;
 
     //-- Default values:
+    w = skull_image->w;
+    h = skull_image->h;
     this->camera_frame = NULL;
     this->update(PARAM_REMAINING_TIME, "10");
 
@@ -51,17 +54,23 @@ bool rd::DeadScreen::init()
 
 bool rd::DeadScreen::cleanup()
 {
-    SDL_FreeSurface(screen);
-    SDL_FreeSurface(skull_image);
+    if (screen!=NULL)
+        SDL_FreeSurface(screen);
+    if (skull_image!=NULL)
+        SDL_FreeSurface(skull_image);
+    if (text_surface!=NULL)
     SDL_FreeSurface(text_surface);
-    if (camera_frame)
+    if (camera_frame!=NULL)
         SDL_FreeSurface(camera_frame);
-    SDL_DestroyWindow(window);
+    if (screen!=NULL)
+        SDL_DestroyWindow(window);
 
     screen = NULL;
     window = NULL;
     skull_image = NULL;
     camera_frame = NULL;
+
+    return true;
 }
 
 bool rd::DeadScreen::show()
@@ -122,6 +131,40 @@ bool rd::DeadScreen::show()
     return true;
 }
 
+bool rd::DeadScreen::drawScreen(void *screen)
+{
+    SDL_Surface * sdl_screen = (SDL_Surface *)screen;
+
+    if (camera_frame)
+    {
+        //-- Draw camera frame
+        SDL_Rect camera_frame_rect = {0,0, camera_frame->w, camera_frame->h};
+        SDL_BlitSurface(camera_frame, NULL, sdl_screen, &camera_frame_rect);
+
+        //-- Draw skull
+        SDL_Rect skull_rect = {(camera_frame->w-skull_image->w)/2,(camera_frame->h-skull_image->h)/2,
+                               skull_image->w, skull_image->h};
+        SDL_BlitSurface(skull_image, NULL, sdl_screen, &skull_rect);
+
+        //-- Draw text
+        SDL_Rect text_rect = {(camera_frame->w-text_surface->w)/2,camera_frame->h-text_surface->h,
+                              text_surface->w, text_surface->h};
+        SDL_BlitSurface(text_surface, NULL, sdl_screen, &text_rect);
+    }
+    else
+    {
+        //-- Draw skull
+        SDL_Rect skull_rect = {0,0, skull_image->w, skull_image->h};
+        SDL_BlitSurface(skull_image, NULL, sdl_screen, &skull_rect);
+
+        //-- Draw text
+        SDL_Rect text_rect = {(skull_image->w-text_surface->w)/2,skull_image->h-text_surface->h, text_surface->w, text_surface->h};
+        SDL_BlitSurface(text_surface, NULL, sdl_screen, &text_rect);
+    }
+
+    return true;
+}
+
 rd::DeadScreen::~DeadScreen()
 {
 
@@ -157,20 +200,8 @@ bool rd::DeadScreen::update(std::string parameter, rd::RdImage value)
         camera_frame = RdImage2SDLImage(last_camera_frame);
 
         //-- Set new window size
-        window = SDL_CreateWindow("Robot Devastation",
-                                  SDL_WINDOWPOS_UNDEFINED,
-                                  SDL_WINDOWPOS_UNDEFINED,
-                                  camera_frame->w,
-                                  camera_frame->h,
-                                  0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
-        if (!window)
-        {
-            RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
-            return false;
-        }
-
-        //Get window surface
-        screen = SDL_GetWindowSurface( window );
+        w = camera_frame->w;
+        h = camera_frame->h;
 
         return true;
     }

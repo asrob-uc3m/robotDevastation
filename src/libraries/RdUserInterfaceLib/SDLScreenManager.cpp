@@ -47,6 +47,8 @@ bool rd::SDLScreenManager::show()
     //-- Show current screen
     SDL_UpdateWindowSurface(window); //Refresh the screen
     SDL_Delay(20); //Wait a bit :)
+
+    return true;
 }
 
 bool rd::SDLScreenManager::initSDL()
