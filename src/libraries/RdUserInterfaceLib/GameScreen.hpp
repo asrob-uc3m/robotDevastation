@@ -43,6 +43,7 @@ class GameScreen : public RdScreen
         virtual bool init();
         virtual bool cleanup();
         virtual bool show();
+        virtual bool drawScreen(void *screen);
         virtual ~GameScreen();
         virtual bool update(std::string parameter, std::string value);
         virtual bool update(std::string parameter, RdPlayer value);
@@ -112,6 +113,7 @@ class GameScreen : public RdScreen
         //-- SDL stuff
         SDL_Window * window;
         SDL_Surface * screen;
+        SDL_Surface * camera_frame_surface;
         TTF_Font *player_font, *target_font, *weapon_font;
 
         static const SDL_Color greencolor;

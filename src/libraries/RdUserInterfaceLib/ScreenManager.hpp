@@ -88,7 +88,19 @@ class ScreenManager
         virtual bool update(std::string parameter, std::string value);
 
         //! @brief Update some RdScreen parameter through the ScreenManager
-        virtual bool update(std::string parameter, RdImage value);
+        virtual bool update(std::string parameter, RdImage value); //-- Required by GameScreen and DeadScreen
+
+        //! @brief Update some RdScreen parameter through the ScreenManager
+        virtual bool update(std::string parameter, RdPlayer value); //-- Required by GameScreen
+
+        //! @brief Update some RdScreen parameter through the ScreenManager
+        virtual bool update(std::string parameter, std::vector<RdPlayer> value); //-- Required by GameScreen
+
+        //! @brief Update some RdScreen parameter through the ScreenManager
+        virtual bool update(std::string parameter, std::vector<RdTarget> value); //-- Required by GameScreen
+
+        //! @brief Update some RdScreen parameter through the ScreenManager
+        virtual bool update(std::string parameter, RdWeapon value); //-- Required by GameScreen
 
         //! @brief Returns a reference to the game screen window (each screen will print directly on this window)
         virtual void *getScreenWindow();

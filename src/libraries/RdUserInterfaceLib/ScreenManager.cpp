@@ -109,6 +109,26 @@ bool rd::ScreenManager::update(std::string parameter, rd::RdImage value)
     return this->screen->update(parameter, value);
 }
 
+bool rd::ScreenManager::update(std::string parameter, rd::RdPlayer value)
+{
+    return this->screen->update(parameter, value);
+}
+
+bool rd::ScreenManager::update(std::string parameter, std::vector<rd::RdPlayer> value)
+{
+    return this->screen->update(parameter, value);
+}
+
+bool rd::ScreenManager::update(std::string parameter, std::vector<rd::RdTarget> value)
+{
+    return this->screen->update(parameter, value);
+}
+
+bool rd::ScreenManager::update(std::string parameter, rd::RdWeapon value)
+{
+    return this->screen->update(parameter, value);
+}
+
 void *rd::ScreenManager::getScreenWindow()
 {
     return NULL;
