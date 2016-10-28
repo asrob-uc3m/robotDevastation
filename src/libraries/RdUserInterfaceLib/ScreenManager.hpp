@@ -82,7 +82,7 @@ class ScreenManager
         virtual void setCurrentScreen(RdScreen* screen);
 
         //! @brief Display the current RdScreen on the game window
-        virtual bool show();
+        virtual bool show() = 0;
 
         //! @brief Update some RdScreen parameter through the ScreenManager
         virtual bool update(std::string parameter, std::string value);

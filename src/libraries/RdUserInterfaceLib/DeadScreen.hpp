@@ -23,7 +23,6 @@ class DeadScreen : public RdScreen
         DeadScreen();
         virtual bool init();
         virtual bool cleanup();
-        virtual bool show();
         virtual bool drawScreen(void *screen);
         virtual ~DeadScreen();
         virtual bool update(std::string parameter, std::string value);
@@ -38,8 +37,6 @@ class DeadScreen : public RdScreen
         static const std::string FONT_PATH;
 
     private:
-        SDL_Window * window;
-        SDL_Surface * screen;
         TTF_Font * font;
         SDL_Surface * text_surface;
         SDL_Surface * skull_image;

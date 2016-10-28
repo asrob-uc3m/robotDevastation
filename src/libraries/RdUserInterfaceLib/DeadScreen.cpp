@@ -14,7 +14,6 @@ const SDL_Color rd::DeadScreen::TEXT_COLOR = {0,255,0,0};
 rd::DeadScreen::DeadScreen()
 {
     w = 200; h = 100; //-- Arbitrary size initialization
-    screen = NULL;
 }
 
 bool rd::DeadScreen::init()
@@ -41,8 +40,6 @@ bool rd::DeadScreen::init()
     }
     TTF_SetFontStyle(font, TTF_STYLE_BOLD);
 
-    window = NULL;
-
     //-- Default values:
     w = skull_image->w;
     h = skull_image->h;
@@ -54,79 +51,15 @@ bool rd::DeadScreen::init()
 
 bool rd::DeadScreen::cleanup()
 {
-    if (screen!=NULL)
-        SDL_FreeSurface(screen);
     if (skull_image!=NULL)
         SDL_FreeSurface(skull_image);
     if (text_surface!=NULL)
     SDL_FreeSurface(text_surface);
     if (camera_frame!=NULL)
         SDL_FreeSurface(camera_frame);
-    if (screen!=NULL)
-        SDL_DestroyWindow(window);
 
-    screen = NULL;
-    window = NULL;
     skull_image = NULL;
     camera_frame = NULL;
-
-    return true;
-}
-
-bool rd::DeadScreen::show()
-{
-    if (window == NULL)
-    {
-        //-- Init screen
-        window = SDL_CreateWindow("Robot Devastation",
-                                  SDL_WINDOWPOS_UNDEFINED,
-                                  SDL_WINDOWPOS_UNDEFINED,
-                                  skull_image->w,
-                                  skull_image->h,
-                                  0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
-        if (!window)
-        {
-            RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
-            return false;
-        }
-
-        //Get window surface
-        screen = SDL_GetWindowSurface( window );
-    }
-
-    //-- Clear screen
-    SDL_FillRect(screen, NULL, 0xFFFFFF);
-
-
-    if (camera_frame)
-    {
-        //-- Draw camera frame
-        SDL_Rect camera_frame_rect = {0,0, camera_frame->w, camera_frame->h};
-        SDL_BlitSurface(camera_frame, NULL, screen, &camera_frame_rect);
-
-        //-- Draw skull
-        SDL_Rect skull_rect = {(camera_frame->w-skull_image->w)/2,(camera_frame->h-skull_image->h)/2,
-                               skull_image->w, skull_image->h};
-        SDL_BlitSurface(skull_image, NULL, screen, &skull_rect);
-
-        //-- Draw text
-        SDL_Rect text_rect = {(camera_frame->w-text_surface->w)/2,camera_frame->h-text_surface->h,
-                              text_surface->w, text_surface->h};
-        SDL_BlitSurface(text_surface, NULL, screen, &text_rect);
-    }
-    else
-    {
-        //-- Draw skull
-        SDL_Rect skull_rect = {0,0, skull_image->w, skull_image->h};
-        SDL_BlitSurface(skull_image, NULL, screen, &skull_rect);
-
-        //-- Draw text
-        SDL_Rect text_rect = {(skull_image->w-text_surface->w)/2,skull_image->h-text_surface->h, text_surface->w, text_surface->h};
-        SDL_BlitSurface(text_surface, NULL, screen, &text_rect);
-    }
-
-    SDL_UpdateWindowSurface(window); //Refresh the screen
-    SDL_Delay(20); //Wait a bit :)
 
     return true;
 }

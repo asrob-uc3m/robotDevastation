@@ -94,11 +94,6 @@ void rd::ScreenManager::setCurrentScreen(rd::RdScreen *screen)
     this->screen = screen;
 }
 
-bool rd::ScreenManager::show()
-{
-    return this->screen->show();
-}
-
 bool rd::ScreenManager::update(std::string parameter, std::string value)
 {
     return this->screen->update(parameter, value);

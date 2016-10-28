@@ -32,7 +32,7 @@ int main()
 
     for (int i = 0; i < 200; i++)
     {
-        if(!screen->show())
+        if(!screenManager->show())
             return 1;
         yarp::os::Time::delay(0.002);
     }

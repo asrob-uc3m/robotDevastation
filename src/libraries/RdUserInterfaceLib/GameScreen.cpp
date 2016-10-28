@@ -15,7 +15,7 @@ rd::GameScreen::GameScreen()
 {
     update_required = true;
     w = 640; h = 480;
-    screen = NULL;
+    camera_frame_surface = NULL;
 }
 
 bool rd::GameScreen::init()
@@ -54,109 +54,14 @@ bool rd::GameScreen::init()
 
 bool rd::GameScreen::cleanup()
 {
-    if (screen!=NULL)
-        SDL_FreeSurface(screen);
-    if (window!=NULL)
-        SDL_DestroyWindow(window);
+    if (camera_frame_surface!=NULL)
+        SDL_FreeSurface(camera_frame_surface);
 
-    screen = NULL;
-    window = NULL;
+    camera_frame_surface = NULL;
 
     return true;
 }
 
-bool rd::GameScreen::show()
-{
-    if (update_required)
-    {
-        if (camera_frame.width()==0 || camera_frame.height()==0)
-        {
-            RD_WARNING("No camera frame received yet\n");
-
-            //-- Set default window size
-            window = SDL_CreateWindow("Robot Devastation",
-                                      SDL_WINDOWPOS_UNDEFINED,
-                                      SDL_WINDOWPOS_UNDEFINED,
-                                      640,
-                                      480,
-                                      0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
-            if (!window)
-            {
-                RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
-                return false;
-            }
-
-            //Get window surface
-            screen = SDL_GetWindowSurface( window );
-
-            //-- Clear screen
-            SDL_FillRect(screen, NULL, 0x00000000);
-        }
-        else
-        {
-            //-- Convert from RdImage to SDL
-            SDL_Surface * camera_frame_surface = RdImage2SDLImage(camera_frame);
-
-            //-- Set new window size
-            window = SDL_CreateWindow("Robot Devastation",
-                                      SDL_WINDOWPOS_UNDEFINED,
-                                      SDL_WINDOWPOS_UNDEFINED,
-                                      camera_frame_surface->w,
-                                      camera_frame_surface->h,
-                                      0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
-            if (!window)
-            {
-                RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
-                return false;
-            }
-
-            //Get window surface
-            screen = SDL_GetWindowSurface( window );
-
-            //-- Clear screen
-            SDL_FillRect(screen, NULL, 0x00000000);
-
-            //-- Draw camera frame
-            SDL_Rect camera_frame_rect = {0,0, camera_frame_surface->w, camera_frame_surface->h};
-            SDL_BlitSurface(camera_frame_surface, NULL, screen, &camera_frame_rect);
-        }
-
-        //-- Draw enemies
-        for (int i = 0; i < (int) targets.size(); i++)
-        {
-            int target_id = targets[i].getPlayerId();
-            int player_index = -1;
-
-            for (int j = 0; j < (int) players.size(); j++)
-                if (target_id == players[j].getId())
-                    player_index = j;
-
-            //-- If not found, ignore current target on HUD
-            if (player_index == -1)
-                continue;
-
-            drawTargetUI(screen, targets[i], players[player_index]);
-        }
-
-        //-- Draw players
-        for ( int i = 0; i < (int) players.size(); i++)
-        {
-            drawPlayerUI(screen, players[i], 5, 10+i*(PLAYER_NAME_H+3));
-        }
-
-        //-- Draw scope:
-        drawScope(screen);
-
-        //-- Draw user interface with user health, weapon and ammo
-        drawUserUI(screen, myself, current_weapon);
-
-        SDL_UpdateWindowSurface(window); //Refresh the screen
-        SDL_Delay(20); //Wait a bit :)
-        update_required = false;
-    }
-
-    return true;
-}
 
 bool rd::GameScreen::drawScreen(void *screen)
 {
@@ -164,7 +69,7 @@ bool rd::GameScreen::drawScreen(void *screen)
 
     if (update_required)
     {
-        if (camera_frame.width()==0 || camera_frame.height()==0)
+        if (camera_frame_surface==NULL)
         {
             RD_WARNING("No camera frame received yet\n");
 
@@ -290,6 +195,11 @@ bool rd::GameScreen::update(std::string parameter, rd::RdImage value)
     {
         camera_frame = RdImage(value);
         camera_frame_surface = RdImage2SDLImage(camera_frame);
+        if (camera_frame_surface==NULL)
+        {
+            RD_ERROR("Error converting RdImage to SDL\n");
+            return false;
+        }
         w = camera_frame_surface->w;
         h = camera_frame_surface->h;
         update_required = true;
