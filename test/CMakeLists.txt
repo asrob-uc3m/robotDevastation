@@ -76,8 +76,8 @@ target_link_libraries(testInitState ${RD_LIBRARIES} StateMachineLib gtest gtest_
 add_executable(testGameState testGameState.cpp)
 target_link_libraries(testGameState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
 
-#add_executable(testDeadState testDeadState.cpp)
-#target_link_libraries(testDeadState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
+add_executable(testDeadState testDeadState.cpp)
+target_link_libraries(testDeadState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
 
 #add_executable(testRobotDevastation testRobotDevastation.cpp)
 #target_link_libraries(testRobotDevastation ${RD_LIBRARIES} StateMachineLib gtest gtest_main)

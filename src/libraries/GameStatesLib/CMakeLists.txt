@@ -6,7 +6,7 @@ set(KEYWORD "GameStatesLib")
 
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} InitState.cpp GameState.cpp) # DeadState.cpp)
+add_library(${KEYWORD} InitState.cpp GameState.cpp DeadState.cpp)
 
 target_link_libraries(${KEYWORD} ${RD_LIBRARIES} RdUserInterfaceLib StateMachineLib RdUtilsLib)
 install(TARGETS ${KEYWORD} DESTINATION lib)
