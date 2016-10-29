@@ -69,22 +69,17 @@ bool rd::GameScreen::drawScreen(void *screen)
 
     if (update_required)
     {
-        if (camera_frame_surface==NULL)
-        {
-            RD_WARNING("No camera frame received yet\n");
+        //-- Clear screen
+        SDL_FillRect(sdl_screen, NULL, 0x00000000);
 
-            //-- Clear screen
-            SDL_FillRect(sdl_screen, NULL, 0x00000000);
-        }
-        else
+        //-- Draw camera frame
+        if (camera_frame_surface!=NULL)
         {
-            //-- Clear screen
-            SDL_FillRect(sdl_screen, NULL, 0x00000000);
-
-            //-- Draw camera frame
             SDL_Rect camera_frame_rect = {0,0, camera_frame_surface->w, camera_frame_surface->h};
             SDL_BlitSurface(camera_frame_surface, NULL, sdl_screen, &camera_frame_rect);
         }
+        else
+            RD_WARNING("No camera frame received yet\n");
 
         //-- Draw enemies
         for (int i = 0; i < (int) targets.size(); i++)

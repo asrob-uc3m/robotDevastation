@@ -5,8 +5,10 @@ const int rd::GameState::EXIT_REQUESTED = 2;
 
 rd::GameState::GameState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
                          rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
-                         rd::RdRobotManager *robotManager, rd::AudioManager *audioManager) :
-                    ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager, audioManager)
+                         rd::RdRobotManager *robotManager, rd::AudioManager *audioManager,
+                         rd::ScreenManager *screenManager) :
+                    ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager,
+                               audioManager, screenManager)
 {
     this->state_id = "GameState";
     received_exit = false;
@@ -73,16 +75,22 @@ bool rd::GameState::setup()
     //-- Show Robot Devastation game screen:
     if (!screen.init())
     {
-        RD_ERROR("Could not init screen\n");
+        RD_ERROR("Could not init game screen\n");
         return false;
     }
 
     //-- Set info elements on GameScreen
-    screen.update(GameScreen::PARAM_MYSELF, mentalMap->getMyself());
-    screen.update(GameScreen::PARAM_PLAYERS, mentalMap->getPlayers());
-    screen.update(GameScreen::PARAM_TARGETS, mentalMap->getTargets());
-    screen.update(GameScreen::PARAM_WEAPON, mentalMap->getCurrentWeapon());
-    screen.show();
+    screenManager->setCurrentScreen(&screen);
+    screenManager->update(GameScreen::PARAM_MYSELF, mentalMap->getMyself());
+    screenManager->update(GameScreen::PARAM_PLAYERS, mentalMap->getPlayers());
+    screenManager->update(GameScreen::PARAM_TARGETS, mentalMap->getTargets());
+    screenManager->update(GameScreen::PARAM_WEAPON, mentalMap->getCurrentWeapon());
+    if(!screenManager->show())
+    {
+        RD_ERROR("Could not show game screen\n");
+        return false;
+    }
+
 
     return true;
 }
@@ -90,11 +98,15 @@ bool rd::GameState::setup()
 bool rd::GameState::loop()
 {
     //-- Set info elements on GameScreen
-    screen.update(GameScreen::PARAM_MYSELF, mentalMap->getMyself());
-    screen.update(GameScreen::PARAM_PLAYERS, mentalMap->getPlayers());
-    screen.update(GameScreen::PARAM_TARGETS, mentalMap->getTargets());
-    screen.update(GameScreen::PARAM_WEAPON, mentalMap->getCurrentWeapon());
-    screen.show();
+    screenManager->update(GameScreen::PARAM_MYSELF, mentalMap->getMyself());
+    screenManager->update(GameScreen::PARAM_PLAYERS, mentalMap->getPlayers());
+    screenManager->update(GameScreen::PARAM_TARGETS, mentalMap->getTargets());
+    screenManager->update(GameScreen::PARAM_WEAPON, mentalMap->getCurrentWeapon());
+    if(!screenManager->show())
+    {
+        RD_ERROR("Could not show game screen\n");
+        return false;
+    }
     return true;
 }
 
@@ -216,5 +228,5 @@ bool rd::GameState::onKeyUp(rd::RdKey k)
 bool rd::GameState::onImageArrived(rd::RdImageManager *manager)
 {
     //-- Don't know if this is safe enough or some mutex is required
-    screen.update(GameScreen::PARAM_CAMERA_FRAME, manager->getImage());
+    screenManager->update(GameScreen::PARAM_CAMERA_FRAME, manager->getImage());
 }

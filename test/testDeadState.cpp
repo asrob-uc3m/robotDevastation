@@ -56,19 +56,29 @@ class DeadStateTestEnvironment : public testing::Environment
             yarp::os::Network::init();
 
             //-- Init SDL
-            //initSDL();
+            SDLScreenManager::RegisterManager();
+            screenManager = ScreenManager::getScreenManager("SDL");
+            ASSERT_NE((ScreenManager*) NULL, screenManager);
+            screenManager->start();
+
         }
 
         virtual void TearDown()
         {
             yarp::os::Network::fini();
-            //cleanupSDL();
+
+            screenManager->stop();
+            ScreenManager::destroyScreenManager();
         }
 
 
     private:
         int argc;
         char ** argv;
+
+    protected:
+        ScreenManager * screenManager;
+
 
 };
 
@@ -93,7 +103,6 @@ class DeadStateTest : public testing::Test
             RdMockupImageManager::RegisterManager();
             MockupInputManager::RegisterManager();
             MockupAudioManager::RegisterManager();
-            SDLScreenManager::RegisterManager();
 
             //-- Create managers
             networkManager = RdNetworkManager::getNetworkManager("MOCKUP");
@@ -140,7 +149,6 @@ class DeadStateTest : public testing::Test
 
             screenManager = ScreenManager::getScreenManager("SDL");
             ASSERT_NE((ScreenManager*) NULL, screenManager);
-            screenManager->start();
 
             //-- Setup managers to the required initial state:
             //-- Note: For simplicity, I'm using InitState here and manually calling
@@ -191,9 +199,6 @@ class DeadStateTest : public testing::Test
 
             delete mockupRobotManager;
             mockupRobotManager = NULL;
-
-            screenManager->stop();
-            ScreenManager::destroyScreenManager();
 
             delete listener;
             listener=NULL;

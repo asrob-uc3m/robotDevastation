@@ -45,13 +45,13 @@ class GameStateTestEnvironment : public testing::Environment
             yarp::os::Network::init();
 
             //-- Init SDL
-            initSDL();
+            //initSDL();
         }
 
         virtual void TearDown()
         {
             yarp::os::Network::fini();
-            cleanupSDL();
+            //cleanupSDL();
         }
 
 
@@ -132,6 +132,7 @@ class GameStateTest : public testing::Test
 
             screenManager = ScreenManager::getScreenManager("SDL");
             ASSERT_NE((ScreenManager*) NULL, screenManager);
+            screenManager->start();
 
             //-- Setup managers to the required initial state:
             //-- Note: For simplicity, I'm using InitState here and manually calling
@@ -169,6 +170,7 @@ class GameStateTest : public testing::Test
             delete mockupRobotManager;
             mockupRobotManager = NULL;
 
+            screenManager->stop();
             ScreenManager::destroyScreenManager();
         }
 

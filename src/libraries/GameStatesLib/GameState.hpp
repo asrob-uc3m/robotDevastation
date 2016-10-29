@@ -37,7 +37,8 @@ class GameState : public State, public ManagerHub,
     public:
         GameState(RdNetworkManager * networkManager, RdImageManager * imageManager,
                   RdInputManager * inputManager, RdMentalMap * mentalMap,
-                  RdRobotManager * robotManager, AudioManager * audioManager);
+                  RdRobotManager * robotManager, AudioManager * audioManager,
+                  ScreenManager * screenManager);
         virtual ~GameState();
         virtual bool setup();
         virtual bool loop();
