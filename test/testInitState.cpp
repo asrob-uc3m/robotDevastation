@@ -152,7 +152,7 @@ class InitStateTest : public testing::Test
         RdMockupRobotManager * mockupRobotManager;
         RdRobotManager * robotManager;
 
-        SDLScreenManager * screenManager;
+        ScreenManager * screenManager;
 };
 
 //--- Tests ------------------------------------------------------------------------------------------

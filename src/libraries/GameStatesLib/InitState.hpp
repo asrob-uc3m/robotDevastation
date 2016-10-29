@@ -8,6 +8,7 @@
 #include "RdUtils.hpp"
 #include "Hub.hpp"
 #include "RdYarpNetworkManager.hpp"
+#include "ScreenManager.hpp"
 #include "InitScreen.hpp"
 
 #include <string>
@@ -37,7 +38,8 @@ class InitState : public State, public ManagerHub, public RdInputEventListener
         //InitState();
         InitState(RdNetworkManager * networkManager, RdImageManager * imageManager,
                   RdInputManager * inputManager, RdMentalMap * mentalMap,
-                  RdRobotManager * robotManager, AudioManager * audioManager);
+                  RdRobotManager * robotManager, AudioManager * audioManager,
+                  ScreenManager * screenManager);
         virtual ~InitState();
         virtual bool setup();
         virtual bool loop();

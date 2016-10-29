@@ -4,8 +4,9 @@ const int rd::InitState::LOGIN_SUCCESSFUL = 1;
 
 rd::InitState::InitState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
                          rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
-                         rd::RdRobotManager *robotManager, AudioManager *audioManager) :
-    ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager, audioManager)
+                         rd::RdRobotManager *robotManager, AudioManager *audioManager,
+                         rd::ScreenManager *screenManager) :
+    ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager, audioManager, screenManager)
 {
     state_id = "InitState";
     login = false;
@@ -22,8 +23,9 @@ bool rd::InitState::setup()
     //-- Show Robot Devastation start screen:
     if( ! screen.init() )
         return false;
+    screenManager->setCurrentScreen(&screen);
 
-    if( ! screen.show() )
+    if( ! screenManager->show() )
         return false;
 
     //-- Start Robot Devastation music theme:
