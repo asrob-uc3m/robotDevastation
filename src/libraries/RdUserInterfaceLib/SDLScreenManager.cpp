@@ -97,6 +97,8 @@ bool rd::SDLScreenManager::start()
 
 bool rd::SDLScreenManager::stop()
 {
+    if (window!=NULL)
+        SDL_DestroyWindow(window);
     stopped = true;
     return true;
 }
