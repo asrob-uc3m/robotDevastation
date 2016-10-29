@@ -25,9 +25,6 @@ bool rd::InitState::setup()
         return false;
     screenManager->setCurrentScreen(&screen);
 
-    if( ! screenManager->show() )
-        return false;
-
     //-- Start Robot Devastation music theme:
     audioManager->start();
     audioManager->play("RD_THEME", -1);
@@ -58,6 +55,9 @@ bool rd::InitState::loop()
             return false;
         logged_in = true;
     }
+
+    if(!screenManager->show())
+        return false;
 
     return true;
 }

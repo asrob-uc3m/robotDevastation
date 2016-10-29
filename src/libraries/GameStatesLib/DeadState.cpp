@@ -38,8 +38,6 @@ bool rd::DeadState::setup()
     RdImage last_camera_frame = imageManager->getImage();
     screenManager->update(DeadScreen::PARAM_LAST_CAMERA_FRAME, last_camera_frame);
     screenManager->update(DeadScreen::PARAM_REMAINING_TIME, number2str(timer));
-    if(!screenManager->show())
-        return false;
 
     //-- Disable camera images
     imageManager->setEnabled(false);
@@ -69,8 +67,6 @@ bool rd::DeadState::loop()
             timer--;
             elapsed_time = 0;
             screenManager->update(DeadScreen::PARAM_REMAINING_TIME, number2str(timer));
-            if(!screenManager->show())
-                return false;
 
             if (timer == 0)
             {
@@ -78,8 +74,10 @@ bool rd::DeadState::loop()
                 inputManager->addInputEventListener(this);
             }
         }
-
     }
+
+    if(!screenManager->show())
+        return false;
 
     return true;
 }

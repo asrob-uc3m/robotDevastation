@@ -85,12 +85,6 @@ bool rd::GameState::setup()
     screenManager->update(GameScreen::PARAM_PLAYERS, mentalMap->getPlayers());
     screenManager->update(GameScreen::PARAM_TARGETS, mentalMap->getTargets());
     screenManager->update(GameScreen::PARAM_WEAPON, mentalMap->getCurrentWeapon());
-    if(!screenManager->show())
-    {
-        RD_ERROR("Could not show game screen\n");
-        return false;
-    }
-
 
     return true;
 }
