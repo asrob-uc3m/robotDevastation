@@ -36,6 +36,11 @@ bool rd::SDLScreenManager::show()
 
     //-- Get writable surface
     SDL_Surface * screen_surface = SDL_GetWindowSurface(window);
+    if (screen_surface == NULL)
+    {
+        RD_ERROR("Could not get SDL screen surface!\n");
+        return false;
+    }
 
     //-- Draw current screen on surface
     if (!screen->drawScreen((void *)screen_surface))
