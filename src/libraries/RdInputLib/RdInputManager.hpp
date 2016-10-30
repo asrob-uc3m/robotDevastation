@@ -87,6 +87,10 @@ class RdInputManager
         //! @brief Configures a parameter with a value
         virtual bool configure(std::string parameter, std::string value);
 
+        //------------------------------ Input Manager API ------------------------------------------------------------//
+        //! @brief Get system info about input events
+        virtual bool refreshEvents();
+
     protected:
         /**
          * @brief This function allows subclasses to install their unique instances in the singleton register to be

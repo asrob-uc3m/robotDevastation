@@ -91,7 +91,7 @@ double rd::RobotDevastation::getPeriod()
 
 bool rd::RobotDevastation::updateModule()
 {
-    SDL_PumpEvents();
+    inputManager->refreshEvents();
 
     //-- Check if FSM has arrived the end-state
     if (gameFSM->getCurrentState() == -1)

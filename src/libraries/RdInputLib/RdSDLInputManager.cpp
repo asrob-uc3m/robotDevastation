@@ -51,6 +51,12 @@ rd::RdSDLInputManager::~RdSDLInputManager()
     uniqueInstance = NULL;
 }
 
+bool rd::RdSDLInputManager::refreshEvents()
+{
+    SDL_PumpEvents();
+    return true;
+}
+
 rd::RdSDLInputManager::RdSDLInputManager()
 {
     stopped = true;

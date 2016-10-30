@@ -55,6 +55,13 @@ class RdSDLInputManager : public RdInputManager
         //! @brief String that identifies this manager
         static const std::string id;
 
+        /**
+         * @brief Get SDL info about input events
+         *
+         * In SDL, this function has to be called frequently, and in the same thread as the graphic output
+         */
+        virtual bool refreshEvents();
+
     private:
         /**
          * @brief Constructor
