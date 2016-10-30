@@ -23,6 +23,8 @@ void rd::SDLScreenManager::setCurrentScreen(rd::RdScreen *screen)
 
 bool rd::SDLScreenManager::show()
 {
+    mutex.lock();
+
     //-- Check if window exists (and create window if it doesn't)
     if (window == NULL)
     {
@@ -63,7 +65,56 @@ bool rd::SDLScreenManager::show()
     SDL_UpdateWindowSurface(window); //Refresh the screen
     SDL_Delay(20); //Wait a bit :)
 
+    mutex.unlock();
     return true;
+}
+
+bool rd::SDLScreenManager::update(std::string parameter, std::string value)
+{
+    mutex.lock();
+    bool ret = this->screen->update(parameter, value);
+    mutex.unlock();
+    return ret;
+}
+
+bool rd::SDLScreenManager::update(std::string parameter, rd::RdImage value)
+{
+    mutex.lock();
+    bool ret = this->screen->update(parameter, value);
+    mutex.unlock();
+    return ret;
+}
+
+bool rd::SDLScreenManager::update(std::string parameter, rd::RdPlayer value)
+{
+    mutex.lock();
+    bool ret = this->screen->update(parameter, value);
+    mutex.unlock();
+    return ret;
+}
+
+bool rd::SDLScreenManager::update(std::string parameter, std::vector<rd::RdPlayer> value)
+{
+    mutex.lock();
+    bool ret = this->screen->update(parameter, value);
+    mutex.unlock();
+    return ret;
+}
+
+bool rd::SDLScreenManager::update(std::string parameter, std::vector<rd::RdTarget> value)
+{
+    mutex.lock();
+    bool ret = this->screen->update(parameter, value);
+    mutex.unlock();
+    return ret;
+}
+
+bool rd::SDLScreenManager::update(std::string parameter, rd::RdWeapon value)
+{
+    mutex.lock();
+    bool ret = this->screen->update(parameter, value);
+    mutex.unlock();
+    return ret;
 }
 
 bool rd::SDLScreenManager::initSDL()

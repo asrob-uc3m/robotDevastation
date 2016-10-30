@@ -102,9 +102,6 @@ class ScreenManager
         //! @brief Update some RdScreen parameter through the ScreenManager
         virtual bool update(std::string parameter, RdWeapon value); //-- Required by GameScreen
 
-        //! @brief Returns a reference to the game screen window (each screen will print directly on this window)
-        virtual void *getScreenWindow();
-
     protected:
         /**
          * @brief This function allows subclasses to install their unique instances in the singleton register to be
@@ -113,7 +110,6 @@ class ScreenManager
         static bool Register(ScreenManager * manager, std::string id);
 
         RdScreen * screen;
-        //Mutex mutex;
 
     private:
         //! @brief Stores the unique instance of the ScreenManager

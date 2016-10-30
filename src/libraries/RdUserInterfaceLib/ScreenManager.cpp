@@ -124,11 +124,6 @@ bool rd::ScreenManager::update(std::string parameter, rd::RdWeapon value)
     return this->screen->update(parameter, value);
 }
 
-void *rd::ScreenManager::getScreenWindow()
-{
-    return NULL;
-}
-
 bool rd::ScreenManager::Register(rd::ScreenManager *manager, std::string id)
 {
     if ( screenManagerRegistry.find(id) == screenManagerRegistry.end())

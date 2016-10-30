@@ -12,6 +12,8 @@
 #include "RdMacros.hpp"
 #include "ScreenManager.hpp"
 
+#include "yarp/os/Mutex.h" //-- Right now use yarp mutex. In the future is better to use C++11 std::mutex
+
 namespace rd{
 
 /**
@@ -28,16 +30,25 @@ class SDLScreenManager : public ScreenManager
         virtual void setCurrentScreen(RdScreen* screen);
 
         //! @brief Display the current RdScreen on the game window
-            virtual bool show();
+        virtual bool show();
 
-//        //! @brief Update some RdScreen parameter through the ScreenManager
-//        virtual bool update(std::string parameter, std::string value);
+        //! @brief Update some RdScreen parameter through the ScreenManager
+        virtual bool update(std::string parameter, std::string value);
 
-//        //! @brief Update some RdScreen parameter through the ScreenManager
-//        virtual bool update(std::string parameter, RdImage value);
+        //! @brief Update some RdScreen parameter through the ScreenManager
+        virtual bool update(std::string parameter, RdImage value); //-- Required by GameScreen and DeadScreen
 
-//        //! @brief Returns a reference to the game screen window (each screen will print directly on this window)
-//        virtual void *getScreenWindow();
+        //! @brief Update some RdScreen parameter through the ScreenManager
+        virtual bool update(std::string parameter, RdPlayer value); //-- Required by GameScreen
+
+        //! @brief Update some RdScreen parameter through the ScreenManager
+        virtual bool update(std::string parameter, std::vector<RdPlayer> value); //-- Required by GameScreen
+
+        //! @brief Update some RdScreen parameter through the ScreenManager
+        virtual bool update(std::string parameter, std::vector<RdTarget> value); //-- Required by GameScreen
+
+        //! @brief Update some RdScreen parameter through the ScreenManager
+        virtual bool update(std::string parameter, RdWeapon value); //-- Required by GameScreen
 
         //! @brief SDL initialization
         static bool initSDL();
@@ -81,6 +92,7 @@ class SDLScreenManager : public ScreenManager
         bool sdl_initialized;
 
         SDL_Window * window;
+        yarp::os::Mutex mutex;
 };
 
 }
