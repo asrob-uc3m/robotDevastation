@@ -10,9 +10,11 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     if( ! initPlayerInfo(rf) )
         return false;
 
-    //-- Init graphics
-    if( ! initSDL() )
-        return false;
+
+    //-- Init screen manager
+    SDLScreenManager::RegisterManager();
+    screenManager = ScreenManager::getScreenManager(SDLScreenManager::id);
+    screenManager->start();
 
     //-- Init input manager
     RdSDLInputManager::RegisterManager();
@@ -69,7 +71,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     //-- Init network manager
     RdYarpNetworkManager::RegisterManager();
-    networkManager = RdYarpNetworkManager::getNetworkManager(RdYarpNetworkManager::id);
+    networkManager = RdNetworkManager::getNetworkManager(RdYarpNetworkManager::id);
     networkManager->configure("player", players[0]);
 
     //-- Get game FSM and start game
@@ -213,11 +215,11 @@ bool rd::RobotDevastation::initGameFSM()
 
     //-- Create states
     int init_state_id = builder.addState(new InitState(networkManager, imageManager, inputManager, mentalMap,
-                                                       robotManager, audioManager));
+                                                       robotManager, audioManager, screenManager));
     int game_state_id = builder.addState(new GameState(networkManager, imageManager, inputManager, mentalMap,
-                                                       robotManager, audioManager));
-    int dead_state_id = builder.addState(new DeadState(networkManager, imageManager, inputManager,
-                                                       mentalMap, robotManager, audioManager));
+                                                       robotManager, audioManager, screenManager));
+    int dead_state_id = builder.addState(new DeadState(networkManager, imageManager, inputManager, mentalMap,
+                                                       robotManager, audioManager, screenManager));
     int end_state_id = builder.addState(State::getEndState());
 
     //-- Add transitions to other states
@@ -262,7 +264,11 @@ bool rd::RobotDevastation::cleanup()
     delete gameFSM;
     gameFSM = NULL;
 
-    cleanupSDL();
+    //-- Close SDL / GUI
+    screenManager->stop();
+    ScreenManager::destroyScreenManager();
+    screenManager = NULL;
+
     return true;
 }
 
