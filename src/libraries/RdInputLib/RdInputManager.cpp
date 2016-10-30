@@ -104,7 +104,7 @@ bool rd::RdInputManager::configure(std::string parameter, std::string value)
 
 bool rd::RdInputManager::refreshEvents()
 {
-    RD_WARNING("Base implementation, does nothing!\n");
+    RD_INFO("Base implementation, does nothing!\n");
     return true;
 }
 

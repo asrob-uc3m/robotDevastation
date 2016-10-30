@@ -86,13 +86,11 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
 double rd::RobotDevastation::getPeriod()
 {
-    return 0.1;  // Fixed, in seconds, the slow thread that calls updateModule below
+    return 1;  // Fixed, in seconds, the slow thread that calls updateModule below
 }
 
 bool rd::RobotDevastation::updateModule()
 {
-    inputManager->refreshEvents();
-
     //-- Check if FSM has arrived the end-state
     if (gameFSM->getCurrentState() == -1)
     {

@@ -57,6 +57,9 @@ bool rd::DeadState::setup()
 
 bool rd::DeadState::loop()
 {
+    //-- Get input events
+    inputManager->refreshEvents();
+
     //-- Do countdown
     if (timer > 0)
     {
@@ -76,6 +79,7 @@ bool rd::DeadState::loop()
         }
     }
 
+    //-- Show graphics
     if(!screenManager->show())
         return false;
 
