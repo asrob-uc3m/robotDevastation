@@ -102,6 +102,12 @@ bool rd::RdInputManager::configure(std::string parameter, std::string value)
     return true;
 }
 
+bool rd::RdInputManager::refreshEvents()
+{
+    RD_INFO("Base implementation, does nothing!\n");
+    return true;
+}
+
 bool rd::RdInputManager::Register(rd::RdInputManager *manager, std::string id)
 {
     if ( inputManagerRegistry.find(id) == inputManagerRegistry.end())

@@ -44,6 +44,10 @@ bool rd::InitState::setup()
 
 bool rd::InitState::loop()
 {
+    //-- Get input events
+    inputManager->refreshEvents();
+
+    //-- Do stuff
     if (login)
     {
         //-- Log in
@@ -56,6 +60,7 @@ bool rd::InitState::loop()
         logged_in = true;
     }
 
+    //-- Show graphics
     if(!screenManager->show())
         return false;
 

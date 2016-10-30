@@ -91,11 +91,16 @@ bool rd::GameState::setup()
 
 bool rd::GameState::loop()
 {
+    //-- Get input events
+    inputManager->refreshEvents();
+
     //-- Set info elements on GameScreen
     screenManager->update(GameScreen::PARAM_MYSELF, mentalMap->getMyself());
     screenManager->update(GameScreen::PARAM_PLAYERS, mentalMap->getPlayers());
     screenManager->update(GameScreen::PARAM_TARGETS, mentalMap->getTargets());
     screenManager->update(GameScreen::PARAM_WEAPON, mentalMap->getCurrentWeapon());
+
+    //-- Show graphics
     if(!screenManager->show())
     {
         RD_ERROR("Could not show game screen\n");
