@@ -13,7 +13,7 @@ include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdScreen.cpp InitScreen.cpp GameScreen.cpp DeadScreen.cpp)
+add_library(${KEYWORD} ScreenManager.cpp SDLScreenManager.cpp RdScreen.cpp InitScreen.cpp GameScreen.cpp DeadScreen.cpp MockupScreen.cpp)
 target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${RD_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 

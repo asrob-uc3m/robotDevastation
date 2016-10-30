@@ -17,6 +17,7 @@
 #include "RdMentalMap.hpp"
 #include "RdMockupRobotManager.hpp"
 #include "MockupAudioManager.hpp"
+#include "SDLScreenManager.hpp"
 
 //-- Game FSM
 #include "StateMachine.hpp"
@@ -125,17 +126,23 @@ class RobotDevastationTest : public testing::Test
             ASSERT_NE((MockupNetworkManager*) NULL, mockupNetworkManager);
             networkManager->configure("player", players[0]);
 
+            //-- Init screen manager
+            SDLScreenManager::RegisterManager();
+            screenManager = ScreenManager::getScreenManager("SDL");
+            ASSERT_NE((ScreenManager*) NULL, screenManager);
+            screenManager->start();
+
             //-- Setup Game FSM
             StateMachineBuilder builder;
             builder.setDirectorType("YARP");
 
             //-- Create states
             init_state_id = builder.addState(new InitState(networkManager, imageManager, inputManager, mentalMap,
-                                                               robotManager, audioManager));
+                                                               robotManager, audioManager, screenManager));
             game_state_id = builder.addState(new GameState(networkManager, imageManager, inputManager, mentalMap,
-                                                               robotManager, audioManager));
+                                                               robotManager, audioManager, screenManager));
             dead_state_id = builder.addState(new DeadState(networkManager, imageManager, inputManager,
-                                                               mentalMap, robotManager, audioManager));
+                                                               mentalMap, robotManager, audioManager, screenManager));
             end_state_id = builder.addState(State::getEndState());
 
             //-- Add transitions to other states
@@ -175,6 +182,10 @@ class RobotDevastationTest : public testing::Test
             delete robotManager;
             robotManager = NULL;
 
+            //-- Close screen:
+            screenManager->stop();
+            ScreenManager::destroyScreenManager();
+
             //-- Delete FSM:
             delete fsm;
             fsm = NULL;
@@ -205,6 +216,8 @@ class RobotDevastationTest : public testing::Test
 
         RdMockupRobotManager * mockupRobotManager;
         RdRobotManager * robotManager;
+
+        ScreenManager * screenManager;
 
         int init_state_id, game_state_id, dead_state_id, end_state_id;
 

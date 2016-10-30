@@ -10,7 +10,7 @@
 #include <yarp/os/RFModule.h>
 
 #include "RdUtils.hpp"
-#include "SDLAudioManager.hpp" //-- Should be AudioManager.hpp
+#include "SDLAudioManager.hpp"
 #include "RdMentalMap.hpp"
 #include "RdInputManager.hpp"
 #include "RdSDLInputManager.hpp"
@@ -25,6 +25,7 @@
 #include "RdYarpLocalImageManager.hpp"
 #include "RdMockupImageManager.hpp"
 #include "RdProcessorImageEventListener.hpp"
+#include "SDLScreenManager.hpp"
 
 //-- Game FSM
 #include "StateMachine.hpp"
@@ -73,6 +74,7 @@ class RobotDevastation : public yarp::os::RFModule
         RdRobotManager * robotManager;
         FiniteStateMachine * stateMachine;
         RdImageManager * imageManager;
+        ScreenManager * screenManager;
 
         bool interruptModule();
         double getPeriod();

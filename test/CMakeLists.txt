@@ -17,6 +17,12 @@ target_link_libraries(testGameScreen ${RD_LIBRARIES} SDL2 SDL2_image SDL2_ttf gt
 add_executable(testDeadScreen testDeadScreen.cpp)
 target_link_libraries(testDeadScreen ${RD_LIBRARIES} SDL2 SDL2_image SDL2_ttf gtest gtest_main)
 
+add_executable(testMockupScreen testMockupScreen.cpp)
+target_link_libraries(testMockupScreen ${RD_LIBRARIES})
+
+add_executable(testSDLScreenManager testSDLScreenManager.cpp)
+target_link_libraries(testSDLScreenManager ${RD_LIBRARIES} RdUserInterfaceLib)
+
 # Audio manager related
 add_executable(testMockupAudioManager testMockupAudioManager.cpp)
 target_link_libraries(testMockupAudioManager ${RD_LIBRARIES} MusicLib gtest gtest_main)

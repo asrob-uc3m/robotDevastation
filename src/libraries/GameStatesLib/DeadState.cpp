@@ -8,8 +8,10 @@ const int rd::DeadState::MAX_HEALTH = 100;
 
 rd::DeadState::DeadState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
                          rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
-                         rd::RdRobotManager *robotManager, AudioManager *audioManager) :
-                ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager, audioManager)
+                         rd::RdRobotManager *robotManager, AudioManager *audioManager,
+                         rd::ScreenManager *screenManager) :
+                ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager,
+                           audioManager, screenManager)
 {
     this->state_id = "DeadState";
 
@@ -29,12 +31,13 @@ bool rd::DeadState::setup()
     received_exit = false;
 
     //-- Configure & show Robot Devastation dead screen:
-    if(!screen.init())
+    if( ! screen.init() )
         return false;
+    screenManager->setCurrentScreen(&screen);
+
     RdImage last_camera_frame = imageManager->getImage();
-    screen.update(DeadScreen::PARAM_LAST_CAMERA_FRAME, last_camera_frame);
-    screen.update(DeadScreen::PARAM_REMAINING_TIME, number2str(timer));
-    screen.show();
+    screenManager->update(DeadScreen::PARAM_LAST_CAMERA_FRAME, last_camera_frame);
+    screenManager->update(DeadScreen::PARAM_REMAINING_TIME, number2str(timer));
 
     //-- Disable camera images
     imageManager->setEnabled(false);
@@ -63,8 +66,7 @@ bool rd::DeadState::loop()
         {
             timer--;
             elapsed_time = 0;
-            screen.update(DeadScreen::PARAM_REMAINING_TIME, number2str(timer));
-            screen.show();
+            screenManager->update(DeadScreen::PARAM_REMAINING_TIME, number2str(timer));
 
             if (timer == 0)
             {
@@ -72,8 +74,10 @@ bool rd::DeadState::loop()
                 inputManager->addInputEventListener(this);
             }
         }
-
     }
+
+    if(!screenManager->show())
+        return false;
 
     return true;
 }

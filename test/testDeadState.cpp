@@ -18,15 +18,16 @@
 #include "SDLUtils.hpp"
 #include "DeadState.hpp"
 #include "InitState.hpp"
+#include "MockupState.hpp"
 
 #include "MockupNetworkManager.hpp"
 #include "RdMockupImageManager.hpp"
+#include "MockupInputEventListener.hpp"
 #include "MockupInputManager.hpp"
 #include "RdMentalMap.hpp"
 #include "RdMockupRobotManager.hpp"
 #include "MockupAudioManager.hpp"
-#include "MockupState.hpp"
-#include "MockupInputEventListener.hpp"
+#include "SDLScreenManager.hpp"
 
 #include <yarp/sig/all.h>
 #include <yarp/os/Network.h>
@@ -55,19 +56,29 @@ class DeadStateTestEnvironment : public testing::Environment
             yarp::os::Network::init();
 
             //-- Init SDL
-            initSDL();
+            SDLScreenManager::RegisterManager();
+            screenManager = ScreenManager::getScreenManager("SDL");
+            ASSERT_NE((ScreenManager*) NULL, screenManager);
+            screenManager->start();
+
         }
 
         virtual void TearDown()
         {
             yarp::os::Network::fini();
-            cleanupSDL();
+
+            screenManager->stop();
+            ScreenManager::destroyScreenManager();
         }
 
 
     private:
         int argc;
         char ** argv;
+
+    protected:
+        ScreenManager * screenManager;
+
 
 };
 
@@ -136,12 +147,16 @@ class DeadStateTest : public testing::Test
             ASSERT_NE((RdMockupRobotManager*) NULL, mockupRobotManager);
             ASSERT_NE((RdRobotManager*) NULL, robotManager);
 
+            screenManager = ScreenManager::getScreenManager("SDL");
+            ASSERT_NE((ScreenManager*) NULL, screenManager);
+
             //-- Setup managers to the required initial state:
             //-- Note: For simplicity, I'm using InitState here and manually calling
             //-- the correct initialization sequence. The testInitState allows to test
             //-- if InitState works correctly.
             State * initState = new InitState(networkManager, imageManager, inputManager,
-                                              mentalMap, robotManager, audioManager);
+                                              mentalMap, robotManager, audioManager,
+                                              screenManager);
             initState->setup();
             dynamic_cast<RdInputEventListener *>(initState)->onKeyUp(MockupKey(RdKey::KEY_ENTER));
             initState->loop();
@@ -212,6 +227,8 @@ class DeadStateTest : public testing::Test
         RdMockupRobotManager * mockupRobotManager;
         RdRobotManager * robotManager;
 
+        ScreenManager * screenManager;
+
         MockupInputEventListener * listener;
 };
 
@@ -225,7 +242,7 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
     ASSERT_TRUE(builder.setDirectorType("YARP"));
 
     int dead_state_id = builder.addState(new DeadState(networkManager, imageManager, inputManager,
-                                                       mentalMap, robotManager, audioManager));
+                                                       mentalMap, robotManager, audioManager, screenManager));
     ASSERT_NE(-1, dead_state_id);
     int game_state_id = builder.addState(new MockupState(1));
     ASSERT_NE(-1, game_state_id);
@@ -313,7 +330,7 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
     ASSERT_TRUE(builder.setDirectorType("YARP"));
 
     int dead_state_id = builder.addState(new DeadState(networkManager, imageManager, inputManager,
-                                                       mentalMap, robotManager, audioManager));
+                                                       mentalMap, robotManager, audioManager, screenManager));
     ASSERT_NE(-1, dead_state_id);
     int game_state_id = builder.addState(new MockupState(1));
     ASSERT_NE(-1, game_state_id);

@@ -14,6 +14,7 @@
 #include "RdMentalMap.hpp"
 #include "RdMockupRobotManager.hpp"
 #include "MockupAudioManager.hpp"
+#include "SDLScreenManager.hpp"
 
 #include <yarp/os/Network.h>
 #include <yarp/os/Time.h>
@@ -63,6 +64,7 @@ class InitStateTest : public testing::Test
             RdMockupImageManager::RegisterManager();
             MockupInputManager::RegisterManager();
             MockupAudioManager::RegisterManager();
+            SDLScreenManager::RegisterManager();
 
             //-- Create managers
             networkManager = RdNetworkManager::getNetworkManager("MOCKUP");
@@ -100,6 +102,9 @@ class InitStateTest : public testing::Test
             robotManager = (RdRobotManager *) mockupRobotManager;
             ASSERT_NE((RdMockupRobotManager*) NULL, mockupRobotManager);
             ASSERT_NE((RdRobotManager*) NULL, robotManager);
+
+            screenManager = ScreenManager::getScreenManager("SDL");
+            ASSERT_NE((ScreenManager*) NULL, screenManager);
         }
 
         virtual void TearDown()
@@ -123,6 +128,8 @@ class InitStateTest : public testing::Test
             delete mockupRobotManager;
             mockupRobotManager = NULL;
 
+            ScreenManager::destroyScreenManager();
+
         }
 
     protected:
@@ -144,6 +151,8 @@ class InitStateTest : public testing::Test
 
         RdMockupRobotManager * mockupRobotManager;
         RdRobotManager * robotManager;
+
+        ScreenManager * screenManager;
 };
 
 //--- Tests ------------------------------------------------------------------------------------------
@@ -154,7 +163,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_TRUE(builder.setDirectorType("YARP"));
 
     int init_state_id = builder.addState(new InitState(networkManager, imageManager, inputManager, mentalMap,
-                                                       robotManager, audioManager));
+                                                       robotManager, audioManager, screenManager));
     int end_state_id = builder.addState(State::getEndState());
 
     ASSERT_NE(-1, init_state_id);

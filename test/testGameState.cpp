@@ -13,6 +13,7 @@
 #include "SDLUtils.hpp"
 #include "InitState.hpp"
 #include "GameState.hpp"
+#include "MockupState.hpp"
 
 #include "MockupNetworkManager.hpp"
 #include "RdMockupImageManager.hpp"
@@ -20,7 +21,7 @@
 #include "RdMentalMap.hpp"
 #include "RdMockupRobotManager.hpp"
 #include "MockupAudioManager.hpp"
-#include "MockupState.hpp"
+#include "SDLScreenManager.hpp"
 
 using namespace rd;
 
@@ -44,13 +45,13 @@ class GameStateTestEnvironment : public testing::Environment
             yarp::os::Network::init();
 
             //-- Init SDL
-            initSDL();
+            //initSDL();
         }
 
         virtual void TearDown()
         {
             yarp::os::Network::fini();
-            cleanupSDL();
+            //cleanupSDL();
         }
 
 
@@ -82,6 +83,7 @@ class GameStateTest : public testing::Test
             RdMockupImageManager::RegisterManager();
             MockupInputManager::RegisterManager();
             MockupAudioManager::RegisterManager();
+            SDLScreenManager::RegisterManager();
 
             //-- Create managers
             networkManager = RdNetworkManager::getNetworkManager("MOCKUP");
@@ -128,12 +130,17 @@ class GameStateTest : public testing::Test
             ASSERT_NE((RdMockupRobotManager*) NULL, mockupRobotManager);
             ASSERT_NE((RdRobotManager*) NULL, robotManager);
 
+            screenManager = ScreenManager::getScreenManager("SDL");
+            ASSERT_NE((ScreenManager*) NULL, screenManager);
+            screenManager->start();
+
             //-- Setup managers to the required initial state:
             //-- Note: For simplicity, I'm using InitState here and manually calling
             //-- the correct initialization sequence. The testInitState allows to test
             //-- if InitState works correctly.
             State * initState = new InitState(networkManager, imageManager, inputManager,
-                                              mentalMap, robotManager, audioManager);
+                                              mentalMap, robotManager, audioManager,
+                                              screenManager);
             initState->setup();
             dynamic_cast<RdInputEventListener *>(initState)->onKeyUp(MockupKey(RdKey::KEY_ENTER));
             initState->loop();
@@ -163,6 +170,8 @@ class GameStateTest : public testing::Test
             delete mockupRobotManager;
             mockupRobotManager = NULL;
 
+            screenManager->stop();
+            ScreenManager::destroyScreenManager();
         }
 
     static const int MAX_HEALTH;
@@ -188,6 +197,8 @@ class GameStateTest : public testing::Test
         RdMockupRobotManager * mockupRobotManager;
         RdRobotManager * robotManager;
 
+        ScreenManager * screenManager;
+
         RdImage test_frame_no_target;
         RdImage test_frame_with_target;
 
@@ -208,7 +219,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     ASSERT_TRUE(builder.setDirectorType("YARP"));
 
     int game_state_id = builder.addState(new GameState(networkManager, imageManager, inputManager, mentalMap,
-                                                       robotManager, audioManager));
+                                                       robotManager, audioManager, screenManager));
     ASSERT_NE(-1, game_state_id);
     int dead_state_id = builder.addState(new MockupState(1));
     ASSERT_NE(-1, dead_state_id);
@@ -366,7 +377,7 @@ TEST_F(GameStateTest, GameStateQuitsWhenRequested )
     ASSERT_TRUE(builder.setDirectorType("YARP"));
 
     int game_state_id = builder.addState(new GameState(networkManager, imageManager, inputManager, mentalMap,
-                                                       robotManager, audioManager));
+                                                       robotManager, audioManager, screenManager));
     ASSERT_NE(-1, game_state_id);
     int dead_state_id = builder.addState(new MockupState(1));
     ASSERT_NE(-1, dead_state_id);
