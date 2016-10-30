@@ -11,6 +11,16 @@ rd::SDLScreenManager::SDLScreenManager()
     window = NULL;
 }
 
+void rd::SDLScreenManager::setCurrentScreen(rd::RdScreen *screen)
+{
+    rd::ScreenManager::setCurrentScreen(screen);
+    if (window != NULL)
+    {
+        SDL_DestroyWindow(window);
+        window = NULL;
+    }
+}
+
 bool rd::SDLScreenManager::show()
 {
     //-- Check if window exists (and create window if it doesn't)

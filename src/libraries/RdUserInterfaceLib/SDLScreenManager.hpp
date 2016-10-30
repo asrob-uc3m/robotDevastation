@@ -23,9 +23,12 @@ namespace rd{
 class SDLScreenManager : public ScreenManager
 {
     public:
-        //------------------------------- Screen Manager functions -----------------------------------------------------//
+        //------------------------------- Screen Manager functions -----------------------------------------------------//    
+        //! @brief Set a RdScreen as current RdScreen
+        virtual void setCurrentScreen(RdScreen* screen);
+
         //! @brief Display the current RdScreen on the game window
-        virtual bool show();
+            virtual bool show();
 
 //        //! @brief Update some RdScreen parameter through the ScreenManager
 //        virtual bool update(std::string parameter, std::string value);
