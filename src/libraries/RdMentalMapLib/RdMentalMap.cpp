@@ -139,16 +139,24 @@ bool rd::RdMentalMap::shoot()
             if ( weapons[current_weapon].canShootTarget(it->second) )
             {
                 //-- Decrease player's life:
-                RdPlayer * player = &players[it->second.getPlayerId()];
-                RD_SUCCESS("Target %s was hit!\n", player->getName().c_str());
+                int target_id = it->second.getPlayerId();
+                if (players.find(target_id) != players.end())
+                {
+                    RdPlayer * player = &players[target_id];
+                    RD_SUCCESS("Target %s was hit!\n", player->getName().c_str());
 
-                player->getDamageFromWeapon(weapons[current_weapon]);
+                    player->getDamageFromWeapon(weapons[current_weapon]);
 
-                hit = true;
+                    hit = true;
 
-                //-- Update listeners
-                for (size_t i = 0; i < listeners.size(); i++)
-                    listeners[i]->onTargetHit(it->second, *player, weapons[current_weapon]);
+                    //-- Update listeners
+                    for (size_t i = 0; i < listeners.size(); i++)
+                        listeners[i]->onTargetHit(it->second, *player, weapons[current_weapon]);
+                }
+                else
+                {
+                    RD_WARNING("Ignoring target with invalid player id %d\n", target_id);
+                }
 
             }
             else
