@@ -50,16 +50,24 @@ bool rd::RdYarpNetworkManager::start()
     //-- Open the rcpClient port with this player's id
     std::ostringstream rpc_str;
     rpc_str << "/";
-    rpc_str << id;
+    rpc_str << player.getId();
     rpc_str << "/rdServer/rpc:o";
-    rpcClient.open( rpc_str.str() );
+    if( ! rpcClient.open( rpc_str.str() ) )
+    {
+        RD_ERROR("Could not open '%s'. Bye!\n",rpc_str.str().c_str());
+        return false;
+    }
 
     //-- Open the callback port with this player's id
     std::ostringstream callback_str;
     callback_str << "/";
-    callback_str << id;
+    callback_str << player.getId();
     callback_str << "/rdServer/command:i";
-    callbackPort.open( callback_str.str() );
+    if( ! callbackPort.open( callback_str.str() ) )
+    {
+        RD_ERROR("Could not open '%s'. Bye!\n",callback_str.str().c_str());
+        return false;
+    }
 
     //-- Try to rpc connect to the server until timeout
     int tries = 0;
