@@ -17,9 +17,6 @@ endif(COMMAND cmake_policy)
 
 project(robotDevastation)
 
-##### library options
-option(ENABLE_RdYarp_RdSerialServoBoard "Choose if you want to compile RdYarp_RdSerialServoBoard" TRUE)
-
 ##### program options
 option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" TRUE)
 option(ENABLE_rdServer "Choose if you want to compile rdServer" TRUE)
