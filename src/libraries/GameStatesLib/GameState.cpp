@@ -3,6 +3,18 @@
 const int rd::GameState::KILLED = 1;
 const int rd::GameState::EXIT_REQUESTED = 2;
 
+const rd::RdKey rd::GameState::KEY_EXIT = rd::MockupKey(rd::RdKey::KEY_ESCAPE);
+const rd::RdKey rd::GameState::KEY_SHOOT = rd::MockupKey(rd::RdKey::KEY_SPACE);
+const rd::RdKey rd::GameState::KEY_RELOAD = rd::MockupKey('r');
+const rd::RdKey rd::GameState::KEY_MOVE_FWD = rd::MockupKey('w');
+const rd::RdKey rd::GameState::KEY_MOVE_BACK = rd::MockupKey('s');
+const rd::RdKey rd::GameState::KEY_TURN_LEFT = rd::MockupKey('a');
+const rd::RdKey rd::GameState::KEY_TURN_RIGHT = rd::MockupKey('d');
+const rd::RdKey rd::GameState::KEY_PAN_POS = rd::MockupKey(rd::RdKey::KEY_ARROW_LEFT);
+const rd::RdKey rd::GameState::KEY_PAN_NEG = rd::MockupKey(rd::RdKey::KEY_ARROW_RIGHT);
+const rd::RdKey rd::GameState::KEY_TILT_POS = rd::MockupKey(rd::RdKey::KEY_ARROW_UP);
+const rd::RdKey rd::GameState::KEY_TILT_NEG = rd::MockupKey(rd::RdKey::KEY_ARROW_DOWN);
+
 rd::GameState::GameState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
                          rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
                          rd::RdRobotManager *robotManager, rd::AudioManager *audioManager,
@@ -145,47 +157,47 @@ int rd::GameState::evaluateConditions()
 
 bool rd::GameState::onKeyDown(rd::RdKey k)
 {
-    if (k.getValue()==rd::RdKey::KEY_SPACE)
+    if (k == KEY_SHOOT)
     {
         mentalMap->shoot();
         return true;
     }
 
-    if (k.getChar()=='r')
+    if (k == KEY_RELOAD)
     {
         mentalMap->reload();
         return true;
     }
 
-    if (k.getValue() == RdKey::KEY_ESCAPE)
+    if (k == KEY_EXIT)
     {
-        RD_DEBUG("Escape was pressed!\n");
+        RD_DEBUG("Exit was triggered!\n");
         received_exit = true;
         return true;
     }
 
     //-- Movement control
-    if (k.getValue() == RdKey::KEY_ARROW_LEFT)
+    if (k == KEY_TURN_LEFT)
     {
-        RD_DEBUG("Left arrow was pressed!\n");
+        RD_DEBUG("Turn left was triggered!\n");
         robotManager->turnLeft();
         return true;
     }
-    if (k.getValue() == RdKey::KEY_ARROW_RIGHT)
+    if (k == KEY_TURN_RIGHT)
     {
-        RD_DEBUG("Right arrow was pressed!\n");
+        RD_DEBUG("Turn right was triggered!\n");
         robotManager->turnRight();
         return true;
     }
-    if (k.getValue() == RdKey::KEY_ARROW_UP)
+    if (k == KEY_MOVE_FWD)
     {
-        RD_DEBUG("Up arrow was pressed!\n");
+        RD_DEBUG("Move forward was triggered!\n");
         robotManager->moveForward();
         return true;
     }
-    if (k.getValue() == RdKey::KEY_ARROW_DOWN)
+    if (k == KEY_MOVE_BACK)
     {
-        RD_DEBUG("Down arrow was pressed!\n");
+        RD_DEBUG("Move backwards was triggered!\n");
         robotManager->moveBackwards();
         return true;
     }
@@ -196,27 +208,27 @@ bool rd::GameState::onKeyDown(rd::RdKey k)
 bool rd::GameState::onKeyUp(rd::RdKey k)
 {
     //-- Movement control
-    if (k.getValue() == RdKey::KEY_ARROW_LEFT)
+    if (k == KEY_TURN_LEFT)
     {
-        RD_DEBUG("Left arrow was released!\n");
+        RD_DEBUG("Turn left was released!\n");
         robotManager->stopMovement();
         return true;
     }
-    if (k.getValue() == RdKey::KEY_ARROW_RIGHT)
+    if (k == KEY_TURN_RIGHT)
     {
-        RD_DEBUG("Right arrow was released!\n");
+        RD_DEBUG("Turn right was released!\n");
         robotManager->stopMovement();
         return true;
     }
-    if (k.getValue() == RdKey::KEY_ARROW_UP)
+    if (k == KEY_MOVE_FWD)
     {
-        RD_DEBUG("Up arrow was released!\n");
+        RD_DEBUG("Move forward was released!\n");
         robotManager->stopMovement();
         return true;
     }
-    if (k.getValue() == RdKey::KEY_ARROW_DOWN)
+    if (k == KEY_MOVE_BACK)
     {
-        RD_DEBUG("Down arrow was released!\n");
+        RD_DEBUG("Move backwards was released!\n");
         robotManager->stopMovement();
         return true;
     }

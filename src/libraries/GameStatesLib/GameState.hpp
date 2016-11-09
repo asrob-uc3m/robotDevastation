@@ -10,6 +10,7 @@
 #include "RdYarpNetworkManager.hpp"
 #include "GameScreen.hpp"
 #include "RdProcessorImageEventListener.hpp"
+#include "MockupKey.hpp"
 
 #include <string>
 #include <sstream>
@@ -56,6 +57,19 @@ class GameState : public State, public ManagerHub,
 
         //-- ImageEventListener interface
         virtual bool onImageArrived(RdImageManager * manager);
+
+        //-- Define keys that trigger actions
+        static const RdKey KEY_EXIT;
+        static const RdKey KEY_SHOOT;
+        static const RdKey KEY_RELOAD;
+        static const RdKey KEY_MOVE_FWD;
+        static const RdKey KEY_MOVE_BACK;
+        static const RdKey KEY_TURN_LEFT;
+        static const RdKey KEY_TURN_RIGHT;
+        static const RdKey KEY_PAN_POS;
+        static const RdKey KEY_PAN_NEG;
+        static const RdKey KEY_TILT_POS;
+        static const RdKey KEY_TILT_NEG;
 
     protected:
         GameScreen screen;

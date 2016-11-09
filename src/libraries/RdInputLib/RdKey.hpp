@@ -25,8 +25,8 @@ namespace rd{
 class RdKey
 {
     public:
-        bool isControlKey();
-        bool isPrintable();
+        bool isControlKey() const;
+        bool isPrintable() const;
 
         char getChar();
         int  getValue();
@@ -46,6 +46,8 @@ class RdKey
         static const int KEY_ENTER;
 
         virtual ~RdKey();
+
+        bool operator==(RdKey const& k);
 
     protected:
         RdKey();
