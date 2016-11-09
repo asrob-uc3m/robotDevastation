@@ -10,10 +10,10 @@ const rd::RdKey rd::GameState::KEY_MOVE_FWD = rd::MockupKey('w');
 const rd::RdKey rd::GameState::KEY_MOVE_BACK = rd::MockupKey('s');
 const rd::RdKey rd::GameState::KEY_TURN_LEFT = rd::MockupKey('a');
 const rd::RdKey rd::GameState::KEY_TURN_RIGHT = rd::MockupKey('d');
-const rd::RdKey rd::GameState::KEY_PAN_POS = rd::MockupKey(rd::RdKey::KEY_ARROW_LEFT);
-const rd::RdKey rd::GameState::KEY_PAN_NEG = rd::MockupKey(rd::RdKey::KEY_ARROW_RIGHT);
-const rd::RdKey rd::GameState::KEY_TILT_POS = rd::MockupKey(rd::RdKey::KEY_ARROW_UP);
-const rd::RdKey rd::GameState::KEY_TILT_NEG = rd::MockupKey(rd::RdKey::KEY_ARROW_DOWN);
+const rd::RdKey rd::GameState::KEY_PAN_LEFT = rd::MockupKey(rd::RdKey::KEY_ARROW_LEFT);
+const rd::RdKey rd::GameState::KEY_PAN_RIGHT = rd::MockupKey(rd::RdKey::KEY_ARROW_RIGHT);
+const rd::RdKey rd::GameState::KEY_TILT_UP = rd::MockupKey(rd::RdKey::KEY_ARROW_UP);
+const rd::RdKey rd::GameState::KEY_TILT_DOWN = rd::MockupKey(rd::RdKey::KEY_ARROW_DOWN);
 
 rd::GameState::GameState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
                          rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
@@ -202,6 +202,32 @@ bool rd::GameState::onKeyDown(rd::RdKey k)
         return true;
     }
 
+    //-- Pan-tilt control
+    if (k == KEY_PAN_LEFT)
+    {
+        RD_DEBUG("Pan left was triggered!\n");
+        robotManager->panLeft();
+        return true;
+    }
+    if (k == KEY_PAN_RIGHT)
+    {
+        RD_DEBUG("Pan right was triggered!\n");
+        robotManager->panRight();
+        return true;
+    }
+    if (k == KEY_TILT_UP)
+    {
+        RD_DEBUG("Tilt pos was triggered!\n");
+        robotManager->tiltUp();
+        return true;
+    }
+    if (k == KEY_TILT_DOWN)
+    {
+        RD_DEBUG("Tilt neg was triggered!\n");
+        robotManager->tiltDown();
+        return true;
+    }
+
     return false;
 }
 
@@ -233,6 +259,31 @@ bool rd::GameState::onKeyUp(rd::RdKey k)
         return true;
     }
 
+    //-- Pan-tilt control
+    if (k == KEY_PAN_LEFT)
+    {
+        RD_DEBUG("Pan left was released!\n");
+        robotManager->stopCameraMovement();
+        return true;
+    }
+    if (k == KEY_PAN_RIGHT)
+    {
+        RD_DEBUG("Pan right was released!\n");
+        robotManager->stopCameraMovement();
+        return true;
+    }
+    if (k == KEY_TILT_UP)
+    {
+        RD_DEBUG("Tilt up was released!\n");
+        robotManager->stopCameraMovement();
+        return true;
+    }
+    if (k == KEY_TILT_DOWN)
+    {
+        RD_DEBUG("Tilt down was released!\n");
+        robotManager->stopCameraMovement();
+        return true;
+    }
     return false;
 }
 

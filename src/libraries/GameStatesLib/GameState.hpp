@@ -66,10 +66,10 @@ class GameState : public State, public ManagerHub,
         static const RdKey KEY_MOVE_BACK;
         static const RdKey KEY_TURN_LEFT;
         static const RdKey KEY_TURN_RIGHT;
-        static const RdKey KEY_PAN_POS;
-        static const RdKey KEY_PAN_NEG;
-        static const RdKey KEY_TILT_POS;
-        static const RdKey KEY_TILT_NEG;
+        static const RdKey KEY_PAN_LEFT;
+        static const RdKey KEY_PAN_RIGHT;
+        static const RdKey KEY_TILT_UP;
+        static const RdKey KEY_TILT_DOWN;
 
     protected:
         GameScreen screen;
