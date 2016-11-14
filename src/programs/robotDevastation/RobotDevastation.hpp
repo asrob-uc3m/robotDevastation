@@ -72,7 +72,6 @@ class RobotDevastation : public yarp::os::RFModule
         RdMentalMap * mentalMap;
         RdNetworkManager * networkManager;
         RdRobotManager * robotManager;
-        FiniteStateMachine * stateMachine;
         RdImageManager * imageManager;
         ScreenManager * screenManager;
 
