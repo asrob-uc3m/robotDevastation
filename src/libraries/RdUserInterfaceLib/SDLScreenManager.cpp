@@ -64,6 +64,7 @@ bool rd::SDLScreenManager::show()
     //-- Show current screen
     SDL_UpdateWindowSurface(window); //Refresh the screen
     SDL_Delay(20); //Wait a bit :)
+    SDL_FreeSurface(screen_surface);
 
     mutex.unlock();
     return true;

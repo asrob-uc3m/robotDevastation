@@ -188,6 +188,12 @@ bool rd::GameScreen::update(std::string parameter, rd::RdImage value)
 
     if (parameter == PARAM_CAMERA_FRAME)
     {
+        if (camera_frame_surface!=NULL)
+        {
+            SDL_FreeSurface(camera_frame_surface);
+            camera_frame_surface=NULL;
+        }
+
         camera_frame = RdImage(value);
         camera_frame_surface = RdImage2SDLImage(camera_frame);
         if (camera_frame_surface==NULL)
@@ -249,6 +255,8 @@ bool rd::GameScreen::drawUserUI(SDL_Surface *screen, rd::RdPlayer user, rd::RdWe
     SDL_Rect ammo_rect_src = {0, 0, AMMO_TEXT_WIDTH, AMMO_TEXT_HEIGHT};
     SDL_BlitSurface(ammo_surface, &ammo_rect_src, screen, &ammo_rect);
 
+    SDL_FreeSurface(name_surface);
+    SDL_FreeSurface(ammo_surface);
     return true;
 }
 

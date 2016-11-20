@@ -6,10 +6,20 @@ rd::RdProcessorImageEventListener::RdProcessorImageEventListener()
 {
     //images_arrived = 0;
     cameraInitialized = false;
+    rimage = NULL;
 
     mentalMap = RdMentalMap::getMentalMap();
 
     scanner.set_config( zbar::ZBAR_NONE, zbar::ZBAR_CFG_ENABLE, 1);
+}
+
+rd::RdProcessorImageEventListener::~RdProcessorImageEventListener()
+{
+    if (rimage!=NULL)
+    {
+        free(rimage);
+        rimage = NULL;
+    }
 }
 
 bool rd::RdProcessorImageEventListener::onImageArrived( RdImageManager * manager )
@@ -23,10 +33,10 @@ bool rd::RdProcessorImageEventListener::onImageArrived( RdImageManager * manager
         cameraWidth = stored_image.width();
         cameraHeight = stored_image.height();
         cameraInitialized = true;
+        rimage = (unsigned char*)malloc( cameraWidth * cameraHeight );
     }
 
     //-- Convert from YARP rgb to zbar b/w.
-    unsigned char* rimage = (unsigned char*)malloc( cameraWidth * cameraHeight );
 
     for( unsigned y = 0; y < cameraHeight; y++ )
     {
