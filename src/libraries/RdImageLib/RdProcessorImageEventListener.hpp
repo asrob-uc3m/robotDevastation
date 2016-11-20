@@ -26,6 +26,7 @@ class RdProcessorImageEventListener : public RdImageEventListener
 {
     public:
         RdProcessorImageEventListener();
+        ~RdProcessorImageEventListener();
 
         virtual bool onImageArrived( RdImageManager * manager );
 
@@ -44,7 +45,8 @@ class RdProcessorImageEventListener : public RdImageEventListener
         int cameraWidth;
         int cameraHeight;
         bool cameraInitialized;
-        //
+        unsigned char* rimage;
+
         zbar::ImageScanner scanner;
 
         RdMentalMap* mentalMap;
