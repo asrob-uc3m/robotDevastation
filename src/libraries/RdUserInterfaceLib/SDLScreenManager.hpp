@@ -56,6 +56,12 @@ class SDLScreenManager : public ScreenManager
         //! @brief SDL Cleanup
         static bool cleanupSDL();
 
+        //------------------------------ Configuration ----------------------------------------------------------------//
+        //! @brief Configures a parameter with a value
+        virtual bool configure(std::string parameter, std::string value);
+
+        static const std::string PARAM_FULLSCREEN;
+
         //---------------- Manager Stuff ----------------------------------------------------------------------//
         virtual bool start();
         virtual bool stop();
@@ -90,6 +96,7 @@ class SDLScreenManager : public ScreenManager
 
         bool stopped;
         bool sdl_initialized;
+        bool fullscreen;
 
         SDL_Window * window;
         yarp::os::Mutex mutex;

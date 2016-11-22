@@ -14,6 +14,14 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Init screen manager
     SDLScreenManager::RegisterManager();
     screenManager = ScreenManager::getScreenManager(SDLScreenManager::id);
+    if (screenManager==NULL)
+    {
+        RD_ERROR("Could not create ScreenManager\n");
+        return false;
+    }
+    if( rf.check("fullscreen") )
+        screenManager->configure(SDLScreenManager::PARAM_FULLSCREEN, "enabled");
+
     screenManager->start();
 
     //-- Init input manager

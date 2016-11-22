@@ -4,10 +4,13 @@
 rd::SDLScreenManager * rd::SDLScreenManager::uniqueInstance = NULL;
 const std::string rd::SDLScreenManager::id = "SDL";
 
+const std::string rd::SDLScreenManager::PARAM_FULLSCREEN = "fullscreen";
+
 rd::SDLScreenManager::SDLScreenManager()
 {
     stopped = true;
     sdl_initialized = false;
+    fullscreen = false;
     window = NULL;
 }
 
@@ -29,10 +32,20 @@ bool rd::SDLScreenManager::show()
     if (window == NULL)
     {
         //-- Init screen
-        window = SDL_CreateWindow("Robot Devastation",
-                                  SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                  200, 100, //-- Arbitrary initial size
-                                  0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
+        if (fullscreen)
+        {
+            window = SDL_CreateWindow("Robot Devastation",
+                                      SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                                      200, 100, //-- Arbitrary initial size
+                                      SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);
+        }
+        else
+        {
+            window = SDL_CreateWindow("Robot Devastation",
+                                      SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                                      200, 100, //-- Arbitrary initial size
+                                      0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
+        }
         if (window==NULL)
         {
             RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
@@ -148,6 +161,27 @@ bool rd::SDLScreenManager::cleanupSDL()
 {
     RD_WARNING("SDL cleanup not implemented!\n");
     return true;
+}
+
+bool rd::SDLScreenManager::configure(std::string parameter, std::string value)
+{
+    if (parameter==PARAM_FULLSCREEN)
+    {
+        if (value=="enabled")
+        {
+            fullscreen = true;
+            RD_INFO("Fullscreen enabled!\n");
+            return true;
+        }
+        else if (value=="disabled")
+        {
+            fullscreen = false;
+            RD_INFO("Fullscreen disabled!\n");
+            return true;
+        }
+    }
+
+    return rd::ScreenManager::configure(parameter, value);
 }
 
 bool rd::SDLScreenManager::start()
