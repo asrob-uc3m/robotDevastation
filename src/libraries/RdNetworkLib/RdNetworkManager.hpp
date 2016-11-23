@@ -103,6 +103,9 @@ class RdNetworkManager: public RdMentalMapEventListener
         //! @brief Implementation of RdMentalMapEventListener interface
         bool onTargetHit(rd::RdTarget target, rd::RdPlayer player, rd::RdWeapon weapon);
 
+        //! @brief Implementation of RdMentalMapEventListener interface
+        bool onRespawn(rd::RdPlayer player);
+
 
 protected:
         /**

@@ -222,6 +222,11 @@ bool rd::RdMentalMap::updateTargets(std::vector<RdTarget> new_target_detections)
 bool rd::RdMentalMap::respawn()
 {
     myself->setHealth(myself->getMaxHealth());
+
+    //-- Update listeners
+    for (size_t i = 0; i < listeners.size(); i++)
+        listeners[i]->onRespawn(*myself);
+
     return true;
 }
 

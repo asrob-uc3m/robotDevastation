@@ -26,6 +26,12 @@ class RdMentalMapEventListener
          * @param weapon Weapon used to hit the target
          */
         virtual bool onTargetHit(RdTarget target, RdPlayer player, RdWeapon weapon) = 0;
+
+        /**
+         * @brief This function will be called whenever the player is respawned
+         * @param player Player to respawn
+         */
+        virtual bool onRespawn(RdPlayer player) = 0;
 };
 
 }

@@ -105,6 +105,11 @@ bool rd::RdNetworkManager::onTargetHit(rd::RdTarget target, rd::RdPlayer player,
     return sendPlayerHit(player, weapon.getDamage());
 }
 
+bool rd::RdNetworkManager::onRespawn(rd::RdPlayer player)
+{
+    return sendPlayerHit(player, -1*player.getMaxHealth()); //-- This is a quick and dirty hack
+}
+
 bool rd::RdNetworkManager::Register(rd::RdNetworkManager *manager, std::string id)
 {
     if ( networkManagerRegistry.find(id) == networkManagerRegistry.end())
