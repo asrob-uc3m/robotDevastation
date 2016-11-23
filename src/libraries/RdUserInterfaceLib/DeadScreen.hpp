@@ -6,7 +6,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include <cstdlib> // For some useful functions such as atexit :)
 #include <string>
 #include <yarp/os/ResourceFinder.h>
 

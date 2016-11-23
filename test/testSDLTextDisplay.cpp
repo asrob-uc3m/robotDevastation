@@ -1,6 +1,6 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
-#include <cstdlib> // For some useful functions such as atexit :)
+#include <cstdlib> // atexit()
 #include <iostream>
 #include <yarp/os/ResourceFinder.h>
 
@@ -23,7 +23,7 @@ int main(void)
     fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
     return false;
     }
-    atexit(SDL_Quit); // Clean it up nicely :)
+    atexit(SDL_Quit); // Clean it up nicely :) FIXME: #70
 
     //-- Init ttf
     if (TTF_Init() == -1)
@@ -102,4 +102,5 @@ int main(void)
     SDL_FreeSurface(screen);
     SDL_FreeSurface(text_surface);
 
+    return 0;
 }
