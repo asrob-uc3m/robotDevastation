@@ -69,6 +69,20 @@ bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
             out.addVocab(VOCAB_RD_OK);
         }
     }
+    else if ((in.get(0).asString() == "respawn")||(in.get(0).asVocab() == VOCAB_RD_RESPAWN)) //-- respawn
+    {
+        int respawnId = in.get(1).asInt();
+
+        if ( players->find(respawnId) == players->end() )
+        {
+            RD_ERROR("Could not respawn, player not logged in, id: %d.\n",logoutId);
+            out.addVocab(VOCAB_RD_FAIL);
+        } else {
+            int newHealth = players->at(respawnId).getMaxHealth();
+            players->at(respawnId).setHealth(newHealth);
+            out.addVocab(VOCAB_RD_OK);
+        }
+    }
     else
     {
 		RD_ERROR("Unkown command: %s.\n", in.toString().c_str());

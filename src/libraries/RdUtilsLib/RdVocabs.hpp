@@ -13,6 +13,7 @@
 #define VOCAB_RD_LOGOUT VOCAB('l','o','g','o')
 #define VOCAB_RD_OK VOCAB2('o','k')
 #define VOCAB_RD_PLAYERS VOCAB('p','l','y','s')
+#define VOCAB_RD_RESPAWN VOCAB('r','p','w','n')
 
 #endif  // __RD_VOCABS_HPP__
 
