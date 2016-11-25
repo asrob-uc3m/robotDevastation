@@ -17,6 +17,8 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
+#include <cstdlib> // atexit()
+
 using namespace rd;
 
 bool finished = false;
@@ -156,7 +158,7 @@ int main(void)
     fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
     return false;
     }
-    atexit(SDL_Quit); // Clean it up nicely :)
+    atexit(SDL_Quit); // Clean it up nicely :) FIXME: #70
 
     //-- Init screen
     SDL_Window * window = SDL_CreateWindow("Robot Devastation",
@@ -206,5 +208,6 @@ int main(void)
     }
 
     RdInputManager::destroyInputManager();
-    SDL_Quit();
+
+    return 0;
 }

@@ -30,7 +30,6 @@ bool rd::initSDL()
         RD_ERROR("SDL could not initialize!\n SDL Error: %s\n", SDL_GetError());
         return false;
     }
-    atexit(SDL_Quit); // Clean it up nicely :)
 
     //-- Init ttf
     if (TTF_Init() == -1)
@@ -50,6 +49,7 @@ bool rd::initSDL()
 
 bool rd::cleanupSDL()
 {
-    RD_WARNING("SDL cleanup not implemented!\n");
+    RD_INFO("Freeing resources...\n");
+    SDL_Quit();
     return true;
 }
