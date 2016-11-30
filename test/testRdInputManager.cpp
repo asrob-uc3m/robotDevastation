@@ -158,7 +158,7 @@ int main(void)
     fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
     return false;
     }
-    atexit(SDL_Quit); // Clean it up nicely :) FIXME: #70
+    atexit(SDL_Quit); // Clean it up nicely :)
 
     //-- Init screen
     SDL_Window * window = SDL_CreateWindow("Robot Devastation",
