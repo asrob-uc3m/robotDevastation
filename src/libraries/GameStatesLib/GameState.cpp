@@ -155,7 +155,7 @@ int rd::GameState::evaluateConditions()
     return -1;
 }
 
-bool rd::GameState::onKeyDown(rd::RdKey k)
+bool rd::GameState::onKeyDown(const rd::RdKey & k)
 {
     if (k == KEY_SHOOT)
     {
@@ -231,7 +231,7 @@ bool rd::GameState::onKeyDown(rd::RdKey k)
     return false;
 }
 
-bool rd::GameState::onKeyUp(rd::RdKey k)
+bool rd::GameState::onKeyUp(const rd::RdKey & k)
 {
     //-- Movement control
     if (k == KEY_TURN_LEFT)

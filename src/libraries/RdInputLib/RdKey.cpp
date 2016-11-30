@@ -15,12 +15,12 @@ bool rd::RdKey::isPrintable() const
     return printable;
 }
 
-char rd::RdKey::getChar()
+char rd::RdKey::getChar() const
 {
     return char_value;
 }
 
-int rd::RdKey::getValue()
+int rd::RdKey::getValue() const
 {
     return key_value;
 }
@@ -29,7 +29,7 @@ rd::RdKey::~RdKey()
 {
 }
 
-bool rd::RdKey::operator==(const rd::RdKey &k)
+bool rd::RdKey::operator==(const rd::RdKey &k) const
 {
     if (this->isPrintable() && k.isPrintable())
         return this->char_value == k.char_value;

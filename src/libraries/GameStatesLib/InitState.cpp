@@ -85,12 +85,12 @@ int rd::InitState::evaluateConditions()
     return -1;
 }
 
-bool rd::InitState::onKeyDown(rd::RdKey k)
+bool rd::InitState::onKeyDown(const rd::RdKey & k)
 {
     return true;
 }
 
-bool rd::InitState::onKeyUp(rd::RdKey k)
+bool rd::InitState::onKeyUp(const rd::RdKey & k)
 {
     if (k.isControlKey() || k.isPrintable())
     {

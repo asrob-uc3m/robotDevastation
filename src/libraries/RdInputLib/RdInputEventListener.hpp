@@ -21,13 +21,13 @@ class RdInputEventListener
          * @brief This function will be called whenever a key is pressed on the keyboard
          * @param k Key that triggered the event
          */
-        virtual bool onKeyDown( RdKey k ) = 0;
+        virtual bool onKeyDown( const RdKey & k ) = 0;
 
         /**
         * @brief This function will be called whenever a key is released on the keyboard
         * @param k Key that triggered the event
         */
-        virtual bool onKeyUp( RdKey k ) = 0;
+        virtual bool onKeyUp( const RdKey & k ) = 0;
 
 };
 

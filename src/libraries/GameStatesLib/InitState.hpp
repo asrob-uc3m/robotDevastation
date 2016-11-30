@@ -51,8 +51,8 @@ class InitState : public State, public ManagerHub, public RdInputEventListener
         static const int LOGIN_SUCCESSFUL;
 
         //-- RdInputEventListener interface:
-        virtual bool onKeyDown(RdKey k);
-        virtual bool onKeyUp(RdKey k);
+        virtual bool onKeyDown(const RdKey & k);
+        virtual bool onKeyUp(const RdKey & k);
 
     protected:
         InitScreen screen;

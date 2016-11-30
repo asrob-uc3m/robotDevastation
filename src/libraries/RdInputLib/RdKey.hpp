@@ -28,8 +28,8 @@ class RdKey
         bool isControlKey() const;
         bool isPrintable() const;
 
-        char getChar();
-        int  getValue();
+        char getChar() const;
+        int  getValue() const;
 
         //-- Constants for control keys (non-printable)
         //! @brief Constant representing a non-supported / unknown key
@@ -47,7 +47,7 @@ class RdKey
 
         virtual ~RdKey();
 
-        bool operator==(RdKey const& k);
+        bool operator==(RdKey const& k) const;
 
     protected:
         RdKey();

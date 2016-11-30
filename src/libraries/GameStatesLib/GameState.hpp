@@ -52,8 +52,8 @@ class GameState : public State, public ManagerHub,
         static const int EXIT_REQUESTED;
 
         //-- RdInputEventListener interface:
-        virtual bool onKeyDown(RdKey k);
-        virtual bool onKeyUp(RdKey k);
+        virtual bool onKeyDown(const RdKey & k);
+        virtual bool onKeyUp(const RdKey & k);
 
         //-- ImageEventListener interface
         virtual bool onImageArrived(RdImageManager * manager);

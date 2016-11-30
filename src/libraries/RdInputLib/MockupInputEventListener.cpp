@@ -6,7 +6,7 @@ rd::MockupInputEventListener::MockupInputEventListener()
     num_keyup_presses = 0;
 }
 
-bool rd::MockupInputEventListener::onKeyDown(rd::RdKey k)
+bool rd::MockupInputEventListener::onKeyDown(const rd::RdKey & k)
 {
     num_keydown_presses++;
     stored_keydown_presses.push_back(k);
@@ -14,7 +14,7 @@ bool rd::MockupInputEventListener::onKeyDown(rd::RdKey k)
     return true;
 }
 
-bool rd::MockupInputEventListener::onKeyUp(rd::RdKey k)
+bool rd::MockupInputEventListener::onKeyUp(const rd::RdKey & k)
 {
     num_keyup_presses++;
     stored_keyup_presses.push_back(k);

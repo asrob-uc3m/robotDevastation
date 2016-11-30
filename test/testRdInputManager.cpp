@@ -47,7 +47,7 @@ class RdTestEventListener : public RdInputEventListener
             SDLAudioManager::destroyAudioManager();
         }
 
-        virtual bool onKeyDown(RdKey k)
+        virtual bool onKeyDown(const RdKey & k)
         {
             if ( k.isControlKey() )
             {
@@ -114,7 +114,7 @@ class RdTestEventListener : public RdInputEventListener
             }
         }
 
-        virtual bool onKeyUp(RdKey k)
+        virtual bool onKeyUp(const RdKey & k)
         {
             if ( k.isControlKey() )
             {

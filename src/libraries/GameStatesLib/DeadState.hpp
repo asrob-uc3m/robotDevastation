@@ -43,8 +43,8 @@ public:
     static const int EXIT_SELECTED;
 
     //-- RdInputEventListener interface:
-    virtual bool onKeyDown(RdKey k);
-    virtual bool onKeyUp(RdKey k);
+    virtual bool onKeyDown(const RdKey & k);
+    virtual bool onKeyUp(const RdKey & k);
 
     static const int DEFAULT_RATE_MS;
     static const int MAX_HEALTH;
