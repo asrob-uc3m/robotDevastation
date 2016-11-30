@@ -22,6 +22,10 @@ bool rd::MockupInputEventListener::onKeyUp(const rd::RdKey & k)
     return true;
 }
 
+bool rd::MockupInputEventListener::onWindowEvent(const rd::RdWindowEvent & event)
+{
+    return true; // not implemented
+}
 
 int rd::MockupInputEventListener::getNumKeyDownPresses()
 {

@@ -98,3 +98,13 @@ bool rd::InitState::onKeyUp(const rd::RdKey & k)
         login = true;
     }
 }
+
+bool rd::InitState::onWindowEvent(const rd::RdWindowEvent & event)
+{
+    if (event.getEvent() == SDL_WINDOWEVENT_CLOSE)
+    {
+        RD_DEBUG("Not yet implemented!\n");
+        return true;
+    }
+    return false;
+}

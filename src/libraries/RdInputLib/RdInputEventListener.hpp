@@ -4,6 +4,7 @@
 #define __RD_INPUT_EVENT_LISTENER_HPP__
 
 #include "RdKey.hpp"
+#include "RdWindowEvent.hpp"
 
 namespace rd{
 
@@ -29,6 +30,11 @@ class RdInputEventListener
         */
         virtual bool onKeyUp( const RdKey & k ) = 0;
 
+        /**
+         * @brief This function will be called whenever a window event is raised
+         * @param event Object that wraps the window event
+         */
+        virtual bool onWindowEvent( const RdWindowEvent & event ) = 0;
 };
 
 }

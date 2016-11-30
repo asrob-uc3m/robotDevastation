@@ -287,6 +287,17 @@ bool rd::GameState::onKeyUp(const rd::RdKey & k)
     return false;
 }
 
+bool rd::GameState::onWindowEvent(const rd::RdWindowEvent & event)
+{
+    if (event.getEvent() == SDL_WINDOWEVENT_CLOSE)
+    {
+        RD_DEBUG("Exit was triggered!\n");
+        received_exit = true;
+        return true;
+    }
+    return false;
+}
+
 bool rd::GameState::onImageArrived(rd::RdImageManager *manager)
 {
     //-- Don't know if this is safe enough or some mutex is required

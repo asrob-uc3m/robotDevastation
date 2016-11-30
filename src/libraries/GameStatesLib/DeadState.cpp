@@ -159,3 +159,14 @@ bool rd::DeadState::onKeyUp(const rd::RdKey & k)
 
     return false;
 }
+
+bool rd::DeadState::onWindowEvent(const RdWindowEvent & event)
+{
+    if (event.getEvent() == SDL_WINDOWEVENT_CLOSE)
+    {
+        RD_DEBUG("Exit was triggered!\n");
+        received_exit = true;
+        return true;
+    }
+    return false;
+}

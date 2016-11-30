@@ -104,15 +104,12 @@ bool rd::RdSDLInputManager::inputCallback(SDL_Event *event)
     }
     else if (event->type == SDL_WINDOWEVENT)
     {
-        if (event->window.event == SDL_WINDOWEVENT_CLOSE)
-        {
-            // TODO: invoke event listeners
-            RD_DEBUG("Close button was hit.\n");
-        }
-        else
-        {
-            return false;
-        }
+        RdWindowEvent * windowEvent = new RdSDLWindowEvent(event->window);
+
+        for (int i = 0; i < (int) listeners.size(); i++)
+            listeners.at(i)->onWindowEvent(*windowEvent);
+
+        delete windowEvent;
     }
     else
     {

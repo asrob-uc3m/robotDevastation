@@ -10,6 +10,7 @@
 #include "RdYarpNetworkManager.hpp"
 #include "ScreenManager.hpp"
 #include "InitScreen.hpp"
+#include "RdWindowEvent.hpp"
 
 #include <string>
 #include <sstream>
@@ -18,6 +19,8 @@
 #include <yarp/os/Bottle.h>
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
+
+#include <SDL.h>
 
 
 namespace rd{
@@ -53,6 +56,7 @@ class InitState : public State, public ManagerHub, public RdInputEventListener
         //-- RdInputEventListener interface:
         virtual bool onKeyDown(const RdKey & k);
         virtual bool onKeyUp(const RdKey & k);
+        virtual bool onWindowEvent(const RdWindowEvent & event);
 
     protected:
         InitScreen screen;

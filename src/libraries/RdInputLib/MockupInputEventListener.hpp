@@ -10,7 +10,7 @@ namespace rd{
 /**
  * @ingroup RdInputLib
  *
- * @brief Mockup object that receives and stores key presses, maily for testing purposes
+ * @brief Mockup object that receives and stores key presses, mainly for testing purposes
  */
 class MockupInputEventListener : public RdInputEventListener
 {
@@ -19,6 +19,7 @@ class MockupInputEventListener : public RdInputEventListener
 
         virtual bool onKeyDown( const RdKey & k );
         virtual bool onKeyUp( const RdKey & k );
+        virtual bool onWindowEvent( const RdWindowEvent & event );
 
         int getNumKeyDownPresses();
         int getNumKeyUpPresses();

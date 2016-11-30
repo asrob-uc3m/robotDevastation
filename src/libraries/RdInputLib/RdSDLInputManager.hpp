@@ -10,7 +10,9 @@
 #include "RdInputManager.hpp"
 #include "RdInputEventListener.hpp"
 #include "RdKey.hpp"
+#include "RdWindowEvent.hpp"
 #include "RdSDLKey.hpp"
+#include "RdSDLWindowEvent.hpp"
 
 namespace rd{
 

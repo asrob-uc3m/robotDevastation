@@ -147,6 +147,11 @@ class RdTestEventListener : public RdInputEventListener
             }
         }
 
+        virtual bool onWindowEvent(const RdWindowEvent & event)
+        {
+            // not implemented
+        }
+
     private:
         AudioManager * audioManager;
 };

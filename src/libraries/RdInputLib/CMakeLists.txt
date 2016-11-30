@@ -14,7 +14,7 @@ include_directories(${RD_INCLUDE_DIRS})
 
 
 add_library(${KEYWORD} RdInputManager.cpp RdSDLInputManager.cpp MockupInputManager.cpp RdKey.cpp RdSDLKey.cpp
-MockupKey.cpp RdInputEventListener.hpp MockupInputEventListener.cpp)
+RdWindowEvent.cpp RdSDLWindowEvent.cpp MockupKey.cpp RdInputEventListener.hpp MockupInputEventListener.cpp)
 
 target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${YARP_LIBRARIES} ${X11_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)

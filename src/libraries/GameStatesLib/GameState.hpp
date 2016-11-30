@@ -11,6 +11,7 @@
 #include "GameScreen.hpp"
 #include "RdProcessorImageEventListener.hpp"
 #include "MockupKey.hpp"
+#include "RdWindowEvent.hpp"
 
 #include <string>
 #include <sstream>
@@ -19,6 +20,8 @@
 #include <yarp/os/Bottle.h>
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
+
+#include <SDL.h>
 
 
 namespace rd{
@@ -54,6 +57,7 @@ class GameState : public State, public ManagerHub,
         //-- RdInputEventListener interface:
         virtual bool onKeyDown(const RdKey & k);
         virtual bool onKeyUp(const RdKey & k);
+        virtual bool onWindowEvent(const RdWindowEvent & event);
 
         //-- ImageEventListener interface
         virtual bool onImageArrived(RdImageManager * manager);

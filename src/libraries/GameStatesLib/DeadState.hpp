@@ -9,7 +9,9 @@
 #include "Hub.hpp"
 #include "RdYarpNetworkManager.hpp"
 #include "DeadScreen.hpp"
+#include "RdWindowEvent.hpp"
 
+#include <SDL.h>
 
 namespace rd{
 
@@ -45,6 +47,7 @@ public:
     //-- RdInputEventListener interface:
     virtual bool onKeyDown(const RdKey & k);
     virtual bool onKeyUp(const RdKey & k);
+    virtual bool onWindowEvent(const RdWindowEvent & event);
 
     static const int DEFAULT_RATE_MS;
     static const int MAX_HEALTH;
