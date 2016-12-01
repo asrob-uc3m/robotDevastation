@@ -73,43 +73,30 @@ bool rd::RdSDLInputManager::inputCallback(SDL_Event *event)
 {
     if (event->type == SDL_KEYDOWN )
     {
-        RdKey * key = new RdSDLKey(event->key.keysym.sym);
+        RdSDLKey key(event->key.keysym.sym);
 
-        if ( !(key->isPrintable() || key->isControlKey()) )
-        {
-            delete key;
+        if ( !(key.isPrintable() || key.isControlKey()) )
             return false;
-        }
 
         for ( int i = 0; i < (int)listeners.size(); i++)
-            listeners.at(i)->onKeyDown(*key);
-
-        delete key;
+            listeners.at(i)->onKeyDown(key);
     }
     else if (event->type == SDL_KEYUP )
     {
-        RdKey * key = new RdSDLKey(event->key.keysym.sym);
+        RdSDLKey key(event->key.keysym.sym);
 
-        if ( !(key->isPrintable() || key->isControlKey()) )
-        {
-            delete key;
+        if ( !(key.isPrintable() || key.isControlKey()) )
             return false;
-        }
 
         for ( int i = 0; i < (int)listeners.size(); i++)
-            listeners.at(i)->onKeyUp(*key);
-
-        delete key;
-
+            listeners.at(i)->onKeyUp(key);
     }
     else if (event->type == SDL_WINDOWEVENT)
     {
-        RdWindowEvent * windowEvent = new RdSDLWindowEvent(event->window);
+        RdSDLWindowEvent windowEvent(event->window);
 
         for (int i = 0; i < (int) listeners.size(); i++)
-            listeners.at(i)->onWindowEvent(*windowEvent);
-
-        delete windowEvent;
+            listeners.at(i)->onWindowEvent(windowEvent);
     }
     else
     {
