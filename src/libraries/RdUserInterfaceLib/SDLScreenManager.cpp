@@ -144,6 +144,7 @@ bool rd::SDLScreenManager::initSDL()
     if (TTF_Init() == -1)
     {
         RD_ERROR("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
+        cleanupSDL();
         return false;
     }
 
@@ -151,6 +152,7 @@ bool rd::SDLScreenManager::initSDL()
     if(!(IMG_Init(IMG_INIT_PNG)&IMG_INIT_PNG))
     {
         RD_ERROR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+        cleanupSDL();
         return false;
     }
     return true;
@@ -159,6 +161,8 @@ bool rd::SDLScreenManager::initSDL()
 bool rd::SDLScreenManager::cleanupSDL()
 {
     RD_INFO("Freeing resources...\n");
+    IMG_Quit();
+    TTF_Quit();
     SDL_Quit();
     return true;
 }

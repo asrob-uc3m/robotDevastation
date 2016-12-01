@@ -35,6 +35,7 @@ bool rd::initSDL()
     if (TTF_Init() == -1)
     {
         RD_ERROR("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
+        cleanupSDL();
         return false;
     }
 
@@ -42,6 +43,7 @@ bool rd::initSDL()
     if(!(IMG_Init(IMG_INIT_PNG)&IMG_INIT_PNG))
     {
         RD_ERROR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+        cleanupSDL();
         return false;
     }
     return true;
@@ -50,6 +52,8 @@ bool rd::initSDL()
 bool rd::cleanupSDL()
 {
     RD_INFO("Freeing resources...\n");
+    IMG_Quit();
+    TTF_Quit();
     SDL_Quit();
     return true;
 }

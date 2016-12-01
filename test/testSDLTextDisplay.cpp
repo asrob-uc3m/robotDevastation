@@ -31,6 +31,7 @@ int main(void)
       printf("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
       return false;
     }
+    atexit(TTF_Quit);
 
     //-- Init screen
     SDL_Window * window = SDL_CreateWindow("Robot Devastation",
