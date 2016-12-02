@@ -149,7 +149,20 @@ class RdTestEventListener : public RdInputEventListener
 
         virtual bool onWindowEvent(const RdWindowEvent & event)
         {
-            // not implemented
+            if ( event.getEvent() == RdWindowEvent::WINDOW_UNKNOWN )
+            {
+                RD_WARNING("Window event not implemented!\n");
+            }
+            else
+            {
+                RD_SUCCESS( "Triggered window event with code %d!\n", event.getEvent() );
+
+                if ( event.getEvent() == RdWindowEvent::WINDOW_CLOSE )
+                {
+                    finished = true;
+                    RD_SUCCESS("Exit!\n");
+                }
+            }
         }
 
     private:
