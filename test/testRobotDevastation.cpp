@@ -147,6 +147,7 @@ class RobotDevastationTest : public testing::Test
 
             //-- Add transitions to other states
             builder.addTransition(init_state_id, game_state_id, InitState::LOGIN_SUCCESSFUL);
+            builder.addTransition(init_state_id, end_state_id, InitState::EXIT_REQUESTED);
             builder.addTransition(game_state_id, dead_state_id, GameState::KILLED);
             builder.addTransition(game_state_id, end_state_id, GameState::EXIT_REQUESTED);
             builder.addTransition(dead_state_id, game_state_id, DeadState::RESPAWN_SELECTED);

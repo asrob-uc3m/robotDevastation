@@ -1,6 +1,9 @@
 #include "InitState.hpp"
 
 const int rd::InitState::LOGIN_SUCCESSFUL = 1;
+const int rd::InitState::EXIT_REQUESTED = 2;
+
+const rd::RdKey rd::InitState::KEY_EXIT = rd::MockupKey(rd::RdKey::KEY_ESCAPE);
 
 rd::InitState::InitState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
                          rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
@@ -11,6 +14,7 @@ rd::InitState::InitState(rd::RdNetworkManager *networkManager, rd::RdImageManage
     state_id = "InitState";
     login = false;
     logged_in = false;
+    received_exit = false;
 }
 
 rd::InitState::~InitState()
@@ -74,6 +78,15 @@ bool rd::InitState::cleanup()
     inputManager->removeInputEventListeners();
     screen.cleanup();
 
+    if (received_exit)
+    {
+        //-- Stop things to exit game (logout)
+        inputManager->stop();
+        audioManager->stop();
+        networkManager->stop();
+        robotManager->setEnabled(false);
+    }
+
     return true;
 }
 
@@ -82,28 +95,38 @@ int rd::InitState::evaluateConditions()
     if (logged_in)
         return LOGIN_SUCCESSFUL;
 
+    if (received_exit)
+        return EXIT_REQUESTED;
+
     return -1;
 }
 
 bool rd::InitState::onKeyDown(const rd::RdKey & k)
 {
+    if (k == KEY_EXIT)
+    {
+        RD_DEBUG("Exit was triggered!\n");
+        received_exit = true;
+    }
     return true;
 }
 
 bool rd::InitState::onKeyUp(const rd::RdKey & k)
 {
-    if (k.isControlKey() || k.isPrintable())
+    if ( !(k == KEY_EXIT) && (k.isControlKey() || k.isPrintable()) )
     {
         RD_DEBUG("Key was pressed!\n");
         login = true;
     }
+    return true;
 }
 
 bool rd::InitState::onWindowEvent(const rd::RdWindowEvent & event)
 {
     if (event.getEvent() == SDL_WINDOWEVENT_CLOSE)
     {
-        RD_DEBUG("Not yet implemented!\n");
+        RD_DEBUG("Exit was triggered!\n");
+        received_exit = true;
         return true;
     }
     return false;
