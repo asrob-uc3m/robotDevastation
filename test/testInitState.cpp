@@ -168,6 +168,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
 
     ASSERT_NE(-1, init_state_id);
     ASSERT_TRUE(builder.addTransition(init_state_id, end_state_id, InitState::LOGIN_SUCCESSFUL));
+    ASSERT_TRUE(builder.addTransition(init_state_id, end_state_id, InitState::EXIT_REQUESTED));
     ASSERT_TRUE(builder.setInitialState(init_state_id));
 
     fsm = builder.buildStateMachine();
