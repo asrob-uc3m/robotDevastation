@@ -289,7 +289,7 @@ bool rd::GameState::onKeyUp(const rd::RdKey & k)
 
 bool rd::GameState::onWindowEvent(const rd::RdWindowEvent & event)
 {
-    if (event.getEvent() == SDL_WINDOWEVENT_CLOSE)
+    if (event.getEvent() == rd::RdWindowEvent::WINDOW_CLOSE)
     {
         RD_DEBUG("Exit was triggered!\n");
         received_exit = true;

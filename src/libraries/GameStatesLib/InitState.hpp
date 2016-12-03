@@ -21,8 +21,6 @@
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
 
-#include <SDL.h>
-
 
 namespace rd{
 

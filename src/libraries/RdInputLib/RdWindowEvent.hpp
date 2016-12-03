@@ -21,6 +21,8 @@ class RdWindowEvent
          */
         virtual int getEvent() const;
 
+        //! @brief Constant representing an unimplemented or unrecognized window action
+        static const int WINDOW_UNKNOWN;
         //! @brief Constant representing a close window action
         static const int WINDOW_CLOSE;
 

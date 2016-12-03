@@ -22,6 +22,13 @@ class RdSDLWindowEvent : public RdWindowEvent
         RdSDLWindowEvent(const SDL_WindowEvent & windowEvent);
 
         virtual ~RdSDLWindowEvent();
+
+    private:
+        /**
+         * @brief Find the correspondence between SDLWindowEvents and RdWindowEvents
+         * @param id A SDL_WindowEventID candidate to check against
+         */
+        void identifyAction(int id);
 };
 
 }

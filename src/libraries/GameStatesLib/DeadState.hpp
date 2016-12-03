@@ -11,7 +11,6 @@
 #include "DeadScreen.hpp"
 #include "RdWindowEvent.hpp"
 
-#include <SDL.h>
 
 namespace rd{
 

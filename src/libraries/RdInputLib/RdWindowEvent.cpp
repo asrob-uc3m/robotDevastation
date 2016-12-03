@@ -1,6 +1,6 @@
 #include "RdWindowEvent.hpp"
 
-rd::RdWindowEvent::RdWindowEvent() : event_id(-1)
+rd::RdWindowEvent::RdWindowEvent() : event_id(WINDOW_UNKNOWN)
 {
 }
 
@@ -13,4 +13,5 @@ rd::RdWindowEvent::~RdWindowEvent()
 {
 }
 
-const int rd::RdWindowEvent::WINDOW_CLOSE = 0;
+const int rd::RdWindowEvent::WINDOW_UNKNOWN = -1;
+const int rd::RdWindowEvent::WINDOW_CLOSE = 1;
