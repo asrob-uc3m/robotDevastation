@@ -70,18 +70,9 @@ bool rd::RdYarpNetworkManager::start()
     }
 
     //-- Try to rpc connect to the server until timeout
-    int tries = 0;
-    while(tries++ < 10)
+    if( ! yarp::os::Network::connect( rpc_str.str() , "/rdServer" ) )
     {
-        if(rpcClient.getOutputCount() > 0)
-            break;
-        RD_INFO("Waiting for rpc to be connected to rdServer (launch 'rdServer' if not already launched). Attempt: %d\n",tries);
-        yarp::os::Time::delay(0.5);
-        yarp::os::Network::connect( rpc_str.str() , "/rdServer" );
-    }
-    if (tries == 11)  //-- 11 allows  10 attempts
-    {
-        RD_ERROR("Timeout for rpc to be connected to rdServer (launch 'rdServer' if not already launched).\n");
+        RD_ERROR("Could not connect Rpc to rdServer (launch 'rdServer' if not already launched).\n");
         return false;
     }
     RD_SUCCESS("Rpc connected to Server (outgoing)!\n")
