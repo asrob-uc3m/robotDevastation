@@ -51,7 +51,8 @@ bool rd::InitState::loop()
     if (login)
     {
         //-- Log in
-        networkManager->login();
+        if( ! networkManager->login() )
+            return false;
         if( ! robotManager->connect() )
             return false;
         robotManager->setEnabled(false);
