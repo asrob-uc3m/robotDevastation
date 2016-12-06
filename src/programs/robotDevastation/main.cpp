@@ -81,6 +81,7 @@ int main(int argc, char *argv[]) {
         printf("\t--mockupRobotManager  //-- Fake robot motors\n");
         printf("\t--mockupImageManager  //-- Fake robot camera\n");
         printf("\t--yarpLocalImageManager  //-- Local webcam as camera\n");
+        printf("\t--fullscreen //-- Fullscreen mode (experimental)\n");
         return 0;
     }
 
