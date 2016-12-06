@@ -18,7 +18,6 @@ bool rd::RdYarpImageManager::start()
     }
 
     imagePort.open(local_port_name.c_str());
-    imagePort.useCallback(*this);
 
     if(! yarp::os::Network::connect( remote_port_name.c_str(), local_port_name.c_str(), "mjpeg" ) )
     {
@@ -30,6 +29,8 @@ bool rd::RdYarpImageManager::start()
             return false;
 		}
 	}
+
+    imagePort.useCallback(*this);
 
     RD_SUCCESS("Connected to robot camera.\n");
 
