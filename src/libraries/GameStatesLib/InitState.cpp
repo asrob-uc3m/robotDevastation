@@ -50,13 +50,13 @@ bool rd::InitState::loop()
     //-- Do stuff
     if (login)
     {
-        //-- Log in
-        if( ! networkManager->login() )
-            return false;
         if( ! robotManager->connect() )
             return false;
         robotManager->setEnabled(false);
         if( ! imageManager->start() )
+            return false;
+        //-- Log in
+        if( ! networkManager->login() )
             return false;
         logged_in = true;
     }
