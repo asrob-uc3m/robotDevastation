@@ -11,6 +11,7 @@
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/Network.h>
 #include <yarp/os/Semaphore.h>
+#include <yarp/os/Time.h>
 
 #include "RdUtils.hpp"
 #include "RdImageManager.hpp"

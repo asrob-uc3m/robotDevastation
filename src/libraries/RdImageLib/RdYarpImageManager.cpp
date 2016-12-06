@@ -19,20 +19,49 @@ bool rd::RdYarpImageManager::start()
 
     imagePort.open(local_port_name.c_str());
 
-    if(! yarp::os::Network::connect( remote_port_name.c_str(), local_port_name.c_str(), "mjpeg" ) )
+    //-- Connect from robot camera to robotDevastation (via mjpeg)
+    int mjpegTries = 0;
+    while(mjpegTries++ < 10)
+   {
+        if(imagePort.getInputCount() > 0)
+            break;
+        RD_INFO("Try to connect from robot camera to robotDevastation (via mjpeg). Attempt: %d\n",mjpegTries);
+        yarp::os::Time::delay(0.5);
+        yarp::os::Network::connect( remote_port_name.c_str(), local_port_name.c_str(), "mjpeg" );
+    }
+    if (mjpegTries == 11)  //-- 11 allows  10 attempts
     {
-        RD_WARNING("Could not connect to robot camera via mjpeg.\n");
-		if (!yarp::os::Network::connect(remote_port_name.c_str(), local_port_name.c_str()))
-		{
+        RD_ERROR("Timeout for connect from robot camera to robotDevastation (via mjpeg).\n");
+
+        //-- Connect from robot camera to robotDevastation (NON-mjpeg)
+        int tries = 0;
+        while(tries++ < 10)
+       {
+            if(imagePort.getInputCount() > 0)
+                break;
+            RD_INFO("Try to connect from robot camera to robotDevastation (NON-mjpeg). Attempt: %d\n",tries);
+            yarp::os::Time::delay(0.5);
+            yarp::os::Network::connect( remote_port_name.c_str(), local_port_name.c_str());
+        }
+        if (tries == 11)  //-- 11 allows  10 attempts
+        {
+            RD_ERROR("Timeout for connect from robot camera to robotDevastation (NON-mjpeg).\n");
             RD_ERROR("Could not connect to robot camera.\n");
             RD_INFO("If you prefer a fake camera use the '--mockupImageManager' or '--yarpLocalImageManager' parameter to run robotDevastation.\n");
             return false;
-		}
-	}
+        }
+        else
+        {
+            RD_SUCCESS(" Connect from robot camera to robotDevastation (NON-mjpeg).\n");
+        }
+    }
+    else
+    {
+        RD_SUCCESS(" Connect from robot camera to robotDevastation (via mjpeg).\n");
+    }
 
     imagePort.useCallback(*this);
 
-    RD_SUCCESS("Connected to robot camera.\n");
 
     stopped = false;
     enabled = false;
