@@ -5,8 +5,8 @@
 bool rd::RdServer::configure(yarp::os::ResourceFinder &rf)
 {
     rdRpcResponder.setPlayers(&players);
-    rdBroadcast.open("/rdBroadcast");
-    rpcServer.open("/rdServer");
+    rdBroadcast.open("/rdServer/info:o");
+    rpcServer.open("/rdServer/rpc:s");
     rpcServer.setReader(rdRpcResponder);
     return true;
 }

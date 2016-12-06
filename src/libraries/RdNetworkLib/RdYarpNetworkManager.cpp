@@ -49,9 +49,9 @@ bool rd::RdYarpNetworkManager::start()
 
     //-- Open the rcpClient port with this player's id
     std::ostringstream rpc_str;
-    rpc_str << "/";
+    rpc_str << "/robotDevastation/";
     rpc_str << player.getId();
-    rpc_str << "/rdServer/rpc:o";
+    rpc_str << "/rdServer/rpc:c";
     if( ! rpcClient.open( rpc_str.str() ) )
     {
         RD_ERROR("Could not open '%s'. Bye!\n",rpc_str.str().c_str());
@@ -60,9 +60,9 @@ bool rd::RdYarpNetworkManager::start()
 
     //-- Open the callback port with this player's id
     std::ostringstream callback_str;
-    callback_str << "/";
+    callback_str << "/robotDevastation/";
     callback_str << player.getId();
-    callback_str << "/rdServer/command:i";
+    callback_str << "/rdServer/info:i";
     if( ! callbackPort.open( callback_str.str() ) )
     {
         RD_ERROR("Could not open '%s'. Bye!\n",callback_str.str().c_str());
@@ -70,20 +70,20 @@ bool rd::RdYarpNetworkManager::start()
     }
 
     //-- Connect robotDevastation RpcClient to rdServer RpcServer
-    if( ! yarp::os::Network::connect( rpc_str.str() , "/rdServer" ) )
+    if( ! yarp::os::Network::connect( rpc_str.str() , "/rdServer/rpc:s" ) )
     {
         RD_ERROR("Could not connect robotDevastation RpcClient to rdServer RpcServer (launch 'rdServer' if not already launched).\n");
         return false;
     }
     RD_SUCCESS("Connected robotDevastation RpcClient to rdServer RpcServer!\n")
 
-    //-- Connect from rdServer rdBroadcast to robotDevastation callbackPort
-    if ( !yarp::os::Network::connect( "/rdBroadcast", callback_str.str() ))
+    //-- Connect from rdServer info to robotDevastation callbackPort
+    if ( !yarp::os::Network::connect( "/rdServer/info:o", callback_str.str() ))
     {
-        RD_ERROR("Could not connect from rdServer rdBroadcast to robotDevastation callbackPort (launch 'rdServer' if not already launched).\n");
+        RD_ERROR("Could not connect from rdServer info to robotDevastation callbackPort (launch 'rdServer' if not already launched).\n");
         return false;
     }
-    RD_SUCCESS("Connected from rdServer rdBroadcast to robotDevastation callbackPort!\n")
+    RD_SUCCESS("Connected from rdServer info to robotDevastation callbackPort!\n")
 
     callbackPort.useCallback(*this);
 
