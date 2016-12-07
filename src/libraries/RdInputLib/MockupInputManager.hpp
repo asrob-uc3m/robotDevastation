@@ -4,7 +4,6 @@
 #define __MOCKUP_INPUT_MANAGER_HPP__
 
 #include "RdInputManager.hpp"
-#include "MockupKey.hpp"
 
 namespace rd{
 

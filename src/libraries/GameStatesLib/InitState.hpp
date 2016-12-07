@@ -10,7 +10,6 @@
 #include "RdYarpNetworkManager.hpp"
 #include "ScreenManager.hpp"
 #include "InitScreen.hpp"
-#include "MockupKey.hpp"
 #include "RdWindowEvent.hpp"
 
 #include <string>

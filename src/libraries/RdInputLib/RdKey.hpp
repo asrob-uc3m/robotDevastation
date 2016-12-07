@@ -25,6 +25,9 @@ namespace rd{
 class RdKey
 {
     public:
+        RdKey(char printable_character);
+        RdKey(int control_key);
+
         bool isControlKey() const;
         bool isPrintable() const;
 
@@ -50,8 +53,6 @@ class RdKey
         bool operator==(RdKey const& k) const;
 
     protected:
-        RdKey();
-
         //! @brief Stores the char representation of a key
         char char_value;
         //! @brief Stores the control key value of a key

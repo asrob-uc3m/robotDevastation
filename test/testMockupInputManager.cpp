@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
 #include "MockupInputManager.hpp"
 #include "MockupInputEventListener.hpp"
-#include "MockupKey.hpp"
 
 using namespace rd;
 
@@ -41,7 +40,7 @@ TEST_F(MockupInputManagerTest, SingleControlKeyPressSentAndReceivedCorrectly)
     ASSERT_FALSE(inputManager->isStopped());
 
     //-- Fake a control keypress
-    MockupKey enter_key(RdKey::KEY_ENTER);
+    RdKey enter_key(RdKey::KEY_ENTER);
     ASSERT_TRUE(inputManager->sendKeyPress(enter_key));
 
     //-- Check if keypress was received
@@ -74,7 +73,7 @@ TEST_F(MockupInputManagerTest, SinglePrintableKeyPressSentAndReceivedCorrectly)
     ASSERT_FALSE(inputManager->isStopped());
 
     //-- Fake a control keypress
-    MockupKey d_key('d');
+    RdKey d_key('d');
     ASSERT_TRUE(inputManager->sendKeyPress(d_key));
 
     //-- Check if keypress was received
@@ -106,8 +105,8 @@ TEST_F(MockupInputManagerTest, SeveralControlKeyPressesSentAndReceivedCorrectly)
     ASSERT_FALSE(inputManager->isStopped());
 
     //-- Fake a control keypress
-    MockupKey enter_key(RdKey::KEY_ENTER);
-    MockupKey arrow_key(RdKey::KEY_ARROW_DOWN);
+    RdKey enter_key(RdKey::KEY_ENTER);
+    RdKey arrow_key(RdKey::KEY_ARROW_DOWN);
     ASSERT_TRUE(inputManager->sendKeyPress(enter_key));
     ASSERT_TRUE(inputManager->sendKeyPress(arrow_key));
 
@@ -142,8 +141,8 @@ TEST_F(MockupInputManagerTest, SeveralPrintableKeyPressesSentAndReceivedCorrectl
     ASSERT_FALSE(inputManager->isStopped());
 
     //-- Fake a control keypress
-    MockupKey r_key('r');
-    MockupKey d_key('d');
+    RdKey r_key('r');
+    RdKey d_key('d');
     ASSERT_TRUE(inputManager->sendKeyPress(r_key));
     ASSERT_TRUE(inputManager->sendKeyPress(d_key));
 
@@ -178,8 +177,8 @@ TEST_F(MockupInputManagerTest, KeyUpAndKeyDownSentAndReceivedCorrectly)
     ASSERT_FALSE(inputManager->isStopped());
 
     //-- Fake a key down
-    MockupKey enter_key(RdKey::KEY_ENTER);
-    MockupKey d_key('d');
+    RdKey enter_key(RdKey::KEY_ENTER);
+    RdKey d_key('d');
     ASSERT_TRUE(inputManager->sendKeyDown(enter_key));
     ASSERT_TRUE(inputManager->sendKeyDown(d_key));
 

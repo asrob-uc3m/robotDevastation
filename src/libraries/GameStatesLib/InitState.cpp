@@ -3,7 +3,7 @@
 const int rd::InitState::LOGIN_SUCCESSFUL = 1;
 const int rd::InitState::EXIT_REQUESTED = 2;
 
-const rd::RdKey rd::InitState::KEY_EXIT = rd::MockupKey(rd::RdKey::KEY_ESCAPE);
+const rd::RdKey rd::InitState::KEY_EXIT = rd::RdKey(rd::RdKey::KEY_ESCAPE);
 
 rd::InitState::InitState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
                          rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,

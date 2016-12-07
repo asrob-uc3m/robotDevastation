@@ -10,7 +10,6 @@
 #include "RdYarpNetworkManager.hpp"
 #include "GameScreen.hpp"
 #include "RdProcessorImageEventListener.hpp"
-#include "MockupKey.hpp"
 #include "RdWindowEvent.hpp"
 
 #include <string>

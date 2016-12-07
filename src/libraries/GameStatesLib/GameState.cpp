@@ -3,17 +3,17 @@
 const int rd::GameState::KILLED = 1;
 const int rd::GameState::EXIT_REQUESTED = 2;
 
-const rd::RdKey rd::GameState::KEY_EXIT = rd::MockupKey(rd::RdKey::KEY_ESCAPE);
-const rd::RdKey rd::GameState::KEY_SHOOT = rd::MockupKey(rd::RdKey::KEY_SPACE);
-const rd::RdKey rd::GameState::KEY_RELOAD = rd::MockupKey('r');
-const rd::RdKey rd::GameState::KEY_MOVE_FWD = rd::MockupKey('w');
-const rd::RdKey rd::GameState::KEY_MOVE_BACK = rd::MockupKey('s');
-const rd::RdKey rd::GameState::KEY_TURN_LEFT = rd::MockupKey('a');
-const rd::RdKey rd::GameState::KEY_TURN_RIGHT = rd::MockupKey('d');
-const rd::RdKey rd::GameState::KEY_PAN_LEFT = rd::MockupKey(rd::RdKey::KEY_ARROW_LEFT);
-const rd::RdKey rd::GameState::KEY_PAN_RIGHT = rd::MockupKey(rd::RdKey::KEY_ARROW_RIGHT);
-const rd::RdKey rd::GameState::KEY_TILT_UP = rd::MockupKey(rd::RdKey::KEY_ARROW_UP);
-const rd::RdKey rd::GameState::KEY_TILT_DOWN = rd::MockupKey(rd::RdKey::KEY_ARROW_DOWN);
+const rd::RdKey rd::GameState::KEY_EXIT = rd::RdKey(rd::RdKey::KEY_ESCAPE);
+const rd::RdKey rd::GameState::KEY_SHOOT = rd::RdKey(rd::RdKey::KEY_SPACE);
+const rd::RdKey rd::GameState::KEY_RELOAD = rd::RdKey('r');
+const rd::RdKey rd::GameState::KEY_MOVE_FWD = rd::RdKey('w');
+const rd::RdKey rd::GameState::KEY_MOVE_BACK = rd::RdKey('s');
+const rd::RdKey rd::GameState::KEY_TURN_LEFT = rd::RdKey('a');
+const rd::RdKey rd::GameState::KEY_TURN_RIGHT = rd::RdKey('d');
+const rd::RdKey rd::GameState::KEY_PAN_LEFT = rd::RdKey(rd::RdKey::KEY_ARROW_LEFT);
+const rd::RdKey rd::GameState::KEY_PAN_RIGHT = rd::RdKey(rd::RdKey::KEY_ARROW_RIGHT);
+const rd::RdKey rd::GameState::KEY_TILT_UP = rd::RdKey(rd::RdKey::KEY_ARROW_UP);
+const rd::RdKey rd::GameState::KEY_TILT_DOWN = rd::RdKey(rd::RdKey::KEY_ARROW_DOWN);
 
 rd::GameState::GameState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
                          rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
