@@ -184,6 +184,45 @@ TEST_F(RdYarpNetworkManagerTest, NetworkManagerAPIWorks)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
+TEST_F(RdYarpNetworkManagerTest, DisconnectedIfNoKeepAlive)
+{
+    MockupNetworkEventListener listener;
+    RdNetworkEventListener * plistener = (RdNetworkEventListener *) &listener;
+    ASSERT_TRUE(((RdNetworkManager*)networkManager)->addNetworkEventListener(plistener));
+
+    //-- Startup
+    networkManager->configure("player", me);
+    ASSERT_TRUE(networkManager->start());
+    ASSERT_FALSE(networkManager->isStopped());
+
+    //-- Login
+    ASSERT_TRUE(networkManager->login());
+    yarp::os::Time::delay(0.5);
+
+    std::vector<RdPlayer> players = listener.getStoredPlayers();
+    EXPECT_LE(1, listener.getDataArrived());
+    ASSERT_EQ(1, players.size());
+    EXPECT_EQ(0, players[0].getId());
+    listener.resetDataArrived();
+
+    //-- Wait more than the timeout time
+    yarp::os::Time::delay(RdNetworkManager::TIMEOUT+1);
+
+    //-- Check that I'm no longer logged in
+    players = listener.getStoredPlayers();
+    EXPECT_LE(1, listener.getDataArrived());
+    ASSERT_EQ(0, players.size());
+    listener.resetDataArrived();
+
+    //-- Logout
+    ASSERT_TRUE(networkManager->logout());
+    yarp::os::Time::delay(0.5);
+    ASSERT_FALSE(networkManager->logout());//--Check that it is not allowed to logout twice
+
+    //-- Stop
+    ASSERT_TRUE(networkManager->stop());
+    ASSERT_TRUE(networkManager->isStopped());
+}
 
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)

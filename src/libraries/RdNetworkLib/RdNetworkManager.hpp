@@ -98,6 +98,8 @@ class RdNetworkManager: public RdMentalMapEventListener
         //! @brief Log the user out of the network
         virtual bool logout() = 0;
 
+        static const int TIMEOUT; //-- Seconds without keep alive before server logs player out
+
         //-- MentalMap listener API
         //-------------------------------------------------------------------------------------------
         //! @brief Implementation of RdMentalMapEventListener interface

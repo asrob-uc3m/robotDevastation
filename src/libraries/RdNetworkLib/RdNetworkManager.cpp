@@ -4,7 +4,7 @@
 rd::RdNetworkManager * rd::RdNetworkManager::networkManagerInstance = NULL;
 std::string rd::RdNetworkManager::currentId = "";
 std::map<std::string, rd::RdNetworkManager *> rd::RdNetworkManager::networkManagerRegistry = std::map<std::string, rd::RdNetworkManager *>();
-
+const int rd::RdNetworkManager::TIMEOUT = 60;
 
 rd::RdNetworkManager *rd::RdNetworkManager::getNetworkManager()
 {
