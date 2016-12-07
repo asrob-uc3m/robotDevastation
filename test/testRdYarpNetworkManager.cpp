@@ -215,9 +215,7 @@ TEST_F(RdYarpNetworkManagerTest, DisconnectedIfNoKeepAlive)
     listener.resetDataArrived();
 
     //-- Logout
-    ASSERT_TRUE(networkManager->logout());
-    yarp::os::Time::delay(0.5);
-    ASSERT_FALSE(networkManager->logout());//--Check that it is not allowed to logout twice
+    ASSERT_FALSE(networkManager->logout()); //-- If you try to log out when already logged out you get an error
 
     //-- Stop
     ASSERT_TRUE(networkManager->stop());
