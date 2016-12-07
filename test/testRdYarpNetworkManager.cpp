@@ -206,7 +206,7 @@ TEST_F(RdYarpNetworkManagerTest, DisconnectedIfNoKeepAlive)
     listener.resetDataArrived();
 
     //-- Wait more than the timeout time
-    yarp::os::Time::delay(RdNetworkManager::TIMEOUT+1);
+    yarp::os::Time::delay(60+1); //-- This should be really hardcoded, but it is the fastest implementation right now
 
     //-- Check that I'm no longer logged in
     players = listener.getStoredPlayers();

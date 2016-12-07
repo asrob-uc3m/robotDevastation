@@ -34,6 +34,7 @@ bool rd::RdServer::updateModule()
     for(it_type iterator = players.begin(); iterator != players.end(); iterator++)
     {
        printf("----------------------\n%s\n", (iterator->second).str().c_str());
+       printf("Belief: %d\n", players_belief[iterator->first]);
        yarp::os::Bottle msgPlayer;
        msgPlayer.addInt( (iterator->second).getId() );
        msgPlayer.addString( (iterator->second).getName().c_str() );
