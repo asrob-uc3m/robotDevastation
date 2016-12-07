@@ -73,7 +73,7 @@ bool rd::RdSDLInputManager::inputCallback(SDL_Event *event)
 {
     if (event->type == SDL_KEYDOWN )
     {
-        RdSDLKey key(event->key.keysym.sym);
+        RdKey key = RdSDLKey::makeKey(event->key.keysym.sym);
 
         if ( !(key.isPrintable() || key.isControlKey()) )
             return false;
@@ -83,7 +83,7 @@ bool rd::RdSDLInputManager::inputCallback(SDL_Event *event)
     }
     else if (event->type == SDL_KEYUP )
     {
-        RdSDLKey key(event->key.keysym.sym);
+        RdKey key = RdSDLKey::makeKey(event->key.keysym.sym);
 
         if ( !(key.isPrintable() || key.isControlKey()) )
             return false;
