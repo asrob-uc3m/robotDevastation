@@ -131,6 +131,11 @@ bool rd::MockupNetworkManager::logout()
     return true;
 }
 
+bool rd::MockupNetworkManager::keepAlive()
+{
+    return true; //-- Not really required in mock object
+}
+
 bool rd::MockupNetworkManager::isLoggedIn()
 {
     return logged_in;

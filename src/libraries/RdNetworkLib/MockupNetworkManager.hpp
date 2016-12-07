@@ -56,6 +56,7 @@ class MockupNetworkManager : public RdNetworkManager
         virtual bool sendPlayerHit(RdPlayer player, int damage);
         virtual bool login();
         virtual bool logout();
+        virtual bool keepAlive();
 
         //-- Mockup object API
         //--------------------------------------------------------------------------------------------

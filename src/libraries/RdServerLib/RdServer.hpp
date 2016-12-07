@@ -5,6 +5,7 @@
 
 #include <yarp/os/RFModule.h>
 #include <yarp/os/RpcServer.h>
+#include <yarp/os/Mutex.h>
 
 #include <map>
 
@@ -44,6 +45,8 @@ class RdServer : public yarp::os::RFModule
         int serverStatus;
 
         std::map <int, RdPlayer> players;
+        std::map <int, int> players_belief;
+        yarp::os::Mutex players_mutex; //-- To work with players & players_belief
 
         yarp::os::RpcServer rpcServer;
         RdRpcResponder rdRpcResponder;

@@ -7,6 +7,7 @@
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/Time.h>
 #include <yarp/os/Vocab.h>
+#include <yarp/os/Mutex.h>
 
 #include <map>
 
@@ -16,18 +17,24 @@
 namespace rd
 {
 
-class RdRpcResponder : public yarp::os::PortReader {
-  protected:
+class RdRpcResponder : public yarp::os::PortReader
+{
+public:
+    void setPlayers(std::map<int,RdPlayer> *value, std::map <int,int>* players_belief,
+                    yarp::os::Mutex* players_mutex);
+
+    static const int MAX_BELIEF; //-- Timeout [s] / Period [s]
+
+private:
     /**
     * Implement the actual responder (callback on RPC).
     */
     virtual bool read(yarp::os::ConnectionReader& connection);
 
     yarp::os::Port* rdBroadcast;
-
-  public:
     std::map <int,RdPlayer>* players;
-    void setPlayers(std::map<int,RdPlayer> *value);
+    std::map <int,int>* players_belief;
+    yarp::os::Mutex* players_mutex;
 };
 
 }

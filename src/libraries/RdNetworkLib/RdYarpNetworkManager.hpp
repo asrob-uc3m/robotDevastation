@@ -7,6 +7,7 @@
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/Semaphore.h>
 #include <yarp/os/RpcClient.h>
+#include <yarp/os/RateThread.h>
 #include <yarp/os/Time.h>
 #include <yarp/os/Network.h>
 
@@ -33,6 +34,7 @@ namespace rd{
  *
  */
 class RdYarpNetworkManager: public RdNetworkManager,
+                            private yarp::os::RateThread,
                             public yarp::os::TypedReaderCallback<yarp::os::Bottle>
 
 {
@@ -63,6 +65,7 @@ class RdYarpNetworkManager: public RdNetworkManager,
         virtual bool sendPlayerHit(RdPlayer player, int damage);
         virtual bool login();
         virtual bool logout();
+        virtual bool keepAlive();
 
     protected:
         //! @brief Yarp callback for incoming messages
@@ -81,12 +84,10 @@ class RdYarpNetworkManager: public RdNetworkManager,
         //! @brief Reference to this manager (unique instance)
         static RdYarpNetworkManager * uniqueInstance;
 
+        void run();
 
-        /**
-         * @brief Start the NetworkManager communications with the RdServer
-         * @param id Id of the player corresponding to the user
-         * @return
-         */
+        //! @brief Period of the keep alive (called by run() )
+        static const int KEEPALIVE_RATE_MS;
 
 
         yarp::os::RpcClient rpcClient;

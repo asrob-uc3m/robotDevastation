@@ -187,6 +187,7 @@ bool rd::RdMentalMap::updatePlayers(std::vector<rd::RdPlayer> new_player_vector)
 
     //-- Clear the pointer to myself (player)
     myself = NULL;
+    players.clear();
 
     for (int i = 0; i < (int) new_player_vector.size(); i++)
     {

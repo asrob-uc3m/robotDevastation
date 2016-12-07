@@ -4,6 +4,7 @@
 //-- Initialize static members
 rd::RdYarpNetworkManager * rd::RdYarpNetworkManager::uniqueInstance = NULL;
 const std::string rd::RdYarpNetworkManager::id = "YARP";
+const int rd::RdYarpNetworkManager::KEEPALIVE_RATE_MS = 1000;
 
 bool rd::RdYarpNetworkManager::RegisterManager()
 {
@@ -15,9 +16,14 @@ bool rd::RdYarpNetworkManager::RegisterManager()
     return Register( uniqueInstance, id);
 }
 
-rd::RdYarpNetworkManager::RdYarpNetworkManager()
+rd::RdYarpNetworkManager::RdYarpNetworkManager() : RateThread(KEEPALIVE_RATE_MS)
 {
     started = false;
+}
+
+void rd::RdYarpNetworkManager::run()
+{
+    keepAlive();
 }
 
 rd::RdYarpNetworkManager::~RdYarpNetworkManager()
@@ -87,6 +93,8 @@ bool rd::RdYarpNetworkManager::start()
 
     callbackPort.useCallback(*this);
 
+    RateThread::start();
+
     started = true;
     return true;
 }
@@ -130,16 +138,18 @@ bool rd::RdYarpNetworkManager::stop()
         return false;
     }
 
-     rpcClient.close();
+    RateThread::askToStop();
 
-     callbackPort.disableCallback();
-     callbackPort.interrupt();
-     callbackPort.close();
+    rpcClient.close();
 
-     yarp::os::NetworkBase::finiMinimum();
+    callbackPort.disableCallback();
+    callbackPort.interrupt();
+    callbackPort.close();
 
-     started = false;
-     return true;
+    yarp::os::NetworkBase::finiMinimum();
+
+    started = false;
+    return true;
 }
 
 bool rd::RdYarpNetworkManager::isStopped()
@@ -237,6 +247,32 @@ bool rd::RdYarpNetworkManager::logout()
     else
     {
         RD_ERROR("Logout failed\n");
+        return false;
+    }
+}
+
+bool rd::RdYarpNetworkManager::keepAlive()
+{
+    if (!started)
+    {
+        RD_ERROR("NetworkManager has not been started\n");
+        return false;
+    }
+
+    RD_INFO("Keep alive...\n");
+    yarp::os::Bottle msgRdPlayer,res;
+    msgRdPlayer.addVocab(VOCAB_RD_KEEPALIVE);
+    msgRdPlayer.addInt(player.getId());
+    rpcClient.write(msgRdPlayer,res);
+
+    //-- Check response
+    if ( strcmp( res.toString().c_str(), "[ok]") == 0)
+    {
+        return true;
+    }
+    else
+    {
+        RD_ERROR("Keep alive failed\n");
         return false;
     }
 }
