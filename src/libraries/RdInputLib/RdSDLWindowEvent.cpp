@@ -1,19 +1,10 @@
 #include "RdSDLWindowEvent.hpp"
 
-rd::RdSDLWindowEvent::RdSDLWindowEvent(const SDL_WindowEvent & windowEvent)
+rd::RdWindowEvent rd::RdSDLWindowEvent::makeWindowEvent(const SDL_WindowEvent & windowEvent)
 {
-    identifyAction(windowEvent.event);
-}
-
-rd::RdSDLWindowEvent::~RdSDLWindowEvent()
-{
-}
-
-void rd::RdSDLWindowEvent::identifyAction(int id)
-{
-    switch (id)
+    switch ( windowEvent.event )
     {
-    case SDL_WINDOWEVENT_CLOSE: event_id = WINDOW_CLOSE;   return;
-    default:                    event_id = WINDOW_UNKNOWN; return;
+    case SDL_WINDOWEVENT_CLOSE: return rd::RdWindowEvent(rd::RdWindowEvent::WINDOW_CLOSE);
+    default:                    return rd::RdWindowEvent(rd::RdWindowEvent::WINDOW_UNKNOWN);
     }
 }

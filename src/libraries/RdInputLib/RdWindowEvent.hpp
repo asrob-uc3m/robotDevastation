@@ -9,26 +9,26 @@ namespace rd{
 /**
  * @ingroup RdInputLib
  *
- * @brief Abstract class that represents a window event
+ * @brief Class that represents a window event
  *
  */
 class RdWindowEvent
 {
     public:
+        RdWindowEvent(int event_id);
+
         /**
          * @brief Get the identifier for this window event
          * @return An integer type that stores an identifier representing the current window event
          */
-        virtual int getEvent() const;
+        int getEvent() const;
 
         //! @brief Constant representing an unimplemented or unrecognized window action
         static const int WINDOW_UNKNOWN;
         //! @brief Constant representing a close window action
         static const int WINDOW_CLOSE;
 
-        virtual ~RdWindowEvent() = 0;
-
-    protected:
+    private:
         RdWindowEvent();
 
         //! @brief Stores an identifier for the window event

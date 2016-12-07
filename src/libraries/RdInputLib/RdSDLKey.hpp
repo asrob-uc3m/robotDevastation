@@ -23,7 +23,7 @@ class RdSDLKey
 {
     public:
         //! @brief Creates a RdKey from a SDL keycode
-        static RdKey makeKey(SDL_Keycode keycode);
+        static rd::RdKey makeKey(SDL_Keycode keycode);
 
         //! @brief Initialize the lookup tables
         static bool initLookupTables();

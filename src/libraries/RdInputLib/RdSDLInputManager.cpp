@@ -93,7 +93,7 @@ bool rd::RdSDLInputManager::inputCallback(SDL_Event *event)
     }
     else if (event->type == SDL_WINDOWEVENT)
     {
-        RdSDLWindowEvent windowEvent(event->window);
+        RdWindowEvent windowEvent = RdSDLWindowEvent::makeWindowEvent(event->window);
 
         for (int i = 0; i < (int) listeners.size(); i++)
             listeners.at(i)->onWindowEvent(windowEvent);

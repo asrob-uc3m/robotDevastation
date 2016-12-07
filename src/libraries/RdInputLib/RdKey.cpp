@@ -59,10 +59,6 @@ int rd::RdKey::getValue() const
     return key_value;
 }
 
-rd::RdKey::~RdKey()
-{
-}
-
 bool rd::RdKey::operator==(const rd::RdKey &k) const
 {
     if (this->isPrintable() && k.isPrintable())

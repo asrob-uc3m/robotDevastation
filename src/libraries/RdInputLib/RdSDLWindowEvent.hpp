@@ -16,19 +16,13 @@ namespace rd{
  * @brief Class that represents a window event, implemented with SDL
  *
  */
-class RdSDLWindowEvent : public RdWindowEvent
+class RdSDLWindowEvent
 {
     public:
-        RdSDLWindowEvent(const SDL_WindowEvent & windowEvent);
-
-        virtual ~RdSDLWindowEvent();
+        static rd::RdWindowEvent makeWindowEvent(const SDL_WindowEvent & windowEvent);
 
     private:
-        /**
-         * @brief Find the correspondence between SDLWindowEvents and RdWindowEvents
-         * @param id A SDL_WindowEventID candidate to check against
-         */
-        void identifyAction(int id);
+        RdSDLWindowEvent();
 };
 
 }

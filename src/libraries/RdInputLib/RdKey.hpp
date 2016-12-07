@@ -48,8 +48,6 @@ class RdKey
         static const int KEY_ARROW_RIGHT;
         static const int KEY_ENTER;
 
-        virtual ~RdKey();
-
         bool operator==(RdKey const& k) const;
 
     protected:

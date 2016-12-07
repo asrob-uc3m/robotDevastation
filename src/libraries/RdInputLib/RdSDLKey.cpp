@@ -15,16 +15,16 @@ rd::RdKey rd::RdSDLKey::makeKey(SDL_Keycode keycode)
 
     if ( sdl_printable_map.find(keycode) != sdl_printable_map.end() )
     {
-        return RdKey(sdl_printable_map.at(keycode));
+        return rd::RdKey(sdl_printable_map.at(keycode));
     }
     else if ( sdl_control_map.find(keycode) != sdl_control_map.end() )
     {
-        return RdKey(sdl_control_map.at(keycode));
+        return rd::RdKey(sdl_control_map.at(keycode));
     }
     else
     {
         RD_ERROR("Key not supported!\n");
-        return RdKey(RdKey::KEY_UNKNOWN);
+        return rd::RdKey(rd::RdKey::KEY_UNKNOWN);
     }
 }
 

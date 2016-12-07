@@ -1,16 +1,12 @@
 #include "RdWindowEvent.hpp"
 
-rd::RdWindowEvent::RdWindowEvent() : event_id(WINDOW_UNKNOWN)
+rd::RdWindowEvent::RdWindowEvent(int eventId) : event_id(eventId)
 {
 }
 
 int rd::RdWindowEvent::getEvent() const
 {
     return event_id;
-}
-
-rd::RdWindowEvent::~RdWindowEvent()
-{
 }
 
 const int rd::RdWindowEvent::WINDOW_UNKNOWN = -1;
