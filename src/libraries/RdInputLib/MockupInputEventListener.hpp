@@ -23,10 +23,13 @@ class MockupInputEventListener : public RdInputEventListener
 
         int getNumKeyDownPresses();
         int getNumKeyUpPresses();
+        int getNumWindowEvents();
+
         bool clear();
 
         std::vector<RdKey> getStoredKeyUpPresses();
         std::vector<RdKey> getStoredKeyDownPresses();
+        std::vector<RdWindowEvent> getStoredWindowEvents();
 
     private:
         int num_keydown_presses;
@@ -34,6 +37,9 @@ class MockupInputEventListener : public RdInputEventListener
 
         int num_keyup_presses;
         std::vector<RdKey> stored_keyup_presses;
+
+        int num_window_events;
+        std::vector<RdWindowEvent> stored_window_events;
 
 };
 }
