@@ -204,7 +204,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_FALSE(mockupRobotManager->isEnabled());
 
     //-- When enter is pressed, the system should log in and go to next state:
-    mockupInputManager->sendKeyPress(RdKey(RdKey::KEY_ENTER));
+    mockupInputManager->sendKeyPress(RdKey::KEY_ENTER);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has logged in and it is in the next state (cleanup):

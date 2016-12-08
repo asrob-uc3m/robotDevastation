@@ -4,7 +4,7 @@ rd::RdWindowEvent rd::RdSDLWindowEvent::makeWindowEvent(const SDL_WindowEvent & 
 {
     switch ( windowEvent.event )
     {
-    case SDL_WINDOWEVENT_CLOSE: return rd::RdWindowEvent(rd::RdWindowEvent::WINDOW_CLOSE);
-    default:                    return rd::RdWindowEvent(rd::RdWindowEvent::WINDOW_UNKNOWN);
+    case SDL_WINDOWEVENT_CLOSE: return rd::RdWindowEvent::WINDOW_CLOSE;
+    default:                    return rd::RdWindowEvent::WINDOW_UNKNOWN;
     }
 }

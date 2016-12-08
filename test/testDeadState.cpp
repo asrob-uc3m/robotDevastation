@@ -158,7 +158,7 @@ class DeadStateTest : public testing::Test
                                               mentalMap, robotManager, audioManager,
                                               screenManager);
             initState->setup();
-            dynamic_cast<RdInputEventListener *>(initState)->onKeyUp(RdKey(RdKey::KEY_ENTER));
+            dynamic_cast<RdInputEventListener *>(initState)->onKeyUp(RdKey::KEY_ENTER);
             initState->loop();
             initState->cleanup();
             delete initState;
@@ -293,14 +293,14 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
 
     //-- When enter is pressed, but the countdown is still active, input is ignored
     yarp::os::Time::delay(0.5);
-    mockupInputManager->sendKeyPress(RdKey(RdKey::KEY_ENTER));
+    mockupInputManager->sendKeyPress(RdKey::KEY_ENTER);
     yarp::os::Time::delay(0.5);
     ASSERT_EQ(dead_state_id, fsm->getCurrentState());
 
     //-- When time is up, and enter is pressed, the system should go to respawn state:
     yarp::os::Time::delay(10);
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
-    mockupInputManager->sendKeyPress(RdKey(RdKey::KEY_ENTER));
+    mockupInputManager->sendKeyPress(RdKey::KEY_ENTER);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has restored things (health, enable stuff)
@@ -382,14 +382,14 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
 
     //-- When enter is pressed, but the countdown is still active, input is ignored
     yarp::os::Time::delay(0.5);
-    mockupInputManager->sendKeyPress(RdKey(RdKey::KEY_ENTER));
+    mockupInputManager->sendKeyPress(RdKey::KEY_ENTER);
     yarp::os::Time::delay(0.5);
     ASSERT_EQ(dead_state_id, fsm->getCurrentState());
 
     //-- When time is up, and esc is pressed, the system should exit the game:
     yarp::os::Time::delay(10);
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
-    mockupInputManager->sendKeyPress(RdKey(RdKey::KEY_ESCAPE));
+    mockupInputManager->sendKeyPress(RdKey::KEY_ESCAPE);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has stopped things and it is in the final state (cleanup):
