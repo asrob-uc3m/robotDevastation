@@ -210,3 +210,33 @@ TEST_F(MockupInputManagerTest, KeyUpAndKeyDownSentAndReceivedCorrectly)
     ASSERT_TRUE(inputManager->stop());
     ASSERT_TRUE(inputManager->isStopped());
 }
+
+TEST_F(MockupInputManagerTest, WindowEventSentAndReceivedCorrectly)
+{
+    MockupInputEventListener listener;
+    RdInputEventListener * plistener = (RdInputEventListener *) &listener;
+    ASSERT_TRUE(((RdInputManager*)inputManager)->addInputEventListener(plistener));
+    ASSERT_EQ(1, inputManager->getNumListeners());
+
+    ASSERT_TRUE(inputManager->start());
+    ASSERT_FALSE(inputManager->isStopped());
+
+    //-- Fake a window event
+    RdWindowEvent window_event(RdWindowEvent::WINDOW_CLOSE);
+    ASSERT_TRUE(inputManager->sendWindowEvent(window_event));
+
+    //-- Check if window event was received
+    ASSERT_EQ(1,listener.getNumWindowEvents());
+
+    //-- Check if window event received is correct
+    std::vector<RdWindowEvent> window_events_received = listener.getStoredWindowEvents();
+    ASSERT_EQ(1,window_events_received.size());
+
+    ASSERT_EQ(window_event.getEvent(), window_events_received[0].getEvent());
+
+    //-- Cleanup
+    ASSERT_TRUE(inputManager->removeInputEventListeners());
+    ASSERT_EQ(0, inputManager->getNumListeners());
+    ASSERT_TRUE(inputManager->stop());
+    ASSERT_TRUE(inputManager->isStopped());
+}
