@@ -10,6 +10,7 @@
 #include "RdYarpNetworkManager.hpp"
 #include "ScreenManager.hpp"
 #include "InitScreen.hpp"
+#include "RdWindowEvent.hpp"
 
 #include <string>
 #include <sstream>
@@ -30,6 +31,7 @@ namespace rd{
 *  - Waits for user input (showing nice RobotDevastation screen)
 *  - When user presses a button (Enter?), connects to the server and
 * starts the game
+*  - Closes if user presses Esc
 *  - It also plays music (important)
 */
 class InitState : public State, public ManagerHub, public RdInputEventListener
@@ -49,15 +51,18 @@ class InitState : public State, public ManagerHub, public RdInputEventListener
         virtual int evaluateConditions();
 
         static const int LOGIN_SUCCESSFUL;
+        static const int EXIT_REQUESTED;
 
         //-- RdInputEventListener interface:
-        virtual bool onKeyDown(RdKey k);
-        virtual bool onKeyUp(RdKey k);
+        virtual bool onKeyDown(const RdKey & k);
+        virtual bool onKeyUp(const RdKey & k);
+        virtual bool onWindowEvent(const RdWindowEvent & event);
 
     protected:
         InitScreen screen;
         bool login;
         bool logged_in;
+        bool received_exit;
 
 
 };

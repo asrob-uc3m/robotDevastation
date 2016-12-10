@@ -10,7 +10,7 @@
 #include "RdYarpNetworkManager.hpp"
 #include "GameScreen.hpp"
 #include "RdProcessorImageEventListener.hpp"
-#include "MockupKey.hpp"
+#include "RdWindowEvent.hpp"
 
 #include <string>
 #include <sstream>
@@ -52,8 +52,9 @@ class GameState : public State, public ManagerHub,
         static const int EXIT_REQUESTED;
 
         //-- RdInputEventListener interface:
-        virtual bool onKeyDown(RdKey k);
-        virtual bool onKeyUp(RdKey k);
+        virtual bool onKeyDown(const RdKey & k);
+        virtual bool onKeyUp(const RdKey & k);
+        virtual bool onWindowEvent(const RdWindowEvent & event);
 
         //-- ImageEventListener interface
         virtual bool onImageArrived(RdImageManager * manager);

@@ -1,54 +1,32 @@
 #include "RdSDLKey.hpp"
 
 bool rd::RdSDLKey::initialized = false;
-std::map< SDL_Keycode, char> rd::RdSDLKey::sdl_printable_map = std::map<SDL_Keycode, char>();
-std::map< SDL_Keycode, int>  rd::RdSDLKey::sdl_control_map = std::map<SDL_Keycode, int>();
+std::map<SDL_Keycode, char> rd::RdSDLKey::sdl_printable_map = std::map<SDL_Keycode, char>();
+std::map<SDL_Keycode, int>  rd::RdSDLKey::sdl_control_map = std::map<SDL_Keycode, int>();
 
-rd::RdSDLKey::RdSDLKey(SDL_Keycode keycode)
+rd::RdSDLKey::RdSDLKey()
 {
-
-    //-- Check if the key maps have been initialized
-    if (!initialized)
-        initLookupTables();
-
-    printable = false;
-    control = false;
-
-    //-- Assign char value:
-    if ( sdl_printable_map.find(keycode) != sdl_printable_map.end() )
-    {
-        char_value = sdl_printable_map.at(keycode);
-        printable = true;
-    }
-    else
-    {
-        char_value = '\0';
-    }
-
-    //-- Assign key value:
-    if ( sdl_control_map.find(keycode) != sdl_control_map.end() )
-    {
-        key_value = sdl_control_map.at(keycode);
-        control = true;
-    }
-    else if (printable)
-    {
-        key_value = KEY_PRINTABLE;
-    }
-    else
-    {
-        key_value = KEY_UNKNOWN;
-    }
-
-    //-- Return feedback
-    if ( !(printable || control) )
-    {
-        char_value = '\0';
-        key_value = KEY_UNKNOWN;
-        RD_ERROR("Key not supported!\n");
-    }
 }
 
+rd::RdKey rd::RdSDLKey::makeKey(SDL_Keycode keycode)
+{
+    //-- Initialize the key maps
+    initLookupTables();
+
+    if ( sdl_printable_map.find(keycode) != sdl_printable_map.end() )
+    {
+        return sdl_printable_map.at(keycode);
+    }
+    else if ( sdl_control_map.find(keycode) != sdl_control_map.end() )
+    {
+        return sdl_control_map.at(keycode);
+    }
+    else
+    {
+        RD_ERROR("Key not supported!\n");
+        return rd::RdKey::KEY_UNKNOWN;
+    }
+}
 
 bool rd::RdSDLKey::initLookupTables()
 {

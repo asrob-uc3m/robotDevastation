@@ -4,6 +4,7 @@
 #define __RD_INPUT_EVENT_LISTENER_HPP__
 
 #include "RdKey.hpp"
+#include "RdWindowEvent.hpp"
 
 namespace rd{
 
@@ -21,14 +22,19 @@ class RdInputEventListener
          * @brief This function will be called whenever a key is pressed on the keyboard
          * @param k Key that triggered the event
          */
-        virtual bool onKeyDown( RdKey k ) = 0;
+        virtual bool onKeyDown( const RdKey & k ) = 0;
 
         /**
         * @brief This function will be called whenever a key is released on the keyboard
         * @param k Key that triggered the event
         */
-        virtual bool onKeyUp( RdKey k ) = 0;
+        virtual bool onKeyUp( const RdKey & k ) = 0;
 
+        /**
+         * @brief This function will be called whenever a window event is raised
+         * @param event Object that wraps the window event
+         */
+        virtual bool onWindowEvent( const RdWindowEvent & event ) = 0;
 };
 
 }

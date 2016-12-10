@@ -4,12 +4,12 @@
 rd::MockupInputManager * rd::MockupInputManager::uniqueInstance = NULL;
 const std::string rd::MockupInputManager::id = "MOCKUP";
 
-bool rd::MockupInputManager::sendKeyPress(RdKey key)
+bool rd::MockupInputManager::sendKeyPress(const rd::RdKey & key)
 {
     if (stopped)
         return false;
 
-    for ( int i = 0; i < (int)listeners.size(); i++)
+    for (int i = 0; i < (int)listeners.size(); i++)
     {
         listeners.at(i)->onKeyUp(key);
         listeners.at(i)->onKeyDown(key);
@@ -18,24 +18,35 @@ bool rd::MockupInputManager::sendKeyPress(RdKey key)
     return true;
 }
 
-bool rd::MockupInputManager::sendKeyUp(rd::RdKey key)
+bool rd::MockupInputManager::sendKeyUp(const rd::RdKey & key)
 {
     if (stopped)
         return false;
 
-    for ( int i = 0; i < (int)listeners.size(); i++)
+    for (int i = 0; i < (int)listeners.size(); i++)
         listeners.at(i)->onKeyUp(key);
 
     return true;
 }
 
-bool rd::MockupInputManager::sendKeyDown(rd::RdKey key)
+bool rd::MockupInputManager::sendKeyDown(const rd::RdKey & key)
 {
     if (stopped)
         return false;
 
-    for ( int i = 0; i < (int)listeners.size(); i++)
+    for (int i = 0; i < (int)listeners.size(); i++)
         listeners.at(i)->onKeyDown(key);
+
+    return true;
+}
+
+bool rd::MockupInputManager::sendWindowEvent(const rd::RdWindowEvent & event)
+{
+    if (stopped)
+        return false;
+
+    for (int i = 0; i < (int)listeners.size(); i++)
+        listeners.at(i)->onWindowEvent(event);
 
     return true;
 }

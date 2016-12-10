@@ -19,16 +19,17 @@ namespace rd{
  * This key is created from a SDL keycode, usually obtained by the SDL event
  *
  */
-class RdSDLKey: public RdKey
+class RdSDLKey
 {
     public:
         //! @brief Creates a RdKey from a SDL keycode
-        RdSDLKey(SDL_Keycode keycode);
+        static rd::RdKey makeKey(SDL_Keycode keycode);
 
         //! @brief Initialize the lookup tables
         static bool initLookupTables();
-
     private:
+        RdSDLKey();
+
         //! @brief Boolean indicating that the lookup tables have been initialized or not
         static bool initialized;
 

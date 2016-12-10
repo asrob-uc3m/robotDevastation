@@ -133,12 +133,12 @@ int rd::DeadState::evaluateConditions()
     return -1;
 }
 
-bool rd::DeadState::onKeyDown(rd::RdKey k)
+bool rd::DeadState::onKeyDown(const rd::RdKey & k)
 {
     return true;
 }
 
-bool rd::DeadState::onKeyUp(rd::RdKey k)
+bool rd::DeadState::onKeyUp(const rd::RdKey & k)
 {
     if (received_respawn || received_exit)
         return false;
@@ -157,5 +157,16 @@ bool rd::DeadState::onKeyUp(rd::RdKey k)
         return true;
     }
 
+    return false;
+}
+
+bool rd::DeadState::onWindowEvent(const RdWindowEvent & event)
+{
+    if (event.getEvent() == RdWindowEvent::WINDOW_CLOSE)
+    {
+        RD_DEBUG("Exit was triggered!\n");
+        received_exit = true;
+        return true;
+    }
     return false;
 }

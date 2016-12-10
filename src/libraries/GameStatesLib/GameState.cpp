@@ -3,17 +3,17 @@
 const int rd::GameState::KILLED = 1;
 const int rd::GameState::EXIT_REQUESTED = 2;
 
-const rd::RdKey rd::GameState::KEY_EXIT = rd::MockupKey(rd::RdKey::KEY_ESCAPE);
-const rd::RdKey rd::GameState::KEY_SHOOT = rd::MockupKey(rd::RdKey::KEY_SPACE);
-const rd::RdKey rd::GameState::KEY_RELOAD = rd::MockupKey('r');
-const rd::RdKey rd::GameState::KEY_MOVE_FWD = rd::MockupKey('w');
-const rd::RdKey rd::GameState::KEY_MOVE_BACK = rd::MockupKey('s');
-const rd::RdKey rd::GameState::KEY_TURN_LEFT = rd::MockupKey('a');
-const rd::RdKey rd::GameState::KEY_TURN_RIGHT = rd::MockupKey('d');
-const rd::RdKey rd::GameState::KEY_PAN_LEFT = rd::MockupKey(rd::RdKey::KEY_ARROW_LEFT);
-const rd::RdKey rd::GameState::KEY_PAN_RIGHT = rd::MockupKey(rd::RdKey::KEY_ARROW_RIGHT);
-const rd::RdKey rd::GameState::KEY_TILT_UP = rd::MockupKey(rd::RdKey::KEY_ARROW_UP);
-const rd::RdKey rd::GameState::KEY_TILT_DOWN = rd::MockupKey(rd::RdKey::KEY_ARROW_DOWN);
+const rd::RdKey rd::GameState::KEY_EXIT = rd::RdKey::KEY_ESCAPE;
+const rd::RdKey rd::GameState::KEY_SHOOT = rd::RdKey::KEY_SPACE;
+const rd::RdKey rd::GameState::KEY_RELOAD = 'r';
+const rd::RdKey rd::GameState::KEY_MOVE_FWD = 'w';
+const rd::RdKey rd::GameState::KEY_MOVE_BACK = 's';
+const rd::RdKey rd::GameState::KEY_TURN_LEFT = 'a';
+const rd::RdKey rd::GameState::KEY_TURN_RIGHT = 'd';
+const rd::RdKey rd::GameState::KEY_PAN_LEFT = rd::RdKey::KEY_ARROW_LEFT;
+const rd::RdKey rd::GameState::KEY_PAN_RIGHT = rd::RdKey::KEY_ARROW_RIGHT;
+const rd::RdKey rd::GameState::KEY_TILT_UP = rd::RdKey::KEY_ARROW_UP;
+const rd::RdKey rd::GameState::KEY_TILT_DOWN = rd::RdKey::KEY_ARROW_DOWN;
 
 rd::GameState::GameState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
                          rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
@@ -155,7 +155,7 @@ int rd::GameState::evaluateConditions()
     return -1;
 }
 
-bool rd::GameState::onKeyDown(rd::RdKey k)
+bool rd::GameState::onKeyDown(const rd::RdKey & k)
 {
     if (k == KEY_SHOOT)
     {
@@ -231,7 +231,7 @@ bool rd::GameState::onKeyDown(rd::RdKey k)
     return false;
 }
 
-bool rd::GameState::onKeyUp(rd::RdKey k)
+bool rd::GameState::onKeyUp(const rd::RdKey & k)
 {
     //-- Movement control
     if (k == KEY_TURN_LEFT)
@@ -282,6 +282,17 @@ bool rd::GameState::onKeyUp(rd::RdKey k)
     {
         RD_DEBUG("Tilt down was released!\n");
         robotManager->stopCameraMovement();
+        return true;
+    }
+    return false;
+}
+
+bool rd::GameState::onWindowEvent(const rd::RdWindowEvent & event)
+{
+    if (event.getEvent() == rd::RdWindowEvent::WINDOW_CLOSE)
+    {
+        RD_DEBUG("Exit was triggered!\n");
+        received_exit = true;
         return true;
     }
     return false;

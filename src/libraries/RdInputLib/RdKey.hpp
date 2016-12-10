@@ -20,16 +20,20 @@ namespace rd{
  * as the arrow keys, the escape key or the backspace key. The space case is a special case, because
  * it is considered both printable and control key.
  *
- *
+ * This class must not be inherited from. Use factory classes and functions to perform custom
+ * initialization (see \ref rd::RdSDLKey).
  */
 class RdKey
 {
     public:
+        RdKey(char printable_character);
+        RdKey(int control_key);
+
         bool isControlKey() const;
         bool isPrintable() const;
 
-        char getChar();
-        int  getValue();
+        char getChar() const;
+        int  getValue() const;
 
         //-- Constants for control keys (non-printable)
         //! @brief Constant representing a non-supported / unknown key
@@ -45,13 +49,9 @@ class RdKey
         static const int KEY_ARROW_RIGHT;
         static const int KEY_ENTER;
 
-        virtual ~RdKey();
-
-        bool operator==(RdKey const& k);
+        bool operator==(RdKey const& k) const;
 
     protected:
-        RdKey();
-
         //! @brief Stores the char representation of a key
         char char_value;
         //! @brief Stores the control key value of a key

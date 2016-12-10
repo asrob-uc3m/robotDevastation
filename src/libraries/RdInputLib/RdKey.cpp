@@ -1,8 +1,42 @@
 #include "RdKey.hpp"
 
-
-rd::RdKey::RdKey()
+rd::RdKey::RdKey(char printable_character)
+    : char_value(printable_character), key_value(KEY_PRINTABLE), printable(true), control(false)
 {
+    if (printable_character == ' ')
+    {
+        control = true;
+        key_value = KEY_SPACE;
+    }
+    else if (printable_character == '\n')
+    {
+        control = true;
+        key_value = KEY_ENTER;
+    }
+    else if (printable_character == '\0')
+    {
+        printable = false;
+        key_value = KEY_UNKNOWN;
+    }
+}
+
+rd::RdKey::RdKey(int control_key)
+    : char_value('\0'), key_value(control_key), printable(false), control(true)
+{
+    if (control_key == KEY_SPACE)
+    {
+        printable = true;
+        char_value = ' ';
+    }
+    else if (control_key == KEY_ENTER)
+    {
+        printable = true;
+        char_value = '\n';
+    }
+    else if (control_key == KEY_UNKNOWN)
+    {
+        control = false;
+    }
 }
 
 bool rd::RdKey::isControlKey() const
@@ -15,21 +49,17 @@ bool rd::RdKey::isPrintable() const
     return printable;
 }
 
-char rd::RdKey::getChar()
+char rd::RdKey::getChar() const
 {
     return char_value;
 }
 
-int rd::RdKey::getValue()
+int rd::RdKey::getValue() const
 {
     return key_value;
 }
 
-rd::RdKey::~RdKey()
-{
-}
-
-bool rd::RdKey::operator==(const rd::RdKey &k)
+bool rd::RdKey::operator==(const rd::RdKey &k) const
 {
     if (this->isPrintable() && k.isPrintable())
         return this->char_value == k.char_value;

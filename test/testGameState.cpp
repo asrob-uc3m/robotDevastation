@@ -142,7 +142,7 @@ class GameStateTest : public testing::Test
                                               mentalMap, robotManager, audioManager,
                                               screenManager);
             initState->setup();
-            dynamic_cast<RdInputEventListener *>(initState)->onKeyUp(MockupKey(RdKey::KEY_ENTER));
+            dynamic_cast<RdInputEventListener *>(initState)->onKeyUp(RdKey::KEY_ENTER);
             initState->loop();
             initState->cleanup();
             delete initState;
@@ -274,38 +274,38 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
 
     //-- If I send move commands, robot moves
     //-- Left
-    mockupInputManager->sendKeyDown(MockupKey(RdKey::KEY_ARROW_LEFT));
+    mockupInputManager->sendKeyDown(RdKey::KEY_ARROW_LEFT);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::LEFT, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    mockupInputManager->sendKeyUp(MockupKey(RdKey::KEY_ARROW_LEFT));
+    mockupInputManager->sendKeyUp(RdKey::KEY_ARROW_LEFT);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
     //-- Right
-    mockupInputManager->sendKeyDown(MockupKey(RdKey::KEY_ARROW_RIGHT));
+    mockupInputManager->sendKeyDown(RdKey::KEY_ARROW_RIGHT);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::RIGHT,((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    mockupInputManager->sendKeyUp(MockupKey(RdKey::KEY_ARROW_RIGHT));
+    mockupInputManager->sendKeyUp(RdKey::KEY_ARROW_RIGHT);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
     //-- Forward
-    mockupInputManager->sendKeyDown(MockupKey(RdKey::KEY_ARROW_UP));
+    mockupInputManager->sendKeyDown(RdKey::KEY_ARROW_UP);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::FORWARD, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    mockupInputManager->sendKeyUp(MockupKey(RdKey::KEY_ARROW_UP));
+    mockupInputManager->sendKeyUp(RdKey::KEY_ARROW_UP);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
     //-- Backwards
-    mockupInputManager->sendKeyDown(MockupKey(RdKey::KEY_ARROW_DOWN));
+    mockupInputManager->sendKeyDown(RdKey::KEY_ARROW_DOWN);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::BACKWARDS, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    mockupInputManager->sendKeyUp(MockupKey(RdKey::KEY_ARROW_DOWN));
+    mockupInputManager->sendKeyUp(RdKey::KEY_ARROW_DOWN);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
@@ -314,7 +314,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     mockupImageManager->receiveImage(test_frame_no_target);
     yarp::os::Time::delay(0.5);
     std::vector<RdPlayer> players_before = mentalMap->getPlayers();
-    mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_SPACE));
+    mockupInputManager->sendKeyPress(RdKey::KEY_SPACE);
     std::vector<RdPlayer> players_after = mentalMap->getPlayers();
     ASSERT_EQ(players_before.size(), players_after.size());
     for(int i = 0; i < players_before.size(); i++)
@@ -322,19 +322,19 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
 
     //-- If I shoot all ammo, I run out of ammo, and I cannot shoot until reloading
     for(int i = 0; i < GameStateTest::MAX_AMMO; i++)
-        mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_SPACE));
+        mockupInputManager->sendKeyPress(RdKey::KEY_SPACE);
     ASSERT_EQ(0, mentalMap->getCurrentWeapon().getCurrentAmmo());
     yarp::os::Time::delay(0.5);
 
     //-- After reloading, I can shoot again
-    mockupInputManager->sendKeyPress(MockupKey('r'));
+    mockupInputManager->sendKeyPress('r');
     ASSERT_EQ(GameStateTest::MAX_AMMO, mentalMap->getCurrentWeapon().getCurrentAmmo());
 
     //-- If I hit other robot, other robot health decreases
     mockupImageManager->receiveImage(test_frame_with_target);
     yarp::os::Time::delay(0.5);
     players_before = mentalMap->getPlayers();
-    mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_SPACE));
+    mockupInputManager->sendKeyPress(RdKey::KEY_SPACE);
     yarp::os::Time::delay(0.5);
     players_after = mentalMap->getPlayers();
     ASSERT_EQ(players_before.size(), players_after.size());
@@ -426,7 +426,7 @@ TEST_F(GameStateTest, GameStateQuitsWhenRequested )
     ASSERT_EQ(game_state_id, fsm->getCurrentState());
 
     //-- When esc is pressed, the system should exit the game:
-    mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_ESCAPE));
+    mockupInputManager->sendKeyPress(RdKey::KEY_ESCAPE);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has stopped things and it is in the final state (cleanup):

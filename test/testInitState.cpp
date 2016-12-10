@@ -156,7 +156,7 @@ class InitStateTest : public testing::Test
 };
 
 //--- Tests ------------------------------------------------------------------------------------------
-TEST_F(InitStateTest, InitStateWorksCorrectly )
+TEST_F(InitStateTest, InitStateGoesToLogin)
 {
     //-- Create fsm with InitState
     StateMachineBuilder builder;
@@ -168,6 +168,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
 
     ASSERT_NE(-1, init_state_id);
     ASSERT_TRUE(builder.addTransition(init_state_id, end_state_id, InitState::LOGIN_SUCCESSFUL));
+    ASSERT_TRUE(builder.addTransition(init_state_id, end_state_id, InitState::EXIT_REQUESTED));
     ASSERT_TRUE(builder.setInitialState(init_state_id));
 
     fsm = builder.buildStateMachine();
@@ -203,7 +204,7 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
     ASSERT_FALSE(mockupRobotManager->isEnabled());
 
     //-- When enter is pressed, the system should log in and go to next state:
-    mockupInputManager->sendKeyPress(MockupKey(RdKey::KEY_ENTER));
+    mockupInputManager->sendKeyPress(RdKey::KEY_ENTER);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has logged in and it is in the next state (cleanup):
@@ -221,6 +222,78 @@ TEST_F(InitStateTest, InitStateWorksCorrectly )
 
     ASSERT_TRUE(mockupRobotManager->isConnected());
     ASSERT_FALSE(mockupRobotManager->isEnabled());
+
+}
+
+TEST_F(InitStateTest, InitStateGoesToExit)
+{
+    //-- Create fsm with InitState
+    StateMachineBuilder builder;
+    ASSERT_TRUE(builder.setDirectorType("YARP"));
+
+    int init_state_id = builder.addState(new InitState(networkManager, imageManager, inputManager, mentalMap,
+                                                       robotManager, audioManager, screenManager));
+    int end_state_id = builder.addState(State::getEndState());
+
+    ASSERT_NE(-1, init_state_id);
+    ASSERT_TRUE(builder.addTransition(init_state_id, end_state_id, InitState::LOGIN_SUCCESSFUL));
+    ASSERT_TRUE(builder.addTransition(init_state_id, end_state_id, InitState::EXIT_REQUESTED));
+    ASSERT_TRUE(builder.setInitialState(init_state_id));
+
+    fsm = builder.buildStateMachine();
+    ASSERT_NE((FiniteStateMachine*)NULL, fsm);
+
+    //-- Check things that should happen before fsm starts (before setup):
+    ASSERT_TRUE(mockupAudioManager->isStopped());
+    ASSERT_TRUE(mockupNetworkManager->isStopped());
+    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_TRUE(mockupInputManager->isStopped());
+    ASSERT_FALSE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isEnabled());
+
+    //-- Start state machine
+    ASSERT_TRUE(fsm->start());
+
+    //-- Check things that should happen in initial state before exit (loop):
+
+    //yarp::os::Time::delay(1);
+    ASSERT_FALSE(mockupAudioManager->isStopped());
+    ASSERT_TRUE(mockupAudioManager->isPlaying("RD_THEME"));
+
+    ASSERT_FALSE(mockupNetworkManager->isStopped());
+    ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
+
+    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
+
+    ASSERT_FALSE(mockupInputManager->isStopped());
+    ASSERT_EQ(1, mockupInputManager->getNumListeners());
+
+    ASSERT_FALSE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isEnabled());
+
+    //-- When esc is pressed, the system should exit the game:
+    mockupInputManager->sendKeyPress(RdKey::KEY_ESCAPE);
+    yarp::os::Time::delay(0.5);
+
+    //-- Check that it has stopped things and it is in the final state (cleanup):
+    ASSERT_TRUE(mockupImageManager->isStopped());
+    ASSERT_FALSE(mockupImageManager->isEnabled());
+
+    ASSERT_TRUE(mockupInputManager->isStopped());
+    ASSERT_EQ(0, mockupInputManager->getNumListeners());
+
+    ASSERT_TRUE(mockupAudioManager->isStopped());
+    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_THEME"));
+
+    ASSERT_TRUE(mockupNetworkManager->isStopped());
+    ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
+
+    ASSERT_FALSE(mockupRobotManager->isConnected());
+    ASSERT_FALSE(mockupRobotManager->isEnabled());
+
+    //-- Check that end state is active
+    ASSERT_EQ(-1, fsm->getCurrentState()); //-- (When FSM is ended, no state is active, hence -1)
 
 }
 

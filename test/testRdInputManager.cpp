@@ -47,7 +47,7 @@ class RdTestEventListener : public RdInputEventListener
             SDLAudioManager::destroyAudioManager();
         }
 
-        virtual bool onKeyDown(RdKey k)
+        virtual bool onKeyDown(const RdKey & k)
         {
             if ( k.isControlKey() )
             {
@@ -114,7 +114,7 @@ class RdTestEventListener : public RdInputEventListener
             }
         }
 
-        virtual bool onKeyUp(RdKey k)
+        virtual bool onKeyUp(const RdKey & k)
         {
             if ( k.isControlKey() )
             {
@@ -144,6 +144,24 @@ class RdTestEventListener : public RdInputEventListener
             {
                 RD_SUCCESS( "Key \"%c\" was released!\n", k.getChar() );
 
+            }
+        }
+
+        virtual bool onWindowEvent(const RdWindowEvent & event)
+        {
+            if ( event.getEvent() == RdWindowEvent::WINDOW_UNKNOWN )
+            {
+                RD_WARNING("Window event not implemented!\n");
+            }
+            else
+            {
+                RD_SUCCESS( "Triggered window event with code %d!\n", event.getEvent() );
+
+                if ( event.getEvent() == RdWindowEvent::WINDOW_CLOSE )
+                {
+                    finished = true;
+                    RD_SUCCESS("Exit!\n");
+                }
             }
         }
 
