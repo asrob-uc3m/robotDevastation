@@ -3,8 +3,6 @@
 const int rd::InitState::LOGIN_SUCCESSFUL = 1;
 const int rd::InitState::EXIT_REQUESTED = 2;
 
-const rd::RdKey rd::InitState::KEY_EXIT = rd::RdKey::KEY_ESCAPE;
-
 rd::InitState::InitState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
                          rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
                          rd::RdRobotManager *robotManager, AudioManager *audioManager,
@@ -103,22 +101,25 @@ int rd::InitState::evaluateConditions()
 
 bool rd::InitState::onKeyDown(const rd::RdKey & k)
 {
-    if (k == KEY_EXIT)
-    {
-        RD_DEBUG("Exit was triggered!\n");
-        received_exit = true;
-    }
     return true;
 }
 
 bool rd::InitState::onKeyUp(const rd::RdKey & k)
 {
-    if ( !(k == KEY_EXIT) && (k.isControlKey() || k.isPrintable()) )
+    if (k.getValue() == rd::RdKey::KEY_ESCAPE)
+    {
+        RD_DEBUG("Escape was pressed!\n");
+        received_exit = true;
+        return true;
+    }
+    else if (k.isControlKey() || k.isPrintable())
     {
         RD_DEBUG("Key was pressed!\n");
         login = true;
+        return true;
     }
-    return true;
+
+    return false;
 }
 
 bool rd::InitState::onWindowEvent(const rd::RdWindowEvent & event)

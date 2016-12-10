@@ -58,9 +58,6 @@ class InitState : public State, public ManagerHub, public RdInputEventListener
         virtual bool onKeyUp(const RdKey & k);
         virtual bool onWindowEvent(const RdWindowEvent & event);
 
-        //-- Define keys that trigger actions
-        static const RdKey KEY_EXIT;
-
     protected:
         InitScreen screen;
         bool login;
