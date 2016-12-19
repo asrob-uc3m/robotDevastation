@@ -12,7 +12,7 @@ namespace rd{
  * @brief Class that represents a window event
  *
  * This class must not be inherited from. Use factory classes and functions to perform custom
- * initialization (see \ref rd::RdSDLWindowEvent).
+ * initialization (see \ref rd::RdSDLEventFactory).
  */
 class RdWindowEvent
 {
