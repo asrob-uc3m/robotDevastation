@@ -21,7 +21,7 @@ namespace rd{
  * it is considered both printable and control key.
  *
  * This class must not be inherited from. Use factory classes and functions to perform custom
- * initialization (see \ref rd::RdSDLKey).
+ * initialization (see \ref rd::RdSDLEventFactory).
  */
 class RdKey
 {

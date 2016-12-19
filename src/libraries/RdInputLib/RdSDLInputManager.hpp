@@ -11,8 +11,7 @@
 #include "RdInputEventListener.hpp"
 #include "RdKey.hpp"
 #include "RdWindowEvent.hpp"
-#include "RdSDLKey.hpp"
-#include "RdSDLWindowEvent.hpp"
+#include "RdSDLEventFactory.hpp"
 
 namespace rd{
 
