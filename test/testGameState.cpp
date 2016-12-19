@@ -414,7 +414,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     ASSERT_EQ(dead_state_id, fsm->getCurrentState());
 }
 
-TEST_F(GameStateTest, GameStateQuitsWhenRequested )
+TEST_F(GameStateTest, GameStateQuitsWhenRequestedKeyPress)
 {
     //-- Create fsm with GameState
     StateMachineBuilder builder;
@@ -471,6 +471,81 @@ TEST_F(GameStateTest, GameStateQuitsWhenRequested )
 
     //-- When esc is pressed, the system should exit the game:
     mockInputManager->sendKeyPress(Key::KEY_ESCAPE);
+    yarp::os::Time::delay(0.5);
+
+    //-- Check that it has stopped things and it is in the final state (cleanup):
+    ASSERT_TRUE(mockImageManager->isStopped());
+    ASSERT_FALSE(mockImageManager->isEnabled());
+    ASSERT_TRUE(mockInputManager->isStopped());
+    ASSERT_EQ(0, mockInputManager->getNumListeners());
+    ASSERT_TRUE(mockAudioManager->isStopped());
+    ASSERT_FALSE(mockAudioManager->isPlaying("RD_THEME"));
+    ASSERT_TRUE(mockNetworkManager->isStopped());
+    ASSERT_FALSE(mockNetworkManager->isLoggedIn());
+    ASSERT_FALSE(mockRobotManager->isConnected());
+    ASSERT_FALSE(mockRobotManager->isEnabled());
+
+    //-- Check that end state is active
+    ASSERT_EQ(-1, fsm->getCurrentState()); //-- (When FSM is ended, no state is active, hence -1)
+}
+
+TEST_F(GameStateTest, GameStateQuitsWhenRequestedWindowEvent)
+{
+    //-- Create fsm with GameState
+    StateMachineBuilder builder;
+    ASSERT_TRUE(builder.setDirectorType("YARP"));
+
+    int game_state_id = builder.addState(new GameState(networkManager, imageManager, inputManager, mentalMap,
+                                                       robotManager, audioManager, screenManager));
+    ASSERT_NE(-1, game_state_id);
+    int dead_state_id = builder.addState(new MockState(1));
+    ASSERT_NE(-1, dead_state_id);
+    int end_state_id = builder.addState(State::getEndState());
+
+    ASSERT_TRUE(builder.addTransition(game_state_id, dead_state_id, GameState::KILLED));
+    ASSERT_TRUE(builder.addTransition(game_state_id, end_state_id, GameState::EXIT_REQUESTED));
+    ASSERT_TRUE(builder.setInitialState(game_state_id));
+
+    fsm = builder.buildStateMachine();
+    ASSERT_NE((FiniteStateMachine*)NULL, fsm);
+
+    //-- Check things that should happen before fsm starts (before setup):
+    //----------------------------------------------------------------------------
+    ASSERT_FALSE(mockAudioManager->isStopped());
+    ASSERT_FALSE(mockAudioManager->isPlaying("RD_THEME"));
+    ASSERT_FALSE(mockNetworkManager->isStopped());
+    ASSERT_TRUE(mockNetworkManager->isLoggedIn());
+    ASSERT_FALSE(mockImageManager->isStopped());
+    ASSERT_FALSE(mockImageManager->isEnabled());
+    ASSERT_FALSE(mockInputManager->isStopped());
+    ASSERT_EQ(0, mockInputManager->getNumListeners());
+    ASSERT_TRUE(mockRobotManager->isConnected());
+    ASSERT_FALSE(mockRobotManager->isEnabled());
+
+    //-- Start state machine
+    ASSERT_TRUE(fsm->start());
+    yarp::os::Time::delay(0.5);
+
+    //-- Check things that should happen just after the fsm starts (after setup)
+    //----------------------------------------------------------------------------
+    ASSERT_FALSE(mockAudioManager->isStopped());
+    ASSERT_TRUE(mockAudioManager->isPlaying("RD_THEME"));
+    ASSERT_FALSE(mockNetworkManager->isStopped());
+    ASSERT_TRUE(mockNetworkManager->isLoggedIn());
+    ASSERT_FALSE(mockImageManager->isStopped());
+    ASSERT_TRUE(mockImageManager->isEnabled());
+    ASSERT_FALSE(mockInputManager->isStopped());
+    ASSERT_EQ(1, mockInputManager->getNumListeners());
+    ASSERT_TRUE(mockRobotManager->isConnected());
+    ASSERT_TRUE(mockRobotManager->isEnabled());
+
+    //-- Testing exiting game
+    //-----------------------------------------------------------------------------
+    //-- Check that GameState is active
+    ASSERT_EQ(game_state_id, fsm->getCurrentState());
+
+    //-- When the window is closed, the system should exit the game:
+    mockInputManager->sendWindowEvent(WindowEvent::WINDOW_CLOSE);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has stopped things and it is in the final state (cleanup):
