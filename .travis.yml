@@ -19,7 +19,7 @@ before_script:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo add-apt-repository -y ppa:robotology/ppa; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get update; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install cmake; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --force-yes install icub-common libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libzbar-dev; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --force-yes install icub-common libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libzbar-dev libeigen3-dev; fi
 
   #OS X dependencies
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export XQUARTZ_VERSION=2.7.6;fi
