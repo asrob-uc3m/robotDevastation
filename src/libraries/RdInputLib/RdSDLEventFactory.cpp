@@ -1,14 +1,18 @@
-#include "RdSDLKey.hpp"
+#include "RdSDLEventFactory.hpp"
 
-bool rd::RdSDLKey::initialized = false;
-std::map<SDL_Keycode, char> rd::RdSDLKey::sdl_printable_map = std::map<SDL_Keycode, char>();
-std::map<SDL_Keycode, int>  rd::RdSDLKey::sdl_control_map = std::map<SDL_Keycode, int>();
+bool rd::RdSDLEventFactory::initialized = false;
+std::map<SDL_Keycode, char> rd::RdSDLEventFactory::sdl_printable_map = std::map<SDL_Keycode, char>();
+std::map<SDL_Keycode, int>  rd::RdSDLEventFactory::sdl_control_map = std::map<SDL_Keycode, int>();
 
-rd::RdSDLKey::RdSDLKey()
+rd::RdSDLEventFactory::RdSDLEventFactory()
 {
 }
 
-rd::RdKey rd::RdSDLKey::makeKey(SDL_Keycode keycode)
+rd::RdSDLEventFactory::RdSDLEventFactory(const RdSDLEventFactory &)
+{
+}
+
+rd::RdKey rd::RdSDLEventFactory::makeKey(SDL_Keycode keycode)
 {
     //-- Initialize the key maps
     initLookupTables();
@@ -28,7 +32,7 @@ rd::RdKey rd::RdSDLKey::makeKey(SDL_Keycode keycode)
     }
 }
 
-bool rd::RdSDLKey::initLookupTables()
+bool rd::RdSDLEventFactory::initLookupTables()
 {
     if (!initialized)
     {
@@ -63,4 +67,13 @@ bool rd::RdSDLKey::initLookupTables()
     }
 
     return initialized;
+}
+
+rd::RdWindowEvent rd::RdSDLEventFactory::makeWindowEvent(SDL_WindowEvent windowEvent)
+{
+    switch ( windowEvent.event )
+    {
+    case SDL_WINDOWEVENT_CLOSE: return rd::RdWindowEvent::WINDOW_CLOSE;
+    default:                    return rd::RdWindowEvent::WINDOW_UNKNOWN;
+    }
 }
