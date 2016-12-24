@@ -1,17 +1,19 @@
 language: cpp
+dist: trusty
+sudo: required
 
-os: 
+os:
   - linux
   - osx
 
 compiler:
   - gcc
   - clang
-  
+
 matrix:
   allow_failures:
   - os: osx
-  
+
 before_script:
   #ubuntu dependencies
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo sh -c 'echo "deb http://www.icub.org/ubuntu precise contrib/science" > /etc/apt/sources.list.d/icub.list'; fi
@@ -19,7 +21,7 @@ before_script:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo add-apt-repository -y ppa:robotology/ppa; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get update; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install cmake; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --force-yes install icub-common libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libzbar-dev; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --force-yes install icub-common libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libzbar-dev; fi
 
   #OS X dependencies
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export XQUARTZ_VERSION=2.7.6;fi
@@ -28,7 +30,7 @@ before_script:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo installer -store -pkg /Volumes/XQuartz-${XQUARTZ_VERSION}/XQuartz.pkg -target / ; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then hdiutil unmount /Volumes/XQuartz-${XQUARTZ_VERSION}; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install `brew deps --1 yarp | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g'`; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install cmake goocanvas  sdl sdl_gfx sdl_image gfortran; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install cmake goocanvas  sdl sdl_image sdl_mixer sdl_ttf gfortran; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install ode --enable-double-precision; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew tap homebrew/science; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install opencv; fi
@@ -40,7 +42,7 @@ before_script:
   - cd yarp
   - mkdir build
   - cd build
-  - cmake ../ -DCREATE_GUIS:BOOL=ON -DCREATE_LIB_MATH:BOOL=ON -DCREATE_OPTIONAL_CARRIERS:BOOL=ON -DENABLE_yarpcar_bayer_carrier:BOOL=ON
+  - cmake ../ -DCREATE_OPTIONAL_CARRIERS:BOOL=ON -DENABLE_yarpcar_mjpeg:BOOL=ON
   - make
   - sudo make install
   - cd ../..
