@@ -61,10 +61,20 @@ script:
 
   - cmake --build .
   - sudo make install
+  - bin/testDeadState
+  - bin/testFSMBuilder
+  - bin/testFSM
+  - bin/testGameState
+  - bin/testInitState
   - bin/testMentalMap
-  # - bin/testRdAudioManager  #-- Travis cannot open the AudioMixer.
-  # - bin/testRdImageManager  #-- 'Illegal Instruction' with clang compiler distro on travis (2015/01/28).
+  - bin/testMockupAudioManager
+  - bin/testMockupInputManager
+  - bin/testRdMockupRobotManager
+  - bin/testRdProcessorImageEventListener
   - bin/testRdYarpNetworkManager
+  - bin/testSDLAudioManager
+  - bin/testRobotDevastation
+
 
 after_success:
   #  - cd ${TRAVIS_BUILD_DIR}
