@@ -4,7 +4,7 @@
 
 **Robot Devastation**: un shooter de nueva generación con realidad aumentada y robots reales. A través de tu smartphone o PC vas a poder jugar online con otros usuarios, manejando robots en campeonatos y campañas: ¡todo 24/7!
 
-Installation Guide: http://asrob.uc3m.es/index.php/C%C3%B3mo_instalar_Robot_Devastation_sobre_Ubuntu_14.10
+Installation Guide: https://asrob-uc3m.gitbooks.io/robotdevastation-user-manual/content/es/instalar-robot-devastation.html
 
 Link to Doxygen documentation: http://asrob.uc3m.es/rddoc/index.html
 
