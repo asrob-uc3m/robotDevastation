@@ -25,6 +25,11 @@ endforeach(header_file ${folder_header})
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
+# Define symbols
+if (WIN32)
+  ADD_DEFINITIONS(-DSDL_MAIN_HANDLED)
+endif (WIN32)
+
 # Set up our main executable.
 if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
