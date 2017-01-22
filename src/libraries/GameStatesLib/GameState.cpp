@@ -302,4 +302,5 @@ bool rd::GameState::onImageArrived(rd::RdImageManager *manager)
 {
     //-- Don't know if this is safe enough or some mutex is required
     screenManager->update(GameScreen::PARAM_CAMERA_FRAME, manager->getImage());
+    return true;
 }

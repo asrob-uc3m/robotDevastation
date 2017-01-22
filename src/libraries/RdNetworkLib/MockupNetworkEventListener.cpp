@@ -10,6 +10,7 @@ bool rd::MockupNetworkEventListener::onDataArrived(std::vector<rd::RdPlayer> pla
 {
     stored_players = players;
     data_arrived++;
+    return true;
 }
 
 int rd::MockupNetworkEventListener::getDataArrived()
