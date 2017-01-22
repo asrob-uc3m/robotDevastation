@@ -19,13 +19,13 @@ bool rd::InitScreen::init()
     yarp::os::ConstString splashPath = rf.findFileByName(SPLASH_PATH);
     if (splashPath == "")
     {
-        RD_ERROR("Unable to find splash screen (resource: %s)!\n", splashPath.c_str())
+        RD_ERROR("Unable to find splash screen (resource: %s)!\n", splashPath.c_str());
         return false;
     }
     image = IMG_Load(splashPath.c_str());
     if (image == NULL)
     {
-        RD_ERROR("Unable to load splash screen (resource: %s)!\n SDL_image Error: %s\n", splashPath.c_str(), IMG_GetError())
+        RD_ERROR("Unable to load splash screen (resource: %s)!\n SDL_image Error: %s\n", splashPath.c_str(), IMG_GetError());
         return false;
     }
 
