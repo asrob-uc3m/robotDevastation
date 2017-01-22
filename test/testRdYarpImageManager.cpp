@@ -7,6 +7,13 @@
 #include "RdYarpImageManager.hpp"
 #include "RdMockupImageEventListener.hpp"
 
+#ifdef WIN32
+#include <Windows.h>
+#define MY_SLEEP(seconds) Sleep(seconds * 1000)
+#else
+#define MY_SLEEP(seconds) sleep(seconds)
+#endif
+
 using namespace rd;
 
 
@@ -105,14 +112,14 @@ TEST_F( RdYarpImageManagerTest, RdYarpImageManagerWorks)
     ASSERT_TRUE(imageManager->start());
 
     //-- Wait for a image to arrive
-    usleep(1e6);
+    MY_SLEEP(1);
 
     //-- Check that a image didn't arrive
     EXPECT_EQ(0, listener.getImagesArrived());
 
     //-- Enable and wait for a image to arrive
     ASSERT_TRUE(imageManager->setEnabled(true));
-    usleep(1e6);
+    MY_SLEEP(1);
 
     //-- Check that a image arrived
     EXPECT_LE( 1, listener.getImagesArrived());
@@ -120,7 +127,7 @@ TEST_F( RdYarpImageManagerTest, RdYarpImageManagerWorks)
     //-- Check that disabling again works
     ASSERT_TRUE(imageManager->setEnabled(false));
     listener.resetImagesArrived();
-    usleep(1e6);
+    MY_SLEEP(1);
     EXPECT_EQ(0, listener.getImagesArrived());
 
     //-- Dettach the listener
