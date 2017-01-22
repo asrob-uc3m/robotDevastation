@@ -64,9 +64,6 @@ rd::RdSDLInputManager::RdSDLInputManager()
     //-- Init SDL
     ////////if (SDL_WasInit( SDL_INIT_EVENTTHREAD) == 0)
     ////////////7    SDL_Init(SDL_INIT_EVENTTHREAD);
-
-    //-- Init X11 threads
-    XInitThreads();
 }
 
 bool rd::RdSDLInputManager::inputCallback(SDL_Event *event)
