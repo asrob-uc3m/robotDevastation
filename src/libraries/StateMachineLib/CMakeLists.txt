@@ -4,11 +4,14 @@ cmake_minimum_required(VERSION 2.6)
 
 set(KEYWORD "StateMachineLib")
 
+find_package(YARP REQUIRED)
+
+include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} StateMachine.cpp StateMachineBuilder.cpp State.cpp MockupState.cpp StateDirector.cpp YarpStateDirector.cpp)
 
-target_link_libraries(${KEYWORD})
+target_link_libraries(${KEYWORD} ${YARP_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
