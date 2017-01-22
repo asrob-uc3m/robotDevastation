@@ -27,7 +27,7 @@ include_directories(${RD_INCLUDE_DIRS})
 
 # Define symbols
 if (WIN32)
-  ADD_DEFINITIONS(-DSDL_MAIN_HANDLED)
+  add_definitions(-DSDL_MAIN_HANDLED)
 endif (WIN32)
 
 # Set up our main executable.

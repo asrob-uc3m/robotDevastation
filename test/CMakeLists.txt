@@ -1,4 +1,5 @@
 # Testing things #########################################################################################
+set(gtest_force_shared_crt ON) # needed for Windows
 add_subdirectory(gtest-1.7.0)
 enable_testing()
 
@@ -10,6 +11,7 @@ find_package(SDL2_ttf REQUIRED)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} ${RD_INCLUDE_DIRS} ${YARP_INCLUDE_DIRS})
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
 link_directories(${RD_LINK_DIRS})
+add_definitions(-DSDL_MAIN_HANDLED) # needed for Windows
 
 # UI related
 add_executable(testSDLTextDisplay testSDLTextDisplay.cpp)
