@@ -10,9 +10,32 @@
 namespace rdlib{
 
 //-- Thanks http://stackoverflow.com/questions/8487986/file-macro-shows-full-path
+#ifdef WIN32
+#define __REL_FILE__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
+#else
 #define __REL_FILE__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
-// For Windows use '\\' instead of '/'.
+#endif
 
+#ifdef WIN32
+// Could be implemented for Win10: http://stackoverflow.com/a/38617204
+#define RESET   ""
+#define BLACK   ""      /* Black */
+#define RED     ""      /* Red */
+#define GREEN   ""      /* Green */
+#define YELLOW  ""      /* Yellow */
+#define BLUE    ""      /* Blue */
+#define MAGENTA ""      /* Magenta */
+#define CYAN    ""      /* Cyan */
+#define WHITE   ""      /* White */
+#define BOLDBLACK   ""      /* Bold Black */
+#define BOLDRED     ""      /* Bold Red */
+#define BOLDGREEN   ""      /* Bold Green */
+#define BOLDYELLOW  ""      /* Bold Yellow */
+#define BOLDBLUE    ""      /* Bold Blue */
+#define BOLDMAGENTA ""      /* Bold Magenta */
+#define BOLDCYAN    ""      /* Bold Cyan */
+#define BOLDWHITE   ""      /* Bold White */
+#else
 // http://stackoverflow.com/questions/1961209/making-some-text-in-printf-appear-in-green-and-red
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
@@ -31,14 +54,8 @@ namespace rdlib{
 #define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
+#endif
 
-#ifdef WIN32
-#define RD_ERROR printf
-#define RD_WARNING printf
-#define RD_SUCCESS printf
-#define RD_INFO printf
-#define RD_DEBUG printf
-#else //linux
 // http://en.wikipedia.org/wiki/Variadic_macro
 // http://stackoverflow.com/questions/15549893/modify-printfs-via-macro-to-include-file-and-line-number-information
 #define RD_ERROR(...) { fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
@@ -55,8 +72,6 @@ namespace rdlib{
 
 #define RD_DEBUG(...) { fprintf(stderr,BLUE); do{printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
                            printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET); }
-
-#endif
 
 } //rdlib
 
