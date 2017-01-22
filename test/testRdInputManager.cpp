@@ -112,6 +112,7 @@ class RdTestEventListener : public RdInputEventListener
                     RD_SUCCESS("Exit!\n");
                 }
             }
+			return true;
         }
 
         virtual bool onKeyUp(const RdKey & k)
@@ -145,6 +146,7 @@ class RdTestEventListener : public RdInputEventListener
                 RD_SUCCESS( "Key \"%c\" was released!\n", k.getChar() );
 
             }
+			return true;
         }
 
         virtual bool onWindowEvent(const RdWindowEvent & event)
@@ -163,6 +165,7 @@ class RdTestEventListener : public RdInputEventListener
                     RD_SUCCESS("Exit!\n");
                 }
             }
+			return true;
         }
 
     private:

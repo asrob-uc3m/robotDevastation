@@ -1,21 +1,28 @@
 # Testing things #########################################################################################
 add_subdirectory(gtest-1.7.0)
 enable_testing()
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} ${RD_INCLUDE_DIRS})
+
+find_package(YARP REQUIRED)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(SDL2_ttf REQUIRED)
+
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} ${RD_INCLUDE_DIRS} ${YARP_INCLUDE_DIRS})
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
 link_directories(${RD_LINK_DIRS})
 
 # UI related
 add_executable(testSDLTextDisplay testSDLTextDisplay.cpp)
-target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} SDL2 SDL2_image SDL2_ttf)
+target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 
 add_executable(testInitScreen testInitScreen.cpp)
-target_link_libraries(testInitScreen ${RD_LIBRARIES} SDL2 SDL2_image SDL2_ttf gtest gtest_main)
+target_link_libraries(testInitScreen ${RD_LIBRARIES} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} gtest gtest_main)
 
 add_executable(testGameScreen testGameScreen.cpp)
-target_link_libraries(testGameScreen ${RD_LIBRARIES} SDL2 SDL2_image SDL2_ttf gtest gtest_main)
+target_link_libraries(testGameScreen ${RD_LIBRARIES} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} gtest gtest_main)
 
 add_executable(testDeadScreen testDeadScreen.cpp)
-target_link_libraries(testDeadScreen ${RD_LIBRARIES} SDL2 SDL2_image SDL2_ttf gtest gtest_main)
+target_link_libraries(testDeadScreen ${RD_LIBRARIES} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} gtest gtest_main)
 
 add_executable(testMockupScreen testMockupScreen.cpp)
 target_link_libraries(testMockupScreen ${RD_LIBRARIES})
