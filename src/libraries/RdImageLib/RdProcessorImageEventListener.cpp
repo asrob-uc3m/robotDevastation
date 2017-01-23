@@ -98,7 +98,7 @@ bool rd::RdProcessorImageEventListener::onImageArrived( RdImageManager * manager
     }
 
     mentalMap->updateTargets(targets);
-
+    return true;
 }
 
 int rd::RdProcessorImageEventListener::getImagesArrived()
