@@ -15,16 +15,16 @@ add_definitions(-DSDL_MAIN_HANDLED) # needed for Windows
 
 # UI related
 add_executable(testSDLTextDisplay testSDLTextDisplay.cpp)
-target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES})
 
 add_executable(testInitScreen testInitScreen.cpp)
-target_link_libraries(testInitScreen ${RD_LIBRARIES} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} gtest gtest_main)
+target_link_libraries(testInitScreen ${RD_LIBRARIES} gtest gtest_main)
 
 add_executable(testGameScreen testGameScreen.cpp)
-target_link_libraries(testGameScreen ${RD_LIBRARIES} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} gtest gtest_main)
+target_link_libraries(testGameScreen ${RD_LIBRARIES} gtest gtest_main)
 
 add_executable(testDeadScreen testDeadScreen.cpp)
-target_link_libraries(testDeadScreen ${RD_LIBRARIES} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} gtest gtest_main)
+target_link_libraries(testDeadScreen ${RD_LIBRARIES} gtest gtest_main)
 
 add_executable(testMockupScreen testMockupScreen.cpp)
 target_link_libraries(testMockupScreen ${RD_LIBRARIES})
