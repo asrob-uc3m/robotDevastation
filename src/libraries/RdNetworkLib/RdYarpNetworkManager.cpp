@@ -81,7 +81,7 @@ bool rd::RdYarpNetworkManager::start()
         RD_ERROR("Could not connect robotDevastation RpcClient to rdServer RpcServer (launch 'rdServer' if not already launched).\n");
         return false;
     }
-    RD_SUCCESS("Connected robotDevastation RpcClient to rdServer RpcServer!\n")
+    RD_SUCCESS("Connected robotDevastation RpcClient to rdServer RpcServer!\n");
 
     //-- Connect from rdServer info to robotDevastation callbackPort
     if ( !yarp::os::Network::connect( "/rdServer/info:o", callback_str.str() ))
@@ -89,7 +89,7 @@ bool rd::RdYarpNetworkManager::start()
         RD_ERROR("Could not connect from rdServer info to robotDevastation callbackPort (launch 'rdServer' if not already launched).\n");
         return false;
     }
-    RD_SUCCESS("Connected from rdServer info to robotDevastation callbackPort!\n")
+    RD_SUCCESS("Connected from rdServer info to robotDevastation callbackPort!\n");
 
     callbackPort.useCallback(*this);
 

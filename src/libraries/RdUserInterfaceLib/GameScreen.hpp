@@ -5,7 +5,6 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
-#include <X11/Xlib.h>
 #include <iostream>
 #include <string>
 #include <vector>

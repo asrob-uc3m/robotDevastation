@@ -112,6 +112,7 @@ class RdTestEventListener : public RdInputEventListener
                     RD_SUCCESS("Exit!\n");
                 }
             }
+            return true;
         }
 
         virtual bool onKeyUp(const RdKey & k)
@@ -145,6 +146,7 @@ class RdTestEventListener : public RdInputEventListener
                 RD_SUCCESS( "Key \"%c\" was released!\n", k.getChar() );
 
             }
+            return true;
         }
 
         virtual bool onWindowEvent(const RdWindowEvent & event)
@@ -163,6 +165,7 @@ class RdTestEventListener : public RdInputEventListener
                     RD_SUCCESS("Exit!\n");
                 }
             }
+            return true;
         }
 
     private:
@@ -173,8 +176,8 @@ int main(void)
 {
     // Load SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-    fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
-    return false;
+        fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
+        return false;
     }
     atexit(SDL_Quit); // Clean it up nicely :)
 
