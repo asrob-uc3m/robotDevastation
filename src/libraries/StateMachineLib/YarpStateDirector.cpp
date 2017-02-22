@@ -35,7 +35,6 @@ bool rd::YarpStateDirector::Stop()
     active = false;
 
     yarp::os::RateThread::askToStop();
-    yarp::os::RateThread::stop();
 
     if (state != NULL)
         state->cleanup();

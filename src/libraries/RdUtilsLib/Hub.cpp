@@ -23,10 +23,10 @@ rd::ManagerHub::ManagerHub(rd::RdNetworkManager *networkManager, rd::RdImageMana
     this->screenManager = screenManager;
 }
 
-bool rd::ManagerHub::setNetworkManager(rd::RdNetworkManager *networkManager) { this->networkManager = networkManager;}
-bool rd::ManagerHub::setImageManager(rd::RdImageManager *imageManager) { this->imageManager = imageManager;}
-bool rd::ManagerHub::setInputManager(rd::RdInputManager *inputManager) { this->inputManager = inputManager;}
-bool rd::ManagerHub::setMentalMap(rd::RdMentalMap *mentalMap) { this->mentalMap = mentalMap;}
-bool rd::ManagerHub::setRobotManager(rd::RdRobotManager *robotManager) { this->robotManager = robotManager;}
-bool rd::ManagerHub::setAudioManager(rd::AudioManager *audioManager) { this->audioManager = audioManager;}
-bool rd::ManagerHub::setScreenManager(rd::ScreenManager *screenManager) {this->screenManager = screenManager;}
+bool rd::ManagerHub::setNetworkManager(rd::RdNetworkManager *networkManager) { this->networkManager = networkManager; return true; }
+bool rd::ManagerHub::setImageManager(rd::RdImageManager *imageManager) { this->imageManager = imageManager; return true; }
+bool rd::ManagerHub::setInputManager(rd::RdInputManager *inputManager) { this->inputManager = inputManager; return true; }
+bool rd::ManagerHub::setMentalMap(rd::RdMentalMap *mentalMap) { this->mentalMap = mentalMap; return true; }
+bool rd::ManagerHub::setRobotManager(rd::RdRobotManager *robotManager) { this->robotManager = robotManager; return true; }
+bool rd::ManagerHub::setAudioManager(rd::AudioManager *audioManager) { this->audioManager = audioManager; return true; }
+bool rd::ManagerHub::setScreenManager(rd::ScreenManager *screenManager) { this->screenManager = screenManager; return true; }

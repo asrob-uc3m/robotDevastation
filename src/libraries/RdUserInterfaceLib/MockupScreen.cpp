@@ -27,7 +27,7 @@ bool rd::MockupScreen::init()
     background = IMG_Load(rf.findFileByName(IMAGE_PATH).c_str());
     if (background == NULL)
     {
-        RD_ERROR("Unable to load background image (resource: %s)!\n SDL_image Error: %s\n", IMAGE_PATH.c_str(), IMG_GetError())
+        RD_ERROR("Unable to load background image (resource: %s)!\n SDL_image Error: %s\n", IMAGE_PATH.c_str(), IMG_GetError());
         return false;
     }
 

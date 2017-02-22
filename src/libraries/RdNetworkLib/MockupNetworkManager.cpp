@@ -32,6 +32,7 @@ bool rd::MockupNetworkManager::start()
 bool rd::MockupNetworkManager::stop()
 {
     stopped = true;
+    return true;
 }
 
 bool rd::MockupNetworkManager::configure(std::string parameter, RdPlayer value)
@@ -177,6 +178,7 @@ bool rd::MockupNetworkManager::sendPlayerData()
     //-- Notify listeners
     for(int i = 0; i < listeners.size(); i++)
         listeners[i]->onDataArrived(this->getPlayerData());
+    return true;
 }
 
 bool rd::MockupNetworkManager::setLoggedIn(bool logged_in)
