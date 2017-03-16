@@ -75,12 +75,12 @@ bool rd::MockupState::read(yarp::os::ConnectionReader & connection)
         internal_variable = received;
     }
 
-    RD_INFO("Preparing response...\n");
-    yarp::os::Bottle out;
     yarp::os::ConnectionWriter *returnToSender = connection.getWriter();
 
     if (returnToSender != NULL)
     {
+        RD_INFO("Preparing response...\n");
+        yarp::os::Bottle out;
         out.addInt(state_history);
         out.write(*returnToSender);
     }
