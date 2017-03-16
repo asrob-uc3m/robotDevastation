@@ -39,7 +39,7 @@ bool rd::MockupState::setup()
 bool rd::MockupState::loop()
 {
     RD_INFO("State with id %d entered in loop() function\n", id);
-    if (state_history | STATE_LOOP)
+    if (!(state_history & STATE_LOOP))
     {
         RD_DEBUG("First loop (id %d)\n", id);
         state_history |= STATE_LOOP;
@@ -65,27 +65,25 @@ int rd::MockupState::evaluateConditions()
 
 bool rd::MockupState::read(yarp::os::ConnectionReader & connection)
 {
-    if (internal_variable != -1)
+    yarp::os::Bottle in;
+    in.read(connection);
+    int received = in.get(0).asInt();
+
+    if (received != REQUEST_STATE)
     {
-        yarp::os::Bottle in;
-        in.read(connection);
-        int received = in.get(0).asInt();
-
-        if (received != REQUEST_STATE)
-        {
-            RD_INFO("Received: %d at state %s\n", received, state_id.c_str());
-            internal_variable = received;
-        }
-
-        RD_INFO("Preparing response...\n");
-        yarp::os::Bottle out;
-        yarp::os::ConnectionWriter *returnToSender = connection.getWriter();
-
-        if (returnToSender != NULL)
-        {
-            out.addInt(state_history);
-            out.write(*returnToSender);
-        }
+        RD_INFO("Received: %d at state %s\n", received, state_id.c_str());
+        internal_variable = received;
     }
+
+    RD_INFO("Preparing response...\n");
+    yarp::os::Bottle out;
+    yarp::os::ConnectionWriter *returnToSender = connection.getWriter();
+
+    if (returnToSender != NULL)
+    {
+        out.addInt(state_history);
+        out.write(*returnToSender);
+    }
+
     return true;
 }
