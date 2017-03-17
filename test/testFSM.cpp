@@ -144,20 +144,17 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect)
 
     yarp::os::Bottle command, response;
 
-    //-- Request current point in execution flow of state 1
+    //-- Connect RpcClient with RpcServer for state 1
     ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer1->getName()));
-    command.addInt(MockupState::REQUEST_STATE);
+
+    //-- Send command to pass to state 2
+    command.addInt(2);
     rpcClient.write(command, response);
 
     //-- Check that state 1 passed through setup and loop
     int currentState1 = response.get(0).asInt();
     ASSERT_TRUE((currentState1 & MockupState::STATE_SETUP) == MockupState::STATE_SETUP);
     ASSERT_TRUE((currentState1 & MockupState::STATE_LOOP) == MockupState::STATE_LOOP);
-
-    //-- Send command to pass to state 2
-    command.clear();
-    command.addInt(2);
-    rpcClient.write(command);
 
     //-- Wait until state 2 is initialized
     while (!stateDirector2->isActive()) {
@@ -178,21 +175,19 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect)
     ASSERT_TRUE(stateDirector2->isActive());
     ASSERT_FALSE(stateDirector3->isActive());
 
-    //-- Request current point in execution flow of state 2
+    //-- Disconnect RpcClient from state 1, connect with RpcServer for state 2
     ASSERT_TRUE(yarp::os::Network::disconnect(rpcClient.getName(), rpcServer1->getName(), false));
     ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer2->getName()));
-    command.addInt(MockupState::REQUEST_STATE);
+
+    //-- Send command to pass to state 3
+    command.clear();
+    command.addInt(3);
     rpcClient.write(command, response);
 
     //-- Check that state 2 passed through setup and loop
     int currentState2 = response.get(0).asInt();
     ASSERT_TRUE((currentState2 & MockupState::STATE_SETUP) == MockupState::STATE_SETUP);
     ASSERT_TRUE((currentState2 & MockupState::STATE_LOOP) == MockupState::STATE_LOOP);
-
-    //-- Send command to pass to state 3
-    command.clear();
-    command.addInt(3);
-    rpcClient.write(command);
 
     //-- Wait until state 3 is initialized
     while (!stateDirector3->isActive()) {
@@ -213,9 +208,12 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect)
     ASSERT_FALSE(stateDirector2->isActive());
     ASSERT_TRUE(stateDirector3->isActive());
 
-    //-- Request current point in execution flow of state 3
+    //-- Disconnect RpcClient from state 2, connect with RpcServer for state 3
     ASSERT_TRUE(yarp::os::Network::disconnect(rpcClient.getName(), rpcServer2->getName(), false));
     ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer3->getName()));
+
+    //-- Request current point in execution flow of state 3
+    command.clear();
     command.addInt(MockupState::REQUEST_STATE);
     rpcClient.write(command, response);
 
@@ -235,6 +233,7 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect)
     //-- Check that state 3 passed through cleanup
     currentState3 = response.get(0).asInt();
     ASSERT_TRUE((currentState3 & MockupState::STATE_CLEANUP) == MockupState::STATE_CLEANUP);
+
 }
 
 TEST_F(FSMTest, StateMachineStopsAtNULL)
@@ -252,20 +251,18 @@ TEST_F(FSMTest, StateMachineStopsAtNULL)
 
     yarp::os::Bottle command, response;
 
-    //-- Request current point in execution flow of state 1
+    //-- Connect RpcClient with RpcServer for state 1
     ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer1->getName()));
-    command.addInt(MockupState::REQUEST_STATE);
+
+    //-- Send command to pass to state null (and therefore finish)
+    command.clear();
+    command.addInt(2);
     rpcClient.write(command, response);
 
     //-- Check that state 1 passed through setup and loop
     int currentState1 = response.get(0).asInt();
     ASSERT_TRUE((currentState1 & MockupState::STATE_SETUP) == MockupState::STATE_SETUP);
     ASSERT_TRUE((currentState1 & MockupState::STATE_LOOP) == MockupState::STATE_LOOP);
-
-    //-- Send command to pass to state null (and therefore finish)
-    command.clear();
-    command.addInt(2);
-    rpcClient.write(command);
 
     //-- Wait until state 1 is finalized
     while (stateDirector1->isActive()) {
