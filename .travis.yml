@@ -49,7 +49,7 @@ install:
   - mkdir build
   - cd build
   - cmake ../ -DCREATE_OPTIONAL_CARRIERS:BOOL=ON -DENABLE_yarpcar_mjpeg:BOOL=ON
-  - make
+  - make -j2
   - sudo make install
   - cd ../..
 
