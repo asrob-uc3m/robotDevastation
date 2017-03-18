@@ -167,19 +167,15 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect)
     ASSERT_TRUE((currentState1 & MockupState::STATE_SETUP) == MockupState::STATE_SETUP);
     ASSERT_TRUE((currentState1 & MockupState::STATE_LOOP) == MockupState::STATE_LOOP);
 
-    //-- Wait until state 2 is initialized
-    while (!stateDirector2->isActive()) {
+    //-- Wait until state 1 passes through cleanup
+    do
+    {
         yarp::os::Time::delay(0.5);
-    }
-
-    //-- Request current point in execution flow of state 1
-    command.clear();
-    command.addInt(MockupState::REQUEST_STATE);
-    rpcClient.write(command, response);
-
-    //-- Check that state 1 passed through cleanup
-    currentState1 = response.get(0).asInt();
-    ASSERT_TRUE((currentState1 & MockupState::STATE_CLEANUP) == MockupState::STATE_CLEANUP);
+        command.clear();
+        command.addInt(MockupState::REQUEST_STATE);
+        rpcClient.write(command, response);
+        currentState1 = response.get(0).asInt();
+    } while ((currentState1 & MockupState::STATE_CLEANUP) != MockupState::STATE_CLEANUP);
 
     //-- Check that state 2 is active
     ASSERT_FALSE(stateDirector1->isActive());
@@ -200,19 +196,15 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect)
     ASSERT_TRUE((currentState2 & MockupState::STATE_SETUP) == MockupState::STATE_SETUP);
     ASSERT_TRUE((currentState2 & MockupState::STATE_LOOP) == MockupState::STATE_LOOP);
 
-    //-- Wait until state 3 is initialized
-    while (!stateDirector3->isActive()) {
+    //-- Wait until state 2 passes through cleanup
+    do
+    {
         yarp::os::Time::delay(0.5);
-    }
-
-    //-- Request current point in execution flow of state 2
-    command.clear();
-    command.addInt(MockupState::REQUEST_STATE);
-    rpcClient.write(command, response);
-
-    //-- Check that state 2 passed through cleanup
-    currentState2 = response.get(0).asInt();
-    ASSERT_TRUE((currentState2 & MockupState::STATE_CLEANUP) == MockupState::STATE_CLEANUP);
+        command.clear();
+        command.addInt(MockupState::REQUEST_STATE);
+        rpcClient.write(command, response);
+        currentState2 = response.get(0).asInt();
+    } while ((currentState2 & MockupState::STATE_CLEANUP) != MockupState::STATE_CLEANUP);
 
     //-- Check that state 3 is active
     ASSERT_FALSE(stateDirector1->isActive());
@@ -274,19 +266,15 @@ TEST_F(FSMTest, StateMachineStopsAtNULL)
     ASSERT_TRUE((currentState1 & MockupState::STATE_SETUP) == MockupState::STATE_SETUP);
     ASSERT_TRUE((currentState1 & MockupState::STATE_LOOP) == MockupState::STATE_LOOP);
 
-    //-- Wait until state 1 is finalized
-    while (stateDirector1->isActive()) {
+    //-- Wait until state 1 passes through cleanup
+    do
+    {
         yarp::os::Time::delay(0.5);
-    }
-
-    //-- Request current point in execution flow of state 1
-    command.clear();
-    command.addInt(MockupState::REQUEST_STATE);
-    rpcClient.write(command, response);
-
-    //-- Check that state 1 passed through cleanup
-    currentState1 = response.get(0).asInt();
-    ASSERT_TRUE((currentState1 & MockupState::STATE_CLEANUP) == MockupState::STATE_CLEANUP);
+        command.clear();
+        command.addInt(MockupState::REQUEST_STATE);
+        rpcClient.write(command, response);
+        currentState1 = response.get(0).asInt();
+    } while ((currentState1 & MockupState::STATE_CLEANUP) != MockupState::STATE_CLEANUP);
 
     //-- Check that state 1 is not active
     ASSERT_FALSE(stateDirector1->isActive());
