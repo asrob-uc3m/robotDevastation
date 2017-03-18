@@ -80,16 +80,45 @@ class FSMBuilderTest : public testing::Test
         }
 
     protected:
+        bool awaitStateCheck(const std::string & state_id, const unsigned int reference_state)
+        {
+            RD_DEBUG("%s\n", state_id.c_str());
+
+            unsigned int retry_count = 0;
+            int currentState = 0;
+            yarp::os::Bottle command, response;
+
+            do
+            {
+                if (retry_count >= max_retries)
+                    return false;
+
+                yarp::os::Time::delay(delay_s);
+
+                command.clear();
+                command.addInt(MockupState::REQUEST_STATE);
+
+                rpcClient.write(command, response);
+                currentState = response.get(0).asInt();
+
+                retry_count++;
+            } while ((currentState & reference_state) != reference_state);
+
+            return true;
+        }
+
         FiniteStateMachine *fsm;
 
         static const std::string debug_port_name;
         static const unsigned int max_retries;
+        static const double delay_s;
 
         yarp::os::RpcClient rpcClient;
 };
 
 const std::string FSMBuilderTest::debug_port_name = "/debug";
 const unsigned int FSMBuilderTest::max_retries = 10;
+const double FSMBuilderTest::delay_s = 0.5;
 
 
 //--- Tests ------------------------------------------------------------------------------------------
@@ -136,39 +165,26 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
     rpcServer3->setReader(*portReader3);
     ASSERT_TRUE(rpcServer3->open("/state3/rpc:s"));
 
-    //-- Connect RpcClient with RpcServer for state 1
-    ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer1->getName()));
-
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
 
     //-- Check that state 1 is active
     ASSERT_EQ(state1_id, fsm->getCurrentState());
 
-    yarp::os::Bottle command, response;
-
-    //-- Send command to pass to state 2
-    command.addInt(2);
-    rpcClient.write(command, response);
+    //-- Connect RpcClient with RpcServer for state 1
+    ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer1->getName()));
 
     //-- Check that state 1 passed through setup and loop
-    int currentState1 = response.get(0).asInt();
-    ASSERT_TRUE((currentState1 & MockupState::STATE_SETUP) == MockupState::STATE_SETUP);
-    ASSERT_TRUE((currentState1 & MockupState::STATE_LOOP) == MockupState::STATE_LOOP);
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_SETUP));
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_LOOP));
 
-    unsigned int retry_count = 0;
+    //-- Send command to pass to state 2
+    yarp::os::Bottle command;
+    command.addInt(2);
+    rpcClient.write(command);
 
-    //-- Wait until state 1 passes through cleanup
-    do
-    {
-        ASSERT_LT(retry_count, max_retries);
-        yarp::os::Time::delay(0.5);
-        command.clear();
-        command.addInt(MockupState::REQUEST_STATE);
-        rpcClient.write(command, response);
-        currentState1 = response.get(0).asInt();
-        retry_count++;
-    } while ((currentState1 & MockupState::STATE_CLEANUP) != MockupState::STATE_CLEANUP);
+    //-- Check that state 1 passed through cleanup
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_CLEANUP));
 
     //-- Check that state 2 is active
     ASSERT_EQ(state2_id, fsm->getCurrentState());
@@ -177,29 +193,17 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
     ASSERT_TRUE(yarp::os::Network::disconnect(rpcClient.getName(), rpcServer1->getName(), false));
     ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer2->getName()));
 
+    //-- Check that state 2 passed through setup and loop
+    ASSERT_TRUE(awaitStateCheck(state2->getStateId(), MockupState::STATE_SETUP));
+    ASSERT_TRUE(awaitStateCheck(state2->getStateId(), MockupState::STATE_LOOP));
+
     //-- Send command to pass to state 3
     command.clear();
     command.addInt(3);
-    rpcClient.write(command, response);
+    rpcClient.write(command);
 
-    //-- Check that state 2 passed through setup and loop
-    int currentState2 = response.get(0).asInt();
-    ASSERT_TRUE((currentState2 & MockupState::STATE_SETUP) == MockupState::STATE_SETUP);
-    ASSERT_TRUE((currentState2 & MockupState::STATE_LOOP) == MockupState::STATE_LOOP);
-
-    retry_count = 0;
-
-    //-- Wait until state 2 passes through cleanup
-    do
-    {
-        ASSERT_LT(retry_count, max_retries);
-        yarp::os::Time::delay(0.5);
-        command.clear();
-        command.addInt(MockupState::REQUEST_STATE);
-        rpcClient.write(command, response);
-        currentState2 = response.get(0).asInt();
-        retry_count++;
-    } while ((currentState2 & MockupState::STATE_CLEANUP) != MockupState::STATE_CLEANUP);
+    //-- Check that state 2 passed through cleanup
+    ASSERT_TRUE(awaitStateCheck(state2->getStateId(), MockupState::STATE_CLEANUP));
 
     //-- Check that state 3 is active
     ASSERT_EQ(state3_id, fsm->getCurrentState());
@@ -208,27 +212,15 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
     ASSERT_TRUE(yarp::os::Network::disconnect(rpcClient.getName(), rpcServer2->getName(), false));
     ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer3->getName()));
 
-    //-- Request current point in execution flow of state 3
-    command.clear();
-    command.addInt(MockupState::REQUEST_STATE);
-    rpcClient.write(command, response);
-
     //-- Check that state 3 passed through setup and loop
-    int currentState3 = response.get(0).asInt();
-    ASSERT_TRUE((currentState3 & MockupState::STATE_SETUP) == MockupState::STATE_SETUP);
-    ASSERT_TRUE((currentState3 & MockupState::STATE_LOOP) == MockupState::STATE_LOOP);
+    ASSERT_TRUE(awaitStateCheck(state3->getStateId(), MockupState::STATE_SETUP));
+    ASSERT_TRUE(awaitStateCheck(state3->getStateId(), MockupState::STATE_LOOP));
 
     //-- Stop current state
     ASSERT_TRUE(fsm->stop());
 
-    //-- Request current point in execution flow of state 3
-    command.clear();
-    command.addInt(MockupState::REQUEST_STATE);
-    rpcClient.write(command, response);
-
     //-- Check that state 3 passed through cleanup
-    currentState3 = response.get(0).asInt();
-    ASSERT_TRUE((currentState3 & MockupState::STATE_CLEANUP) == MockupState::STATE_CLEANUP);
+    ASSERT_TRUE(awaitStateCheck(state3->getStateId(), MockupState::STATE_CLEANUP));
 
     //-- Check that no state is active
     ASSERT_EQ(-1, fsm->getCurrentState());
@@ -259,39 +251,26 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedStopsAtNULL)
     rpcServer1->setReader(*portReader1);
     ASSERT_TRUE(rpcServer1->open("/state1/rpc:s"));
 
-    //-- Connect RpcClient with RpcServer for state 1
-    ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer1->getName()));
-
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
 
     //-- Check that state 1 is active
     ASSERT_EQ(state1_id, fsm->getCurrentState());
 
-    yarp::os::Bottle command, response;
-
-    //-- Send command to pass to state 2
-    command.addInt(2);
-    rpcClient.write(command, response);
+    //-- Connect RpcClient with RpcServer for state 1
+    ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer1->getName()));
 
     //-- Check that state 1 passed through setup and loop
-    int currentState1 = response.get(0).asInt();
-    ASSERT_TRUE((currentState1 & MockupState::STATE_SETUP) == MockupState::STATE_SETUP);
-    ASSERT_TRUE((currentState1 & MockupState::STATE_LOOP) == MockupState::STATE_LOOP);
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_SETUP));
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_LOOP));
 
-    unsigned int retry_count = 0;
+    //-- Send command to pass to state 2
+    yarp::os::Bottle command;
+    command.addInt(2);
+    rpcClient.write(command);
 
-    //-- Wait until state 1 passes through cleanup
-    do
-    {
-        ASSERT_LT(retry_count, max_retries);
-        yarp::os::Time::delay(0.5);
-        command.clear();
-        command.addInt(MockupState::REQUEST_STATE);
-        rpcClient.write(command, response);
-        currentState1 = response.get(0).asInt();
-        retry_count++;
-    } while ((currentState1 & MockupState::STATE_CLEANUP) != MockupState::STATE_CLEANUP);
+    //-- Check that state 1 passed through cleanup
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_CLEANUP));
 
     //-- Check that no state is active
     ASSERT_EQ(-1, fsm->getCurrentState());
