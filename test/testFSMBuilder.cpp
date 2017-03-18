@@ -142,6 +142,9 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
 
+    //-- Check that state 1 is active
+    ASSERT_EQ(state1_id, fsm->getCurrentState());
+
     yarp::os::Bottle command, response;
 
     //-- Send command to pass to state 2
@@ -167,7 +170,7 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
         retry_count++;
     } while ((currentState1 & MockupState::STATE_CLEANUP) != MockupState::STATE_CLEANUP);
 
-    //-- Check that state2 is active
+    //-- Check that state 2 is active
     ASSERT_EQ(state2_id, fsm->getCurrentState());
 
     //-- Disconnect RpcClient from state 1, connect with RpcServer for state 2
@@ -198,7 +201,7 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
         retry_count++;
     } while ((currentState2 & MockupState::STATE_CLEANUP) != MockupState::STATE_CLEANUP);
 
-    //-- Check that state3 is active
+    //-- Check that state 3 is active
     ASSERT_EQ(state3_id, fsm->getCurrentState());
 
     //-- Disconnect RpcClient from state 2, connect with RpcServer for state 3
@@ -226,6 +229,9 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
     //-- Check that state 3 passed through cleanup
     currentState3 = response.get(0).asInt();
     ASSERT_TRUE((currentState3 & MockupState::STATE_CLEANUP) == MockupState::STATE_CLEANUP);
+
+    //-- Check that no state is active
+    ASSERT_EQ(-1, fsm->getCurrentState());
 }
 
 TEST_F(FSMBuilderTest, StateMachineGeneratedStopsAtNULL)
@@ -259,6 +265,9 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedStopsAtNULL)
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
 
+    //-- Check that state 1 is active
+    ASSERT_EQ(state1_id, fsm->getCurrentState());
+
     yarp::os::Bottle command, response;
 
     //-- Send command to pass to state 2
@@ -283,6 +292,9 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedStopsAtNULL)
         currentState1 = response.get(0).asInt();
         retry_count++;
     } while ((currentState1 & MockupState::STATE_CLEANUP) != MockupState::STATE_CLEANUP);
+
+    //-- Check that no state is active
+    ASSERT_EQ(-1, fsm->getCurrentState());
 }
 
 

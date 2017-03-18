@@ -246,6 +246,9 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect)
     //-- Check that state 3 passed through cleanup
     currentState3 = response.get(0).asInt();
     ASSERT_TRUE((currentState3 & MockupState::STATE_CLEANUP) == MockupState::STATE_CLEANUP);
+
+    //-- Check that state 3 is not active
+    ASSERT_FALSE(stateDirector3->isActive());
 }
 
 TEST_F(FSMTest, StateMachineStopsAtNULL)
