@@ -126,12 +126,14 @@ class FSMTest : public testing::Test
         StateDirector *stateDirector1, *stateDirector2, *stateDirector3, *nullStateDirector;
 
         static const std::string debug_port_name;
+        static const unsigned int max_retries;
 
         yarp::os::RpcClient rpcClient;
         yarp::os::RpcServer *rpcServer1, *rpcServer2, *rpcServer3;
 };
 
 const std::string FSMTest::debug_port_name = "/debug";
+const unsigned int FSMTest::max_retries = 10;
 
 
 //--- Tests ------------------------------------------------------------------------------------------
@@ -167,14 +169,18 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect)
     ASSERT_TRUE((currentState1 & MockupState::STATE_SETUP) == MockupState::STATE_SETUP);
     ASSERT_TRUE((currentState1 & MockupState::STATE_LOOP) == MockupState::STATE_LOOP);
 
+    unsigned int retry_count = 0;
+
     //-- Wait until state 1 passes through cleanup
     do
     {
+        ASSERT_LT(retry_count, max_retries);
         yarp::os::Time::delay(0.5);
         command.clear();
         command.addInt(MockupState::REQUEST_STATE);
         rpcClient.write(command, response);
         currentState1 = response.get(0).asInt();
+        retry_count++;
     } while ((currentState1 & MockupState::STATE_CLEANUP) != MockupState::STATE_CLEANUP);
 
     //-- Check that state 2 is active
@@ -196,14 +202,18 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect)
     ASSERT_TRUE((currentState2 & MockupState::STATE_SETUP) == MockupState::STATE_SETUP);
     ASSERT_TRUE((currentState2 & MockupState::STATE_LOOP) == MockupState::STATE_LOOP);
 
+    retry_count = 0;
+
     //-- Wait until state 2 passes through cleanup
     do
     {
+        ASSERT_LT(retry_count, max_retries);
         yarp::os::Time::delay(0.5);
         command.clear();
         command.addInt(MockupState::REQUEST_STATE);
         rpcClient.write(command, response);
         currentState2 = response.get(0).asInt();
+        retry_count++;
     } while ((currentState2 & MockupState::STATE_CLEANUP) != MockupState::STATE_CLEANUP);
 
     //-- Check that state 3 is active
@@ -266,14 +276,18 @@ TEST_F(FSMTest, StateMachineStopsAtNULL)
     ASSERT_TRUE((currentState1 & MockupState::STATE_SETUP) == MockupState::STATE_SETUP);
     ASSERT_TRUE((currentState1 & MockupState::STATE_LOOP) == MockupState::STATE_LOOP);
 
+    unsigned int retry_count = 0;
+
     //-- Wait until state 1 passes through cleanup
     do
     {
+        ASSERT_LT(retry_count, max_retries);
         yarp::os::Time::delay(0.5);
         command.clear();
         command.addInt(MockupState::REQUEST_STATE);
         rpcClient.write(command, response);
         currentState1 = response.get(0).asInt();
+        retry_count++;
     } while ((currentState1 & MockupState::STATE_CLEANUP) != MockupState::STATE_CLEANUP);
 
     //-- Check that state 1 is not active
