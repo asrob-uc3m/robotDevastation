@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+
 #include <string>
 #include <vector>
 
@@ -12,7 +13,7 @@
 #include <yarp/os/Bottle.h>
 #include <yarp/os/RpcClient.h>
 #include <yarp/os/RpcServer.h>
-
+#include <yarp/os/PortReader.h>
 #include <yarp/os/Time.h>
 
 using namespace rd;
@@ -42,11 +43,9 @@ class FSMTestEnvironment : public testing::Environment
             yarp::os::Network::fini();
         }
 
-
     private:
         int argc;
         char ** argv;
-
 };
 
 
@@ -57,25 +56,22 @@ class FSMTest : public testing::Test
     public:
         virtual void SetUp()
         {
-            ASSERT_TRUE(rpcClient.open(debug_port_name + "/rpc:c"));
-
             state1 = new MockupState(1);
             rpcServer1 = dynamic_cast<yarp::os::RpcServer *>(state1);
             yarp::os::PortReader *portReader1 = dynamic_cast<yarp::os::PortReader *>(state1);
             rpcServer1->setReader(*portReader1);
-            ASSERT_TRUE(rpcServer1->open("/state1/rpc:s"));
 
             state2 = new MockupState(2);
             rpcServer2 = dynamic_cast<yarp::os::RpcServer *>(state2);
             yarp::os::PortReader *portReader2 = dynamic_cast<yarp::os::PortReader *>(state2);
             rpcServer2->setReader(*portReader2);
-            ASSERT_TRUE(rpcServer2->open("/state2/rpc:s"));
 
             state3 = new MockupState(3);
             rpcServer3 = dynamic_cast<yarp::os::RpcServer *>(state3);
             yarp::os::PortReader *portReader3 = dynamic_cast<yarp::os::PortReader *>(state3);
             rpcServer3->setReader(*portReader3);
-            ASSERT_TRUE(rpcServer3->open("/state3/rpc:s"));
+
+            initPorts();
 
             stateDirector1 = new YarpStateDirector(state1);
             stateDirector2 = new YarpStateDirector(state2);
@@ -87,6 +83,31 @@ class FSMTest : public testing::Test
         virtual void TearDown()
         {
             //-- Disconnect states from yarp
+            closePorts();
+
+            delete stateDirector1;
+            delete stateDirector2;
+            delete stateDirector3;
+            delete nullStateDirector;
+
+            stateDirector1 = NULL;
+            stateDirector2 = NULL;
+            stateDirector3 = NULL;
+            nullStateDirector = NULL;
+        }
+
+        virtual void initPorts()
+        {
+            //-- Setup yarp ports
+            ASSERT_TRUE(rpcClient.open(debug_port_name + "/rpc:c"));
+            ASSERT_TRUE(rpcServer1->open("/state1/rpc:s"));
+            ASSERT_TRUE(rpcServer2->open("/state2/rpc:s"));
+            ASSERT_TRUE(rpcServer3->open("/state3/rpc:s"));
+        }
+
+        virtual void closePorts()
+        {
+            //-- Close yarp ports
             rpcServer1->interrupt();
             rpcServer1->close();
 
@@ -98,16 +119,6 @@ class FSMTest : public testing::Test
 
             rpcClient.interrupt();
             rpcClient.close();
-
-            delete stateDirector1;
-            delete stateDirector2;
-            delete stateDirector3;
-            delete nullStateDirector;
-
-            stateDirector1 = NULL;
-            stateDirector2 = NULL;
-            stateDirector3 = NULL;
-            nullStateDirector = NULL;
         }
 
     protected:
@@ -233,7 +244,6 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect)
     //-- Check that state 3 passed through cleanup
     currentState3 = response.get(0).asInt();
     ASSERT_TRUE((currentState3 & MockupState::STATE_CLEANUP) == MockupState::STATE_CLEANUP);
-
 }
 
 TEST_F(FSMTest, StateMachineStopsAtNULL)
