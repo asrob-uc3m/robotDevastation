@@ -1,7 +1,11 @@
 #include "MockupState.hpp"
 
-const std::string rd::MockupState::debug_port_name = "/testState";
+const unsigned int rd::MockupState::STATE_INITIAL = 0;
+const unsigned int rd::MockupState::STATE_SETUP = 1;
+const unsigned int rd::MockupState::STATE_LOOP = 2;
+const unsigned int rd::MockupState::STATE_CLEANUP = 4;
 
+const unsigned int rd::MockupState::REQUEST_STATE = 0;
 
 rd::MockupState::MockupState(int id)
 {
@@ -13,22 +17,13 @@ rd::MockupState::MockupState(int id)
     state_id = ss.str();
 
     internal_variable = -1;
-    first_loop = true;
-
-    commandPort = dynamic_cast<yarp::os::BufferedPort<yarp::os::Bottle> *>(this);
+    state_history = STATE_INITIAL;
 
     RD_DEBUG("Creating MockupState with id: %s\n", state_id.c_str());
-
-    if (!startNetwork(id))
-    {
-        RD_ERROR("Could not start network\n");
-        return;
-    }
 }
 
 rd::MockupState::~MockupState()
 {
-    closeNetwork();
 }
 
 bool rd::MockupState::setup()
@@ -36,11 +31,7 @@ bool rd::MockupState::setup()
     RD_INFO("State with id %d entered in setup() function\n", id);
 
     internal_variable = 0;
-
-    yarp::os::Bottle& outMsg = debugPort.prepare();
-    outMsg.clear();
-    outMsg.addString("setup");
-    debugPort.writeStrict();
+    state_history |= STATE_SETUP;
 
     return true;
 }
@@ -48,15 +39,10 @@ bool rd::MockupState::setup()
 bool rd::MockupState::loop()
 {
     RD_INFO("State with id %d entered in loop() function\n", id);
-    if(first_loop)
+    if (!(state_history & STATE_LOOP))
     {
         RD_DEBUG("First loop (id %d)\n", id);
-        first_loop = false;
-
-        yarp::os::Bottle& outMsg = debugPort.prepare();
-        outMsg.clear();
-        outMsg.addString("loop");
-        debugPort.writeStrict();
+        state_history |= STATE_LOOP;
     }
 
     return true;
@@ -67,12 +53,7 @@ bool rd::MockupState::cleanup()
     RD_INFO("State with id %d entered in cleanup() function\n", id);
 
     internal_variable = -1;
-    first_loop = true;
-
-    yarp::os::Bottle& outMsg = debugPort.prepare();
-    outMsg.clear();
-    outMsg.addString("cleanup");
-    debugPort.writeStrict();
+    state_history |= STATE_CLEANUP;
 
     return true;
 }
@@ -82,56 +63,27 @@ int rd::MockupState::evaluateConditions()
     return internal_variable;
 }
 
-void rd::MockupState::onRead(yarp::os::Bottle &b)
+bool rd::MockupState::read(yarp::os::ConnectionReader & connection)
 {
-    if (internal_variable != -1)
-    {
-        int new_status = b.get(0).asInt();
-        internal_variable = new_status;
+    yarp::os::Bottle in;
+    in.read(connection);
+    int received = in.get(0).asInt();
 
-        RD_INFO("Received: %d at state %s\n", new_status, state_id.c_str());
+    if (received != REQUEST_STATE)
+    {
+        RD_INFO("Received: %d at state %s\n", received, state_id.c_str());
+        internal_variable = received;
     }
 
-}
+    yarp::os::ConnectionWriter *returnToSender = connection.getWriter();
 
-bool rd::MockupState::startNetwork(int id)
-{
-    //-- Init yarp network & server
-    yarp::os::Network::init();
-    //yarp::os::Network::runNameServer(argc, argv);
-
-    //-- Setup yarp ports
-    std::stringstream debug_port_ss;
-    debug_port_ss << debug_port_name << "/" << id;
-
-    if (!debugPort.open(debug_port_ss.str() + "/status:o"))
+    if (returnToSender != NULL)
     {
-        RD_ERROR("Could not open yarp port: %s\n", (debug_port_ss.str() + "/status:o").c_str() );
-        return false;
+        RD_INFO("Preparing response...\n");
+        yarp::os::Bottle out;
+        out.addInt(state_history);
+        out.write(*returnToSender);
     }
-
-    if(!commandPort->open(debug_port_ss.str() + "/command:i"))
-    {
-        RD_ERROR("Could not open yarp port: %s\n", (debug_port_ss.str() +"/command:i").c_str() );
-        return false;
-    }
-    commandPort->useCallback(*commandPort);
 
     return true;
-}
-
-void rd::MockupState::closeNetwork()
-{
-    RD_INFO("Closing ports...\n");
-
-    //-- Close yarp ports
-    commandPort->disableCallback();
-
-    debugPort.interrupt();
-    commandPort->interrupt();
-
-    debugPort.close();
-    commandPort->close();
-
-    yarp::os::Network::fini();
 }

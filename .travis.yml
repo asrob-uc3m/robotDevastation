@@ -14,6 +14,10 @@ matrix:
   allow_failures:
   - os: osx
 
+env:
+  # avoid ALSA errors
+  - AUDIODEV=null
+
 before_script:
   #ubuntu dependencies
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo sh -c 'echo "deb http://www.icub.org/ubuntu precise contrib/science" > /etc/apt/sources.list.d/icub.list'; fi
@@ -57,6 +61,10 @@ before_script:
   - cd build 
   - cmake ../ ${CMAKE_OPTIONS}
   
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+
 script:
 
   - cmake --build .
