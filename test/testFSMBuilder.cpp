@@ -1,19 +1,18 @@
 #include "gtest/gtest.h"
+
 #include <string>
-#include <vector>
 
 #include "State.hpp"
 #include "MockupState.hpp"
-#include "StateDirector.hpp"
-#include "YarpStateDirector.hpp"
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
 #include "RdUtils.hpp"
 
 #include <yarp/os/Network.h>
 #include <yarp/os/Bottle.h>
-#include <yarp/os/Port.h>
-
+#include <yarp/os/RpcClient.h>
+#include <yarp/os/RpcServer.h>
+#include <yarp/os/PortReader.h>
 #include <yarp/os/Time.h>
 
 using namespace rd;
@@ -43,13 +42,10 @@ class FSMBuilderTestEnvironment : public testing::Environment
             yarp::os::Network::fini();
         }
 
-
     private:
         int argc;
         char ** argv;
-
 };
-
 
 
 //-- Class for the setup of each test
@@ -70,51 +66,78 @@ class FSMBuilderTest : public testing::Test
             fsm = NULL;
         }
 
-    void initPorts()
-    {
-        //-- Setup yarp ports
-        ASSERT_TRUE(debugPort.open(debug_port_name + "/status:i"));
-        ASSERT_TRUE(commandPort.open(debug_port_name + "/command:o"));
-    }
+        void initPorts()
+        {
+            //-- Setup yarp ports
+            ASSERT_TRUE(rpcClient.open(debug_port_name + "/rpc:c"));
+        }
 
-    void closePorts()
-    {
-        //-- Close yarp ports
-        debugPort.interrupt();
-        commandPort.interrupt();
-
-        debugPort.close();
-        commandPort.close();
-    }
-
-
+        void closePorts()
+        {
+            //-- Close yarp ports
+            rpcClient.interrupt();
+            rpcClient.close();
+        }
 
     protected:
+        bool awaitStateCheck(const std::string & state_id, const unsigned int reference_state)
+        {
+            RD_DEBUG("%s\n", state_id.c_str());
+
+            unsigned int retry_count = 0;
+            int currentState = 0;
+            yarp::os::Bottle command, response;
+
+            do
+            {
+                if (retry_count >= max_retries)
+                    return false;
+
+                yarp::os::Time::delay(delay_s);
+
+                command.clear();
+                command.addInt(MockupState::REQUEST_STATE);
+
+                rpcClient.write(command, response);
+                currentState = response.get(0).asInt();
+
+                retry_count++;
+            } while ((currentState & reference_state) != reference_state);
+
+            return true;
+        }
+
         FiniteStateMachine *fsm;
 
         static const std::string debug_port_name;
+        static const unsigned int max_retries;
+        static const double delay_s;
 
-        yarp::os::BufferedPort<yarp::os::Bottle> debugPort;
-        yarp::os::Port commandPort;
+        yarp::os::RpcClient rpcClient;
 };
 
 const std::string FSMBuilderTest::debug_port_name = "/debug";
+const unsigned int FSMBuilderTest::max_retries = 10;
+const double FSMBuilderTest::delay_s = 0.5;
 
 
 //--- Tests ------------------------------------------------------------------------------------------
-TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect )
+TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
 {
     //-- Create state machine builder and configure state machine:
     StateMachineBuilder builder;
     ASSERT_TRUE(builder.setDirectorType("YARP"));
 
-    int state1_id = builder.addState(new MockupState(1));
+    State *state1 = new MockupState(1);
+    int state1_id = builder.addState(state1);
     ASSERT_NE(-1, state1_id);
 
-    int state2_id = builder.addState(new MockupState(2));
+    State *state2 = new MockupState(2);
+    int state2_id = builder.addState(state2);
     ASSERT_NE(-1, state2_id);
 
-    int state3_id = builder.addState(new MockupState(3));
+    State *state3 = new MockupState(3);
+    int state3_id = builder.addState(state3);
     ASSERT_NE(-1, state3_id);
 
     ASSERT_TRUE(builder.addTransition(state1_id, state2_id, 2));
@@ -127,66 +150,80 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect )
     fsm = builder.buildStateMachine();
     ASSERT_NE((FiniteStateMachine*)NULL, fsm);
 
-    //-- Connect states to yarp
-    ASSERT_TRUE(yarp::os::Network::connect("/testState/1/status:o", debug_port_name + "/status:i" ));
-    ASSERT_TRUE(yarp::os::Network::connect( "/testState/2/status:o", debug_port_name + "/status:i"));
-    ASSERT_TRUE(yarp::os::Network::connect("/testState/3/status:o", debug_port_name + "/status:i"));
+    yarp::os::RpcServer *rpcServer1 = dynamic_cast<yarp::os::RpcServer *>(state1);
+    yarp::os::PortReader *portReader1 = dynamic_cast<yarp::os::PortReader *>(state1);
+    rpcServer1->setReader(*portReader1);
+    ASSERT_TRUE(rpcServer1->open("/state1/rpc:s"));
 
-    ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/1/command:i"));
-    ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/2/command:i"));
-    ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/3/command:i"));
+    yarp::os::RpcServer *rpcServer2 = dynamic_cast<yarp::os::RpcServer *>(state2);
+    yarp::os::PortReader *portReader2 = dynamic_cast<yarp::os::PortReader *>(state2);
+    rpcServer2->setReader(*portReader2);
+    ASSERT_TRUE(rpcServer2->open("/state2/rpc:s"));
+
+    yarp::os::RpcServer *rpcServer3 = dynamic_cast<yarp::os::RpcServer *>(state3);
+    yarp::os::PortReader *portReader3 = dynamic_cast<yarp::os::PortReader *>(state3);
+    rpcServer3->setReader(*portReader3);
+    ASSERT_TRUE(rpcServer3->open("/state3/rpc:s"));
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
 
-    //-- Check that the init state passed through setup and init states:
-    yarp::os::Bottle *debugMsg = debugPort.read();
-    EXPECT_STREQ("setup", debugMsg->get(0).asString().c_str());
+    //-- Check that state 1 is active
+    ASSERT_EQ(state1_id, fsm->getCurrentState());
 
-    debugMsg = debugPort.read();
-    EXPECT_STREQ("loop", debugMsg->get(0).asString().c_str());
+    //-- Connect RpcClient with RpcServer for state 1
+    ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer1->getName()));
+
+    //-- Check that state 1 passed through setup and loop
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_SETUP));
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_LOOP));
 
     //-- Send command to pass to state 2
-    yarp::os::Bottle state2Cmd;
-    state2Cmd.addInt(2);
-    commandPort.write(state2Cmd);
+    yarp::os::Bottle command;
+    command.addInt(2);
+    rpcClient.write(command);
 
-    debugMsg = debugPort.read();
-    EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
+    //-- Check that state 1 passed through cleanup
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_CLEANUP));
 
-    //-- Check that state2 is active
+    //-- Check that state 2 is active
     ASSERT_EQ(state2_id, fsm->getCurrentState());
 
-    //-- Check that the state 2 passed through setup and init states:
-    debugMsg = debugPort.read();
-    EXPECT_STREQ("setup", debugMsg->get(0).asString().c_str());
+    //-- Disconnect RpcClient from state 1, connect with RpcServer for state 2
+    ASSERT_TRUE(yarp::os::Network::disconnect(rpcClient.getName(), rpcServer1->getName(), false));
+    ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer2->getName()));
 
-    debugMsg = debugPort.read();
-    EXPECT_STREQ("loop", debugMsg->get(0).asString().c_str());
+    //-- Check that state 2 passed through setup and loop
+    ASSERT_TRUE(awaitStateCheck(state2->getStateId(), MockupState::STATE_SETUP));
+    ASSERT_TRUE(awaitStateCheck(state2->getStateId(), MockupState::STATE_LOOP));
 
     //-- Send command to pass to state 3
-    yarp::os::Bottle state3Cmd;
-    state3Cmd.addInt(3);
-    commandPort.write(state3Cmd);
-    debugMsg = debugPort.read();
-    EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
+    command.clear();
+    command.addInt(3);
+    rpcClient.write(command);
 
-    //-- Check that state3 is active
+    //-- Check that state 2 passed through cleanup
+    ASSERT_TRUE(awaitStateCheck(state2->getStateId(), MockupState::STATE_CLEANUP));
+
+    //-- Check that state 3 is active
     ASSERT_EQ(state3_id, fsm->getCurrentState());
 
-    //-- Check that the state 3 passed through setup and init states:
-    debugMsg = debugPort.read();
-    EXPECT_STREQ("setup", debugMsg->get(0).asString().c_str());
+    //-- Disconnect RpcClient from state 2, connect with RpcServer for state 3
+    ASSERT_TRUE(yarp::os::Network::disconnect(rpcClient.getName(), rpcServer2->getName(), false));
+    ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer3->getName()));
 
-    debugMsg = debugPort.read();
-    EXPECT_STREQ("loop", debugMsg->get(0).asString().c_str());
+    //-- Check that state 3 passed through setup and loop
+    ASSERT_TRUE(awaitStateCheck(state3->getStateId(), MockupState::STATE_SETUP));
+    ASSERT_TRUE(awaitStateCheck(state3->getStateId(), MockupState::STATE_LOOP));
 
     //-- Stop current state
     ASSERT_TRUE(fsm->stop());
 
-    //-- Check that the state 3 passed through cleanup
-    debugMsg = debugPort.read();
-    EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
+    //-- Check that state 3 passed through cleanup
+    ASSERT_TRUE(awaitStateCheck(state3->getStateId(), MockupState::STATE_CLEANUP));
+
+    //-- Check that no state is active
+    ASSERT_EQ(-1, fsm->getCurrentState());
 }
 
 TEST_F(FSMBuilderTest, StateMachineGeneratedStopsAtNULL)
@@ -195,7 +232,8 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedStopsAtNULL)
     StateMachineBuilder builder;
     ASSERT_TRUE(builder.setDirectorType("YARP"));
 
-    int state1_id = builder.addState(new MockupState(1));
+    State *state1 = new MockupState(1);
+    int state1_id = builder.addState(state1);
     ASSERT_NE(-1, state1_id);
 
     int state2_id = builder.addState(State::getEndState());
@@ -208,27 +246,34 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedStopsAtNULL)
     fsm = builder.buildStateMachine();
     ASSERT_NE((FiniteStateMachine*)NULL, fsm);
 
-    //-- Connect states to yarp
-    ASSERT_TRUE(yarp::os::Network::connect("/testState/1/status:o", debug_port_name + "/status:i" ));
-    ASSERT_TRUE(yarp::os::Network::connect(debug_port_name + "/command:o", "/testState/1/command:i"));
+    yarp::os::RpcServer *rpcServer1 = dynamic_cast<yarp::os::RpcServer *>(state1);
+    yarp::os::PortReader *portReader1 = dynamic_cast<yarp::os::PortReader *>(state1);
+    rpcServer1->setReader(*portReader1);
+    ASSERT_TRUE(rpcServer1->open("/state1/rpc:s"));
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
 
-    //-- Check that the init state passed through setup and init states:
-    yarp::os::Bottle *debugMsg = debugPort.read();
-    EXPECT_STREQ("setup", debugMsg->get(0).asString().c_str());
+    //-- Check that state 1 is active
+    ASSERT_EQ(state1_id, fsm->getCurrentState());
 
-    debugMsg = debugPort.read();
-    EXPECT_STREQ("loop", debugMsg->get(0).asString().c_str());
+    //-- Connect RpcClient with RpcServer for state 1
+    ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer1->getName()));
+
+    //-- Check that state 1 passed through setup and loop
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_SETUP));
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_LOOP));
 
     //-- Send command to pass to state 2
-    yarp::os::Bottle state2Cmd;
-    state2Cmd.addInt(2);
-    commandPort.write(state2Cmd);
+    yarp::os::Bottle command;
+    command.addInt(2);
+    rpcClient.write(command);
 
-    debugMsg = debugPort.read();
-    EXPECT_STREQ("cleanup", debugMsg->get(0).asString().c_str());
+    //-- Check that state 1 passed through cleanup
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_CLEANUP));
+
+    //-- Check that no state is active
+    ASSERT_EQ(-1, fsm->getCurrentState());
 }
 
 
