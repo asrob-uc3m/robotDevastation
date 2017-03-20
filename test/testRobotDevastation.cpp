@@ -401,7 +401,7 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     //-- When time is up, and esc is pressed, the system should exit the game:
     yarp::os::Time::delay(10);
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
-    mockupInputManager->sendKeyPress(GameState::KEY_EXIT);
+    mockupInputManager->sendKeyPress(RdKey::KEY_ESCAPE);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has stopped things and it is in the final state (cleanup):
