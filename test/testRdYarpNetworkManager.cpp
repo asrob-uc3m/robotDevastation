@@ -18,33 +18,6 @@
 
 using namespace rd;
 
-class RunningRdServerThread: public yarp::os::Thread
-{
-    public:
-        RunningRdServerThread(yarp::os::ResourceFinder& rf) {
-            this->rf = rf;
-        }
-
-        virtual void run() {
-            rdServer.runModule(rf);
-            RD_DEBUG("Run Module!\n");
-        }
-
-        virtual void onStop() {
-            RD_DEBUG("Request Module stop\n");
-            rdServer.stopModule(true);
-            RD_DEBUG("Module stopped\n");
-        }
-
-        virtual ~RunningRdServerThread() {}
-
-    private:
-        yarp::os::ResourceFinder rf;
-        rd::RdServer rdServer;
-        int argc;
-        char** argv;
-};
-
 class RdYarpNetworkManagerTest : public testing::Test
 {
     public:    
@@ -58,28 +31,28 @@ class RdYarpNetworkManagerTest : public testing::Test
             other_player = RdPlayer(1, "dummy", 100, 100, 1, 0);
 
             RD_DEBUG("Running rdServer\n");
-            yarp::os::ResourceFinder rf;
-            rdServer = new RunningRdServerThread(rf);
-            rdServer->start();
-            yarp::os::Time::delay(1);
+            rf = new yarp::os::ResourceFinder();
+            rdServer.configure(*rf);
+            rdServer.runModuleThreaded();
             RD_DEBUG("rdServer now running\n");
         }
 
         virtual void TearDown()
         {
             RD_DEBUG("Stopping rdServer\n");
-            rdServer->stop();
-            delete rdServer;
-            rdServer = NULL;
-
+            rdServer.stopModule(true);
             ASSERT_TRUE(RdYarpNetworkManager::destroyNetworkManager());
+
+            delete rf;
+            rf = NULL;
         }
 
         RdPlayer me, other_player;
 
     protected:
+        yarp::os::ResourceFinder * rf;
         RdNetworkManager * networkManager;
-        RunningRdServerThread * rdServer;
+        RdServer rdServer;
 
     private:
         int argc;
