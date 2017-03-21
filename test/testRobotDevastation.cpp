@@ -290,39 +290,43 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     ASSERT_EQ(50, mentalMap->getMyself().getHealth());
 
     //-- If I send move commands, robot moves
+
     //-- Left
-    mockupInputManager->sendKeyDown(RdKey::KEY_ARROW_LEFT);
+    mockupInputManager->sendKeyDown(GameState::KEY_TURN_LEFT);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::LEFT, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    mockupInputManager->sendKeyUp(RdKey::KEY_ARROW_LEFT);
+    mockupInputManager->sendKeyUp(GameState::KEY_TURN_LEFT);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
+
     //-- Right
-    mockupInputManager->sendKeyDown(RdKey::KEY_ARROW_RIGHT);
+    mockupInputManager->sendKeyDown(GameState::KEY_TURN_RIGHT);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::RIGHT,((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    mockupInputManager->sendKeyUp(RdKey::KEY_ARROW_RIGHT);
+    mockupInputManager->sendKeyUp(GameState::KEY_TURN_RIGHT);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
+
     //-- Forward
-    mockupInputManager->sendKeyDown(RdKey::KEY_ARROW_UP);
+    mockupInputManager->sendKeyDown(GameState::KEY_MOVE_FWD);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::FORWARD, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    mockupInputManager->sendKeyUp(RdKey::KEY_ARROW_UP);
+    mockupInputManager->sendKeyUp(GameState::KEY_MOVE_FWD);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
+
     //-- Backwards
-    mockupInputManager->sendKeyDown(RdKey::KEY_ARROW_DOWN);
+    mockupInputManager->sendKeyDown(GameState::KEY_MOVE_BACK);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::BACKWARDS, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    mockupInputManager->sendKeyUp(RdKey::KEY_ARROW_DOWN);
+    mockupInputManager->sendKeyUp(GameState::KEY_MOVE_BACK);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
@@ -331,7 +335,7 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     mockupImageManager->receiveImage(test_frame_no_target);
     yarp::os::Time::delay(0.5);
     std::vector<RdPlayer> players_before = mentalMap->getPlayers();
-    mockupInputManager->sendKeyPress(RdKey::KEY_SPACE);
+    mockupInputManager->sendKeyPress(GameState::KEY_SHOOT);
     std::vector<RdPlayer> players_after = mentalMap->getPlayers();
     ASSERT_EQ(players_before.size(), players_after.size());
     for(int i = 0; i < players_before.size(); i++)
@@ -339,7 +343,7 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
 
     //-- If I shoot all ammo, I run out of ammo, and I cannot shoot until reloading
     for(int i = 0; i < MAX_AMMO; i++)
-        mockupInputManager->sendKeyPress(RdKey::KEY_SPACE);
+        mockupInputManager->sendKeyPress(GameState::KEY_SHOOT);
     ASSERT_EQ(0, mentalMap->getCurrentWeapon().getCurrentAmmo());
     yarp::os::Time::delay(0.5);
 
@@ -351,7 +355,7 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     mockupImageManager->receiveImage(test_frame_with_target);
     yarp::os::Time::delay(0.5);
     players_before = mentalMap->getPlayers();
-    mockupInputManager->sendKeyPress(RdKey::KEY_SPACE);
+    mockupInputManager->sendKeyPress(GameState::KEY_SHOOT);
     yarp::os::Time::delay(0.5);
     players_after = mentalMap->getPlayers();
     ASSERT_EQ(players_before.size(), players_after.size());

@@ -272,49 +272,93 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     yarp::os::Time::delay(0.5);
     ASSERT_EQ(50, mentalMap->getMyself().getHealth());
 
-    //-- If I send move commands, robot moves
-    //-- Left
-    mockupInputManager->sendKeyDown(RdKey::KEY_ARROW_LEFT);
+    //-- If I send movement/camera commands, robot moves
+
+    //-- Turn left
+    mockupInputManager->sendKeyDown(GameState::KEY_TURN_LEFT);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::LEFT, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    mockupInputManager->sendKeyUp(RdKey::KEY_ARROW_LEFT);
+    mockupInputManager->sendKeyUp(GameState::KEY_TURN_LEFT);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    //-- Right
-    mockupInputManager->sendKeyDown(RdKey::KEY_ARROW_RIGHT);
+
+    //-- Turn right
+    mockupInputManager->sendKeyDown(GameState::KEY_TURN_RIGHT);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::RIGHT,((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    mockupInputManager->sendKeyUp(RdKey::KEY_ARROW_RIGHT);
+    mockupInputManager->sendKeyUp(GameState::KEY_TURN_RIGHT);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    //-- Forward
-    mockupInputManager->sendKeyDown(RdKey::KEY_ARROW_UP);
+
+    //-- Move forward
+    mockupInputManager->sendKeyDown(GameState::KEY_MOVE_FWD);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::FORWARD, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    mockupInputManager->sendKeyUp(RdKey::KEY_ARROW_UP);
+    mockupInputManager->sendKeyUp(GameState::KEY_MOVE_FWD);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    //-- Backwards
-    mockupInputManager->sendKeyDown(RdKey::KEY_ARROW_DOWN);
+
+    //-- Move backwards
+    mockupInputManager->sendKeyDown(GameState::KEY_MOVE_BACK);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::BACKWARDS, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
-    mockupInputManager->sendKeyUp(RdKey::KEY_ARROW_DOWN);
+    mockupInputManager->sendKeyUp(GameState::KEY_MOVE_BACK);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
     ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
+
+    //-- Pan left
+    mockupInputManager->sendKeyDown(GameState::KEY_PAN_LEFT);
+    yarp::os::Time::delay(0.5);
+    ASSERT_TRUE(mockupRobotManager->isCameraMoving());
+    ASSERT_EQ(RdMockupRobotManager::CAMERA_LEFT, ((RdMockupRobotManager *)robotManager)->getCameraMovementDirection());
+    mockupInputManager->sendKeyUp(GameState::KEY_PAN_LEFT);
+    yarp::os::Time::delay(0.5);
+    ASSERT_FALSE(mockupRobotManager->isCameraMoving());
+    ASSERT_EQ(RdMockupRobotManager::CAMERA_NONE, ((RdMockupRobotManager *)robotManager)->getCameraMovementDirection());
+
+    //-- Pan right
+    mockupInputManager->sendKeyDown(GameState::KEY_PAN_RIGHT);
+    yarp::os::Time::delay(0.5);
+    ASSERT_TRUE(mockupRobotManager->isCameraMoving());
+    ASSERT_EQ(RdMockupRobotManager::CAMERA_RIGHT,((RdMockupRobotManager *)robotManager)->getCameraMovementDirection());
+    mockupInputManager->sendKeyUp(GameState::KEY_PAN_RIGHT);
+    yarp::os::Time::delay(0.5);
+    ASSERT_FALSE(mockupRobotManager->isCameraMoving());
+    ASSERT_EQ(RdMockupRobotManager::CAMERA_NONE, ((RdMockupRobotManager *)robotManager)->getCameraMovementDirection());
+
+    //-- Tilt up
+    mockupInputManager->sendKeyDown(GameState::KEY_TILT_UP);
+    yarp::os::Time::delay(0.5);
+    ASSERT_TRUE(mockupRobotManager->isCameraMoving());
+    ASSERT_EQ(RdMockupRobotManager::CAMERA_UP, ((RdMockupRobotManager *)robotManager)->getCameraMovementDirection());
+    mockupInputManager->sendKeyUp(GameState::KEY_TILT_UP);
+    yarp::os::Time::delay(0.5);
+    ASSERT_FALSE(mockupRobotManager->isCameraMoving());
+    ASSERT_EQ(RdMockupRobotManager::CAMERA_NONE, ((RdMockupRobotManager *)robotManager)->getCameraMovementDirection());
+
+    //-- Tilt down
+    mockupInputManager->sendKeyDown(GameState::KEY_TILT_DOWN);
+    yarp::os::Time::delay(0.5);
+    ASSERT_TRUE(mockupRobotManager->isCameraMoving());
+    ASSERT_EQ(RdMockupRobotManager::CAMERA_DOWN, ((RdMockupRobotManager *)robotManager)->getCameraMovementDirection());
+    mockupInputManager->sendKeyUp(GameState::KEY_TILT_DOWN);
+    yarp::os::Time::delay(0.5);
+    ASSERT_FALSE(mockupRobotManager->isCameraMoving());
+    ASSERT_EQ(RdMockupRobotManager::CAMERA_NONE, ((RdMockupRobotManager *)robotManager)->getCameraMovementDirection());
 
     //-- If I shoot with no target in the scope, the enemies life is kept equal
     mockupImageManager->receiveImage(test_frame_no_target);
     yarp::os::Time::delay(0.5);
     std::vector<RdPlayer> players_before = mentalMap->getPlayers();
-    mockupInputManager->sendKeyPress(RdKey::KEY_SPACE);
+    mockupInputManager->sendKeyPress(GameState::KEY_SHOOT);
     std::vector<RdPlayer> players_after = mentalMap->getPlayers();
     ASSERT_EQ(players_before.size(), players_after.size());
     for(int i = 0; i < players_before.size(); i++)
@@ -322,7 +366,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
 
     //-- If I shoot all ammo, I run out of ammo, and I cannot shoot until reloading
     for(int i = 0; i < GameStateTest::MAX_AMMO; i++)
-        mockupInputManager->sendKeyPress(RdKey::KEY_SPACE);
+        mockupInputManager->sendKeyPress(GameState::KEY_SHOOT);
     ASSERT_EQ(0, mentalMap->getCurrentWeapon().getCurrentAmmo());
     yarp::os::Time::delay(0.5);
 
@@ -334,7 +378,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     mockupImageManager->receiveImage(test_frame_with_target);
     yarp::os::Time::delay(0.5);
     players_before = mentalMap->getPlayers();
-    mockupInputManager->sendKeyPress(RdKey::KEY_SPACE);
+    mockupInputManager->sendKeyPress(GameState::KEY_SHOOT);
     yarp::os::Time::delay(0.5);
     players_after = mentalMap->getPlayers();
     ASSERT_EQ(players_before.size(), players_after.size());
