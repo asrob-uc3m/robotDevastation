@@ -2,9 +2,9 @@
 #include <string>
 #include <vector>
 
-#include "RdMentalMap.hpp"
-#include "RdTarget.hpp"
-#include "RdPlayer.hpp"
+#include "MentalMap.hpp"
+#include "Target.hpp"
+#include "Player.hpp"
 #include "SDLAudioManager.hpp"
 
 using namespace rd;

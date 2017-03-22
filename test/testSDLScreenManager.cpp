@@ -9,7 +9,7 @@
 
 #include "ScreenManager.hpp"
 #include "SDLScreenManager.hpp"
-#include "RdScreen.hpp"
+#include "Screen.hpp"
 #include "MockupScreen.hpp"
 
 #include <yarp/os/Time.h>

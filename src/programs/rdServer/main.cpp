@@ -45,8 +45,8 @@ rdClient
 
 #include <yarp/os/Network.h>
 
-#include "RdMacros.hpp"
-#include "RdServer.hpp"
+#include "Macros.hpp"
+#include "Server.hpp"
 
 int main(int argc, char *argv[]) {
 

@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-set(KEYWORD "RdImageLib")
+set(KEYWORD "ImageLib")
 
 find_package(YARP REQUIRED)
 find_package(ZBar REQUIRED)
@@ -11,9 +11,9 @@ include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${ZBAR_INCLUDE_DIR})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdImageManager.cpp RdImageEventListener.hpp RdYarpImageManager.cpp RdYarpLocalImageManager.hpp RdYarpLocalImageManager.cpp
-     RdProcessorImageEventListener.hpp RdProcessorImageEventListener.cpp
-     RdMockupImageManager.cpp RdMockupImageEventListener.cpp)
+add_library(${KEYWORD} ImageManager.cpp ImageEventListener.hpp YarpImageManager.cpp YarpLocalImageManager.hpp YarpLocalImageManager.cpp
+     ProcessorImageEventListener.hpp ProcessorImageEventListener.cpp
+     MockupImageManager.cpp MockupImageEventListener.cpp)
 target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${ZBAR_LIBRARIES} ${RD_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 

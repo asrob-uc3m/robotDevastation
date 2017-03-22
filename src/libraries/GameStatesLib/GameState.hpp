@@ -5,12 +5,12 @@
 
 #include "State.hpp"
 #include "StateDirector.hpp"
-#include "RdUtils.hpp"
+#include "Utils.hpp"
 #include "Hub.hpp"
-#include "RdYarpNetworkManager.hpp"
+#include "YarpNetworkManager.hpp"
 #include "GameScreen.hpp"
-#include "RdProcessorImageEventListener.hpp"
-#include "RdWindowEvent.hpp"
+#include "ProcessorImageEventListener.hpp"
+#include "WindowEvent.hpp"
 
 #include <string>
 #include <sstream>

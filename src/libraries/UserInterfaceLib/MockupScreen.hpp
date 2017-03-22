@@ -9,9 +9,9 @@
 #include <string>
 #include <yarp/os/ResourceFinder.h>
 
-#include "RdScreen.hpp"
+#include "Screen.hpp"
 
-#include "RdUtils.hpp"
+#include "Utils.hpp"
 #include "SDLUtils.hpp"
 
 namespace rd {

@@ -2,14 +2,14 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-set(KEYWORD "RdRobotLib")
+set(KEYWORD "RobotLib")
 
 find_package(YARP REQUIRED)
 
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdRobotManager.cpp RdYarpRobotManager.cpp RdMockupRobotManager.cpp)
+add_library(${KEYWORD} RobotManager.cpp YarpRobotManager.cpp MockupRobotManager.cpp)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 install(TARGETS ${KEYWORD} DESTINATION lib)
 

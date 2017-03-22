@@ -4,15 +4,15 @@
 
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
-#include "RdUtils.hpp"
+#include "Utils.hpp"
 #include "SDLUtils.hpp"
 #include "InitState.hpp"
 
 #include "MockupNetworkManager.hpp"
-#include "RdMockupImageManager.hpp"
+#include "MockupImageManager.hpp"
 #include "MockupInputManager.hpp"
-#include "RdMentalMap.hpp"
-#include "RdMockupRobotManager.hpp"
+#include "MentalMap.hpp"
+#include "MockupRobotManager.hpp"
 #include "MockupAudioManager.hpp"
 #include "SDLScreenManager.hpp"
 

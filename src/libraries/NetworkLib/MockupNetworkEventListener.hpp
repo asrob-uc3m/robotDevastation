@@ -1,7 +1,7 @@
 #ifndef _MOCKUP_NETWORK_EVENT_LISTENER_HPP_
 #define _MOCKUP_NETWORK_EVENT_LISTENER_HPP_
 
-#include "RdNetworkEventListener.hpp"
+#include "NetworkEventListener.hpp"
 
 namespace rd {
 /**

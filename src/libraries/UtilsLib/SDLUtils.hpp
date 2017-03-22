@@ -3,7 +3,7 @@
 #ifndef __SDL_UTILS_HPP__
 #define __SDL_UTILS_HPP__
 
-#include <RdImageManager.hpp>
+#include "ImageManager.hpp"
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>

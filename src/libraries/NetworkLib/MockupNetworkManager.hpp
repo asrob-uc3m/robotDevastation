@@ -3,10 +3,10 @@
 #ifndef __MOCKUP_NETWORK_MANAGER_HPP__
 #define __MOCKUP_NETWORK_MANAGER_HPP__
 
-#include "RdUtils.hpp"
-#include "RdNetworkManager.hpp"
-#include "RdNetworkEventListener.hpp"
-#include "RdPlayer.hpp"
+#include "Utils.hpp"
+#include "NetworkManager.hpp"
+#include "NetworkEventListener.hpp"
+#include "Player.hpp"
 
 namespace rd{
 

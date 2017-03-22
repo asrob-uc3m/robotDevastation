@@ -3,7 +3,7 @@
 #ifndef __MOCKUP_INPUT_MANAGER_HPP__
 #define __MOCKUP_INPUT_MANAGER_HPP__
 
-#include "RdInputManager.hpp"
+#include "InputManager.hpp"
 
 namespace rd{
 

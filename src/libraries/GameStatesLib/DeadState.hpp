@@ -5,11 +5,11 @@
 
 #include "State.hpp"
 #include "StateDirector.hpp"
-#include "RdUtils.hpp"
+#include "Utils.hpp"
 #include "Hub.hpp"
-#include "RdYarpNetworkManager.hpp"
+#include "YarpNetworkManager.hpp"
 #include "DeadScreen.hpp"
-#include "RdWindowEvent.hpp"
+#include "WindowEvent.hpp"
 
 
 namespace rd{

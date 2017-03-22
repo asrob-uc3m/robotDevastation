@@ -4,13 +4,13 @@
 #ifndef __MANAGER_HUB_HPP__
 #define __MANAGER_HUB_HPP__
 
-#include "RdImageManager.hpp"
-#include "RdInputManager.hpp"
-#include "RdKey.hpp"
-#include "RdMentalMap.hpp"
-#include "RdWeapon.hpp"
-#include "RdNetworkManager.hpp"
-#include "RdRobotManager.hpp"
+#include "ImageManager.hpp"
+#include "InputManager.hpp"
+#include "Key.hpp"
+#include "MentalMap.hpp"
+#include "Weapon.hpp"
+#include "NetworkManager.hpp"
+#include "RobotManager.hpp"
 #include "AudioManager.hpp"
 #include "ScreenManager.hpp"
 

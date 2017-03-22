@@ -2,14 +2,14 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-set(KEYWORD "RdMentalMapLib")
+set(KEYWORD "MentalMapLib")
 
 find_package(YARP REQUIRED)
 
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdMentalMap.cpp RdMentalMapEventListener.hpp RdPlayer.cpp RdTarget.cpp RdWeapon.cpp)
+add_library(${KEYWORD} MentalMap.cpp MentalMapEventListener.hpp Player.cpp Target.cpp Weapon.cpp)
 target_link_libraries(${KEYWORD})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 

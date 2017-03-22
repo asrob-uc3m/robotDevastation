@@ -6,7 +6,7 @@
 #include "MockupState.hpp"
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
-#include "RdUtils.hpp"
+#include "Utils.hpp"
 
 #include <yarp/os/Network.h>
 #include <yarp/os/Bottle.h>

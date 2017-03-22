@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-set(KEYWORD "RdInputLib")
+set(KEYWORD "InputLib")
 
 find_package(YARP REQUIRED)
 find_package(SDL2 REQUIRED)
@@ -12,8 +12,8 @@ include_directories(${SDL2_INCLUDE_DIR})
 include_directories(${RD_INCLUDE_DIRS})
 
 
-add_library(${KEYWORD} RdInputManager.cpp RdSDLInputManager.cpp MockupInputManager.cpp RdKey.cpp RdWindowEvent.cpp
-RdSDLEventFactory.cpp RdInputEventListener.hpp MockupInputEventListener.cpp)
+add_library(${KEYWORD} InputManager.cpp SDLInputManager.cpp MockupInputManager.cpp Key.cpp WindowEvent.cpp
+SDLEventFactory.cpp InputEventListener.hpp MockupInputEventListener.cpp)
 
 target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${YARP_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)

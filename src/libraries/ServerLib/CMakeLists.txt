@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-set(KEYWORD "RdServerLib")
+set(KEYWORD "ServerLib")
 
 find_package(YARP REQUIRED)
 list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH})

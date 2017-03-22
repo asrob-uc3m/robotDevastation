@@ -9,7 +9,7 @@
 #include <iostream>
 #include <map>
 
-#include "RdMacros.hpp"
+#include "Macros.hpp"
 #include "ScreenManager.hpp"
 
 #include "yarp/os/Mutex.h" //-- Right now use yarp mutex. In the future is better to use C++11 std::mutex

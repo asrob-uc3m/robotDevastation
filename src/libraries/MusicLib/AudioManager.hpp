@@ -6,7 +6,7 @@
 #include <iostream>
 #include <map>
 
-#include "RdMacros.hpp"
+#include "Macros.hpp"
 
 namespace rd{
 

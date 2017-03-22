@@ -6,8 +6,8 @@
 #include <iostream>
 #include <map>
 
-#include "RdMacros.hpp"
-#include "RdScreen.hpp"
+#include "Macros.hpp"
+#include "Screen.hpp"
 
 namespace rd{
 

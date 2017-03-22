@@ -2,14 +2,14 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-set(KEYWORD "RdNetworkLib")
+set(KEYWORD "NetworkLib")
 
 find_package(YARP REQUIRED)
 
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RdNetworkManager.cpp RdYarpNetworkManager.cpp RdNetworkEventListener.hpp MockupNetworkManager.cpp MockupNetworkEventListener.cpp)
+add_library(${KEYWORD} NetworkManager.cpp YarpNetworkManager.cpp NetworkEventListener.hpp MockupNetworkManager.cpp MockupNetworkEventListener.cpp)
 target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${RD_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 

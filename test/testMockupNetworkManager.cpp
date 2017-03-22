@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "MockupNetworkManager.hpp"
 #include "MockupNetworkEventListener.hpp"
-#include "RdMentalMap.hpp"
+#include "MentalMap.hpp"
 
 using namespace rd;
 

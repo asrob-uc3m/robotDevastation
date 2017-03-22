@@ -10,7 +10,7 @@
 
 #include "ScreenManager.hpp"
 #include "SDLScreenManager.hpp"
-#include "RdScreen.hpp"
+#include "Screen.hpp"
 #include "DeadScreen.hpp"
 
 #include <yarp/sig/all.h>

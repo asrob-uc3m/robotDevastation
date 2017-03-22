@@ -14,13 +14,13 @@
 #include <string>
 #include <vector>
 
-#include "RdMentalMap.hpp"
-#include "RdTarget.hpp"
-#include "RdPlayer.hpp"
-#include "RdWeapon.hpp"
+#include "MentalMap.hpp"
+#include "Target.hpp"
+#include "Player.hpp"
+#include "Weapon.hpp"
 #include "ScreenManager.hpp"
 #include "SDLScreenManager.hpp"
-#include "RdScreen.hpp"
+#include "Screen.hpp"
 #include "GameScreen.hpp"
 
 using namespace rd;
