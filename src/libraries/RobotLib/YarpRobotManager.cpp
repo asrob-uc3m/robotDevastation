@@ -86,53 +86,6 @@ bool YarpRobotManager::connect()
         return false;
     }
 
-    std::string yarprunPortStr("/");
-    yarprunPortStr += robotName;
-    if( yarp::os::NetworkBase::exists(yarprunPortStr) )
-    {
-        std::string launchRobotOptionsStr("(on /");
-        launchRobotOptionsStr += robotName;
-        launchRobotOptionsStr += ") (as roblauncher) (cmd \"sudo launchRaspiYarp --device RdRobotServer --subdevice RdOnePwmMotors --name /";  // RdOnePwmMotors or RdFakeMotors
-        launchRobotOptionsStr += robotName;
-        launchRobotOptionsStr += " --gpios 17 27\")";
-        yarp::os::Property launchRobotOptions;
-        launchRobotOptions.fromString(launchRobotOptionsStr);  //-- Default should look like "/rd1/rpc:s"
-        RD_DEBUG("Attempting to start motors on robot side [parameters: %s]...\n",launchRobotOptionsStr.c_str());
-        RD_INFO("If you prefer a fake robot with a fake camera, launch 'robotDevastation --mockupRobotManager --mockupImageManager'\n");
-        int robotRet = yarp::os::Run::client(launchRobotOptions);
-        if (robotRet == 0)
-        {
-            RD_SUCCESS("Started motors on robot side.\n");
-        }
-        else
-        {
-            RD_WARNING("Could not start motors on robot side, but will atempt to connect anyway.\n");
-        }
-
-        std::string launchCameraOptionsStr("(on /");
-        launchCameraOptionsStr += robotName;
-        launchCameraOptionsStr += ") (as launcher) (cmd \"yarpdev --device opencv_grabber --name /";
-        launchCameraOptionsStr += robotName;
-        launchCameraOptionsStr += "/img:o\")";
-        yarp::os::Property launchCameraOptions;
-        launchCameraOptions.fromString(launchCameraOptionsStr);
-        RD_DEBUG("Attempting to start camera on robot side [parameters: %s]...\n",launchCameraOptionsStr.c_str());
-        RD_INFO("If you prefer a fake robot with a fake camera, launch 'robotDevastation --mockupRobotManager --mockupImageManager'\n");
-        int cameraRet = yarp::os::Run::client(launchCameraOptions);  //-- Default should look like "/rd1/img:o"
-        if (cameraRet == 0)
-        {
-            RD_SUCCESS("Started camera on robot side.\n");
-        }
-        else
-        {
-            RD_WARNING("Could not start camera on robot side, but will atempt to connect anyway.\n");
-        }
-    }
-    else
-    {
-        RD_WARNING("No %s yarprun port found. Will try to connect, but jump remote launching.\n", yarprunPortStr.c_str());
-    }
-
     std::string local_s("/robotDevastation/");
     local_s += robotName;
     local_s += "/rpc:c";
