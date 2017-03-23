@@ -11,7 +11,7 @@ include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} InitState.cpp GameState.cpp DeadState.cpp)
 
-target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES} RdUserInterfaceLib StateMachineLib RdUtilsLib)
+target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES} UserInterfaceLib StateMachineLib UtilsLib)
 install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...

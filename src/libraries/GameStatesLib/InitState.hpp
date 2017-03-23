@@ -5,12 +5,12 @@
 
 #include "State.hpp"
 #include "StateDirector.hpp"
-#include "RdUtils.hpp"
+#include "Utils.hpp"
 #include "Hub.hpp"
-#include "RdYarpNetworkManager.hpp"
+#include "YarpNetworkManager.hpp"
 #include "ScreenManager.hpp"
 #include "InitScreen.hpp"
-#include "RdWindowEvent.hpp"
+#include "WindowEvent.hpp"
 
 #include <string>
 #include <sstream>
@@ -34,13 +34,13 @@ namespace rd{
 *  - Closes if user presses Esc
 *  - It also plays music (important)
 */
-class InitState : public State, public ManagerHub, public RdInputEventListener
+class InitState : public State, public ManagerHub, public InputEventListener
 {
     public:
         //InitState();
-        InitState(RdNetworkManager * networkManager, RdImageManager * imageManager,
-                  RdInputManager * inputManager, RdMentalMap * mentalMap,
-                  RdRobotManager * robotManager, AudioManager * audioManager,
+        InitState(NetworkManager * networkManager, ImageManager * imageManager,
+                  InputManager * inputManager, MentalMap * mentalMap,
+                  RobotManager * robotManager, AudioManager * audioManager,
                   ScreenManager * screenManager);
         virtual ~InitState();
         virtual bool setup();
@@ -53,10 +53,10 @@ class InitState : public State, public ManagerHub, public RdInputEventListener
         static const int LOGIN_SUCCESSFUL;
         static const int EXIT_REQUESTED;
 
-        //-- RdInputEventListener interface:
-        virtual bool onKeyDown(const RdKey & k);
-        virtual bool onKeyUp(const RdKey & k);
-        virtual bool onWindowEvent(const RdWindowEvent & event);
+        //-- InputEventListener interface:
+        virtual bool onKeyDown(const Key & k);
+        virtual bool onKeyUp(const Key & k);
+        virtual bool onWindowEvent(const WindowEvent & event);
 
     protected:
         InitScreen screen;

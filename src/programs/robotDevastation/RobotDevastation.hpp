@@ -9,22 +9,22 @@
 
 #include <yarp/os/RFModule.h>
 
-#include "RdUtils.hpp"
+#include "Utils.hpp"
 #include "SDLAudioManager.hpp"
-#include "RdMentalMap.hpp"
-#include "RdInputManager.hpp"
-#include "RdSDLInputManager.hpp"
-#include "RdInputEventListener.hpp"
-#include "RdYarpNetworkManager.hpp"
-#include "RdRobotManager.hpp"
-#include "RdYarpRobotManager.hpp"
-#include "RdMockupRobotManager.hpp"
+#include "MentalMap.hpp"
+#include "InputManager.hpp"
+#include "SDLInputManager.hpp"
+#include "InputEventListener.hpp"
+#include "YarpNetworkManager.hpp"
+#include "RobotManager.hpp"
+#include "YarpRobotManager.hpp"
+#include "MockRobotManager.hpp"
 #include "StateMachine.hpp"
-#include "RdImageManager.hpp"
-#include "RdYarpImageManager.hpp"
-#include "RdYarpLocalImageManager.hpp"
-#include "RdMockupImageManager.hpp"
-#include "RdProcessorImageEventListener.hpp"
+#include "ImageManager.hpp"
+#include "YarpImageManager.hpp"
+#include "YarpLocalImageManager.hpp"
+#include "MockImageManager.hpp"
+#include "ProcessorImageEventListener.hpp"
 #include "SDLScreenManager.hpp"
 
 //-- Game FSM
@@ -67,12 +67,12 @@ class RobotDevastation : public yarp::os::RFModule
 
         FiniteStateMachine * gameFSM;
 
-        RdInputManager *  inputManager;
+        InputManager *  inputManager;
         AudioManager * audioManager;
-        RdMentalMap * mentalMap;
-        RdNetworkManager * networkManager;
-        RdRobotManager * robotManager;
-        RdImageManager * imageManager;
+        MentalMap * mentalMap;
+        NetworkManager * networkManager;
+        RobotManager * robotManager;
+        ImageManager * imageManager;
         ScreenManager * screenManager;
 
         bool interruptModule();

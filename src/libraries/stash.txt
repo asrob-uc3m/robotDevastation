@@ -23,7 +23,7 @@ class InitStateTest : public testing::Test
 //--- Tests ------------------------------------------------------------------------------------------
 TEST_F(InitStateTest, InitStateWorksCorrectly )
 {
-    //-- Create mockup objects
+    //-- Create mock objects
     
     
     //-- Create fsm with InitState

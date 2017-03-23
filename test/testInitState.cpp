@@ -4,16 +4,16 @@
 
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
-#include "RdUtils.hpp"
+#include "Utils.hpp"
 #include "SDLUtils.hpp"
 #include "InitState.hpp"
 
-#include "MockupNetworkManager.hpp"
-#include "RdMockupImageManager.hpp"
-#include "MockupInputManager.hpp"
-#include "RdMentalMap.hpp"
-#include "RdMockupRobotManager.hpp"
-#include "MockupAudioManager.hpp"
+#include "MockNetworkManager.hpp"
+#include "MockImageManager.hpp"
+#include "MockInputManager.hpp"
+#include "MentalMap.hpp"
+#include "MockRobotManager.hpp"
+#include "MockAudioManager.hpp"
 #include "SDLScreenManager.hpp"
 
 #include <yarp/os/Network.h>
@@ -60,48 +60,48 @@ class InitStateTest : public testing::Test
             yarp::os::Network::init();
 
             //-- Register managers to be used:
-            MockupNetworkManager::RegisterManager();
-            RdMockupImageManager::RegisterManager();
-            MockupInputManager::RegisterManager();
-            MockupAudioManager::RegisterManager();
+            MockNetworkManager::RegisterManager();
+            MockImageManager::RegisterManager();
+            MockInputManager::RegisterManager();
+            MockAudioManager::RegisterManager();
             SDLScreenManager::RegisterManager();
 
             //-- Create managers
-            networkManager = RdNetworkManager::getNetworkManager("MOCKUP");
-            mockupNetworkManager = dynamic_cast<MockupNetworkManager *>(networkManager);
-            ASSERT_NE((RdNetworkManager*) NULL, networkManager);
-            ASSERT_NE((MockupNetworkManager*) NULL, mockupNetworkManager);
+            networkManager = NetworkManager::getNetworkManager("MOCK");
+            mockNetworkManager = dynamic_cast<MockNetworkManager *>(networkManager);
+            ASSERT_NE((NetworkManager*) NULL, networkManager);
+            ASSERT_NE((MockNetworkManager*) NULL, mockNetworkManager);
 
-            imageManager = RdImageManager::getImageManager("MOCKUP");
-            mockupImageManager = dynamic_cast<RdMockupImageManager *>(imageManager);
-            ASSERT_NE((RdImageManager*) NULL, imageManager);
-            ASSERT_NE((RdMockupImageManager*) NULL, mockupImageManager);
+            imageManager = ImageManager::getImageManager("MOCK");
+            mockImageManager = dynamic_cast<MockImageManager *>(imageManager);
+            ASSERT_NE((ImageManager*) NULL, imageManager);
+            ASSERT_NE((MockImageManager*) NULL, mockImageManager);
 
-            inputManager = RdInputManager::getInputManager("MOCKUP");
-            mockupInputManager = dynamic_cast<MockupInputManager *>(inputManager);
-            ASSERT_NE((RdInputManager*) NULL, inputManager);
-            ASSERT_NE((MockupInputManager*) NULL, mockupInputManager);
+            inputManager = InputManager::getInputManager("MOCK");
+            mockInputManager = dynamic_cast<MockInputManager *>(inputManager);
+            ASSERT_NE((InputManager*) NULL, inputManager);
+            ASSERT_NE((MockInputManager*) NULL, mockInputManager);
 
-            audioManager = AudioManager::getAudioManager("MOCKUP");
-            mockupAudioManager = dynamic_cast<MockupAudioManager *>(audioManager);
+            audioManager = AudioManager::getAudioManager("MOCK");
+            mockAudioManager = dynamic_cast<MockAudioManager *>(audioManager);
             ASSERT_NE((AudioManager*) NULL, audioManager);
-            ASSERT_NE((MockupAudioManager*) NULL, mockupAudioManager);
-            mockupAudioManager->load("RD_THEME","RD_THEME", AudioManager::MUSIC);
+            ASSERT_NE((MockAudioManager*) NULL, mockAudioManager);
+            mockAudioManager->load("RD_THEME","RD_THEME", AudioManager::MUSIC);
 
-            mentalMap = RdMentalMap::getMentalMap();
-            ASSERT_NE((RdMentalMap*) NULL, mentalMap);
+            mentalMap = MentalMap::getMentalMap();
+            ASSERT_NE((MentalMap*) NULL, mentalMap);
             ASSERT_TRUE(mentalMap->configure(1));
 
-            std::vector<RdPlayer> players;
-            players.push_back(RdPlayer(1,"test_player",100,100,0,0) );
+            std::vector<Player> players;
+            players.push_back(Player(1,"test_player",100,100,0,0) );
             ASSERT_TRUE(mentalMap->updatePlayers(players));
-            mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
+            mentalMap->addWeapon(Weapon("Default gun", 10, 5));
             networkManager->configure("player", players[0]);
 
-            mockupRobotManager = new RdMockupRobotManager("MOCKUP");
-            robotManager = (RdRobotManager *) mockupRobotManager;
-            ASSERT_NE((RdMockupRobotManager*) NULL, mockupRobotManager);
-            ASSERT_NE((RdRobotManager*) NULL, robotManager);
+            mockRobotManager = new MockRobotManager("MOCK");
+            robotManager = (RobotManager *) mockRobotManager;
+            ASSERT_NE((MockRobotManager*) NULL, mockRobotManager);
+            ASSERT_NE((RobotManager*) NULL, robotManager);
 
             screenManager = ScreenManager::getScreenManager("SDL");
             ASSERT_NE((ScreenManager*) NULL, screenManager);
@@ -114,19 +114,19 @@ class InitStateTest : public testing::Test
 
 
             //-- Delete things
-            RdNetworkManager::destroyNetworkManager();
+            NetworkManager::destroyNetworkManager();
             networkManager = NULL;
-            mockupNetworkManager = NULL;
-            RdImageManager::destroyImageManager();
+            mockNetworkManager = NULL;
+            ImageManager::destroyImageManager();
             imageManager = NULL;
-            mockupImageManager = NULL;
-            RdInputManager::destroyInputManager();
+            mockImageManager = NULL;
+            InputManager::destroyInputManager();
             AudioManager::destroyAudioManager();
 
-            RdMentalMap::destroyMentalMap();
+            MentalMap::destroyMentalMap();
 
-            delete mockupRobotManager;
-            mockupRobotManager = NULL;
+            delete mockRobotManager;
+            mockRobotManager = NULL;
 
             ScreenManager::destroyScreenManager();
 
@@ -135,22 +135,22 @@ class InitStateTest : public testing::Test
     protected:
         FiniteStateMachine *fsm;
 
-        RdNetworkManager * networkManager;
-        MockupNetworkManager * mockupNetworkManager;
+        NetworkManager * networkManager;
+        MockNetworkManager * mockNetworkManager;
 
-        RdImageManager * imageManager;
-        RdMockupImageManager * mockupImageManager;
+        ImageManager * imageManager;
+        MockImageManager * mockImageManager;
 
-        RdInputManager * inputManager;
-        MockupInputManager * mockupInputManager;
+        InputManager * inputManager;
+        MockInputManager * mockInputManager;
 
         AudioManager * audioManager;
-        MockupAudioManager * mockupAudioManager;
+        MockAudioManager * mockAudioManager;
 
-        RdMentalMap * mentalMap;
+        MentalMap * mentalMap;
 
-        RdMockupRobotManager * mockupRobotManager;
-        RdRobotManager * robotManager;
+        MockRobotManager * mockRobotManager;
+        RobotManager * robotManager;
 
         ScreenManager * screenManager;
 };
@@ -175,12 +175,12 @@ TEST_F(InitStateTest, InitStateGoesToLogin)
     ASSERT_NE((FiniteStateMachine*)NULL, fsm);
 
     //-- Check things that should happen before fsm starts (before setup):
-    ASSERT_TRUE(mockupAudioManager->isStopped());
-    ASSERT_TRUE(mockupNetworkManager->isStopped());
-    ASSERT_TRUE(mockupImageManager->isStopped());
-    ASSERT_TRUE(mockupInputManager->isStopped());
-    ASSERT_FALSE(mockupRobotManager->isConnected());
-    ASSERT_FALSE(mockupRobotManager->isEnabled());
+    ASSERT_TRUE(mockAudioManager->isStopped());
+    ASSERT_TRUE(mockNetworkManager->isStopped());
+    ASSERT_TRUE(mockImageManager->isStopped());
+    ASSERT_TRUE(mockInputManager->isStopped());
+    ASSERT_FALSE(mockRobotManager->isConnected());
+    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
@@ -188,40 +188,40 @@ TEST_F(InitStateTest, InitStateGoesToLogin)
     //-- Check things that should happen in initial state before login (loop):
 
     //yarp::os::Time::delay(1);
-    ASSERT_FALSE(mockupAudioManager->isStopped());
-    ASSERT_TRUE(mockupAudioManager->isPlaying("RD_THEME"));
+    ASSERT_FALSE(mockAudioManager->isStopped());
+    ASSERT_TRUE(mockAudioManager->isPlaying("RD_THEME"));
 
-    ASSERT_FALSE(mockupNetworkManager->isStopped());
-    ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
+    ASSERT_FALSE(mockNetworkManager->isStopped());
+    ASSERT_FALSE(mockNetworkManager->isLoggedIn());
 
-    ASSERT_TRUE(mockupImageManager->isStopped());
-    ASSERT_FALSE(mockupImageManager->isEnabled());
+    ASSERT_TRUE(mockImageManager->isStopped());
+    ASSERT_FALSE(mockImageManager->isEnabled());
 
-    ASSERT_FALSE(mockupInputManager->isStopped());
-    ASSERT_EQ(1, mockupInputManager->getNumListeners());
+    ASSERT_FALSE(mockInputManager->isStopped());
+    ASSERT_EQ(1, mockInputManager->getNumListeners());
 
-    ASSERT_FALSE(mockupRobotManager->isConnected());
-    ASSERT_FALSE(mockupRobotManager->isEnabled());
+    ASSERT_FALSE(mockRobotManager->isConnected());
+    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- When enter is pressed, the system should log in and go to next state:
-    mockupInputManager->sendKeyPress(RdKey::KEY_ENTER);
+    mockInputManager->sendKeyPress(Key::KEY_ENTER);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has logged in and it is in the next state (cleanup):
-    ASSERT_FALSE(mockupAudioManager->isStopped());
-    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_THEME"));
+    ASSERT_FALSE(mockAudioManager->isStopped());
+    ASSERT_FALSE(mockAudioManager->isPlaying("RD_THEME"));
 
-    ASSERT_FALSE(mockupNetworkManager->isStopped());
-    ASSERT_TRUE(mockupNetworkManager->isLoggedIn());
+    ASSERT_FALSE(mockNetworkManager->isStopped());
+    ASSERT_TRUE(mockNetworkManager->isLoggedIn());
 
-    ASSERT_FALSE(mockupImageManager->isStopped());
-    ASSERT_FALSE(mockupImageManager->isEnabled());
+    ASSERT_FALSE(mockImageManager->isStopped());
+    ASSERT_FALSE(mockImageManager->isEnabled());
 
-    ASSERT_FALSE(mockupInputManager->isStopped());
-    ASSERT_EQ(0, mockupInputManager->getNumListeners());
+    ASSERT_FALSE(mockInputManager->isStopped());
+    ASSERT_EQ(0, mockInputManager->getNumListeners());
 
-    ASSERT_TRUE(mockupRobotManager->isConnected());
-    ASSERT_FALSE(mockupRobotManager->isEnabled());
+    ASSERT_TRUE(mockRobotManager->isConnected());
+    ASSERT_FALSE(mockRobotManager->isEnabled());
 
 }
 
@@ -244,12 +244,12 @@ TEST_F(InitStateTest, InitStateGoesToExit)
     ASSERT_NE((FiniteStateMachine*)NULL, fsm);
 
     //-- Check things that should happen before fsm starts (before setup):
-    ASSERT_TRUE(mockupAudioManager->isStopped());
-    ASSERT_TRUE(mockupNetworkManager->isStopped());
-    ASSERT_TRUE(mockupImageManager->isStopped());
-    ASSERT_TRUE(mockupInputManager->isStopped());
-    ASSERT_FALSE(mockupRobotManager->isConnected());
-    ASSERT_FALSE(mockupRobotManager->isEnabled());
+    ASSERT_TRUE(mockAudioManager->isStopped());
+    ASSERT_TRUE(mockNetworkManager->isStopped());
+    ASSERT_TRUE(mockImageManager->isStopped());
+    ASSERT_TRUE(mockInputManager->isStopped());
+    ASSERT_FALSE(mockRobotManager->isConnected());
+    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
@@ -257,40 +257,40 @@ TEST_F(InitStateTest, InitStateGoesToExit)
     //-- Check things that should happen in initial state before exit (loop):
 
     //yarp::os::Time::delay(1);
-    ASSERT_FALSE(mockupAudioManager->isStopped());
-    ASSERT_TRUE(mockupAudioManager->isPlaying("RD_THEME"));
+    ASSERT_FALSE(mockAudioManager->isStopped());
+    ASSERT_TRUE(mockAudioManager->isPlaying("RD_THEME"));
 
-    ASSERT_FALSE(mockupNetworkManager->isStopped());
-    ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
+    ASSERT_FALSE(mockNetworkManager->isStopped());
+    ASSERT_FALSE(mockNetworkManager->isLoggedIn());
 
-    ASSERT_TRUE(mockupImageManager->isStopped());
-    ASSERT_FALSE(mockupImageManager->isEnabled());
+    ASSERT_TRUE(mockImageManager->isStopped());
+    ASSERT_FALSE(mockImageManager->isEnabled());
 
-    ASSERT_FALSE(mockupInputManager->isStopped());
-    ASSERT_EQ(1, mockupInputManager->getNumListeners());
+    ASSERT_FALSE(mockInputManager->isStopped());
+    ASSERT_EQ(1, mockInputManager->getNumListeners());
 
-    ASSERT_FALSE(mockupRobotManager->isConnected());
-    ASSERT_FALSE(mockupRobotManager->isEnabled());
+    ASSERT_FALSE(mockRobotManager->isConnected());
+    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- When esc is pressed, the system should exit the game:
-    mockupInputManager->sendKeyPress(RdKey::KEY_ESCAPE);
+    mockInputManager->sendKeyPress(Key::KEY_ESCAPE);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has stopped things and it is in the final state (cleanup):
-    ASSERT_TRUE(mockupImageManager->isStopped());
-    ASSERT_FALSE(mockupImageManager->isEnabled());
+    ASSERT_TRUE(mockImageManager->isStopped());
+    ASSERT_FALSE(mockImageManager->isEnabled());
 
-    ASSERT_TRUE(mockupInputManager->isStopped());
-    ASSERT_EQ(0, mockupInputManager->getNumListeners());
+    ASSERT_TRUE(mockInputManager->isStopped());
+    ASSERT_EQ(0, mockInputManager->getNumListeners());
 
-    ASSERT_TRUE(mockupAudioManager->isStopped());
-    ASSERT_FALSE(mockupAudioManager->isPlaying("RD_THEME"));
+    ASSERT_TRUE(mockAudioManager->isStopped());
+    ASSERT_FALSE(mockAudioManager->isPlaying("RD_THEME"));
 
-    ASSERT_TRUE(mockupNetworkManager->isStopped());
-    ASSERT_FALSE(mockupNetworkManager->isLoggedIn());
+    ASSERT_TRUE(mockNetworkManager->isStopped());
+    ASSERT_FALSE(mockNetworkManager->isLoggedIn());
 
-    ASSERT_FALSE(mockupRobotManager->isConnected());
-    ASSERT_FALSE(mockupRobotManager->isEnabled());
+    ASSERT_FALSE(mockRobotManager->isConnected());
+    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- Check that end state is active
     ASSERT_EQ(-1, fsm->getCurrentState()); //-- (When FSM is ended, no state is active, hence -1)
