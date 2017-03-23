@@ -81,9 +81,9 @@ script:
   - bin/testMentalMap
   - bin/testMockupAudioManager
   - bin/testMockupInputManager
-  - bin/testRdMockupRobotManager
-  - bin/testRdProcessorImageEventListener
-  - bin/testRdYarpNetworkManager
+  - bin/testMockupRobotManager
+  - bin/testProcessorImageEventListener
+  - bin/testYarpNetworkManager
   - bin/testSDLAudioManager
   - bin/testRobotDevastation
 
