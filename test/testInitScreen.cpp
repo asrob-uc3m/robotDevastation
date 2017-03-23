@@ -10,7 +10,7 @@
 
 #include "ScreenManager.hpp"
 #include "SDLScreenManager.hpp"
-#include "RdScreen.hpp"
+#include "Screen.hpp"
 #include "InitScreen.hpp"
 
 #include <yarp/os/Time.h>
@@ -24,7 +24,7 @@ int main()
     ScreenManager * screenManager = ScreenManager::getScreenManager("SDL");
     screenManager->start();
 
-    RdScreen * screen = new InitScreen();
+    Screen * screen = new InitScreen();
 
     if(!screen->init())
         return 1;

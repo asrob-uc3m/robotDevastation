@@ -14,13 +14,13 @@
 #include <string>
 #include <vector>
 
-#include "RdMentalMap.hpp"
-#include "RdTarget.hpp"
-#include "RdPlayer.hpp"
-#include "RdWeapon.hpp"
+#include "MentalMap.hpp"
+#include "Target.hpp"
+#include "Player.hpp"
+#include "Weapon.hpp"
 #include "ScreenManager.hpp"
 #include "SDLScreenManager.hpp"
-#include "RdScreen.hpp"
+#include "Screen.hpp"
 #include "GameScreen.hpp"
 
 using namespace rd;
@@ -37,28 +37,28 @@ int main(void)
     ScreenManager * screenManager = ScreenManager::getScreenManager("SDL");
     screenManager->start();
 
-    RdScreen * screen = new GameScreen();
+    Screen * screen = new GameScreen();
     if(!screen->init())
         return 1;
     screenManager->setCurrentScreen(screen);
 
     //-- Create a mental map with some info:
-    RdMentalMap * mentalMap = RdMentalMap::getMentalMap();
+    MentalMap * mentalMap = MentalMap::getMentalMap();
     mentalMap->configure(0);
 
-    std::vector<RdPlayer> players;
-    players.push_back(RdPlayer(0, "Myself", 50, 100, 0, 0));
-    players.push_back(RdPlayer(1, "Enemy1", 50, 100, 1, 0));
-    players.push_back(RdPlayer(2, "Enemy2", 75, 100, 1, 0));
+    std::vector<Player> players;
+    players.push_back(Player(0, "Myself", 50, 100, 0, 0));
+    players.push_back(Player(1, "Enemy1", 50, 100, 1, 0));
+    players.push_back(Player(2, "Enemy2", 75, 100, 1, 0));
     mentalMap->updatePlayers(players);
 
-    std::vector<RdTarget> targets;
-    targets.push_back(RdTarget(1, RdVector2d(100, 100), RdVector2d(50, 50)));
-    targets.push_back(RdTarget(2, RdVector2d(400, 200), RdVector2d(100, 100)));
-    targets.push_back(RdTarget());
+    std::vector<Target> targets;
+    targets.push_back(Target(1, Vector2d(100, 100), Vector2d(50, 50)));
+    targets.push_back(Target(2, Vector2d(400, 200), Vector2d(100, 100)));
+    targets.push_back(Target());
     mentalMap->updateTargets(targets);
 
-    mentalMap->addWeapon(RdWeapon("Machine gun", 10, 250));
+    mentalMap->addWeapon(Weapon("Machine gun", 10, 250));
 
     //-- Set info elements on GameScreen
     screenManager->update(GameScreen::PARAM_MYSELF, mentalMap->getMyself());
@@ -67,7 +67,7 @@ int main(void)
     screenManager->update(GameScreen::PARAM_WEAPON, mentalMap->getCurrentWeapon());
 
     //-- Load test image
-    RdImage frame;
+    Image frame;
     yarp::sig::file::read(frame, rf.findFileByName("../images/test_frame.ppm"));
     screenManager->update(GameScreen::PARAM_CAMERA_FRAME, frame);
 
@@ -89,7 +89,7 @@ int main(void)
     screen = NULL;
 
     SDLScreenManager::destroyScreenManager();
-    RdMentalMap::destroyMentalMap();
+    MentalMap::destroyMentalMap();
     return 0;
 }
 

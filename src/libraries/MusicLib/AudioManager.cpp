@@ -15,7 +15,7 @@ rd::AudioManager *rd::AudioManager::getAudioManager()
     {
         if(!audioManagerRegistry.empty() )
         {
-            //-- Install the first RdImageManger found
+            //-- Install the first ImageManager found
             currentId = audioManagerRegistry.begin()->first;
             audioManagerInstance = audioManagerRegistry.begin()->second;
         }

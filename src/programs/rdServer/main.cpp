@@ -5,7 +5,7 @@
  * @ingroup rd_programs
  * \defgroup rdServer rdServer
  *
- * @brief The Robot Devastation PC server. Creates an instance of the RdServer class.
+ * @brief The Robot Devastation PC server. Creates an instance of the Server class.
  *
  * @section legal Legal
  *
@@ -45,8 +45,8 @@ rdClient
 
 #include <yarp/os/Network.h>
 
-#include "RdMacros.hpp"
-#include "RdServer.hpp"
+#include "Macros.hpp"
+#include "Server.hpp"
 
 int main(int argc, char *argv[]) {
 
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
     rf.setDefaultConfigFile("rdServer.ini");
     rf.configure(argc, argv);
 
-    rd::RdServer rdServer;
+    rd::Server rdServer;
     if(rf.check("help")) {
         return rdServer.runModule(rf);
     }

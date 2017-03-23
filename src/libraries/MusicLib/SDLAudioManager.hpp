@@ -8,13 +8,13 @@
 #include <iostream>
 #include <map>
 
-#include "RdMacros.hpp"
+#include "Macros.hpp"
 #include "AudioManager.hpp"
 
 namespace rd{
 
 /**
- * @ingroup RdMusicLib
+ * @ingroup MusicLib
  *
  * @brief Music and sound effects manager using SDL libraries
  *
@@ -49,7 +49,7 @@ class SDLAudioManager : public AudioManager
         virtual bool isStopped();
 
         /**
-         * @brief Register this manager in the RdImageManager registry so that can be used
+         * @brief Register this manager in the ImageManager registry so that can be used
          *
          * It ensures that only one manager of this type is created (unique instance)
          */
@@ -72,7 +72,7 @@ class SDLAudioManager : public AudioManager
          */
         SDLAudioManager();
 
-        //! \brief Stores the unique instance of the RdAudioManager
+        //! \brief Stores the unique instance of the AudioManager
         static SDLAudioManager * uniqueInstance;
 
         //! \brief Dictionary for the sound effects

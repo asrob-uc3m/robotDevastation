@@ -3,9 +3,9 @@
 const int rd::InitState::LOGIN_SUCCESSFUL = 1;
 const int rd::InitState::EXIT_REQUESTED = 2;
 
-rd::InitState::InitState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
-                         rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
-                         rd::RdRobotManager *robotManager, AudioManager *audioManager,
+rd::InitState::InitState(rd::NetworkManager *networkManager, rd::ImageManager *imageManager,
+                         rd::InputManager *inputManager, rd::MentalMap *mentalMap,
+                         rd::RobotManager *robotManager, AudioManager *audioManager,
                          rd::ScreenManager *screenManager) :
     ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager, audioManager, screenManager)
 {
@@ -37,7 +37,7 @@ bool rd::InitState::setup()
 
     //-- Setup network manager
     networkManager->addNetworkEventListener(mentalMap);
-    mentalMap->addMentalMapEventListener((RdYarpNetworkManager *)networkManager);
+    mentalMap->addMentalMapEventListener((YarpNetworkManager *)networkManager);
     if( ! networkManager->start() )
         return false;
 
@@ -100,14 +100,14 @@ int rd::InitState::evaluateConditions()
     return -1;
 }
 
-bool rd::InitState::onKeyDown(const rd::RdKey & k)
+bool rd::InitState::onKeyDown(const rd::Key & k)
 {
     return true;
 }
 
-bool rd::InitState::onKeyUp(const rd::RdKey & k)
+bool rd::InitState::onKeyUp(const rd::Key & k)
 {
-    if (k.getValue() == rd::RdKey::KEY_ESCAPE)
+    if (k.getValue() == rd::Key::KEY_ESCAPE)
     {
         RD_DEBUG("Escape was pressed!\n");
         received_exit = true;
@@ -123,9 +123,9 @@ bool rd::InitState::onKeyUp(const rd::RdKey & k)
     return false;
 }
 
-bool rd::InitState::onWindowEvent(const rd::RdWindowEvent & event)
+bool rd::InitState::onWindowEvent(const rd::WindowEvent & event)
 {
-    if (event.getEvent() == rd::RdWindowEvent::WINDOW_CLOSE)
+    if (event.getEvent() == rd::WindowEvent::WINDOW_CLOSE)
     {
         RD_DEBUG("Exit was triggered!\n");
         received_exit = true;

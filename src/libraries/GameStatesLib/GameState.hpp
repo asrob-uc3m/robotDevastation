@@ -5,12 +5,12 @@
 
 #include "State.hpp"
 #include "StateDirector.hpp"
-#include "RdUtils.hpp"
+#include "Utils.hpp"
 #include "Hub.hpp"
-#include "RdYarpNetworkManager.hpp"
+#include "YarpNetworkManager.hpp"
 #include "GameScreen.hpp"
-#include "RdProcessorImageEventListener.hpp"
-#include "RdWindowEvent.hpp"
+#include "ProcessorImageEventListener.hpp"
+#include "WindowEvent.hpp"
 
 #include <string>
 #include <sstream>
@@ -33,12 +33,12 @@ namespace rd{
 *  - It also plays music (important)
 */
 class GameState : public State, public ManagerHub,
-                  public RdInputEventListener, public RdImageEventListener
+                  public InputEventListener, public ImageEventListener
 {
     public:
-        GameState(RdNetworkManager * networkManager, RdImageManager * imageManager,
-                  RdInputManager * inputManager, RdMentalMap * mentalMap,
-                  RdRobotManager * robotManager, AudioManager * audioManager,
+        GameState(NetworkManager * networkManager, ImageManager * imageManager,
+                  InputManager * inputManager, MentalMap * mentalMap,
+                  RobotManager * robotManager, AudioManager * audioManager,
                   ScreenManager * screenManager);
         virtual ~GameState();
         virtual bool setup();
@@ -51,32 +51,32 @@ class GameState : public State, public ManagerHub,
         static const int KILLED;
         static const int EXIT_REQUESTED;
 
-        //-- RdInputEventListener interface:
-        virtual bool onKeyDown(const RdKey & k);
-        virtual bool onKeyUp(const RdKey & k);
-        virtual bool onWindowEvent(const RdWindowEvent & event);
+        //-- InputEventListener interface:
+        virtual bool onKeyDown(const Key & k);
+        virtual bool onKeyUp(const Key & k);
+        virtual bool onWindowEvent(const WindowEvent & event);
 
         //-- ImageEventListener interface
-        virtual bool onImageArrived(RdImageManager * manager);
+        virtual bool onImageArrived(ImageManager * manager);
 
         //-- Define keys that trigger actions
-        static const RdKey KEY_EXIT;
-        static const RdKey KEY_SHOOT;
-        static const RdKey KEY_RELOAD;
-        static const RdKey KEY_MOVE_FWD;
-        static const RdKey KEY_MOVE_BACK;
-        static const RdKey KEY_TURN_LEFT;
-        static const RdKey KEY_TURN_RIGHT;
-        static const RdKey KEY_PAN_LEFT;
-        static const RdKey KEY_PAN_RIGHT;
-        static const RdKey KEY_TILT_UP;
-        static const RdKey KEY_TILT_DOWN;
+        static const Key KEY_EXIT;
+        static const Key KEY_SHOOT;
+        static const Key KEY_RELOAD;
+        static const Key KEY_MOVE_FWD;
+        static const Key KEY_MOVE_BACK;
+        static const Key KEY_TURN_LEFT;
+        static const Key KEY_TURN_RIGHT;
+        static const Key KEY_PAN_LEFT;
+        static const Key KEY_PAN_RIGHT;
+        static const Key KEY_TILT_UP;
+        static const Key KEY_TILT_DOWN;
 
     protected:
         GameScreen screen;
         bool received_exit;
-        RdProcessorImageEventListener processorImageEventListener;
-        RdImage last_camera_frame;
+        ProcessorImageEventListener processorImageEventListener;
+        Image last_camera_frame;
 
 
 };

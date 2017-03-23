@@ -2,32 +2,32 @@
 #include <string>
 #include <vector>
 
-#include "RdMentalMap.hpp"
-#include "RdTarget.hpp"
-#include "RdPlayer.hpp"
+#include "MentalMap.hpp"
+#include "Target.hpp"
+#include "Player.hpp"
 #include "SDLAudioManager.hpp"
 
 using namespace rd;
 
-class RdMentalMapTest : public testing::Test
+class MentalMapTest : public testing::Test
 {
     public:
         virtual void SetUp()
         {
             SDLAudioManager::RegisterManager();
-            mentalMap = RdMentalMap::getMentalMap();
+            mentalMap = MentalMap::getMentalMap();
 
-            player1 = new RdPlayer(0, "Myself", 100, 100, 0, 0);
-            player2 = new RdPlayer(1, "Enemy", 100, 100, 1, 0);
-            player3 = new RdPlayer(2, "Enemy2", 100, 100, 1, 0);
+            player1 = new Player(0, "Myself", 100, 100, 0, 0);
+            player2 = new Player(1, "Enemy", 100, 100, 1, 0);
+            player3 = new Player(2, "Enemy2", 100, 100, 1, 0);
 
-            target1 = new RdTarget(1, RdVector2d(100, 100), RdVector2d(50, 50));
-            target2 = new RdTarget(2, RdVector2d( 20,  20), RdVector2d( 5,  5));
+            target1 = new Target(1, Vector2d(100, 100), Vector2d(50, 50));
+            target2 = new Target(2, Vector2d( 20,  20), Vector2d( 5,  5));
         }
 
         virtual void TearDown()
         {
-            RdMentalMap::destroyMentalMap();
+            MentalMap::destroyMentalMap();
             SDLAudioManager::destroyAudioManager();
 
             delete player1; player1 = NULL;
@@ -38,38 +38,38 @@ class RdMentalMapTest : public testing::Test
             delete target2; target2 = NULL;
         }
 
-        RdPlayer * player1, * player2, * player3;
+        Player * player1, * player2, * player3;
 
-        RdTarget * target1, * target2;
+        Target * target1, * target2;
 
     protected:
-        RdMentalMap * mentalMap;
+        MentalMap * mentalMap;
 };
 
-TEST_F( RdMentalMapTest, MentalMapIsSingleton)
+TEST_F( MentalMapTest, MentalMapIsSingleton)
 {
-    RdMentalMap * map2 = NULL;
-    map2 = RdMentalMap::getMentalMap();
+    MentalMap * map2 = NULL;
+    map2 = MentalMap::getMentalMap();
 
-    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
-    ASSERT_NE((RdMentalMap *)NULL, map2);
+    ASSERT_NE((MentalMap *)NULL, mentalMap);
+    ASSERT_NE((MentalMap *)NULL, map2);
     ASSERT_EQ(mentalMap, map2);
 }
 
-TEST_F( RdMentalMapTest, ConfigureMentalMap)
+TEST_F( MentalMapTest, ConfigureMentalMap)
 {
-    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
+    ASSERT_NE((MentalMap *)NULL, mentalMap);
 
     //-- Configure a mental map for two players:
     const int id = 0;
     ASSERT_FALSE(!mentalMap->configure(id));
 
     //-- Check the number of players
-    std::vector<RdPlayer> players = mentalMap->getPlayers();
+    std::vector<Player> players = mentalMap->getPlayers();
     EXPECT_EQ(0, (int) players.size());
 
     //-- Check the number of targets
-    std::vector<RdTarget> targets = mentalMap->getTargets();
+    std::vector<Target> targets = mentalMap->getTargets();
     EXPECT_EQ(0, (int) targets.size());
 }
 
@@ -79,23 +79,23 @@ TEST_F( RdMentalMapTest, ConfigureMentalMap)
 //-- Player-related
 //---------------------------------------------------------------------------------------
 
-TEST_F( RdMentalMapTest, UpdatePlayersUpdatesPlayers)
+TEST_F( MentalMapTest, UpdatePlayersUpdatesPlayers)
 {
-    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
+    ASSERT_NE((MentalMap *)NULL, mentalMap);
 
     //-- Configure a mental map for two players:
     const int id = 0;
     ASSERT_FALSE(!mentalMap->configure(id));
 
     //-- Update players:
-    std::vector<RdPlayer> players;
+    std::vector<Player> players;
     players.push_back(*player1);
     players.push_back(*player2);
 
     ASSERT_TRUE(mentalMap->updatePlayers(players));
 
     //-- Check players stored:
-    std::vector<RdPlayer> players_stored = mentalMap->getPlayers();
+    std::vector<Player> players_stored = mentalMap->getPlayers();
     ASSERT_EQ(2, (int) players_stored.size());
 
     if (players_stored[0].getId() == 0)
@@ -183,27 +183,27 @@ TEST_F( RdMentalMapTest, UpdatePlayersUpdatesPlayers)
 
 }
 
-TEST_F( RdMentalMapTest, MyselfPointsToMe)
+TEST_F( MentalMapTest, MyselfPointsToMe)
 {
-    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
+    ASSERT_NE((MentalMap *)NULL, mentalMap);
 
     //-- Configure a mental map for two players:
     const int id = 0;
     ASSERT_FALSE(!mentalMap->configure(id));
 
     //-- Update players:
-    std::vector<RdPlayer> players;
+    std::vector<Player> players;
     players.push_back(*player1);
     players.push_back(*player2);
 
     ASSERT_TRUE(mentalMap->updatePlayers(players));
 
     //-- Check players stored:
-    std::vector<RdPlayer> players_stored = mentalMap->getPlayers();
+    std::vector<Player> players_stored = mentalMap->getPlayers();
     ASSERT_EQ(2, (int) players_stored.size());
 
     //-- Check if myself is me:
-    RdPlayer me = mentalMap->getMyself();
+    Player me = mentalMap->getMyself();
     EXPECT_EQ(0, me.getId());
     EXPECT_STREQ("Myself", me.getName().c_str());
     EXPECT_EQ(0, me.getTeamId());
@@ -211,9 +211,9 @@ TEST_F( RdMentalMapTest, MyselfPointsToMe)
 }
 
 
-TEST_F( RdMentalMapTest, RespawnWorks)
+TEST_F( MentalMapTest, RespawnWorks)
 {
-    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
+    ASSERT_NE((MentalMap *)NULL, mentalMap);
 
     //-- Configure a mental map for one dead player:
     const int id = 0;
@@ -221,7 +221,7 @@ TEST_F( RdMentalMapTest, RespawnWorks)
 
     //-- Update players:
     player1->setHealth(0);
-    std::vector<RdPlayer> players;
+    std::vector<Player> players;
     players.push_back(*player1);
 
     ASSERT_TRUE(mentalMap->updatePlayers(players));
@@ -229,11 +229,11 @@ TEST_F( RdMentalMapTest, RespawnWorks)
     ASSERT_TRUE(mentalMap->respawn());
 
     //-- Check players stored:
-    std::vector<RdPlayer> players_stored = mentalMap->getPlayers();
+    std::vector<Player> players_stored = mentalMap->getPlayers();
     ASSERT_EQ(1, (int) players_stored.size());
 
     //-- Check if myself is me:
-    RdPlayer me = mentalMap->getMyself();
+    Player me = mentalMap->getMyself();
     EXPECT_EQ(0, me.getId());
     ASSERT_EQ(me.getMaxHealth(), me.getHealth());
 }
@@ -242,16 +242,16 @@ TEST_F( RdMentalMapTest, RespawnWorks)
 //-- Enemy-related
 //---------------------------------------------------------------------------------------
 
-TEST_F( RdMentalMapTest, UpdateTargetsUpdateTargets)
+TEST_F( MentalMapTest, UpdateTargetsUpdateTargets)
 {
-    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
+    ASSERT_NE((MentalMap *)NULL, mentalMap);
 
     //-- Configure a mental map for two players:
     const int id = 0;
     ASSERT_FALSE(!mentalMap->configure(id));
 
     //-- Update players:
-    std::vector<RdPlayer> players;
+    std::vector<Player> players;
     players.push_back(*player1);
     players.push_back(*player2);
 
@@ -259,14 +259,14 @@ TEST_F( RdMentalMapTest, UpdateTargetsUpdateTargets)
 
 
     //-- Update targets:
-    std::vector<RdTarget> targets;
+    std::vector<Target> targets;
     targets.push_back(*target1);
 
     ASSERT_TRUE(mentalMap->updateTargets(targets));
 
 
     //-- Check targets:
-    std::vector<RdTarget> targets_stored = mentalMap->getTargets();
+    std::vector<Target> targets_stored = mentalMap->getTargets();
     ASSERT_EQ(1, targets_stored.size());
     EXPECT_EQ(1, targets_stored[0].getPlayerId());
     EXPECT_EQ(100, targets_stored[0].getPos().x);
@@ -277,16 +277,16 @@ TEST_F( RdMentalMapTest, UpdateTargetsUpdateTargets)
 
 }
 
-TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
+TEST_F( MentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
 {
-    ASSERT_NE((RdMentalMap *)NULL, mentalMap);
+    ASSERT_NE((MentalMap *)NULL, mentalMap);
 
     //-- Configure a mental map for two players:
     const int id = 0;
     ASSERT_FALSE(!mentalMap->configure(id));
 
     //-- Update players:
-    std::vector<RdPlayer> players;
+    std::vector<Player> players;
     players.push_back(*player1);
     players.push_back(*player2);
     players.push_back(*player3);
@@ -294,7 +294,7 @@ TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
 
 
     //-- Update enemies:
-    std::vector<RdTarget> targets;
+    std::vector<Target> targets;
     targets.push_back(*target1);
     targets.push_back(*target2);
 
@@ -303,12 +303,12 @@ TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
 
     //-- Update with a single target until belief for the other target reaches 0:
     //-- (Belief decrease is hardcoded, and decreases by 10 each update)
-    std::vector<RdTarget> new_target_vector;
+    std::vector<Target> new_target_vector;
     new_target_vector.push_back(*target2);
     ASSERT_TRUE(mentalMap->updateTargets(new_target_vector));
 
     //-- Check targets:
-    RdTarget target_not_updated = mentalMap->getTarget(1);
+    Target target_not_updated = mentalMap->getTarget(1);
     EXPECT_EQ(1, target_not_updated.getPlayerId());
     EXPECT_EQ(100, target_not_updated.getPos().x);
     EXPECT_EQ(100, target_not_updated.getPos().y);
@@ -333,12 +333,12 @@ TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
 //-- Thread-safe functions
 //---------------------------------------------------------------------------------------
 
-//TEST_F( RdMentalMapTest, TargetsLockedWhenModified)
+//TEST_F( MentalMapTest, TargetsLockedWhenModified)
 //{
 //    ASSERT_TRUE(false);
 //}
 
-//TEST_F( RdMentalMapTest, PlayersLockedWhenModified)
+//TEST_F( MentalMapTest, PlayersLockedWhenModified)
 //{
 //    ASSERT_FALSE(true);
 //}
