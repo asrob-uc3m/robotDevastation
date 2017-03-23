@@ -13,7 +13,7 @@ include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} ImageManager.cpp ImageEventListener.hpp YarpImageManager.cpp YarpLocalImageManager.hpp YarpLocalImageManager.cpp
      ProcessorImageEventListener.hpp ProcessorImageEventListener.cpp
-     MockupImageManager.cpp MockupImageEventListener.cpp)
+     MockImageManager.cpp MockImageEventListener.cpp)
 target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${ZBAR_LIBRARIES} ${RD_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 

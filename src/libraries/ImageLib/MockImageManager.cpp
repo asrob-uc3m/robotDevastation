@@ -1,4 +1,4 @@
-#include "MockupImageManager.hpp"
+#include "MockImageManager.hpp"
 
 
 //-- Initialize static members

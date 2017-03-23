@@ -1,4 +1,4 @@
-#include "MockupInputManager.hpp"
+#include "MockInputManager.hpp"
 
 //-- Initialize static members
 rd::MockupInputManager * rd::MockupInputManager::uniqueInstance = NULL;

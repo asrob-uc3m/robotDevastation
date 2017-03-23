@@ -12,7 +12,7 @@ include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_MIXER_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} AudioManager.cpp SDLAudioManager.cpp MockupAudioManager.cpp)
+add_library(${KEYWORD} AudioManager.cpp SDLAudioManager.cpp MockAudioManager.cpp)
 target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)
 

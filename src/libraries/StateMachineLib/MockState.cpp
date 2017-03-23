@@ -1,4 +1,4 @@
-#include "MockupState.hpp"
+#include "MockState.hpp"
 
 const unsigned int rd::MockupState::STATE_INITIAL = 0;
 const unsigned int rd::MockupState::STATE_SETUP = 1;

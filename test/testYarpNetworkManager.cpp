@@ -11,7 +11,7 @@
 #include <yarp/os/ResourceFinder.h>
 
 #include "YarpNetworkManager.hpp"
-#include "MockupNetworkEventListener.hpp"
+#include "MockNetworkEventListener.hpp"
 #include "Server.hpp"
 
 #include "gtest/gtest.h"

@@ -26,15 +26,15 @@ target_link_libraries(testGameScreen ${RD_LIBRARIES} gtest gtest_main)
 add_executable(testDeadScreen testDeadScreen.cpp)
 target_link_libraries(testDeadScreen ${RD_LIBRARIES} gtest gtest_main)
 
-add_executable(testMockupScreen testMockupScreen.cpp)
-target_link_libraries(testMockupScreen ${RD_LIBRARIES})
+add_executable(testMockScreen testMockScreen.cpp)
+target_link_libraries(testMockScreen ${RD_LIBRARIES})
 
 add_executable(testSDLScreenManager testSDLScreenManager.cpp)
 target_link_libraries(testSDLScreenManager ${RD_LIBRARIES} UserInterfaceLib)
 
 # Audio manager related
-add_executable(testMockupAudioManager testMockupAudioManager.cpp)
-target_link_libraries(testMockupAudioManager ${RD_LIBRARIES} MusicLib gtest gtest_main)
+add_executable(testMockAudioManager testMockAudioManager.cpp)
+target_link_libraries(testMockAudioManager ${RD_LIBRARIES} MusicLib gtest gtest_main)
 
 add_executable(testSDLAudioManager testSDLAudioManager.cpp)
 target_link_libraries(testSDLAudioManager ${RD_LIBRARIES} MusicLib gtest gtest_main)
@@ -43,8 +43,8 @@ target_link_libraries(testSDLAudioManager ${RD_LIBRARIES} MusicLib gtest gtest_m
 add_executable(testInputManager testInputManager.cpp)
 target_link_libraries(testInputManager ${RD_LIBRARIES} InputLib gtest gtest_main)
 
-add_executable(testMockupInputManager testMockupInputManager.cpp)
-target_link_libraries(testMockupInputManager ${RD_LIBRARIES} InputLib gtest gtest_main)
+add_executable(testMockInputManager testMockInputManager.cpp)
+target_link_libraries(testMockInputManager ${RD_LIBRARIES} InputLib gtest gtest_main)
 
 # Mental Map related
 add_executable(testMentalMap testMentalMap.cpp)
@@ -54,22 +54,22 @@ target_link_libraries(testMentalMap ${RD_LIBRARIES} MentalMapLib gtest gtest_mai
 add_executable(testYarpNetworkManager testYarpNetworkManager.cpp)
 target_link_libraries(testYarpNetworkManager ${RD_LIBRARIES} NetworkLib gtest gtest_main)
 
-add_executable(testMockupNetworkManager testMockupNetworkManager.cpp)
-target_link_libraries(testMockupNetworkManager ${RD_LIBRARIES} NetworkLib gtest gtest_main)
+add_executable(testMockNetworkManager testMockNetworkManager.cpp)
+target_link_libraries(testMockNetworkManager ${RD_LIBRARIES} NetworkLib gtest gtest_main)
 
 # Image manager related
 add_executable(testYarpImageManager testYarpImageManager.cpp)
 target_link_libraries(testYarpImageManager ${RD_LIBRARIES} ImageLib gtest gtest_main)
 
-add_executable(testMockupImageManager testMockupImageManager.cpp)
-target_link_libraries(testMockupImageManager ${RD_LIBRARIES} ImageLib gtest gtest_main)
+add_executable(testMockImageManager testMockImageManager.cpp)
+target_link_libraries(testMockImageManager ${RD_LIBRARIES} ImageLib gtest gtest_main)
 
 add_executable(testProcessorImageEventListener testProcessorImageEventListener.cpp)
 target_link_libraries(testProcessorImageEventListener ${RD_LIBRARIES} ImageLib gtest gtest_main)
 
 # Robot manager related
-add_executable(testMockupRobotManager testMockupRobotManager.cpp)
-target_link_libraries(testMockupRobotManager ${RD_LIBRARIES} RobotLib gtest gtest_main)
+add_executable(testMockRobotManager testMockRobotManager.cpp)
+target_link_libraries(testMockRobotManager ${RD_LIBRARIES} RobotLib gtest gtest_main)
 
 # State machine related
 add_executable(testFSM testFSM.cpp)

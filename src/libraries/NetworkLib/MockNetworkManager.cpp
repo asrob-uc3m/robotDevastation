@@ -1,4 +1,4 @@
-#include "MockupNetworkManager.hpp"
+#include "MockNetworkManager.hpp"
 
 //-- Initialize static members
 rd::MockupNetworkManager * rd::MockupNetworkManager::uniqueInstance = NULL;

@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "MockupRobotManager.cpp"
+#include "MockRobotManager.cpp"
 
 using namespace rd;
 

@@ -1,4 +1,4 @@
-#include "MockupScreen.hpp"
+#include "MockScreen.hpp"
 
 //-- Public
 const std::string rd::MockupScreen::PARAM_MESSAGE = "message";

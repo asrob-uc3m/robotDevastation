@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "State.hpp"
-#include "MockupState.hpp"
+#include "MockState.hpp"
 #include "StateDirector.hpp"
 #include "YarpStateDirector.hpp"
 #include "Utils.hpp"

@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "MockupInputManager.hpp"
-#include "MockupInputEventListener.hpp"
+#include "MockInputManager.hpp"
+#include "MockInputEventListener.hpp"
 
 using namespace rd;
 

@@ -1,4 +1,4 @@
-#include "MockupAudioManager.hpp"
+#include "MockAudioManager.hpp"
 
 //-- This is very important:
 rd::MockupAudioManager * rd::MockupAudioManager::uniqueInstance = NULL;

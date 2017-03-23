@@ -6,8 +6,8 @@
 #include <yarp/os/ResourceFinder.h>
 
 #include "ImageManager.hpp"
-#include "MockupImageManager.hpp"
-#include "MockupImageEventListener.hpp"
+#include "MockImageManager.hpp"
+#include "MockImageEventListener.hpp"
 
 using namespace rd;
 

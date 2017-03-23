@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include <string>
 
-#include "MockupAudioManager.hpp"
+#include "MockAudioManager.hpp"
 
 #include <yarp/os/Time.h>
 #include <yarp/os/ResourceFinder.h>

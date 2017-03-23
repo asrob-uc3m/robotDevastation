@@ -5,7 +5,7 @@
 
 #include "ImageManager.hpp"
 #include "YarpImageManager.hpp"
-#include "MockupImageEventListener.hpp"
+#include "MockImageEventListener.hpp"
 
 #ifdef WIN32
 #include <Windows.h>

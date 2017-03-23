@@ -11,12 +11,12 @@
 #include "Utils.hpp"
 #include "SDLUtils.hpp"
 
-#include "MockupNetworkManager.hpp"
-#include "MockupImageManager.hpp"
-#include "MockupInputManager.hpp"
+#include "MockNetworkManager.hpp"
+#include "MockImageManager.hpp"
+#include "MockInputManager.hpp"
 #include "MentalMap.hpp"
-#include "MockupRobotManager.hpp"
-#include "MockupAudioManager.hpp"
+#include "MockRobotManager.hpp"
+#include "MockAudioManager.hpp"
 #include "SDLScreenManager.hpp"
 
 //-- Game FSM

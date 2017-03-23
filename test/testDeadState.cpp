@@ -18,15 +18,15 @@
 #include "SDLUtils.hpp"
 #include "DeadState.hpp"
 #include "InitState.hpp"
-#include "MockupState.hpp"
+#include "MockState.hpp"
 
-#include "MockupNetworkManager.hpp"
-#include "MockupImageManager.hpp"
-#include "MockupInputEventListener.hpp"
-#include "MockupInputManager.hpp"
+#include "MockNetworkManager.hpp"
+#include "MockImageManager.hpp"
+#include "MockInputEventListener.hpp"
+#include "MockInputManager.hpp"
 #include "MentalMap.hpp"
-#include "MockupRobotManager.hpp"
-#include "MockupAudioManager.hpp"
+#include "MockRobotManager.hpp"
+#include "MockAudioManager.hpp"
 #include "SDLScreenManager.hpp"
 
 #include <yarp/sig/all.h>

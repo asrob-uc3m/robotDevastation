@@ -9,7 +9,7 @@ find_package(YARP REQUIRED)
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} StateMachine.cpp StateMachineBuilder.cpp State.cpp MockupState.cpp StateDirector.cpp YarpStateDirector.cpp)
+add_library(${KEYWORD} StateMachine.cpp StateMachineBuilder.cpp State.cpp MockState.cpp StateDirector.cpp YarpStateDirector.cpp)
 
 target_link_libraries(${KEYWORD} ${YARP_LIBRARIES})
 install(TARGETS ${KEYWORD} DESTINATION lib)

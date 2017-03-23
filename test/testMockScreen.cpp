@@ -9,7 +9,7 @@
 
 #include <yarp/os/Time.h>
 
-#include "MockupScreen.hpp"
+#include "MockScreen.hpp"
 
 using namespace rd;
 
