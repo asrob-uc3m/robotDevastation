@@ -1,26 +1,26 @@
 #include "MockNetworkManager.hpp"
 
 //-- Initialize static members
-rd::MockupNetworkManager * rd::MockupNetworkManager::uniqueInstance = NULL;
-const std::string rd::MockupNetworkManager::id = "MOCKUP";
+rd::MockNetworkManager * rd::MockNetworkManager::uniqueInstance = NULL;
+const std::string rd::MockNetworkManager::id = "MOCKUP";
 
 
-bool rd::MockupNetworkManager::RegisterManager()
+bool rd::MockNetworkManager::RegisterManager()
 {
     if (uniqueInstance == NULL)
     {
-        uniqueInstance = new MockupNetworkManager();
+        uniqueInstance = new MockNetworkManager();
     }
 
     return Register( uniqueInstance, id);
 }
 
-rd::MockupNetworkManager::~MockupNetworkManager()
+rd::MockNetworkManager::~MockNetworkManager()
 {
     uniqueInstance = NULL;
 }
 
-bool rd::MockupNetworkManager::start()
+bool rd::MockNetworkManager::start()
 {
     if (player.getId() == -1)
         return false;
@@ -29,13 +29,13 @@ bool rd::MockupNetworkManager::start()
     return true;
 }
 
-bool rd::MockupNetworkManager::stop()
+bool rd::MockNetworkManager::stop()
 {
     stopped = true;
     return true;
 }
 
-bool rd::MockupNetworkManager::configure(std::string parameter, Player value)
+bool rd::MockNetworkManager::configure(std::string parameter, Player value)
 {
     if (parameter.compare("player") == 0)
     {
@@ -46,7 +46,7 @@ bool rd::MockupNetworkManager::configure(std::string parameter, Player value)
     return NetworkManager::configure(parameter, value);
 }
 
-bool rd::MockupNetworkManager::sendPlayerHit(rd::Player player, int damage)
+bool rd::MockNetworkManager::sendPlayerHit(rd::Player player, int damage)
 {
     int id = player.getId();
 
@@ -77,7 +77,7 @@ bool rd::MockupNetworkManager::sendPlayerHit(rd::Player player, int damage)
     return true;
 }
 
-bool rd::MockupNetworkManager::login()
+bool rd::MockNetworkManager::login()
 {
 
     int loginId = player.getId();
@@ -104,7 +104,7 @@ bool rd::MockupNetworkManager::login()
     return true;
 }
 
-bool rd::MockupNetworkManager::logout()
+bool rd::MockNetworkManager::logout()
 {
     int id = player.getId();
 
@@ -132,22 +132,22 @@ bool rd::MockupNetworkManager::logout()
     return true;
 }
 
-bool rd::MockupNetworkManager::keepAlive()
+bool rd::MockNetworkManager::keepAlive()
 {
     return true; //-- Not really required in mock object
 }
 
-bool rd::MockupNetworkManager::isLoggedIn()
+bool rd::MockNetworkManager::isLoggedIn()
 {
     return logged_in;
 }
 
-bool rd::MockupNetworkManager::isStopped()
+bool rd::MockNetworkManager::isStopped()
 {
     return stopped;
 }
 
-bool rd::MockupNetworkManager::setPlayerData(std::vector<rd::Player> players)
+bool rd::MockNetworkManager::setPlayerData(std::vector<rd::Player> players)
 {
     players_dic.clear();
 
@@ -161,7 +161,7 @@ bool rd::MockupNetworkManager::setPlayerData(std::vector<rd::Player> players)
     return true;
 }
 
-std::vector<rd::Player> rd::MockupNetworkManager::getPlayerData()
+std::vector<rd::Player> rd::MockNetworkManager::getPlayerData()
 {
     std::vector<Player> player_vector;
 
@@ -173,7 +173,7 @@ std::vector<rd::Player> rd::MockupNetworkManager::getPlayerData()
     return player_vector;
 }
 
-bool rd::MockupNetworkManager::sendPlayerData()
+bool rd::MockNetworkManager::sendPlayerData()
 {
     //-- Notify listeners
     for(int i = 0; i < listeners.size(); i++)
@@ -181,7 +181,7 @@ bool rd::MockupNetworkManager::sendPlayerData()
     return true;
 }
 
-bool rd::MockupNetworkManager::setLoggedIn(bool logged_in)
+bool rd::MockNetworkManager::setLoggedIn(bool logged_in)
 {
     if (this->logged_in != logged_in)
     {
@@ -195,7 +195,7 @@ bool rd::MockupNetworkManager::setLoggedIn(bool logged_in)
     }
 }
 
-rd::MockupNetworkManager::MockupNetworkManager()
+rd::MockNetworkManager::MockNetworkManager()
 {
     logged_in = false;
     stopped = true;

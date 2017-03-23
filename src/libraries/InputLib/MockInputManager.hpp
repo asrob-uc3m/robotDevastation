@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCKUP_INPUT_MANAGER_HPP__
-#define __MOCKUP_INPUT_MANAGER_HPP__
+#ifndef __MOCK_INPUT_MANAGER_HPP__
+#define __MOCK_INPUT_MANAGER_HPP__
 
 #include "InputManager.hpp"
 
@@ -13,7 +13,7 @@ namespace rd{
  * @brief Allows to simulate input from a user programatically (mainly for test purposes)
  *
  */
-class MockupInputManager : public InputManager
+class MockInputManager : public InputManager
 {
     public:
         //------------------------------ Testing Interface ------------------------------------------------------------//
@@ -23,8 +23,8 @@ class MockupInputManager : public InputManager
         bool sendWindowEvent(const WindowEvent & event);
 
         //------------------------------ Construction & destruction ---------------------------------------------------//
-        MockupInputManager();
-        ~MockupInputManager();
+        MockInputManager();
+        ~MockInputManager();
 
         /**
          * @brief Register this manager in the InputManager registry so that can be used
@@ -46,9 +46,9 @@ class MockupInputManager : public InputManager
 
    private:
         //! @brief Reference to this manager (unique instance)
-        static MockupInputManager * uniqueInstance;
+        static MockInputManager * uniqueInstance;
 
         bool stopped;
 };
 }
-#endif // __MOCKUP_INPUT_MANAGER_HPP__
+#endif // __MOCK_INPUT_MANAGER_HPP__

@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCKUP_SCREEN_HPP__
-#define __MOCKUP_SCREEN_HPP__
+#ifndef __MOCK_SCREEN_HPP__
+#define __MOCK_SCREEN_HPP__
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -16,15 +16,15 @@
 
 namespace rd {
 
-class MockupScreen : public Screen
+class MockScreen : public Screen
 {
     public:
-        MockupScreen();
+        MockScreen();
         virtual bool init();
         virtual bool cleanup();
         virtual bool show();
         virtual bool drawScreen(void *screen);
-        virtual ~MockupScreen();
+        virtual ~MockScreen();
         virtual bool update(std::string parameter, std::string value);
 
         //-- Available parameters:
@@ -47,4 +47,4 @@ class MockupScreen : public Screen
 
 }
 
-#endif // __MOCKUP_SCREEN_HPP__
+#endif // __MOCK_SCREEN_HPP__

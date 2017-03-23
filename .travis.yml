@@ -79,9 +79,9 @@ script:
   - bin/testGameState
   - bin/testInitState
   - bin/testMentalMap
-  - bin/testMockupAudioManager
-  - bin/testMockupInputManager
-  - bin/testMockupRobotManager
+  - bin/testMockAudioManager
+  - bin/testMockInputManager
+  - bin/testMockRobotManager
   - bin/testProcessorImageEventListener
   - bin/testYarpNetworkManager
   - bin/testSDLAudioManager

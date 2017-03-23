@@ -7,13 +7,13 @@ using namespace rd;
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
-class MockupNetworkManagerTest : public testing::Test
+class MockNetworkManagerTest : public testing::Test
 {
     public:
         virtual void SetUp()
         {
-            MockupNetworkManager::RegisterManager();
-            networkManager = (MockupNetworkManager *) NetworkManager::getNetworkManager(MockupNetworkManager::id);
+            MockNetworkManager::RegisterManager();
+            networkManager = (MockNetworkManager *) NetworkManager::getNetworkManager(MockNetworkManager::id);
 
             me = Player(0, "me", 100, 100, 0, 0);
             other_player = Player(1, "dummy", 100, 100, 1, 0);
@@ -26,14 +26,14 @@ class MockupNetworkManagerTest : public testing::Test
 
 
     protected:
-        MockupNetworkManager * networkManager;
+        MockNetworkManager * networkManager;
         Player me, other_player;
 };
 
 
 //-- Things that are being tested
 //-----------------------------------------------------------------------------------------------------
-TEST_F(MockupNetworkManagerTest, ManagerDoesNotStartIfNotConfigured)
+TEST_F(MockNetworkManagerTest, ManagerDoesNotStartIfNotConfigured)
 {
     ASSERT_FALSE(networkManager->start());
     ASSERT_TRUE(networkManager->isStopped());
@@ -46,7 +46,7 @@ TEST_F(MockupNetworkManagerTest, ManagerDoesNotStartIfNotConfigured)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
-TEST_F(MockupNetworkManagerTest, PlayerCreatedWhenLogin)
+TEST_F(MockNetworkManagerTest, PlayerCreatedWhenLogin)
 {
     networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
@@ -64,7 +64,7 @@ TEST_F(MockupNetworkManagerTest, PlayerCreatedWhenLogin)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
-TEST_F(MockupNetworkManagerTest, ErrorLoginTwice)
+TEST_F(MockNetworkManagerTest, ErrorLoginTwice)
 {
     networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
@@ -88,7 +88,7 @@ TEST_F(MockupNetworkManagerTest, ErrorLoginTwice)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
-TEST_F(MockupNetworkManagerTest, PlayerRemovedOnLogout)
+TEST_F(MockNetworkManagerTest, PlayerRemovedOnLogout)
 {
     networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
@@ -111,7 +111,7 @@ TEST_F(MockupNetworkManagerTest, PlayerRemovedOnLogout)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
-TEST_F(MockupNetworkManagerTest, ErrorLogoutTwice)
+TEST_F(MockNetworkManagerTest, ErrorLogoutTwice)
 {
     networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
@@ -137,7 +137,7 @@ TEST_F(MockupNetworkManagerTest, ErrorLogoutTwice)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
-TEST_F(MockupNetworkManagerTest, SetPlayerAddsPlayer)
+TEST_F(MockNetworkManagerTest, SetPlayerAddsPlayer)
 {
     networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
@@ -158,7 +158,7 @@ TEST_F(MockupNetworkManagerTest, SetPlayerAddsPlayer)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
-TEST_F(MockupNetworkManagerTest, PlayerDamagedWhenShot)
+TEST_F(MockNetworkManagerTest, PlayerDamagedWhenShot)
 {
     networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
@@ -184,9 +184,9 @@ TEST_F(MockupNetworkManagerTest, PlayerDamagedWhenShot)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
-TEST_F(MockupNetworkManagerTest, ListenersNotifiedOnEvent)
+TEST_F(MockNetworkManagerTest, ListenersNotifiedOnEvent)
 {
-    MockupNetworkEventListener listener;
+    MockNetworkEventListener listener;
     NetworkEventListener * plistener = (NetworkEventListener *) &listener;
     ASSERT_TRUE(((NetworkManager*)networkManager)->addNetworkEventListener(plistener));
 
@@ -208,10 +208,10 @@ TEST_F(MockupNetworkManagerTest, ListenersNotifiedOnEvent)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
-TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
+TEST_F(MockNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
 {
     //-------------------------------------------------------------------------------------
-    //-- This tests integration between MockupNetworkManager and MentalMap
+    //-- This tests integration between MockNetworkManager and MentalMap
     //-- More precisely, that targets are updated in MentalMap when shot, with information
     //-- going from MentalMap to NetworkManager and then back to MentalMap
     //-------------------------------------------------------------------------------------

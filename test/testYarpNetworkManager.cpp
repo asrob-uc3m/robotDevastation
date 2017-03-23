@@ -136,7 +136,7 @@ TEST_F(YarpNetworkManagerTest, NetworkManagerIsSingleton)
 
 TEST_F(YarpNetworkManagerTest, NetworkManagerAPIWorks)
 {
-    MockupNetworkEventListener listener;
+    MockNetworkEventListener listener;
     NetworkEventListener * plistener = (NetworkEventListener *) &listener;
     ASSERT_TRUE(((NetworkManager*)networkManager)->addNetworkEventListener(plistener));
 
@@ -186,7 +186,7 @@ TEST_F(YarpNetworkManagerTest, NetworkManagerAPIWorks)
 
 TEST_F(YarpNetworkManagerTest, DisconnectedIfNoKeepAlive)
 {
-    MockupNetworkEventListener listener;
+    MockNetworkEventListener listener;
     NetworkEventListener * plistener = (NetworkEventListener *) &listener;
     ASSERT_TRUE(((NetworkManager*)networkManager)->addNetworkEventListener(plistener));
 

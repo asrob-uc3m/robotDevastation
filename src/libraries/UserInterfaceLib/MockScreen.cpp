@@ -1,22 +1,22 @@
 #include "MockScreen.hpp"
 
 //-- Public
-const std::string rd::MockupScreen::PARAM_MESSAGE = "message";
+const std::string rd::MockScreen::PARAM_MESSAGE = "message";
 
 //-- Protected
-const std::string rd::MockupScreen::IMAGE_PATH = "../images/unittesting.jpg";
-const std::string rd::MockupScreen::FONT_PATH = "../fonts/FreeMono.ttf";
+const std::string rd::MockScreen::IMAGE_PATH = "../images/unittesting.jpg";
+const std::string rd::MockScreen::FONT_PATH = "../fonts/FreeMono.ttf";
 
 //-- Private
-const SDL_Color rd::MockupScreen::TEXT_COLOR = {255,0,0,0};
+const SDL_Color rd::MockScreen::TEXT_COLOR = {255,0,0,0};
 
-rd::MockupScreen::MockupScreen()
+rd::MockScreen::MockScreen()
 {
     w = 200; h = 100; //-- Arbitrary size initialization
     screen = NULL;
 }
 
-bool rd::MockupScreen::init()
+bool rd::MockScreen::init()
 {
     //-- Find the real path to the resources with ResourceFinder
     yarp::os::ResourceFinder rf;
@@ -50,7 +50,7 @@ bool rd::MockupScreen::init()
     return true;
 }
 
-bool rd::MockupScreen::cleanup()
+bool rd::MockScreen::cleanup()
 {
     if (screen!=NULL)
         SDL_FreeSurface(screen);
@@ -71,12 +71,12 @@ bool rd::MockupScreen::cleanup()
     return true;
 }
 
-bool rd::MockupScreen::show()
+bool rd::MockScreen::show()
 {
     if (window == NULL)
     {
         //-- Init screen
-        window = SDL_CreateWindow("MockupScreen",
+        window = SDL_CreateWindow("MockScreen",
                                   SDL_WINDOWPOS_UNDEFINED,
                                   SDL_WINDOWPOS_UNDEFINED,
                                   background->w,
@@ -111,7 +111,7 @@ bool rd::MockupScreen::show()
     return true;
 }
 
-bool rd::MockupScreen::drawScreen(void *screen)
+bool rd::MockScreen::drawScreen(void *screen)
 {
     SDL_Surface * sdl_screen = (SDL_Surface *)screen;
 
@@ -130,12 +130,12 @@ bool rd::MockupScreen::drawScreen(void *screen)
     return true;
 }
 
-rd::MockupScreen::~MockupScreen()
+rd::MockScreen::~MockScreen()
 {
 
 }
 
-bool rd::MockupScreen::update(std::string parameter, std::string value)
+bool rd::MockScreen::update(std::string parameter, std::string value)
 {
     if (parameter == PARAM_MESSAGE)
     {

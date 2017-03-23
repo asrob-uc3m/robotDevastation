@@ -1,32 +1,32 @@
 #include "MockState.hpp"
 
-const unsigned int rd::MockupState::STATE_INITIAL = 0;
-const unsigned int rd::MockupState::STATE_SETUP = 1;
-const unsigned int rd::MockupState::STATE_LOOP = 2;
-const unsigned int rd::MockupState::STATE_CLEANUP = 4;
+const unsigned int rd::MockState::STATE_INITIAL = 0;
+const unsigned int rd::MockState::STATE_SETUP = 1;
+const unsigned int rd::MockState::STATE_LOOP = 2;
+const unsigned int rd::MockState::STATE_CLEANUP = 4;
 
-const unsigned int rd::MockupState::REQUEST_STATE = 0;
+const unsigned int rd::MockState::REQUEST_STATE = 0;
 
-rd::MockupState::MockupState(int id)
+rd::MockState::MockState(int id)
 {
     //-- Set class parameters:
     this->id = id;
 
     std::stringstream ss;
-    ss << "MockupState #" << id;
+    ss << "MockState #" << id;
     state_id = ss.str();
 
     internal_variable = -1;
     state_history = STATE_INITIAL;
 
-    RD_DEBUG("Creating MockupState with id: %s\n", state_id.c_str());
+    RD_DEBUG("Creating MockState with id: %s\n", state_id.c_str());
 }
 
-rd::MockupState::~MockupState()
+rd::MockState::~MockState()
 {
 }
 
-bool rd::MockupState::setup()
+bool rd::MockState::setup()
 {
     RD_INFO("State with id %d entered in setup() function\n", id);
 
@@ -36,7 +36,7 @@ bool rd::MockupState::setup()
     return true;
 }
 
-bool rd::MockupState::loop()
+bool rd::MockState::loop()
 {
     RD_INFO("State with id %d entered in loop() function\n", id);
     if (!(state_history & STATE_LOOP))
@@ -48,7 +48,7 @@ bool rd::MockupState::loop()
     return true;
 }
 
-bool rd::MockupState::cleanup()
+bool rd::MockState::cleanup()
 {
     RD_INFO("State with id %d entered in cleanup() function\n", id);
 
@@ -58,12 +58,12 @@ bool rd::MockupState::cleanup()
     return true;
 }
 
-int rd::MockupState::evaluateConditions()
+int rd::MockState::evaluateConditions()
 {
     return internal_variable;
 }
 
-bool rd::MockupState::read(yarp::os::ConnectionReader & connection)
+bool rd::MockState::read(yarp::os::ConnectionReader & connection)
 {
     yarp::os::Bottle in;
     in.read(connection);

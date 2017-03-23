@@ -24,14 +24,14 @@ int main()
     screenManager->start();
 
     //-- Create a Screen to check the ScreenManager
-    Screen * screen = new MockupScreen();
+    Screen * screen = new MockScreen();
     screen->init();
-    Screen * screen2 = new MockupScreen();
+    Screen * screen2 = new MockScreen();
     screen2->init();
 
     //-- Set the first Screen in the ScreenManager
     screenManager->setCurrentScreen(screen);
-    screenManager->update(MockupScreen::PARAM_MESSAGE, "Test screen");
+    screenManager->update(MockScreen::PARAM_MESSAGE, "Test screen");
 
     //-- Loop to display the first Screen
     for (int i = 0; i < 10; i++)
@@ -42,7 +42,7 @@ int main()
 
     //-- Set the second Screen in the ScreenManager
     screenManager->setCurrentScreen(screen2);
-    screenManager->update(MockupScreen::PARAM_MESSAGE, "Another test screen");
+    screenManager->update(MockScreen::PARAM_MESSAGE, "Another test screen");
 
     //-- Loop to display the first second
     for (int i = 0; i < 10; i++)

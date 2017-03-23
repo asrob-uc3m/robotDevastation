@@ -13,7 +13,7 @@
 
 using namespace rd;
 
-class MockupAudioManagerTest : public testing::Test
+class MockAudioManagerTest : public testing::Test
 {
 	public:
         virtual void SetUp()
@@ -49,12 +49,12 @@ class MockupAudioManagerTest : public testing::Test
 };
 
 
-const std::string MockupAudioManagerTest::sound_bso = "../sounds/RobotDevastationBSO.mp3";
-const std::string MockupAudioManagerTest::sound_shoot = "../sounds/01_milshot.wav";
-const std::string MockupAudioManagerTest::sound_explosion = "../sounds/15_explosion.wav";
+const std::string MockAudioManagerTest::sound_bso = "../sounds/RobotDevastationBSO.mp3";
+const std::string MockAudioManagerTest::sound_shoot = "../sounds/01_milshot.wav";
+const std::string MockAudioManagerTest::sound_explosion = "../sounds/15_explosion.wav";
 
 
-TEST_F( MockupAudioManagerTest, AudioManagerIsSingleton)
+TEST_F( MockAudioManagerTest, AudioManagerIsSingleton)
 {
     AudioManager * manager2 = NULL;
     manager2 = AudioManager::getAudioManager("SDL");
@@ -64,7 +64,7 @@ TEST_F( MockupAudioManagerTest, AudioManagerIsSingleton)
     ASSERT_EQ(audioManager, manager2);
 }
 
-TEST_F( MockupAudioManagerTest, AudioManagerLoadsAudio)
+TEST_F( MockAudioManagerTest, AudioManagerLoadsAudio)
 {
     ASSERT_NE((AudioManager *)NULL, audioManager);
     ASSERT_TRUE(audioManager->load(sound_bso_realpath, "bso", SDLAudioManager::MUSIC));
@@ -72,7 +72,7 @@ TEST_F( MockupAudioManagerTest, AudioManagerLoadsAudio)
     ASSERT_TRUE(audioManager->load(sound_explosion_realpath, "explosion", SDLAudioManager::FX));
 }
 
-TEST_F( MockupAudioManagerTest, AudioManagerPlaysOneSound )
+TEST_F( MockAudioManagerTest, AudioManagerPlaysOneSound )
 {
     ASSERT_NE((AudioManager *)NULL, audioManager);
 
@@ -83,7 +83,7 @@ TEST_F( MockupAudioManagerTest, AudioManagerPlaysOneSound )
     EXPECT_TRUE(audioManager->stopMusic());
 }
 
-TEST_F( MockupAudioManagerTest, AudioManagerPlaysFx )
+TEST_F( MockAudioManagerTest, AudioManagerPlaysFx )
 {
     ASSERT_NE((AudioManager *)NULL, audioManager);
 
@@ -96,7 +96,7 @@ TEST_F( MockupAudioManagerTest, AudioManagerPlaysFx )
     MY_SLEEP(2);
 }
 
-TEST_F( MockupAudioManagerTest, AudioManagerPlaysAllSounds )
+TEST_F( MockAudioManagerTest, AudioManagerPlaysAllSounds )
 {
     ASSERT_NE((AudioManager *)NULL, audioManager);
 

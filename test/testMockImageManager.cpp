@@ -14,7 +14,7 @@ using namespace rd;
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
-class MockupImageManagerTest : public testing::Test
+class MockImageManagerTest : public testing::Test
 {
     public:
         virtual void SetUp()
@@ -25,8 +25,8 @@ class MockupImageManagerTest : public testing::Test
             rf.setDefaultConfigFile("robotDevastation.ini");
             image_filename = rf.findFileByName(image_filename_raw);
 
-            MockupImageManager::RegisterManager();
-            imageManager = ImageManager::getImageManager(MockupImageManager::id);
+            MockImageManager::RegisterManager();
+            imageManager = ImageManager::getImageManager(MockImageManager::id);
         }
 
         virtual void TearDown()
@@ -42,16 +42,16 @@ class MockupImageManagerTest : public testing::Test
 
 };
 
-const std::string MockupImageManagerTest::image_filename_raw = "../images/test_frame.ppm";
+const std::string MockImageManagerTest::image_filename_raw = "../images/test_frame.ppm";
 
 //-- Class for the setup of the enviroment for all the tests
 //----------------------------------------------------------------------------------------
 //-- This opens the webcam in a port so that the imageManager can connect to it
 
-class MockupImageManagerEnvironment : public testing::Environment
+class MockImageManagerEnvironment : public testing::Environment
 {
     public:
-        MockupImageManagerEnvironment(int argc, char ** argv)
+        MockImageManagerEnvironment(int argc, char ** argv)
         {
             this->argc = argc;
             this->argv = argv;
@@ -78,10 +78,10 @@ class MockupImageManagerEnvironment : public testing::Environment
 //-- Things that are being tested
 //-----------------------------------------------------------------------------------------------------
 
-TEST_F(MockupImageManagerTest, MockupImageManagerNotificationWorks)
+TEST_F(MockImageManagerTest, MockImageManagerNotificationWorks)
 {
     //-- Create a mockup listener
-    MockupImageEventListener listener;
+    MockImageEventListener listener;
 
     //-- Add the listener to the manager
     ASSERT_TRUE(imageManager->addImageEventListener(&listener));
@@ -95,17 +95,17 @@ TEST_F(MockupImageManagerTest, MockupImageManagerNotificationWorks)
 
     //-- Load test image
     Image test_image;
-    ASSERT_TRUE(yarp::sig::file::read(test_image, MockupImageManagerTest::image_filename));
+    ASSERT_TRUE(yarp::sig::file::read(test_image, MockImageManagerTest::image_filename));
 
     //-- Check that an image didn't arrive
-    EXPECT_FALSE(((MockupImageManager *) imageManager)->receiveImage(test_image));
+    EXPECT_FALSE(((MockImageManager *) imageManager)->receiveImage(test_image));
     EXPECT_EQ(0, listener.getImagesArrived());
 
     //-- Enable manager
     ASSERT_TRUE(imageManager->setEnabled(true));
 
     //-- Send test image to mockup manager
-    ASSERT_TRUE(((MockupImageManager *) imageManager)->receiveImage(test_image));
+    ASSERT_TRUE(((MockImageManager *) imageManager)->receiveImage(test_image));
 
     //-- Check that the correct image arrived
     EXPECT_EQ(1, listener.getImagesArrived());
@@ -125,13 +125,13 @@ TEST_F(MockupImageManagerTest, MockupImageManagerNotificationWorks)
     EXPECT_TRUE(imageManager->removeImageEventListeners());
     ASSERT_TRUE(imageManager->stop());
     ASSERT_TRUE(imageManager->isStopped());
-    ASSERT_FALSE(((MockupImageManager *) imageManager)->isEnabled());
+    ASSERT_FALSE(((MockImageManager *) imageManager)->isEnabled());
 }
 
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
   testing::InitGoogleTest(&argc, argv);
-  testing::Environment* env = testing::AddGlobalTestEnvironment(new MockupImageManagerEnvironment(argc, argv));
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new MockImageManagerEnvironment(argc, argv));
   return RUN_ALL_TESTS();
 }

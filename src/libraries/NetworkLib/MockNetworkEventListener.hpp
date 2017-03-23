@@ -1,5 +1,5 @@
-#ifndef _MOCKUP_NETWORK_EVENT_LISTENER_HPP_
-#define _MOCKUP_NETWORK_EVENT_LISTENER_HPP_
+#ifndef _MOCK_NETWORK_EVENT_LISTENER_HPP_
+#define _MOCK_NETWORK_EVENT_LISTENER_HPP_
 
 #include "NetworkEventListener.hpp"
 
@@ -14,10 +14,10 @@ namespace rd {
  *
  */
 
-class MockupNetworkEventListener : public NetworkEventListener
+class MockNetworkEventListener : public NetworkEventListener
 {
     public:
-        MockupNetworkEventListener();
+        MockNetworkEventListener();
 
         virtual bool onDataArrived(std::vector<Player> players);
 
@@ -36,4 +36,4 @@ class MockupNetworkEventListener : public NetworkEventListener
 
 }
 
-#endif // _MOCKUP_NETWORK_EVENT_LISTENER_HPP_
+#endif // _MOCK_NETWORK_EVENT_LISTENER_HPP_

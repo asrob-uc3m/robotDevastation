@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCKUP_NETWORK_MANAGER_HPP__
-#define __MOCKUP_NETWORK_MANAGER_HPP__
+#ifndef __MOCK_NETWORK_MANAGER_HPP__
+#define __MOCK_NETWORK_MANAGER_HPP__
 
 #include "Utils.hpp"
 #include "NetworkManager.hpp"
@@ -15,19 +15,19 @@ namespace rd{
  *
  * @brief Allow for low-level access of members in tests / manipulating internal data
  *
- * MockupNetworkManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
+ * MockNetworkManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
- * class, we first get the reference to the MockupNetworkManager with getNetworkManager() and then we
+ * class, we first get the reference to the MockNetworkManager with getNetworkManager() and then we
  * access the manager with that reference.
  *
- * When the program finishes, the MockupNetworkManager can be deallocated using destroyNetworkManager().
+ * When the program finishes, the MockNetworkManager can be deallocated using destroyNetworkManager().
  *
  * Network events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
  * along with the data relevant to the event triggered (i.e. data that just arrived)
  *
  */
 
-class MockupNetworkManager : public NetworkManager
+class MockNetworkManager : public NetworkManager
 {
     public:
         //-- Creation and configuration
@@ -39,7 +39,7 @@ class MockupNetworkManager : public NetworkManager
          */
         static bool RegisterManager();
 
-        ~MockupNetworkManager();
+        ~MockNetworkManager();
 
         //! @brief String that identifies this manager
         static const std::string id;
@@ -58,7 +58,7 @@ class MockupNetworkManager : public NetworkManager
         virtual bool logout();
         virtual bool keepAlive();
 
-        //-- Mockup object API
+        //-- Mock object API
         //--------------------------------------------------------------------------------------------
         bool isLoggedIn();
         bool isStopped();
@@ -75,10 +75,10 @@ class MockupNetworkManager : public NetworkManager
          * Constructor for this class is private, since the singleton can only be instantiated once,
          * and the instantiation is done at the getNetworkManager() method
          */
-        MockupNetworkManager();
+        MockNetworkManager();
 
         //! @brief Reference to this manager (unique instance)
-        static MockupNetworkManager * uniqueInstance;
+        static MockNetworkManager * uniqueInstance;
 
 
         //-- Required stuff
@@ -91,4 +91,4 @@ class MockupNetworkManager : public NetworkManager
 };
 }
 
-#endif //-- __RD_NETWORK_MANAGER_HPP__
+#endif //-- __MOCK_NETWORK_MANAGER_HPP__

@@ -24,8 +24,8 @@ class ProcessorImageEventListenerTest : public testing::Test
             rf.setDefaultContext("robotDevastation");
             rf.setDefaultConfigFile("robotDevastation.ini");
 
-            MockupImageManager::RegisterManager();
-            imageManager = ImageManager::getImageManager(MockupImageManager::id);
+            MockImageManager::RegisterManager();
+            imageManager = ImageManager::getImageManager(MockImageManager::id);
             ASSERT_NE((ImageManager*)NULL, imageManager);
             imageManager->addImageEventListener(&processor);
 
@@ -84,7 +84,7 @@ TEST_F(ProcessorImageEventListenerTest, TargetDetectionWorks)
     //-- Send image to image manager
     ASSERT_TRUE(imageManager->start());
     ASSERT_TRUE(imageManager->setEnabled(true));
-    ASSERT_TRUE(((MockupImageManager *)imageManager)->receiveImage(test_image));
+    ASSERT_TRUE(((MockImageManager *)imageManager)->receiveImage(test_image));
     yarp::os::Time::delay(0.5);
 
     //-- Check detected targets:
@@ -109,7 +109,7 @@ TEST_F(ProcessorImageEventListenerTest, BadQRsAreIgnored)
     //-- Send image to image manager
     ASSERT_TRUE(imageManager->start());
     ASSERT_TRUE(imageManager->setEnabled(true));
-    ASSERT_TRUE(((MockupImageManager *)imageManager)->receiveImage(bad_image));
+    ASSERT_TRUE(((MockImageManager *)imageManager)->receiveImage(bad_image));
     yarp::os::Time::delay(0.5);
 
     //-- Check detected targets:

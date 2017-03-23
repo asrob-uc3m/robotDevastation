@@ -96,7 +96,7 @@ class FSMBuilderTest : public testing::Test
                 yarp::os::Time::delay(delay_s);
 
                 command.clear();
-                command.addInt(MockupState::REQUEST_STATE);
+                command.addInt(MockState::REQUEST_STATE);
 
                 rpcClient.write(command, response);
                 currentState = response.get(0).asInt();
@@ -128,15 +128,15 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
     StateMachineBuilder builder;
     ASSERT_TRUE(builder.setDirectorType("YARP"));
 
-    State *state1 = new MockupState(1);
+    State *state1 = new MockState(1);
     int state1_id = builder.addState(state1);
     ASSERT_NE(-1, state1_id);
 
-    State *state2 = new MockupState(2);
+    State *state2 = new MockState(2);
     int state2_id = builder.addState(state2);
     ASSERT_NE(-1, state2_id);
 
-    State *state3 = new MockupState(3);
+    State *state3 = new MockState(3);
     int state3_id = builder.addState(state3);
     ASSERT_NE(-1, state3_id);
 
@@ -175,8 +175,8 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
     ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer1->getName()));
 
     //-- Check that state 1 passed through setup and loop
-    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_SETUP));
-    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_LOOP));
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockState::STATE_SETUP));
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockState::STATE_LOOP));
 
     //-- Send command to pass to state 2
     yarp::os::Bottle command;
@@ -184,7 +184,7 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
     rpcClient.write(command);
 
     //-- Check that state 1 passed through cleanup
-    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_CLEANUP));
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockState::STATE_CLEANUP));
 
     //-- Check that state 2 is active
     ASSERT_EQ(state2_id, fsm->getCurrentState());
@@ -194,8 +194,8 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
     ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer2->getName()));
 
     //-- Check that state 2 passed through setup and loop
-    ASSERT_TRUE(awaitStateCheck(state2->getStateId(), MockupState::STATE_SETUP));
-    ASSERT_TRUE(awaitStateCheck(state2->getStateId(), MockupState::STATE_LOOP));
+    ASSERT_TRUE(awaitStateCheck(state2->getStateId(), MockState::STATE_SETUP));
+    ASSERT_TRUE(awaitStateCheck(state2->getStateId(), MockState::STATE_LOOP));
 
     //-- Send command to pass to state 3
     command.clear();
@@ -203,7 +203,7 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
     rpcClient.write(command);
 
     //-- Check that state 2 passed through cleanup
-    ASSERT_TRUE(awaitStateCheck(state2->getStateId(), MockupState::STATE_CLEANUP));
+    ASSERT_TRUE(awaitStateCheck(state2->getStateId(), MockState::STATE_CLEANUP));
 
     //-- Check that state 3 is active
     ASSERT_EQ(state3_id, fsm->getCurrentState());
@@ -213,14 +213,14 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
     ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer3->getName()));
 
     //-- Check that state 3 passed through setup and loop
-    ASSERT_TRUE(awaitStateCheck(state3->getStateId(), MockupState::STATE_SETUP));
-    ASSERT_TRUE(awaitStateCheck(state3->getStateId(), MockupState::STATE_LOOP));
+    ASSERT_TRUE(awaitStateCheck(state3->getStateId(), MockState::STATE_SETUP));
+    ASSERT_TRUE(awaitStateCheck(state3->getStateId(), MockState::STATE_LOOP));
 
     //-- Stop current state
     ASSERT_TRUE(fsm->stop());
 
     //-- Check that state 3 passed through cleanup
-    ASSERT_TRUE(awaitStateCheck(state3->getStateId(), MockupState::STATE_CLEANUP));
+    ASSERT_TRUE(awaitStateCheck(state3->getStateId(), MockState::STATE_CLEANUP));
 
     //-- Check that no state is active
     ASSERT_EQ(-1, fsm->getCurrentState());
@@ -232,7 +232,7 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedStopsAtNULL)
     StateMachineBuilder builder;
     ASSERT_TRUE(builder.setDirectorType("YARP"));
 
-    State *state1 = new MockupState(1);
+    State *state1 = new MockState(1);
     int state1_id = builder.addState(state1);
     ASSERT_NE(-1, state1_id);
 
@@ -261,8 +261,8 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedStopsAtNULL)
     ASSERT_TRUE(yarp::os::Network::connect(rpcClient.getName(), rpcServer1->getName()));
 
     //-- Check that state 1 passed through setup and loop
-    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_SETUP));
-    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_LOOP));
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockState::STATE_SETUP));
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockState::STATE_LOOP));
 
     //-- Send command to pass to state 2
     yarp::os::Bottle command;
@@ -270,7 +270,7 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedStopsAtNULL)
     rpcClient.write(command);
 
     //-- Check that state 1 passed through cleanup
-    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockupState::STATE_CLEANUP));
+    ASSERT_TRUE(awaitStateCheck(state1->getStateId(), MockState::STATE_CLEANUP));
 
     //-- Check that no state is active
     ASSERT_EQ(-1, fsm->getCurrentState());

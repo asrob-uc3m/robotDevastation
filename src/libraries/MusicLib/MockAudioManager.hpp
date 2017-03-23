@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCKUP_AUDIO_MANAGER_HPP__
-#define __MOCKUP_AUDIO_MANAGER_HPP__
+#ifndef __MOCK_AUDIO_MANAGER_HPP__
+#define __MOCK_AUDIO_MANAGER_HPP__
 
 #include <map>
 
@@ -16,14 +16,14 @@ namespace rd{
 /**
  * @ingroup MusicLib
  *
- * @brief Mockup music and sound effects manager for testing purposes
+ * @brief Mock music and sound effects manager for testing purposes
  *
  */
-class MockupAudioManager : public AudioManager,
+class MockAudioManager : public AudioManager,
                            public yarp::os::RateThread
 {
     public:
-        //---------------- Mockup interface -------------------------------------------------------------------------//
+        //---------------- Mock interface -------------------------------------------------------------------------//
          //! @brief Whether the sound with the given id is being played or not
         bool isPlaying(const std::string& id);
 
@@ -52,7 +52,7 @@ class MockupAudioManager : public AudioManager,
         static bool RegisterManager();
 
         //! @brief Destructor. Used to reset the local static reference after destroying this manager
-        ~MockupAudioManager();
+        ~MockAudioManager();
 
         //! @brief String that identifies this manager
         static const std::string id;
@@ -70,13 +70,13 @@ class MockupAudioManager : public AudioManager,
          * Constructor for this class is private, since the singleton can only be instantiated once,
          * and the instantiation is done at the getAudioManager() method
          */
-        MockupAudioManager();
+        MockAudioManager();
 
         //! @brief Method called periodically from the RateThread class. It simply calls the update() method.
         void run();
 
         //! \brief Stores the unique instance of the AudioManager
-        static MockupAudioManager * uniqueInstance;
+        static MockAudioManager * uniqueInstance;
 
         //! \brief Dictionary for sound durations:
         yarp::os::Mutex durations_mutex;
@@ -91,4 +91,4 @@ class MockupAudioManager : public AudioManager,
 
 }
 
-#endif //-- __MOCKUP_AUDIO_MANAGER_HPP__
+#endif //-- __MOCK_AUDIO_MANAGER_HPP__

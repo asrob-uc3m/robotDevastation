@@ -1,10 +1,10 @@
 #include "MockInputManager.hpp"
 
 //-- Initialize static members
-rd::MockupInputManager * rd::MockupInputManager::uniqueInstance = NULL;
-const std::string rd::MockupInputManager::id = "MOCKUP";
+rd::MockInputManager * rd::MockInputManager::uniqueInstance = NULL;
+const std::string rd::MockInputManager::id = "MOCKUP";
 
-bool rd::MockupInputManager::sendKeyPress(const rd::Key & key)
+bool rd::MockInputManager::sendKeyPress(const rd::Key & key)
 {
     if (stopped)
         return false;
@@ -18,7 +18,7 @@ bool rd::MockupInputManager::sendKeyPress(const rd::Key & key)
     return true;
 }
 
-bool rd::MockupInputManager::sendKeyUp(const rd::Key & key)
+bool rd::MockInputManager::sendKeyUp(const rd::Key & key)
 {
     if (stopped)
         return false;
@@ -29,7 +29,7 @@ bool rd::MockupInputManager::sendKeyUp(const rd::Key & key)
     return true;
 }
 
-bool rd::MockupInputManager::sendKeyDown(const rd::Key & key)
+bool rd::MockInputManager::sendKeyDown(const rd::Key & key)
 {
     if (stopped)
         return false;
@@ -40,7 +40,7 @@ bool rd::MockupInputManager::sendKeyDown(const rd::Key & key)
     return true;
 }
 
-bool rd::MockupInputManager::sendWindowEvent(const rd::WindowEvent & event)
+bool rd::MockInputManager::sendWindowEvent(const rd::WindowEvent & event)
 {
     if (stopped)
         return false;
@@ -51,44 +51,44 @@ bool rd::MockupInputManager::sendWindowEvent(const rd::WindowEvent & event)
     return true;
 }
 
-rd::MockupInputManager::MockupInputManager()
+rd::MockInputManager::MockInputManager()
 {
     stopped = true;
 }
 
-rd::MockupInputManager::~MockupInputManager()
+rd::MockInputManager::~MockInputManager()
 {
     uniqueInstance = NULL;
 }
 
-bool rd::MockupInputManager::RegisterManager()
+bool rd::MockInputManager::RegisterManager()
 {
     if (uniqueInstance == NULL)
     {
-        uniqueInstance = new MockupInputManager();
+        uniqueInstance = new MockInputManager();
     }
 
     return Register(uniqueInstance, id);
 }
 
-bool rd::MockupInputManager::stop()
+bool rd::MockInputManager::stop()
 {
     stopped = true;
     return true;
 }
 
-bool rd::MockupInputManager::isStopped()
+bool rd::MockInputManager::isStopped()
 {
     return stopped;
 }
 
-int rd::MockupInputManager::getNumListeners()
+int rd::MockInputManager::getNumListeners()
 {
     return listeners.size();
 }
 
 
-bool rd::MockupInputManager::start()
+bool rd::MockInputManager::start()
 {
     stopped = false;
     return true;

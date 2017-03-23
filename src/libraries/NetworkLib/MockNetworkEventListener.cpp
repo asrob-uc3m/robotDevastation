@@ -1,29 +1,29 @@
 #include "MockNetworkEventListener.hpp"
 
 
-rd::MockupNetworkEventListener::MockupNetworkEventListener()
+rd::MockNetworkEventListener::MockNetworkEventListener()
 {
     data_arrived = 0;
 }
 
-bool rd::MockupNetworkEventListener::onDataArrived(std::vector<rd::Player> players)
+bool rd::MockNetworkEventListener::onDataArrived(std::vector<rd::Player> players)
 {
     stored_players = players;
     data_arrived++;
     return true;
 }
 
-int rd::MockupNetworkEventListener::getDataArrived()
+int rd::MockNetworkEventListener::getDataArrived()
 {
     return data_arrived;
 }
 
-void rd::MockupNetworkEventListener::resetDataArrived()
+void rd::MockNetworkEventListener::resetDataArrived()
 {
     data_arrived = 0;
 }
 
-std::vector<rd::Player> rd::MockupNetworkEventListener::getStoredPlayers()
+std::vector<rd::Player> rd::MockNetworkEventListener::getStoredPlayers()
 {
     return stored_players;
 }

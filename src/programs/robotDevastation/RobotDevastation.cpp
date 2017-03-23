@@ -34,15 +34,15 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     //-- Init robot
     if( rf.check("mockupRobotManager") )
-        robotManager = new MockupRobotManager(robotName);
+        robotManager = new MockRobotManager(robotName);
     else
         robotManager = new YarpRobotManager(robotName);
 
     //-- Init image manager
     if( rf.check("mockupImageManager") )
     {
-        MockupImageManager::RegisterManager();
-        imageManager = ImageManager::getImageManager(MockupImageManager::id);
+        MockImageManager::RegisterManager();
+        imageManager = ImageManager::getImageManager(MockImageManager::id);
     }
     else if( rf.check("yarpLocalImageManager") )
     {

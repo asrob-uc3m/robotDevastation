@@ -1,5 +1,5 @@
-#ifndef __RD_MOCKUP_IMAGE_EVENT_LISTENER_HPP__
-#define __RD_MOCKUP_IMAGE_EVENT_LISTENER_HPP__
+#ifndef __RD_MOCK_IMAGE_EVENT_LISTENER_HPP__
+#define __RD_MOCK_IMAGE_EVENT_LISTENER_HPP__
 
 #include "ImageEventListener.hpp"
 
@@ -15,10 +15,10 @@ namespace rd{
  *
  *  @todo Move this class to ImageLib, set it to be compiled only with the tests
  */
-class MockupImageEventListener : public ImageEventListener
+class MockImageEventListener : public ImageEventListener
 {
     public:
-        MockupImageEventListener();
+        MockImageEventListener();
 
         virtual bool onImageArrived( ImageManager * manager );
 
@@ -34,4 +34,4 @@ class MockupImageEventListener : public ImageEventListener
 };
 }
 
-#endif // __RD_MOCKUP_IMAGE_EVENT_LISTENER_HPP__
+#endif // __RD_MOCK_IMAGE_EVENT_LISTENER_HPP__

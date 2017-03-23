@@ -98,7 +98,7 @@ const std::string YarpImageManagerEnvironment::camera_port_name = "/grabber";
 TEST_F( YarpImageManagerTest, YarpImageManagerWorks)
 {
     //-- Create a mockup listener
-    MockupImageEventListener listener;
+    MockImageEventListener listener;
 
     //-- Add the listener to the manager
     ASSERT_TRUE(imageManager->addImageEventListener(&listener));

@@ -1,20 +1,20 @@
 #include "MockImageEventListener.hpp"
 
 
-rd::MockupImageEventListener::MockupImageEventListener()
+rd::MockImageEventListener::MockImageEventListener()
 {
     images_arrived = 0;
 }
 
-bool rd::MockupImageEventListener::onImageArrived(rd::ImageManager *manager)
+bool rd::MockImageEventListener::onImageArrived(rd::ImageManager *manager)
 {
     stored_image = manager->getImage();
     images_arrived++;
     return true;
 }
 
-int rd::MockupImageEventListener::getImagesArrived() { return images_arrived; }
+int rd::MockImageEventListener::getImagesArrived() { return images_arrived; }
 
-void rd::MockupImageEventListener::resetImagesArrived() { images_arrived = 0; }
+void rd::MockImageEventListener::resetImagesArrived() { images_arrived = 0; }
 
-rd::Image rd::MockupImageEventListener::getStoredImage() { return stored_image; }
+rd::Image rd::MockImageEventListener::getStoredImage() { return stored_image; }

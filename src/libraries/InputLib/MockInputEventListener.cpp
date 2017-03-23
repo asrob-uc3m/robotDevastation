@@ -1,13 +1,13 @@
 #include "MockInputEventListener.hpp"
 
-rd::MockupInputEventListener::MockupInputEventListener()
+rd::MockInputEventListener::MockInputEventListener()
 {
     num_keydown_presses = 0;
     num_keyup_presses = 0;
     num_window_events = 0;
 }
 
-bool rd::MockupInputEventListener::onKeyDown(const rd::Key & k)
+bool rd::MockInputEventListener::onKeyDown(const rd::Key & k)
 {
     num_keydown_presses++;
     stored_keydown_presses.push_back(k);
@@ -15,7 +15,7 @@ bool rd::MockupInputEventListener::onKeyDown(const rd::Key & k)
     return true;
 }
 
-bool rd::MockupInputEventListener::onKeyUp(const rd::Key & k)
+bool rd::MockInputEventListener::onKeyUp(const rd::Key & k)
 {
     num_keyup_presses++;
     stored_keyup_presses.push_back(k);
@@ -23,7 +23,7 @@ bool rd::MockupInputEventListener::onKeyUp(const rd::Key & k)
     return true;
 }
 
-bool rd::MockupInputEventListener::onWindowEvent(const rd::WindowEvent & event)
+bool rd::MockInputEventListener::onWindowEvent(const rd::WindowEvent & event)
 {
     num_window_events++;
     stored_window_events.push_back(event);
@@ -31,22 +31,22 @@ bool rd::MockupInputEventListener::onWindowEvent(const rd::WindowEvent & event)
     return true;
 }
 
-int rd::MockupInputEventListener::getNumKeyDownPresses()
+int rd::MockInputEventListener::getNumKeyDownPresses()
 {
     return num_keydown_presses;
 }
 
-int rd::MockupInputEventListener::getNumKeyUpPresses()
+int rd::MockInputEventListener::getNumKeyUpPresses()
 {
     return num_keyup_presses;
 }
 
-int rd::MockupInputEventListener::getNumWindowEvents()
+int rd::MockInputEventListener::getNumWindowEvents()
 {
     return num_window_events;
 }
 
-bool rd::MockupInputEventListener::clear()
+bool rd::MockInputEventListener::clear()
 {
     num_keydown_presses = 0;
     num_keyup_presses = 0;
@@ -59,17 +59,17 @@ bool rd::MockupInputEventListener::clear()
     return true;
 }
 
-std::vector<rd::Key> rd::MockupInputEventListener::getStoredKeyUpPresses()
+std::vector<rd::Key> rd::MockInputEventListener::getStoredKeyUpPresses()
 {
     return stored_keyup_presses;
 }
 
-std::vector<rd::Key> rd::MockupInputEventListener::getStoredKeyDownPresses()
+std::vector<rd::Key> rd::MockInputEventListener::getStoredKeyDownPresses()
 {
     return stored_keydown_presses;
 }
 
-std::vector<rd::WindowEvent> rd::MockupInputEventListener::getStoredWindowEvents()
+std::vector<rd::WindowEvent> rd::MockInputEventListener::getStoredWindowEvents()
 {
     return stored_window_events;
 }

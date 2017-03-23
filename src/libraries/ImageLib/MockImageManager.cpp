@@ -2,11 +2,11 @@
 
 
 //-- Initialize static members
-rd::MockupImageManager * rd::MockupImageManager::uniqueInstance = NULL;
-const std::string rd::MockupImageManager::id = "MOCKUP";
+rd::MockImageManager * rd::MockImageManager::uniqueInstance = NULL;
+const std::string rd::MockImageManager::id = "MOCKUP";
 
 
-bool rd::MockupImageManager::start()
+bool rd::MockImageManager::start()
 {
     RD_DEBUG("\n");
     stopped = false;
@@ -14,7 +14,7 @@ bool rd::MockupImageManager::start()
 
 }
 
-bool rd::MockupImageManager::stop()
+bool rd::MockImageManager::stop()
 {
     RD_DEBUG("\n");
     stopped = true;
@@ -22,29 +22,29 @@ bool rd::MockupImageManager::stop()
     return true;
 }
 
-bool rd::MockupImageManager::isStopped()
+bool rd::MockImageManager::isStopped()
 {
     return stopped;
 }
 
-bool rd::MockupImageManager::setEnabled(bool enabled)
+bool rd::MockImageManager::setEnabled(bool enabled)
 {
     this->enabled = enabled;
     return true;
 }
 
-bool rd::MockupImageManager::isEnabled()
+bool rd::MockImageManager::isEnabled()
 {
     return enabled;
 }
 
-bool rd::MockupImageManager::configure(std::string parameter, std::string value)
+bool rd::MockImageManager::configure(std::string parameter, std::string value)
 {
     RD_DEBUG("Configure called for parameter: \"%s\" with value: \"%s\"\n", parameter.c_str(), value.c_str());
     return ImageManager::configure(parameter, value);
 }
 
-rd::Image rd::MockupImageManager::getImage()
+rd::Image rd::MockImageManager::getImage()
 {
     semaphore.wait();
     Image return_image(image);
@@ -53,22 +53,22 @@ rd::Image rd::MockupImageManager::getImage()
     return return_image;
 }
 
-bool rd::MockupImageManager::RegisterManager()
+bool rd::MockImageManager::RegisterManager()
 {
     if (uniqueInstance == NULL)
     {
-        uniqueInstance = new MockupImageManager();
+        uniqueInstance = new MockImageManager();
     }
 
     return Register(uniqueInstance, id);
 }
 
-rd::MockupImageManager::~MockupImageManager()
+rd::MockImageManager::~MockImageManager()
 {
     uniqueInstance = NULL;
 }
 
-bool rd::MockupImageManager::receiveImage(rd::Image received_image)
+bool rd::MockImageManager::receiveImage(rd::Image received_image)
 {
     semaphore.wait();
     image = received_image;
@@ -80,14 +80,14 @@ bool rd::MockupImageManager::receiveImage(rd::Image received_image)
             listeners[i]->onImageArrived(this);
     else
     {
-        RD_WARNING("MockupImageManager is disabled!\n");
+        RD_WARNING("MockImageManager is disabled!\n");
         return false;
     }
 
     return true;
 }
 
-rd::MockupImageManager::MockupImageManager()
+rd::MockImageManager::MockImageManager()
 {
     stopped = true;
     enabled = false;

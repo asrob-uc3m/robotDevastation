@@ -2,21 +2,21 @@
 
 #include "MockRobotManager.hpp"
 
-const int rd::MockupRobotManager::FORWARD = 1;
-const int rd::MockupRobotManager::BACKWARDS = 2;
-const int rd::MockupRobotManager::LEFT = 4;
-const int rd::MockupRobotManager::RIGHT = 8;
-const int rd::MockupRobotManager::NONE = 0;
+const int rd::MockRobotManager::FORWARD = 1;
+const int rd::MockRobotManager::BACKWARDS = 2;
+const int rd::MockRobotManager::LEFT = 4;
+const int rd::MockRobotManager::RIGHT = 8;
+const int rd::MockRobotManager::NONE = 0;
 
-const int rd::MockupRobotManager::CAMERA_UP = 1;
-const int rd::MockupRobotManager::CAMERA_DOWN = 2;
-const int rd::MockupRobotManager::CAMERA_LEFT = 4;
-const int rd::MockupRobotManager::CAMERA_RIGHT = 8;
-const int rd::MockupRobotManager::CAMERA_NONE = 0; 
+const int rd::MockRobotManager::CAMERA_UP = 1;
+const int rd::MockRobotManager::CAMERA_DOWN = 2;
+const int rd::MockRobotManager::CAMERA_LEFT = 4;
+const int rd::MockRobotManager::CAMERA_RIGHT = 8;
+const int rd::MockRobotManager::CAMERA_NONE = 0; 
 
 namespace rd
 {
-MockupRobotManager:: MockupRobotManager(const std::string& robotName): RobotManager(robotName)
+MockRobotManager:: MockRobotManager(const std::string& robotName): RobotManager(robotName)
 { 
     connected = false;
     enabled = false;
@@ -24,7 +24,7 @@ MockupRobotManager:: MockupRobotManager(const std::string& robotName): RobotMana
     camera_movement_direction = CAMERA_NONE;
 }
 
-bool MockupRobotManager::moveForward(int velocity) 
+bool MockRobotManager::moveForward(int velocity) 
 {
     if (connected)
     {
@@ -46,7 +46,7 @@ bool MockupRobotManager::moveForward(int velocity)
     }
 }
 
-bool MockupRobotManager::moveBackwards(int velocity)
+bool MockRobotManager::moveBackwards(int velocity)
 {
     if (connected)
     {
@@ -68,7 +68,7 @@ bool MockupRobotManager::moveBackwards(int velocity)
     }
 }
 
-bool MockupRobotManager::turnLeft(int velocity) 
+bool MockRobotManager::turnLeft(int velocity) 
 {
     if (connected)
     {
@@ -90,7 +90,7 @@ bool MockupRobotManager::turnLeft(int velocity)
     }
 }
 
-bool MockupRobotManager::turnRight(int velocity)
+bool MockRobotManager::turnRight(int velocity)
 {
     if (connected)
     {
@@ -112,7 +112,7 @@ bool MockupRobotManager::turnRight(int velocity)
     }
 }
 
-bool MockupRobotManager::stopMovement()
+bool MockRobotManager::stopMovement()
 {
     if (connected)
     {
@@ -134,7 +134,7 @@ bool MockupRobotManager::stopMovement()
     }
 }
 
-bool MockupRobotManager::tiltUp(int velocity)
+bool MockRobotManager::tiltUp(int velocity)
 {
     if (connected)
     {
@@ -156,7 +156,7 @@ bool MockupRobotManager::tiltUp(int velocity)
     }
 }
 
-bool MockupRobotManager::tiltDown(int velocity)
+bool MockRobotManager::tiltDown(int velocity)
 {
     if (connected)
     {
@@ -178,7 +178,7 @@ bool MockupRobotManager::tiltDown(int velocity)
     }
 }
 
-bool MockupRobotManager::panLeft(int velocity)
+bool MockRobotManager::panLeft(int velocity)
 {
     if (connected)
     {
@@ -200,7 +200,7 @@ bool MockupRobotManager::panLeft(int velocity)
     }
 }
 
-bool MockupRobotManager::panRight(int velocity)
+bool MockRobotManager::panRight(int velocity)
 {
     if (connected)
     {
@@ -222,7 +222,7 @@ bool MockupRobotManager::panRight(int velocity)
     }
 }
 
-bool MockupRobotManager::stopCameraMovement()
+bool MockRobotManager::stopCameraMovement()
 {
     if (connected)
     {
@@ -244,7 +244,7 @@ bool MockupRobotManager::stopCameraMovement()
     }
 }
         
-bool MockupRobotManager::connect()  
+bool MockRobotManager::connect()  
 {
     if (!connected)
     {
@@ -258,7 +258,7 @@ bool MockupRobotManager::connect()
     }
 }
 
-bool MockupRobotManager::disconnect()  
+bool MockRobotManager::disconnect()  
 {
     if (connected)
     {
@@ -272,53 +272,53 @@ bool MockupRobotManager::disconnect()
     }
 }
 
-bool MockupRobotManager::test()  {
+bool MockRobotManager::test()  {
     RD_DEBUG("\n");
     return false;
 }
 
-void MockupRobotManager::setEnabled(bool enabled)
+void MockRobotManager::setEnabled(bool enabled)
 {
     this->enabled = enabled;
     if (enabled)
     {
-        RD_DEBUG("MockupRobotManager enabled\n");
+        RD_DEBUG("MockRobotManager enabled\n");
     }
     else
-        RD_DEBUG("MockupRobotManager disabled\n");
+        RD_DEBUG("MockRobotManager disabled\n");
 }
 
-void MockupRobotManager::onDestroy(){
+void MockRobotManager::onDestroy(){
     RD_DEBUG("\n");
     return;
 }
 
-bool MockupRobotManager::isConnected()
+bool MockRobotManager::isConnected()
 {
     return connected;
 }
 
-bool MockupRobotManager::isEnabled()
+bool MockRobotManager::isEnabled()
 {
     return enabled;
 }
 
-bool MockupRobotManager::isMoving() 
+bool MockRobotManager::isMoving() 
 {
     return movement_direction!=NONE;
 }
 
-int MockupRobotManager::getMovementDirection() 
+int MockRobotManager::getMovementDirection() 
 {
     return movement_direction;
 }
 
-bool MockupRobotManager::isCameraMoving()
+bool MockRobotManager::isCameraMoving()
 {
     return camera_movement_direction != NONE;
 }
 
-int MockupRobotManager::getCameraMovementDirection()
+int MockRobotManager::getCameraMovementDirection()
 {
     return camera_movement_direction;
 }

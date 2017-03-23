@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __RD_MOCKUP_IMAGE_MANAGER_HPP__
-#define __RD_MOCKUP_IMAGE_MANAGER_HPP__
+#ifndef __RD_MOCK_IMAGE_MANAGER_HPP__
+#define __RD_MOCK_IMAGE_MANAGER_HPP__
 
 
 #include <vector>
@@ -24,14 +24,14 @@ namespace rd{
  * ImageManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
  * class, we first have to register the manager with the RegisterManager method.
- * Then, we can get the reference to the MockupImageManager with ImageManager::getImageManager(), using
+ * Then, we can get the reference to the MockImageManager with ImageManager::getImageManager(), using
  * the corresponding id and access the manager with that reference.
  *
  * Imnage events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
  * along with the reference to the manager that triggered them to be able to access the image
  *
  */
-class MockupImageManager : public ImageManager
+class MockImageManager : public ImageManager
 {
     public:
         virtual bool start();
@@ -50,7 +50,7 @@ class MockupImageManager : public ImageManager
         static bool RegisterManager();
 
         //! @brief Destructor. Used to reset the local static reference after destroying this manager
-        ~MockupImageManager();
+        ~MockImageManager();
 
         //! @brief String that identifies this manager
         static const std::string id;
@@ -65,10 +65,10 @@ class MockupImageManager : public ImageManager
          * Constructor for this class is private, since the singleton can only be instantiated once,
          * and the instantiation is done at the getMentalMap() method
          */
-        MockupImageManager();
+        MockImageManager();
 
         //! @brief Reference to this manager (unique instance)
-        static MockupImageManager * uniqueInstance;
+        static MockImageManager * uniqueInstance;
 
         //! @brief Semaphore to make the image manipulation thread-safe
         yarp::os::Semaphore semaphore;
@@ -84,4 +84,4 @@ class MockupImageManager : public ImageManager
 
 }
 
-#endif //-- __RD_MOCKUP_IMAGE_MANAGER_HPP__
+#endif //-- __RD_MOCK_IMAGE_MANAGER_HPP__

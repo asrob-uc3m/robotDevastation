@@ -6,32 +6,32 @@ using namespace rd;
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
-class MockupInputManagerTest : public testing::Test
+class MockInputManagerTest : public testing::Test
 {
     public:
         virtual void SetUp()
         {
-            ASSERT_TRUE(MockupInputManager::RegisterManager());
-            inputManager = (MockupInputManager *) MockupInputManager::getInputManager(MockupInputManager::id);
+            ASSERT_TRUE(MockInputManager::RegisterManager());
+            inputManager = (MockInputManager *) MockInputManager::getInputManager(MockInputManager::id);
             ASSERT_TRUE(inputManager);
         }
 
         virtual void TearDown()
         {
-            ASSERT_TRUE(MockupInputManager::destroyInputManager());
+            ASSERT_TRUE(MockInputManager::destroyInputManager());
         }
 
 
     protected:
-        MockupInputManager * inputManager;
+        MockInputManager * inputManager;
 };
 
 
 //-- Things that are being tested
 //-----------------------------------------------------------------------------------------------------
-TEST_F(MockupInputManagerTest, SingleControlKeyPressSentAndReceivedCorrectly)
+TEST_F(MockInputManagerTest, SingleControlKeyPressSentAndReceivedCorrectly)
 {
-    MockupInputEventListener listener;
+    MockInputEventListener listener;
     InputEventListener * plistener = (InputEventListener *) &listener;
     ASSERT_TRUE(((InputManager*)inputManager)->addInputEventListener(plistener));
     ASSERT_EQ(1, inputManager->getNumListeners());
@@ -63,9 +63,9 @@ TEST_F(MockupInputManagerTest, SingleControlKeyPressSentAndReceivedCorrectly)
     ASSERT_TRUE(inputManager->isStopped());
 }
 
-TEST_F(MockupInputManagerTest, SinglePrintableKeyPressSentAndReceivedCorrectly)
+TEST_F(MockInputManagerTest, SinglePrintableKeyPressSentAndReceivedCorrectly)
 {
-    MockupInputEventListener listener;
+    MockInputEventListener listener;
     InputEventListener * plistener = (InputEventListener *) &listener;
     ASSERT_TRUE(((InputManager*)inputManager)->addInputEventListener(plistener));
 
@@ -95,9 +95,9 @@ TEST_F(MockupInputManagerTest, SinglePrintableKeyPressSentAndReceivedCorrectly)
     ASSERT_TRUE(inputManager->isStopped());
 }
 
-TEST_F(MockupInputManagerTest, SeveralControlKeyPressesSentAndReceivedCorrectly)
+TEST_F(MockInputManagerTest, SeveralControlKeyPressesSentAndReceivedCorrectly)
 {
-    MockupInputEventListener listener;
+    MockInputEventListener listener;
     InputEventListener * plistener = (InputEventListener *) &listener;
     ASSERT_TRUE(((InputManager*)inputManager)->addInputEventListener(plistener));
 
@@ -131,9 +131,9 @@ TEST_F(MockupInputManagerTest, SeveralControlKeyPressesSentAndReceivedCorrectly)
     ASSERT_TRUE(inputManager->isStopped());
 }
 
-TEST_F(MockupInputManagerTest, SeveralPrintableKeyPressesSentAndReceivedCorrectly)
+TEST_F(MockInputManagerTest, SeveralPrintableKeyPressesSentAndReceivedCorrectly)
 {
-    MockupInputEventListener listener;
+    MockInputEventListener listener;
     InputEventListener * plistener = (InputEventListener *) &listener;
     ASSERT_TRUE(((InputManager*)inputManager)->addInputEventListener(plistener));
 
@@ -167,9 +167,9 @@ TEST_F(MockupInputManagerTest, SeveralPrintableKeyPressesSentAndReceivedCorrectl
     ASSERT_TRUE(inputManager->isStopped());
 }
 
-TEST_F(MockupInputManagerTest, KeyUpAndKeyDownSentAndReceivedCorrectly)
+TEST_F(MockInputManagerTest, KeyUpAndKeyDownSentAndReceivedCorrectly)
 {
-    MockupInputEventListener listener;
+    MockInputEventListener listener;
     InputEventListener * plistener = (InputEventListener *) &listener;
     ASSERT_TRUE(((InputManager*)inputManager)->addInputEventListener(plistener));
 
@@ -211,9 +211,9 @@ TEST_F(MockupInputManagerTest, KeyUpAndKeyDownSentAndReceivedCorrectly)
     ASSERT_TRUE(inputManager->isStopped());
 }
 
-TEST_F(MockupInputManagerTest, WindowEventSentAndReceivedCorrectly)
+TEST_F(MockInputManagerTest, WindowEventSentAndReceivedCorrectly)
 {
-    MockupInputEventListener listener;
+    MockInputEventListener listener;
     InputEventListener * plistener = (InputEventListener *) &listener;
     ASSERT_TRUE(((InputManager*)inputManager)->addInputEventListener(plistener));
     ASSERT_EQ(1, inputManager->getNumListeners());

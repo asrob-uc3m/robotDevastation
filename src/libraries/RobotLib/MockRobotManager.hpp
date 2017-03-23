@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __RD_MOCKUP_ROBOT_MANAGER_HPP__
-#define __RD_MOCKUP_ROBOT_MANAGER_HPP__
+#ifndef __RD_MOCK_ROBOT_MANAGER_HPP__
+#define __RD_MOCK_ROBOT_MANAGER_HPP__
 
 
 #include <sstream>
@@ -18,11 +18,11 @@ namespace rd{
  * @brief The Robot Manager for testing
  *
  */
-class MockupRobotManager : public RobotManager
+class MockRobotManager : public RobotManager
 {
     public:
 
-        MockupRobotManager(const std::string& robotName);
+        MockRobotManager(const std::string& robotName);
 
         //-- RobotManager interface
         //-----------------------------------------------------
@@ -48,7 +48,7 @@ class MockupRobotManager : public RobotManager
 
         virtual void onDestroy();
 
-        //-- Mockup functionality
+        //-- Mock functionality
         //-----------------------------------------------------
         bool isConnected();
         bool isEnabled();
@@ -78,4 +78,4 @@ class MockupRobotManager : public RobotManager
 
 
 
-#endif //-- __RD_MOCKUP_ROBOT_MANAGER_HPP__
+#endif //-- __RD_MOCK_ROBOT_MANAGER_HPP__

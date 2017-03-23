@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCKUP_STATE_HPP__
-#define __MOCKUP_STATE_HPP__
+#ifndef __MOCK_STATE_HPP__
+#define __MOCK_STATE_HPP__
 
 #include "State.hpp"
 #include "Utils.hpp"
@@ -26,12 +26,12 @@ namespace rd{
 *  - Saves the value received in the commandPort and returns
 * it at condition evaluation
 */
-class MockupState : public State, public yarp::os::PortReader, public yarp::os::RpcServer
+class MockState : public State, public yarp::os::PortReader, public yarp::os::RpcServer
 {
     public:
-        //! @brief Creates a MockupState and assigns it an id
-        MockupState(int id);
-        virtual ~MockupState();
+        //! @brief Creates a MockState and assigns it an id
+        MockState(int id);
+        virtual ~MockState();
 
         //! @brief Sets an internal variable indicating that this function has been called
         virtual bool setup();
@@ -73,4 +73,4 @@ class MockupState : public State, public yarp::os::PortReader, public yarp::os::
 
 
 }
-#endif // __MOCKUP_STATE_HPP__
+#endif // __MOCK_STATE_HPP__

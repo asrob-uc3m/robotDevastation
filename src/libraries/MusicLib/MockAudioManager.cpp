@@ -1,16 +1,16 @@
 #include "MockAudioManager.hpp"
 
 //-- This is very important:
-rd::MockupAudioManager * rd::MockupAudioManager::uniqueInstance = NULL;
-const std::string rd::MockupAudioManager::id = "MOCKUP";
+rd::MockAudioManager * rd::MockAudioManager::uniqueInstance = NULL;
+const std::string rd::MockAudioManager::id = "MOCKUP";
 
 
-rd::MockupAudioManager::MockupAudioManager() : yarp::os::RateThread(UPDATE_PERIOD)
+rd::MockAudioManager::MockAudioManager() : yarp::os::RateThread(UPDATE_PERIOD)
 {
     stopped = true;
 }
 
-void rd::MockupAudioManager::run()
+void rd::MockAudioManager::run()
 {
     durations_mutex.lock();
     loop_times_mutex.lock();
@@ -41,7 +41,7 @@ void rd::MockupAudioManager::run()
 }
 
 
-bool rd::MockupAudioManager::isPlaying(const std::string &id)
+bool rd::MockAudioManager::isPlaying(const std::string &id)
 {
     bool playing = false;
 
@@ -67,7 +67,7 @@ bool rd::MockupAudioManager::isPlaying(const std::string &id)
     return playing;
 }
 
-bool rd::MockupAudioManager::load(const std::string &music_filepath, const std::string &id, const int &type)
+bool rd::MockAudioManager::load(const std::string &music_filepath, const std::string &id, const int &type)
 {
     durations_mutex.lock();
     loop_times_mutex.lock();
@@ -89,7 +89,7 @@ bool rd::MockupAudioManager::load(const std::string &music_filepath, const std::
     return true;
 }
 
-bool rd::MockupAudioManager::play(const std::string &id, int loop)
+bool rd::MockAudioManager::play(const std::string &id, int loop)
 {
     durations_mutex.lock();
     loop_times_mutex.lock();
@@ -111,7 +111,7 @@ bool rd::MockupAudioManager::play(const std::string &id, int loop)
     return true;
 }
 
-bool rd::MockupAudioManager::stopMusic()
+bool rd::MockAudioManager::stopMusic()
 {
     durations_mutex.lock();
     loop_times_mutex.lock();
@@ -130,13 +130,13 @@ bool rd::MockupAudioManager::stopMusic()
     return true;
 }
 
-bool rd::MockupAudioManager::start()
+bool rd::MockAudioManager::start()
 {
     stopped = false;
     return yarp::os::RateThread::start();
 }
 
-bool rd::MockupAudioManager::stop()
+bool rd::MockAudioManager::stop()
 {
     durations_mutex.unlock();
     loop_times_mutex.unlock();
@@ -145,22 +145,22 @@ bool rd::MockupAudioManager::stop()
     return true;
 }
 
-bool rd::MockupAudioManager::isStopped()
+bool rd::MockAudioManager::isStopped()
 {
     return stopped;
 }
 
-bool rd::MockupAudioManager::RegisterManager()
+bool rd::MockAudioManager::RegisterManager()
 {
     if (uniqueInstance == NULL)
     {
-        uniqueInstance = new MockupAudioManager();
+        uniqueInstance = new MockAudioManager();
     }
 
     return Register( uniqueInstance, id);
 }
 
-rd::MockupAudioManager::~MockupAudioManager()
+rd::MockAudioManager::~MockAudioManager()
 {
     //-- Stop this manager
     this->stop();

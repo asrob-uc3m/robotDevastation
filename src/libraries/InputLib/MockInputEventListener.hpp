@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCKUP_INPUT_EVENT_LISTENER_HPP__
-#define __MOCKUP_INPUT_EVENT_LISTENER_HPP__
+#ifndef __MOCK_INPUT_EVENT_LISTENER_HPP__
+#define __MOCK_INPUT_EVENT_LISTENER_HPP__
 
 #include "InputEventListener.hpp"
 
@@ -10,12 +10,12 @@ namespace rd{
 /**
  * @ingroup InputLib
  *
- * @brief Mockup object that receives and stores key presses, mainly for testing purposes
+ * @brief Mock object that receives and stores key presses, mainly for testing purposes
  */
-class MockupInputEventListener : public InputEventListener
+class MockInputEventListener : public InputEventListener
 {
     public:
-        MockupInputEventListener();
+        MockInputEventListener();
 
         virtual bool onKeyDown( const Key & k );
         virtual bool onKeyUp( const Key & k );
@@ -43,4 +43,4 @@ class MockupInputEventListener : public InputEventListener
 
 };
 }
-#endif // __MOCKUP_INPUT_EVENT_LISTENER_HPP__
+#endif // __MOCK_INPUT_EVENT_LISTENER_HPP__
