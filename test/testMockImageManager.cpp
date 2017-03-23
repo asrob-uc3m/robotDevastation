@@ -80,7 +80,7 @@ class MockImageManagerEnvironment : public testing::Environment
 
 TEST_F(MockImageManagerTest, MockImageManagerNotificationWorks)
 {
-    //-- Create a mockup listener
+    //-- Create a mock listener
     MockImageEventListener listener;
 
     //-- Add the listener to the manager
@@ -104,7 +104,7 @@ TEST_F(MockImageManagerTest, MockImageManagerNotificationWorks)
     //-- Enable manager
     ASSERT_TRUE(imageManager->setEnabled(true));
 
-    //-- Send test image to mockup manager
+    //-- Send test image to mock manager
     ASSERT_TRUE(((MockImageManager *) imageManager)->receiveImage(test_image));
 
     //-- Check that the correct image arrived

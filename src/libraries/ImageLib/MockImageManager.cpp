@@ -3,7 +3,7 @@
 
 //-- Initialize static members
 rd::MockImageManager * rd::MockImageManager::uniqueInstance = NULL;
-const std::string rd::MockImageManager::id = "MOCKUP";
+const std::string rd::MockImageManager::id = "MOCK";
 
 
 bool rd::MockImageManager::start()

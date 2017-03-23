@@ -14,7 +14,7 @@ class MockAudioManagerTest : public testing::Test
         virtual void SetUp()
         {
             MockAudioManager::RegisterManager();
-            audioManager = AudioManager::getAudioManager("MOCKUP");
+            audioManager = AudioManager::getAudioManager("MOCK");
             mockManager = (MockAudioManager *) audioManager;
 
             //-- Find resources
@@ -55,7 +55,7 @@ const std::string MockAudioManagerTest::sound_explosion = "../sounds/15_explosio
 TEST_F( MockAudioManagerTest, AudioManagerIsSingleton)
 {
     AudioManager * manager2 = NULL;
-    manager2 = AudioManager::getAudioManager("MOCKUP");
+    manager2 = AudioManager::getAudioManager("MOCK");
 
     ASSERT_NE((AudioManager *)NULL, audioManager);
     ASSERT_NE((AudioManager *)NULL, manager2);

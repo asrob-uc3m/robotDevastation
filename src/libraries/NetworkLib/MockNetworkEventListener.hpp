@@ -9,7 +9,7 @@ namespace rd {
  *
  * The required pure virtual members are left with their function body empty.
  *
- * This mockup object allows to access the received data and has a counter of
+ * This mock object allows to access the received data and has a counter of
  * the incoming messages received
  *
  */

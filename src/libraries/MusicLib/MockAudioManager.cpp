@@ -2,7 +2,7 @@
 
 //-- This is very important:
 rd::MockAudioManager * rd::MockAudioManager::uniqueInstance = NULL;
-const std::string rd::MockAudioManager::id = "MOCKUP";
+const std::string rd::MockAudioManager::id = "MOCK";
 
 
 rd::MockAudioManager::MockAudioManager() : yarp::os::RateThread(UPDATE_PERIOD)

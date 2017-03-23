@@ -2,7 +2,7 @@
 
 //-- Initialize static members
 rd::MockNetworkManager * rd::MockNetworkManager::uniqueInstance = NULL;
-const std::string rd::MockNetworkManager::id = "MOCKUP";
+const std::string rd::MockNetworkManager::id = "MOCK";
 
 
 bool rd::MockNetworkManager::RegisterManager()

@@ -82,7 +82,7 @@ bool YarpRobotManager::connect()
 
     if ( ! yarp::os::NetworkBase::checkNetwork() )
     {
-        RD_ERROR("Found no yarp network (try running 'yarpserver &'', or '--mockupRobotManager' for Fake robot motors). Bye!\n");
+        RD_ERROR("Found no yarp network (try running 'yarpserver &'', or '--mockRobotManager' for Fake robot motors). Bye!\n");
         return false;
     }
 
@@ -108,7 +108,7 @@ bool YarpRobotManager::connect()
     if (tries == 11)
     {
         RD_ERROR("Timeout on connect to remote robot!\n");
-        RD_INFO("If you prefer a fake robot use the '--mockupRobotManager' parameter to run robotDevastation.\n");
+        RD_INFO("If you prefer a fake robot use the '--mockRobotManager' parameter to run robotDevastation.\n");
         return false;
     }
 

@@ -78,8 +78,8 @@ int main(int argc, char *argv[]) {
     {
         printf("RobotDevastation optional parameters:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        printf("\t--mockupRobotManager  //-- Fake robot motors\n");
-        printf("\t--mockupImageManager  //-- Fake robot camera\n");
+        printf("\t--mockRobotManager  //-- Fake robot motors\n");
+        printf("\t--mockImageManager  //-- Fake robot camera\n");
         printf("\t--yarpLocalImageManager  //-- Local webcam as camera\n");
         printf("\t--fullscreen //-- Fullscreen mode (experimental)\n");
         return 0;

@@ -105,12 +105,12 @@ class DeadStateTest : public testing::Test
             MockAudioManager::RegisterManager();
 
             //-- Create managers
-            networkManager = NetworkManager::getNetworkManager("MOCKUP");
+            networkManager = NetworkManager::getNetworkManager("MOCK");
             mockNetworkManager = dynamic_cast<MockNetworkManager *>(networkManager);
             ASSERT_NE((NetworkManager*) NULL, networkManager);
             ASSERT_NE((MockNetworkManager*) NULL, mockNetworkManager);
 
-            imageManager = ImageManager::getImageManager("MOCKUP");
+            imageManager = ImageManager::getImageManager("MOCK");
             mockImageManager = dynamic_cast<MockImageManager *>(imageManager);
             ASSERT_NE((ImageManager*) NULL, imageManager);
             ASSERT_NE((MockImageManager*) NULL, mockImageManager);
@@ -119,12 +119,12 @@ class DeadStateTest : public testing::Test
             yarp::sig::file::read(test_frame, rf.findFileByName("../images/test_frame_qr.ppm"));
             mockImageManager->receiveImage(test_frame);
 
-            inputManager = InputManager::getInputManager("MOCKUP");
+            inputManager = InputManager::getInputManager("MOCK");
             mockInputManager = dynamic_cast<MockInputManager *>(inputManager);
             ASSERT_NE((InputManager*) NULL, inputManager);
             ASSERT_NE((MockInputManager*) NULL, mockInputManager);
 
-            audioManager = AudioManager::getAudioManager("MOCKUP");
+            audioManager = AudioManager::getAudioManager("MOCK");
             mockAudioManager = dynamic_cast<MockAudioManager *>(audioManager);
             ASSERT_NE((AudioManager*) NULL, audioManager);
             ASSERT_NE((MockAudioManager*) NULL, mockAudioManager);
@@ -142,7 +142,7 @@ class DeadStateTest : public testing::Test
             mentalMap->addWeapon(Weapon("Default gun", 10, 5));
             networkManager->configure("player", players[0]);
 
-            mockRobotManager = new MockRobotManager("MOCKUP");
+            mockRobotManager = new MockRobotManager("MOCK");
             robotManager = (RobotManager *) mockRobotManager;
             ASSERT_NE((MockRobotManager*) NULL, mockRobotManager);
             ASSERT_NE((RobotManager*) NULL, robotManager);

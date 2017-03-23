@@ -77,14 +77,14 @@ class RobotDevastationTest : public testing::Test
 
             //-- Init input manager
             MockInputManager::RegisterManager();
-            inputManager = InputManager::getInputManager("MOCKUP");
+            inputManager = InputManager::getInputManager("MOCK");
             mockInputManager = dynamic_cast<MockInputManager *>(inputManager);
             ASSERT_NE((InputManager*) NULL, inputManager);
             ASSERT_NE((MockInputManager*) NULL, mockInputManager);
 
             //-- Init sound
             MockAudioManager::RegisterManager();
-            audioManager = AudioManager::getAudioManager("MOCKUP");
+            audioManager = AudioManager::getAudioManager("MOCK");
             mockAudioManager = dynamic_cast<MockAudioManager *>(audioManager);
             ASSERT_NE((AudioManager*) NULL, audioManager);
             ASSERT_NE((MockAudioManager*) NULL, mockAudioManager);
@@ -96,14 +96,14 @@ class RobotDevastationTest : public testing::Test
             mockAudioManager->load("reload","reload", AudioManager::FX);
 
             //-- Init robot:
-            mockRobotManager = new MockRobotManager("MOCKUP");
+            mockRobotManager = new MockRobotManager("MOCK");
             robotManager = (RobotManager *) mockRobotManager;
             ASSERT_NE((MockRobotManager*) NULL, mockRobotManager);
             ASSERT_NE((RobotManager*) NULL, robotManager);
 
             //-- Init image manager
             MockImageManager::RegisterManager();
-            imageManager = ImageManager::getImageManager("MOCKUP");
+            imageManager = ImageManager::getImageManager("MOCK");
             mockImageManager = dynamic_cast<MockImageManager *>(imageManager);
             ASSERT_NE((ImageManager*) NULL, imageManager);
             ASSERT_NE((MockImageManager*) NULL, mockImageManager);
@@ -120,7 +120,7 @@ class RobotDevastationTest : public testing::Test
 
             //-- Init network manager
             MockNetworkManager::RegisterManager();
-            networkManager = NetworkManager::getNetworkManager("MOCKUP");
+            networkManager = NetworkManager::getNetworkManager("MOCK");
             mockNetworkManager = dynamic_cast<MockNetworkManager *>(networkManager);
             ASSERT_NE((NetworkManager*) NULL, networkManager);
             ASSERT_NE((MockNetworkManager*) NULL, mockNetworkManager);
