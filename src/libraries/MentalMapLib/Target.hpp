@@ -9,7 +9,7 @@
 namespace rd{
 
 /**
- * @ingroup RdMentalMapLib
+ * @ingroup MentalMapLib
  *
  * @brief Class that represents a target detected. This target is (or should be) associated to a player.
  *

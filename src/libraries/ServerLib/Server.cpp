@@ -76,7 +76,7 @@ bool rd::Server::updateModule()
 }
 
 bool rd::Server::interruptModule() {
-    printf("RdServer closing...\n");
+    printf("Server closing...\n");
     rdBroadcast.interrupt();
     rpcServer.interrupt();
     rdBroadcast.close();

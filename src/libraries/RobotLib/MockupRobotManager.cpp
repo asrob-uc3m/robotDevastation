@@ -282,10 +282,10 @@ void MockupRobotManager::setEnabled(bool enabled)
     this->enabled = enabled;
     if (enabled)
     {
-        RD_DEBUG("RdMockupRobotManager enabled\n");
+        RD_DEBUG("MockupRobotManager enabled\n");
     }
     else
-        RD_DEBUG("RdMockupRobotManager disabled\n");
+        RD_DEBUG("MockupRobotManager disabled\n");
 }
 
 void MockupRobotManager::onDestroy(){

@@ -13,7 +13,7 @@
 namespace rd{
 
 /**
- * @ingroup RdRobotManagerLib
+ * @ingroup RobotManagerLib
  *
  * @brief The Robot Manager for testing
  *
@@ -24,7 +24,7 @@ class MockupRobotManager : public RobotManager
 
         MockupRobotManager(const std::string& robotName);
 
-        //-- RdRobotManager interface
+        //-- RobotManager interface
         //-----------------------------------------------------
         //-- Robot movement related functions
         virtual bool moveForward(int velocity = UNUSED);

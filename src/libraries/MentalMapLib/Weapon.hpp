@@ -14,7 +14,7 @@ namespace rd {
 class Target;
 
 /**
- * @ingroup RdMentalMapLib
+ * @ingroup MentalMapLib
  *
  * @brief Class that represents a weapon
  *

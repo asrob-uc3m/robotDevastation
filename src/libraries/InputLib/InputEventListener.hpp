@@ -9,11 +9,11 @@
 namespace rd{
 
 /**
- * @ingroup RdInputLib
+ * @ingroup InputLib
  *
- * @brief Interface for objects that can be notified of input events by the RdInputManager
+ * @brief Interface for objects that can be notified of input events by the InputManager
  *
- * RdInputEventListener follows the <a href="http://en.wikipedia.org/wiki/Observer_pattern">observer</a> design pattern.
+ * InputEventListener follows the <a href="http://en.wikipedia.org/wiki/Observer_pattern">observer</a> design pattern.
  */
 class InputEventListener
 {

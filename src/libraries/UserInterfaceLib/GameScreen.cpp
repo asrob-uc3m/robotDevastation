@@ -136,7 +136,7 @@ bool rd::GameScreen::update(std::string parameter, rd::Player value)
         return true;
     }
 
-    RD_ERROR("No RdPlayer parameter %s exists.\n", parameter.c_str());
+    RD_ERROR("No Player parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
@@ -149,7 +149,7 @@ bool rd::GameScreen::update(std::string parameter, std::vector<rd::Player> value
         return true;
     }
 
-    RD_ERROR("No vector<RdPlayer> parameter %s exists.\n", parameter.c_str());
+    RD_ERROR("No vector<Player> parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
@@ -162,7 +162,7 @@ bool rd::GameScreen::update(std::string parameter, std::vector<rd::Target> value
         return true;
     }
 
-    RD_ERROR("No vector<RdTarget> parameter %s exists.\n", parameter.c_str());
+    RD_ERROR("No vector<Target> parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
@@ -175,7 +175,7 @@ bool rd::GameScreen::update(std::string parameter, rd::Weapon value)
         return true;
     }
 
-    RD_ERROR("No RdWeapom parameter %s exists.\n", parameter.c_str());
+    RD_ERROR("No Weapon parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
@@ -198,7 +198,7 @@ bool rd::GameScreen::update(std::string parameter, rd::Image value)
         camera_frame_surface = RdImage2SDLImage(camera_frame);
         if (camera_frame_surface==NULL)
         {
-            RD_ERROR("Error converting RdImage to SDL\n");
+            RD_ERROR("Error converting Image to SDL\n");
             return false;
         }
         w = camera_frame_surface->w;
@@ -207,7 +207,7 @@ bool rd::GameScreen::update(std::string parameter, rd::Image value)
         return true;
     }
 
-    RD_ERROR("No RdImage parameter %s exists.\n", parameter.c_str());
+    RD_ERROR("No Image parameter %s exists.\n", parameter.c_str());
      return false;
 }
 

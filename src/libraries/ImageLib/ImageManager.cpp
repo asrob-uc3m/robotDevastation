@@ -13,13 +13,13 @@ rd::ImageManager *rd::ImageManager::getImageManager()
     {
         if(!imageManagerRegistry.empty() )
         {
-            //-- Install the first RdImageManger found
+            //-- Install the first ImageManager found
             currentId = imageManagerRegistry.begin()->first;
             imageManagerInstance = imageManagerRegistry.begin()->second;
         }
         else
         {
-            RD_ERROR("No RdImageManager registered!! Returning null\n");
+            RD_ERROR("No ImageManager registered!! Returning null\n");
         }
     }
 
@@ -37,7 +37,7 @@ rd::ImageManager *rd::ImageManager::getImageManager(std::string id)
         }
         else
         {
-            RD_ERROR("RdImageManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            RD_ERROR("ImageManager %s not found! (Maybe it was not registered?)\n", id.c_str());
         }
     }
 
@@ -121,7 +121,7 @@ bool rd::ImageManager::Register(rd::ImageManager *manager, std::string id)
     }
     else
     {
-        RD_ERROR( "RdImageManager with id \"%s\" was already registered\n", id.c_str());
+        RD_ERROR( "ImageManager with id \"%s\" was already registered\n", id.c_str());
         return false;
     }
 

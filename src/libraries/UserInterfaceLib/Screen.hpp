@@ -13,13 +13,13 @@ namespace rd{
 /**
  * @ingroup rd_libraries
  *
- * \defgroup RdUserInterfaceLib
+ * \defgroup UserInterfaceLib
  *
- * @brief The RdUserInterfaceLib library contains the \ref RdGameScreen class.
+ * @brief The UserInterfaceLib library contains the \ref GameScreen class.
  */
 
 /**
- * @ingroup RdUserInterfaceLib
+ * @ingroup UserInterfaceLib
  *
  * @brief A User Interface.
  *

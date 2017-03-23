@@ -13,7 +13,7 @@
 namespace rd{
 
 /**
- * @ingroup RdInputLib
+ * @ingroup InputLib
  *
  * @brief Factory class that provides static methods for instantiating SDL event source classes.
  *
@@ -21,10 +21,10 @@ namespace rd{
 class SDLEventFactory
 {
     public:
-        //! @brief Creates a \ref RdKey from a SDL keycode
+        //! @brief Creates a \ref Key from a SDL keycode
         static rd::Key makeKey(SDL_Keycode keycode);
 
-        //! @brief Creates a \ref RdWindowEvent from a SDL window event structure
+        //! @brief Creates a \ref WindowEvent from a SDL window event structure
         static rd::WindowEvent makeWindowEvent(SDL_WindowEvent windowEvent);
 
         //! @brief Initialize the lookup tables

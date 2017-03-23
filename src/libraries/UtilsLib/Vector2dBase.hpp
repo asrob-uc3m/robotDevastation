@@ -5,7 +5,7 @@
 #define __RD_VECTOR_BASE_HPP__
 
 /**
- * @ingroup RdUtilsLib
+ * @ingroup UtilsLib
  *
  * @brief Class representing a 2D vector
  *

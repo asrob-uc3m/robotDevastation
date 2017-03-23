@@ -51,7 +51,7 @@ class GameState : public State, public ManagerHub,
         static const int KILLED;
         static const int EXIT_REQUESTED;
 
-        //-- RdInputEventListener interface:
+        //-- InputEventListener interface:
         virtual bool onKeyDown(const Key & k);
         virtual bool onKeyUp(const Key & k);
         virtual bool onWindowEvent(const WindowEvent & event);

@@ -198,7 +198,7 @@ bool rd::YarpNetworkManager::login()
         RD_WARNING("NetworkManager has not been started\n");
         if(!start())
         {
-            RD_ERROR("RdNetworkManager could not be started for player %d\n", player.getId() );
+            RD_ERROR("NetworkManager could not be started for player %d\n", player.getId() );
             return false;
         }
     }

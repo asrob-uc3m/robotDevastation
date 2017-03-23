@@ -129,7 +129,7 @@ bool rd::DeadScreen::update(std::string parameter, rd::Image value)
     {
         last_camera_frame = Image(value);
 
-        //-- Convert from RdImage to SDL
+        //-- Convert from Image to SDL
         camera_frame = RdImage2SDLImage(last_camera_frame);
 
         //-- Set new window size
@@ -139,6 +139,6 @@ bool rd::DeadScreen::update(std::string parameter, rd::Image value)
         return true;
     }
 
-    RD_ERROR("No RdImage parameter %s exists.\n", parameter.c_str());
+    RD_ERROR("No Image parameter %s exists.\n", parameter.c_str());
     return false;
 }

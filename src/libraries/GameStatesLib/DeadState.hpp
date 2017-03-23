@@ -43,7 +43,7 @@ public:
     static const int RESPAWN_SELECTED;
     static const int EXIT_SELECTED;
 
-    //-- RdInputEventListener interface:
+    //-- InputEventListener interface:
     virtual bool onKeyDown(const Key & k);
     virtual bool onKeyUp(const Key & k);
     virtual bool onWindowEvent(const WindowEvent & event);

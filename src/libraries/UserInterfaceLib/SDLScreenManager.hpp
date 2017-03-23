@@ -17,7 +17,7 @@
 namespace rd{
 
 /**
- * @ingroup RdUserInterfaceLib
+ * @ingroup UserInterfaceLib
  *
  * @brief Manage game screens using SDL libraries
  *
@@ -26,28 +26,28 @@ class SDLScreenManager : public ScreenManager
 {
     public:
         //------------------------------- Screen Manager functions -----------------------------------------------------//    
-        //! @brief Set a RdScreen as current RdScreen
+        //! @brief Set a Screen as current Screen
         virtual void setCurrentScreen(Screen* screen);
 
-        //! @brief Display the current RdScreen on the game window
+        //! @brief Display the current Screen on the game window
         virtual bool show();
 
-        //! @brief Update some RdScreen parameter through the ScreenManager
+        //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(std::string parameter, std::string value);
 
-        //! @brief Update some RdScreen parameter through the ScreenManager
+        //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(std::string parameter, Image value); //-- Required by GameScreen and DeadScreen
 
-        //! @brief Update some RdScreen parameter through the ScreenManager
+        //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(std::string parameter, Player value); //-- Required by GameScreen
 
-        //! @brief Update some RdScreen parameter through the ScreenManager
+        //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(std::string parameter, std::vector<Player> value); //-- Required by GameScreen
 
-        //! @brief Update some RdScreen parameter through the ScreenManager
+        //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(std::string parameter, std::vector<Target> value); //-- Required by GameScreen
 
-        //! @brief Update some RdScreen parameter through the ScreenManager
+        //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(std::string parameter, Weapon value); //-- Required by GameScreen
 
         //! @brief SDL initialization

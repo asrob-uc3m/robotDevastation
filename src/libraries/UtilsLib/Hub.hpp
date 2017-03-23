@@ -17,7 +17,7 @@
 namespace rd{
 
 /**
- * @ingroup RdUtils
+ * @ingroup Utils
  *
  * @brief A classs to interface all the robot devastation managers
  *

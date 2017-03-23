@@ -18,16 +18,16 @@
 namespace rd{
 
 /**
- * @ingroup RdNetworkLib
+ * @ingroup NetworkLib
  *
- * @brief Manages the communications between the user and the RdServer using YARP
+ * @brief Manages the communications between the user and the Server using YARP
  *
- * RdYarpNetworkManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
+ * YarpNetworkManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
- * class, we first get the reference to the RdYarpNetworkManager with getNetworkManager() and then we
+ * class, we first get the reference to the YarpNetworkManager with getNetworkManager() and then we
  * access the manager with that reference.
  *
- * When the program finishes, the RdYarpNetworkManager can be deallocated using destroyNetworkManager().
+ * When the program finishes, the YarpNetworkManager can be deallocated using destroyNetworkManager().
  *
  * Network events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
  * along with the data relevant to the event triggered (i.e. data that just arrived)
@@ -41,7 +41,7 @@ class YarpNetworkManager: public NetworkManager,
     public:
         //------------------ Creation and configuration --------------------------------------------------------------//
         /**
-         * @brief Register this manager in the RdNetworkManager registry so that can be used
+         * @brief Register this manager in the NetworkManager registry so that can be used
          *
          * It ensures that only one manager of this type is created (unique instance)
          */
@@ -61,7 +61,7 @@ class YarpNetworkManager: public NetworkManager,
         //! @brief Configures a parameter with a value
         virtual bool configure(std::string parameter, Player value);
 
-        //------------------ RdServer API ----------------------------------------------------------------------------//
+        //------------------ Server API ----------------------------------------------------------------------------//
         virtual bool sendPlayerHit(Player player, int damage);
         virtual bool login();
         virtual bool logout();

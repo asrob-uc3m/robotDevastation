@@ -4,9 +4,9 @@
 /**
  * @ingroup rd_libraries
  *
- * \defgroup RdUtilsLib
+ * \defgroup UtilsLib
  *
- * @brief The RdUtilsLib library contains miscellaneous macros and utilities
+ * @brief The UtilsLib library contains miscellaneous macros and utilities
  */
 //-- Include all utils
 #include "Vocabs.hpp"

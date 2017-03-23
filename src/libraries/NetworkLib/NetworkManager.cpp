@@ -11,13 +11,13 @@ rd::NetworkManager *rd::NetworkManager::getNetworkManager()
     {
         if(!networkManagerRegistry.empty() )
         {
-            //-- Install the first RdNetworkManager found
+            //-- Install the first NetworkManager found
             currentId = networkManagerRegistry.begin()->first;
             networkManagerInstance = networkManagerRegistry.begin()->second;
         }
         else
         {
-            RD_ERROR("No RdNetworkManager registered!! Returning null\n");
+            RD_ERROR("No NetworkManager registered!! Returning null\n");
         }
     }
 
@@ -35,7 +35,7 @@ rd::NetworkManager *rd::NetworkManager::getNetworkManager(std::string id)
         }
         else
         {
-            RD_ERROR("RdImageManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            RD_ERROR("ImageManager %s not found! (Maybe it was not registered?)\n", id.c_str());
         }
     }
 
@@ -126,7 +126,7 @@ bool rd::NetworkManager::Register(rd::NetworkManager *manager, std::string id)
     }
     else
     {
-        RD_ERROR( "RdImageManager with id \"%s\" was already registered\n", id.c_str());
+        RD_ERROR( "ImageManager with id \"%s\" was already registered\n", id.c_str());
         return false;
     }
 

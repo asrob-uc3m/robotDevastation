@@ -28,7 +28,7 @@
 namespace rd{
 
 /**
- * @ingroup RdRobotManagerLib
+ * @ingroup RobotManagerLib
  *
  * @brief The Robot Manager for the Rd1 robot.
  *

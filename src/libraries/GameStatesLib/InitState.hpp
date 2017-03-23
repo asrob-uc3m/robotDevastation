@@ -53,7 +53,7 @@ class InitState : public State, public ManagerHub, public InputEventListener
         static const int LOGIN_SUCCESSFUL;
         static const int EXIT_REQUESTED;
 
-        //-- RdInputEventListener interface:
+        //-- InputEventListener interface:
         virtual bool onKeyDown(const Key & k);
         virtual bool onKeyUp(const Key & k);
         virtual bool onWindowEvent(const WindowEvent & event);

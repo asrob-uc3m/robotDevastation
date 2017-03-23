@@ -15,18 +15,18 @@
 namespace rd{
 
 /**
- * @ingroup RdInputLib
+ * @ingroup InputLib
  *
  * @brief User input manager ( keyboard, mouse, joysticks, etc) using SDL
  *
- * RdSDLInputManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
+ * SDLInputManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
- * class, we first get the reference to the RdInputManager with getInputManager() and then we
+ * class, we first get the reference to the InputManager with getInputManager() and then we
  * access the manager with that reference.
  *
- * When the program finishes, the RdSDLInputManager can be deallocated using destroyInputManager().
+ * When the program finishes, the SDLInputManager can be deallocated using destroyInputManager().
  *
- * RdSDLInputManager acts as a <a href="http://en.wikipedia.org/wiki/Facade_pattern">façade</a>, offering
+ * SDLInputManager acts as a <a href="http://en.wikipedia.org/wiki/Facade_pattern">façade</a>, offering
  * a unified interface to the different managers for the mouse, keyboard, etc.
  *
  * Input events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
@@ -43,7 +43,7 @@ class SDLInputManager : public InputManager
         virtual bool configure(std::string parameter, std::string value);
 
         /**
-         * @brief Register this manager in the RdImageManager registry so that can be used
+         * @brief Register this manager in the ImageManager registry so that can be used
          *
          * It ensures that only one manager of this type is created (unique instance)
          */

@@ -14,14 +14,14 @@ namespace rd{
 /**
  * @ingroup rd_libraries
  *
- * \defgroup RdUserInterfaceLib
+ * \defgroup UserInterfaceLib
  *
- * @brief The RdUserInterfaceLib library contains classes related to the game graphical user interface
+ * @brief The UserInterfaceLib library contains classes related to the game graphical user interface
  *
  **/
 
 /**
- * @ingroup RdUserInterfaceLib
+ * @ingroup UserInterfaceLib
  *
  * @brief Manage game screens
  *
@@ -33,7 +33,7 @@ namespace rd{
  * class, we first get the reference to the ScreenManager with getScreenManager() and then we
  * access the manager with that reference.
  *
- * When the program finishes, the ScreenManager can be deallocated using destroScreenManager().
+ * When the program finishes, the ScreenManager can be deallocated using destroyScreenManager().
  */
 class ScreenManager
 {
@@ -78,28 +78,28 @@ class ScreenManager
 
 
         //------------------------------- Screen Manager functions -----------------------------------------------------//
-        //! @brief Set a RdScreen as current RdScreen
+        //! @brief Set a Screen as current Screen
         virtual void setCurrentScreen(Screen* screen);
 
-        //! @brief Display the current RdScreen on the game window
+        //! @brief Display the current Screen on the game window
         virtual bool show() = 0;
 
-        //! @brief Update some RdScreen parameter through the ScreenManager
+        //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(std::string parameter, std::string value);
 
-        //! @brief Update some RdScreen parameter through the ScreenManager
+        //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(std::string parameter, Image value); //-- Required by GameScreen and DeadScreen
 
-        //! @brief Update some RdScreen parameter through the ScreenManager
+        //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(std::string parameter, Player value); //-- Required by GameScreen
 
-        //! @brief Update some RdScreen parameter through the ScreenManager
+        //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(std::string parameter, std::vector<Player> value); //-- Required by GameScreen
 
-        //! @brief Update some RdScreen parameter through the ScreenManager
+        //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(std::string parameter, std::vector<Target> value); //-- Required by GameScreen
 
-        //! @brief Update some RdScreen parameter through the ScreenManager
+        //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(std::string parameter, Weapon value); //-- Required by GameScreen
 
     protected:

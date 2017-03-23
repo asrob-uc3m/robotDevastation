@@ -11,7 +11,7 @@
 namespace rd{
 
 /**
- * @ingroup RdNetworkLib
+ * @ingroup NetworkLib
  *
  * @brief Allow for low-level access of members in tests / manipulating internal data
  *
@@ -33,7 +33,7 @@ class MockupNetworkManager : public NetworkManager
         //-- Creation and configuration
         //--------------------------------------------------------------------------------------------
         /**
-         * @brief Register this manager in the RdNetworkManager registry so that can be used
+         * @brief Register this manager in the NetworkManager registry so that can be used
          *
          * It ensures that only one manager of this type is created (unique instance)
          */
@@ -51,7 +51,7 @@ class MockupNetworkManager : public NetworkManager
         //! @brief Configures a parameter with a value
         virtual bool configure(std::string parameter, Player value);
 
-        //-- RdServer API
+        //-- Server API
         //--------------------------------------------------------------------------------------------
         virtual bool sendPlayerHit(Player player, int damage);
         virtual bool login();

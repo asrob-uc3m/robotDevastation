@@ -11,7 +11,7 @@
 namespace rd{
 
 /**
- * @ingroup RdInputLib
+ * @ingroup InputLib
  *
  * @brief Class that represents a keyboard key
  *
@@ -21,7 +21,7 @@ namespace rd{
  * it is considered both printable and control key.
  *
  * This class must not be inherited from. Use factory classes and functions to perform custom
- * initialization (see \ref rd::RdSDLEventFactory).
+ * initialization (see \ref rd::SDLEventFactory).
  */
 class Key
 {

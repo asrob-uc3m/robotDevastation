@@ -5,7 +5,7 @@
  * @ingroup rd_programs
  * \defgroup rdServer rdServer
  *
- * @brief The Robot Devastation PC server. Creates an instance of the RdServer class.
+ * @brief The Robot Devastation PC server. Creates an instance of the Server class.
  *
  * @section legal Legal
  *

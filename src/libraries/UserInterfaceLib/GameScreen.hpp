@@ -23,13 +23,13 @@ namespace rd{
 /**
  * @ingroup rd_libraries
  *
- * \defgroup RdUserInterfaceLib
+ * \defgroup UserInterfaceLib
  *
- * @brief The RdUserInterfaceLib library contains the different game screens
+ * @brief The UserInterfaceLib library contains the different game screens
  */
 
 /**
- * @ingroup RdUserInterfaceLib
+ * @ingroup UserInterfaceLib
  *
  * @brief A User Interface.
  *

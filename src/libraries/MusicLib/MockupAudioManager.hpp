@@ -14,7 +14,7 @@
 namespace rd{
 
 /**
- * @ingroup RdMusicLib
+ * @ingroup MusicLib
  *
  * @brief Mockup music and sound effects manager for testing purposes
  *
@@ -45,7 +45,7 @@ class MockupAudioManager : public AudioManager,
         virtual bool isStopped();
 
         /**
-         * @brief Register this manager in the RdImageManager registry so that can be used
+         * @brief Register this manager in the ImageManager registry so that can be used
          *
          * It ensures that only one manager of this type is created (unique instance)
          */
@@ -75,7 +75,7 @@ class MockupAudioManager : public AudioManager,
         //! @brief Method called periodically from the RateThread class. It simply calls the update() method.
         void run();
 
-        //! \brief Stores the unique instance of the RdAudioManager
+        //! \brief Stores the unique instance of the AudioManager
         static MockupAudioManager * uniqueInstance;
 
         //! \brief Dictionary for sound durations:

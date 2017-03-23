@@ -10,11 +10,11 @@
 namespace rd{
 
 /**
- * @ingroup RdMentalMapLib
+ * @ingroup MentalMapLib
  *
  * @brief Interface for objects that can be notified of events related to changes on the data stored
  *
- * RdMentalMapEventListener follows the <a href="http://en.wikipedia.org/wiki/Observer_pattern">observer</a> design pattern.
+ * MentalMapEventListener follows the <a href="http://en.wikipedia.org/wiki/Observer_pattern">observer</a> design pattern.
  */
 class MentalMapEventListener
 {

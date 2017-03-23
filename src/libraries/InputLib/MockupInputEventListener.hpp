@@ -8,7 +8,7 @@
 namespace rd{
 
 /**
- * @ingroup RdInputLib
+ * @ingroup InputLib
  *
  * @brief Mockup object that receives and stores key presses, mainly for testing purposes
  */

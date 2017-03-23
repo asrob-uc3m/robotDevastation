@@ -15,24 +15,24 @@ namespace rd{
 /**
  * @ingroup rd_libraries
  *
- * \defgroup RdInputLib
+ * \defgroup InputLib
  *
- * @brief The RdInputLib library contains classes related to user input (keyboard, mouse, etc).
+ * @brief The InputLib library contains classes related to user input (keyboard, mouse, etc).
  */
 
 /**
- * @ingroup RdInputLib
+ * @ingroup InputLib
  *
  * @brief User input manager ( keyboard, mouse, joysticks, etc)
  *
- * RdInputManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
+ * InputManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
- * class, we first get the reference to the RdInputManager with getInputManager() and then we
+ * class, we first get the reference to the InputManager with getInputManager() and then we
  * access the manager with that reference.
  *
- * When the program finishes, the RdInputManager can be deallocated using destroyInputManager().
+ * When the program finishes, the InputManager can be deallocated using destroyInputManager().
  *
- * RdInputManager acts as a <a href="http://en.wikipedia.org/wiki/Facade_pattern">façade</a>, offering
+ * InputManager acts as a <a href="http://en.wikipedia.org/wiki/Facade_pattern">façade</a>, offering
  * a unified interface to the different managers for the mouse, keyboard, etc.
  *
  * Input events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
@@ -44,20 +44,20 @@ class InputManager
     public:
         //------------------------------ Construction & destruction ---------------------------------------------------//
         /**
-         * @brief Get a reference to the RdInputManager
+         * @brief Get a reference to the InputManager
          * @return By default, if no id is specified, this will return a reference to the first
-         * RdInputManager that it can find in the registry, or NULL if no RdInputManager was registered.
+         * InputManager that it can find in the registry, or NULL if no InputManager was registered.
          */
         static InputManager * getInputManager();
 
         /**
-         * @brief Get a reference to the RdInputManager
-         * @return The RdInputManager registered with the given id, NULL if the id is not found in
+         * @brief Get a reference to the InputManager
+         * @return The InputManager registered with the given id, NULL if the id is not found in
          * the registry.
          */
         static InputManager * getInputManager(std::string id);
 
-        //! @brief Deallocate all the registered RdInputManager
+        //! @brief Deallocate all the registered InputManager
         static bool destroyInputManager();
 
         virtual ~InputManager();
@@ -67,7 +67,7 @@ class InputManager
         /**
          * @brief Start to capture input events
          *
-         * This function is supposed to be called after RdInputManager configuration.
+         * This function is supposed to be called after InputManager configuration.
          */
         virtual bool start() = 0;
 
@@ -78,10 +78,10 @@ class InputManager
         virtual bool isStopped() = 0;
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
-        //! @brief Adds a RdInputEventListener to the list of observers to be notified of events
+        //! @brief Adds a InputEventListener to the list of observers to be notified of events
         bool addInputEventListener( InputEventListener * listener );
 
-        //! @brief Unregisters all the RdInputEventListener stored
+        //! @brief Unregisters all the InputEventListener stored
         bool removeInputEventListeners();
 
         //! @brief Configures a parameter with a value
@@ -102,13 +102,13 @@ class InputManager
         std::vector<InputEventListener *> listeners;
 
     private:
-        //! @brief Stores the unique instance of the RdInputManager
+        //! @brief Stores the unique instance of the InputManager
         static InputManager * inputManagerInstance;
 
         //! \brief Stores the id of the current unique instance used
         static std::string currentId;
 
-        //! \brief Stores all the RdInputManager that have been registered
+        //! \brief Stores all the InputManager that have been registered
         static std::map< std::string, InputManager * > inputManagerRegistry;
 
 };

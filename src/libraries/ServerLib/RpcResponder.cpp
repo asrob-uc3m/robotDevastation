@@ -50,7 +50,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         players_mutex->lock();
         if ( players->find(loginId) == players->end() )  // if not found, we can create
         {
-            //-- RdPlayer( int id, std::string name, int health, int max_health, int team_id, int score);
+            //-- Player( int id, std::string name, int health, int max_health, int team_id, int score);
             Player rdPlayer( loginId, in.get(2).asString().c_str(),100,100,in.get(3).asInt(),0);
 
             players->operator [](loginId) = rdPlayer;

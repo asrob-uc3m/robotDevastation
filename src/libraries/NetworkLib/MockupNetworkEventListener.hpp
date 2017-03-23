@@ -5,7 +5,7 @@
 
 namespace rd {
 /**
- * @brief Dummy RdNetworkEventListener used for testing
+ * @brief Dummy NetworkEventListener used for testing
  *
  * The required pure virtual members are left with their function body empty.
  *

@@ -21,24 +21,24 @@ namespace rd{
 /**
  * @ingroup rd_libraries
  *
- * \defgroup RdMentalMapLib
+ * \defgroup MentalMapLib
  *
- * @brief The RdMentalMapLib library contains all the classes related to game information storage (e.g. players, targets, weapons, etc)
+ * @brief The MentalMapLib library contains all the classes related to game information storage (e.g. players, targets, weapons, etc)
  */
 
 /**
- * @ingroup RdMentalMapLib
+ * @ingroup MentalMapLib
  *
  * @brief Mental map is a repository for information about the players, targets and weapons.
  *
- * RdMentalMap is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
+ * MentalMap is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
- * class, we first get the reference to the RdMentalMap with getMentalMap() and then we
- * access the RdMentalMap with that reference.
+ * class, we first get the reference to the MentalMap with getMentalMap() and then we
+ * access the MentalMap with that reference.
  *
- * When the program finishes, the RdMentalMap can be deallocated using destroyMentalMap().
+ * When the program finishes, the MentalMap can be deallocated using destroyMentalMap().
  *
- * RdMentalMap implements the RdNetworkEventListener <a href="http://en.wikipedia.org/wiki/Observer_pattern">observer</a> interface,
+ * MentalMap implements the NetworkEventListener <a href="http://en.wikipedia.org/wiki/Observer_pattern">observer</a> interface,
  * which allows this class to receive notification of network events to update its local data.
  *
  * Data change events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
@@ -50,10 +50,10 @@ class MentalMap : public NetworkEventListener
     public:
         //-- Creation and configuration
         //--------------------------------------------------------------------------------------------
-        //! @brief Get a reference to the RdMentalMap
+        //! @brief Get a reference to the MentalMap
         static MentalMap * getMentalMap();
 
-        //! @brief Get a reference to the RdMentalMap
+        //! @brief Get a reference to the MentalMap
         static bool destroyMentalMap();
 
         //! @brief Store the id of the player corresponding to the user
@@ -102,10 +102,10 @@ class MentalMap : public NetworkEventListener
 
         //-- Listeners
         //--------------------------------------------------------------------------------------------
-        //! @brief Adds a RdMentalMapEventListener to the list of observers to be notified of events
+        //! @brief Adds a MentalMapEventListener to the list of observers to be notified of events
         bool addMentalMapEventListener( MentalMapEventListener * listener);
 
-        //! @brief Unregisters all the RdMentalMapEventListener stored
+        //! @brief Unregisters all the MentalMapEventListener stored
         bool removeMentalMapEventListeners();
 
     private:
@@ -117,7 +117,7 @@ class MentalMap : public NetworkEventListener
          */
         MentalMap();
 
-        //! @brief Stores the unique instance of the RdMentalMap
+        //! @brief Stores the unique instance of the MentalMap
         static MentalMap * mentalMapInstance;
 
 
@@ -149,9 +149,9 @@ class MentalMap : public NetworkEventListener
         std::vector<MentalMapEventListener *> listeners;
 
 
-        //-- Implementation of RdNetworkEventListener functions
+        //-- Implementation of NetworkEventListener functions
         //--------------------------------------------------------------------------------------------
-        //! @brief Updates the local information about the players with the new data received by the RdNetworkManager.
+        //! @brief Updates the local information about the players with the new data received by the NetworkManager.
         bool onDataArrived(std::vector<Player> players);
 };
 

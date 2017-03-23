@@ -15,7 +15,7 @@
 namespace rd{
 
 /**
- * @ingroup RdUtilsLib
+ * @ingroup UtilsLib
  *
  * @brief A template-based class to read ini files.
  */

@@ -8,7 +8,7 @@
 namespace rd{
 
 /**
- * @ingroup RdInputLib
+ * @ingroup InputLib
  *
  * @brief Allows to simulate input from a user programatically (mainly for test purposes)
  *
@@ -27,7 +27,7 @@ class MockupInputManager : public InputManager
         ~MockupInputManager();
 
         /**
-         * @brief Register this manager in the RdInputManager registry so that can be used
+         * @brief Register this manager in the InputManager registry so that can be used
          *
          * It ensures that only one manager of this type is created (unique instance)
          */

@@ -12,7 +12,7 @@ namespace rd{
 class Weapon;
 
 /**
- * @ingroup RdMentalMapLib
+ * @ingroup MentalMapLib
  *
  * @brief Class that represents a player of this game, with a 'unique' id, name, health, team id and score.
  *

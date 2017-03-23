@@ -22,23 +22,23 @@ class ImageEventListener; //-- Required to avoid recurrent loops in dependencies
 /**
  * @ingroup rd_libraries
  *
- * \defgroup RdImageLib
+ * \defgroup ImageLib
  *
- * @brief The RdImageLib library contains classes related to image input (from cameras, etc)
+ * @brief The ImageLib library contains classes related to image input (from cameras, etc)
  */
 
 /**
- * @ingroup RdImageLib
+ * @ingroup ImageLib
  *
  * @brief Generic image input manager
  *
- * RdImageManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
+ * ImageManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
  * class, we first register the needed subclasses of this class. This way, we can later get the reference
- * to the RdImageManager with getImageManager and the name of the desired registered subclass. Later calls
+ * to the ImageManager with getImageManager and the name of the desired registered subclass. Later calls
  * to getImageManager() will return that selected subclass.
  *
- * When the program finishes, the RdImageManager can be deallocated using destroyImageManager().
+ * When the program finishes, the ImageManager can be deallocated using destroyImageManager().
  *
  * Imnage events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
  * along with the reference to the manager that triggered them to be able to access the image
@@ -49,15 +49,15 @@ class ImageManager
     public:
         //------------------------------ Construction & destruction ---------------------------------------------------//
         /**
-         * @brief Get a reference to the RdImageManager
+         * @brief Get a reference to the ImageManager
          * @return By default, if no id is specified, this will return a reference to the first
-         * RdImageManager that it can find in the registry, or NULL if no RdImageManager was registered.
+         * ImageManager that it can find in the registry, or NULL if no ImageManager was registered.
          */
         static ImageManager *getImageManager();
 
         /**
-         * @brief Get a reference to the RdImageManager
-         * @return The RdImageManager registered with the given id, NULL if the id is not found in
+         * @brief Get a reference to the ImageManager
+         * @return The ImageManager registered with the given id, NULL if the id is not found in
          * the registry.
          */
         static ImageManager * getImageManager(std::string id);
@@ -72,7 +72,7 @@ class ImageManager
         /**
          * @brief Start to capture images
          *
-         * This function is supposed to be called after RdImageManager configuration.
+         * This function is supposed to be called after ImageManager configuration.
          */
         virtual bool start() = 0;
 
@@ -91,9 +91,9 @@ class ImageManager
 
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
-        //! @brief Adds a RdImageEventListener to the list of observers to be notified of events
+        //! @brief Adds a ImageEventListener to the list of observers to be notified of events
         bool addImageEventListener( ImageEventListener * listener );
-        //! @brief Unregisters all the RdImageEventListener stored
+        //! @brief Unregisters all the ImageEventListener stored
         bool removeImageEventListeners();
 
         //! @brief Configures a parameter with a value
@@ -111,13 +111,13 @@ class ImageManager
         std::vector<ImageEventListener *> listeners;
 
     private:
-        //! \brief Stores the unique instance of the RdInputManager
+        //! \brief Stores the unique instance of the InputManager
         static ImageManager * imageManagerInstance;
 
         //! \brief Stores the id of the current unique instance used
         static std::string currentId;
 
-        //! \brief Stores all the RdImageManager that have been registered
+        //! \brief Stores all the ImageManager that have been registered
         static std::map< std::string, ImageManager * > imageManagerRegistry;
 
 

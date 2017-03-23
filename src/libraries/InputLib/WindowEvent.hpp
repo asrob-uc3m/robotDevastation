@@ -7,12 +7,12 @@
 namespace rd{
 
 /**
- * @ingroup RdInputLib
+ * @ingroup InputLib
  *
  * @brief Class that represents a window event
  *
  * This class must not be inherited from. Use factory classes and functions to perform custom
- * initialization (see \ref rd::RdSDLEventFactory).
+ * initialization (see \ref rd::SDLEventFactory).
  */
 class WindowEvent
 {
@@ -33,7 +33,7 @@ class WindowEvent
     private:
         WindowEvent();
 
-		//! @brief Stores an identifier for the window event
+        //! @brief Stores an identifier for the window event
         int event_id;
 };
 

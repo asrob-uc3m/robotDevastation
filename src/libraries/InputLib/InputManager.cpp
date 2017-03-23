@@ -13,13 +13,13 @@ rd::InputManager *rd::InputManager::getInputManager()
     {
         if(!inputManagerRegistry.empty() )
         {
-            //-- Install the first RdInputManager found
+            //-- Install the first InputManager found
             currentId = inputManagerRegistry.begin()->first;
             inputManagerInstance = inputManagerRegistry.begin()->second;
         }
         else
         {
-            RD_ERROR("No RdInputManager registered!! Returning null\n");
+            RD_ERROR("No InputManager registered!! Returning null\n");
         }
     }
 
@@ -37,7 +37,7 @@ rd::InputManager *rd::InputManager::getInputManager(std::string id)
         }
         else
         {
-            RD_ERROR("RdInputManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            RD_ERROR("InputManager %s not found! (Maybe it was not registered?)\n", id.c_str());
         }
     }
 
@@ -125,7 +125,7 @@ bool rd::InputManager::Register(rd::InputManager *manager, std::string id)
     }
     else
     {
-        RD_ERROR( "RdInputManager with id \"%s\" was already registered\n", id.c_str());
+        RD_ERROR( "InputManager with id \"%s\" was already registered\n", id.c_str());
         return false;
     }
 

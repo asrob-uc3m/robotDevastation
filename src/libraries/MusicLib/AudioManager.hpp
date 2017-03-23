@@ -13,24 +13,24 @@ namespace rd{
 /**
  * @ingroup rd_libraries
  *
- * \defgroup RdMusicLib
+ * \defgroup MusicLib
  *
- * @brief The RdMusicLib library contains classes related to game music and sound effects
+ * @brief The MusicLib library contains classes related to game music and sound effects
 
 /**
- * @ingroup RdMusicLib
+ * @ingroup MusicLib
  *
  * @brief Music and sound effects manager
  *
- * RdAudioManger can load several audio files and assign them a string for identification,
+ * AudioManager can load several audio files and assign them a string for identification,
  * so that they can be played later.
  *
- * RdAudioManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
+ * AudioManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
- * class, we first get the reference to the RdAudioManager with getAudioManager() and then we
+ * class, we first get the reference to the AudioManager with getAudioManager() and then we
  * access the manager with that reference.
  *
- * When the program finishes, the RdAudioManager can be deallocated using destroAudioManager().
+ * When the program finishes, the AudioManager can be deallocated using destroAudioManager().
  */
 class AudioManager
 {
@@ -50,7 +50,7 @@ class AudioManager
          */
         static AudioManager * getAudioManager(std::string id);
 
-        //! @brief Deallocate all the registered RdInputManager
+        //! @brief Deallocate all the registered InputManager
         static bool destroyAudioManager();
 
         virtual ~AudioManager();
@@ -120,7 +120,7 @@ class AudioManager
         //! \brief Stores the id of the current unique instance used
         static std::string currentId;
 
-        //! \brief Stores all the RdInputManager that have been registered
+        //! \brief Stores all the InputManager that have been registered
         static std::map< std::string, AudioManager * > audioManagerRegistry;
 
 };

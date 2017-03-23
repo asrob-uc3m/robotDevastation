@@ -6,14 +6,14 @@
 namespace rd{
 
 /**
- * @brief Dummy RdImageEventListener used for testing
+ * @brief Dummy ImageEventListener used for testing
  *
  * The required pure virtual members are left with their function body empty.
  *
  * This mockup object allows to access the received image and has a counter of
  * the incoming images received
  *
- *  @todo Move this class to RdImageLib, set it to be compiled only with the tests
+ *  @todo Move this class to ImageLib, set it to be compiled only with the tests
  */
 class MockupImageEventListener : public ImageEventListener
 {
