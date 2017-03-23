@@ -15,9 +15,9 @@
 
 namespace rd{
 
-typedef yarp::sig::ImageOf<yarp::sig::PixelRgb> RdImage;
+typedef yarp::sig::ImageOf<yarp::sig::PixelRgb> Image;
 
-class RdImageEventListener; //-- Required to avoid recurrent loops in dependencies
+class ImageEventListener; //-- Required to avoid recurrent loops in dependencies
 
 /**
  * @ingroup rd_libraries
@@ -44,7 +44,7 @@ class RdImageEventListener; //-- Required to avoid recurrent loops in dependenci
  * along with the reference to the manager that triggered them to be able to access the image
  *
  */
-class RdImageManager
+class ImageManager
 {
     public:
         //------------------------------ Construction & destruction ---------------------------------------------------//
@@ -53,19 +53,19 @@ class RdImageManager
          * @return By default, if no id is specified, this will return a reference to the first
          * RdImageManager that it can find in the registry, or NULL if no RdImageManager was registered.
          */
-        static RdImageManager *getImageManager();
+        static ImageManager *getImageManager();
 
         /**
          * @brief Get a reference to the RdImageManager
          * @return The RdImageManager registered with the given id, NULL if the id is not found in
          * the registry.
          */
-        static RdImageManager * getImageManager(std::string id);
+        static ImageManager * getImageManager(std::string id);
 
         //! @brief Deallocate all the registered ImageManager
         static bool destroyImageManager();
 
-        virtual ~RdImageManager();
+        virtual ~ImageManager();
 
 
         //------------------------------ Manager Startup & Halting ----------------------------------------------------//
@@ -87,12 +87,12 @@ class RdImageManager
 
         //------------------------------- Read image ------------------------------------------------------------------//
         //! @brief Return the last received image
-        virtual RdImage getImage() = 0;
+        virtual Image getImage() = 0;
 
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Adds a RdImageEventListener to the list of observers to be notified of events
-        bool addImageEventListener( RdImageEventListener * listener );
+        bool addImageEventListener( ImageEventListener * listener );
         //! @brief Unregisters all the RdImageEventListener stored
         bool removeImageEventListeners();
 
@@ -105,20 +105,20 @@ class RdImageManager
          * @brief This function allows subclasses to install their unique instances in the singleton register to be
          * selected later by the user
          */
-        static bool Register( RdImageManager * manager, std::string id);
+        static bool Register( ImageManager * manager, std::string id);
 
         //! @brief Observers registered to be notified of image events
-        std::vector<RdImageEventListener *> listeners;
+        std::vector<ImageEventListener *> listeners;
 
     private:
         //! \brief Stores the unique instance of the RdInputManager
-        static RdImageManager * imageManagerInstance;
+        static ImageManager * imageManagerInstance;
 
         //! \brief Stores the id of the current unique instance used
         static std::string currentId;
 
         //! \brief Stores all the RdImageManager that have been registered
-        static std::map< std::string, RdImageManager * > imageManagerRegistry;
+        static std::map< std::string, ImageManager * > imageManagerRegistry;
 
 
 };

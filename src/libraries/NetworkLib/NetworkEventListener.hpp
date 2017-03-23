@@ -8,10 +8,10 @@
 
 namespace rd{
 
-class RdNetworkEventListener
+class NetworkEventListener
 {
     public:
-        virtual bool onDataArrived(std::vector<RdPlayer> players) = 0;
+        virtual bool onDataArrived(std::vector<Player> players) = 0;
 };
 
 }

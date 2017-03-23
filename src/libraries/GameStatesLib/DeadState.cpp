@@ -6,9 +6,9 @@ const int rd::DeadState::DEFAULT_RATE_MS = 100;
 const int rd::DeadState::MAX_HEALTH = 100;
 
 
-rd::DeadState::DeadState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
-                         rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
-                         rd::RdRobotManager *robotManager, AudioManager *audioManager,
+rd::DeadState::DeadState(rd::NetworkManager *networkManager, rd::ImageManager *imageManager,
+                         rd::InputManager *inputManager, rd::MentalMap *mentalMap,
+                         rd::RobotManager *robotManager, AudioManager *audioManager,
                          rd::ScreenManager *screenManager) :
                 ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager,
                            audioManager, screenManager)
@@ -35,7 +35,7 @@ bool rd::DeadState::setup()
         return false;
     screenManager->setCurrentScreen(&screen);
 
-    RdImage last_camera_frame = imageManager->getImage();
+    Image last_camera_frame = imageManager->getImage();
     screenManager->update(DeadScreen::PARAM_LAST_CAMERA_FRAME, last_camera_frame);
     screenManager->update(DeadScreen::PARAM_REMAINING_TIME, number2str(timer));
 
@@ -133,24 +133,24 @@ int rd::DeadState::evaluateConditions()
     return -1;
 }
 
-bool rd::DeadState::onKeyDown(const rd::RdKey & k)
+bool rd::DeadState::onKeyDown(const rd::Key & k)
 {
     return true;
 }
 
-bool rd::DeadState::onKeyUp(const rd::RdKey & k)
+bool rd::DeadState::onKeyUp(const rd::Key & k)
 {
     if (received_respawn || received_exit)
         return false;
 
-    if (k.getValue() == RdKey::KEY_ENTER)
+    if (k.getValue() == Key::KEY_ENTER)
     {
         RD_DEBUG("Enter was pressed!\n");
         received_respawn = true;
         return true;
     }
 
-    if (k.getValue() == RdKey::KEY_ESCAPE)
+    if (k.getValue() == Key::KEY_ESCAPE)
     {
         RD_DEBUG("Escape was pressed!\n");
         received_exit = true;
@@ -160,9 +160,9 @@ bool rd::DeadState::onKeyUp(const rd::RdKey & k)
     return false;
 }
 
-bool rd::DeadState::onWindowEvent(const RdWindowEvent & event)
+bool rd::DeadState::onWindowEvent(const WindowEvent & event)
 {
-    if (event.getEvent() == RdWindowEvent::WINDOW_CLOSE)
+    if (event.getEvent() == WindowEvent::WINDOW_CLOSE)
     {
         RD_DEBUG("Exit was triggered!\n");
         received_exit = true;

@@ -27,26 +27,26 @@ class ManagerHub
     public:
     ManagerHub();
 
-    ManagerHub(RdNetworkManager * networkManager, RdImageManager * imageManager,
-               RdInputManager * inputManager, RdMentalMap * mentalMap,
-               RdRobotManager * robotManager, AudioManager * audioManager,
+    ManagerHub(NetworkManager * networkManager, ImageManager * imageManager,
+               InputManager * inputManager, MentalMap * mentalMap,
+               RobotManager * robotManager, AudioManager * audioManager,
                ScreenManager * screenManager);
 
-        bool setNetworkManager(RdNetworkManager * networkManager);
-        bool setImageManager(RdImageManager * imageManager);
-        bool setInputManager(RdInputManager * inputManager);
-        bool setMentalMap(RdMentalMap * mentalMap);
-        bool setRobotManager(RdRobotManager * robotManager);
+        bool setNetworkManager(NetworkManager * networkManager);
+        bool setImageManager(ImageManager * imageManager);
+        bool setInputManager(InputManager * inputManager);
+        bool setMentalMap(MentalMap * mentalMap);
+        bool setRobotManager(RobotManager * robotManager);
         bool setAudioManager(AudioManager * audioManager);
         bool setScreenManager(ScreenManager * screenManager);
 
    protected:
         //-- Pointers to everything important in the game:
-        RdNetworkManager * networkManager;
-        RdImageManager * imageManager;
-        RdInputManager * inputManager;
-        RdMentalMap * mentalMap;
-        RdRobotManager * robotManager;
+        NetworkManager * networkManager;
+        ImageManager * imageManager;
+        InputManager * inputManager;
+        MentalMap * mentalMap;
+        RobotManager * robotManager;
         AudioManager * audioManager;
         ScreenManager * screenManager;
 };

@@ -1,14 +1,14 @@
 #include "Target.hpp"
 
-rd::RdTarget::RdTarget()
+rd::Target::Target()
 {
     this->player_id = -1;
-    this->pos = RdVector2d(-1, -1);
-    this->dimensions = RdVector2d(-1, -1);
+    this->pos = Vector2d(-1, -1);
+    this->dimensions = Vector2d(-1, -1);
     this->belief = -1;
 }
 
-rd::RdTarget::RdTarget(int player_id, RdVector2d pos, RdVector2d dimensions)
+rd::Target::Target(int player_id, Vector2d pos, Vector2d dimensions)
 {
     this->player_id = player_id;
     this->pos = pos;
@@ -16,42 +16,42 @@ rd::RdTarget::RdTarget(int player_id, RdVector2d pos, RdVector2d dimensions)
     this->belief = MAX_BELIEF;
 }
 
-int rd::RdTarget::getPlayerId()
+int rd::Target::getPlayerId()
 {
     return player_id;
 }
 
-void rd::RdTarget::setPlayerId(int id)
+void rd::Target::setPlayerId(int id)
 {
     player_id = id;
 }
 
-RdVector2d rd::RdTarget::getPos()
+Vector2d rd::Target::getPos()
 {
     return pos;
 }
 
-void rd::RdTarget::setPos(const RdVector2d &pos)
+void rd::Target::setPos(const Vector2d &pos)
 {
     this->pos = pos;
 }
 
-RdVector2d rd::RdTarget::getDimensions()
+Vector2d rd::Target::getDimensions()
 {
     return dimensions;
 }
 
-void rd::RdTarget::setDimensions(const RdVector2d &dimensions)
+void rd::Target::setDimensions(const Vector2d &dimensions)
 {
    this->dimensions = dimensions;
 }
 
-int rd::RdTarget::getBelief()
+int rd::Target::getBelief()
 {
     return belief;
 }
 
-bool rd::RdTarget::reduceBelief(int amount)
+bool rd::Target::reduceBelief(int amount)
 {
     belief -= amount;
 
@@ -64,7 +64,7 @@ bool rd::RdTarget::reduceBelief(int amount)
     return true;
 }
 
-bool rd::RdTarget::resetBelief()
+bool rd::Target::resetBelief()
 {
     belief = MAX_BELIEF;
     return true;

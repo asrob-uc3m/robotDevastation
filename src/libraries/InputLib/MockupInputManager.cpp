@@ -4,7 +4,7 @@
 rd::MockupInputManager * rd::MockupInputManager::uniqueInstance = NULL;
 const std::string rd::MockupInputManager::id = "MOCKUP";
 
-bool rd::MockupInputManager::sendKeyPress(const rd::RdKey & key)
+bool rd::MockupInputManager::sendKeyPress(const rd::Key & key)
 {
     if (stopped)
         return false;
@@ -18,7 +18,7 @@ bool rd::MockupInputManager::sendKeyPress(const rd::RdKey & key)
     return true;
 }
 
-bool rd::MockupInputManager::sendKeyUp(const rd::RdKey & key)
+bool rd::MockupInputManager::sendKeyUp(const rd::Key & key)
 {
     if (stopped)
         return false;
@@ -29,7 +29,7 @@ bool rd::MockupInputManager::sendKeyUp(const rd::RdKey & key)
     return true;
 }
 
-bool rd::MockupInputManager::sendKeyDown(const rd::RdKey & key)
+bool rd::MockupInputManager::sendKeyDown(const rd::Key & key)
 {
     if (stopped)
         return false;
@@ -40,7 +40,7 @@ bool rd::MockupInputManager::sendKeyDown(const rd::RdKey & key)
     return true;
 }
 
-bool rd::MockupInputManager::sendWindowEvent(const rd::RdWindowEvent & event)
+bool rd::MockupInputManager::sendWindowEvent(const rd::WindowEvent & event)
 {
     if (stopped)
         return false;

@@ -32,13 +32,13 @@ int main()
     ScreenManager * screenManager = ScreenManager::getScreenManager("SDL");
     screenManager->start();
 
-    RdScreen * screen = new DeadScreen();
+    Screen * screen = new DeadScreen();
     if(!screen->init())
         return 1;
     screenManager->setCurrentScreen(screen);
 
     //-- Load test image
-    RdImage test_frame;
+    Image test_frame;
     yarp::sig::file::read(test_frame, file_path.c_str());
     screenManager->update(DeadScreen::PARAM_LAST_CAMERA_FRAME, test_frame);
 

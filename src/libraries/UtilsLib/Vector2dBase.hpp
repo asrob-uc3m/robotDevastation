@@ -13,20 +13,20 @@
  */
 
 template< class T>
-class RdVector2dBase {
+class Vector2dBase {
     public:
-        RdVector2dBase( T x, T y): x(x), y(y) {}
-        RdVector2dBase(): x(0), y(0) {}
+        Vector2dBase( T x, T y): x(x), y(y) {}
+        Vector2dBase(): x(0), y(0) {}
         T x, y;
         
-        bool operator==( const RdVector2dBase<T>& other_vector) { return this->x == other_vector.x
+        bool operator==( const Vector2dBase<T>& other_vector) { return this->x == other_vector.x
                     && this->y == other_vector.y; }
 
-        RdVector2dBase& operator+=( const RdVector2dBase<T>& a ) { x+=a.x; y+=a.y; return *this;}
+        Vector2dBase& operator+=( const Vector2dBase<T>&a ) { x+=a.x; y+=a.y; return *this;}
 };
 
 //! @brief Default 2D vector
-typedef RdVector2dBase<int> RdVector2d;
+typedef Vector2dBase<int> Vector2d;
 
 #endif // __RD_VECTOR_BASE_HPP__
 

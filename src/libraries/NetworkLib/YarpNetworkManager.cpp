@@ -2,36 +2,36 @@
 
 
 //-- Initialize static members
-rd::RdYarpNetworkManager * rd::RdYarpNetworkManager::uniqueInstance = NULL;
-const std::string rd::RdYarpNetworkManager::id = "YARP";
-const int rd::RdYarpNetworkManager::KEEPALIVE_RATE_MS = 1000;
+rd::YarpNetworkManager * rd::YarpNetworkManager::uniqueInstance = NULL;
+const std::string rd::YarpNetworkManager::id = "YARP";
+const int rd::YarpNetworkManager::KEEPALIVE_RATE_MS = 1000;
 
-bool rd::RdYarpNetworkManager::RegisterManager()
+bool rd::YarpNetworkManager::RegisterManager()
 {
     if (uniqueInstance == NULL)
     {
-        uniqueInstance = new RdYarpNetworkManager();
+        uniqueInstance = new YarpNetworkManager();
     }
 
     return Register( uniqueInstance, id);
 }
 
-rd::RdYarpNetworkManager::RdYarpNetworkManager() : RateThread(KEEPALIVE_RATE_MS)
+rd::YarpNetworkManager::YarpNetworkManager() : RateThread(KEEPALIVE_RATE_MS)
 {
     started = false;
 }
 
-void rd::RdYarpNetworkManager::run()
+void rd::YarpNetworkManager::run()
 {
     keepAlive();
 }
 
-rd::RdYarpNetworkManager::~RdYarpNetworkManager()
+rd::YarpNetworkManager::~YarpNetworkManager()
 {
     uniqueInstance = NULL;
 }
 
-bool rd::RdYarpNetworkManager::start()
+bool rd::YarpNetworkManager::start()
 {
     if (player.getId() == -1)
     {
@@ -100,16 +100,16 @@ bool rd::RdYarpNetworkManager::start()
 }
 
 
-void rd::RdYarpNetworkManager::onRead(yarp::os::Bottle &b)
+void rd::YarpNetworkManager::onRead(yarp::os::Bottle &b)
 {
     //RD_INFO("Got %s\n", b.toString().c_str());
     if ((b.get(0).asString() == "players")||(b.get(0).asVocab() == VOCAB_RD_PLAYERS)) {  // players //
         //RD_INFO("Number of players: %d\n",b.size()-1);  // -1 because of vocab.
-        std::vector< RdPlayer > players;
+        std::vector< Player > players;
         for(size_t i=1;i<b.size();i++)
         {
 
-            RdPlayer rdPlayer(b.get(i).asList()->get(0).asInt(),
+            Player rdPlayer(b.get(i).asList()->get(0).asInt(),
                               b.get(i).asList()->get(1).asString().c_str(),
                               b.get(i).asList()->get(2).asInt(),
                               b.get(i).asList()->get(3).asInt(),
@@ -130,7 +130,7 @@ void rd::RdYarpNetworkManager::onRead(yarp::os::Bottle &b)
 
 }
 
-bool rd::RdYarpNetworkManager::stop()
+bool rd::YarpNetworkManager::stop()
 {
     if (!started)
     {
@@ -152,12 +152,12 @@ bool rd::RdYarpNetworkManager::stop()
     return true;
 }
 
-bool rd::RdYarpNetworkManager::isStopped()
+bool rd::YarpNetworkManager::isStopped()
 {
     return !started;
 }
 
-bool rd::RdYarpNetworkManager::configure(std::string parameter, RdPlayer value)
+bool rd::YarpNetworkManager::configure(std::string parameter, Player value)
 {
     if (parameter.compare("player") == 0)
     {
@@ -165,10 +165,10 @@ bool rd::RdYarpNetworkManager::configure(std::string parameter, RdPlayer value)
         return true;
     }
 
-    return RdNetworkManager::configure(parameter, value);
+    return NetworkManager::configure(parameter, value);
 }
 
-bool rd::RdYarpNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)
+bool rd::YarpNetworkManager::sendPlayerHit(rd::Player player, int damage)
 {
     if (!started)
     {
@@ -191,7 +191,7 @@ bool rd::RdYarpNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)
         return false;
 }
 
-bool rd::RdYarpNetworkManager::login()
+bool rd::YarpNetworkManager::login()
 {
     if (!started)
     {
@@ -223,7 +223,7 @@ bool rd::RdYarpNetworkManager::login()
         return false;
 }
 
-bool rd::RdYarpNetworkManager::logout()
+bool rd::YarpNetworkManager::logout()
 {
     if (!started)
     {
@@ -251,7 +251,7 @@ bool rd::RdYarpNetworkManager::logout()
     }
 }
 
-bool rd::RdYarpNetworkManager::keepAlive()
+bool rd::YarpNetworkManager::keepAlive()
 {
     if (!started)
     {

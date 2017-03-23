@@ -14,10 +14,10 @@ namespace rd{
  * This class must not be inherited from. Use factory classes and functions to perform custom
  * initialization (see \ref rd::RdSDLEventFactory).
  */
-class RdWindowEvent
+class WindowEvent
 {
     public:
-        RdWindowEvent(int event_id);
+        WindowEvent(int event_id);
 
         /**
          * @brief Get the identifier for this window event
@@ -31,9 +31,9 @@ class RdWindowEvent
         static const int WINDOW_CLOSE;
 
     private:
-        RdWindowEvent();
+        WindowEvent();
 
-        //! @brief Stores an identifier for the window event
+		//! @brief Stores an identifier for the window event
         int event_id;
 };
 

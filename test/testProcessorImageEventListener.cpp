@@ -24,13 +24,13 @@ class RdProcessorImageEventListenerTest : public testing::Test
             rf.setDefaultContext("robotDevastation");
             rf.setDefaultConfigFile("robotDevastation.ini");
 
-            RdMockupImageManager::RegisterManager();
-            imageManager = RdImageManager::getImageManager(RdMockupImageManager::id);
-            ASSERT_NE((RdImageManager*)NULL, imageManager);
+            MockupImageManager::RegisterManager();
+            imageManager = ImageManager::getImageManager(MockupImageManager::id);
+            ASSERT_NE((ImageManager*)NULL, imageManager);
             imageManager->addImageEventListener(&processor);
 
-            mentalMap = RdMentalMap::getMentalMap();
-            ASSERT_NE((RdMentalMap*)NULL, mentalMap);
+            mentalMap = MentalMap::getMentalMap();
+            ASSERT_NE((MentalMap*)NULL, mentalMap);
 
             //-- Load test images
             yarp::sig::file::read(test_image, rf.findFileByName(image_filename));
@@ -44,10 +44,10 @@ class RdProcessorImageEventListenerTest : public testing::Test
 
         virtual void TearDown()
         {
-            RdImageManager::destroyImageManager();
+            ImageManager::destroyImageManager();
             imageManager = NULL;
 
-            RdMentalMap::destroyMentalMap();
+            MentalMap::destroyMentalMap();
             mentalMap = NULL;
         }
 
@@ -55,18 +55,18 @@ class RdProcessorImageEventListenerTest : public testing::Test
         static const std::string bad_image_filename;
 
     protected:
-        RdImageManager * imageManager;
-        RdMentalMap * mentalMap;
-        RdProcessorImageEventListener processor;
+        ImageManager * imageManager;
+        MentalMap * mentalMap;
+        ProcessorImageEventListener processor;
 
-        RdImage test_image;
-        RdImage bad_image;
+        Image test_image;
+        Image bad_image;
 };
 
 const std::string RdProcessorImageEventListenerTest::image_filename = "../images/test_target.ppm";
 const std::string RdProcessorImageEventListenerTest::bad_image_filename = "../images/test_target_bad.ppm";
 
-void compare_targets(RdTarget target1, RdTarget target2, int threshold = 20)
+void compare_targets(Target target1, Target target2, int threshold = 20)
 {
     ASSERT_EQ(target1.getPlayerId(), target2.getPlayerId());
     ASSERT_NEAR(target1.getPos().x, target2.getPos().x, threshold);
@@ -78,17 +78,17 @@ void compare_targets(RdTarget target1, RdTarget target2, int threshold = 20)
 TEST_F(RdProcessorImageEventListenerTest, TargetDetectionWorks)
 {
     //-- Expected targets:
-    RdTarget target1(1, RdVector2d(200, 200), RdVector2d(220,220));
-    RdTarget target2(2, RdVector2d(500, 100), RdVector2d(150, 150));
+    Target target1(1, Vector2d(200, 200), Vector2d(220,220));
+    Target target2(2, Vector2d(500, 100), Vector2d(150, 150));
 
     //-- Send image to image manager
     ASSERT_TRUE(imageManager->start());
     ASSERT_TRUE(imageManager->setEnabled(true));
-    ASSERT_TRUE(((RdMockupImageManager *)imageManager)->receiveImage(test_image));
+    ASSERT_TRUE(((MockupImageManager *)imageManager)->receiveImage(test_image));
     yarp::os::Time::delay(0.5);
 
     //-- Check detected targets:
-    std::vector<RdTarget> targets_detected = RdProcessorImageEventListenerTest::mentalMap->getTargets();
+    std::vector<Target> targets_detected = RdProcessorImageEventListenerTest::mentalMap->getTargets();
     ASSERT_EQ(2, targets_detected.size());
 
     if (targets_detected[0].getPlayerId() == target1.getPlayerId())
@@ -109,10 +109,10 @@ TEST_F(RdProcessorImageEventListenerTest, BadQRsAreIgnored)
     //-- Send image to image manager
     ASSERT_TRUE(imageManager->start());
     ASSERT_TRUE(imageManager->setEnabled(true));
-    ASSERT_TRUE(((RdMockupImageManager *)imageManager)->receiveImage(bad_image));
+    ASSERT_TRUE(((MockupImageManager *)imageManager)->receiveImage(bad_image));
     yarp::os::Time::delay(0.5);
 
     //-- Check detected targets:
-    std::vector<RdTarget> targets_detected = RdProcessorImageEventListenerTest::mentalMap->getTargets();
+    std::vector<Target> targets_detected = RdProcessorImageEventListenerTest::mentalMap->getTargets();
     ASSERT_EQ(0, targets_detected.size());
 }

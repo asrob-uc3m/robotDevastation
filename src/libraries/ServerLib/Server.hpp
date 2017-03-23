@@ -21,7 +21,7 @@ namespace rd{
  * @ingroup rdServer
  * @brief The parent Robot Devastation class of the \ref rdServer program.
  */
-class RdServer : public yarp::os::RFModule
+class Server : public yarp::os::RFModule
 {
 
     public:
@@ -32,7 +32,7 @@ class RdServer : public yarp::os::RFModule
          */
         bool configure(yarp::os::ResourceFinder &rf);
 
-        virtual ~RdServer();
+        virtual ~Server();
 
     protected:
         bool interruptModule();
@@ -44,12 +44,12 @@ class RdServer : public yarp::os::RFModule
 
         int serverStatus;
 
-        std::map <int, RdPlayer> players;
+        std::map <int, Player> players;
         std::map <int, int> players_belief;
         yarp::os::Mutex players_mutex; //-- To work with players & players_belief
 
         yarp::os::RpcServer rpcServer;
-        RdRpcResponder rdRpcResponder;
+        RpcResponder rdRpcResponder;
         yarp::os::Port rdBroadcast;
 };
 

@@ -24,9 +24,9 @@ int main()
     screenManager->start();
 
     //-- Create a RdScreen to check the ScreenManager
-    RdScreen * screen = new MockupScreen();
+    Screen * screen = new MockupScreen();
     screen->init();
-    RdScreen * screen2 = new MockupScreen();
+    Screen * screen2 = new MockupScreen();
     screen2->init();
 
     //-- Set the first Screen in the ScreenManager

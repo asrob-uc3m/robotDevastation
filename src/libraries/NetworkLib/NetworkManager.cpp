@@ -1,11 +1,11 @@
 #include "NetworkManager.hpp"
 
 //-- Static members initialization:
-rd::RdNetworkManager * rd::RdNetworkManager::networkManagerInstance = NULL;
-std::string rd::RdNetworkManager::currentId = "";
-std::map<std::string, rd::RdNetworkManager *> rd::RdNetworkManager::networkManagerRegistry = std::map<std::string, rd::RdNetworkManager *>();
+rd::NetworkManager * rd::NetworkManager::networkManagerInstance = NULL;
+std::string rd::NetworkManager::currentId = "";
+std::map<std::string, rd::NetworkManager *> rd::NetworkManager::networkManagerRegistry = std::map<std::string, rd::NetworkManager *>();
 
-rd::RdNetworkManager *rd::RdNetworkManager::getNetworkManager()
+rd::NetworkManager *rd::NetworkManager::getNetworkManager()
 {
     if (networkManagerInstance == NULL )
     {
@@ -24,7 +24,7 @@ rd::RdNetworkManager *rd::RdNetworkManager::getNetworkManager()
     return networkManagerInstance;
 }
 
-rd::RdNetworkManager *rd::RdNetworkManager::getNetworkManager(std::string id)
+rd::NetworkManager *rd::NetworkManager::getNetworkManager(std::string id)
 {
     if (networkManagerInstance == NULL )
     {
@@ -42,7 +42,7 @@ rd::RdNetworkManager *rd::RdNetworkManager::getNetworkManager(std::string id)
     return networkManagerInstance;
 }
 
-bool rd::RdNetworkManager::destroyNetworkManager()
+bool rd::NetworkManager::destroyNetworkManager()
 {
     //-- First, stop & delete the manager currently in use (if any)
     if (networkManagerInstance != NULL)
@@ -53,16 +53,16 @@ bool rd::RdNetworkManager::destroyNetworkManager()
         networkManagerInstance = NULL;
 
         //-- Remove it also from the registry
-        std::map<std::string, RdNetworkManager *>::iterator it = networkManagerRegistry.find(currentId);
+        std::map<std::string, NetworkManager *>::iterator it = networkManagerRegistry.find(currentId);
         if (it != networkManagerRegistry.end())
             networkManagerRegistry.erase(it);
     }
 
     //-- Destroy all the remaining registered ImageManagers
-    for ( std::map<std::string, RdNetworkManager *>::iterator it = networkManagerRegistry.begin();
+    for ( std::map<std::string, NetworkManager *>::iterator it = networkManagerRegistry.begin();
           it != networkManagerRegistry.end(); ++it)
     {
-        RdNetworkManager * currentManager = it->second;
+        NetworkManager * currentManager = it->second;
 
         if (currentManager != NULL)
         {
@@ -80,36 +80,36 @@ bool rd::RdNetworkManager::destroyNetworkManager()
     return true;
 }
 
-rd::RdNetworkManager::~RdNetworkManager() { }
+rd::NetworkManager::~NetworkManager() { }
 
-bool rd::RdNetworkManager::addNetworkEventListener(rd::RdNetworkEventListener *listener)
+bool rd::NetworkManager::addNetworkEventListener(rd::NetworkEventListener *listener)
 {
     listeners.push_back(listener);
     return true;
 }
 
-bool rd::RdNetworkManager::removeNetworkEventListeners()
+bool rd::NetworkManager::removeNetworkEventListeners()
 {
     listeners.clear();
     return true;
 }
 
-bool rd::RdNetworkManager::configure(std::string parameter, RdPlayer value)
+bool rd::NetworkManager::configure(std::string parameter, Player value)
 {
     return true;
 }
 
-bool rd::RdNetworkManager::onTargetHit(rd::RdTarget target, rd::RdPlayer player, rd::RdWeapon weapon)
+bool rd::NetworkManager::onTargetHit(rd::Target target, rd::Player player, rd::Weapon weapon)
 {
     return sendPlayerHit(player, weapon.getDamage());
 }
 
-bool rd::RdNetworkManager::onRespawn(rd::RdPlayer player)
+bool rd::NetworkManager::onRespawn(rd::Player player)
 {
     return sendPlayerHit(player, -1*player.getMaxHealth()); //-- This is a quick and dirty hack
 }
 
-bool rd::RdNetworkManager::Register(rd::RdNetworkManager *manager, std::string id)
+bool rd::NetworkManager::Register(rd::NetworkManager *manager, std::string id)
 {
     if ( networkManagerRegistry.find(id) == networkManagerRegistry.end())
     {

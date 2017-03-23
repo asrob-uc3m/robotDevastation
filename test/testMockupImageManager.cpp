@@ -25,20 +25,20 @@ class RdMockupImageManagerTest : public testing::Test
             rf.setDefaultConfigFile("robotDevastation.ini");
             image_filename = rf.findFileByName(image_filename_raw);
 
-            RdMockupImageManager::RegisterManager();
-            imageManager = RdImageManager::getImageManager(RdMockupImageManager::id);
+            MockupImageManager::RegisterManager();
+            imageManager = ImageManager::getImageManager(MockupImageManager::id);
         }
 
         virtual void TearDown()
         {
-            RdImageManager::destroyImageManager();
+            ImageManager::destroyImageManager();
         }
 
         static const std::string image_filename_raw;
         std::string image_filename;
 
     protected:
-        RdImageManager * imageManager;
+        ImageManager * imageManager;
 
 };
 
@@ -81,7 +81,7 @@ class RdMockupImageManagerEnvironment : public testing::Environment
 TEST_F(RdMockupImageManagerTest, RdMockupImageManagerNotificationWorks)
 {
     //-- Create a mockup listener
-    RdMockupImageEventListener listener;
+    MockupImageEventListener listener;
 
     //-- Add the listener to the manager
     ASSERT_TRUE(imageManager->addImageEventListener(&listener));
@@ -94,22 +94,22 @@ TEST_F(RdMockupImageManagerTest, RdMockupImageManagerNotificationWorks)
     EXPECT_EQ(0, listener.getImagesArrived());
 
     //-- Load test image
-    RdImage test_image;
+    Image test_image;
     ASSERT_TRUE(yarp::sig::file::read(test_image, RdMockupImageManagerTest::image_filename));
 
     //-- Check that an image didn't arrive
-    EXPECT_FALSE(((RdMockupImageManager *) imageManager)->receiveImage(test_image));
+    EXPECT_FALSE(((MockupImageManager *) imageManager)->receiveImage(test_image));
     EXPECT_EQ(0, listener.getImagesArrived());
 
     //-- Enable manager
     ASSERT_TRUE(imageManager->setEnabled(true));
 
     //-- Send test image to mockup manager
-    ASSERT_TRUE(((RdMockupImageManager *) imageManager)->receiveImage(test_image));
+    ASSERT_TRUE(((MockupImageManager *) imageManager)->receiveImage(test_image));
 
     //-- Check that the correct image arrived
     EXPECT_EQ(1, listener.getImagesArrived());
-    RdImage received_image = listener.getStoredImage();
+    Image received_image = listener.getStoredImage();
 
     ASSERT_EQ(received_image.width(), test_image.width());
     ASSERT_EQ(received_image.height(), test_image.height());
@@ -125,7 +125,7 @@ TEST_F(RdMockupImageManagerTest, RdMockupImageManagerNotificationWorks)
     EXPECT_TRUE(imageManager->removeImageEventListeners());
     ASSERT_TRUE(imageManager->stop());
     ASSERT_TRUE(imageManager->isStopped());
-    ASSERT_FALSE(((RdMockupImageManager *) imageManager)->isEnabled());
+    ASSERT_FALSE(((MockupImageManager *) imageManager)->isEnabled());
 }
 
 //--- Main -------------------------------------------------------------------------------------------

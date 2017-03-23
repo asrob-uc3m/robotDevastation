@@ -1,42 +1,42 @@
 #include "Screen.hpp"
 
-rd::RdScreen::RdScreen()
+rd::Screen::Screen()
 {
 
 }
 
 
-bool rd::RdScreen::drawScreen(void *screen)
+bool rd::Screen::drawScreen(void *screen)
 {
     return false;
 }
 
-bool rd::RdScreen::update(std::string parameter, std::string value)
+bool rd::Screen::update(std::string parameter, std::string value)
 {
     return true;
 }
 
-bool rd::RdScreen::update(std::string parameter, rd::RdImage value)
+bool rd::Screen::update(std::string parameter, rd::Image value)
 {
     return true;
 }
 
-bool rd::RdScreen::update(std::string parameter, rd::RdPlayer value)
+bool rd::Screen::update(std::string parameter, rd::Player value)
 {
     return true;
 }
 
-bool rd::RdScreen::update(std::string parameter, std::vector<rd::RdPlayer> value)
+bool rd::Screen::update(std::string parameter, std::vector<rd::Player> value)
 {
     return true;
 }
 
-bool rd::RdScreen::update(std::string parameter, std::vector<rd::RdTarget> value)
+bool rd::Screen::update(std::string parameter, std::vector<rd::Target> value)
 {
     return true;
 }
 
-bool rd::RdScreen::update(std::string parameter, rd::RdWeapon value)
+bool rd::Screen::update(std::string parameter, rd::Weapon value)
 {
     return true;
 }

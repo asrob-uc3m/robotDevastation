@@ -2,11 +2,11 @@
 
 
 //-- Initialize static members
-rd::RdYarpImageManager * rd::RdYarpImageManager::uniqueInstance = NULL;
-const std::string rd::RdYarpImageManager::id = "YARP";
+rd::YarpImageManager * rd::YarpImageManager::uniqueInstance = NULL;
+const std::string rd::YarpImageManager::id = "YARP";
 
 
-bool rd::RdYarpImageManager::start()
+bool rd::YarpImageManager::start()
 {
     yarp::os::NetworkBase::initMinimum();
 
@@ -69,7 +69,7 @@ bool rd::RdYarpImageManager::start()
 
 }
 
-bool rd::RdYarpImageManager::stop()
+bool rd::YarpImageManager::stop()
 {
     imagePort.disableCallback();
     imagePort.interrupt();
@@ -81,18 +81,18 @@ bool rd::RdYarpImageManager::stop()
     return true;
 }
 
-bool rd::RdYarpImageManager::isStopped()
+bool rd::YarpImageManager::isStopped()
 {
     return stopped;
 }
 
-bool rd::RdYarpImageManager::setEnabled(bool enabled)
+bool rd::YarpImageManager::setEnabled(bool enabled)
 {
     this->enabled = enabled;
     return true;
 }
 
-bool rd::RdYarpImageManager::configure(std::string parameter, std::string value)
+bool rd::YarpImageManager::configure(std::string parameter, std::string value)
 {
     if ( parameter.compare("remote_img_port") == 0 && value.compare("") != 0)
     {
@@ -105,34 +105,34 @@ bool rd::RdYarpImageManager::configure(std::string parameter, std::string value)
         return true;
     }
     else
-        return RdImageManager::configure(parameter, value);
+        return ImageManager::configure(parameter, value);
 }
 
-rd::RdImage rd::RdYarpImageManager::getImage()
+rd::Image rd::YarpImageManager::getImage()
 {
     semaphore.wait();
-    RdImage return_image(image);
+    Image return_image(image);
     semaphore.post();
 
     return return_image;
 }
 
-bool rd::RdYarpImageManager::RegisterManager()
+bool rd::YarpImageManager::RegisterManager()
 {
     if (uniqueInstance == NULL)
     {
-        uniqueInstance = new RdYarpImageManager();
+        uniqueInstance = new YarpImageManager();
     }
 
     return Register( uniqueInstance, id);
 }
 
-rd::RdYarpImageManager::~RdYarpImageManager()
+rd::YarpImageManager::~YarpImageManager()
 {
     uniqueInstance = NULL;
 }
 
-void rd::RdYarpImageManager::onRead(rd::RdImage &image)
+void rd::YarpImageManager::onRead(rd::Image &image)
 {
     semaphore.wait();
     this->image=image;
@@ -148,7 +148,7 @@ void rd::RdYarpImageManager::onRead(rd::RdImage &image)
     }
 }
 
-rd::RdYarpImageManager::RdYarpImageManager()
+rd::YarpImageManager::YarpImageManager()
 {
     stopped = true;
     enabled = false;

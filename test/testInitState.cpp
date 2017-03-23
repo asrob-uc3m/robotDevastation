@@ -61,25 +61,25 @@ class InitStateTest : public testing::Test
 
             //-- Register managers to be used:
             MockupNetworkManager::RegisterManager();
-            RdMockupImageManager::RegisterManager();
+            MockupImageManager::RegisterManager();
             MockupInputManager::RegisterManager();
             MockupAudioManager::RegisterManager();
             SDLScreenManager::RegisterManager();
 
             //-- Create managers
-            networkManager = RdNetworkManager::getNetworkManager("MOCKUP");
+            networkManager = NetworkManager::getNetworkManager("MOCKUP");
             mockupNetworkManager = dynamic_cast<MockupNetworkManager *>(networkManager);
-            ASSERT_NE((RdNetworkManager*) NULL, networkManager);
+            ASSERT_NE((NetworkManager*) NULL, networkManager);
             ASSERT_NE((MockupNetworkManager*) NULL, mockupNetworkManager);
 
-            imageManager = RdImageManager::getImageManager("MOCKUP");
-            mockupImageManager = dynamic_cast<RdMockupImageManager *>(imageManager);
-            ASSERT_NE((RdImageManager*) NULL, imageManager);
-            ASSERT_NE((RdMockupImageManager*) NULL, mockupImageManager);
+            imageManager = ImageManager::getImageManager("MOCKUP");
+            mockupImageManager = dynamic_cast<MockupImageManager *>(imageManager);
+            ASSERT_NE((ImageManager*) NULL, imageManager);
+            ASSERT_NE((MockupImageManager*) NULL, mockupImageManager);
 
-            inputManager = RdInputManager::getInputManager("MOCKUP");
+            inputManager = InputManager::getInputManager("MOCKUP");
             mockupInputManager = dynamic_cast<MockupInputManager *>(inputManager);
-            ASSERT_NE((RdInputManager*) NULL, inputManager);
+            ASSERT_NE((InputManager*) NULL, inputManager);
             ASSERT_NE((MockupInputManager*) NULL, mockupInputManager);
 
             audioManager = AudioManager::getAudioManager("MOCKUP");
@@ -88,20 +88,20 @@ class InitStateTest : public testing::Test
             ASSERT_NE((MockupAudioManager*) NULL, mockupAudioManager);
             mockupAudioManager->load("RD_THEME","RD_THEME", AudioManager::MUSIC);
 
-            mentalMap = RdMentalMap::getMentalMap();
-            ASSERT_NE((RdMentalMap*) NULL, mentalMap);
+            mentalMap = MentalMap::getMentalMap();
+            ASSERT_NE((MentalMap*) NULL, mentalMap);
             ASSERT_TRUE(mentalMap->configure(1));
 
-            std::vector<RdPlayer> players;
-            players.push_back(RdPlayer(1,"test_player",100,100,0,0) );
+            std::vector<Player> players;
+            players.push_back(Player(1,"test_player",100,100,0,0) );
             ASSERT_TRUE(mentalMap->updatePlayers(players));
-            mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
+            mentalMap->addWeapon(Weapon("Default gun", 10, 5));
             networkManager->configure("player", players[0]);
 
-            mockupRobotManager = new RdMockupRobotManager("MOCKUP");
-            robotManager = (RdRobotManager *) mockupRobotManager;
-            ASSERT_NE((RdMockupRobotManager*) NULL, mockupRobotManager);
-            ASSERT_NE((RdRobotManager*) NULL, robotManager);
+            mockupRobotManager = new MockupRobotManager("MOCKUP");
+            robotManager = (RobotManager *) mockupRobotManager;
+            ASSERT_NE((MockupRobotManager*) NULL, mockupRobotManager);
+            ASSERT_NE((RobotManager*) NULL, robotManager);
 
             screenManager = ScreenManager::getScreenManager("SDL");
             ASSERT_NE((ScreenManager*) NULL, screenManager);
@@ -114,16 +114,16 @@ class InitStateTest : public testing::Test
 
 
             //-- Delete things
-            RdNetworkManager::destroyNetworkManager();
+            NetworkManager::destroyNetworkManager();
             networkManager = NULL;
             mockupNetworkManager = NULL;
-            RdImageManager::destroyImageManager();
+            ImageManager::destroyImageManager();
             imageManager = NULL;
             mockupImageManager = NULL;
-            RdInputManager::destroyInputManager();
+            InputManager::destroyInputManager();
             AudioManager::destroyAudioManager();
 
-            RdMentalMap::destroyMentalMap();
+            MentalMap::destroyMentalMap();
 
             delete mockupRobotManager;
             mockupRobotManager = NULL;
@@ -135,22 +135,22 @@ class InitStateTest : public testing::Test
     protected:
         FiniteStateMachine *fsm;
 
-        RdNetworkManager * networkManager;
+        NetworkManager * networkManager;
         MockupNetworkManager * mockupNetworkManager;
 
-        RdImageManager * imageManager;
-        RdMockupImageManager * mockupImageManager;
+        ImageManager * imageManager;
+        MockupImageManager * mockupImageManager;
 
-        RdInputManager * inputManager;
+        InputManager * inputManager;
         MockupInputManager * mockupInputManager;
 
         AudioManager * audioManager;
         MockupAudioManager * mockupAudioManager;
 
-        RdMentalMap * mentalMap;
+        MentalMap * mentalMap;
 
-        RdMockupRobotManager * mockupRobotManager;
-        RdRobotManager * robotManager;
+        MockupRobotManager * mockupRobotManager;
+        RobotManager * robotManager;
 
         ScreenManager * screenManager;
 };
@@ -204,7 +204,7 @@ TEST_F(InitStateTest, InitStateGoesToLogin)
     ASSERT_FALSE(mockupRobotManager->isEnabled());
 
     //-- When enter is pressed, the system should log in and go to next state:
-    mockupInputManager->sendKeyPress(RdKey::KEY_ENTER);
+    mockupInputManager->sendKeyPress(Key::KEY_ENTER);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has logged in and it is in the next state (cleanup):
@@ -273,7 +273,7 @@ TEST_F(InitStateTest, InitStateGoesToExit)
     ASSERT_FALSE(mockupRobotManager->isEnabled());
 
     //-- When esc is pressed, the system should exit the game:
-    mockupInputManager->sendKeyPress(RdKey::KEY_ESCAPE);
+    mockupInputManager->sendKeyPress(Key::KEY_ESCAPE);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has stopped things and it is in the final state (cleanup):

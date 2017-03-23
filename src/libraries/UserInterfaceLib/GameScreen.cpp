@@ -127,7 +127,7 @@ bool rd::GameScreen::update(std::string parameter, std::string value)
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, rd::RdPlayer value)
+bool rd::GameScreen::update(std::string parameter, rd::Player value)
 {
     if (parameter == PARAM_MYSELF)
     {
@@ -140,7 +140,7 @@ bool rd::GameScreen::update(std::string parameter, rd::RdPlayer value)
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, std::vector<rd::RdPlayer> value)
+bool rd::GameScreen::update(std::string parameter, std::vector<rd::Player> value)
 {
     if (parameter == PARAM_PLAYERS)
     {
@@ -153,7 +153,7 @@ bool rd::GameScreen::update(std::string parameter, std::vector<rd::RdPlayer> val
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, std::vector<rd::RdTarget> value)
+bool rd::GameScreen::update(std::string parameter, std::vector<rd::Target> value)
 {
     if (parameter == PARAM_TARGETS)
     {
@@ -166,7 +166,7 @@ bool rd::GameScreen::update(std::string parameter, std::vector<rd::RdTarget> val
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, rd::RdWeapon value)
+bool rd::GameScreen::update(std::string parameter, rd::Weapon value)
 {
     if (parameter == PARAM_WEAPON)
     {
@@ -179,7 +179,7 @@ bool rd::GameScreen::update(std::string parameter, rd::RdWeapon value)
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, rd::RdImage value)
+bool rd::GameScreen::update(std::string parameter, rd::Image value)
 {    if (value.width() == 0 || value.height() == 0)
     {
         RD_ERROR("Invalid image");
@@ -194,7 +194,7 @@ bool rd::GameScreen::update(std::string parameter, rd::RdImage value)
             camera_frame_surface=NULL;
         }
 
-        camera_frame = RdImage(value);
+        camera_frame = Image(value);
         camera_frame_surface = RdImage2SDLImage(camera_frame);
         if (camera_frame_surface==NULL)
         {
@@ -211,7 +211,7 @@ bool rd::GameScreen::update(std::string parameter, rd::RdImage value)
      return false;
 }
 
-bool rd::GameScreen::drawUserUI(SDL_Surface *screen, rd::RdPlayer user, rd::RdWeapon weapon)
+bool rd::GameScreen::drawUserUI(SDL_Surface *screen, rd::Player user, rd::Weapon weapon)
 {
     //-- User health bar:
     //--------------------------------------------------------------------------------------------
@@ -260,7 +260,7 @@ bool rd::GameScreen::drawUserUI(SDL_Surface *screen, rd::RdPlayer user, rd::RdWe
     return true;
 }
 
-bool rd::GameScreen::drawPlayerUI(SDL_Surface *screen, RdPlayer player, int x, int y)
+bool rd::GameScreen::drawPlayerUI(SDL_Surface *screen, Player player, int x, int y)
 {
     //-- Player interface:
     SDL_Surface * text_surface = TTF_RenderText_Solid(player_font, player.getName().c_str(), greencolor );
@@ -281,7 +281,7 @@ bool rd::GameScreen::drawPlayerUI(SDL_Surface *screen, RdPlayer player, int x, i
     return true;
 }
 
-bool rd::GameScreen::drawTargetUI(SDL_Surface *screen, RdTarget target, RdPlayer player_data)
+bool rd::GameScreen::drawTargetUI(SDL_Surface *screen, Target target, Player player_data)
 {
     //-- Check that the dimensions of the target are feasible
     if (target.getDimensions().x < 0 || target.getDimensions().y < 0 ||

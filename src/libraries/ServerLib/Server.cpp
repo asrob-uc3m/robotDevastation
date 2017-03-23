@@ -2,7 +2,7 @@
 
 #include "Server.hpp"
 
-bool rd::RdServer::configure(yarp::os::ResourceFinder &rf)
+bool rd::Server::configure(yarp::os::ResourceFinder &rf)
 {
     rdRpcResponder.setPlayers(&players, &players_belief, &players_mutex);
     rdBroadcast.open("/rdServer/info:o");
@@ -11,17 +11,17 @@ bool rd::RdServer::configure(yarp::os::ResourceFinder &rf)
     return true;
 }
 
-rd::RdServer::~RdServer()
+rd::Server::~Server()
 {
 
 }
 
-double rd::RdServer::getPeriod()
+double rd::Server::getPeriod()
 {
     return 0.1;  // Fixed, in seconds, the slow thread that calls updateModule below
 }
 
-bool rd::RdServer::updateModule()
+bool rd::Server::updateModule()
 {
     //-- Broadcast player info
     players_mutex.lock();
@@ -30,7 +30,7 @@ bool rd::RdServer::updateModule()
     printf("=======rdServer=======\n");
     printf("Number of players: %zd\n",players.size());
 
-    typedef std::map<int, RdPlayer>::iterator it_type;
+    typedef std::map<int, Player>::iterator it_type;
     for(it_type iterator = players.begin(); iterator != players.end(); iterator++)
     {
        printf("----------------------\n%s\n", (iterator->second).str().c_str());
@@ -75,7 +75,7 @@ bool rd::RdServer::updateModule()
     return true;
 }
 
-bool rd::RdServer::interruptModule() {
+bool rd::Server::interruptModule() {
     printf("RdServer closing...\n");
     rdBroadcast.interrupt();
     rpcServer.interrupt();

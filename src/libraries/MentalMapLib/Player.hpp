@@ -9,7 +9,7 @@
 
 namespace rd{
 
-class RdWeapon;
+class Weapon;
 
 /**
  * @ingroup RdMentalMapLib
@@ -17,12 +17,12 @@ class RdWeapon;
  * @brief Class that represents a player of this game, with a 'unique' id, name, health, team id and score.
  *
  */
-class RdPlayer
+class Player
 {
 public:
     //! @brief Constructs a default, dummy player. (That is invalid for the game, by the way)
-    RdPlayer();
-    RdPlayer( int id, std::string name, int health, int max_health, int team_id, int score);
+    Player();
+    Player ( int id, std::string name, int health, int max_health, int team_id, int score);
 
     int getId() const;
     void setId(int value);
@@ -34,7 +34,7 @@ public:
     void setHealth(int value);
 
     //! @brief Reduces this player's health by an amount specified by the weapon used
-    bool getDamageFromWeapon(RdWeapon& weapon);
+    bool getDamageFromWeapon(Weapon& weapon);
 
     int getMaxHealth() const;
     void setMaxHealth(int value);

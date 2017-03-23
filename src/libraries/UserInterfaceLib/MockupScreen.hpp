@@ -16,7 +16,7 @@
 
 namespace rd {
 
-class MockupScreen : public RdScreen
+class MockupScreen : public Screen
 {
     public:
         MockupScreen();

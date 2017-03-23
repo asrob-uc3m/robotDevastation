@@ -1,6 +1,6 @@
 #include "Key.hpp"
 
-rd::RdKey::RdKey(char printable_character)
+rd::Key::Key(char printable_character)
     : char_value(printable_character), key_value(KEY_PRINTABLE), printable(true), control(false)
 {
     if (printable_character == ' ')
@@ -20,7 +20,7 @@ rd::RdKey::RdKey(char printable_character)
     }
 }
 
-rd::RdKey::RdKey(int control_key)
+rd::Key::Key(int control_key)
     : char_value('\0'), key_value(control_key), printable(false), control(true)
 {
     if (control_key == KEY_SPACE)
@@ -39,27 +39,27 @@ rd::RdKey::RdKey(int control_key)
     }
 }
 
-bool rd::RdKey::isControlKey() const
+bool rd::Key::isControlKey() const
 {
     return control;
 }
 
-bool rd::RdKey::isPrintable() const
+bool rd::Key::isPrintable() const
 {
     return printable;
 }
 
-char rd::RdKey::getChar() const
+char rd::Key::getChar() const
 {
     return char_value;
 }
 
-int rd::RdKey::getValue() const
+int rd::Key::getValue() const
 {
     return key_value;
 }
 
-bool rd::RdKey::operator==(const rd::RdKey &k) const
+bool rd::Key::operator==(const rd::Key &k) const
 {
     if (this->isPrintable() && k.isPrintable())
         return this->char_value == k.char_value;
@@ -69,13 +69,13 @@ bool rd::RdKey::operator==(const rd::RdKey &k) const
 }
 
 
-const int rd::RdKey::KEY_UNKNOWN = -1;
-const int rd::RdKey::KEY_PRINTABLE = 0;
-const int rd::RdKey::KEY_SPACE = 1;
-const int rd::RdKey::KEY_ESCAPE = 2;
-const int rd::RdKey::KEY_BACKSPACE = 3;
-const int rd::RdKey::KEY_ARROW_UP = 4;
-const int rd::RdKey::KEY_ARROW_DOWN = 5;
-const int rd::RdKey::KEY_ARROW_LEFT = 6;
-const int rd::RdKey::KEY_ARROW_RIGHT = 7;
-const int rd::RdKey::KEY_ENTER = 8;
+const int rd::Key::KEY_UNKNOWN = -1;
+const int rd::Key::KEY_PRINTABLE = 0;
+const int rd::Key::KEY_SPACE = 1;
+const int rd::Key::KEY_ESCAPE = 2;
+const int rd::Key::KEY_BACKSPACE = 3;
+const int rd::Key::KEY_ARROW_UP = 4;
+const int rd::Key::KEY_ARROW_DOWN = 5;
+const int rd::Key::KEY_ARROW_LEFT = 6;
+const int rd::Key::KEY_ARROW_RIGHT = 7;
+const int rd::Key::KEY_ENTER = 8;

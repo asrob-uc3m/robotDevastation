@@ -7,7 +7,7 @@ rd::MockupInputEventListener::MockupInputEventListener()
     num_window_events = 0;
 }
 
-bool rd::MockupInputEventListener::onKeyDown(const rd::RdKey & k)
+bool rd::MockupInputEventListener::onKeyDown(const rd::Key & k)
 {
     num_keydown_presses++;
     stored_keydown_presses.push_back(k);
@@ -15,7 +15,7 @@ bool rd::MockupInputEventListener::onKeyDown(const rd::RdKey & k)
     return true;
 }
 
-bool rd::MockupInputEventListener::onKeyUp(const rd::RdKey & k)
+bool rd::MockupInputEventListener::onKeyUp(const rd::Key & k)
 {
     num_keyup_presses++;
     stored_keyup_presses.push_back(k);
@@ -23,7 +23,7 @@ bool rd::MockupInputEventListener::onKeyUp(const rd::RdKey & k)
     return true;
 }
 
-bool rd::MockupInputEventListener::onWindowEvent(const rd::RdWindowEvent & event)
+bool rd::MockupInputEventListener::onWindowEvent(const rd::WindowEvent & event)
 {
     num_window_events++;
     stored_window_events.push_back(event);
@@ -59,17 +59,17 @@ bool rd::MockupInputEventListener::clear()
     return true;
 }
 
-std::vector<rd::RdKey> rd::MockupInputEventListener::getStoredKeyUpPresses()
+std::vector<rd::Key> rd::MockupInputEventListener::getStoredKeyUpPresses()
 {
     return stored_keyup_presses;
 }
 
-std::vector<rd::RdKey> rd::MockupInputEventListener::getStoredKeyDownPresses()
+std::vector<rd::Key> rd::MockupInputEventListener::getStoredKeyDownPresses()
 {
     return stored_keydown_presses;
 }
 
-std::vector<rd::RdWindowEvent> rd::MockupInputEventListener::getStoredWindowEvents()
+std::vector<rd::WindowEvent> rd::MockupInputEventListener::getStoredWindowEvents()
 {
     return stored_window_events;
 }

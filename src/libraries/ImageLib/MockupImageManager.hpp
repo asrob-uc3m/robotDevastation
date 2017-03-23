@@ -31,7 +31,7 @@ namespace rd{
  * along with the reference to the manager that triggered them to be able to access the image
  *
  */
-class RdMockupImageManager : public RdImageManager
+class MockupImageManager : public ImageManager
 {
     public:
         virtual bool start();
@@ -40,7 +40,7 @@ class RdMockupImageManager : public RdImageManager
         virtual bool setEnabled(bool enabled);
         virtual bool isEnabled();
         virtual bool configure(std::string parameter, std::string value);
-        virtual RdImage getImage();
+        virtual Image getImage();
 
         /**
          * @brief Register this manager in the RdImageManager registry so that can be used
@@ -50,13 +50,13 @@ class RdMockupImageManager : public RdImageManager
         static bool RegisterManager();
 
         //! @brief Destructor. Used to reset the local static reference after destroying this manager
-        ~RdMockupImageManager();
+        ~MockupImageManager();
 
         //! @brief String that identifies this manager
         static const std::string id;
 
         //! @brief Simulate image has been received from device
-        bool receiveImage(RdImage received_image);
+        bool receiveImage(Image received_image);
 
     private:
         /**
@@ -65,16 +65,16 @@ class RdMockupImageManager : public RdImageManager
          * Constructor for this class is private, since the singleton can only be instantiated once,
          * and the instantiation is done at the getMentalMap() method
          */
-        RdMockupImageManager();
+        MockupImageManager();
 
         //! @brief Reference to this manager (unique instance)
-        static RdMockupImageManager * uniqueInstance;
+        static MockupImageManager * uniqueInstance;
 
         //! @brief Semaphore to make the image manipulation thread-safe
         yarp::os::Semaphore semaphore;
 
         //! @brief Last image received
-        RdImage image;
+        Image image;
 
         bool stopped;
         bool enabled;

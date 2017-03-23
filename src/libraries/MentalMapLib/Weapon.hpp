@@ -11,7 +11,7 @@
 
 namespace rd {
 
-class RdTarget;
+class Target;
 
 /**
  * @ingroup RdMentalMapLib
@@ -19,15 +19,15 @@ class RdTarget;
  * @brief Class that represents a weapon
  *
  */
-class RdWeapon
+class Weapon
 {
 public:
     //! @brief Constructs a default, dummy weapon. (That is invalid for the game, by the way)
-    RdWeapon();
-    RdWeapon(std::string name, int damage, int max_ammo);
+    Weapon();
+    Weapon(std::string name, int damage, int max_ammo);
 
     //! @brief Checks if the target is within the weapon's current range and can be hit by it
-    bool canShootTarget(RdTarget& target);
+    bool canShootTarget(Target& target);
 
     //! @brief Increases the current ammo to max_ammo
     bool reload();

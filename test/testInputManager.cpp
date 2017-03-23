@@ -25,7 +25,7 @@ bool finished = false;
 int x_pos = 0;
 int y_pos = 0;
 
-class RdTestEventListener : public RdInputEventListener
+class RdTestEventListener : public InputEventListener
 {
     public:
         RdTestEventListener()
@@ -47,23 +47,23 @@ class RdTestEventListener : public RdInputEventListener
             SDLAudioManager::destroyAudioManager();
         }
 
-        virtual bool onKeyDown(const RdKey & k)
+        virtual bool onKeyDown(const Key & k)
         {
             if ( k.isControlKey() )
             {
                 RD_SUCCESS( "Control key with code %d pressed!\n", k.getValue() );
 
-                if ( k.getValue() == RdKey::KEY_SPACE)
+                if ( k.getValue() == Key::KEY_SPACE)
                 {
                     audioManager->play("shoot", false);
                     RD_SUCCESS("Shoot!\n");
                 }
-                else if ( k.getValue() == RdKey::KEY_ESCAPE)
+                else if ( k.getValue() == Key::KEY_ESCAPE)
                 {
                     finished = true;
                     RD_SUCCESS("Exit!\n");
                 }
-                else if ( k.getValue() == RdKey::KEY_ARROW_LEFT)
+                else if ( k.getValue() == Key::KEY_ARROW_LEFT)
                 {
                     x_pos -= 20;
                     if (x_pos < 0 )
@@ -71,7 +71,7 @@ class RdTestEventListener : public RdInputEventListener
 
                     RD_SUCCESS("Reduce x!\n");
                 }
-                else if ( k.getValue() == RdKey::KEY_ARROW_RIGHT)
+                else if ( k.getValue() == Key::KEY_ARROW_RIGHT)
                 {
                     x_pos += 20;
                     if (x_pos > 640 )
@@ -79,7 +79,7 @@ class RdTestEventListener : public RdInputEventListener
 
                     RD_SUCCESS("Increase x!\n");
                 }
-                else if ( k.getValue() == RdKey::KEY_ARROW_UP)
+                else if ( k.getValue() == Key::KEY_ARROW_UP)
                 {
                     y_pos -= 20;
                     if (y_pos < 0 )
@@ -87,7 +87,7 @@ class RdTestEventListener : public RdInputEventListener
 
                     RD_SUCCESS("Reduce y!\n");
                 }
-                else if ( k.getValue() == RdKey::KEY_ARROW_DOWN)
+                else if ( k.getValue() == Key::KEY_ARROW_DOWN)
                 {
                     y_pos += 20;
                     if (y_pos > 640 )
@@ -115,28 +115,28 @@ class RdTestEventListener : public RdInputEventListener
             return true;
         }
 
-        virtual bool onKeyUp(const RdKey & k)
+        virtual bool onKeyUp(const Key & k)
         {
             if ( k.isControlKey() )
             {
                 RD_SUCCESS( "Control key with code %d released!\n", k.getValue() );
-                if ( k.getValue() == RdKey::KEY_SPACE)
+                if ( k.getValue() == Key::KEY_SPACE)
                 {
                     RD_SUCCESS("Released shoot!\n");
                 }
-                else if ( k.getValue() == RdKey::KEY_ARROW_LEFT)
+                else if ( k.getValue() == Key::KEY_ARROW_LEFT)
                 {
                     RD_SUCCESS("Released left!\n");
                 }
-                else if ( k.getValue() == RdKey::KEY_ARROW_RIGHT)
+                else if ( k.getValue() == Key::KEY_ARROW_RIGHT)
                 {
                     RD_SUCCESS("Released right!\n");
                 }
-                else if ( k.getValue() == RdKey::KEY_ARROW_UP)
+                else if ( k.getValue() == Key::KEY_ARROW_UP)
                 {
                     RD_SUCCESS("Released up!\n");
                 }
-                else if ( k.getValue() == RdKey::KEY_ARROW_DOWN)
+                else if ( k.getValue() == Key::KEY_ARROW_DOWN)
                 {
                     RD_SUCCESS("Release down!\n");
                 }
@@ -149,9 +149,9 @@ class RdTestEventListener : public RdInputEventListener
             return true;
         }
 
-        virtual bool onWindowEvent(const RdWindowEvent & event)
+        virtual bool onWindowEvent(const WindowEvent & event)
         {
-            if ( event.getEvent() == RdWindowEvent::WINDOW_UNKNOWN )
+            if ( event.getEvent() == WindowEvent::WINDOW_UNKNOWN )
             {
                 RD_WARNING("Window event not implemented!\n");
             }
@@ -159,7 +159,7 @@ class RdTestEventListener : public RdInputEventListener
             {
                 RD_SUCCESS( "Triggered window event with code %d!\n", event.getEvent() );
 
-                if ( event.getEvent() == RdWindowEvent::WINDOW_CLOSE )
+                if ( event.getEvent() == WindowEvent::WINDOW_CLOSE )
                 {
                     finished = true;
                     RD_SUCCESS("Exit!\n");
@@ -195,8 +195,8 @@ int main(void)
     SDL_Surface * screen = SDL_GetWindowSurface( window );
 
     //-- Get a (SDL) inputManager
-    RdSDLInputManager::RegisterManager();
-    RdInputManager * inputManager = RdInputManager::getInputManager("SDL");
+    SDLInputManager::RegisterManager();
+    InputManager * inputManager = InputManager::getInputManager("SDL");
     if (inputManager == NULL)
     {
         RD_ERROR("Could not get AudioManager\n");
@@ -228,7 +228,7 @@ int main(void)
         SDL_PumpEvents();
     }
 
-    RdInputManager::destroyInputManager();
+    InputManager::destroyInputManager();
 
     return 0;
 }

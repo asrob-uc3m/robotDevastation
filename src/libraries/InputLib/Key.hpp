@@ -23,11 +23,11 @@ namespace rd{
  * This class must not be inherited from. Use factory classes and functions to perform custom
  * initialization (see \ref rd::RdSDLEventFactory).
  */
-class RdKey
+class Key
 {
     public:
-        RdKey(char printable_character);
-        RdKey(int control_key);
+        Key(char printable_character);
+        Key(int control_key);
 
         bool isControlKey() const;
         bool isPrintable() const;
@@ -49,7 +49,7 @@ class RdKey
         static const int KEY_ARROW_RIGHT;
         static const int KEY_ENTER;
 
-        bool operator==(RdKey const& k) const;
+        bool operator==(Key const& k) const;
 
     protected:
         //! @brief Stores the char representation of a key

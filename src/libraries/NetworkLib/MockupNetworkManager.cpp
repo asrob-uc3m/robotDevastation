@@ -35,7 +35,7 @@ bool rd::MockupNetworkManager::stop()
     return true;
 }
 
-bool rd::MockupNetworkManager::configure(std::string parameter, RdPlayer value)
+bool rd::MockupNetworkManager::configure(std::string parameter, Player value)
 {
     if (parameter.compare("player") == 0)
     {
@@ -43,10 +43,10 @@ bool rd::MockupNetworkManager::configure(std::string parameter, RdPlayer value)
         return true;
     }
 
-    return RdNetworkManager::configure(parameter, value);
+    return NetworkManager::configure(parameter, value);
 }
 
-bool rd::MockupNetworkManager::sendPlayerHit(rd::RdPlayer player, int damage)
+bool rd::MockupNetworkManager::sendPlayerHit(rd::Player player, int damage)
 {
     int id = player.getId();
 
@@ -114,7 +114,7 @@ bool rd::MockupNetworkManager::logout()
         return false;
     }
 
-    std::map<int, RdPlayer>::iterator it = players_dic.find(id);
+    std::map<int, Player>::iterator it = players_dic.find(id);
 
     if ( it != players_dic.end() )  // if  found, we can erase it
     {
@@ -147,7 +147,7 @@ bool rd::MockupNetworkManager::isStopped()
     return stopped;
 }
 
-bool rd::MockupNetworkManager::setPlayerData(std::vector<rd::RdPlayer> players)
+bool rd::MockupNetworkManager::setPlayerData(std::vector<rd::Player> players)
 {
     players_dic.clear();
 
@@ -161,11 +161,11 @@ bool rd::MockupNetworkManager::setPlayerData(std::vector<rd::RdPlayer> players)
     return true;
 }
 
-std::vector<rd::RdPlayer> rd::MockupNetworkManager::getPlayerData()
+std::vector<rd::Player> rd::MockupNetworkManager::getPlayerData()
 {
-    std::vector<RdPlayer> player_vector;
+    std::vector<Player> player_vector;
 
-    for( std::map<int, RdPlayer>::const_iterator it = players_dic.begin(); it != players_dic.end(); ++it)
+    for( std::map<int, Player>::const_iterator it = players_dic.begin(); it != players_dic.end(); ++it)
     {
         player_vector.push_back(it->second);
     }

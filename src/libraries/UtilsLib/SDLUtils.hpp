@@ -10,7 +10,7 @@
 
 namespace rd {
 
-SDL_Surface * RdImage2SDLImage(const RdImage & image);
+SDL_Surface * RdImage2SDLImage(const Image & image);
 bool initSDL();
 bool cleanupSDL();
 

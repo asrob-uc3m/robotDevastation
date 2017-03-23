@@ -18,11 +18,11 @@ namespace rd{
  * @brief The Robot Manager for testing
  *
  */
-class RdMockupRobotManager : public RdRobotManager
+class MockupRobotManager : public RobotManager
 {
     public:
 
-        RdMockupRobotManager(const std::string& robotName);
+        MockupRobotManager(const std::string& robotName);
 
         //-- RdRobotManager interface
         //-----------------------------------------------------

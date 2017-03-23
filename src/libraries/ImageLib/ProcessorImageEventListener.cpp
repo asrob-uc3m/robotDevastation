@@ -2,18 +2,18 @@
 
 #include "ProcessorImageEventListener.hpp"
 
-rd::RdProcessorImageEventListener::RdProcessorImageEventListener()
+rd::ProcessorImageEventListener::ProcessorImageEventListener()
 {
     //images_arrived = 0;
     cameraInitialized = false;
     rimage = NULL;
 
-    mentalMap = RdMentalMap::getMentalMap();
+    mentalMap = MentalMap::getMentalMap();
 
     scanner.set_config( zbar::ZBAR_NONE, zbar::ZBAR_CFG_ENABLE, 1);
 }
 
-rd::RdProcessorImageEventListener::~RdProcessorImageEventListener()
+rd::ProcessorImageEventListener::~ProcessorImageEventListener()
 {
     if (rimage!=NULL)
     {
@@ -22,7 +22,7 @@ rd::RdProcessorImageEventListener::~RdProcessorImageEventListener()
     }
 }
 
-bool rd::RdProcessorImageEventListener::onImageArrived( RdImageManager * manager )
+bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
 {
     stored_image = manager->getImage();
     //images_arrived++;
@@ -57,7 +57,7 @@ bool rd::RdProcessorImageEventListener::onImageArrived( RdImageManager * manager
     int numDetected = scanner.scan(image);
     //RD_DEBUG("How many detected QR: %d\n",numDetected);
 
-    std::vector< RdTarget > targets;
+    std::vector< Target > targets;
 
     // extract results
     for(zbar::Image::SymbolIterator symbol = image.symbol_begin(); symbol != image.symbol_end(); ++symbol)
@@ -77,22 +77,22 @@ bool rd::RdProcessorImageEventListener::onImageArrived( RdImageManager * manager
         }
 
         //-- Obtain coordinates from QR.
-        std::vector< RdVector2d > coords;
+        std::vector< Vector2d > coords;
         int n = symbol->get_location_size();
         for(int i=0;i<n;i++)
         {
-             RdVector2d coord(symbol->get_location_x(i),symbol->get_location_y(i));
+             Vector2d coord(symbol->get_location_x(i),symbol->get_location_y(i));
              //-- Check the following output if things ever start to fail.
              //RD_DEBUG("%d: %d %d\n",i,coord.x,coord.y);
              coords.push_back(coord);
         }
         int qrWidth = fabs(float(coords[2].x - coords[1].x));
 		int qrHeight = fabs(float(coords[1].y - coords[0].y));
-        RdVector2d qrCenter(coords[0].x+(qrWidth/2), coords[0].y+(qrHeight/2) );
+        Vector2d qrCenter(coords[0].x+(qrWidth/2), coords[0].y+(qrHeight/2) );
 
-        RdTarget target( identifier_int,
+        Target target( identifier_int,
                          qrCenter,
-                         RdVector2d(qrWidth, qrHeight) );
+                         Vector2d(qrWidth, qrHeight) );
         targets.push_back(target);
 
     }
@@ -101,22 +101,22 @@ bool rd::RdProcessorImageEventListener::onImageArrived( RdImageManager * manager
     return true;
 }
 
-int rd::RdProcessorImageEventListener::getImagesArrived()
+int rd::ProcessorImageEventListener::getImagesArrived()
 {
     return images_arrived;
 }
 
-void rd::RdProcessorImageEventListener::resetImagesArrived()
+void rd::ProcessorImageEventListener::resetImagesArrived()
 {
     images_arrived = 0;
 }
 
-rd::RdImage rd::RdProcessorImageEventListener::getStoredImage()
+rd::Image rd::ProcessorImageEventListener::getStoredImage()
 {
     return stored_image;
 }
 
-bool rd::RdProcessorImageEventListener::isInteger(std::string s)
+bool rd::ProcessorImageEventListener::isInteger(std::string s)
 {
     //-- Code adapted from: http://stackoverflow.com/questions/2844817/how-do-i-check-if-a-c-string-is-an-int
    if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false ;

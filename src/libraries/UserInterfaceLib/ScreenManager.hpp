@@ -79,7 +79,7 @@ class ScreenManager
 
         //------------------------------- Screen Manager functions -----------------------------------------------------//
         //! @brief Set a RdScreen as current RdScreen
-        virtual void setCurrentScreen(RdScreen* screen);
+        virtual void setCurrentScreen(Screen* screen);
 
         //! @brief Display the current RdScreen on the game window
         virtual bool show() = 0;
@@ -88,19 +88,19 @@ class ScreenManager
         virtual bool update(std::string parameter, std::string value);
 
         //! @brief Update some RdScreen parameter through the ScreenManager
-        virtual bool update(std::string parameter, RdImage value); //-- Required by GameScreen and DeadScreen
+        virtual bool update(std::string parameter, Image value); //-- Required by GameScreen and DeadScreen
 
         //! @brief Update some RdScreen parameter through the ScreenManager
-        virtual bool update(std::string parameter, RdPlayer value); //-- Required by GameScreen
+        virtual bool update(std::string parameter, Player value); //-- Required by GameScreen
 
         //! @brief Update some RdScreen parameter through the ScreenManager
-        virtual bool update(std::string parameter, std::vector<RdPlayer> value); //-- Required by GameScreen
+        virtual bool update(std::string parameter, std::vector<Player> value); //-- Required by GameScreen
 
         //! @brief Update some RdScreen parameter through the ScreenManager
-        virtual bool update(std::string parameter, std::vector<RdTarget> value); //-- Required by GameScreen
+        virtual bool update(std::string parameter, std::vector<Target> value); //-- Required by GameScreen
 
         //! @brief Update some RdScreen parameter through the ScreenManager
-        virtual bool update(std::string parameter, RdWeapon value); //-- Required by GameScreen
+        virtual bool update(std::string parameter, Weapon value); //-- Required by GameScreen
 
     protected:
         /**
@@ -109,7 +109,7 @@ class ScreenManager
          */
         static bool Register(ScreenManager * manager, std::string id);
 
-        RdScreen * screen;
+        Screen * screen;
 
     private:
         //! @brief Stores the unique instance of the ScreenManager

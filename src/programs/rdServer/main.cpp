@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
     rf.setDefaultConfigFile("rdServer.ini");
     rf.configure(argc, argv);
 
-    rd::RdServer rdServer;
+    rd::Server rdServer;
     if(rf.check("help")) {
         return rdServer.runModule(rf);
     }

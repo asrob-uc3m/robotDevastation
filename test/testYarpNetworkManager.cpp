@@ -40,7 +40,7 @@ class RunningRdServerThread: public yarp::os::Thread
 
     private:
         yarp::os::ResourceFinder rf;
-        rd::RdServer rdServer;
+        rd::Server rdServer;
         int argc;
         char** argv;
 };
@@ -50,12 +50,12 @@ class RdYarpNetworkManagerTest : public testing::Test
     public:    
         virtual void SetUp()
         {
-            ASSERT_TRUE(RdYarpNetworkManager::RegisterManager());
-            networkManager = RdYarpNetworkManager::getNetworkManager();
+            ASSERT_TRUE(YarpNetworkManager::RegisterManager());
+            networkManager = YarpNetworkManager::getNetworkManager();
             ASSERT_TRUE(networkManager);
 
-            me = RdPlayer(0, "me", 100, 100, 0, 0);
-            other_player = RdPlayer(1, "dummy", 100, 100, 1, 0);
+            me = Player(0, "me", 100, 100, 0, 0);
+            other_player = Player(1, "dummy", 100, 100, 1, 0);
 
             RD_DEBUG("Running rdServer\n");
             yarp::os::ResourceFinder rf;
@@ -72,13 +72,13 @@ class RdYarpNetworkManagerTest : public testing::Test
             delete rdServer;
             rdServer = NULL;
 
-            ASSERT_TRUE(RdYarpNetworkManager::destroyNetworkManager());
+            ASSERT_TRUE(YarpNetworkManager::destroyNetworkManager());
         }
 
-        RdPlayer me, other_player;
+        Player me, other_player;
 
     protected:
-        RdNetworkManager * networkManager;
+        NetworkManager * networkManager;
         RunningRdServerThread * rdServer;
 
     private:
@@ -126,19 +126,19 @@ TEST_F(RdYarpNetworkManagerTest, ManagerDoesNotStartIfNotConfigured)
 
 TEST_F(RdYarpNetworkManagerTest, NetworkManagerIsSingleton)
 {
-    RdNetworkManager * networkManager2 = NULL;
-    networkManager2 = RdYarpNetworkManager::getNetworkManager();
+    NetworkManager * networkManager2 = NULL;
+    networkManager2 = YarpNetworkManager::getNetworkManager();
 
-    ASSERT_NE((RdNetworkManager *)NULL, networkManager);
-    ASSERT_NE((RdNetworkManager *)NULL, networkManager2);
+    ASSERT_NE((NetworkManager *)NULL, networkManager);
+    ASSERT_NE((NetworkManager *)NULL, networkManager2);
     ASSERT_EQ(networkManager, networkManager2);
 }
 
 TEST_F(RdYarpNetworkManagerTest, NetworkManagerAPIWorks)
 {
     MockupNetworkEventListener listener;
-    RdNetworkEventListener * plistener = (RdNetworkEventListener *) &listener;
-    ASSERT_TRUE(((RdNetworkManager*)networkManager)->addNetworkEventListener(plistener));
+    NetworkEventListener * plistener = (NetworkEventListener *) &listener;
+    ASSERT_TRUE(((NetworkManager*)networkManager)->addNetworkEventListener(plistener));
 
     //-- Startup
     networkManager->configure("player", me);
@@ -150,7 +150,7 @@ TEST_F(RdYarpNetworkManagerTest, NetworkManagerAPIWorks)
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(networkManager->login());//--Check that it is not allowed to login twice
 
-    std::vector<RdPlayer> players = listener.getStoredPlayers();
+    std::vector<Player> players = listener.getStoredPlayers();
     EXPECT_LE(1, listener.getDataArrived());
     ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
@@ -187,8 +187,8 @@ TEST_F(RdYarpNetworkManagerTest, NetworkManagerAPIWorks)
 TEST_F(RdYarpNetworkManagerTest, DisconnectedIfNoKeepAlive)
 {
     MockupNetworkEventListener listener;
-    RdNetworkEventListener * plistener = (RdNetworkEventListener *) &listener;
-    ASSERT_TRUE(((RdNetworkManager*)networkManager)->addNetworkEventListener(plistener));
+    NetworkEventListener * plistener = (NetworkEventListener *) &listener;
+    ASSERT_TRUE(((NetworkManager*)networkManager)->addNetworkEventListener(plistener));
 
     //-- Startup
     networkManager->configure("player", me);
@@ -199,7 +199,7 @@ TEST_F(RdYarpNetworkManagerTest, DisconnectedIfNoKeepAlive)
     ASSERT_TRUE(networkManager->login());
     yarp::os::Time::delay(0.5);
 
-    std::vector<RdPlayer> players = listener.getStoredPlayers();
+    std::vector<Player> players = listener.getStoredPlayers();
     EXPECT_LE(1, listener.getDataArrived());
     ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());

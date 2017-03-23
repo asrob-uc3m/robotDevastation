@@ -2,12 +2,12 @@
 
 
 //-- Static members initialization:
-rd::RdImageManager * rd::RdImageManager::imageManagerInstance = NULL;
-std::string rd::RdImageManager::currentId = "";
-std::map<std::string, rd::RdImageManager *> rd::RdImageManager::imageManagerRegistry = std::map<std::string, rd::RdImageManager *>();
+rd::ImageManager * rd::ImageManager::imageManagerInstance = NULL;
+std::string rd::ImageManager::currentId = "";
+std::map<std::string, rd::ImageManager *> rd::ImageManager::imageManagerRegistry = std::map<std::string, rd::ImageManager *>();
 
 
-rd::RdImageManager *rd::RdImageManager::getImageManager()
+rd::ImageManager *rd::ImageManager::getImageManager()
 {
     if (imageManagerInstance == NULL )
     {
@@ -26,7 +26,7 @@ rd::RdImageManager *rd::RdImageManager::getImageManager()
     return imageManagerInstance;
 }
 
-rd::RdImageManager *rd::RdImageManager::getImageManager(std::string id)
+rd::ImageManager *rd::ImageManager::getImageManager(std::string id)
 {
     if (imageManagerInstance == NULL )
     {
@@ -44,7 +44,7 @@ rd::RdImageManager *rd::RdImageManager::getImageManager(std::string id)
     return imageManagerInstance;
 }
 
-bool rd::RdImageManager::destroyImageManager()
+bool rd::ImageManager::destroyImageManager()
 {
     //-- First, stop & delete the manager currently in use (if any)
     if (imageManagerInstance != NULL)
@@ -55,16 +55,16 @@ bool rd::RdImageManager::destroyImageManager()
         imageManagerInstance = NULL;
 
         //-- Remove it also from the registry
-        std::map<std::string, RdImageManager *>::iterator it = imageManagerRegistry.find(currentId);
+        std::map<std::string, ImageManager *>::iterator it = imageManagerRegistry.find(currentId);
         if (it != imageManagerRegistry.end())
             imageManagerRegistry.erase(it);
     }
 
     //-- Destroy all the remaining registered ImageManagers
-    for ( std::map<std::string, RdImageManager *>::iterator it = imageManagerRegistry.begin();
+    for ( std::map<std::string, ImageManager *>::iterator it = imageManagerRegistry.begin();
           it != imageManagerRegistry.end(); ++it)
     {
-        RdImageManager * currentManager = it->second;
+        ImageManager * currentManager = it->second;
 
         if (currentManager != NULL)
         {
@@ -82,29 +82,29 @@ bool rd::RdImageManager::destroyImageManager()
     return true;
 }
 
-rd::RdImageManager::~RdImageManager()
+rd::ImageManager::~ImageManager()
 {
 
 }
 
-bool rd::RdImageManager::addImageEventListener(rd::RdImageEventListener *listener)
+bool rd::ImageManager::addImageEventListener(rd::ImageEventListener *listener)
 {
     listeners.push_back(listener);
     return true;
 }
 
-bool rd::RdImageManager::removeImageEventListeners()
+bool rd::ImageManager::removeImageEventListeners()
 {
     listeners.clear();
     return true;
 }
 
-bool rd::RdImageManager::configure(std::string parameter, std::string value)
+bool rd::ImageManager::configure(std::string parameter, std::string value)
 {
     return true;
 }
 
-bool rd::RdImageManager::Register(rd::RdImageManager *manager, std::string id)
+bool rd::ImageManager::Register(rd::ImageManager *manager, std::string id)
 {
     if ( imageManagerRegistry.find(id) == imageManagerRegistry.end())
     {

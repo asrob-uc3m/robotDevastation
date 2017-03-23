@@ -15,26 +15,26 @@ namespace rd{
  *
  * RdInputEventListener follows the <a href="http://en.wikipedia.org/wiki/Observer_pattern">observer</a> design pattern.
  */
-class RdInputEventListener
+class InputEventListener
 {
     public:
          /**
          * @brief This function will be called whenever a key is pressed on the keyboard
          * @param k Key that triggered the event
          */
-        virtual bool onKeyDown( const RdKey & k ) = 0;
+        virtual bool onKeyDown( const Key & k ) = 0;
 
         /**
         * @brief This function will be called whenever a key is released on the keyboard
         * @param k Key that triggered the event
         */
-        virtual bool onKeyUp( const RdKey & k ) = 0;
+        virtual bool onKeyUp( const Key & k ) = 0;
 
         /**
          * @brief This function will be called whenever a window event is raised
          * @param event Object that wraps the window event
          */
-        virtual bool onWindowEvent( const RdWindowEvent & event ) = 0;
+        virtual bool onWindowEvent( const WindowEvent & event ) = 0;
 };
 
 }

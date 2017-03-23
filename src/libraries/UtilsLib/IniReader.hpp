@@ -20,10 +20,10 @@ namespace rd{
  * @brief A template-based class to read ini files.
  */
 template < class T1, class T2 >
-class RdIniReader {
+class IniReader {
     public:
-        RdIniReader() { }
-        ~RdIniReader() { }
+        IniReader() { }
+        ~IniReader() { }
 
         void parseFile(const char* fileName, std::vector< std::pair< T1, T2 > >& data) {
             std::ifstream ifs(fileName);

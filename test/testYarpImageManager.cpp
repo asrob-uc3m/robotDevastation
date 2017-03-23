@@ -24,18 +24,18 @@ class RdYarpImageManagerTest : public testing::Test
     public:
         virtual void SetUp()
         {
-            RdYarpImageManager::RegisterManager();
-            imageManager = RdImageManager::getImageManager(RdYarpImageManager::id);
+            YarpImageManager::RegisterManager();
+            imageManager = ImageManager::getImageManager(YarpImageManager::id);
         }
 
         virtual void TearDown()
         {
-            RdImageManager::destroyImageManager();
+            ImageManager::destroyImageManager();
         }
 
 
     protected:
-        RdImageManager * imageManager;
+        ImageManager * imageManager;
 };
 
 
@@ -98,7 +98,7 @@ const std::string RdYarpImageManagerEnvironment::camera_port_name = "/grabber";
 TEST_F( RdYarpImageManagerTest, RdYarpImageManagerWorks)
 {
     //-- Create a mockup listener
-    RdMockupImageEventListener listener;
+    MockupImageEventListener listener;
 
     //-- Add the listener to the manager
     ASSERT_TRUE(imageManager->addImageEventListener(&listener));

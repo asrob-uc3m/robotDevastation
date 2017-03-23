@@ -15,22 +15,22 @@ namespace rd{
  *
  *  @todo Move this class to RdImageLib, set it to be compiled only with the tests
  */
-class RdMockupImageEventListener : public RdImageEventListener
+class MockupImageEventListener : public ImageEventListener
 {
     public:
-        RdMockupImageEventListener();
+        MockupImageEventListener();
 
-        virtual bool onImageArrived( RdImageManager * manager );
+        virtual bool onImageArrived( ImageManager * manager );
 
         int getImagesArrived();
         void resetImagesArrived();
 
-        RdImage getStoredImage();
+        Image getStoredImage();
 
 
     private:
         int images_arrived;
-        RdImage stored_image;
+        Image stored_image;
 };
 }
 

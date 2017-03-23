@@ -11,7 +11,7 @@ class RdMockupRobotManagerTest : public testing::Test
     public:
         virtual void SetUp()
         {
-            robotManager = new RdMockupRobotManager(robot_name);
+            robotManager = new MockupRobotManager(robot_name);
         }
 
         virtual void TearDown()
@@ -23,7 +23,7 @@ class RdMockupRobotManagerTest : public testing::Test
         static const std::string robot_name;
 
     protected:
-        RdMockupRobotManager * robotManager;
+        MockupRobotManager * robotManager;
 
 };
 
@@ -87,34 +87,34 @@ TEST_F(RdMockupRobotManagerTest, RdMockupRobotMoves)
     //-- Moving forward (and stop)
     EXPECT_TRUE(robotManager->moveForward());
     EXPECT_TRUE(robotManager->isMoving());
-    EXPECT_EQ(RdMockupRobotManager::FORWARD, robotManager->getMovementDirection());
+    EXPECT_EQ(MockupRobotManager::FORWARD, robotManager->getMovementDirection());
     EXPECT_TRUE(robotManager->stopMovement());
     EXPECT_FALSE(robotManager->isMoving());
-    EXPECT_EQ(RdMockupRobotManager::NONE, robotManager->getMovementDirection());
+    EXPECT_EQ(MockupRobotManager::NONE, robotManager->getMovementDirection());
 
     //-- Moving backwards (and stop)
     EXPECT_TRUE(robotManager->moveBackwards());
     EXPECT_TRUE(robotManager->isMoving());
-    EXPECT_EQ(RdMockupRobotManager::BACKWARDS, robotManager->getMovementDirection());
+    EXPECT_EQ(MockupRobotManager::BACKWARDS, robotManager->getMovementDirection());
     EXPECT_TRUE(robotManager->stopMovement());
     EXPECT_FALSE(robotManager->isMoving());
-    EXPECT_EQ(RdMockupRobotManager::NONE, robotManager->getMovementDirection());
+    EXPECT_EQ(MockupRobotManager::NONE, robotManager->getMovementDirection());
 
     //-- Turning left (and stop)
     EXPECT_TRUE(robotManager->turnLeft());
     EXPECT_TRUE(robotManager->isMoving());
-    EXPECT_EQ(RdMockupRobotManager::LEFT, robotManager->getMovementDirection());
+    EXPECT_EQ(MockupRobotManager::LEFT, robotManager->getMovementDirection());
     EXPECT_TRUE(robotManager->stopMovement());
     EXPECT_FALSE(robotManager->isMoving());
-    EXPECT_EQ(RdMockupRobotManager::NONE, robotManager->getMovementDirection());
+    EXPECT_EQ(MockupRobotManager::NONE, robotManager->getMovementDirection());
 
     //-- Turning right (and stop)
     EXPECT_TRUE(robotManager->turnRight());
     EXPECT_TRUE(robotManager->isMoving());
-    EXPECT_EQ(RdMockupRobotManager::RIGHT, robotManager->getMovementDirection());
+    EXPECT_EQ(MockupRobotManager::RIGHT, robotManager->getMovementDirection());
     EXPECT_TRUE(robotManager->stopMovement());
     EXPECT_FALSE(robotManager->isMoving());
-    EXPECT_EQ(RdMockupRobotManager::NONE, robotManager->getMovementDirection());
+    EXPECT_EQ(MockupRobotManager::NONE, robotManager->getMovementDirection());
 
     ASSERT_TRUE(robotManager->disconnect());
 }
@@ -128,34 +128,34 @@ TEST_F(RdMockupRobotManagerTest, RdMockupRobotCameraMoves)
     //-- Tilting up (and stop)
     EXPECT_TRUE(robotManager->tiltUp());
     EXPECT_TRUE(robotManager->isCameraMoving());
-    EXPECT_EQ(RdMockupRobotManager::CAMERA_UP, robotManager->getCameraMovementDirection());
+    EXPECT_EQ(MockupRobotManager::CAMERA_UP, robotManager->getCameraMovementDirection());
     EXPECT_TRUE(robotManager->stopCameraMovement());
     EXPECT_FALSE(robotManager->isCameraMoving());
-    EXPECT_EQ(RdMockupRobotManager::CAMERA_NONE, robotManager->getCameraMovementDirection());
+    EXPECT_EQ(MockupRobotManager::CAMERA_NONE, robotManager->getCameraMovementDirection());
 
     //-- Tilting down (and stop)
     EXPECT_TRUE(robotManager->tiltDown());
     EXPECT_TRUE(robotManager->isCameraMoving());
-    EXPECT_EQ(RdMockupRobotManager::CAMERA_DOWN, robotManager->getCameraMovementDirection());
+    EXPECT_EQ(MockupRobotManager::CAMERA_DOWN, robotManager->getCameraMovementDirection());
     EXPECT_TRUE(robotManager->stopCameraMovement());
     EXPECT_FALSE(robotManager->isCameraMoving());
-    EXPECT_EQ(RdMockupRobotManager::CAMERA_NONE, robotManager->getCameraMovementDirection());
+    EXPECT_EQ(MockupRobotManager::CAMERA_NONE, robotManager->getCameraMovementDirection());
 
     //-- Panning left (and stop)
     EXPECT_TRUE(robotManager->panLeft());
     EXPECT_TRUE(robotManager->isCameraMoving());
-    EXPECT_EQ(RdMockupRobotManager::CAMERA_LEFT, robotManager->getCameraMovementDirection());
+    EXPECT_EQ(MockupRobotManager::CAMERA_LEFT, robotManager->getCameraMovementDirection());
     EXPECT_TRUE(robotManager->stopCameraMovement());
     EXPECT_FALSE(robotManager->isCameraMoving());
-    EXPECT_EQ(RdMockupRobotManager::CAMERA_NONE, robotManager->getCameraMovementDirection());
+    EXPECT_EQ(MockupRobotManager::CAMERA_NONE, robotManager->getCameraMovementDirection());
 
     //-- Panning right (and stop)
     EXPECT_TRUE(robotManager->panRight());
     EXPECT_TRUE(robotManager->isCameraMoving());
-    EXPECT_EQ(RdMockupRobotManager::CAMERA_RIGHT, robotManager->getCameraMovementDirection());
+    EXPECT_EQ(MockupRobotManager::CAMERA_RIGHT, robotManager->getCameraMovementDirection());
     EXPECT_TRUE(robotManager->stopCameraMovement());
     EXPECT_FALSE(robotManager->isCameraMoving());
-    EXPECT_EQ(RdMockupRobotManager::CAMERA_NONE, robotManager->getCameraMovementDirection());
+    EXPECT_EQ(MockupRobotManager::CAMERA_NONE, robotManager->getCameraMovementDirection());
 
     ASSERT_TRUE(robotManager->disconnect());
 }

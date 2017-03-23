@@ -14,22 +14,22 @@ namespace rd {
  *
  */
 
-class MockupNetworkEventListener : public RdNetworkEventListener
+class MockupNetworkEventListener : public NetworkEventListener
 {
     public:
         MockupNetworkEventListener();
 
-        virtual bool onDataArrived(std::vector<RdPlayer> players);
+        virtual bool onDataArrived(std::vector<Player> players);
 
         int getDataArrived();
         void resetDataArrived();
 
-        std::vector<RdPlayer> getStoredPlayers();
+        std::vector<Player> getStoredPlayers();
 
 
     private:
         int data_arrived;
-        std::vector<RdPlayer> stored_players;
+        std::vector<Player> stored_players;
 };
 
 

@@ -2,11 +2,11 @@
 
 
 //-- Initialize static members
-rd::RdYarpLocalImageManager * rd::RdYarpLocalImageManager::uniqueInstance = NULL;
-const std::string rd::RdYarpLocalImageManager::id = "YARPlocal";
+rd::YarpLocalImageManager * rd::YarpLocalImageManager::uniqueInstance = NULL;
+const std::string rd::YarpLocalImageManager::id = "YARPlocal";
 
 
-bool rd::RdYarpLocalImageManager::start()
+bool rd::YarpLocalImageManager::start()
 {
     yarp::os::Network::init();
 
@@ -43,7 +43,7 @@ bool rd::RdYarpLocalImageManager::start()
 
 }
 
-bool rd::RdYarpLocalImageManager::stop()
+bool rd::YarpLocalImageManager::stop()
 {
     imagePort.disableCallback();
     imagePort.interrupt();
@@ -57,18 +57,18 @@ bool rd::RdYarpLocalImageManager::stop()
     return true;
 }
 
-bool rd::RdYarpLocalImageManager::isStopped()
+bool rd::YarpLocalImageManager::isStopped()
 {
     return stopped;
 }
 
-bool rd::RdYarpLocalImageManager::setEnabled(bool enabled)
+bool rd::YarpLocalImageManager::setEnabled(bool enabled)
 {
     this->enabled = enabled;
     return true;
 }
 
-bool rd::RdYarpLocalImageManager::configure(std::string parameter, std::string value)
+bool rd::YarpLocalImageManager::configure(std::string parameter, std::string value)
 {
     if ( parameter.compare("remote_img_port") == 0 && value.compare("") != 0)
     {
@@ -81,34 +81,34 @@ bool rd::RdYarpLocalImageManager::configure(std::string parameter, std::string v
         return true;
     }
     else
-        return RdImageManager::configure(parameter, value);
+        return ImageManager::configure(parameter, value);
 }
 
-rd::RdImage rd::RdYarpLocalImageManager::getImage()
+rd::Image rd::YarpLocalImageManager::getImage()
 {
     semaphore.wait();
-    RdImage return_image(image);
+    Image return_image(image);
     semaphore.post();
 
     return return_image;
 }
 
-bool rd::RdYarpLocalImageManager::RegisterManager()
+bool rd::YarpLocalImageManager::RegisterManager()
 {
     if (uniqueInstance == NULL)
     {
-        uniqueInstance = new RdYarpLocalImageManager();
+        uniqueInstance = new YarpLocalImageManager();
     }
 
     return Register( uniqueInstance, id);
 }
 
-rd::RdYarpLocalImageManager::~RdYarpLocalImageManager()
+rd::YarpLocalImageManager::~YarpLocalImageManager()
 {
     uniqueInstance = NULL;
 }
 
-void rd::RdYarpLocalImageManager::onRead(rd::RdImage &image)
+void rd::YarpLocalImageManager::onRead(rd::Image &image)
 {
     semaphore.wait();
     this->image=image;
@@ -124,7 +124,7 @@ void rd::RdYarpLocalImageManager::onRead(rd::RdImage &image)
     }
 }
 
-rd::RdYarpLocalImageManager::RdYarpLocalImageManager()
+rd::YarpLocalImageManager::YarpLocalImageManager()
 {
     stopped = true;
     enabled = false;

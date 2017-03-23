@@ -33,7 +33,7 @@ namespace rd{
  * along with the data relevant to the event triggered (i.e. data that just arrived)
  *
  */
-class RdYarpNetworkManager: public RdNetworkManager,
+class YarpNetworkManager: public NetworkManager,
                             private yarp::os::RateThread,
                             public yarp::os::TypedReaderCallback<yarp::os::Bottle>
 
@@ -47,7 +47,7 @@ class RdYarpNetworkManager: public RdNetworkManager,
          */
         static bool RegisterManager();
 
-        ~RdYarpNetworkManager();
+        ~YarpNetworkManager();
 
         //! @brief String that identifies this manager
         static const std::string id;
@@ -59,10 +59,10 @@ class RdYarpNetworkManager: public RdNetworkManager,
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, RdPlayer value);
+        virtual bool configure(std::string parameter, Player value);
 
         //------------------ RdServer API ----------------------------------------------------------------------------//
-        virtual bool sendPlayerHit(RdPlayer player, int damage);
+        virtual bool sendPlayerHit(Player player, int damage);
         virtual bool login();
         virtual bool logout();
         virtual bool keepAlive();
@@ -78,11 +78,11 @@ class RdYarpNetworkManager: public RdNetworkManager,
          * Constructor for this class is private, since the singleton can only be instantiated once,
          * and the instantiation is done at the getNetworkManager() method
          */
-        RdYarpNetworkManager();
+        YarpNetworkManager();
 
 
         //! @brief Reference to this manager (unique instance)
-        static RdYarpNetworkManager * uniqueInstance;
+        static YarpNetworkManager * uniqueInstance;
 
         void run();
 
@@ -94,7 +94,7 @@ class RdYarpNetworkManager: public RdNetworkManager,
         yarp::os::BufferedPort<yarp::os::Bottle> callbackPort;
 
         //! @brief Player
-        RdPlayer player;
+        Player player;
 
         bool started;
 };

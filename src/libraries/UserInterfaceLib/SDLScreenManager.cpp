@@ -14,7 +14,7 @@ rd::SDLScreenManager::SDLScreenManager()
     window = NULL;
 }
 
-void rd::SDLScreenManager::setCurrentScreen(rd::RdScreen *screen)
+void rd::SDLScreenManager::setCurrentScreen(rd::Screen *screen)
 {
     rd::ScreenManager::setCurrentScreen(screen);
     if (window != NULL)
@@ -91,7 +91,7 @@ bool rd::SDLScreenManager::update(std::string parameter, std::string value)
     return ret;
 }
 
-bool rd::SDLScreenManager::update(std::string parameter, rd::RdImage value)
+bool rd::SDLScreenManager::update(std::string parameter, rd::Image value)
 {
     mutex.lock();
     bool ret = this->screen->update(parameter, value);
@@ -99,7 +99,7 @@ bool rd::SDLScreenManager::update(std::string parameter, rd::RdImage value)
     return ret;
 }
 
-bool rd::SDLScreenManager::update(std::string parameter, rd::RdPlayer value)
+bool rd::SDLScreenManager::update(std::string parameter, rd::Player value)
 {
     mutex.lock();
     bool ret = this->screen->update(parameter, value);
@@ -107,7 +107,7 @@ bool rd::SDLScreenManager::update(std::string parameter, rd::RdPlayer value)
     return ret;
 }
 
-bool rd::SDLScreenManager::update(std::string parameter, std::vector<rd::RdPlayer> value)
+bool rd::SDLScreenManager::update(std::string parameter, std::vector<rd::Player> value)
 {
     mutex.lock();
     bool ret = this->screen->update(parameter, value);
@@ -115,7 +115,7 @@ bool rd::SDLScreenManager::update(std::string parameter, std::vector<rd::RdPlaye
     return ret;
 }
 
-bool rd::SDLScreenManager::update(std::string parameter, std::vector<rd::RdTarget> value)
+bool rd::SDLScreenManager::update(std::string parameter, std::vector<rd::Target> value)
 {
     mutex.lock();
     bool ret = this->screen->update(parameter, value);
@@ -123,7 +123,7 @@ bool rd::SDLScreenManager::update(std::string parameter, std::vector<rd::RdTarge
     return ret;
 }
 
-bool rd::SDLScreenManager::update(std::string parameter, rd::RdWeapon value)
+bool rd::SDLScreenManager::update(std::string parameter, rd::Weapon value)
 {
     mutex.lock();
     bool ret = this->screen->update(parameter, value);

@@ -1,10 +1,10 @@
 #include "SDLInputManager.hpp"
 
 //-- Initialize static members
-rd::RdSDLInputManager * rd::RdSDLInputManager::uniqueInstance = NULL;
-const std::string rd::RdSDLInputManager::id = "SDL";
+rd::SDLInputManager * rd::SDLInputManager::uniqueInstance = NULL;
+const std::string rd::SDLInputManager::id = "SDL";
 
-bool rd::RdSDLInputManager::start()
+bool rd::SDLInputManager::start()
 {  
     //-- Start input callback
     SDL_AddEventWatch(staticInputCallback, this);
@@ -14,7 +14,7 @@ bool rd::RdSDLInputManager::start()
     return true;
 }
 
-bool rd::RdSDLInputManager::stop()
+bool rd::SDLInputManager::stop()
 {
     //-- Stop input callback
     SDL_DelEventWatch(staticInputCallback, this);
@@ -24,40 +24,40 @@ bool rd::RdSDLInputManager::stop()
     return true;
 }
 
-bool rd::RdSDLInputManager::isStopped()
+bool rd::SDLInputManager::isStopped()
 {
     return stopped;
 }
 
-bool rd::RdSDLInputManager::configure(std::string parameter, std::string value)
+bool rd::SDLInputManager::configure(std::string parameter, std::string value)
 {
-    return RdInputManager::configure(parameter, value);
+    return InputManager::configure(parameter, value);
 }
 
-bool rd::RdSDLInputManager::RegisterManager()
+bool rd::SDLInputManager::RegisterManager()
 {
     if (uniqueInstance == NULL)
     {
-        uniqueInstance = new RdSDLInputManager();
+        uniqueInstance = new SDLInputManager();
     }
 
     return Register( uniqueInstance, id);
 }
 
-rd::RdSDLInputManager::~RdSDLInputManager()
+rd::SDLInputManager::~SDLInputManager()
 {
     //-- Stop this thread
     this->stop();
     uniqueInstance = NULL;
 }
 
-bool rd::RdSDLInputManager::refreshEvents()
+bool rd::SDLInputManager::refreshEvents()
 {
     SDL_PumpEvents();
     return true;
 }
 
-rd::RdSDLInputManager::RdSDLInputManager()
+rd::SDLInputManager::SDLInputManager()
 {
     stopped = true;
 
@@ -66,11 +66,11 @@ rd::RdSDLInputManager::RdSDLInputManager()
     ////////////7    SDL_Init(SDL_INIT_EVENTTHREAD);
 }
 
-bool rd::RdSDLInputManager::inputCallback(SDL_Event *event)
+bool rd::SDLInputManager::inputCallback(SDL_Event *event)
 {
     if (event->type == SDL_KEYDOWN )
     {
-        RdKey key = RdSDLEventFactory::makeKey(event->key.keysym.sym);
+        Key key = SDLEventFactory::makeKey(event->key.keysym.sym);
 
         if ( !(key.isPrintable() || key.isControlKey()) )
             return false;
@@ -80,7 +80,7 @@ bool rd::RdSDLInputManager::inputCallback(SDL_Event *event)
     }
     else if (event->type == SDL_KEYUP )
     {
-        RdKey key = RdSDLEventFactory::makeKey(event->key.keysym.sym);
+        Key key = SDLEventFactory::makeKey(event->key.keysym.sym);
 
         if ( !(key.isPrintable() || key.isControlKey()) )
             return false;
@@ -90,7 +90,7 @@ bool rd::RdSDLInputManager::inputCallback(SDL_Event *event)
     }
     else if (event->type == SDL_WINDOWEVENT)
     {
-        RdWindowEvent windowEvent = RdSDLEventFactory::makeWindowEvent(event->window);
+        WindowEvent windowEvent = SDLEventFactory::makeWindowEvent(event->window);
 
         for (int i = 0; i < (int) listeners.size(); i++)
             listeners.at(i)->onWindowEvent(windowEvent);

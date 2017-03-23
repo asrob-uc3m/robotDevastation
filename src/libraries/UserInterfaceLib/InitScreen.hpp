@@ -14,7 +14,7 @@
 
 namespace rd {
 
-class InitScreen : public RdScreen
+class InitScreen : public Screen
 {
     public:
         InitScreen();

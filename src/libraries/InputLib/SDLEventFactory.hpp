@@ -18,20 +18,20 @@ namespace rd{
  * @brief Factory class that provides static methods for instantiating SDL event source classes.
  *
  */
-class RdSDLEventFactory
+class SDLEventFactory
 {
     public:
         //! @brief Creates a \ref RdKey from a SDL keycode
-        static rd::RdKey makeKey(SDL_Keycode keycode);
+        static rd::Key makeKey(SDL_Keycode keycode);
 
         //! @brief Creates a \ref RdWindowEvent from a SDL window event structure
-        static rd::RdWindowEvent makeWindowEvent(SDL_WindowEvent windowEvent);
+        static rd::WindowEvent makeWindowEvent(SDL_WindowEvent windowEvent);
 
         //! @brief Initialize the lookup tables
         static bool initLookupTables();
     private:
-        RdSDLEventFactory();
-        RdSDLEventFactory(const RdSDLEventFactory &);
+        SDLEventFactory();
+        SDLEventFactory(const SDLEventFactory &);
 
         //! @brief Boolean indicating that the lookup tables have been initialized or not
         static bool initialized;

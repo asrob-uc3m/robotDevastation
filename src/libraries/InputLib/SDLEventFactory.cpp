@@ -1,18 +1,18 @@
 #include "SDLEventFactory.hpp"
 
-bool rd::RdSDLEventFactory::initialized = false;
-std::map<SDL_Keycode, char> rd::RdSDLEventFactory::sdl_printable_map = std::map<SDL_Keycode, char>();
-std::map<SDL_Keycode, int>  rd::RdSDLEventFactory::sdl_control_map = std::map<SDL_Keycode, int>();
+bool rd::SDLEventFactory::initialized = false;
+std::map<SDL_Keycode, char> rd::SDLEventFactory::sdl_printable_map = std::map<SDL_Keycode, char>();
+std::map<SDL_Keycode, int>  rd::SDLEventFactory::sdl_control_map = std::map<SDL_Keycode, int>();
 
-rd::RdSDLEventFactory::RdSDLEventFactory()
+rd::SDLEventFactory::SDLEventFactory()
 {
 }
 
-rd::RdSDLEventFactory::RdSDLEventFactory(const RdSDLEventFactory &)
+rd::SDLEventFactory::SDLEventFactory(const SDLEventFactory &)
 {
 }
 
-rd::RdKey rd::RdSDLEventFactory::makeKey(SDL_Keycode keycode)
+rd::Key rd::SDLEventFactory::makeKey(SDL_Keycode keycode)
 {
     //-- Initialize the key maps
     initLookupTables();
@@ -28,11 +28,11 @@ rd::RdKey rd::RdSDLEventFactory::makeKey(SDL_Keycode keycode)
     else
     {
         RD_ERROR("Key not supported!\n");
-        return rd::RdKey::KEY_UNKNOWN;
+        return rd::Key::KEY_UNKNOWN;
     }
 }
 
-bool rd::RdSDLEventFactory::initLookupTables()
+bool rd::SDLEventFactory::initLookupTables()
 {
     if (!initialized)
     {
@@ -54,14 +54,14 @@ bool rd::RdSDLEventFactory::initLookupTables()
         sdl_printable_map[SDLK_SPACE] = ' ';
         sdl_printable_map[SDLK_RETURN] = '\n';
 
-        sdl_control_map[SDLK_SPACE] = rd::RdKey::KEY_SPACE;
-        sdl_control_map[SDLK_ESCAPE] = rd::RdKey::KEY_ESCAPE;
-        sdl_control_map[SDLK_BACKSPACE] = rd::RdKey::KEY_BACKSPACE;
-        sdl_control_map[SDLK_UP] = rd::RdKey::KEY_ARROW_UP;
-        sdl_control_map[SDLK_DOWN] = rd::RdKey::KEY_ARROW_DOWN;
-        sdl_control_map[SDLK_LEFT] = rd::RdKey::KEY_ARROW_LEFT;
-        sdl_control_map[SDLK_RIGHT] = rd::RdKey::KEY_ARROW_RIGHT;
-        sdl_control_map[SDLK_RETURN] = rd::RdKey::KEY_ENTER;
+        sdl_control_map[SDLK_SPACE] = rd::Key::KEY_SPACE;
+        sdl_control_map[SDLK_ESCAPE] = rd::Key::KEY_ESCAPE;
+        sdl_control_map[SDLK_BACKSPACE] = rd::Key::KEY_BACKSPACE;
+        sdl_control_map[SDLK_UP] = rd::Key::KEY_ARROW_UP;
+        sdl_control_map[SDLK_DOWN] = rd::Key::KEY_ARROW_DOWN;
+        sdl_control_map[SDLK_LEFT] = rd::Key::KEY_ARROW_LEFT;
+        sdl_control_map[SDLK_RIGHT] = rd::Key::KEY_ARROW_RIGHT;
+        sdl_control_map[SDLK_RETURN] = rd::Key::KEY_ENTER;
 
         initialized = true;
     }
@@ -69,11 +69,11 @@ bool rd::RdSDLEventFactory::initLookupTables()
     return initialized;
 }
 
-rd::RdWindowEvent rd::RdSDLEventFactory::makeWindowEvent(SDL_WindowEvent windowEvent)
+rd::WindowEvent rd::SDLEventFactory::makeWindowEvent(SDL_WindowEvent windowEvent)
 {
     switch ( windowEvent.event )
     {
-    case SDL_WINDOWEVENT_CLOSE: return rd::RdWindowEvent::WINDOW_CLOSE;
-    default:                    return rd::RdWindowEvent::WINDOW_UNKNOWN;
+    case SDL_WINDOWEVENT_CLOSE: return rd::WindowEvent::WINDOW_CLOSE;
+    default:                    return rd::WindowEvent::WINDOW_UNKNOWN;
     }
 }

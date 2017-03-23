@@ -67,12 +67,12 @@ class RobotDevastation : public yarp::os::RFModule
 
         FiniteStateMachine * gameFSM;
 
-        RdInputManager *  inputManager;
+        InputManager *  inputManager;
         AudioManager * audioManager;
-        RdMentalMap * mentalMap;
-        RdNetworkManager * networkManager;
-        RdRobotManager * robotManager;
-        RdImageManager * imageManager;
+        MentalMap * mentalMap;
+        NetworkManager * networkManager;
+        RobotManager * robotManager;
+        ImageManager * imageManager;
         ScreenManager * screenManager;
 
         bool interruptModule();

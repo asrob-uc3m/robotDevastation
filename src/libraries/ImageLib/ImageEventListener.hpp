@@ -7,7 +7,7 @@
 
 namespace rd{
 
-class RdImageManager;
+class ImageManager;
 
 /**
  * @ingroup RdImageLib
@@ -16,14 +16,14 @@ class RdImageManager;
  *
  * RdImageEventListener follows the <a href="http://en.wikipedia.org/wiki/Observer_pattern">observer</a> design pattern.
  */
-class RdImageEventListener
+class ImageEventListener
 {
     public:
          /**
          * @brief This function will be called whenever a image arrives to the RdImageManager
          * @param manager A reference to the RdImageManager that triggered the event
          */
-        virtual bool onImageArrived( RdImageManager * manager ) = 0;
+        virtual bool onImageArrived( ImageManager * manager ) = 0;
 
 };
 

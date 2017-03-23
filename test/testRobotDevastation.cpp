@@ -77,9 +77,9 @@ class RobotDevastationTest : public testing::Test
 
             //-- Init input manager
             MockupInputManager::RegisterManager();
-            inputManager = RdInputManager::getInputManager("MOCKUP");
+            inputManager = InputManager::getInputManager("MOCKUP");
             mockupInputManager = dynamic_cast<MockupInputManager *>(inputManager);
-            ASSERT_NE((RdInputManager*) NULL, inputManager);
+            ASSERT_NE((InputManager*) NULL, inputManager);
             ASSERT_NE((MockupInputManager*) NULL, mockupInputManager);
 
             //-- Init sound
@@ -96,33 +96,33 @@ class RobotDevastationTest : public testing::Test
             mockupAudioManager->load("reload","reload", AudioManager::FX);
 
             //-- Init robot:
-            mockupRobotManager = new RdMockupRobotManager("MOCKUP");
-            robotManager = (RdRobotManager *) mockupRobotManager;
-            ASSERT_NE((RdMockupRobotManager*) NULL, mockupRobotManager);
-            ASSERT_NE((RdRobotManager*) NULL, robotManager);
+            mockupRobotManager = new MockupRobotManager("MOCKUP");
+            robotManager = (RobotManager *) mockupRobotManager;
+            ASSERT_NE((MockupRobotManager*) NULL, mockupRobotManager);
+            ASSERT_NE((RobotManager*) NULL, robotManager);
 
             //-- Init image manager
-            RdMockupImageManager::RegisterManager();
-            imageManager = RdImageManager::getImageManager("MOCKUP");
-            mockupImageManager = dynamic_cast<RdMockupImageManager *>(imageManager);
-            ASSERT_NE((RdImageManager*) NULL, imageManager);
-            ASSERT_NE((RdMockupImageManager*) NULL, mockupImageManager);
+            MockupImageManager::RegisterManager();
+            imageManager = ImageManager::getImageManager("MOCKUP");
+            mockupImageManager = dynamic_cast<MockupImageManager *>(imageManager);
+            ASSERT_NE((ImageManager*) NULL, imageManager);
+            ASSERT_NE((MockupImageManager*) NULL, mockupImageManager);
 
             //-- Init mental map
-            mentalMap = RdMentalMap::getMentalMap();
-            ASSERT_NE((RdMentalMap*) NULL, mentalMap);
+            mentalMap = MentalMap::getMentalMap();
+            ASSERT_NE((MentalMap*) NULL, mentalMap);
             ASSERT_TRUE(mentalMap->configure(1));
 
-            std::vector<RdPlayer> players;
-            players.push_back(RdPlayer(1,"test_player",MAX_HEALTH,MAX_HEALTH,0,0) );
+            std::vector<Player> players;
+            players.push_back(Player(1,"test_player",MAX_HEALTH,MAX_HEALTH,0,0) );
             ASSERT_TRUE(mentalMap->updatePlayers(players));
-            mentalMap->addWeapon(RdWeapon("Default gun", 10, MAX_AMMO));
+            mentalMap->addWeapon(Weapon("Default gun", 10, MAX_AMMO));
 
             //-- Init network manager
             MockupNetworkManager::RegisterManager();
-            networkManager = RdNetworkManager::getNetworkManager("MOCKUP");
+            networkManager = NetworkManager::getNetworkManager("MOCKUP");
             mockupNetworkManager = dynamic_cast<MockupNetworkManager *>(networkManager);
-            ASSERT_NE((RdNetworkManager*) NULL, networkManager);
+            ASSERT_NE((NetworkManager*) NULL, networkManager);
             ASSERT_NE((MockupNetworkManager*) NULL, mockupNetworkManager);
             networkManager->configure("player", players[0]);
 
@@ -161,10 +161,10 @@ class RobotDevastationTest : public testing::Test
 
         virtual void TearDown()
         {
-            RdInputManager::destroyInputManager();
+            InputManager::destroyInputManager();
             inputManager = NULL;
 
-            RdNetworkManager::destroyNetworkManager();
+            NetworkManager::destroyNetworkManager();
             networkManager = NULL;
 
             //-- Closing audio system:
@@ -172,11 +172,11 @@ class RobotDevastationTest : public testing::Test
             audioManager = NULL;
 
             //-- Closing mental map:
-            RdMentalMap::destroyMentalMap();
+            MentalMap::destroyMentalMap();
             mentalMap = NULL;
 
             //-- Close img related ports:
-            RdImageManager::destroyImageManager();
+            ImageManager::destroyImageManager();
             imageManager = NULL;
 
             //-- Close robot:
@@ -201,29 +201,29 @@ class RobotDevastationTest : public testing::Test
     protected:
         FiniteStateMachine *fsm;
 
-        RdNetworkManager * networkManager;
+        NetworkManager * networkManager;
         MockupNetworkManager * mockupNetworkManager;
 
-        RdImageManager * imageManager;
-        RdMockupImageManager * mockupImageManager;
+        ImageManager * imageManager;
+        MockupImageManager * mockupImageManager;
 
-        RdInputManager * inputManager;
+        InputManager * inputManager;
         MockupInputManager * mockupInputManager;
 
         AudioManager * audioManager;
         MockupAudioManager * mockupAudioManager;
 
-        RdMentalMap * mentalMap;
+        MentalMap * mentalMap;
 
-        RdMockupRobotManager * mockupRobotManager;
-        RdRobotManager * robotManager;
+        MockupRobotManager * mockupRobotManager;
+        RobotManager * robotManager;
 
         ScreenManager * screenManager;
 
         int init_state_id, game_state_id, dead_state_id, end_state_id;
 
-        RdImage test_frame_no_target;
-        RdImage test_frame_with_target;
+        Image test_frame_no_target;
+        Image test_frame_with_target;
         static const std::string FRAME_NO_TARGET_PATH;
         static const std::string FRAME_WITH_TARGET_PATH;
 };
@@ -263,7 +263,7 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     ASSERT_FALSE(mockupRobotManager->isEnabled());
 
     //-- When enter is pressed, the system should log in and go to next state:
-    mockupInputManager->sendKeyPress(RdKey::KEY_ENTER);
+    mockupInputManager->sendKeyPress(Key::KEY_ENTER);
     yarp::os::Time::delay(0.5);
 
     //-- Check things that should happen just after the fsm starts (after setup)
@@ -295,48 +295,48 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     mockupInputManager->sendKeyDown(GameState::KEY_TURN_LEFT);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
-    ASSERT_EQ(RdMockupRobotManager::LEFT, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
+    ASSERT_EQ(MockupRobotManager::LEFT, ((MockupRobotManager *)robotManager)->getMovementDirection());
     mockupInputManager->sendKeyUp(GameState::KEY_TURN_LEFT);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
-    ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
+    ASSERT_EQ(MockupRobotManager::NONE, ((MockupRobotManager *)robotManager)->getMovementDirection());
 
     //-- Right
     mockupInputManager->sendKeyDown(GameState::KEY_TURN_RIGHT);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
-    ASSERT_EQ(RdMockupRobotManager::RIGHT,((RdMockupRobotManager *)robotManager)->getMovementDirection());
+    ASSERT_EQ(MockupRobotManager::RIGHT,((MockupRobotManager *)robotManager)->getMovementDirection());
     mockupInputManager->sendKeyUp(GameState::KEY_TURN_RIGHT);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
-    ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
+    ASSERT_EQ(MockupRobotManager::NONE, ((MockupRobotManager *)robotManager)->getMovementDirection());
 
     //-- Forward
     mockupInputManager->sendKeyDown(GameState::KEY_MOVE_FWD);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
-    ASSERT_EQ(RdMockupRobotManager::FORWARD, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
+    ASSERT_EQ(MockupRobotManager::FORWARD, ((MockupRobotManager *)robotManager)->getMovementDirection());
     mockupInputManager->sendKeyUp(GameState::KEY_MOVE_FWD);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
-    ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
+    ASSERT_EQ(MockupRobotManager::NONE, ((MockupRobotManager *)robotManager)->getMovementDirection());
 
     //-- Backwards
     mockupInputManager->sendKeyDown(GameState::KEY_MOVE_BACK);
     yarp::os::Time::delay(0.5);
     ASSERT_TRUE(mockupRobotManager->isMoving());
-    ASSERT_EQ(RdMockupRobotManager::BACKWARDS, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
+    ASSERT_EQ(MockupRobotManager::BACKWARDS, ((MockupRobotManager *)robotManager)->getMovementDirection());
     mockupInputManager->sendKeyUp(GameState::KEY_MOVE_BACK);
     yarp::os::Time::delay(0.5);
     ASSERT_FALSE(mockupRobotManager->isMoving());
-    ASSERT_EQ(RdMockupRobotManager::NONE, ((RdMockupRobotManager *)robotManager)->getMovementDirection());
+    ASSERT_EQ(MockupRobotManager::NONE, ((MockupRobotManager *)robotManager)->getMovementDirection());
 
     //-- If I shoot with no target in the scope, the enemies life is kept equal
     mockupImageManager->receiveImage(test_frame_no_target);
     yarp::os::Time::delay(0.5);
-    std::vector<RdPlayer> players_before = mentalMap->getPlayers();
+    std::vector<Player> players_before = mentalMap->getPlayers();
     mockupInputManager->sendKeyPress(GameState::KEY_SHOOT);
-    std::vector<RdPlayer> players_after = mentalMap->getPlayers();
+    std::vector<Player> players_after = mentalMap->getPlayers();
     ASSERT_EQ(players_before.size(), players_after.size());
     for(int i = 0; i < players_before.size(); i++)
         EXPECT_EQ(players_before[i].getHealth(), players_after[i].getHealth());
@@ -394,14 +394,14 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
 
     //-- When enter is pressed, but the countdown is still active, input is ignored
     yarp::os::Time::delay(0.5);
-    mockupInputManager->sendKeyPress(RdKey::KEY_ENTER);
+    mockupInputManager->sendKeyPress(Key::KEY_ENTER);
     yarp::os::Time::delay(0.5);
     ASSERT_EQ(dead_state_id, fsm->getCurrentState());
 
     //-- When time is up, and esc is pressed, the system should exit the game:
     yarp::os::Time::delay(10);
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
-    mockupInputManager->sendKeyPress(RdKey::KEY_ESCAPE);
+    mockupInputManager->sendKeyPress(Key::KEY_ESCAPE);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has stopped things and it is in the final state (cleanup):

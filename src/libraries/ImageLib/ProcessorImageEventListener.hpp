@@ -22,25 +22,25 @@ namespace rd
  * the incoming images received
  *
  */
-class RdProcessorImageEventListener : public RdImageEventListener
+class ProcessorImageEventListener : public ImageEventListener
 {
     public:
-        RdProcessorImageEventListener();
-        ~RdProcessorImageEventListener();
+        ProcessorImageEventListener();
+        ~ProcessorImageEventListener();
 
-        virtual bool onImageArrived( RdImageManager * manager );
+        virtual bool onImageArrived( ImageManager * manager );
 
         int getImagesArrived();
         void resetImagesArrived();
 
-        RdImage getStoredImage();
+        Image getStoredImage();
 
 
     private:
         bool isInteger(std::string s);
 
         int images_arrived;
-        RdImage stored_image;
+        Image stored_image;
 
         int cameraWidth;
         int cameraHeight;
@@ -49,7 +49,7 @@ class RdProcessorImageEventListener : public RdImageEventListener
 
         zbar::ImageScanner scanner;
 
-        RdMentalMap* mentalMap;
+        MentalMap* mentalMap;
 };
 
 }  // namespace rd

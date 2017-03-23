@@ -35,8 +35,8 @@ namespace rd{
  * along with the reference to the manager that triggered them to be able to access the image
  *
  */
-class RdYarpLocalImageManager : public RdImageManager,
-                           public yarp::os::TypedReaderCallback<RdImage>
+class YarpLocalImageManager : public ImageManager,
+                           public yarp::os::TypedReaderCallback<Image>
 {
     public:
         virtual bool start();
@@ -44,7 +44,7 @@ class RdYarpLocalImageManager : public RdImageManager,
         virtual bool isStopped();
         virtual bool setEnabled(bool enabled);
         virtual bool configure(std::string parameter, std::string value);
-        virtual RdImage getImage();
+        virtual Image getImage();
 
         /**
          * @brief Register this manager in the RdImageManager registry so that can be used
@@ -54,14 +54,14 @@ class RdYarpLocalImageManager : public RdImageManager,
         static bool RegisterManager();
 
         //! @brief Destructor. Used to reset the local static reference after destroying this manager
-        ~RdYarpLocalImageManager();
+        ~YarpLocalImageManager();
 
         //! @brief String that identifies this manager
         static const std::string id;
 
     protected:
         //-- Yarp event for incoming messages
-        void onRead(RdImage& image);
+        void onRead(Image& image);
 
     private:
         /**
@@ -70,19 +70,19 @@ class RdYarpLocalImageManager : public RdImageManager,
          * Constructor for this class is private, since the singleton can only be instantiated once,
          * and the instantiation is done at the getMentalMap() method
          */
-        RdYarpLocalImageManager();
+        YarpLocalImageManager();
 
         //! @brief Reference to this manager (unique instance)
-        static RdYarpLocalImageManager * uniqueInstance;
+        static YarpLocalImageManager * uniqueInstance;
 
         //! @brief Semaphore to make the image manipulation thread-safe
         yarp::os::Semaphore semaphore;
 
         //! @brief Last image received
-        RdImage image;
+        Image image;
 
         //! @brief Yarp port to communicate with the remote camera
-        yarp::os::BufferedPort<RdImage> imagePort;
+        yarp::os::BufferedPort<Image> imagePort;
 
         //! @brief Name of the local yarp port
         std::string local_port_name;

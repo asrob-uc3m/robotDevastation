@@ -13,14 +13,14 @@ namespace rd{
  * @brief Allows to simulate input from a user programatically (mainly for test purposes)
  *
  */
-class MockupInputManager : public RdInputManager
+class MockupInputManager : public InputManager
 {
     public:
         //------------------------------ Testing Interface ------------------------------------------------------------//
-        bool sendKeyPress(const RdKey & key);
-        bool sendKeyUp(const RdKey & key);
-        bool sendKeyDown(const RdKey & key);
-        bool sendWindowEvent(const RdWindowEvent & event);
+        bool sendKeyPress(const Key & key);
+        bool sendKeyUp(const Key & key);
+        bool sendKeyDown(const Key & key);
+        bool sendWindowEvent(const WindowEvent & event);
 
         //------------------------------ Construction & destruction ---------------------------------------------------//
         MockupInputManager();

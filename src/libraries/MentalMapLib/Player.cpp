@@ -1,6 +1,6 @@
 #include "Player.hpp"
 
-rd::RdPlayer::RdPlayer()
+rd::Player::Player()
 {
     //-- Default values
     this->id = -1;
@@ -11,7 +11,7 @@ rd::RdPlayer::RdPlayer()
     this->score = -1;
 }
 
-rd::RdPlayer::RdPlayer(int id, std::string name, int health, int max_health, int team_id, int score)
+rd::Player::Player(int id, std::string name, int health, int max_health, int team_id, int score)
 {
     this->id = id;
     this->name = name;
@@ -21,37 +21,37 @@ rd::RdPlayer::RdPlayer(int id, std::string name, int health, int max_health, int
     this->score = score;
 }
 
-int rd::RdPlayer::getId() const
+int rd::Player::getId() const
 {
     return id;
 }
 
-void rd::RdPlayer::setId(int value)
+void rd::Player::setId(int value)
 {
     id = value;
 }
 
-std::string rd::RdPlayer::getName() const
+std::string rd::Player::getName() const
 {
     return name;
 }
 
-void rd::RdPlayer::setName(const std::string &value)
+void rd::Player::setName(const std::string &value)
 {
     name = value;
 }
 
-int rd::RdPlayer::getHealth() const
+int rd::Player::getHealth() const
 {
     return health;
 }
 
-void rd::RdPlayer::setHealth(int value)
+void rd::Player::setHealth(int value)
 {
     health = value;
 }
 
-bool rd::RdPlayer::getDamageFromWeapon(rd::RdWeapon &weapon)
+bool rd::Player::getDamageFromWeapon(rd::Weapon &weapon)
 {
     health -= weapon.getDamage();
     if (health < 0)
@@ -59,37 +59,37 @@ bool rd::RdPlayer::getDamageFromWeapon(rd::RdWeapon &weapon)
     return true;
 }
 
-int rd::RdPlayer::getMaxHealth() const
+int rd::Player::getMaxHealth() const
 {
     return max_health;
 }
 
-void rd::RdPlayer::setMaxHealth(int value)
+void rd::Player::setMaxHealth(int value)
 {
     max_health = value;
 }
 
-int rd::RdPlayer::getTeamId() const
+int rd::Player::getTeamId() const
 {
     return team_id;
 }
 
-void rd::RdPlayer::setTeamId(int value)
+void rd::Player::setTeamId(int value)
 {
     team_id = value;
 }
 
-int rd::RdPlayer::getScore() const
+int rd::Player::getScore() const
 {
     return score;
 }
 
-void rd::RdPlayer::setScore(int value)
+void rd::Player::setScore(int value)
 {
     score = value;
 }
 
-std::string rd::RdPlayer::str()
+std::string rd::Player::str()
 {
     std::stringstream sstream;
     sstream << "ID: " << id << std::endl;

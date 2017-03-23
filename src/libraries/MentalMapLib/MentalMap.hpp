@@ -45,13 +45,13 @@ namespace rd{
  * along with the data relevant to the event triggered (i.e. the new targets detected).
  *
  */
-class RdMentalMap : public RdNetworkEventListener
+class MentalMap : public NetworkEventListener
 {
     public:
         //-- Creation and configuration
         //--------------------------------------------------------------------------------------------
         //! @brief Get a reference to the RdMentalMap
-        static RdMentalMap * getMentalMap();
+        static MentalMap * getMentalMap();
 
         //! @brief Get a reference to the RdMentalMap
         static bool destroyMentalMap();
@@ -62,19 +62,19 @@ class RdMentalMap : public RdNetworkEventListener
 
         //-- Interface to get data
         //--------------------------------------------------------------------------------------------
-        std::vector<RdTarget> getTargets();
-        std::vector<RdPlayer> getPlayers();
-        RdTarget getTarget(const int& id = -1);
-        RdPlayer getPlayer(const int& id = -1);
+        std::vector<Target> getTargets();
+        std::vector<Player> getPlayers();
+        Target getTarget(const int& id = -1);
+        Player getPlayer(const int& id = -1);
 
         //! @brief Get the player corresponding to the user
-        RdPlayer getMyself();
+        Player getMyself();
 
 
         //-- Weapon interface
         //--------------------------------------------------------------------------------------------
-        void addWeapon(RdWeapon weapon);
-        RdWeapon getCurrentWeapon();
+        void addWeapon(Weapon weapon);
+        Weapon getCurrentWeapon();
 
         //! @brief Manage all the actions to be carried out when the user shoots (sound, update players, etc)
         bool shoot();
@@ -86,7 +86,7 @@ class RdMentalMap : public RdNetworkEventListener
         //-- Functions to update data
         //--------------------------------------------------------------------------------------------
         //! @brief  The current implementation just replaces the players inside the mental map by the new players
-        bool updatePlayers(std::vector<RdPlayer> new_player_vector);
+        bool updatePlayers(std::vector<Player> new_player_vector);
 
         /**
          * @brief Update the targets stored in the mental map
@@ -94,7 +94,7 @@ class RdMentalMap : public RdNetworkEventListener
          * If a target previously detected is no longer present in the new detections, decreases the belief value
          * until reaching 0. Then, it deletes that target.
          */
-        bool updateTargets(std::vector<RdTarget> new_target_detections);
+        bool updateTargets(std::vector<Target> new_target_detections);
 
         //! @brief Restores the health of current player (and does more stuff if needed)
         bool respawn();
@@ -103,7 +103,7 @@ class RdMentalMap : public RdNetworkEventListener
         //-- Listeners
         //--------------------------------------------------------------------------------------------
         //! @brief Adds a RdMentalMapEventListener to the list of observers to be notified of events
-        bool addMentalMapEventListener( RdMentalMapEventListener * listener);
+        bool addMentalMapEventListener( MentalMapEventListener * listener);
 
         //! @brief Unregisters all the RdMentalMapEventListener stored
         bool removeMentalMapEventListeners();
@@ -115,20 +115,20 @@ class RdMentalMap : public RdNetworkEventListener
          * Constructor for this class is private, since the singleton can only be instantiated once,
          * and the instantiation is done at the getMentalMap() method
          */
-        RdMentalMap();
+        MentalMap();
 
         //! @brief Stores the unique instance of the RdMentalMap
-        static RdMentalMap * mentalMapInstance;
+        static MentalMap * mentalMapInstance;
 
 
         //! @brief Storage for the target data. The key of the dictionary is the player id.
-        std::map<int, RdTarget> targets;
+        std::map<int, Target> targets;
 
         //! @brief Storage for the players data. The key of the dictionary is the player id.
-        std::map<int, RdPlayer> players;
+        std::map<int, Player> players;
 
         //! @brief Storage for the weapons data.
-        std::vector<RdWeapon> weapons;
+        std::vector<Weapon> weapons;
 
         //! @brief Index of the weapon currenly selected.
         int current_weapon;
@@ -138,7 +138,7 @@ class RdMentalMap : public RdNetworkEventListener
         int my_id;
 
         //! @brief Pointer to the player corresponding to the user
-        RdPlayer* myself;
+        Player* myself;
 
 
         //! @brief Reference to the AudioManager
@@ -146,13 +146,13 @@ class RdMentalMap : public RdNetworkEventListener
 
 
         //! @brief Observers registered to be notified of data change events
-        std::vector<RdMentalMapEventListener *> listeners;
+        std::vector<MentalMapEventListener *> listeners;
 
 
         //-- Implementation of RdNetworkEventListener functions
         //--------------------------------------------------------------------------------------------
         //! @brief Updates the local information about the players with the new data received by the RdNetworkManager.
-        bool onDataArrived(std::vector<RdPlayer> players);
+        bool onDataArrived(std::vector<Player> players);
 };
 
 }

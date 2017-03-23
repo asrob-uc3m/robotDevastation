@@ -2,12 +2,12 @@
 
 
 //-- This is very important:
-rd::RdInputManager * rd::RdInputManager::inputManagerInstance = NULL;
-std::string rd::RdInputManager::currentId = "";
-std::map<std::string, rd::RdInputManager *> rd::RdInputManager::inputManagerRegistry = std::map<std::string, rd::RdInputManager *>();
+rd::InputManager * rd::InputManager::inputManagerInstance = NULL;
+std::string rd::InputManager::currentId = "";
+std::map<std::string, rd::InputManager *> rd::InputManager::inputManagerRegistry = std::map<std::string, rd::InputManager *>();
 
 
-rd::RdInputManager *rd::RdInputManager::getInputManager()
+rd::InputManager *rd::InputManager::getInputManager()
 {
     if (inputManagerInstance == NULL )
     {
@@ -26,7 +26,7 @@ rd::RdInputManager *rd::RdInputManager::getInputManager()
     return inputManagerInstance;
 }
 
-rd::RdInputManager *rd::RdInputManager::getInputManager(std::string id)
+rd::InputManager *rd::InputManager::getInputManager(std::string id)
 {
     if (inputManagerInstance == NULL )
     {
@@ -44,7 +44,7 @@ rd::RdInputManager *rd::RdInputManager::getInputManager(std::string id)
     return inputManagerInstance;
 }
 
-bool rd::RdInputManager::destroyInputManager()
+bool rd::InputManager::destroyInputManager()
 {
     //-- First, stop & delete the manager currently in use (if any)
     if (inputManagerInstance != NULL)
@@ -55,16 +55,16 @@ bool rd::RdInputManager::destroyInputManager()
         inputManagerInstance = NULL;
 
         //-- Remove it also from the registry
-        std::map<std::string, RdInputManager *>::iterator it = inputManagerRegistry.find(currentId);
+        std::map<std::string, InputManager *>::iterator it = inputManagerRegistry.find(currentId);
         if (it != inputManagerRegistry.end())
             inputManagerRegistry.erase(it);
     }
 
     //-- Destroy all the remaining registered InputManagers
-    for ( std::map<std::string, RdInputManager *>::iterator it = inputManagerRegistry.begin();
+    for ( std::map<std::string, InputManager *>::iterator it = inputManagerRegistry.begin();
           it != inputManagerRegistry.end(); ++it)
     {
-        RdInputManager * currentManager = it->second;
+        InputManager * currentManager = it->second;
 
         if (currentManager != NULL)
         {
@@ -81,34 +81,34 @@ bool rd::RdInputManager::destroyInputManager()
     return true;
 }
 
-rd::RdInputManager::~RdInputManager()
+rd::InputManager::~InputManager()
 {
 }
 
-bool rd::RdInputManager::addInputEventListener(rd::RdInputEventListener *listener)
+bool rd::InputManager::addInputEventListener(rd::InputEventListener *listener)
 {
     listeners.push_back(listener);
     return true;
 }
 
-bool rd::RdInputManager::removeInputEventListeners()
+bool rd::InputManager::removeInputEventListeners()
 {
     listeners.clear();
     return true;
 }
 
-bool rd::RdInputManager::configure(std::string parameter, std::string value)
+bool rd::InputManager::configure(std::string parameter, std::string value)
 {
     return true;
 }
 
-bool rd::RdInputManager::refreshEvents()
+bool rd::InputManager::refreshEvents()
 {
     RD_INFO("Base implementation, does nothing!\n");
     return true;
 }
 
-bool rd::RdInputManager::Register(rd::RdInputManager *manager, std::string id)
+bool rd::InputManager::Register(rd::InputManager *manager, std::string id)
 {
     if ( inputManagerRegistry.find(id) == inputManagerRegistry.end())
     {

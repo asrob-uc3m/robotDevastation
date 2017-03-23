@@ -25,24 +25,24 @@ namespace rd{
  *
  */
 
-class RdScreen
+class Screen
 {
     public:
         virtual bool init() = 0;
         virtual bool cleanup() = 0;
         virtual bool drawScreen(void *screen); //-- Temporary definition as not pure virtual (to avoid breaking the whole inheritance tree while migrating API)
         virtual bool update(std::string parameter, std::string value);
-        virtual bool update(std::string parameter, RdImage value); //-- Required by GameScreen and DeadScreen
-        virtual bool update(std::string parameter, RdPlayer value); //-- Required by GameScreen
-        virtual bool update(std::string parameter, std::vector<RdPlayer> value); //-- Required by GameScreen
-        virtual bool update(std::string parameter, std::vector<RdTarget> value); //-- Required by GameScreen
-        virtual bool update(std::string parameter, RdWeapon value); //-- Required by GameScreen
-        virtual ~RdScreen() {}
+        virtual bool update(std::string parameter, Image value); //-- Required by GameScreen and DeadScreen
+        virtual bool update(std::string parameter, Player value); //-- Required by GameScreen
+        virtual bool update(std::string parameter, std::vector<Player> value); //-- Required by GameScreen
+        virtual bool update(std::string parameter, std::vector<Target> value); //-- Required by GameScreen
+        virtual bool update(std::string parameter, Weapon value); //-- Required by GameScreen
+        virtual ~Screen() {}
 
         int h, w; //-- Screen size
 
     protected:
-        RdScreen();
+        Screen();
 };
 
 }

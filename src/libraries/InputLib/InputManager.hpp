@@ -39,7 +39,7 @@ namespace rd{
  * along with the data relevant to the event triggered (i.e. what key was pressed)
  *
  */
-class RdInputManager
+class InputManager
 {
     public:
         //------------------------------ Construction & destruction ---------------------------------------------------//
@@ -48,19 +48,19 @@ class RdInputManager
          * @return By default, if no id is specified, this will return a reference to the first
          * RdInputManager that it can find in the registry, or NULL if no RdInputManager was registered.
          */
-        static RdInputManager * getInputManager();
+        static InputManager * getInputManager();
 
         /**
          * @brief Get a reference to the RdInputManager
          * @return The RdInputManager registered with the given id, NULL if the id is not found in
          * the registry.
          */
-        static RdInputManager * getInputManager(std::string id);
+        static InputManager * getInputManager(std::string id);
 
         //! @brief Deallocate all the registered RdInputManager
         static bool destroyInputManager();
 
-        virtual ~RdInputManager();
+        virtual ~InputManager();
 
 
         //------------------------------ Manager Startup & Halting ----------------------------------------------------//
@@ -79,7 +79,7 @@ class RdInputManager
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Adds a RdInputEventListener to the list of observers to be notified of events
-        bool addInputEventListener( RdInputEventListener * listener );
+        bool addInputEventListener( InputEventListener * listener );
 
         //! @brief Unregisters all the RdInputEventListener stored
         bool removeInputEventListeners();
@@ -96,20 +96,20 @@ class RdInputManager
          * @brief This function allows subclasses to install their unique instances in the singleton register to be
          * selected later by the user
          */
-        static bool Register( RdInputManager * manager, std::string id);
+        static bool Register( InputManager * manager, std::string id);
 
         //! @brief Observers registered to be notified of input events
-        std::vector<RdInputEventListener *> listeners;
+        std::vector<InputEventListener *> listeners;
 
     private:
         //! @brief Stores the unique instance of the RdInputManager
-        static RdInputManager * inputManagerInstance;
+        static InputManager * inputManagerInstance;
 
         //! \brief Stores the id of the current unique instance used
         static std::string currentId;
 
         //! \brief Stores all the RdInputManager that have been registered
-        static std::map< std::string, RdInputManager * > inputManagerRegistry;
+        static std::map< std::string, InputManager * > inputManagerRegistry;
 
 };
 

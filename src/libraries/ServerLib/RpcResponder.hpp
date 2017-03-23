@@ -17,10 +17,10 @@
 namespace rd
 {
 
-class RdRpcResponder : public yarp::os::PortReader
+class RpcResponder : public yarp::os::PortReader
 {
 public:
-    void setPlayers(std::map<int,RdPlayer> *value, std::map <int,int>* players_belief,
+    void setPlayers(std::map<int,Player> *value, std::map <int,int>* players_belief,
                     yarp::os::Mutex* players_mutex);
 
     static const int MAX_BELIEF; //-- Timeout [s] / Period [s]
@@ -32,7 +32,7 @@ private:
     virtual bool read(yarp::os::ConnectionReader& connection);
 
     yarp::os::Port* rdBroadcast;
-    std::map <int,RdPlayer>* players;
+    std::map <int,Player>* players;
     std::map <int,int>* players_belief;
     yarp::os::Mutex* players_mutex;
 };

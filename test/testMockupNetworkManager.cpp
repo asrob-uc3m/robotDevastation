@@ -13,21 +13,21 @@ class MockupNetworkManagerTest : public testing::Test
         virtual void SetUp()
         {
             MockupNetworkManager::RegisterManager();
-            networkManager = (MockupNetworkManager *) RdNetworkManager::getNetworkManager(MockupNetworkManager::id);
+            networkManager = (MockupNetworkManager *) NetworkManager::getNetworkManager(MockupNetworkManager::id);
 
-            me = RdPlayer(0, "me", 100, 100, 0, 0);
-            other_player = RdPlayer(1, "dummy", 100, 100, 1, 0);
+            me = Player(0, "me", 100, 100, 0, 0);
+            other_player = Player(1, "dummy", 100, 100, 1, 0);
         }
 
         virtual void TearDown()
         {
-            RdNetworkManager::destroyNetworkManager();
+            NetworkManager::destroyNetworkManager();
         }
 
 
     protected:
         MockupNetworkManager * networkManager;
-        RdPlayer me, other_player;
+        Player me, other_player;
 };
 
 
@@ -56,7 +56,7 @@ TEST_F(MockupNetworkManagerTest, PlayerCreatedWhenLogin)
     ASSERT_TRUE(networkManager->isLoggedIn());
 
 
-    std::vector<RdPlayer> players = networkManager->getPlayerData();
+    std::vector<Player> players = networkManager->getPlayerData();
     ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
 
@@ -73,7 +73,7 @@ TEST_F(MockupNetworkManagerTest, ErrorLoginTwice)
     ASSERT_TRUE(networkManager->login());
     ASSERT_TRUE(networkManager->isLoggedIn());
 
-    std::vector<RdPlayer> players = networkManager->getPlayerData();
+    std::vector<Player> players = networkManager->getPlayerData();
     ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
 
@@ -97,7 +97,7 @@ TEST_F(MockupNetworkManagerTest, PlayerRemovedOnLogout)
     ASSERT_TRUE(networkManager->login());
     ASSERT_TRUE(networkManager->isLoggedIn());
 
-    std::vector<RdPlayer> players = networkManager->getPlayerData();
+    std::vector<Player> players = networkManager->getPlayerData();
     ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
 
@@ -120,7 +120,7 @@ TEST_F(MockupNetworkManagerTest, ErrorLogoutTwice)
     ASSERT_TRUE(networkManager->login());
     ASSERT_TRUE(networkManager->isLoggedIn());
 
-    std::vector<RdPlayer> players = networkManager->getPlayerData();
+    std::vector<Player> players = networkManager->getPlayerData();
     ASSERT_EQ(1, players.size());
     EXPECT_EQ(0, players[0].getId());
 
@@ -143,7 +143,7 @@ TEST_F(MockupNetworkManagerTest, SetPlayerAddsPlayer)
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
-    std::vector<RdPlayer> players;
+    std::vector<Player> players;
     players.push_back(me);
     players.push_back(other_player);
 
@@ -164,7 +164,7 @@ TEST_F(MockupNetworkManagerTest, PlayerDamagedWhenShot)
     ASSERT_TRUE(networkManager->start());
     ASSERT_FALSE(networkManager->isStopped());
 
-    std::vector<RdPlayer> players;
+    std::vector<Player> players;
     players.push_back(me);
     players.push_back(other_player);
 
@@ -187,8 +187,8 @@ TEST_F(MockupNetworkManagerTest, PlayerDamagedWhenShot)
 TEST_F(MockupNetworkManagerTest, ListenersNotifiedOnEvent)
 {
     MockupNetworkEventListener listener;
-    RdNetworkEventListener * plistener = (RdNetworkEventListener *) &listener;
-    ASSERT_TRUE(((RdNetworkManager*)networkManager)->addNetworkEventListener(plistener));
+    NetworkEventListener * plistener = (NetworkEventListener *) &listener;
+    ASSERT_TRUE(((NetworkManager*)networkManager)->addNetworkEventListener(plistener));
 
     networkManager->configure("player", me);
     ASSERT_TRUE(networkManager->start());
@@ -198,7 +198,7 @@ TEST_F(MockupNetworkManagerTest, ListenersNotifiedOnEvent)
     ASSERT_TRUE(networkManager->isLoggedIn());
 
     /* Check that data > 0 and check contents */
-    std::vector<RdPlayer> players = listener.getStoredPlayers();
+    std::vector<Player> players = listener.getStoredPlayers();
 
     EXPECT_EQ(1, listener.getDataArrived());
     ASSERT_EQ(1, players.size());
@@ -217,17 +217,17 @@ TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
     //-------------------------------------------------------------------------------------
 
     //-- Create a mental map with player & weapon info
-    RdMentalMap * mentalMap = RdMentalMap::getMentalMap();
-    ASSERT_NE((RdMentalMap*) NULL, mentalMap);
-    mentalMap->addWeapon(RdWeapon("Machine gun", 10, 10));
+    MentalMap * mentalMap = MentalMap::getMentalMap();
+    ASSERT_NE((MentalMap*) NULL, mentalMap);
+    mentalMap->addWeapon(Weapon("Machine gun", 10, 10));
     ASSERT_TRUE(mentalMap->configure(me.getId()));
-    std::vector<RdPlayer> players;
+    std::vector<Player> players;
     players.push_back(me);
     players.push_back(other_player);
     ASSERT_TRUE(mentalMap->updatePlayers(players));
-    std::vector<RdTarget> targets;
-    targets.push_back(RdTarget(other_player.getId(), RdVector2d(RdWeapon::SCOPE_X, RdWeapon::SCOPE_Y),
-                               RdVector2d(50, 50)));
+    std::vector<Target> targets;
+    targets.push_back(Target(other_player.getId(), Vector2d(Weapon::SCOPE_X, Weapon::SCOPE_Y),
+                               Vector2d(50, 50)));
     ASSERT_TRUE(mentalMap->updateTargets(targets));
 
     //-- Attach mental map to networkManager
@@ -245,7 +245,7 @@ TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
     mentalMap->shoot();
 
     //-- Check everything worked as expected
-    std::vector<RdPlayer> players_after = mentalMap->getPlayers();
+    std::vector<Player> players_after = mentalMap->getPlayers();
     for(int i = 0; i < players_after.size(); i++)
         if (players_after[i].getId() == 2)
             ASSERT_LT(players_after[i].getHealth(), 100);
@@ -253,5 +253,5 @@ TEST_F(MockupNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
     //-- Cleanup
     ASSERT_TRUE(networkManager->stop());
     ASSERT_TRUE(networkManager->isStopped());
-    RdMentalMap::destroyMentalMap();
+    MentalMap::destroyMentalMap();
 }

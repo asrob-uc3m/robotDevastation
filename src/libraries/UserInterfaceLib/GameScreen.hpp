@@ -34,7 +34,7 @@ namespace rd{
  * @brief A User Interface.
  *
  */
-class GameScreen : public RdScreen
+class GameScreen : public Screen
 {
     public:
         GameScreen();
@@ -43,11 +43,11 @@ class GameScreen : public RdScreen
         virtual bool drawScreen(void *screen);
         virtual ~GameScreen();
         virtual bool update(std::string parameter, std::string value);
-        virtual bool update(std::string parameter, RdPlayer value);
-        virtual bool update(std::string parameter, std::vector<RdPlayer> value);
-        virtual bool update(std::string parameter, std::vector<RdTarget> value);
-        virtual bool update(std::string parameter, RdWeapon value);
-        virtual bool update(std::string parameter, RdImage value);
+        virtual bool update(std::string parameter, Player value);
+        virtual bool update(std::string parameter, std::vector<Player> value);
+        virtual bool update(std::string parameter, std::vector<Target> value);
+        virtual bool update(std::string parameter, Weapon value);
+        virtual bool update(std::string parameter, Image value);
 
         //-- Screen interface parameters
         static const std::string PARAM_CAMERA_FRAME;
@@ -57,9 +57,9 @@ class GameScreen : public RdScreen
         static const std::string PARAM_WEAPON;
 
     private:
-        bool drawUserUI(SDL_Surface * screen, RdPlayer user, RdWeapon weapon);
-        bool drawPlayerUI( SDL_Surface * screen, RdPlayer player, int x, int y);
-        bool drawTargetUI( SDL_Surface * screen, RdTarget target, RdPlayer player_data);
+        bool drawUserUI(SDL_Surface * screen, Player user, Weapon weapon);
+        bool drawPlayerUI( SDL_Surface * screen, Player player, int x, int y);
+        bool drawTargetUI( SDL_Surface * screen, Target target, Player player_data);
         bool drawScope( SDL_Surface * screen );
 
         //-- Screen constants (that should not be constant)
@@ -115,11 +115,11 @@ class GameScreen : public RdScreen
         static const SDL_Color redcolor;
         static const SDL_Color bluecolor;
 
-        RdPlayer myself;
-        std::vector<RdPlayer> players;
-        std::vector<RdTarget> targets;
-        RdWeapon current_weapon;
-        RdImage camera_frame;
+        Player myself;
+        std::vector<Player> players;
+        std::vector<Target> targets;
+        Weapon current_weapon;
+        Image camera_frame;
 
 };
 

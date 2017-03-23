@@ -24,12 +24,12 @@ namespace rd{
 *      - When user presses enter, respawns the robot and goes to game state again
 *      - When user presses q, logout the game
 */
-class DeadState : public State, public ManagerHub, public RdInputEventListener
+class DeadState : public State, public ManagerHub, public InputEventListener
 {
 public:
-    DeadState(RdNetworkManager * networkManager, RdImageManager * imageManager,
-              RdInputManager * inputManager, RdMentalMap * mentalMap,
-              RdRobotManager * robotManager, AudioManager * audioManager,
+    DeadState(NetworkManager * networkManager, ImageManager * imageManager,
+              InputManager * inputManager, MentalMap * mentalMap,
+              RobotManager * robotManager, AudioManager * audioManager,
               ScreenManager * screenManager);
     virtual ~DeadState();
     virtual bool setup();
@@ -44,9 +44,9 @@ public:
     static const int EXIT_SELECTED;
 
     //-- RdInputEventListener interface:
-    virtual bool onKeyDown(const RdKey & k);
-    virtual bool onKeyUp(const RdKey & k);
-    virtual bool onWindowEvent(const RdWindowEvent & event);
+    virtual bool onKeyDown(const Key & k);
+    virtual bool onKeyUp(const Key & k);
+    virtual bool onWindowEvent(const WindowEvent & event);
 
     static const int DEFAULT_RATE_MS;
     static const int MAX_HEALTH;

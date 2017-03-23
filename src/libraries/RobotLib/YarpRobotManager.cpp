@@ -4,73 +4,73 @@
 
 namespace rd
 {
-RdYarpRobotManager::RdYarpRobotManager(const std::string& robotName): RdRobotManager(robotName)
+YarpRobotManager::YarpRobotManager(const std::string& robotName): RobotManager(robotName)
 {
     connected = false;
     enabled = false;
 }
 
-bool RdYarpRobotManager::moveForward(int velocity)
+bool YarpRobotManager::moveForward(int velocity)
 {
     RD_DEBUG("\n");
     return send1vocab1int(VOCAB_MOVE_FORWARD,velocity);
 }
 
-bool RdYarpRobotManager::moveBackwards(int velocity)
+bool YarpRobotManager::moveBackwards(int velocity)
 {
     RD_DEBUG("\n");
     return send1vocab1int(VOCAB_MOVE_BACKWARDS,velocity);
 }
 
-bool RdYarpRobotManager::turnLeft(int velocity)
+bool YarpRobotManager::turnLeft(int velocity)
 {
     RD_DEBUG("\n");
     return send1vocab1int(VOCAB_TURN_LEFT,velocity);
 }
 
-bool RdYarpRobotManager::turnRight(int velocity)
+bool YarpRobotManager::turnRight(int velocity)
 {
     RD_DEBUG("\n");
     return send1vocab1int(VOCAB_TURN_RIGHT,velocity);
 }
 
-bool RdYarpRobotManager::stopMovement()
+bool YarpRobotManager::stopMovement()
 {
     RD_DEBUG("\n");
     return send1vocab(VOCAB_STOP_MOVEMENT);
 }
 
-bool RdYarpRobotManager::tiltUp(int velocity)
+bool YarpRobotManager::tiltUp(int velocity)
 {
     RD_DEBUG("\n");
     return send1vocab1int(VOCAB_TILT_UP,velocity);
 }
 
-bool RdYarpRobotManager::tiltDown(int velocity)
+bool YarpRobotManager::tiltDown(int velocity)
 {
     RD_DEBUG("\n");
     return send1vocab1int(VOCAB_TILT_DOWN,velocity);
 }
 
-bool RdYarpRobotManager::panLeft(int velocity)
+bool YarpRobotManager::panLeft(int velocity)
 {
     RD_DEBUG("\n");
     return send1vocab1int(VOCAB_PAN_LEFT,velocity);
 }
 
-bool RdYarpRobotManager::panRight(int velocity)
+bool YarpRobotManager::panRight(int velocity)
 {
     RD_DEBUG("\n");
     return send1vocab1int(VOCAB_PAN_RIGHT,velocity);
 }
 
-bool RdYarpRobotManager::stopCameraMovement()
+bool YarpRobotManager::stopCameraMovement()
 {
     RD_DEBUG("\n");
     return send1vocab(VOCAB_STOP_CAMERA_MOVEMENT);
 }
         
-bool RdYarpRobotManager::connect()
+bool YarpRobotManager::connect()
 {
     if( connected )
     {
@@ -164,25 +164,25 @@ bool RdYarpRobotManager::connect()
     return true;
 }
 
-bool RdYarpRobotManager::disconnect()  {
+bool YarpRobotManager::disconnect()  {
     rpcClient.close();
     return true;
 }
 
-bool RdYarpRobotManager::test()  {
+bool YarpRobotManager::test()  {
     return true;
 }
 
-void RdYarpRobotManager::setEnabled(bool enabled)
+void YarpRobotManager::setEnabled(bool enabled)
 {
 
 }
 
-void RdYarpRobotManager::onDestroy(){
+void YarpRobotManager::onDestroy(){
     return;
 }
 
-bool RdYarpRobotManager::send1vocab1int(int vocab, int integer)
+bool YarpRobotManager::send1vocab1int(int vocab, int integer)
 {
     yarp::os::Bottle cmd, response;
     cmd.addVocab(vocab);
@@ -194,7 +194,7 @@ bool RdYarpRobotManager::send1vocab1int(int vocab, int integer)
         return false;
 }
 
-bool RdYarpRobotManager::send1vocab(int vocab)
+bool YarpRobotManager::send1vocab(int vocab)
 {
     yarp::os::Bottle cmd, response;
     cmd.addVocab(vocab);

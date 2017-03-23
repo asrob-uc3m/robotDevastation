@@ -117,7 +117,7 @@ bool rd::DeadScreen::update(std::string parameter, std::string value)
     return false;
 }
 
-bool rd::DeadScreen::update(std::string parameter, rd::RdImage value)
+bool rd::DeadScreen::update(std::string parameter, rd::Image value)
 {
     if (value.width() == 0 || value.height() == 0)
     {
@@ -127,7 +127,7 @@ bool rd::DeadScreen::update(std::string parameter, rd::RdImage value)
 
     if (parameter == PARAM_LAST_CAMERA_FRAME)
     {
-        last_camera_frame = RdImage(value);
+        last_camera_frame = Image(value);
 
         //-- Convert from RdImage to SDL
         camera_frame = RdImage2SDLImage(last_camera_frame);

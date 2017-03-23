@@ -14,21 +14,21 @@ namespace rd{
  * @brief Class that represents a target detected. This target is (or should be) associated to a player.
  *
  */
-class RdTarget
+class Target
 {
 public:
     //! @brief Constructs a default, dummy target. (That is invalid for the game, by the way)
-    RdTarget();
-    RdTarget( int player_id, RdVector2d pos, RdVector2d dimensions);
+    Target();
+    Target( int player_id, Vector2d pos, Vector2d dimensions);
 
     int getPlayerId();
     void setPlayerId(int id);
 
-    RdVector2d getPos();
-    void setPos(const RdVector2d &pos);
+    Vector2d getPos();
+    void setPos(const Vector2d &pos);
 
-    RdVector2d getDimensions();
-    void setDimensions(const RdVector2d &dimensions);
+    Vector2d getDimensions();
+    void setDimensions(const Vector2d &dimensions);
 
     int getBelief();
     bool reduceBelief(int amount);
@@ -39,10 +39,10 @@ private:
     int player_id;
 
     //! @brief Center of the box that bounds this target
-    RdVector2d pos;
+    Vector2d pos;
 
     //! @brief Height and Width of the box that bounds this target
-    RdVector2d dimensions;
+    Vector2d dimensions;
 
     //! @brief Quantity representing how sure we are that this target can currently be seen by the user's robot
     int belief;

@@ -25,8 +25,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     screenManager->start();
 
     //-- Init input manager
-    RdSDLInputManager::RegisterManager();
-    inputManager = RdInputManager::getInputManager("SDL");
+    SDLInputManager::RegisterManager();
+    inputManager = InputManager::getInputManager("SDL");
 
     //-- Init sound
     if( ! initSound(rf) )
@@ -34,25 +34,25 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
     //-- Init robot
     if( rf.check("mockupRobotManager") )
-        robotManager = new RdMockupRobotManager(robotName);
+        robotManager = new MockupRobotManager(robotName);
     else
-        robotManager = new RdYarpRobotManager(robotName);
+        robotManager = new YarpRobotManager(robotName);
 
     //-- Init image manager
     if( rf.check("mockupImageManager") )
     {
-        RdMockupImageManager::RegisterManager();
-        imageManager = RdImageManager::getImageManager(RdMockupImageManager::id);
+        MockupImageManager::RegisterManager();
+        imageManager = ImageManager::getImageManager(MockupImageManager::id);
     }
     else if( rf.check("yarpLocalImageManager") )
     {
-        RdYarpLocalImageManager::RegisterManager();
-        imageManager = RdImageManager::getImageManager(RdYarpLocalImageManager::id);
+        YarpLocalImageManager::RegisterManager();
+        imageManager = ImageManager::getImageManager(YarpLocalImageManager::id);
     }
     else
     {
-        RdYarpImageManager::RegisterManager();
-        imageManager = RdImageManager::getImageManager(RdYarpImageManager::id);
+        YarpImageManager::RegisterManager();
+        imageManager = ImageManager::getImageManager(YarpImageManager::id);
     }
 
     //-- Configure the camera port
@@ -68,18 +68,18 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     imageManager->configure("local_img_port", localCameraPortName.str() ); //-- Name given by me
 
     //-- Init mentalMap
-    mentalMap = RdMentalMap::getMentalMap();
+    mentalMap = MentalMap::getMentalMap();
     mentalMap->configure(id);
 
-    std::vector<RdPlayer> players;
-    players.push_back(RdPlayer(id,name,100,100,team,0));
+    std::vector<Player> players;
+    players.push_back(Player(id,name,100,100,team,0));
     mentalMap->updatePlayers(players);
 
-    mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
+    mentalMap->addWeapon(Weapon("Default gun", 10, 5));
 
     //-- Init network manager
-    RdYarpNetworkManager::RegisterManager();
-    networkManager = RdNetworkManager::getNetworkManager(RdYarpNetworkManager::id);
+    YarpNetworkManager::RegisterManager();
+    networkManager = NetworkManager::getNetworkManager(YarpNetworkManager::id);
     networkManager->configure("player", players[0]);
 
     //-- Get game FSM and start game
@@ -245,10 +245,10 @@ bool rd::RobotDevastation::initGameFSM()
 
 bool rd::RobotDevastation::cleanup()
 {
-    RdInputManager::destroyInputManager();
+    InputManager::destroyInputManager();
     inputManager = NULL;
 
-    RdNetworkManager::destroyNetworkManager();
+    NetworkManager::destroyNetworkManager();
     networkManager = NULL;
 
     //-- Closing audio system:
@@ -256,11 +256,11 @@ bool rd::RobotDevastation::cleanup()
     audioManager = NULL;
 
     //-- Closing mental map:
-    RdMentalMap::destroyMentalMap();
+    MentalMap::destroyMentalMap();
     mentalMap = NULL;
 
     //-- Close img related ports:
-    RdImageManager::destroyImageManager();
+    ImageManager::destroyImageManager();
     imageManager = NULL;
 
     //-- Close robot:

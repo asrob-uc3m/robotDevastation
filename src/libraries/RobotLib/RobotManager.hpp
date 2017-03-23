@@ -23,7 +23,7 @@ namespace rd{
  * @brief A base class for Robot Managers.
  *
  */
-class RdRobotManager
+class RobotManager
 {
     public:
         //-- Robot movement related functions    
@@ -55,12 +55,12 @@ class RdRobotManager
 
         //-- Other
         virtual void onDestroy() = 0;
-        virtual ~RdRobotManager() {}
+        virtual ~RobotManager() {}
 
         //-- Constants
         static const int UNUSED = -1;
 
-        RdRobotManager(const std::string& robotName) {
+        RobotManager(const std::string& robotName) {
             this->robotName = robotName;
         }
 

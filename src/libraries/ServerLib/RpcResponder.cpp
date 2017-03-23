@@ -2,9 +2,9 @@
 
 #include "RpcResponder.hpp"
 
-const int rd::RdRpcResponder::MAX_BELIEF = 600;
+const int rd::RpcResponder::MAX_BELIEF = 600;
 
-bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
+bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
 {
     yarp::os::Bottle in, out;
     in.read(connection);
@@ -51,7 +51,7 @@ bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
         if ( players->find(loginId) == players->end() )  // if not found, we can create
         {
             //-- RdPlayer( int id, std::string name, int health, int max_health, int team_id, int score);
-            RdPlayer rdPlayer( loginId, in.get(2).asString().c_str(),100,100,in.get(3).asInt(),0);
+            Player rdPlayer( loginId, in.get(2).asString().c_str(),100,100,in.get(3).asInt(),0);
 
             players->operator [](loginId) = rdPlayer;
             players_belief->operator [](loginId) = MAX_BELIEF;
@@ -126,7 +126,7 @@ bool rd::RdRpcResponder::read(yarp::os::ConnectionReader& connection)
 
 }
 
-void rd::RdRpcResponder::setPlayers(std::map<int,RdPlayer> *value, std::map<int, int> *players_belief, yarp::os::Mutex *players_mutex)
+void rd::RpcResponder::setPlayers(std::map<int,Player> *value, std::map<int, int> *players_belief, yarp::os::Mutex *players_mutex)
 {
     players = value;
     this->players_belief = players_belief;

@@ -16,7 +16,7 @@ namespace rd{
  *
  * RdMentalMapEventListener follows the <a href="http://en.wikipedia.org/wiki/Observer_pattern">observer</a> design pattern.
  */
-class RdMentalMapEventListener
+class MentalMapEventListener
 {
     public:
         /**
@@ -25,13 +25,13 @@ class RdMentalMapEventListener
          * @param player Player corresponding to the target hit
          * @param weapon Weapon used to hit the target
          */
-        virtual bool onTargetHit(RdTarget target, RdPlayer player, RdWeapon weapon) = 0;
+        virtual bool onTargetHit(Target target, Player player, Weapon weapon) = 0;
 
         /**
          * @brief This function will be called whenever the player is respawned
          * @param player Player to respawn
          */
-        virtual bool onRespawn(RdPlayer player) = 0;
+        virtual bool onRespawn(Player player) = 0;
 };
 
 }

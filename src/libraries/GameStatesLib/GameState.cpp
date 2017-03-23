@@ -3,21 +3,21 @@
 const int rd::GameState::KILLED = 1;
 const int rd::GameState::EXIT_REQUESTED = 2;
 
-const rd::RdKey rd::GameState::KEY_EXIT = rd::RdKey::KEY_ESCAPE;
-const rd::RdKey rd::GameState::KEY_SHOOT = rd::RdKey::KEY_SPACE;
-const rd::RdKey rd::GameState::KEY_RELOAD = 'r';
-const rd::RdKey rd::GameState::KEY_MOVE_FWD = 'w';
-const rd::RdKey rd::GameState::KEY_MOVE_BACK = 's';
-const rd::RdKey rd::GameState::KEY_TURN_LEFT = 'a';
-const rd::RdKey rd::GameState::KEY_TURN_RIGHT = 'd';
-const rd::RdKey rd::GameState::KEY_PAN_LEFT = rd::RdKey::KEY_ARROW_LEFT;
-const rd::RdKey rd::GameState::KEY_PAN_RIGHT = rd::RdKey::KEY_ARROW_RIGHT;
-const rd::RdKey rd::GameState::KEY_TILT_UP = rd::RdKey::KEY_ARROW_UP;
-const rd::RdKey rd::GameState::KEY_TILT_DOWN = rd::RdKey::KEY_ARROW_DOWN;
+const rd::Key rd::GameState::KEY_EXIT = rd::Key::KEY_ESCAPE;
+const rd::Key rd::GameState::KEY_SHOOT = rd::Key::KEY_SPACE;
+const rd::Key rd::GameState::KEY_RELOAD = 'r';
+const rd::Key rd::GameState::KEY_MOVE_FWD = 'w';
+const rd::Key rd::GameState::KEY_MOVE_BACK = 's';
+const rd::Key rd::GameState::KEY_TURN_LEFT = 'a';
+const rd::Key rd::GameState::KEY_TURN_RIGHT = 'd';
+const rd::Key rd::GameState::KEY_PAN_LEFT = rd::Key::KEY_ARROW_LEFT;
+const rd::Key rd::GameState::KEY_PAN_RIGHT = rd::Key::KEY_ARROW_RIGHT;
+const rd::Key rd::GameState::KEY_TILT_UP = rd::Key::KEY_ARROW_UP;
+const rd::Key rd::GameState::KEY_TILT_DOWN = rd::Key::KEY_ARROW_DOWN;
 
-rd::GameState::GameState(rd::RdNetworkManager *networkManager, rd::RdImageManager *imageManager,
-                         rd::RdInputManager *inputManager, rd::RdMentalMap *mentalMap,
-                         rd::RdRobotManager *robotManager, rd::AudioManager *audioManager,
+rd::GameState::GameState(rd::NetworkManager *networkManager, rd::ImageManager *imageManager,
+                         rd::InputManager *inputManager, rd::MentalMap *mentalMap,
+                         rd::RobotManager *robotManager, rd::AudioManager *audioManager,
                          rd::ScreenManager *screenManager) :
                     ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager,
                                audioManager, screenManager)
@@ -155,7 +155,7 @@ int rd::GameState::evaluateConditions()
     return -1;
 }
 
-bool rd::GameState::onKeyDown(const rd::RdKey & k)
+bool rd::GameState::onKeyDown(const rd::Key & k)
 {
     if (k == KEY_SHOOT)
     {
@@ -231,7 +231,7 @@ bool rd::GameState::onKeyDown(const rd::RdKey & k)
     return false;
 }
 
-bool rd::GameState::onKeyUp(const rd::RdKey & k)
+bool rd::GameState::onKeyUp(const rd::Key & k)
 {
     //-- Movement control
     if (k == KEY_TURN_LEFT)
@@ -287,9 +287,9 @@ bool rd::GameState::onKeyUp(const rd::RdKey & k)
     return false;
 }
 
-bool rd::GameState::onWindowEvent(const rd::RdWindowEvent & event)
+bool rd::GameState::onWindowEvent(const rd::WindowEvent & event)
 {
-    if (event.getEvent() == rd::RdWindowEvent::WINDOW_CLOSE)
+    if (event.getEvent() == rd::WindowEvent::WINDOW_CLOSE)
     {
         RD_DEBUG("Exit was triggered!\n");
         received_exit = true;
@@ -298,7 +298,7 @@ bool rd::GameState::onWindowEvent(const rd::RdWindowEvent & event)
     return false;
 }
 
-bool rd::GameState::onImageArrived(rd::RdImageManager *manager)
+bool rd::GameState::onImageArrived(rd::ImageManager *manager)
 {
     //-- Don't know if this is safe enough or some mutex is required
     screenManager->update(GameScreen::PARAM_CAMERA_FRAME, manager->getImage());

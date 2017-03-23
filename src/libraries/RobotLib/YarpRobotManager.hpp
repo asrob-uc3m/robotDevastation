@@ -33,11 +33,11 @@ namespace rd{
  * @brief The Robot Manager for the Rd1 robot.
  *
  */
-class RdYarpRobotManager : public RdRobotManager
+class YarpRobotManager : public RobotManager
 {
     public:
 
-        RdYarpRobotManager(const std::string& robotName);
+        YarpRobotManager(const std::string& robotName);
 
         //-- Robot movement related functions    
         virtual bool moveForward(int velocity = UNUSED);

@@ -33,7 +33,7 @@ namespace rd{
  * along with the data relevant to the event triggered (i.e. what key was pressed)
  *
  */
-class RdSDLInputManager : public RdInputManager
+class SDLInputManager : public InputManager
 {
     public:
         virtual bool start();
@@ -50,7 +50,7 @@ class RdSDLInputManager : public RdInputManager
         static bool RegisterManager();
 
         //! @brief Destructor. Used to reset the local static reference after destroying this manager
-        ~RdSDLInputManager();
+        ~SDLInputManager();
 
         //! @brief String that identifies this manager
         static const std::string id;
@@ -69,7 +69,7 @@ class RdSDLInputManager : public RdInputManager
          * Constructor for this class is private, since the singleton can only be instantiated once,
          * and the instantiation is done at the getInputManager() method
          */
-        RdSDLInputManager();
+        SDLInputManager();
 
         // This static function is the real callback function.  It's compatible
         // with the C-style CallbackFunctionPtr.  The extra void* is used to
@@ -77,7 +77,7 @@ class RdSDLInputManager : public RdInputManager
         static int staticInputCallback(void *userdata, SDL_Event *event)
         {
             // Get back into the class by treating p as the "this" pointer.
-            if( ! ((RdSDLInputManager *)userdata) -> inputCallback(event) )
+            if( ! ((SDLInputManager *)userdata) -> inputCallback(event) )
                 return 1;
             return 0;
         }
@@ -86,7 +86,7 @@ class RdSDLInputManager : public RdInputManager
 
 
         //! @brief Reference to this manager (unique instance)
-        static RdSDLInputManager * uniqueInstance;
+        static SDLInputManager * uniqueInstance;
 
         bool stopped;
 };

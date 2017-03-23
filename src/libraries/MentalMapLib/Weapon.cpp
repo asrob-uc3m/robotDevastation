@@ -1,10 +1,10 @@
 #include "Weapon.hpp"
 
 
-const int rd::RdWeapon::SCOPE_X = 640/2;
-const int rd::RdWeapon::SCOPE_Y = 480/2;
+const int rd::Weapon::SCOPE_X = 640/2;
+const int rd::Weapon::SCOPE_Y = 480/2;
 
-rd::RdWeapon::RdWeapon()
+rd::Weapon::Weapon()
 {
     //-- Dummy weapon
     name = "dummy";
@@ -13,7 +13,7 @@ rd::RdWeapon::RdWeapon()
     current_ammo = -1;
 }
 
-rd::RdWeapon::RdWeapon(std::string name, int damage, int max_ammo)
+rd::Weapon::Weapon(std::string name, int damage, int max_ammo)
 {
     this->name = name;
     this->damage = damage;
@@ -21,7 +21,7 @@ rd::RdWeapon::RdWeapon(std::string name, int damage, int max_ammo)
     this->current_ammo = max_ammo;
 }
 
-bool rd::RdWeapon::canShootTarget(rd::RdTarget &target)
+bool rd::Weapon::canShootTarget(rd::Target &target)
 {
     //-- Calculate target limits:
     int target_top_left_x = target.getPos().x - target.getDimensions().x / 2;
@@ -40,34 +40,34 @@ bool rd::RdWeapon::canShootTarget(rd::RdTarget &target)
         return false;
 }
 
-bool rd::RdWeapon::reload()
+bool rd::Weapon::reload()
 {
     current_ammo = max_ammo;
     return true;
 }
 
-std::string rd::RdWeapon::getName()
+std::string rd::Weapon::getName()
 {
     return name;
 }
 
-int rd::RdWeapon::getDamage()
+int rd::Weapon::getDamage()
 {
     return damage;
 }
 
-int rd::RdWeapon::getCurrentAmmo()
+int rd::Weapon::getCurrentAmmo()
 {
     return current_ammo;
 }
 
-bool rd::RdWeapon::setCurrentAmmo(int current_ammo)
+bool rd::Weapon::setCurrentAmmo(int current_ammo)
 {
     this->current_ammo = current_ammo;
     return true;
 }
 
-int rd::RdWeapon::getMaxAmmo()
+int rd::Weapon::getMaxAmmo()
 {
     return max_ammo;
 }

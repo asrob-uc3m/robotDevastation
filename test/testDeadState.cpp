@@ -100,28 +100,28 @@ class DeadStateTest : public testing::Test
 
             //-- Register managers to be used:
             MockupNetworkManager::RegisterManager();
-            RdMockupImageManager::RegisterManager();
+            MockupImageManager::RegisterManager();
             MockupInputManager::RegisterManager();
             MockupAudioManager::RegisterManager();
 
             //-- Create managers
-            networkManager = RdNetworkManager::getNetworkManager("MOCKUP");
+            networkManager = NetworkManager::getNetworkManager("MOCKUP");
             mockupNetworkManager = dynamic_cast<MockupNetworkManager *>(networkManager);
-            ASSERT_NE((RdNetworkManager*) NULL, networkManager);
+            ASSERT_NE((NetworkManager*) NULL, networkManager);
             ASSERT_NE((MockupNetworkManager*) NULL, mockupNetworkManager);
 
-            imageManager = RdImageManager::getImageManager("MOCKUP");
-            mockupImageManager = dynamic_cast<RdMockupImageManager *>(imageManager);
-            ASSERT_NE((RdImageManager*) NULL, imageManager);
-            ASSERT_NE((RdMockupImageManager*) NULL, mockupImageManager);
+            imageManager = ImageManager::getImageManager("MOCKUP");
+            mockupImageManager = dynamic_cast<MockupImageManager *>(imageManager);
+            ASSERT_NE((ImageManager*) NULL, imageManager);
+            ASSERT_NE((MockupImageManager*) NULL, mockupImageManager);
             //-- Load test image
-            RdImage test_frame;
+            Image test_frame;
             yarp::sig::file::read(test_frame, rf.findFileByName("../images/test_frame_qr.ppm"));
             mockupImageManager->receiveImage(test_frame);
 
-            inputManager = RdInputManager::getInputManager("MOCKUP");
+            inputManager = InputManager::getInputManager("MOCKUP");
             mockupInputManager = dynamic_cast<MockupInputManager *>(inputManager);
-            ASSERT_NE((RdInputManager*) NULL, inputManager);
+            ASSERT_NE((InputManager*) NULL, inputManager);
             ASSERT_NE((MockupInputManager*) NULL, mockupInputManager);
 
             audioManager = AudioManager::getAudioManager("MOCKUP");
@@ -131,21 +131,21 @@ class DeadStateTest : public testing::Test
             mockupAudioManager->load("RD_THEME","RD_THEME", AudioManager::MUSIC);
             mockupAudioManager->load("RD_DEAD","RD_DEAD", AudioManager::MUSIC);
 
-            mentalMap = RdMentalMap::getMentalMap();
-            ASSERT_NE((RdMentalMap*) NULL, mentalMap);
+            mentalMap = MentalMap::getMentalMap();
+            ASSERT_NE((MentalMap*) NULL, mentalMap);
             ASSERT_TRUE(mentalMap->configure(1));
 
             //-- Insert dead player for testing
-            std::vector<RdPlayer> players;
-            players.push_back(RdPlayer(1,"test_player", 0,MAX_HEALTH,0,0) );
+            std::vector<Player> players;
+            players.push_back(Player(1,"test_player", 0,MAX_HEALTH,0,0) );
             ASSERT_TRUE(mentalMap->updatePlayers(players));
-            mentalMap->addWeapon(RdWeapon("Default gun", 10, 5));
+            mentalMap->addWeapon(Weapon("Default gun", 10, 5));
             networkManager->configure("player", players[0]);
 
-            mockupRobotManager = new RdMockupRobotManager("MOCKUP");
-            robotManager = (RdRobotManager *) mockupRobotManager;
-            ASSERT_NE((RdMockupRobotManager*) NULL, mockupRobotManager);
-            ASSERT_NE((RdRobotManager*) NULL, robotManager);
+            mockupRobotManager = new MockupRobotManager("MOCKUP");
+            robotManager = (RobotManager *) mockupRobotManager;
+            ASSERT_NE((MockupRobotManager*) NULL, mockupRobotManager);
+            ASSERT_NE((RobotManager*) NULL, robotManager);
 
             screenManager = ScreenManager::getScreenManager("SDL");
             ASSERT_NE((ScreenManager*) NULL, screenManager);
@@ -158,7 +158,7 @@ class DeadStateTest : public testing::Test
                                               mentalMap, robotManager, audioManager,
                                               screenManager);
             initState->setup();
-            dynamic_cast<RdInputEventListener *>(initState)->onKeyUp(RdKey::KEY_ENTER);
+            dynamic_cast<InputEventListener *>(initState)->onKeyUp(Key::KEY_ENTER);
             initState->loop();
             initState->cleanup();
             delete initState;
@@ -186,16 +186,16 @@ class DeadStateTest : public testing::Test
 
 
             //-- Delete things
-            RdNetworkManager::destroyNetworkManager();
+            NetworkManager::destroyNetworkManager();
             networkManager = NULL;
             mockupNetworkManager = NULL;
-            RdImageManager::destroyImageManager();
+            ImageManager::destroyImageManager();
             imageManager = NULL;
             mockupImageManager = NULL;
-            RdInputManager::destroyInputManager();
+            InputManager::destroyInputManager();
             AudioManager::destroyAudioManager();
 
-            RdMentalMap::destroyMentalMap();
+            MentalMap::destroyMentalMap();
 
             delete mockupRobotManager;
             mockupRobotManager = NULL;
@@ -210,22 +210,22 @@ class DeadStateTest : public testing::Test
     protected:
         FiniteStateMachine *fsm;
 
-        RdNetworkManager * networkManager;
+        NetworkManager * networkManager;
         MockupNetworkManager * mockupNetworkManager;
 
-        RdImageManager * imageManager;
-        RdMockupImageManager * mockupImageManager;
+        ImageManager * imageManager;
+        MockupImageManager * mockupImageManager;
 
-        RdInputManager * inputManager;
+        InputManager * inputManager;
         MockupInputManager * mockupInputManager;
 
         AudioManager * audioManager;
         MockupAudioManager * mockupAudioManager;
 
-        RdMentalMap * mentalMap;
+        MentalMap * mentalMap;
 
-        RdMockupRobotManager * mockupRobotManager;
-        RdRobotManager * robotManager;
+        MockupRobotManager * mockupRobotManager;
+        RobotManager * robotManager;
 
         ScreenManager * screenManager;
 
@@ -293,14 +293,14 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
 
     //-- When enter is pressed, but the countdown is still active, input is ignored
     yarp::os::Time::delay(0.5);
-    mockupInputManager->sendKeyPress(RdKey::KEY_ENTER);
+    mockupInputManager->sendKeyPress(Key::KEY_ENTER);
     yarp::os::Time::delay(0.5);
     ASSERT_EQ(dead_state_id, fsm->getCurrentState());
 
     //-- When time is up, and enter is pressed, the system should go to respawn state:
     yarp::os::Time::delay(10);
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
-    mockupInputManager->sendKeyPress(RdKey::KEY_ENTER);
+    mockupInputManager->sendKeyPress(Key::KEY_ENTER);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has restored things (health, enable stuff)
@@ -382,14 +382,14 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
 
     //-- When enter is pressed, but the countdown is still active, input is ignored
     yarp::os::Time::delay(0.5);
-    mockupInputManager->sendKeyPress(RdKey::KEY_ENTER);
+    mockupInputManager->sendKeyPress(Key::KEY_ENTER);
     yarp::os::Time::delay(0.5);
     ASSERT_EQ(dead_state_id, fsm->getCurrentState());
 
     //-- When time is up, and esc is pressed, the system should exit the game:
     yarp::os::Time::delay(10);
     ASSERT_EQ(1, mockupInputManager->getNumListeners());
-    mockupInputManager->sendKeyPress(RdKey::KEY_ESCAPE);
+    mockupInputManager->sendKeyPress(Key::KEY_ESCAPE);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has stopped things and it is in the final state (cleanup):

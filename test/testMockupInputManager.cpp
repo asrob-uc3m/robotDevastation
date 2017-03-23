@@ -32,15 +32,15 @@ class MockupInputManagerTest : public testing::Test
 TEST_F(MockupInputManagerTest, SingleControlKeyPressSentAndReceivedCorrectly)
 {
     MockupInputEventListener listener;
-    RdInputEventListener * plistener = (RdInputEventListener *) &listener;
-    ASSERT_TRUE(((RdInputManager*)inputManager)->addInputEventListener(plistener));
+    InputEventListener * plistener = (InputEventListener *) &listener;
+    ASSERT_TRUE(((InputManager*)inputManager)->addInputEventListener(plistener));
     ASSERT_EQ(1, inputManager->getNumListeners());
 
     ASSERT_TRUE(inputManager->start());
     ASSERT_FALSE(inputManager->isStopped());
 
     //-- Fake a control keypress
-    RdKey enter_key(RdKey::KEY_ENTER);
+    Key enter_key(Key::KEY_ENTER);
     ASSERT_TRUE(inputManager->sendKeyPress(enter_key));
 
     //-- Check if keypress was received
@@ -48,8 +48,8 @@ TEST_F(MockupInputManagerTest, SingleControlKeyPressSentAndReceivedCorrectly)
     ASSERT_EQ(1,listener.getNumKeyUpPresses());
 
     //-- Check if keypress received is correct
-    std::vector<RdKey> keys_down_received = listener.getStoredKeyDownPresses();
-    std::vector<RdKey> keys_up_received = listener.getStoredKeyDownPresses();
+    std::vector<Key> keys_down_received = listener.getStoredKeyDownPresses();
+    std::vector<Key> keys_up_received = listener.getStoredKeyDownPresses();
     ASSERT_EQ(1,keys_down_received.size());
     ASSERT_EQ(1,keys_up_received.size());
 
@@ -66,14 +66,14 @@ TEST_F(MockupInputManagerTest, SingleControlKeyPressSentAndReceivedCorrectly)
 TEST_F(MockupInputManagerTest, SinglePrintableKeyPressSentAndReceivedCorrectly)
 {
     MockupInputEventListener listener;
-    RdInputEventListener * plistener = (RdInputEventListener *) &listener;
-    ASSERT_TRUE(((RdInputManager*)inputManager)->addInputEventListener(plistener));
+    InputEventListener * plistener = (InputEventListener *) &listener;
+    ASSERT_TRUE(((InputManager*)inputManager)->addInputEventListener(plistener));
 
     ASSERT_TRUE(inputManager->start());
     ASSERT_FALSE(inputManager->isStopped());
 
     //-- Fake a control keypress
-    RdKey d_key('d');
+    Key d_key('d');
     ASSERT_TRUE(inputManager->sendKeyPress(d_key));
 
     //-- Check if keypress was received
@@ -81,8 +81,8 @@ TEST_F(MockupInputManagerTest, SinglePrintableKeyPressSentAndReceivedCorrectly)
     ASSERT_EQ(1,listener.getNumKeyUpPresses());
 
     //-- Check if keypress received is correct
-    std::vector<RdKey> keys_down_received = listener.getStoredKeyDownPresses();
-    std::vector<RdKey> keys_up_received = listener.getStoredKeyDownPresses();
+    std::vector<Key> keys_down_received = listener.getStoredKeyDownPresses();
+    std::vector<Key> keys_up_received = listener.getStoredKeyDownPresses();
     ASSERT_EQ(1,keys_down_received.size());
     ASSERT_EQ(1,keys_up_received.size());
 
@@ -98,15 +98,15 @@ TEST_F(MockupInputManagerTest, SinglePrintableKeyPressSentAndReceivedCorrectly)
 TEST_F(MockupInputManagerTest, SeveralControlKeyPressesSentAndReceivedCorrectly)
 {
     MockupInputEventListener listener;
-    RdInputEventListener * plistener = (RdInputEventListener *) &listener;
-    ASSERT_TRUE(((RdInputManager*)inputManager)->addInputEventListener(plistener));
+    InputEventListener * plistener = (InputEventListener *) &listener;
+    ASSERT_TRUE(((InputManager*)inputManager)->addInputEventListener(plistener));
 
     ASSERT_TRUE(inputManager->start());
     ASSERT_FALSE(inputManager->isStopped());
 
     //-- Fake a control keypress
-    RdKey enter_key(RdKey::KEY_ENTER);
-    RdKey arrow_key(RdKey::KEY_ARROW_DOWN);
+    Key enter_key(Key::KEY_ENTER);
+    Key arrow_key(Key::KEY_ARROW_DOWN);
     ASSERT_TRUE(inputManager->sendKeyPress(enter_key));
     ASSERT_TRUE(inputManager->sendKeyPress(arrow_key));
 
@@ -115,8 +115,8 @@ TEST_F(MockupInputManagerTest, SeveralControlKeyPressesSentAndReceivedCorrectly)
     ASSERT_EQ(2,listener.getNumKeyUpPresses());
 
     //-- Check if keypress received is correct
-    std::vector<RdKey> keys_down_received = listener.getStoredKeyDownPresses();
-    std::vector<RdKey> keys_up_received = listener.getStoredKeyDownPresses();
+    std::vector<Key> keys_down_received = listener.getStoredKeyDownPresses();
+    std::vector<Key> keys_up_received = listener.getStoredKeyDownPresses();
     ASSERT_EQ(2,keys_down_received.size());
     ASSERT_EQ(2,keys_up_received.size());
 
@@ -134,15 +134,15 @@ TEST_F(MockupInputManagerTest, SeveralControlKeyPressesSentAndReceivedCorrectly)
 TEST_F(MockupInputManagerTest, SeveralPrintableKeyPressesSentAndReceivedCorrectly)
 {
     MockupInputEventListener listener;
-    RdInputEventListener * plistener = (RdInputEventListener *) &listener;
-    ASSERT_TRUE(((RdInputManager*)inputManager)->addInputEventListener(plistener));
+    InputEventListener * plistener = (InputEventListener *) &listener;
+    ASSERT_TRUE(((InputManager*)inputManager)->addInputEventListener(plistener));
 
     ASSERT_TRUE(inputManager->start());
     ASSERT_FALSE(inputManager->isStopped());
 
     //-- Fake a control keypress
-    RdKey r_key('r');
-    RdKey d_key('d');
+    Key r_key('r');
+    Key d_key('d');
     ASSERT_TRUE(inputManager->sendKeyPress(r_key));
     ASSERT_TRUE(inputManager->sendKeyPress(d_key));
 
@@ -151,8 +151,8 @@ TEST_F(MockupInputManagerTest, SeveralPrintableKeyPressesSentAndReceivedCorrectl
     ASSERT_EQ(2,listener.getNumKeyUpPresses());
 
     //-- Check if keypress received is correct
-    std::vector<RdKey> keys_down_received = listener.getStoredKeyDownPresses();
-    std::vector<RdKey> keys_up_received = listener.getStoredKeyDownPresses();
+    std::vector<Key> keys_down_received = listener.getStoredKeyDownPresses();
+    std::vector<Key> keys_up_received = listener.getStoredKeyDownPresses();
     ASSERT_EQ(2,keys_down_received.size());
     ASSERT_EQ(2,keys_up_received.size());
 
@@ -170,15 +170,15 @@ TEST_F(MockupInputManagerTest, SeveralPrintableKeyPressesSentAndReceivedCorrectl
 TEST_F(MockupInputManagerTest, KeyUpAndKeyDownSentAndReceivedCorrectly)
 {
     MockupInputEventListener listener;
-    RdInputEventListener * plistener = (RdInputEventListener *) &listener;
-    ASSERT_TRUE(((RdInputManager*)inputManager)->addInputEventListener(plistener));
+    InputEventListener * plistener = (InputEventListener *) &listener;
+    ASSERT_TRUE(((InputManager*)inputManager)->addInputEventListener(plistener));
 
     ASSERT_TRUE(inputManager->start());
     ASSERT_FALSE(inputManager->isStopped());
 
     //-- Fake a key down
-    RdKey enter_key(RdKey::KEY_ENTER);
-    RdKey d_key('d');
+    Key enter_key(Key::KEY_ENTER);
+    Key d_key('d');
     ASSERT_TRUE(inputManager->sendKeyDown(enter_key));
     ASSERT_TRUE(inputManager->sendKeyDown(d_key));
 
@@ -195,8 +195,8 @@ TEST_F(MockupInputManagerTest, KeyUpAndKeyDownSentAndReceivedCorrectly)
     ASSERT_EQ(2,listener.getNumKeyUpPresses());
 
     //-- Check if keypress received is correct
-    std::vector<RdKey> keys_down_received = listener.getStoredKeyDownPresses();
-    std::vector<RdKey> keys_up_received = listener.getStoredKeyDownPresses();
+    std::vector<Key> keys_down_received = listener.getStoredKeyDownPresses();
+    std::vector<Key> keys_up_received = listener.getStoredKeyDownPresses();
     ASSERT_EQ(2,keys_down_received.size());
     ASSERT_EQ(2,keys_up_received.size());
 
@@ -214,22 +214,22 @@ TEST_F(MockupInputManagerTest, KeyUpAndKeyDownSentAndReceivedCorrectly)
 TEST_F(MockupInputManagerTest, WindowEventSentAndReceivedCorrectly)
 {
     MockupInputEventListener listener;
-    RdInputEventListener * plistener = (RdInputEventListener *) &listener;
-    ASSERT_TRUE(((RdInputManager*)inputManager)->addInputEventListener(plistener));
+    InputEventListener * plistener = (InputEventListener *) &listener;
+    ASSERT_TRUE(((InputManager*)inputManager)->addInputEventListener(plistener));
     ASSERT_EQ(1, inputManager->getNumListeners());
 
     ASSERT_TRUE(inputManager->start());
     ASSERT_FALSE(inputManager->isStopped());
 
     //-- Fake a window event
-    RdWindowEvent window_event(RdWindowEvent::WINDOW_CLOSE);
+    WindowEvent window_event(WindowEvent::WINDOW_CLOSE);
     ASSERT_TRUE(inputManager->sendWindowEvent(window_event));
 
     //-- Check if window event was received
     ASSERT_EQ(1,listener.getNumWindowEvents());
 
     //-- Check if window event received is correct
-    std::vector<RdWindowEvent> window_events_received = listener.getStoredWindowEvents();
+    std::vector<WindowEvent> window_events_received = listener.getStoredWindowEvents();
     ASSERT_EQ(1,window_events_received.size());
 
     ASSERT_EQ(window_event.getEvent(), window_events_received[0].getEvent());

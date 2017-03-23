@@ -27,7 +27,7 @@ namespace rd{
  *
  */
 
-class MockupNetworkManager : public RdNetworkManager
+class MockupNetworkManager : public NetworkManager
 {
     public:
         //-- Creation and configuration
@@ -49,11 +49,11 @@ class MockupNetworkManager : public RdNetworkManager
         virtual bool stop();
 
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, RdPlayer value);
+        virtual bool configure(std::string parameter, Player value);
 
         //-- RdServer API
         //--------------------------------------------------------------------------------------------
-        virtual bool sendPlayerHit(RdPlayer player, int damage);
+        virtual bool sendPlayerHit(Player player, int damage);
         virtual bool login();
         virtual bool logout();
         virtual bool keepAlive();
@@ -63,8 +63,8 @@ class MockupNetworkManager : public RdNetworkManager
         bool isLoggedIn();
         bool isStopped();
 
-        bool setPlayerData(std::vector<RdPlayer> game_players);
-        std::vector<RdPlayer> getPlayerData();
+        bool setPlayerData(std::vector<Player> game_players);
+        std::vector<Player> getPlayerData();
         bool sendPlayerData();
         bool setLoggedIn(bool logged_in);
 
@@ -84,9 +84,9 @@ class MockupNetworkManager : public RdNetworkManager
         //-- Required stuff
         bool logged_in;
         bool stopped;
-        RdPlayer player;
-        std::vector<RdPlayer> game_players;
-        std::map <int, RdPlayer> players_dic;
+        Player player;
+        std::vector<Player> game_players;
+        std::map <int, Player> players_dic;
 
 };
 }

@@ -16,7 +16,7 @@
 
 namespace rd {
 
-class DeadScreen : public RdScreen
+class DeadScreen : public Screen
 {
     public:
         DeadScreen();
@@ -25,7 +25,7 @@ class DeadScreen : public RdScreen
         virtual bool drawScreen(void *screen);
         virtual ~DeadScreen();
         virtual bool update(std::string parameter, std::string value);
-        virtual bool update(std::string parameter, RdImage value);
+        virtual bool update(std::string parameter, Image value);
 
         //-- Available parameters:
         static const std::string PARAM_REMAINING_TIME;
@@ -43,7 +43,7 @@ class DeadScreen : public RdScreen
         static const SDL_Color TEXT_COLOR;
 
         std::string remaining_time;
-        RdImage last_camera_frame;
+        Image last_camera_frame;
 };
 
 }
