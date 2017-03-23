@@ -2,17 +2,11 @@
 #include <yarp/os/Property.h>
 #include <yarp/dev/PolyDriver.h>
 #include <yarp/os/Network.h>
+#include <yarp/os/Time.h>
 
 #include "ImageManager.hpp"
 #include "YarpImageManager.hpp"
 #include "MockImageEventListener.hpp"
-
-#ifdef WIN32
-#include <Windows.h>
-#define MY_SLEEP(seconds) Sleep(seconds * 1000)
-#else
-#define MY_SLEEP(seconds) sleep(seconds)
-#endif
 
 using namespace rd;
 
@@ -112,14 +106,14 @@ TEST_F( YarpImageManagerTest, YarpImageManagerWorks)
     ASSERT_TRUE(imageManager->start());
 
     //-- Wait for a image to arrive
-    MY_SLEEP(1);
+    yarp::os::Time::delay(1);
 
     //-- Check that a image didn't arrive
     EXPECT_EQ(0, listener.getImagesArrived());
 
     //-- Enable and wait for a image to arrive
     ASSERT_TRUE(imageManager->setEnabled(true));
-    MY_SLEEP(1);
+    yarp::os::Time::delay(1);
 
     //-- Check that a image arrived
     EXPECT_LE( 1, listener.getImagesArrived());
@@ -127,7 +121,7 @@ TEST_F( YarpImageManagerTest, YarpImageManagerWorks)
     //-- Check that disabling again works
     ASSERT_TRUE(imageManager->setEnabled(false));
     listener.resetImagesArrived();
-    MY_SLEEP(1);
+    yarp::os::Time::delay(1);
     EXPECT_EQ(0, listener.getImagesArrived());
 
     //-- Dettach the listener

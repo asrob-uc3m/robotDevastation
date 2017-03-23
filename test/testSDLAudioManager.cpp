@@ -1,15 +1,9 @@
 #include "gtest/gtest.h"
 #include <string>
-#include "yarp/os/ResourceFinder.h"
+#include <yarp/os/ResourceFinder.h>
+#include <yarp/os/Time.h>
 
 #include "SDLAudioManager.hpp"
-
-#ifdef WIN32
-#include <Windows.h>
-#define MY_SLEEP(seconds) Sleep(seconds * 1000)
-#else
-#define MY_SLEEP(seconds) sleep(seconds)
-#endif
 
 using namespace rd;
 
@@ -79,7 +73,7 @@ TEST_F( MockAudioManagerTest, AudioManagerPlaysOneSound )
     ASSERT_TRUE(audioManager->load(sound_bso_realpath, "bso", SDLAudioManager::MUSIC));
 
     EXPECT_TRUE(audioManager->play("bso", true));
-    MY_SLEEP(2);
+    yarp::os::Time::delay(2);
     EXPECT_TRUE(audioManager->stopMusic());
 }
 
@@ -91,9 +85,9 @@ TEST_F( MockAudioManagerTest, AudioManagerPlaysFx )
     ASSERT_TRUE(audioManager->load(sound_explosion_realpath, "explosion", SDLAudioManager::FX));
 
     EXPECT_TRUE(audioManager->play("shoot", false));
-    MY_SLEEP(1);
+    yarp::os::Time::delay(1);
     EXPECT_TRUE(audioManager->play("explosion", false));
-    MY_SLEEP(2);
+    yarp::os::Time::delay(2);
 }
 
 TEST_F( MockAudioManagerTest, AudioManagerPlaysAllSounds )
@@ -106,8 +100,8 @@ TEST_F( MockAudioManagerTest, AudioManagerPlaysAllSounds )
 
     EXPECT_TRUE(audioManager->play("bso", true));
     EXPECT_TRUE(audioManager->play("shoot", true));
-    MY_SLEEP(1);
+    yarp::os::Time::delay(1);
     EXPECT_TRUE(audioManager->play("explosion", false));
-    MY_SLEEP(4);
+    yarp::os::Time::delay(4);
     EXPECT_TRUE(audioManager->stopMusic());
 }
