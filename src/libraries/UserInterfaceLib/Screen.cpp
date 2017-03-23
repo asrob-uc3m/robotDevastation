@@ -5,12 +5,6 @@ rd::Screen::Screen()
 
 }
 
-
-bool rd::Screen::drawScreen(void *screen)
-{
-    return false;
-}
-
 bool rd::Screen::update(std::string parameter, std::string value)
 {
     return true;
