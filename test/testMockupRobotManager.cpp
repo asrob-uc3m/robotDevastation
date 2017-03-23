@@ -6,7 +6,7 @@ using namespace rd;
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
-class RdMockupRobotManagerTest : public testing::Test
+class MockupRobotManagerTest : public testing::Test
 {
     public:
         virtual void SetUp()
@@ -27,11 +27,11 @@ class RdMockupRobotManagerTest : public testing::Test
 
 };
 
-const std::string RdMockupRobotManagerTest::robot_name = "MockupRobot";
+const std::string MockupRobotManagerTest::robot_name = "MockupRobot";
 
 //-- Things that are being tested
 //-----------------------------------------------------------------------------------------------------
-TEST_F(RdMockupRobotManagerTest, RdMockupRobotConnectionIsOk)
+TEST_F(MockupRobotManagerTest, MockupRobotConnectionIsOk)
 {
     ASSERT_FALSE(robotManager->isConnected());
     ASSERT_TRUE(robotManager->connect());
@@ -40,7 +40,7 @@ TEST_F(RdMockupRobotManagerTest, RdMockupRobotConnectionIsOk)
     ASSERT_FALSE(robotManager->isConnected());
 }
 
-TEST_F(RdMockupRobotManagerTest, RdMockupRobotCannotMoveIfDisconnected)
+TEST_F(MockupRobotManagerTest, MockupRobotCannotMoveIfDisconnected)
 {
     EXPECT_FALSE(robotManager->moveForward());
     EXPECT_FALSE(robotManager->moveBackwards());
@@ -55,7 +55,7 @@ TEST_F(RdMockupRobotManagerTest, RdMockupRobotCannotMoveIfDisconnected)
     EXPECT_FALSE(robotManager->isCameraMoving());
 }
 
-TEST_F(RdMockupRobotManagerTest, RdMockupRobotCannotMoveIfDisabled)
+TEST_F(MockupRobotManagerTest, MockupRobotCannotMoveIfDisabled)
 {
     ASSERT_FALSE(robotManager->isConnected());
     ASSERT_TRUE(robotManager->connect());
@@ -78,7 +78,7 @@ TEST_F(RdMockupRobotManagerTest, RdMockupRobotCannotMoveIfDisabled)
     ASSERT_FALSE(robotManager->isConnected());
 }
 
-TEST_F(RdMockupRobotManagerTest, RdMockupRobotMoves)
+TEST_F(MockupRobotManagerTest, MockupRobotMoves)
 {
     ASSERT_TRUE(robotManager->connect());
     robotManager->setEnabled(true);
@@ -119,7 +119,7 @@ TEST_F(RdMockupRobotManagerTest, RdMockupRobotMoves)
     ASSERT_TRUE(robotManager->disconnect());
 }
 
-TEST_F(RdMockupRobotManagerTest, RdMockupRobotCameraMoves)
+TEST_F(MockupRobotManagerTest, MockupRobotCameraMoves)
 {
     ASSERT_TRUE(robotManager->connect());
     robotManager->setEnabled(true);

@@ -1,5 +1,5 @@
 /***
- * testRdInputManager
+ * testInputManager
  *
  * Test class for testing the input manager and listener classes
  *
@@ -25,10 +25,10 @@ bool finished = false;
 int x_pos = 0;
 int y_pos = 0;
 
-class RdTestEventListener : public InputEventListener
+class TestEventListener : public InputEventListener
 {
     public:
-        RdTestEventListener()
+        TestEventListener()
         {
             SDLAudioManager::RegisterManager();
             audioManager = AudioManager::getAudioManager("SDL");
@@ -42,7 +42,7 @@ class RdTestEventListener : public InputEventListener
             audioManager->load( "../sounds/01_milshot.wav", "shoot", SDLAudioManager::FX);
         }
 
-        ~RdTestEventListener()
+        ~TestEventListener()
         {
             SDLAudioManager::destroyAudioManager();
         }
@@ -204,7 +204,7 @@ int main(void)
     }
 
     //-- Set event listener
-    RdTestEventListener listener;
+    TestEventListener listener;
     inputManager->addInputEventListener(&listener);
     inputManager->start();
 

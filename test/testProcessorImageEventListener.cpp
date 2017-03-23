@@ -14,7 +14,7 @@ using namespace rd;
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
-class RdProcessorImageEventListenerTest : public testing::Test
+class ProcessorImageEventListenerTest : public testing::Test
 {
     public:
         virtual void SetUp()
@@ -63,8 +63,8 @@ class RdProcessorImageEventListenerTest : public testing::Test
         Image bad_image;
 };
 
-const std::string RdProcessorImageEventListenerTest::image_filename = "../images/test_target.ppm";
-const std::string RdProcessorImageEventListenerTest::bad_image_filename = "../images/test_target_bad.ppm";
+const std::string ProcessorImageEventListenerTest::image_filename = "../images/test_target.ppm";
+const std::string ProcessorImageEventListenerTest::bad_image_filename = "../images/test_target_bad.ppm";
 
 void compare_targets(Target target1, Target target2, int threshold = 20)
 {
@@ -75,7 +75,7 @@ void compare_targets(Target target1, Target target2, int threshold = 20)
     ASSERT_NEAR(target1.getDimensions().y, target2.getDimensions().y, threshold);
 }
 
-TEST_F(RdProcessorImageEventListenerTest, TargetDetectionWorks)
+TEST_F(ProcessorImageEventListenerTest, TargetDetectionWorks)
 {
     //-- Expected targets:
     Target target1(1, Vector2d(200, 200), Vector2d(220,220));
@@ -88,7 +88,7 @@ TEST_F(RdProcessorImageEventListenerTest, TargetDetectionWorks)
     yarp::os::Time::delay(0.5);
 
     //-- Check detected targets:
-    std::vector<Target> targets_detected = RdProcessorImageEventListenerTest::mentalMap->getTargets();
+    std::vector<Target> targets_detected = ProcessorImageEventListenerTest::mentalMap->getTargets();
     ASSERT_EQ(2, targets_detected.size());
 
     if (targets_detected[0].getPlayerId() == target1.getPlayerId())
@@ -104,7 +104,7 @@ TEST_F(RdProcessorImageEventListenerTest, TargetDetectionWorks)
 
 }
 
-TEST_F(RdProcessorImageEventListenerTest, BadQRsAreIgnored)
+TEST_F(ProcessorImageEventListenerTest, BadQRsAreIgnored)
 {
     //-- Send image to image manager
     ASSERT_TRUE(imageManager->start());
@@ -113,6 +113,6 @@ TEST_F(RdProcessorImageEventListenerTest, BadQRsAreIgnored)
     yarp::os::Time::delay(0.5);
 
     //-- Check detected targets:
-    std::vector<Target> targets_detected = RdProcessorImageEventListenerTest::mentalMap->getTargets();
+    std::vector<Target> targets_detected = ProcessorImageEventListenerTest::mentalMap->getTargets();
     ASSERT_EQ(0, targets_detected.size());
 }

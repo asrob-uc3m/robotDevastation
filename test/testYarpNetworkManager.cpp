@@ -1,5 +1,5 @@
 /***
- * testRdYarpNetworkManager
+ * testYarpNetworkManager
  *
  * Test for testing the client interface with the server
  *
@@ -18,10 +18,10 @@
 
 using namespace rd;
 
-class RunningRdServerThread: public yarp::os::Thread
+class RunningServerThread: public yarp::os::Thread
 {
     public:
-        RunningRdServerThread(yarp::os::ResourceFinder& rf) {
+        RunningServerThread(yarp::os::ResourceFinder& rf) {
             this->rf = rf;
         }
 
@@ -36,7 +36,7 @@ class RunningRdServerThread: public yarp::os::Thread
             RD_DEBUG("Module stopped\n");
         }
 
-        virtual ~RunningRdServerThread() {}
+        virtual ~RunningServerThread() {}
 
     private:
         yarp::os::ResourceFinder rf;
@@ -45,7 +45,7 @@ class RunningRdServerThread: public yarp::os::Thread
         char** argv;
 };
 
-class RdYarpNetworkManagerTest : public testing::Test
+class YarpNetworkManagerTest : public testing::Test
 {
     public:    
         virtual void SetUp()
@@ -59,7 +59,7 @@ class RdYarpNetworkManagerTest : public testing::Test
 
             RD_DEBUG("Running rdServer\n");
             yarp::os::ResourceFinder rf;
-            rdServer = new RunningRdServerThread(rf);
+            rdServer = new RunningServerThread(rf);
             rdServer->start();
             yarp::os::Time::delay(1);
             RD_DEBUG("rdServer now running\n");
@@ -79,7 +79,7 @@ class RdYarpNetworkManagerTest : public testing::Test
 
     protected:
         NetworkManager * networkManager;
-        RunningRdServerThread * rdServer;
+        RunningServerThread * rdServer;
 
     private:
         int argc;
@@ -89,10 +89,10 @@ class RdYarpNetworkManagerTest : public testing::Test
 
 //-- Class for the setup of the enviroment for all the tests
 //----------------------------------------------------------------------------------------
-class RdYarpNetworkManagerEnvironment : public testing::Environment
+class YarpNetworkManagerEnvironment : public testing::Environment
 {
     public:
-        RdYarpNetworkManagerEnvironment(int argc, char ** argv)
+        YarpNetworkManagerEnvironment(int argc, char ** argv)
         {
         }
 
@@ -111,7 +111,7 @@ class RdYarpNetworkManagerEnvironment : public testing::Environment
 
 //-- Things that are being tested
 //-----------------------------------------------------------------------------------------------------
-TEST_F(RdYarpNetworkManagerTest, ManagerDoesNotStartIfNotConfigured)
+TEST_F(YarpNetworkManagerTest, ManagerDoesNotStartIfNotConfigured)
 {
     ASSERT_FALSE(networkManager->start());
     ASSERT_TRUE(networkManager->isStopped());
@@ -124,7 +124,7 @@ TEST_F(RdYarpNetworkManagerTest, ManagerDoesNotStartIfNotConfigured)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
-TEST_F(RdYarpNetworkManagerTest, NetworkManagerIsSingleton)
+TEST_F(YarpNetworkManagerTest, NetworkManagerIsSingleton)
 {
     NetworkManager * networkManager2 = NULL;
     networkManager2 = YarpNetworkManager::getNetworkManager();
@@ -134,7 +134,7 @@ TEST_F(RdYarpNetworkManagerTest, NetworkManagerIsSingleton)
     ASSERT_EQ(networkManager, networkManager2);
 }
 
-TEST_F(RdYarpNetworkManagerTest, NetworkManagerAPIWorks)
+TEST_F(YarpNetworkManagerTest, NetworkManagerAPIWorks)
 {
     MockupNetworkEventListener listener;
     NetworkEventListener * plistener = (NetworkEventListener *) &listener;
@@ -184,7 +184,7 @@ TEST_F(RdYarpNetworkManagerTest, NetworkManagerAPIWorks)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
-TEST_F(RdYarpNetworkManagerTest, DisconnectedIfNoKeepAlive)
+TEST_F(YarpNetworkManagerTest, DisconnectedIfNoKeepAlive)
 {
     MockupNetworkEventListener listener;
     NetworkEventListener * plistener = (NetworkEventListener *) &listener;
@@ -226,6 +226,6 @@ TEST_F(RdYarpNetworkManagerTest, DisconnectedIfNoKeepAlive)
 int main(int argc, char **argv)
 {
   testing::InitGoogleTest(&argc, argv);
-  testing::Environment* env = testing::AddGlobalTestEnvironment(new RdYarpNetworkManagerEnvironment(argc, argv));
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new YarpNetworkManagerEnvironment(argc, argv));
   return RUN_ALL_TESTS();
 }

@@ -9,7 +9,7 @@
 
 using namespace rd;
 
-class RdMentalMapTest : public testing::Test
+class MentalMapTest : public testing::Test
 {
     public:
         virtual void SetUp()
@@ -46,7 +46,7 @@ class RdMentalMapTest : public testing::Test
         MentalMap * mentalMap;
 };
 
-TEST_F( RdMentalMapTest, MentalMapIsSingleton)
+TEST_F( MentalMapTest, MentalMapIsSingleton)
 {
     MentalMap * map2 = NULL;
     map2 = MentalMap::getMentalMap();
@@ -56,7 +56,7 @@ TEST_F( RdMentalMapTest, MentalMapIsSingleton)
     ASSERT_EQ(mentalMap, map2);
 }
 
-TEST_F( RdMentalMapTest, ConfigureMentalMap)
+TEST_F( MentalMapTest, ConfigureMentalMap)
 {
     ASSERT_NE((MentalMap *)NULL, mentalMap);
 
@@ -79,7 +79,7 @@ TEST_F( RdMentalMapTest, ConfigureMentalMap)
 //-- Player-related
 //---------------------------------------------------------------------------------------
 
-TEST_F( RdMentalMapTest, UpdatePlayersUpdatesPlayers)
+TEST_F( MentalMapTest, UpdatePlayersUpdatesPlayers)
 {
     ASSERT_NE((MentalMap *)NULL, mentalMap);
 
@@ -183,7 +183,7 @@ TEST_F( RdMentalMapTest, UpdatePlayersUpdatesPlayers)
 
 }
 
-TEST_F( RdMentalMapTest, MyselfPointsToMe)
+TEST_F( MentalMapTest, MyselfPointsToMe)
 {
     ASSERT_NE((MentalMap *)NULL, mentalMap);
 
@@ -211,7 +211,7 @@ TEST_F( RdMentalMapTest, MyselfPointsToMe)
 }
 
 
-TEST_F( RdMentalMapTest, RespawnWorks)
+TEST_F( MentalMapTest, RespawnWorks)
 {
     ASSERT_NE((MentalMap *)NULL, mentalMap);
 
@@ -242,7 +242,7 @@ TEST_F( RdMentalMapTest, RespawnWorks)
 //-- Enemy-related
 //---------------------------------------------------------------------------------------
 
-TEST_F( RdMentalMapTest, UpdateTargetsUpdateTargets)
+TEST_F( MentalMapTest, UpdateTargetsUpdateTargets)
 {
     ASSERT_NE((MentalMap *)NULL, mentalMap);
 
@@ -277,7 +277,7 @@ TEST_F( RdMentalMapTest, UpdateTargetsUpdateTargets)
 
 }
 
-TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
+TEST_F( MentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
 {
     ASSERT_NE((MentalMap *)NULL, mentalMap);
 
@@ -333,12 +333,12 @@ TEST_F( RdMentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
 //-- Thread-safe functions
 //---------------------------------------------------------------------------------------
 
-//TEST_F( RdMentalMapTest, TargetsLockedWhenModified)
+//TEST_F( MentalMapTest, TargetsLockedWhenModified)
 //{
 //    ASSERT_TRUE(false);
 //}
 
-//TEST_F( RdMentalMapTest, PlayersLockedWhenModified)
+//TEST_F( MentalMapTest, PlayersLockedWhenModified)
 //{
 //    ASSERT_FALSE(true);
 //}

@@ -1,7 +1,7 @@
 /***
  * testSDLScreenManager
  *
- * Testing SDLScreenManager class, which deals with SDL output and RdScreen management
+ * Testing SDLScreenManager class, which deals with SDL output and Screen management
  *
  * This test is NOT AUTOMATIC, not suitable for running it with a CI server
  *
@@ -23,7 +23,7 @@ int main()
     ScreenManager * screenManager = ScreenManager::getScreenManager("SDL");
     screenManager->start();
 
-    //-- Create a RdScreen to check the ScreenManager
+    //-- Create a Screen to check the ScreenManager
     Screen * screen = new MockupScreen();
     screen->init();
     Screen * screen2 = new MockupScreen();

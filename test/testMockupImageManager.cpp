@@ -14,7 +14,7 @@ using namespace rd;
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
-class RdMockupImageManagerTest : public testing::Test
+class MockupImageManagerTest : public testing::Test
 {
     public:
         virtual void SetUp()
@@ -42,16 +42,16 @@ class RdMockupImageManagerTest : public testing::Test
 
 };
 
-const std::string RdMockupImageManagerTest::image_filename_raw = "../images/test_frame.ppm";
+const std::string MockupImageManagerTest::image_filename_raw = "../images/test_frame.ppm";
 
 //-- Class for the setup of the enviroment for all the tests
 //----------------------------------------------------------------------------------------
 //-- This opens the webcam in a port so that the imageManager can connect to it
 
-class RdMockupImageManagerEnvironment : public testing::Environment
+class MockupImageManagerEnvironment : public testing::Environment
 {
     public:
-        RdMockupImageManagerEnvironment(int argc, char ** argv)
+        MockupImageManagerEnvironment(int argc, char ** argv)
         {
             this->argc = argc;
             this->argv = argv;
@@ -78,7 +78,7 @@ class RdMockupImageManagerEnvironment : public testing::Environment
 //-- Things that are being tested
 //-----------------------------------------------------------------------------------------------------
 
-TEST_F(RdMockupImageManagerTest, RdMockupImageManagerNotificationWorks)
+TEST_F(MockupImageManagerTest, MockupImageManagerNotificationWorks)
 {
     //-- Create a mockup listener
     MockupImageEventListener listener;
@@ -95,7 +95,7 @@ TEST_F(RdMockupImageManagerTest, RdMockupImageManagerNotificationWorks)
 
     //-- Load test image
     Image test_image;
-    ASSERT_TRUE(yarp::sig::file::read(test_image, RdMockupImageManagerTest::image_filename));
+    ASSERT_TRUE(yarp::sig::file::read(test_image, MockupImageManagerTest::image_filename));
 
     //-- Check that an image didn't arrive
     EXPECT_FALSE(((MockupImageManager *) imageManager)->receiveImage(test_image));
@@ -132,6 +132,6 @@ TEST_F(RdMockupImageManagerTest, RdMockupImageManagerNotificationWorks)
 int main(int argc, char **argv)
 {
   testing::InitGoogleTest(&argc, argv);
-  testing::Environment* env = testing::AddGlobalTestEnvironment(new RdMockupImageManagerEnvironment(argc, argv));
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new MockupImageManagerEnvironment(argc, argv));
   return RUN_ALL_TESTS();
 }

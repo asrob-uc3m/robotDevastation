@@ -19,7 +19,7 @@ using namespace rd;
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
-class RdYarpImageManagerTest : public testing::Test
+class YarpImageManagerTest : public testing::Test
 {
     public:
         virtual void SetUp()
@@ -43,10 +43,10 @@ class RdYarpImageManagerTest : public testing::Test
 //----------------------------------------------------------------------------------------
 //-- This opens the webcam in a port so that the imageManager can connect to it
 
-class RdYarpImageManagerEnvironment : public testing::Environment
+class YarpImageManagerEnvironment : public testing::Environment
 {
     public:
-        RdYarpImageManagerEnvironment(int argc, char ** argv)
+        YarpImageManagerEnvironment(int argc, char ** argv)
         {
             this->argc = argc;
             this->argv = argv;
@@ -88,14 +88,14 @@ class RdYarpImageManagerEnvironment : public testing::Environment
         yarp::dev::PolyDriver cameraDevice;
 };
 
-const std::string RdYarpImageManagerEnvironment::camera_port_name = "/grabber";
+const std::string YarpImageManagerEnvironment::camera_port_name = "/grabber";
 
 
 
 //-- Things that are being tested
 //-----------------------------------------------------------------------------------------------------
 
-TEST_F( RdYarpImageManagerTest, RdYarpImageManagerWorks)
+TEST_F( YarpImageManagerTest, YarpImageManagerWorks)
 {
     //-- Create a mockup listener
     MockupImageEventListener listener;
@@ -104,7 +104,7 @@ TEST_F( RdYarpImageManagerTest, RdYarpImageManagerWorks)
     ASSERT_TRUE(imageManager->addImageEventListener(&listener));
 
     //-- Configure the camera port
-    ASSERT_TRUE(imageManager->configure("remote_img_port", RdYarpImageManagerEnvironment::camera_port_name));
+    ASSERT_TRUE(imageManager->configure("remote_img_port", YarpImageManagerEnvironment::camera_port_name));
     ASSERT_TRUE(imageManager->configure("local_img_port", "/asdf")); //-- Name given by me
 
     //-- Start the imageManager
@@ -141,6 +141,6 @@ TEST_F( RdYarpImageManagerTest, RdYarpImageManagerWorks)
 int main(int argc, char **argv)
 {
   testing::InitGoogleTest(&argc, argv);
-  testing::Environment* env = testing::AddGlobalTestEnvironment(new RdYarpImageManagerEnvironment(argc, argv));
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new YarpImageManagerEnvironment(argc, argv));
   return RUN_ALL_TESTS();
 }
