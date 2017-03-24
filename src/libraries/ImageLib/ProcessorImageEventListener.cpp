@@ -24,14 +24,14 @@ rd::ProcessorImageEventListener::~ProcessorImageEventListener()
 
 bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
 {
-    stored_image = manager->getImage();
+    received_image = manager->getImage();
     //images_arrived++;
     //RD_DEBUG("%d\n",images_arrived);
 
     if(!cameraInitialized)
     {
-        cameraWidth = stored_image.width();
-        cameraHeight = stored_image.height();
+        cameraWidth = received_image.width();
+        cameraHeight = received_image.height();
         cameraInitialized = true;
         rimage = (unsigned char*)malloc( cameraWidth * cameraHeight );
     }
@@ -43,7 +43,7 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
         for( unsigned x = 0; x < cameraWidth; x++ )
         {
             //Convert to Y800
-            int data = stored_image.pixel(x,y).r + stored_image.pixel(x,y).g + stored_image.pixel(x,y).b;
+            int data = received_image.pixel(x,y).r + received_image.pixel(x,y).g + received_image.pixel(x,y).b;
             data/=3;
             if( data < 0 )
                 data = 0;
@@ -99,21 +99,6 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
 
     mentalMap->updateTargets(targets);
     return true;
-}
-
-int rd::ProcessorImageEventListener::getImagesArrived()
-{
-    return images_arrived;
-}
-
-void rd::ProcessorImageEventListener::resetImagesArrived()
-{
-    images_arrived = 0;
-}
-
-rd::Image rd::ProcessorImageEventListener::getStoredImage()
-{
-    return stored_image;
 }
 
 bool rd::ProcessorImageEventListener::isInteger(std::string s)
