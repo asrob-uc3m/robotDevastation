@@ -30,17 +30,10 @@ class ProcessorImageEventListener : public ImageEventListener
 
         virtual bool onImageArrived( ImageManager * manager );
 
-        int getImagesArrived();
-        void resetImagesArrived();
-
-        Image getStoredImage();
-
 
     private:
         bool isInteger(std::string s);
-
-        int images_arrived;
-        Image stored_image;
+        Image received_image;
 
         int cameraWidth;
         int cameraHeight;
