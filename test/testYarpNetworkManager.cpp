@@ -70,6 +70,7 @@ class YarpNetworkManagerTestBase : public testing::Test
 
             RD_DEBUG("Running rdServer\n");
             rf = new yarp::os::ResourceFinder();
+            rf->setDefault("quiet", yarp::os::Value());
             rdServer.configure(*rf);
             rdServer.runModuleThreaded();
             RD_DEBUG("rdServer now running\n");

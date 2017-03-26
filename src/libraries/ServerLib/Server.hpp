@@ -49,6 +49,9 @@ class Server : public yarp::os::RFModule
         /** Watchdog period [s]. */
         double watchdog;
 
+        /** Disable stdout feedback. */
+        bool quiet;
+
         int serverStatus;
 
         std::map <int, Player> players;
