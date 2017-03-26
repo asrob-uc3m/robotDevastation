@@ -16,7 +16,44 @@
 
 #include "gtest/gtest.h"
 
+namespace rd
+{
+    class YarpNetworkManagerNoKeepAlive;
+}
+
+class rd::YarpNetworkManagerNoKeepAlive : public YarpNetworkManager
+{
+    public:
+        static bool RegisterManager();
+
+        static const std::string id;
+
+    protected:
+        void run()
+        {
+            // noop, overrides YarpNetworkManager::run
+        }
+
+    private:
+        YarpNetworkManagerNoKeepAlive() {}
+
+        static YarpNetworkManagerNoKeepAlive * uniqueInstance;
+};
+
 using namespace rd;
+
+YarpNetworkManagerNoKeepAlive * YarpNetworkManagerNoKeepAlive::uniqueInstance = NULL;
+const std::string YarpNetworkManagerNoKeepAlive::id = "YARP_NO_KEEP_ALIVE";
+
+bool YarpNetworkManagerNoKeepAlive::RegisterManager()
+{
+    if (uniqueInstance == NULL)
+    {
+        uniqueInstance = new YarpNetworkManagerNoKeepAlive();
+    }
+
+    return Register(uniqueInstance, id);
+}
 
 class YarpNetworkManagerTest : public testing::Test
 {
@@ -53,10 +90,43 @@ class YarpNetworkManagerTest : public testing::Test
         yarp::os::ResourceFinder * rf;
         NetworkManager * networkManager;
         Server rdServer;
+};
 
-    private:
-        int argc;
-        char ** argv;
+class YarpNetworkManagerNoKeepAliveTest : public testing::Test
+{
+    public:
+        virtual void SetUp()
+        {
+            ASSERT_TRUE(YarpNetworkManagerNoKeepAlive::RegisterManager());
+            networkManager = YarpNetworkManager::getNetworkManager();
+            ASSERT_TRUE(networkManager);
+
+            me = Player(0, "me", 100, 100, 0, 0);
+            other_player = Player(1, "dummy", 100, 100, 1, 0);
+
+            RD_DEBUG("Running rdServer\n");
+            rf = new yarp::os::ResourceFinder();
+            rdServer.configure(*rf);
+            rdServer.runModuleThreaded();
+            RD_DEBUG("rdServer now running\n");
+        }
+
+        virtual void TearDown()
+        {
+            RD_DEBUG("Stopping rdServer\n");
+            rdServer.stopModule(true);
+            ASSERT_TRUE(YarpNetworkManager::destroyNetworkManager());
+
+            delete rf;
+            rf = NULL;
+        }
+
+        Player me, other_player;
+
+    protected:
+        yarp::os::ResourceFinder * rf;
+        NetworkManager * networkManager;
+        Server rdServer;
 };
 
 
@@ -157,7 +227,7 @@ TEST_F(YarpNetworkManagerTest, NetworkManagerAPIWorks)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
-TEST_F(YarpNetworkManagerTest, DisconnectedIfNoKeepAlive)
+TEST_F(YarpNetworkManagerNoKeepAliveTest, DisconnectedIfNoKeepAlive)
 {
     MockNetworkEventListener listener;
     NetworkEventListener * plistener = &listener;
