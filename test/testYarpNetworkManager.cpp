@@ -55,13 +55,13 @@ bool YarpNetworkManagerNoKeepAlive::RegisterManager()
     return Register(uniqueInstance, id);
 }
 
-class YarpNetworkManagerTest : public testing::Test
+class YarpNetworkManagerTestBase : public testing::Test
 {
-    public:    
+    public:
         virtual void SetUp()
         {
-            ASSERT_TRUE(YarpNetworkManager::RegisterManager());
-            networkManager = YarpNetworkManager::getNetworkManager();
+            ASSERT_TRUE(registerNetworkManager());
+            networkManager = NetworkManager::getNetworkManager();
             ASSERT_TRUE(networkManager);
 
             me = Player(0, "me", 100, 100, 0, 0);
@@ -78,7 +78,7 @@ class YarpNetworkManagerTest : public testing::Test
         {
             RD_DEBUG("Stopping rdServer\n");
             rdServer.stopModule(true);
-            ASSERT_TRUE(YarpNetworkManager::destroyNetworkManager());
+            ASSERT_TRUE(NetworkManager::destroyNetworkManager());
 
             delete rf;
             rf = NULL;
@@ -87,46 +87,29 @@ class YarpNetworkManagerTest : public testing::Test
         Player me, other_player;
 
     protected:
+        virtual bool registerNetworkManager() = 0;
+
         yarp::os::ResourceFinder * rf;
         NetworkManager * networkManager;
         Server rdServer;
 };
 
-class YarpNetworkManagerNoKeepAliveTest : public testing::Test
+class YarpNetworkManagerTest : public YarpNetworkManagerTestBase
 {
-    public:
-        virtual void SetUp()
-        {
-            ASSERT_TRUE(YarpNetworkManagerNoKeepAlive::RegisterManager());
-            networkManager = YarpNetworkManager::getNetworkManager();
-            ASSERT_TRUE(networkManager);
-
-            me = Player(0, "me", 100, 100, 0, 0);
-            other_player = Player(1, "dummy", 100, 100, 1, 0);
-
-            RD_DEBUG("Running rdServer\n");
-            rf = new yarp::os::ResourceFinder();
-            rdServer.configure(*rf);
-            rdServer.runModuleThreaded();
-            RD_DEBUG("rdServer now running\n");
-        }
-
-        virtual void TearDown()
-        {
-            RD_DEBUG("Stopping rdServer\n");
-            rdServer.stopModule(true);
-            ASSERT_TRUE(YarpNetworkManager::destroyNetworkManager());
-
-            delete rf;
-            rf = NULL;
-        }
-
-        Player me, other_player;
-
     protected:
-        yarp::os::ResourceFinder * rf;
-        NetworkManager * networkManager;
-        Server rdServer;
+        virtual bool registerNetworkManager()
+        {
+            return YarpNetworkManager::RegisterManager();
+        }
+};
+
+class YarpNetworkManagerNoKeepAliveTest : public YarpNetworkManagerTestBase
+{
+    protected:
+        virtual bool registerNetworkManager()
+        {
+            return YarpNetworkManagerNoKeepAlive::RegisterManager();
+        }
 };
 
 
