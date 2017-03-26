@@ -7,8 +7,6 @@
 #include <string>  // std::string
 #include <string.h>  // strrchr
 
-namespace rdlib{
-
 //-- Thanks http://stackoverflow.com/questions/8487986/file-macro-shows-full-path
 #ifdef WIN32
 #define __REL_FILE__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
@@ -73,7 +71,4 @@ namespace rdlib{
 #define RD_DEBUG(...) { fprintf(stderr,BLUE); do{printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
                            printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET); }
 
-} //rdlib
-
 #endif  // __RD_MACROS_HPP__
-
