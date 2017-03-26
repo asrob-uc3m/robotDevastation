@@ -34,7 +34,7 @@ namespace rd{
  *
  */
 class YarpNetworkManager : public NetworkManager,
-                           public yarp::os::RateThread,
+                           private yarp::os::RateThread,
                            public yarp::os::TypedReaderCallback<yarp::os::Bottle>
 {
     public:

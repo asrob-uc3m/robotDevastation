@@ -13,6 +13,7 @@
 #include "YarpNetworkManager.hpp"
 #include "MockNetworkEventListener.hpp"
 #include "Server.hpp"
+#include "RpcResponder.hpp"
 
 #include "gtest/gtest.h"
 
@@ -232,7 +233,9 @@ TEST_F(YarpNetworkManagerNoKeepAliveTest, DisconnectedIfNoKeepAlive)
     listener.resetDataArrived();
 
     //-- Wait more than the timeout time
-    yarp::os::Time::delay(60+1); //-- This should be really hardcoded, but it is the fastest implementation right now
+    const int delay = RpcResponder::MAX_BELIEF * rdServer.getPeriod();
+    RD_INFO("Waiting %d + 1 seconds...\n", delay);
+    yarp::os::Time::delay(delay + 1);
 
     //-- Check that I'm no longer logged in
     players = listener.getStoredPlayers();

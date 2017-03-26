@@ -32,11 +32,18 @@ class Server : public yarp::os::RFModule
          */
         bool configure(yarp::os::ResourceFinder &rf);
 
+        /**
+         * Get the approximate periodicity at which updateModule() is called
+         * by runModule()
+         *
+         * @return period between successive calls to updateModule()
+         */
+        double getPeriod();
+
         virtual ~Server();
 
     protected:
         bool interruptModule();
-        double getPeriod();
         bool updateModule();
 
         /** Watchdog period [s]. */
