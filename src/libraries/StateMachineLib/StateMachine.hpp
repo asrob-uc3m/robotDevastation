@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __FINITE_STATE_MACHINE_HPP__
-#define __FINITE_STATE_MACHINE_HPP__
+#ifndef __RD_FINITE_STATE_MACHINE_HPP__
+#define __RD_FINITE_STATE_MACHINE_HPP__
 
 #include "StateDirector.hpp"
 
@@ -48,5 +48,5 @@ class FiniteStateMachine
 
 }
 
-#endif //-- __FINITE_STATE_MACHINE_HPP__
+#endif //-- __RD_FINITE_STATE_MACHINE_HPP__
 

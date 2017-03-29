@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCK_AUDIO_MANAGER_HPP__
-#define __MOCK_AUDIO_MANAGER_HPP__
+#ifndef __RD_MOCK_AUDIO_MANAGER_HPP__
+#define __RD_MOCK_AUDIO_MANAGER_HPP__
 
 #include <map>
 
@@ -91,4 +91,4 @@ class MockAudioManager : public AudioManager,
 
 }
 
-#endif //-- __MOCK_AUDIO_MANAGER_HPP__
+#endif //-- __RD_MOCK_AUDIO_MANAGER_HPP__

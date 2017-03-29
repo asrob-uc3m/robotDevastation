@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __DEAD_STATE_HPP__
-#define __DEAD_STATE_HPP__
+#ifndef __RD_DEAD_STATE_HPP__
+#define __RD_DEAD_STATE_HPP__
 
 #include "State.hpp"
 #include "StateDirector.hpp"
@@ -60,4 +60,4 @@ protected:
     int timer; //-- Countdown timer in s
 };
 }
-#endif // __DEAD_STATE_HPP__
+#endif // __RD_DEAD_STATE_HPP__

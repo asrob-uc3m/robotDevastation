@@ -1,5 +1,5 @@
-#ifndef _MOCK_NETWORK_EVENT_LISTENER_HPP_
-#define _MOCK_NETWORK_EVENT_LISTENER_HPP_
+#ifndef _RD_MOCK_NETWORK_EVENT_LISTENER_HPP_
+#define _RD_MOCK_NETWORK_EVENT_LISTENER_HPP_
 
 #include "NetworkEventListener.hpp"
 
@@ -36,4 +36,4 @@ class MockNetworkEventListener : public NetworkEventListener
 
 }
 
-#endif // _MOCK_NETWORK_EVENT_LISTENER_HPP_
+#endif // _RD_MOCK_NETWORK_EVENT_LISTENER_HPP_

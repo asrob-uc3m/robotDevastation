@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __SDL_UTILS_HPP__
-#define __SDL_UTILS_HPP__
+#ifndef __RD_SDL_UTILS_HPP__
+#define __RD_SDL_UTILS_HPP__
 
 #include "ImageManager.hpp"
 #include <SDL.h>
@@ -16,4 +16,4 @@ bool cleanupSDL();
 
 }
 
-#endif  // __SDL_UTILS_HPP__
+#endif  // __RD_SDL_UTILS_HPP__

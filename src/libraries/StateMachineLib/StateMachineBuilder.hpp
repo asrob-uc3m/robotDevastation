@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __STATE_MACHINE_BUILDER_HPP__
-#define __STATE_MACHINE_BUILDER_HPP__
+#ifndef __RD_STATE_MACHINE_BUILDER_HPP__
+#define __RD_STATE_MACHINE_BUILDER_HPP__
 
 #include <string>
 #include <map>
@@ -88,4 +88,4 @@ class StateMachineBuilder
         int initial_state_id;
 };
 }
-#endif // __STATE_MACHINE_BUILDER_HPP__
+#endif // __RD_STATE_MACHINE_BUILDER_HPP__

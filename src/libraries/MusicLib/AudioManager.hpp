@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __AUDIO_MANAGER_HPP__
-#define __AUDIO_MANAGER_HPP__
+#ifndef __RD_AUDIO_MANAGER_HPP__
+#define __RD_AUDIO_MANAGER_HPP__
 
 #include <iostream>
 #include <map>
@@ -127,4 +127,4 @@ class AudioManager
 
 }
 
-#endif //-- __AUDIO_MANAGER_HPP__
+#endif //-- __RD_AUDIO_MANAGER_HPP__

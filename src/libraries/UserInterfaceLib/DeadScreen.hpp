@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __DEAD_SCREEN_HPP__
-#define __DEAD_SCREEN_HPP__
+#ifndef __RD_DEAD_SCREEN_HPP__
+#define __RD_DEAD_SCREEN_HPP__
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -48,4 +48,4 @@ class DeadScreen : public Screen
 
 }
 
-#endif // __DEAD_SCREEN_HPP__
+#endif // __RD_DEAD_SCREEN_HPP__

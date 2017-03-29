@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __SDL_SCREEN_MANAGER_HPP__
-#define __SDL_SCREEN_MANAGER_HPP__
+#ifndef __RD_SDL_SCREEN_MANAGER_HPP__
+#define __RD_SDL_SCREEN_MANAGER_HPP__
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -104,4 +104,4 @@ class SDLScreenManager : public ScreenManager
 
 }
 
-#endif //-- __SDL_SCREEN_MANAGER_HPP__
+#endif //-- __RD_SDL_SCREEN_MANAGER_HPP__

@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __STATE_DIRECTOR_HPP__
-#define __STATE_DIRECTOR_HPP__
+#ifndef __RD_STATE_DIRECTOR_HPP__
+#define __RD_STATE_DIRECTOR_HPP__
 
 #include <map>
 #include "State.hpp"
@@ -60,4 +60,4 @@ class StateDirector
         StateDirector() {}
 };
 }
-#endif // __STATE_DIRECTOR_HPP__
+#endif // __RD_STATE_DIRECTOR_HPP__

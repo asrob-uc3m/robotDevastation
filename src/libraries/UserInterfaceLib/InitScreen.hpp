@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __INIT_SCREEN_HPP__
-#define __INIT_SCREEN_HPP__
+#ifndef __RD_INIT_SCREEN_HPP__
+#define __RD_INIT_SCREEN_HPP__
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -35,4 +35,4 @@ class InitScreen : public Screen
 
 }
 
-#endif // __INIT_SCREEN_HPP__
+#endif // __RD_INIT_SCREEN_HPP__

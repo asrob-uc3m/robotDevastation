@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __STATE_HPP__
-#define __STATE_HPP__
+#ifndef __RD_STATE_HPP__
+#define __RD_STATE_HPP__
 
 #include <string>
 
@@ -60,4 +60,4 @@ class State
 
 }
 
-#endif //-- __STATE_HPP__
+#endif //-- __RD_STATE_HPP__

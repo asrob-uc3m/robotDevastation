@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __GAME_STATE_HPP__
-#define __GAME_STATE_HPP__
+#ifndef __RD_GAME_STATE_HPP__
+#define __RD_GAME_STATE_HPP__
 
 #include "State.hpp"
 #include "StateDirector.hpp"
@@ -83,4 +83,4 @@ class GameState : public State, public ManagerHub,
 
 
 }
-#endif // __GAME_STATE_HPP__
+#endif // __RD_GAME_STATE_HPP__

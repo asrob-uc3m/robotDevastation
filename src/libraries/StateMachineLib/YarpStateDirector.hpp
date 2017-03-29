@@ -1,5 +1,5 @@
-#ifndef YARPSTATEDIRECTOR_HPP
-#define YARPSTATEDIRECTOR_HPP
+#ifndef __RD_YARP_STATE_DIRECTOR_HPP__
+#define __RD_YARP_STATE_DIRECTOR_HPP__
 
 #include <yarp/os/RateThread.h>
 
@@ -31,4 +31,4 @@ public:
 };
 
 }
-#endif // YARPSTATEDIRECTOR_HPP
+#endif // __RD_YARP_STATE_DIRECTOR_HPP__

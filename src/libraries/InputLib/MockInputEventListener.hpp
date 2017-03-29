@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCK_INPUT_EVENT_LISTENER_HPP__
-#define __MOCK_INPUT_EVENT_LISTENER_HPP__
+#ifndef __RD_MOCK_INPUT_EVENT_LISTENER_HPP__
+#define __RD_MOCK_INPUT_EVENT_LISTENER_HPP__
 
 #include "InputEventListener.hpp"
 
@@ -43,4 +43,4 @@ class MockInputEventListener : public InputEventListener
 
 };
 }
-#endif // __MOCK_INPUT_EVENT_LISTENER_HPP__
+#endif // __RD_MOCK_INPUT_EVENT_LISTENER_HPP__

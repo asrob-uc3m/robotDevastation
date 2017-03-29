@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __SCREEN_MANAGER_HPP__
-#define __SCREEN_MANAGER_HPP__
+#ifndef __RD_SCREEN_MANAGER_HPP__
+#define __RD_SCREEN_MANAGER_HPP__
 
 #include <iostream>
 #include <map>
@@ -127,4 +127,4 @@ class ScreenManager
 
 }
 
-#endif //-- __SCREEN_MANAGER_HPP__
+#endif //-- __RD_SCREEN_MANAGER_HPP__

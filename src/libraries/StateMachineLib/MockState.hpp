@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCK_STATE_HPP__
-#define __MOCK_STATE_HPP__
+#ifndef __RD_MOCK_STATE_HPP__
+#define __RD_MOCK_STATE_HPP__
 
 #include "State.hpp"
 #include "Utils.hpp"
@@ -73,4 +73,4 @@ class MockState : public State, public yarp::os::PortReader, public yarp::os::Rp
 
 
 }
-#endif // __MOCK_STATE_HPP__
+#endif // __RD_MOCK_STATE_HPP__

@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCK_INPUT_MANAGER_HPP__
-#define __MOCK_INPUT_MANAGER_HPP__
+#ifndef __RD_MOCK_INPUT_MANAGER_HPP__
+#define __RD_MOCK_INPUT_MANAGER_HPP__
 
 #include "InputManager.hpp"
 
@@ -51,4 +51,4 @@ class MockInputManager : public InputManager
         bool stopped;
 };
 }
-#endif // __MOCK_INPUT_MANAGER_HPP__
+#endif // __RD_MOCK_INPUT_MANAGER_HPP__

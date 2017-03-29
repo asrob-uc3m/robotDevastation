@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __SDL_AUDIO_MANAGER_HPP__
-#define __SDL_AUDIO_MANAGER_HPP__
+#ifndef __RD_SDL_AUDIO_MANAGER_HPP__
+#define __RD_SDL_AUDIO_MANAGER_HPP__
 
 #include <SDL.h>
 #include <SDL_mixer.h>
@@ -87,4 +87,4 @@ class SDLAudioManager : public AudioManager
 
 }
 
-#endif //-- __SDL_AUDIO_MANAGER_HPP__
+#endif //-- __RD_SDL_AUDIO_MANAGER_HPP__
