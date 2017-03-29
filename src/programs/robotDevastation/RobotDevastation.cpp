@@ -48,6 +48,19 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     {
         YarpLocalImageManager::RegisterManager();
         imageManager = ImageManager::getImageManager(YarpLocalImageManager::id);
+        if (imageManager == NULL)
+        {
+            RD_ERROR("Could not create yarpLocalImageManager\n");
+            return false;
+        }
+
+        if(rf.check("camera_id"))
+        {
+            std::stringstream camera_id_ss;
+            camera_id_ss << rf.find("camera_id").asInt();
+            RD_INFO("YarpLocalImageManager is using camera with index %s.\n", camera_id_ss.str().c_str())
+            imageManager->configure("camera_id", camera_id_ss.str());
+        }
     }
     else
     {

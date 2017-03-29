@@ -14,6 +14,8 @@ bool rd::YarpLocalImageManager::start()
     cameraOptions.put("device","grabber");
     cameraOptions.put("subdevice","opencv_grabber");
     cameraOptions.put("name",remote_port_name);
+    RD_DEBUG("Camera id: %d\n", camera_id);
+    cameraOptions.put("camera", camera_id);
     cameraDevice.open(cameraOptions);
     if(!cameraDevice.isValid())
     {
@@ -80,6 +82,12 @@ bool rd::YarpLocalImageManager::configure(std::string parameter, std::string val
         local_port_name = value;
         return true;
     }
+    else if (parameter.compare("camera_id") == 0)
+    {
+        std::stringstream ss(value);
+        ss >> camera_id;
+        return true;
+    }
     else
         return ImageManager::configure(parameter, value);
 }
@@ -128,4 +136,5 @@ rd::YarpLocalImageManager::YarpLocalImageManager()
 {
     stopped = true;
     enabled = false;
+    camera_id = -1;
 }

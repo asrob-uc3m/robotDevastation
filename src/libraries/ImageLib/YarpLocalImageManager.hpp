@@ -94,6 +94,9 @@ class YarpLocalImageManager : public ImageManager,
         bool enabled;
 
         yarp::dev::PolyDriver cameraDevice;
+
+        //! @brief Used to select when several cameras are attached
+        int camera_id;
 };
 
 
