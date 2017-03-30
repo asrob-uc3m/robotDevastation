@@ -22,7 +22,7 @@ bool rd::MockImageManager::stop()
     return true;
 }
 
-bool rd::MockImageManager::isStopped()
+bool rd::MockImageManager::isStopped() const
 {
     return stopped;
 }
@@ -33,7 +33,7 @@ bool rd::MockImageManager::setEnabled(bool enabled)
     return true;
 }
 
-bool rd::MockImageManager::isEnabled()
+bool rd::MockImageManager::isEnabled() const
 {
     return enabled;
 }
@@ -44,7 +44,7 @@ bool rd::MockImageManager::configure(std::string parameter, std::string value)
     return ImageManager::configure(parameter, value);
 }
 
-rd::Image rd::MockImageManager::getImage()
+rd::Image rd::MockImageManager::getImage() const
 {
     semaphore.wait();
     Image return_image = image;

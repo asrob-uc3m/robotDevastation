@@ -78,14 +78,14 @@ class ImageManager
         virtual bool stop() = 0;
 
         //! @brief True if the manager is not active
-        virtual bool isStopped() = 0;
+        virtual bool isStopped() const = 0;
 
         //! @brief Enables/disables notifications to listeners
         virtual bool setEnabled(bool enabled) = 0;
 
         //------------------------------- Read image ------------------------------------------------------------------//
         //! @brief Return the last received image
-        virtual Image getImage() = 0;
+        virtual Image getImage() const = 0;
 
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//

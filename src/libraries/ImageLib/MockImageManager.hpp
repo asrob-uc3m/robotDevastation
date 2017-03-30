@@ -31,11 +31,11 @@ class MockImageManager : public ImageManager
     public:
         virtual bool start();
         virtual bool stop();
-        virtual bool isStopped();
+        virtual bool isStopped() const;
         virtual bool setEnabled(bool enabled);
-        virtual bool isEnabled();
+        virtual bool isEnabled() const;
         virtual bool configure(std::string parameter, std::string value);
-        virtual Image getImage();
+        virtual Image getImage() const;
 
         /**
          * @brief Register this manager in the ImageManager registry so that can be used
@@ -66,7 +66,7 @@ class MockImageManager : public ImageManager
         static MockImageManager * uniqueInstance;
 
         //! @brief Semaphore to make the image manipulation thread-safe
-        yarp::os::Semaphore semaphore;
+        mutable yarp::os::Semaphore semaphore;
 
         //! @brief Last image received
         Image image;

@@ -64,7 +64,7 @@ bool rd::YarpLocalImageManager::stop()
     return true;
 }
 
-bool rd::YarpLocalImageManager::isStopped()
+bool rd::YarpLocalImageManager::isStopped() const
 {
     return stopped;
 }
@@ -97,7 +97,7 @@ bool rd::YarpLocalImageManager::configure(std::string parameter, std::string val
         return ImageManager::configure(parameter, value);
 }
 
-rd::Image rd::YarpLocalImageManager::getImage()
+rd::Image rd::YarpLocalImageManager::getImage() const
 {
     semaphore.wait();
     Image return_image = image;
