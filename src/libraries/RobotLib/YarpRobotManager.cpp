@@ -1,6 +1,10 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
+#include <yarp/os/Network.h>
+#include <yarp/os/Time.h>
+
 #include "YarpRobotManager.hpp"
+#include "Macros.hpp"
 
 namespace rd
 {

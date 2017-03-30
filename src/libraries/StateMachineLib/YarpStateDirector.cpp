@@ -1,5 +1,5 @@
 #include "YarpStateDirector.hpp"
-
+#include "Macros.hpp"
 
 const int rd::YarpStateDirector::DEFAULT_RATE_MS = 100;
 

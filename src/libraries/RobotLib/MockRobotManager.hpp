@@ -3,12 +3,9 @@
 #ifndef __RD_MOCK_ROBOT_MANAGER_HPP__
 #define __RD_MOCK_ROBOT_MANAGER_HPP__
 
-
-#include <sstream>
+#include <string>
 
 #include "RobotManager.hpp"
-
-#include "Macros.hpp"
 
 namespace rd{
 

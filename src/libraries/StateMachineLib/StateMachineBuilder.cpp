@@ -1,4 +1,6 @@
 #include "StateMachineBuilder.hpp"
+#include "YarpStateDirector.hpp"
+#include "Macros.hpp"
 
 rd::StateMachineBuilder::StateMachineBuilder()
 {

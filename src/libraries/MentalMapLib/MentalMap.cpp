@@ -1,4 +1,8 @@
+#include <map>
+
 #include "MentalMap.hpp"
+#include "SDLAudioManager.hpp"
+#include "Macros.hpp"
 
 //-- This is very important:
 rd::MentalMap * rd::MentalMap::mentalMapInstance = NULL;

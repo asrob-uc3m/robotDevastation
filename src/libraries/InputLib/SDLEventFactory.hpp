@@ -3,12 +3,12 @@
 #ifndef __RD_SDL_EVENT_FACTORY__
 #define __RD_SDL_EVENT_FACTORY__
 
+#include <map>
+
+#include <SDL.h>
 
 #include "Key.hpp"
 #include "WindowEvent.hpp"
-#include <map>
-#include <SDL.h>
-
 
 namespace rd{
 

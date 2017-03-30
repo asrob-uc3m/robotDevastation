@@ -4,7 +4,7 @@
 #include <yarp/os/RateThread.h>
 
 #include "StateDirector.hpp"
-
+#include "State.hpp"
 
 namespace rd {
 

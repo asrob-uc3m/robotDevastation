@@ -1,4 +1,5 @@
 #include "GameState.hpp"
+#include "Macros.hpp"
 
 const int rd::GameState::KILLED = 1;
 const int rd::GameState::EXIT_REQUESTED = 2;

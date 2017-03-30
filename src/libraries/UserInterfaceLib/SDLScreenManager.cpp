@@ -1,4 +1,8 @@
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+
 #include "SDLScreenManager.hpp"
+#include "Macros.hpp"
 
 //-- This is very important:
 rd::SDLScreenManager * rd::SDLScreenManager::uniqueInstance = NULL;

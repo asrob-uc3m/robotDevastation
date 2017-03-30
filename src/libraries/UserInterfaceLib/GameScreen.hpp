@@ -3,20 +3,17 @@
 #ifndef __RD_GAME_SCREEN_HPP__
 #define __RD_GAME_SCREEN_HPP__
 
-#include <SDL.h>
-#include <SDL_ttf.h>
-#include <iostream>
 #include <string>
 #include <vector>
-#include <yarp/os/ResourceFinder.h>
 
-#include "MentalMap.hpp"
+#include <SDL.h>
+#include <SDL_ttf.h>
+
 #include "Target.hpp"
 #include "Player.hpp"
 #include "Weapon.hpp"
 #include "Screen.hpp"
-#include "Utils.hpp"
-#include "SDLUtils.hpp"
+#include "ImageManager.hpp"
 
 namespace rd{
 

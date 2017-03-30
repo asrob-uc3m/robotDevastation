@@ -1,5 +1,8 @@
-#include "YarpImageManager.hpp"
+#include <yarp/os/Time.h>
+#include <yarp/os/Network.h>
 
+#include "YarpImageManager.hpp"
+#include "Macros.hpp"
 
 //-- Initialize static members
 rd::YarpImageManager * rd::YarpImageManager::uniqueInstance = NULL;
@@ -111,7 +114,7 @@ bool rd::YarpImageManager::configure(std::string parameter, std::string value)
 rd::Image rd::YarpImageManager::getImage()
 {
     semaphore.wait();
-    Image return_image(image);
+    Image return_image = image;
     semaphore.post();
 
     return return_image;

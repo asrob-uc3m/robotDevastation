@@ -3,11 +3,10 @@
 #ifndef __RD_INPUT_MANAGER_HPP__
 #define __RD_INPUT_MANAGER_HPP__
 
-
-
+#include <string>
 #include <vector>
+#include <map>
 
-#include "Utils.hpp"
 #include "InputEventListener.hpp"
 
 namespace rd{

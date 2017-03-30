@@ -3,16 +3,11 @@
 #ifndef __RD_MOCK_STATE_HPP__
 #define __RD_MOCK_STATE_HPP__
 
-#include "State.hpp"
-#include "Utils.hpp"
-
-#include <string>
-#include <sstream>
-
-#include <yarp/os/Bottle.h>
 #include <yarp/os/PortReader.h>
 #include <yarp/os/RpcServer.h>
+#include <yarp/os/ConnectionReader.h>
 
+#include "State.hpp"
 
 namespace rd{
 

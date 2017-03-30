@@ -3,16 +3,13 @@
 #ifndef __RD_DEAD_SCREEN_HPP__
 #define __RD_DEAD_SCREEN_HPP__
 
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
 #include <string>
-#include <yarp/os/ResourceFinder.h>
+
+#include <SDL.h>
+#include <SDL_ttf.h>
 
 #include "Screen.hpp"
-
-#include "Utils.hpp"
-#include "SDLUtils.hpp"
+#include "ImageManager.hpp"
 
 namespace rd {
 

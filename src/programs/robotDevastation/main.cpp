@@ -44,11 +44,13 @@ rdClient
  */
 
 #include <iostream>
+#include <stdio.h>
 
 #include <yarp/os/Network.h>
+#include <yarp/os/ResourceFinder.h>
 
-#include "Utils.hpp"
 #include "RobotDevastation.hpp"
+#include "Macros.hpp"
 
 int main(int argc, char *argv[]) {
 

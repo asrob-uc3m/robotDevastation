@@ -42,8 +42,10 @@ rdClient
  */
 
 #include <iostream>
+#include <stdio.h>
 
 #include <yarp/os/Network.h>
+#include <yarp/os/ResourceFinder.h>
 
 #include "Macros.hpp"
 #include "Server.hpp"

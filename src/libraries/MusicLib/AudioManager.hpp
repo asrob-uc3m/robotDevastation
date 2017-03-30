@@ -3,10 +3,8 @@
 #ifndef __RD_AUDIO_MANAGER_HPP__
 #define __RD_AUDIO_MANAGER_HPP__
 
-#include <iostream>
+#include <string>
 #include <map>
-
-#include "Macros.hpp"
 
 namespace rd{
 

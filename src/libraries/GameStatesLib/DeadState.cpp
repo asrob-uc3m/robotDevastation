@@ -1,4 +1,5 @@
 #include "DeadState.hpp"
+#include "Utils.hpp"
 
 const int rd::DeadState::RESPAWN_SELECTED = 1;
 const int rd::DeadState::EXIT_SELECTED = 2;

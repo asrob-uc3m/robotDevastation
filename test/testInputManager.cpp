@@ -13,6 +13,7 @@
 #include "SDLInputManager.hpp"
 #include "InputEventListener.hpp"
 #include "SDLAudioManager.hpp"
+#include "Macros.hpp"
 
 #include <SDL.h>
 #include <SDL_ttf.h>

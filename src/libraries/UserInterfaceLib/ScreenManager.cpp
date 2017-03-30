@@ -1,4 +1,5 @@
 #include "ScreenManager.hpp"
+#include "Macros.hpp"
 
 //-- This is very important:
 rd::ScreenManager * rd::ScreenManager::screenManagerInstance = NULL;

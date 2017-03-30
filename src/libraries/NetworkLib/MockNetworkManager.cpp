@@ -1,4 +1,5 @@
 #include "MockNetworkManager.hpp"
+#include "Macros.hpp"
 
 //-- Initialize static members
 rd::MockNetworkManager * rd::MockNetworkManager::uniqueInstance = NULL;

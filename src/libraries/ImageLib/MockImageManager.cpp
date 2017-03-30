@@ -1,5 +1,5 @@
 #include "MockImageManager.hpp"
-
+#include "Macros.hpp"
 
 //-- Initialize static members
 rd::MockImageManager * rd::MockImageManager::uniqueInstance = NULL;
@@ -47,7 +47,7 @@ bool rd::MockImageManager::configure(std::string parameter, std::string value)
 rd::Image rd::MockImageManager::getImage()
 {
     semaphore.wait();
-    Image return_image(image);
+    Image return_image = image;
     semaphore.post();
 
     return return_image;

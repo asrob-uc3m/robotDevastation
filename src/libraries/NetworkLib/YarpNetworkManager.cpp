@@ -1,5 +1,11 @@
-#include "YarpNetworkManager.hpp"
+#include <sstream>
+#include <string.h> // strcmp()
 
+#include <yarp/os/Network.h>
+
+#include "YarpNetworkManager.hpp"
+#include "Macros.hpp"
+#include "Vocabs.hpp"
 
 //-- Initialize static members
 rd::YarpNetworkManager * rd::YarpNetworkManager::uniqueInstance = NULL;

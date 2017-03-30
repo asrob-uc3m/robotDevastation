@@ -3,17 +3,16 @@
 #ifndef __RD_YARP_NETWORK_MANAGER_HPP__
 #define __RD_YARP_NETWORK_MANAGER_HPP__
 
-#include <yarp/os/Port.h>
-#include <yarp/os/BufferedPort.h>
-#include <yarp/os/Semaphore.h>
-#include <yarp/os/RpcClient.h>
-#include <yarp/os/RateThread.h>
-#include <yarp/os/Time.h>
-#include <yarp/os/Network.h>
+#include <string>
 
-#include "Utils.hpp"
+#include <yarp/os/RateThread.h>
+#include <yarp/os/PortReaderBuffer.h>
+#include <yarp/os/Bottle.h>
+#include <yarp/os/RpcClient.h>
+#include <yarp/os/BufferedPort.h>
+
 #include "NetworkManager.hpp"
-#include "NetworkEventListener.hpp"
+#include "Player.hpp"
 
 namespace rd{
 

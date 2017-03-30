@@ -3,7 +3,10 @@
 #ifndef __RD_MOCK_NETWORK_MANAGER_HPP__
 #define __RD_MOCK_NETWORK_MANAGER_HPP__
 
-#include "Utils.hpp"
+#include <string>
+#include <vector>
+#include <map>
+
 #include "NetworkManager.hpp"
 #include "NetworkEventListener.hpp"
 #include "Player.hpp"

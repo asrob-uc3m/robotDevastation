@@ -3,14 +3,11 @@
 #ifndef __RD_SDL_INPUT_MANAGER_HPP__
 #define __RD_SDL_INPUT_MANAGER_HPP__
 
+#include <string>
+
 #include <SDL.h>
-#include <yarp/os/RateThread.h>
 
 #include "InputManager.hpp"
-#include "InputEventListener.hpp"
-#include "Key.hpp"
-#include "WindowEvent.hpp"
-#include "SDLEventFactory.hpp"
 
 namespace rd{
 

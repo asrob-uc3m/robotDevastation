@@ -4,22 +4,18 @@
 #define __RD_INIT_STATE_HPP__
 
 #include "State.hpp"
-#include "StateDirector.hpp"
-#include "Utils.hpp"
 #include "Hub.hpp"
-#include "YarpNetworkManager.hpp"
+#include "InputEventListener.hpp"
+#include "NetworkManager.hpp"
+#include "ImageManager.hpp"
+#include "InputManager.hpp"
+#include "MentalMap.hpp"
+#include "RobotManager.hpp"
+#include "AudioManager.hpp"
 #include "ScreenManager.hpp"
-#include "InitScreen.hpp"
+#include "Key.hpp"
 #include "WindowEvent.hpp"
-
-#include <string>
-#include <sstream>
-
-#include <yarp/os/Network.h>
-#include <yarp/os/Bottle.h>
-#include <yarp/os/Port.h>
-#include <yarp/os/BufferedPort.h>
-
+#include "InitScreen.hpp"
 
 namespace rd{
 

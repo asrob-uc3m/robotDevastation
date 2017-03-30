@@ -9,8 +9,14 @@
  */
 
 #include "gtest/gtest.h"
+
 #include <string>
 #include <vector>
+
+#include <yarp/sig/all.h>
+#include <yarp/os/Network.h>
+#include <yarp/os/Time.h>
+#include <yarp/os/ResourceFinder.h>
 
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
@@ -28,11 +34,6 @@
 #include "MockRobotManager.hpp"
 #include "MockAudioManager.hpp"
 #include "SDLScreenManager.hpp"
-
-#include <yarp/sig/all.h>
-#include <yarp/os/Network.h>
-#include <yarp/os/Time.h>
-#include <yarp/os/ResourceFinder.h>
 
 using namespace rd;
 

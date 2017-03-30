@@ -1,6 +1,5 @@
 #include "Weapon.hpp"
 
-
 const int rd::Weapon::SCOPE_X = 640/2;
 const int rd::Weapon::SCOPE_Y = 480/2;
 

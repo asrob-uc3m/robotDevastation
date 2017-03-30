@@ -1,4 +1,7 @@
 #include "SDLInputManager.hpp"
+#include "SDLEventFactory.hpp"
+#include "Key.hpp"
+#include "WindowEvent.hpp"
 
 //-- Initialize static members
 rd::SDLInputManager * rd::SDLInputManager::uniqueInstance = NULL;

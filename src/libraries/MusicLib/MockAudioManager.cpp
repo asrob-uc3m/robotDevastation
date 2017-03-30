@@ -1,4 +1,5 @@
 #include "MockAudioManager.hpp"
+#include "Macros.hpp"
 
 //-- This is very important:
 rd::MockAudioManager * rd::MockAudioManager::uniqueInstance = NULL;

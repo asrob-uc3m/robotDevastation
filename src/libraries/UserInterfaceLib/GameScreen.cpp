@@ -1,5 +1,10 @@
+#include <sstream>
+
+#include <yarp/os/ResourceFinder.h>
 
 #include "GameScreen.hpp"
+#include "SDLUtils.hpp"
+#include "Macros.hpp"
 
 const std::string rd::GameScreen::PARAM_CAMERA_FRAME = "camera_frame";
 const std::string rd::GameScreen::PARAM_MYSELF = "myself";

@@ -3,11 +3,6 @@
 #ifndef __RD_KEY_HPP__
 #define __RD_KEY_HPP__
 
-#include "Utils.hpp"
-
-#include <SDL.h>
-#include <map>
-
 namespace rd{
 
 /**

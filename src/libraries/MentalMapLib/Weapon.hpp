@@ -4,10 +4,8 @@
 #define __RD_WEAPON_HPP__
 
 #include <string>
-#include "Utils.hpp"
+
 #include "Target.hpp"
-#include "Player.hpp"
-#include "SDLAudioManager.hpp"
 
 namespace rd {
 

@@ -4,7 +4,6 @@
 #define __RD_PLAYER_HPP__
 
 #include <string>
-#include <sstream>
 #include "Weapon.hpp"
 
 namespace rd{

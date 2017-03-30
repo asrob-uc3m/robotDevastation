@@ -3,7 +3,6 @@
 #ifndef __RD_TARGET_HPP__
 #define __RD_TARGET_HPP__
 
-#include "Player.hpp"
 #include "Vector2dBase.hpp"
 
 namespace rd{

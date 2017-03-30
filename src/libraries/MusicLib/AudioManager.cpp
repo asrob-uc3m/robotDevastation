@@ -1,4 +1,5 @@
 #include "AudioManager.hpp"
+#include "Macros.hpp"
 
 //-- This is very important:
 rd::AudioManager * rd::AudioManager::audioManagerInstance = NULL;

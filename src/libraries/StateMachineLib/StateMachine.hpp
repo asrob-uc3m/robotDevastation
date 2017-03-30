@@ -3,6 +3,8 @@
 #ifndef __RD_FINITE_STATE_MACHINE_HPP__
 #define __RD_FINITE_STATE_MACHINE_HPP__
 
+#include <vector>
+
 #include "StateDirector.hpp"
 
 namespace rd{

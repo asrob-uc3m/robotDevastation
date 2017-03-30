@@ -3,16 +3,20 @@
 #ifndef __RD_SDL_SCREEN_MANAGER_HPP__
 #define __RD_SDL_SCREEN_MANAGER_HPP__
 
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <iostream>
+#include <string>
+#include <vector>
 #include <map>
 
-#include "Macros.hpp"
-#include "ScreenManager.hpp"
+#include <SDL.h>
 
-#include "yarp/os/Mutex.h" //-- Right now use yarp mutex. In the future is better to use C++11 std::mutex
+#include <yarp/os/Mutex.h> //-- Right now use yarp mutex. In the future is better to use C++11 std::mutex
+
+#include "ScreenManager.hpp"
+#include "Screen.hpp"
+#include "ImageManager.hpp"
+#include "Player.hpp"
+#include "Target.hpp"
+#include "Weapon.hpp"
 
 namespace rd{
 

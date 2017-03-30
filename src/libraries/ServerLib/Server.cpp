@@ -1,6 +1,12 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
+#include <stdio.h>
+
+#include <yarp/os/Bottle.h>
+
 #include "Server.hpp"
+#include "Macros.hpp"
+#include "Vocabs.hpp"
 
 bool rd::Server::configure(yarp::os::ResourceFinder &rf)
 {

@@ -10,6 +10,7 @@
 #include <yarp/os/Time.h>
 
 #include "MockScreen.hpp"
+#include "SDLUtils.hpp"
 
 using namespace rd;
 

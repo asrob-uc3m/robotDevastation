@@ -1,4 +1,6 @@
 #include "InitState.hpp"
+#include "YarpNetworkManager.hpp"
+#include "Macros.hpp"
 
 const int rd::InitState::LOGIN_SUCCESSFUL = 1;
 const int rd::InitState::EXIT_REQUESTED = 2;

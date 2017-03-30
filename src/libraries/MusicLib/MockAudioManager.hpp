@@ -3,13 +3,13 @@
 #ifndef __RD_MOCK_AUDIO_MANAGER_HPP__
 #define __RD_MOCK_AUDIO_MANAGER_HPP__
 
+#include <string>
 #include <map>
-
-#include "Macros.hpp"
-#include "AudioManager.hpp"
 
 #include <yarp/os/RateThread.h>
 #include <yarp/os/Mutex.h>
+
+#include "AudioManager.hpp"
 
 namespace rd{
 

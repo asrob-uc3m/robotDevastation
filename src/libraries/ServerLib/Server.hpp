@@ -3,13 +3,15 @@
 #ifndef __RD_SERVER_HPP__
 #define __RD_SERVER_HPP__
 
-#include <yarp/os/RFModule.h>
-#include <yarp/os/RpcServer.h>
-#include <yarp/os/Mutex.h>
-
 #include <map>
 
-#include "Utils.hpp"
+#include <yarp/os/RFModule.h>
+#include <yarp/os/ResourceFinder.h>
+#include <yarp/os/RpcServer.h>
+#include <yarp/os/Mutex.h>
+#include <yarp/os/Port.h>
+
+#include "Player.hpp"
 #include "RpcResponder.hpp"
 
 #define DEFAULT_WATCHDOG    1.0       // [s]

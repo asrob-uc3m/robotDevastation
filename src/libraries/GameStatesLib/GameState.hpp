@@ -4,22 +4,20 @@
 #define __RD_GAME_STATE_HPP__
 
 #include "State.hpp"
-#include "StateDirector.hpp"
-#include "Utils.hpp"
 #include "Hub.hpp"
-#include "YarpNetworkManager.hpp"
-#include "GameScreen.hpp"
-#include "ProcessorImageEventListener.hpp"
+#include "InputEventListener.hpp"
+#include "ImageEventListener.hpp"
+#include "NetworkManager.hpp"
+#include "ImageManager.hpp"
+#include "InputManager.hpp"
+#include "MentalMap.hpp"
+#include "RobotManager.hpp"
+#include "AudioManager.hpp"
+#include "ScreenManager.hpp"
+#include "Key.hpp"
 #include "WindowEvent.hpp"
-
-#include <string>
-#include <sstream>
-
-#include <yarp/os/Network.h>
-#include <yarp/os/Bottle.h>
-#include <yarp/os/Port.h>
-#include <yarp/os/BufferedPort.h>
-
+#include "ProcessorImageEventListener.hpp"
+#include "GameScreen.hpp"
 
 namespace rd{
 

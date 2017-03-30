@@ -1,4 +1,10 @@
+#include <SDL_image.h>
+
+#include <yarp/os/ResourceFinder.h>
+
 #include "DeadScreen.hpp"
+#include "SDLUtils.hpp"
+#include "Macros.hpp"
 
 //-- Public
 const std::string rd::DeadScreen::PARAM_REMAINING_TIME = "remaining_time";

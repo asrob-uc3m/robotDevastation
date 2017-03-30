@@ -8,14 +8,18 @@
  *
  ***/
 
+#include <string>
+
+#include <yarp/sig/ImageFile.h>
+#include <yarp/os/ResourceFinder.h>
+#include <yarp/os/Time.h>
+
 #include "ScreenManager.hpp"
 #include "SDLScreenManager.hpp"
 #include "Screen.hpp"
 #include "DeadScreen.hpp"
-
-#include <yarp/sig/all.h>
-#include <yarp/os/ResourceFinder.h>
-#include <yarp/os/Time.h>
+#include "ImageManager.hpp"
+#include "Utils.hpp"
 
 using namespace rd;
 

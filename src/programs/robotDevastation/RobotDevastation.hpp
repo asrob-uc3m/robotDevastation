@@ -3,11 +3,12 @@
 #ifndef __ROBOT_DEVASTATION_HPP__
 #define __ROBOT_DEVASTATION_HPP__
 
-#include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
 
 #include <yarp/os/RFModule.h>
+#include <yarp/os/ResourceFinder.h>
 
 #include "Utils.hpp"
 #include "SDLAudioManager.hpp"

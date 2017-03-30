@@ -3,11 +3,15 @@
 #ifndef __RD_SCREEN_MANAGER_HPP__
 #define __RD_SCREEN_MANAGER_HPP__
 
-#include <iostream>
+#include <string>
+#include <vector>
 #include <map>
 
-#include "Macros.hpp"
 #include "Screen.hpp"
+#include "ImageManager.hpp"
+#include "Player.hpp"
+#include "Target.hpp"
+#include "Weapon.hpp"
 
 namespace rd{
 

@@ -3,11 +3,15 @@
 #ifndef __RD_NETWORK_MANAGER_HPP__
 #define __RD_NETWORK_MANAGER_HPP__
 
+#include <string>
+#include <vector>
 #include <map>
 
-#include "Utils.hpp"
 #include "Player.hpp"
+#include "Target.hpp"
+#include "Weapon.hpp"
 #include "NetworkEventListener.hpp"
+#include "NetworkManager.hpp"
 #include "MentalMapEventListener.hpp"
 
 namespace rd{

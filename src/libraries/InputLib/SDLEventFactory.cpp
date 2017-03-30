@@ -1,4 +1,5 @@
 #include "SDLEventFactory.hpp"
+#include "Macros.hpp"
 
 bool rd::SDLEventFactory::initialized = false;
 std::map<SDL_Keycode, char> rd::SDLEventFactory::sdl_printable_map = std::map<SDL_Keycode, char>();

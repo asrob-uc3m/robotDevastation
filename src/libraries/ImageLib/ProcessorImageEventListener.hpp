@@ -3,13 +3,12 @@
 #ifndef __RD_PROCESSOR_IMAGE_EVENT_LISTENER_HPP__
 #define __RD_PROCESSOR_IMAGE_EVENT_LISTENER_HPP__
 
-#include <math.h>  //-- Just for fabs to make it a bit failproof.
+#include <string>
 
-#include <stddef.h> //-- Just for NULL
 #include <zbar.h>
 
 #include "ImageManager.hpp"
-#include "Macros.hpp"
+#include "ImageEventListener.hpp"
 #include "MentalMap.hpp"
 
 namespace rd

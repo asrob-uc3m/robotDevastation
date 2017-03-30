@@ -3,19 +3,13 @@
 #ifndef __RD_YARP_IMAGE_MANAGER_HPP__
 #define __RD_YARP_IMAGE_MANAGER_HPP__
 
-
-#include <vector>
-#include <map>
 #include <string>
 
+#include <yarp/os/PortReaderBuffer.h>
 #include <yarp/os/BufferedPort.h>
-#include <yarp/os/Network.h>
 #include <yarp/os/Semaphore.h>
-#include <yarp/os/Time.h>
 
-#include "Utils.hpp"
 #include "ImageManager.hpp"
-#include "ImageEventListener.hpp"
 
 namespace rd{
 

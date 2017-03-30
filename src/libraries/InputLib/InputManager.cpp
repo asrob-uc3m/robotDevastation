@@ -1,5 +1,5 @@
 #include "InputManager.hpp"
-
+#include "Macros.hpp"
 
 //-- This is very important:
 rd::InputManager * rd::InputManager::inputManagerInstance = NULL;

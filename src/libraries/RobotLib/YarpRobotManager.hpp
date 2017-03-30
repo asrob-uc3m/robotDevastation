@@ -3,15 +3,12 @@
 #ifndef __RD_YARP_ROBOT_MANAGER_HPP__
 #define __RD_YARP_ROBOT_MANAGER_HPP__
 
-#include <yarp/dev/all.h>
-#include <yarp/os/Run.h>
-#include <yarp/os/RpcClient.h>
+#include <string>
 
-#include <sstream>
+#include <yarp/os/RpcClient.h>
+#include <yarp/dev/all.h> // VOCAB macros
 
 #include "RobotManager.hpp"
-
-#include "Macros.hpp"
 
 #define VOCAB_MOVE_FORWARD VOCAB4('m','o','v','f')
 #define VOCAB_MOVE_BACKWARDS VOCAB4('m','o','v','b')

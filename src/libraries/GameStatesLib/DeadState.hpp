@@ -4,13 +4,18 @@
 #define __RD_DEAD_STATE_HPP__
 
 #include "State.hpp"
-#include "StateDirector.hpp"
-#include "Utils.hpp"
 #include "Hub.hpp"
-#include "YarpNetworkManager.hpp"
+#include "InputEventListener.hpp"
+#include "NetworkManager.hpp"
+#include "ImageManager.hpp"
+#include "InputManager.hpp"
+#include "MentalMap.hpp"
+#include "RobotManager.hpp"
+#include "AudioManager.hpp"
+#include "ScreenManager.hpp"
 #include "DeadScreen.hpp"
+#include "Key.hpp"
 #include "WindowEvent.hpp"
-
 
 namespace rd{
 

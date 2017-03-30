@@ -3,15 +3,13 @@
 #ifndef __RD_RPC_RESPONDER__
 #define __RD_RPC_RESPONDER__
 
-#include <yarp/os/Port.h>
-#include <yarp/os/BufferedPort.h>
-#include <yarp/os/Time.h>
-#include <yarp/os/Vocab.h>
-#include <yarp/os/Mutex.h>
-
 #include <map>
 
-#include "Utils.hpp"
+#include <yarp/os/PortReader.h>
+#include <yarp/os/Mutex.h>
+#include <yarp/os/ConnectionReader.h>
+#include <yarp/os/Port.h>
+
 #include "Player.hpp"
 
 namespace rd

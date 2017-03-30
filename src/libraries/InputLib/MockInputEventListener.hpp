@@ -3,7 +3,11 @@
 #ifndef __RD_MOCK_INPUT_EVENT_LISTENER_HPP__
 #define __RD_MOCK_INPUT_EVENT_LISTENER_HPP__
 
+#include <vector>
+
 #include "InputEventListener.hpp"
+#include "Key.hpp"
+#include "WindowEvent.hpp"
 
 namespace rd{
 

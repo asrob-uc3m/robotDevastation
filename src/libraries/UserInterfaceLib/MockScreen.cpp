@@ -1,4 +1,9 @@
+#include <SDL_image.h>
+
+#include <yarp/os/ResourceFinder.h>
+
 #include "MockScreen.hpp"
+#include "Macros.hpp"
 
 //-- Public
 const std::string rd::MockScreen::PARAM_MESSAGE = "message";

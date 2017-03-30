@@ -3,17 +3,13 @@
 #ifndef __RD_MENTAL_MAP_HPP__
 #define __RD_MENTAL_MAP_HPP__
 
-#include <map>
 #include <vector>
-#include <iterator>
 
 #include "Player.hpp"
 #include "Target.hpp"
 #include "Weapon.hpp"
-#include "Utils.hpp"
 #include "MentalMapEventListener.hpp"
 #include "NetworkEventListener.hpp"
-#include "NetworkManager.hpp"
 #include "AudioManager.hpp"
 
 namespace rd{

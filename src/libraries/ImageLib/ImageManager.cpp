@@ -1,11 +1,10 @@
 #include "ImageManager.hpp"
-
+#include "Macros.hpp"
 
 //-- Static members initialization:
 rd::ImageManager * rd::ImageManager::imageManagerInstance = NULL;
 std::string rd::ImageManager::currentId = "";
 std::map<std::string, rd::ImageManager *> rd::ImageManager::imageManagerRegistry = std::map<std::string, rd::ImageManager *>();
-
 
 rd::ImageManager *rd::ImageManager::getImageManager()
 {

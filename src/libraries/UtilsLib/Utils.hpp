@@ -1,6 +1,9 @@
 #ifndef __RD_UTILS_HPP__
 #define __RD_UTILS_HPP__
 
+#include <string>
+#include <sstream>
+
 /**
  * @ingroup rd_libraries
  *
@@ -15,7 +18,6 @@
 #include "IniReader.hpp"
 
 //-- Misc utils ----------------------------------------------//
-#include "string"
 
 template<typename T> std::string number2str(T number)
 {

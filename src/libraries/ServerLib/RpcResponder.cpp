@@ -1,6 +1,11 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
+#include <yarp/os/Bottle.h>
+#include <yarp/os/ConnectionWriter.h>
+
 #include "RpcResponder.hpp"
+#include "Macros.hpp"
+#include "Vocabs.hpp"
 
 const int rd::RpcResponder::MAX_BELIEF = 600;
 

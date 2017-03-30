@@ -1,6 +1,14 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
+#include <math.h>  //-- Just for fabs to make it a bit failproof.
+#include <stddef.h> //-- Just for NULL
+#include <vector>
+#include <sstream>
+
 #include "ProcessorImageEventListener.hpp"
+#include "Target.hpp"
+#include "Vector2dBase.hpp"
+#include "Macros.hpp"
 
 rd::ProcessorImageEventListener::ProcessorImageEventListener()
 {

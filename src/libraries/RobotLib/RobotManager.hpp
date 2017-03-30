@@ -4,8 +4,6 @@
 #define __RD_ROBOT_MANAGER_HPP__
 
 #include <string>
-#include <vector>
-#include <map>
 
 namespace rd{
 

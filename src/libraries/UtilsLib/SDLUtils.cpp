@@ -1,4 +1,8 @@
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+
 #include "SDLUtils.hpp"
+#include "Macros.hpp"
 
 SDL_Surface * rd::RdImage2SDLImage(const Image & image)
 {

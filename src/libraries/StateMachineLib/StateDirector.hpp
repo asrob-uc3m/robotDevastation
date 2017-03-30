@@ -4,8 +4,8 @@
 #define __RD_STATE_DIRECTOR_HPP__
 
 #include <map>
+
 #include "State.hpp"
-#include "Utils.hpp"
 
 namespace rd{
 

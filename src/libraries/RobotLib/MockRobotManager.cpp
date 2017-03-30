@@ -1,6 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
 #include "MockRobotManager.hpp"
+#include "Macros.hpp"
 
 const int rd::MockRobotManager::FORWARD = 1;
 const int rd::MockRobotManager::BACKWARDS = 2;

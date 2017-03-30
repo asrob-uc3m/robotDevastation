@@ -3,16 +3,11 @@
 #ifndef __RD_MOCK_IMAGE_MANAGER_HPP__
 #define __RD_MOCK_IMAGE_MANAGER_HPP__
 
-
-#include <vector>
 #include <string>
 
 #include <yarp/os/Semaphore.h>
-#include <yarp/sig/ImageDraw.h>
 
-#include "Utils.hpp"
 #include "ImageManager.hpp"
-#include "ImageEventListener.hpp"
 
 namespace rd{
 

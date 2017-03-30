@@ -1,6 +1,7 @@
 #ifndef __RD_MOCK_IMAGE_EVENT_LISTENER_HPP__
 #define __RD_MOCK_IMAGE_EVENT_LISTENER_HPP__
 
+#include "ImageManager.hpp"
 #include "ImageEventListener.hpp"
 
 namespace rd{

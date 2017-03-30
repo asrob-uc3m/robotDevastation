@@ -1,4 +1,10 @@
+#include <SDL_image.h>
+
+#include <yarp/os/ResourceFinder.h>
+#include <yarp/os/ConstString.h>
+
 #include "InitScreen.hpp"
+#include "Macros.hpp"
 
 const std::string rd::InitScreen::SPLASH_PATH = "../images/800px-Devastation-thin.png";
 const std::string rd::InitScreen::FONT_PATH = "../fonts/FreeMono.ttf";

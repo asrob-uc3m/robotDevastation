@@ -3,10 +3,9 @@
 #ifndef __RD_SDL_UTILS_HPP__
 #define __RD_SDL_UTILS_HPP__
 
-#include "ImageManager.hpp"
 #include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
+
+#include "ImageManager.hpp"
 
 namespace rd {
 

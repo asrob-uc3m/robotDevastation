@@ -6,9 +6,7 @@
 
 #include "ImageManager.hpp"
 #include "InputManager.hpp"
-#include "Key.hpp"
 #include "MentalMap.hpp"
-#include "Weapon.hpp"
 #include "NetworkManager.hpp"
 #include "RobotManager.hpp"
 #include "AudioManager.hpp"

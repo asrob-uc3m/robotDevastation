@@ -9,10 +9,13 @@
 
 #include <yarp/os/Thread.h>
 #include <yarp/os/ResourceFinder.h>
+#include <yarp/os/Network.h>
+#include <yarp/os/Time.h>
 
 #include "YarpNetworkManager.hpp"
 #include "MockNetworkEventListener.hpp"
 #include "Server.hpp"
+#include "Macros.hpp"
 
 #include "gtest/gtest.h"
 

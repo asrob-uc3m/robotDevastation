@@ -4,12 +4,12 @@
 #define __RD_STATE_MACHINE_BUILDER_HPP__
 
 #include <string>
+#include <vector>
 #include <map>
 #include <utility>
 
 #include "State.hpp"
 #include "StateDirector.hpp"
-#include "YarpStateDirector.hpp"
 #include "StateMachine.hpp"
 
 namespace rd {

@@ -1,5 +1,5 @@
 #include "StateDirector.hpp"
-
+#include "Macros.hpp"
 
 rd::StateDirector::StateDirector(rd::State *state)
 {

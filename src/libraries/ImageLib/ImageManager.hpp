@@ -3,15 +3,13 @@
 #ifndef __RD_IMAGE_MANAGER_HPP__
 #define __RD_IMAGE_MANAGER_HPP__
 
-
 #include <vector>
 #include <map>
 #include <string>
 
-#include "Utils.hpp"
-#include "ImageEventListener.hpp"
 #include <yarp/sig/Image.h>
 
+#include "ImageEventListener.hpp"
 
 namespace rd{
 

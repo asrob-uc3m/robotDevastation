@@ -1,4 +1,5 @@
 #include "NetworkManager.hpp"
+#include "Macros.hpp"
 
 //-- Static members initialization:
 rd::NetworkManager * rd::NetworkManager::networkManagerInstance = NULL;
