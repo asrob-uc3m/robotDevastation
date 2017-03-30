@@ -16,7 +16,7 @@ rd::Target::Target(int player_id, Vector2d pos, Vector2d dimensions)
     this->belief = MAX_BELIEF;
 }
 
-int rd::Target::getPlayerId()
+int rd::Target::getPlayerId() const
 {
     return player_id;
 }
@@ -26,7 +26,7 @@ void rd::Target::setPlayerId(int id)
     player_id = id;
 }
 
-Vector2d rd::Target::getPos()
+Vector2d rd::Target::getPos() const
 {
     return pos;
 }
@@ -36,7 +36,7 @@ void rd::Target::setPos(const Vector2d &pos)
     this->pos = pos;
 }
 
-Vector2d rd::Target::getDimensions()
+Vector2d rd::Target::getDimensions() const
 {
     return dimensions;
 }
@@ -46,7 +46,7 @@ void rd::Target::setDimensions(const Vector2d &dimensions)
    this->dimensions = dimensions;
 }
 
-int rd::Target::getBelief()
+int rd::Target::getBelief() const
 {
     return belief;
 }

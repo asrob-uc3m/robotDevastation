@@ -31,11 +31,11 @@ public:
     bool reload();
 
 
-    std::string getName();
-    int getDamage();
-    int getCurrentAmmo();
+    std::string getName() const;
+    int getDamage() const;
+    int getCurrentAmmo() const;
     bool setCurrentAmmo(int current_ammo);
-    int getMaxAmmo();
+    int getMaxAmmo() const;
 
     //! @brief X coordinate of the weapon's scope
     static const int SCOPE_X;

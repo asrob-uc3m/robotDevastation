@@ -20,16 +20,16 @@ public:
     Target();
     Target( int player_id, Vector2d pos, Vector2d dimensions);
 
-    int getPlayerId();
+    int getPlayerId() const;
     void setPlayerId(int id);
 
-    Vector2d getPos();
+    Vector2d getPos() const;
     void setPos(const Vector2d &pos);
 
-    Vector2d getDimensions();
+    Vector2d getDimensions() const;
     void setDimensions(const Vector2d &dimensions);
 
-    int getBelief();
+    int getBelief() const;
     bool reduceBelief(int amount);
     bool resetBelief();
 

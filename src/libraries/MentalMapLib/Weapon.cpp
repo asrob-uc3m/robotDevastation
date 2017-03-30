@@ -45,17 +45,17 @@ bool rd::Weapon::reload()
     return true;
 }
 
-std::string rd::Weapon::getName()
+std::string rd::Weapon::getName() const
 {
     return name;
 }
 
-int rd::Weapon::getDamage()
+int rd::Weapon::getDamage() const
 {
     return damage;
 }
 
-int rd::Weapon::getCurrentAmmo()
+int rd::Weapon::getCurrentAmmo() const
 {
     return current_ammo;
 }
@@ -66,7 +66,7 @@ bool rd::Weapon::setCurrentAmmo(int current_ammo)
     return true;
 }
 
-int rd::Weapon::getMaxAmmo()
+int rd::Weapon::getMaxAmmo() const
 {
     return max_ammo;
 }
