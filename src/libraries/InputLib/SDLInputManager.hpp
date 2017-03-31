@@ -37,7 +37,7 @@ class SDLInputManager : public InputManager
         virtual bool stop();
         virtual bool isStopped() const;
 
-        virtual bool configure(std::string parameter, std::string value);
+        virtual bool configure(const std::string & parameter, const std::string & value);
 
         /**
          * @brief Register this manager in the ImageManager registry so that can be used

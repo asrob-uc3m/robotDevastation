@@ -56,7 +56,7 @@ class NetworkManager: public MentalMapEventListener
          * @return The NetworkManager registered with the given id, NULL if the id is not found in
          * the registry.
          */
-        static rd::NetworkManager *getNetworkManager(std::string id);
+        static rd::NetworkManager *getNetworkManager(const std::string & id);
 
         //! @brief Deallocate all the registered NetworkManager
         static bool destroyNetworkManager();
@@ -87,7 +87,7 @@ class NetworkManager: public MentalMapEventListener
         bool removeNetworkEventListeners();
 
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, Player value);
+        virtual bool configure(const std::string & parameter, Player value);
 
 
 
@@ -119,7 +119,7 @@ protected:
          * @brief This function allows subclasses to install their unique instances in the singleton register to be
          * selected later by the user
          */
-        static bool Register(NetworkManager *manager, std::string id);
+        static bool Register(NetworkManager *manager, const std::string & id);
 
         //! @brief Observers registered to be notified of network events
         std::vector<NetworkEventListener *> listeners;

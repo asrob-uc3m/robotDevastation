@@ -38,7 +38,7 @@ bool rd::MockImageManager::isEnabled() const
     return enabled;
 }
 
-bool rd::MockImageManager::configure(std::string parameter, std::string value)
+bool rd::MockImageManager::configure(const std::string & parameter, const std::string & value)
 {
     RD_DEBUG("Configure called for parameter: \"%s\" with value: \"%s\"\n", parameter.c_str(), value.c_str());
     return ImageManager::configure(parameter, value);

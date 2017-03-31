@@ -21,7 +21,7 @@ class MockScreen : public Screen
         virtual bool show();
         virtual bool drawScreen(void *screen);
         virtual ~MockScreen();
-        virtual bool update(std::string parameter, std::string value);
+        virtual bool update(const std::string & parameter, const std::string & value);
 
         //-- Available parameters:
         static const std::string PARAM_MESSAGE;

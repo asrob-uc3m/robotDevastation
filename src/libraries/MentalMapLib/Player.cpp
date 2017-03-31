@@ -13,7 +13,7 @@ rd::Player::Player()
     this->score = -1;
 }
 
-rd::Player::Player(int id, std::string name, int health, int max_health, int team_id, int score)
+rd::Player::Player(int id, const std::string & name, int health, int max_health, int team_id, int score)
 {
     this->id = id;
     this->name = name;

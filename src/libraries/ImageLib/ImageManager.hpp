@@ -58,7 +58,7 @@ class ImageManager
          * @return The ImageManager registered with the given id, NULL if the id is not found in
          * the registry.
          */
-        static ImageManager * getImageManager(std::string id);
+        static ImageManager * getImageManager(const std::string & id);
 
         //! @brief Deallocate all the registered ImageManager
         static bool destroyImageManager();
@@ -95,7 +95,7 @@ class ImageManager
         bool removeImageEventListeners();
 
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, std::string value);
+        virtual bool configure(const std::string & parameter, const std::string & value);
 
 
     protected:
@@ -103,7 +103,7 @@ class ImageManager
          * @brief This function allows subclasses to install their unique instances in the singleton register to be
          * selected later by the user
          */
-        static bool Register( ImageManager * manager, std::string id);
+        static bool Register( ImageManager * manager, const std::string & id);
 
         //! @brief Observers registered to be notified of image events
         std::vector<ImageEventListener *> listeners;

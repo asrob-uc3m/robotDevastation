@@ -163,7 +163,7 @@ bool rd::YarpNetworkManager::isStopped() const
     return !started;
 }
 
-bool rd::YarpNetworkManager::configure(std::string parameter, Player value)
+bool rd::YarpNetworkManager::configure(const std::string & parameter, Player value)
 {
     if (parameter.compare("player") == 0)
     {

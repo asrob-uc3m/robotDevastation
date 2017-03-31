@@ -39,12 +39,12 @@ class GameScreen : public Screen
         virtual bool cleanup();
         virtual bool drawScreen(void *screen);
         virtual ~GameScreen();
-        virtual bool update(std::string parameter, std::string value);
-        virtual bool update(std::string parameter, Player value);
-        virtual bool update(std::string parameter, std::vector<Player> value);
-        virtual bool update(std::string parameter, std::vector<Target> value);
-        virtual bool update(std::string parameter, Weapon value);
-        virtual bool update(std::string parameter, Image value);
+        virtual bool update(const std::string & parameter, const std::string & value);
+        virtual bool update(const std::string & parameter, Player value);
+        virtual bool update(const std::string & parameter, std::vector<Player> value);
+        virtual bool update(const std::string & parameter, std::vector<Target> value);
+        virtual bool update(const std::string & parameter, Weapon value);
+        virtual bool update(const std::string & parameter, Image value);
 
         //-- Screen interface parameters
         static const std::string PARAM_CAMERA_FRAME;

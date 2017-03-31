@@ -46,7 +46,7 @@ class AudioManager
          * @return The AudioManager registered with the given id, NULL if the id is not found in
          * the registry.
          */
-        static AudioManager * getAudioManager(std::string id);
+        static AudioManager * getAudioManager(const std::string & id);
 
         //! @brief Deallocate all the registered InputManager
         static bool destroyAudioManager();
@@ -70,7 +70,7 @@ class AudioManager
 
         //------------------------------ Configuration ----------------------------------------------------------------//
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, std::string value);
+        virtual bool configure(const std::string & parameter, const std::string & value);
 
 
         //------------------------------- Audio Manager functions -----------------------------------------------------//
@@ -108,7 +108,7 @@ class AudioManager
          * @brief This function allows subclasses to install their unique instances in the singleton register to be
          * selected later by the user
          */
-        static bool Register( AudioManager * manager, std::string id);
+        static bool Register( AudioManager * manager, const std::string & id);
 
 
     private:

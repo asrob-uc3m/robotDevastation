@@ -126,13 +126,13 @@ rd::GameScreen::~GameScreen()
 
 }
 
-bool rd::GameScreen::update(std::string parameter, std::string value)
+bool rd::GameScreen::update(const std::string & parameter, const std::string & value)
 {
     RD_ERROR("No string parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, rd::Player value)
+bool rd::GameScreen::update(const std::string & parameter, rd::Player value)
 {
     if (parameter == PARAM_MYSELF)
     {
@@ -145,7 +145,7 @@ bool rd::GameScreen::update(std::string parameter, rd::Player value)
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, std::vector<rd::Player> value)
+bool rd::GameScreen::update(const std::string & parameter, std::vector<rd::Player> value)
 {
     if (parameter == PARAM_PLAYERS)
     {
@@ -158,7 +158,7 @@ bool rd::GameScreen::update(std::string parameter, std::vector<rd::Player> value
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, std::vector<rd::Target> value)
+bool rd::GameScreen::update(const std::string & parameter, std::vector<rd::Target> value)
 {
     if (parameter == PARAM_TARGETS)
     {
@@ -171,7 +171,7 @@ bool rd::GameScreen::update(std::string parameter, std::vector<rd::Target> value
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, rd::Weapon value)
+bool rd::GameScreen::update(const std::string & parameter, rd::Weapon value)
 {
     if (parameter == PARAM_WEAPON)
     {
@@ -184,7 +184,7 @@ bool rd::GameScreen::update(std::string parameter, rd::Weapon value)
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, rd::Image value)
+bool rd::GameScreen::update(const std::string & parameter, rd::Image value)
 {    if (value.width() == 0 || value.height() == 0)
     {
         RD_ERROR("Invalid image");
