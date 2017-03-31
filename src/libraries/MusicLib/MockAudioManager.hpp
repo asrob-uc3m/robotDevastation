@@ -25,7 +25,7 @@ class MockAudioManager : public AudioManager,
     public:
         //---------------- Mock interface -------------------------------------------------------------------------//
          //! @brief Whether the sound with the given id is being played or not
-        bool isPlaying(const std::string& id);
+        bool isPlaying(const std::string& id) const;
 
 
         //---------------- Audio-related Stuff ----------------------------------------------------------------------//
@@ -42,7 +42,7 @@ class MockAudioManager : public AudioManager,
         //---------------- Manager Stuff ----------------------------------------------------------------------//
         virtual bool start();
         virtual bool stop();
-        virtual bool isStopped();
+        virtual bool isStopped() const;
 
         /**
          * @brief Register this manager in the ImageManager registry so that can be used
@@ -79,11 +79,11 @@ class MockAudioManager : public AudioManager,
         static MockAudioManager * uniqueInstance;
 
         //! \brief Dictionary for sound durations:
-        yarp::os::Mutex durations_mutex;
+        mutable yarp::os::Mutex durations_mutex;
         std::map<std::string, int> durations;
 
         //! \brief Dictionary for loop times
-        yarp::os::Mutex loop_times_mutex;
+        mutable yarp::os::Mutex loop_times_mutex;
         std::map<std::string, int> loop_times;
 
         bool stopped;

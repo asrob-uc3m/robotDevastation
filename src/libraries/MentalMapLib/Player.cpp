@@ -91,7 +91,7 @@ void rd::Player::setScore(int value)
     score = value;
 }
 
-std::string rd::Player::str()
+std::string rd::Player::str() const
 {
     std::stringstream sstream;
     sstream << "ID: " << id << std::endl;

@@ -47,10 +47,10 @@ class MockRobotManager : public RobotManager
 
         //-- Mock functionality
         //-----------------------------------------------------
-        bool isConnected();
-        bool isEnabled();
+        bool isConnected() const;
+        bool isEnabled() const;
 
-        bool isMoving();
+        bool isMoving() const;
         int getMovementDirection();
         static const int FORWARD;
         static const int BACKWARDS;

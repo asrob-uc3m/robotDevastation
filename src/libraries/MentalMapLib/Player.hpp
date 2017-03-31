@@ -45,7 +45,7 @@ public:
     void setScore(int value);
 
     //! @brief Returns a string representing this object
-    std::string str();
+    std::string str() const;
 
 private:
     std::string name;

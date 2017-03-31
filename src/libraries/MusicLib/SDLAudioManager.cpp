@@ -103,7 +103,7 @@ bool rd::SDLAudioManager::stop()
     return true;
 }
 
-bool rd::SDLAudioManager::isStopped()
+bool rd::SDLAudioManager::isStopped() const
 {
     return stopped;
 }

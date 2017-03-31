@@ -13,7 +13,7 @@ bool rd::MockImageEventListener::onImageArrived(rd::ImageManager *manager)
     return true;
 }
 
-int rd::MockImageEventListener::getImagesArrived() { return images_arrived; }
+int rd::MockImageEventListener::getImagesArrived() const { return images_arrived; }
 
 void rd::MockImageEventListener::resetImagesArrived() { images_arrived = 0; }
 

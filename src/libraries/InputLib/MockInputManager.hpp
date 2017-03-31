@@ -43,7 +43,7 @@ class MockInputManager : public InputManager
         //------------------------------ Manager Startup & Halting ----------------------------------------------------//
         virtual bool start();
         virtual bool stop();
-        virtual bool isStopped();
+        virtual bool isStopped() const;
 
         //------------------------------ Listeners---------------------------------------------------------------------//
         int getNumListeners();

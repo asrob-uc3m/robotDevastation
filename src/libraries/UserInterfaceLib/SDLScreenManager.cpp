@@ -212,7 +212,7 @@ bool rd::SDLScreenManager::stop()
     return true;
 }
 
-bool rd::SDLScreenManager::isStopped()
+bool rd::SDLScreenManager::isStopped() const
 {
     return stopped;
 }

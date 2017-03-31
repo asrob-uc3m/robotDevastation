@@ -54,7 +54,7 @@ class YarpNetworkManager: public NetworkManager,
         //------------------ Manager Startup & Halting ---------------------------------------------------------------//
         virtual bool start();
         virtual bool stop();
-        virtual bool isStopped();
+        virtual bool isStopped() const;
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Configures a parameter with a value

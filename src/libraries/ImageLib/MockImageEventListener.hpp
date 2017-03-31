@@ -23,7 +23,7 @@ class MockImageEventListener : public ImageEventListener
 
         virtual bool onImageArrived( ImageManager * manager );
 
-        int getImagesArrived();
+        int getImagesArrived() const;
         void resetImagesArrived();
 
         Image getStoredImage();

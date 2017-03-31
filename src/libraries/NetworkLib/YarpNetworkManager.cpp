@@ -158,7 +158,7 @@ bool rd::YarpNetworkManager::stop()
     return true;
 }
 
-bool rd::YarpNetworkManager::isStopped()
+bool rd::YarpNetworkManager::isStopped() const
 {
     return !started;
 }

@@ -63,11 +63,11 @@ class MockNetworkManager : public NetworkManager
 
         //-- Mock object API
         //--------------------------------------------------------------------------------------------
-        bool isLoggedIn();
-        bool isStopped();
+        bool isLoggedIn() const;
+        bool isStopped() const;
 
         bool setPlayerData(std::vector<Player> game_players);
-        std::vector<Player> getPlayerData();
+        std::vector<Player> getPlayerData() const;
         bool sendPlayerData();
         bool setLoggedIn(bool logged_in);
 

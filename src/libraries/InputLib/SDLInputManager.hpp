@@ -35,7 +35,7 @@ class SDLInputManager : public InputManager
     public:
         virtual bool start();
         virtual bool stop();
-        virtual bool isStopped();
+        virtual bool isStopped() const;
 
         virtual bool configure(std::string parameter, std::string value);
 

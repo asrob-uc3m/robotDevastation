@@ -76,7 +76,7 @@ class NetworkManager: public MentalMapEventListener
         virtual bool stop() = 0;
 
         //! @brief Returns true if manager is stopped (obviously)
-        virtual bool isStopped() = 0;
+        virtual bool isStopped() const = 0;
 
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//

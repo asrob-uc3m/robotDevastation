@@ -23,7 +23,7 @@ class StateDirector
         virtual ~StateDirector();
 
         //! @brief Allows access to the id of the attached State
-        std::string getStateId();
+        std::string getStateId() const;
 
         /**
          * @brief Function that starts the attached State
@@ -49,7 +49,7 @@ class StateDirector
         virtual bool addTransition( StateDirector * nextState, int condition);
 
         //! @brief Returns the current state of the state
-        virtual bool isActive();
+        virtual bool isActive() const;
 
     protected:
         State * state;

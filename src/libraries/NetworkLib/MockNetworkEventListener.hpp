@@ -24,10 +24,10 @@ class MockNetworkEventListener : public NetworkEventListener
 
         virtual bool onDataArrived(std::vector<Player> players);
 
-        int getDataArrived();
+        int getDataArrived() const;
         void resetDataArrived();
 
-        std::vector<Player> getStoredPlayers();
+        std::vector<Player> getStoredPlayers() const;
 
 
     private:

@@ -25,15 +25,15 @@ class MockInputEventListener : public InputEventListener
         virtual bool onKeyUp( const Key & k );
         virtual bool onWindowEvent( const WindowEvent & event );
 
-        int getNumKeyDownPresses();
-        int getNumKeyUpPresses();
-        int getNumWindowEvents();
+        int getNumKeyDownPresses() const;
+        int getNumKeyUpPresses() const;
+        int getNumWindowEvents() const;
 
         bool clear();
 
-        std::vector<Key> getStoredKeyUpPresses();
-        std::vector<Key> getStoredKeyDownPresses();
-        std::vector<WindowEvent> getStoredWindowEvents();
+        std::vector<Key> getStoredKeyUpPresses() const;
+        std::vector<Key> getStoredKeyDownPresses() const;
+        std::vector<WindowEvent> getStoredWindowEvents() const;
 
     private:
         int num_keydown_presses;

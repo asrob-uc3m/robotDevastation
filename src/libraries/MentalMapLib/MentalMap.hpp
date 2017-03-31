@@ -58,19 +58,19 @@ class MentalMap : public NetworkEventListener
 
         //-- Interface to get data
         //--------------------------------------------------------------------------------------------
-        std::vector<Target> getTargets();
-        std::vector<Player> getPlayers();
-        Target getTarget(const int& id = -1);
-        Player getPlayer(const int& id = -1);
+        std::vector<Target> getTargets() const;
+        std::vector<Player> getPlayers() const;
+        Target getTarget(const int& id = -1) const;
+        Player getPlayer(const int& id = -1) const;
 
         //! @brief Get the player corresponding to the user
-        Player getMyself();
+        Player getMyself() const;
 
 
         //-- Weapon interface
         //--------------------------------------------------------------------------------------------
         void addWeapon(Weapon weapon);
-        Weapon getCurrentWeapon();
+        Weapon getCurrentWeapon() const;
 
         //! @brief Manage all the actions to be carried out when the user shoots (sound, update players, etc)
         bool shoot();

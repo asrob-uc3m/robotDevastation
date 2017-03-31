@@ -45,7 +45,7 @@ class SDLAudioManager : public AudioManager
         //---------------- Manager Stuff ----------------------------------------------------------------------//
         virtual bool start();
         virtual bool stop();
-        virtual bool isStopped();
+        virtual bool isStopped() const;
 
         /**
          * @brief Register this manager in the ImageManager registry so that can be used

@@ -294,17 +294,17 @@ void MockRobotManager::onDestroy(){
     return;
 }
 
-bool MockRobotManager::isConnected()
+bool MockRobotManager::isConnected() const
 {
     return connected;
 }
 
-bool MockRobotManager::isEnabled()
+bool MockRobotManager::isEnabled() const
 {
     return enabled;
 }
 
-bool MockRobotManager::isMoving() 
+bool MockRobotManager::isMoving() const
 {
     return movement_direction!=NONE;
 }

@@ -13,7 +13,7 @@ bool rd::MockNetworkEventListener::onDataArrived(std::vector<rd::Player> players
     return true;
 }
 
-int rd::MockNetworkEventListener::getDataArrived()
+int rd::MockNetworkEventListener::getDataArrived() const
 {
     return data_arrived;
 }
@@ -23,7 +23,7 @@ void rd::MockNetworkEventListener::resetDataArrived()
     data_arrived = 0;
 }
 
-std::vector<rd::Player> rd::MockNetworkEventListener::getStoredPlayers()
+std::vector<rd::Player> rd::MockNetworkEventListener::getStoredPlayers() const
 {
     return stored_players;
 }

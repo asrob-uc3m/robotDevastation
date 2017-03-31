@@ -42,7 +42,7 @@ void rd::MockAudioManager::run()
 }
 
 
-bool rd::MockAudioManager::isPlaying(const std::string &id)
+bool rd::MockAudioManager::isPlaying(const std::string &id) const
 {
     bool playing = false;
 
@@ -57,7 +57,7 @@ bool rd::MockAudioManager::isPlaying(const std::string &id)
         return false;
     }
 
-    if (loop_times[id] != 0 || durations[id] > 0)
+    if (loop_times.at(id) != 0 || durations.at(id) > 0)
     {
         playing = true;
     }
@@ -146,7 +146,7 @@ bool rd::MockAudioManager::stop()
     return true;
 }
 
-bool rd::MockAudioManager::isStopped()
+bool rd::MockAudioManager::isStopped() const
 {
     return stopped;
 }

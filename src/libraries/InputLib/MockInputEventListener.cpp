@@ -31,17 +31,17 @@ bool rd::MockInputEventListener::onWindowEvent(const rd::WindowEvent & event)
     return true;
 }
 
-int rd::MockInputEventListener::getNumKeyDownPresses()
+int rd::MockInputEventListener::getNumKeyDownPresses() const
 {
     return num_keydown_presses;
 }
 
-int rd::MockInputEventListener::getNumKeyUpPresses()
+int rd::MockInputEventListener::getNumKeyUpPresses() const
 {
     return num_keyup_presses;
 }
 
-int rd::MockInputEventListener::getNumWindowEvents()
+int rd::MockInputEventListener::getNumWindowEvents() const
 {
     return num_window_events;
 }
@@ -59,17 +59,17 @@ bool rd::MockInputEventListener::clear()
     return true;
 }
 
-std::vector<rd::Key> rd::MockInputEventListener::getStoredKeyUpPresses()
+std::vector<rd::Key> rd::MockInputEventListener::getStoredKeyUpPresses() const
 {
     return stored_keyup_presses;
 }
 
-std::vector<rd::Key> rd::MockInputEventListener::getStoredKeyDownPresses()
+std::vector<rd::Key> rd::MockInputEventListener::getStoredKeyDownPresses() const
 {
     return stored_keydown_presses;
 }
 
-std::vector<rd::WindowEvent> rd::MockInputEventListener::getStoredWindowEvents()
+std::vector<rd::WindowEvent> rd::MockInputEventListener::getStoredWindowEvents() const
 {
     return stored_window_events;
 }

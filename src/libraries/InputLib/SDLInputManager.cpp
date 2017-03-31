@@ -27,7 +27,7 @@ bool rd::SDLInputManager::stop()
     return true;
 }
 
-bool rd::SDLInputManager::isStopped()
+bool rd::SDLInputManager::isStopped() const
 {
     return stopped;
 }

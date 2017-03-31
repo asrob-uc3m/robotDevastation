@@ -40,7 +40,7 @@ bool rd::MentalMap::configure(const int &player_id)
     return true;
 }
 
-std::vector<rd::Target> rd::MentalMap::getTargets()
+std::vector<rd::Target> rd::MentalMap::getTargets() const
 {
     std::vector<Target> target_vector;
 
@@ -53,7 +53,7 @@ std::vector<rd::Target> rd::MentalMap::getTargets()
 
 }
 
-std::vector<rd::Player> rd::MentalMap::getPlayers()
+std::vector<rd::Player> rd::MentalMap::getPlayers() const
 {
     std::vector<Player> player_vector;
 
@@ -65,11 +65,11 @@ std::vector<rd::Player> rd::MentalMap::getPlayers()
     return player_vector;
 }
 
-rd::Target rd::MentalMap::getTarget(const int &id)
+rd::Target rd::MentalMap::getTarget(const int &id) const
 {
     if ( targets.find(id) != targets.end() )
     {
-        return targets[id];
+        return targets.at(id);
     }
     else
     {
@@ -79,11 +79,11 @@ rd::Target rd::MentalMap::getTarget(const int &id)
     }
 }
 
-rd::Player rd::MentalMap::getPlayer(const int &id)
+rd::Player rd::MentalMap::getPlayer(const int &id) const
 {
     if ( players.find(id) != players.end() )
     {
-        return players[id];
+        return players.at(id);
     }
     else
     {
@@ -93,7 +93,7 @@ rd::Player rd::MentalMap::getPlayer(const int &id)
     }
 }
 
-rd::Player rd::MentalMap::getMyself()
+rd::Player rd::MentalMap::getMyself() const
 {
     if (!myself)
     {
@@ -107,7 +107,7 @@ rd::Player rd::MentalMap::getMyself()
     }
 }
 
-rd::Weapon rd::MentalMap::getCurrentWeapon()
+rd::Weapon rd::MentalMap::getCurrentWeapon() const
 {
     if ( (int)weapons.size() >= current_weapon)
         return weapons[current_weapon];

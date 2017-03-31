@@ -74,7 +74,7 @@ class ScreenManager
         virtual bool stop() = 0;
 
         //! @brief True if the manager is not active
-        virtual bool isStopped() = 0;
+        virtual bool isStopped() const = 0;
 
         //------------------------------ Configuration ----------------------------------------------------------------//
         //! @brief Configures a parameter with a value

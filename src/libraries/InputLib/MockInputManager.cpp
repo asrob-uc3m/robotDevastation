@@ -77,7 +77,7 @@ bool rd::MockInputManager::stop()
     return true;
 }
 
-bool rd::MockInputManager::isStopped()
+bool rd::MockInputManager::isStopped() const
 {
     return stopped;
 }

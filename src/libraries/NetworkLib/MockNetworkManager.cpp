@@ -138,12 +138,12 @@ bool rd::MockNetworkManager::keepAlive()
     return true; //-- Not really required in mock object
 }
 
-bool rd::MockNetworkManager::isLoggedIn()
+bool rd::MockNetworkManager::isLoggedIn() const
 {
     return logged_in;
 }
 
-bool rd::MockNetworkManager::isStopped()
+bool rd::MockNetworkManager::isStopped() const
 {
     return stopped;
 }
@@ -162,7 +162,7 @@ bool rd::MockNetworkManager::setPlayerData(std::vector<rd::Player> players)
     return true;
 }
 
-std::vector<rd::Player> rd::MockNetworkManager::getPlayerData()
+std::vector<rd::Player> rd::MockNetworkManager::getPlayerData() const
 {
     std::vector<Player> player_vector;
 
