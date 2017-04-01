@@ -30,7 +30,7 @@ init:
   - cmd: set
   - cmd: cmake --version
   - cmd: msbuild /version
-  - cmd: echo.
+  - cmd:
 
 install:
   # Create folders
@@ -40,7 +40,7 @@ install:
   # Download and install ACE
   - cmd: echo Downloading %ACE_DOWNLOAD_URL%
   - cmd: appveyor DownloadFile "%ACE_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\ace.zip"
-  - cmd: 7z x -y ace.zip
+  - cmd: 7z x -y "%DOWNLOADS_PATH%\ace.zip"
   - cmd: msbuild "%DOWNLOADS_PATH%\ACE_wrappers\ACE_wrappers_vc12.sln" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - cmd: set ACE_ROOT=%DOWNLOADS_PATH%\ACE_wrappers
   - cmd: set PATH=%PATH%;%ACE_ROOT%\lib
