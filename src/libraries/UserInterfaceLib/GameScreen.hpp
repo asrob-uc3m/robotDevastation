@@ -41,8 +41,8 @@ class GameScreen : public Screen
         virtual ~GameScreen();
         virtual bool update(const std::string & parameter, const std::string & value);
         virtual bool update(const std::string & parameter, Player value);
-        virtual bool update(const std::string & parameter, std::vector<Player> value);
-        virtual bool update(const std::string & parameter, std::vector<Target> value);
+        virtual bool update(const std::string & parameter, const std::vector<Player> & value);
+        virtual bool update(const std::string & parameter, const std::vector<Target> & value);
         virtual bool update(const std::string & parameter, Weapon value);
         virtual bool update(const std::string & parameter, Image value);
 

@@ -148,7 +148,7 @@ bool rd::MockNetworkManager::isStopped() const
     return stopped;
 }
 
-bool rd::MockNetworkManager::setPlayerData(std::vector<rd::Player> players)
+bool rd::MockNetworkManager::setPlayerData(const std::vector<rd::Player> & players)
 {
     players_dic.clear();
 

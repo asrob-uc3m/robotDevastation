@@ -31,7 +31,7 @@ class FiniteStateMachine
          * @param stateDirectors vector of StateDirector forming the FiniteStateMachine
          * @param initial_state_id Id of the initial state
          */
-        FiniteStateMachine(std::vector<StateDirector *> stateDirectors, int initial_state_id);
+        FiniteStateMachine(const std::vector<StateDirector *> & stateDirectors, int initial_state_id);
         ~FiniteStateMachine();
 
         //! @brief Starts the state machine (running the initial state)

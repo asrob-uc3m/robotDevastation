@@ -111,7 +111,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, rd::Player valu
     return ret;
 }
 
-bool rd::SDLScreenManager::update(const std::string & parameter, std::vector<rd::Player> value)
+bool rd::SDLScreenManager::update(const std::string & parameter, const std::vector<rd::Player> & value)
 {
     mutex.lock();
     bool ret = this->screen->update(parameter, value);
@@ -119,7 +119,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, std::vector<rd:
     return ret;
 }
 
-bool rd::SDLScreenManager::update(const std::string & parameter, std::vector<rd::Target> value)
+bool rd::SDLScreenManager::update(const std::string & parameter, const std::vector<rd::Target> & value)
 {
     mutex.lock();
     bool ret = this->screen->update(parameter, value);

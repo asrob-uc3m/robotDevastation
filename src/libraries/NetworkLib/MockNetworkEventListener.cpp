@@ -6,7 +6,7 @@ rd::MockNetworkEventListener::MockNetworkEventListener()
     data_arrived = 0;
 }
 
-bool rd::MockNetworkEventListener::onDataArrived(std::vector<rd::Player> players)
+bool rd::MockNetworkEventListener::onDataArrived(const std::vector<rd::Player> & players)
 {
     stored_players = players;
     data_arrived++;

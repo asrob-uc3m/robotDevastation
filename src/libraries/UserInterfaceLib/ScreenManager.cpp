@@ -110,12 +110,12 @@ bool rd::ScreenManager::update(const std::string & parameter, rd::Player value)
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(const std::string & parameter, std::vector<rd::Player> value)
+bool rd::ScreenManager::update(const std::string & parameter, const std::vector<rd::Player> & value)
 {
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(const std::string & parameter, std::vector<rd::Target> value)
+bool rd::ScreenManager::update(const std::string & parameter, const std::vector<rd::Target> & value)
 {
     return this->screen->update(parameter, value);
 }

@@ -34,8 +34,8 @@ class Screen
         virtual bool update(const std::string & parameter, const std::string & value);
         virtual bool update(const std::string & parameter, Image value); //-- Required by GameScreen and DeadScreen
         virtual bool update(const std::string & parameter, Player value); //-- Required by GameScreen
-        virtual bool update(const std::string & parameter, std::vector<Player> value); //-- Required by GameScreen
-        virtual bool update(const std::string & parameter, std::vector<Target> value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const std::vector<Player> & value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const std::vector<Target> & value); //-- Required by GameScreen
         virtual bool update(const std::string & parameter, Weapon value); //-- Required by GameScreen
         virtual ~Screen() {}
 

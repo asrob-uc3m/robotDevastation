@@ -82,7 +82,7 @@ class MentalMap : public NetworkEventListener
         //-- Functions to update data
         //--------------------------------------------------------------------------------------------
         //! @brief  The current implementation just replaces the players inside the mental map by the new players
-        bool updatePlayers(std::vector<Player> new_player_vector);
+        bool updatePlayers(const std::vector<Player> & new_player_vector);
 
         /**
          * @brief Update the targets stored in the mental map
@@ -90,7 +90,7 @@ class MentalMap : public NetworkEventListener
          * If a target previously detected is no longer present in the new detections, decreases the belief value
          * until reaching 0. Then, it deletes that target.
          */
-        bool updateTargets(std::vector<Target> new_target_detections);
+        bool updateTargets(const std::vector<Target> & new_target_detections);
 
         //! @brief Restores the health of current player (and does more stuff if needed)
         bool respawn();
@@ -148,7 +148,7 @@ class MentalMap : public NetworkEventListener
         //-- Implementation of NetworkEventListener functions
         //--------------------------------------------------------------------------------------------
         //! @brief Updates the local information about the players with the new data received by the NetworkManager.
-        bool onDataArrived(std::vector<Player> players);
+        bool onDataArrived(const std::vector<Player> & players);
 };
 
 }

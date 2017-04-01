@@ -145,7 +145,7 @@ bool rd::GameScreen::update(const std::string & parameter, rd::Player value)
     return false;
 }
 
-bool rd::GameScreen::update(const std::string & parameter, std::vector<rd::Player> value)
+bool rd::GameScreen::update(const std::string & parameter, const std::vector<rd::Player> & value)
 {
     if (parameter == PARAM_PLAYERS)
     {
@@ -158,7 +158,7 @@ bool rd::GameScreen::update(const std::string & parameter, std::vector<rd::Playe
     return false;
 }
 
-bool rd::GameScreen::update(const std::string & parameter, std::vector<rd::Target> value)
+bool rd::GameScreen::update(const std::string & parameter, const std::vector<rd::Target> & value)
 {
     if (parameter == PARAM_TARGETS)
     {

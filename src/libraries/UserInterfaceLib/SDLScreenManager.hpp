@@ -46,10 +46,10 @@ class SDLScreenManager : public ScreenManager
         virtual bool update(const std::string & parameter, Player value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(const std::string & parameter, std::vector<Player> value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const std::vector<Player> & value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(const std::string & parameter, std::vector<Target> value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const std::vector<Target> & value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(const std::string & parameter, Weapon value); //-- Required by GameScreen
