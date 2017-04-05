@@ -54,10 +54,10 @@ class RobotManager
         virtual void onDestroy() = 0;
         virtual ~RobotManager() {}
 
+    protected:
         //-- Constants
         static const int UNUSED = -1;
 
-    protected:
 };
 
 }
