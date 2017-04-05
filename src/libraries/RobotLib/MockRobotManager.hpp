@@ -72,6 +72,8 @@ class MockRobotManager : public RobotManager
     private:
         int movement_direction;
         int camera_movement_direction;
+
+        bool enabled;
 };
 
 }
