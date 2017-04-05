@@ -12,6 +12,8 @@ class NetworkEventListener
 {
     public:
         virtual bool onDataArrived(std::vector<Player> players) = 0;
+
+        virtual ~NetworkEventListener() {}
 };
 
 }

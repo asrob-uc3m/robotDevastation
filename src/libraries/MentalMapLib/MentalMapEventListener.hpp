@@ -32,6 +32,8 @@ class MentalMapEventListener
          * @param player Player to respawn
          */
         virtual bool onRespawn(Player player) = 0;
+
+        virtual ~MentalMapEventListener() {}
 };
 
 }
