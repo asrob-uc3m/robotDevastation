@@ -55,9 +55,6 @@ class StateDirector
         State * state;
         bool active;
         std::map<int, StateDirector * > nextStates;
-
-    private:
-        StateDirector() {}
 };
 }
 #endif // __RD_STATE_DIRECTOR_HPP__
