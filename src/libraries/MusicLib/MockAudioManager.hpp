@@ -52,7 +52,7 @@ class MockAudioManager : public AudioManager,
         static bool RegisterManager();
 
         //! @brief Destructor. Used to reset the local static reference after destroying this manager
-        ~MockAudioManager();
+        virtual ~MockAudioManager();
 
         //! @brief String that identifies this manager
         static const std::string id;

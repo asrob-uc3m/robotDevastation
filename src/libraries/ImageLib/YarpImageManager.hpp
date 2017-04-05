@@ -47,7 +47,7 @@ class YarpImageManager : public ImageManager,
         static bool RegisterManager();
 
         //! @brief Destructor. Used to reset the local static reference after destroying this manager
-        ~YarpImageManager();
+        virtual ~YarpImageManager();
 
         //! @brief String that identifies this manager
         static const std::string id;

@@ -55,7 +55,7 @@ class SDLAudioManager : public AudioManager
         static bool RegisterManager();
 
         //! @brief Destructor. Used to reset the local static reference after destroying this manager
-        ~SDLAudioManager();
+        virtual ~SDLAudioManager();
 
 
         //! @brief String that identifies this manager

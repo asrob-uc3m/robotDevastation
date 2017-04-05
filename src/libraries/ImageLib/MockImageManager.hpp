@@ -45,7 +45,7 @@ class MockImageManager : public ImageManager
         static bool RegisterManager();
 
         //! @brief Destructor. Used to reset the local static reference after destroying this manager
-        ~MockImageManager();
+        virtual ~MockImageManager();
 
         //! @brief String that identifies this manager
         static const std::string id;

@@ -79,7 +79,7 @@ class SDLScreenManager : public ScreenManager
         static bool RegisterManager();
 
         //! @brief Destructor. Used to reset the local static reference after destroying this manager
-        ~SDLScreenManager();
+        virtual ~SDLScreenManager();
 
 
         //! @brief String that identifies this manager

@@ -46,7 +46,7 @@ class YarpNetworkManager: public NetworkManager,
          */
         static bool RegisterManager();
 
-        ~YarpNetworkManager();
+        virtual ~YarpNetworkManager();
 
         //! @brief String that identifies this manager
         static const std::string id;
