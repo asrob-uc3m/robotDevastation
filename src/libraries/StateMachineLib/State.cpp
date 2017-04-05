@@ -18,5 +18,5 @@ std::string rd::State::getStateId() const
 
 rd::State *rd::State::getEndState()
 {
-    return (rd::State *)NULL;
+    return (State *)NULL;
 }

@@ -22,10 +22,10 @@ class SDLEventFactory
 {
     public:
         //! @brief Creates a \ref Key from a SDL keycode
-        static rd::Key makeKey(SDL_Keycode keycode);
+        static Key makeKey(SDL_Keycode keycode);
 
         //! @brief Creates a \ref WindowEvent from a SDL window event structure
-        static rd::WindowEvent makeWindowEvent(SDL_WindowEvent windowEvent);
+        static WindowEvent makeWindowEvent(SDL_WindowEvent windowEvent);
 
         //! @brief Initialize the lookup tables
         static bool initLookupTables();

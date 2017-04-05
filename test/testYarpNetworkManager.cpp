@@ -43,7 +43,7 @@ class RunningServerThread: public yarp::os::Thread
 
     private:
         yarp::os::ResourceFinder rf;
-        rd::Server rdServer;
+        Server rdServer;
         int argc;
         char** argv;
 };

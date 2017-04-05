@@ -29,7 +29,7 @@ rd::Key rd::SDLEventFactory::makeKey(SDL_Keycode keycode)
     else
     {
         RD_ERROR("Key not supported!\n");
-        return rd::Key::KEY_UNKNOWN;
+        return Key::KEY_UNKNOWN;
     }
 }
 
@@ -55,14 +55,14 @@ bool rd::SDLEventFactory::initLookupTables()
         sdl_printable_map[SDLK_SPACE] = ' ';
         sdl_printable_map[SDLK_RETURN] = '\n';
 
-        sdl_control_map[SDLK_SPACE] = rd::Key::KEY_SPACE;
-        sdl_control_map[SDLK_ESCAPE] = rd::Key::KEY_ESCAPE;
-        sdl_control_map[SDLK_BACKSPACE] = rd::Key::KEY_BACKSPACE;
-        sdl_control_map[SDLK_UP] = rd::Key::KEY_ARROW_UP;
-        sdl_control_map[SDLK_DOWN] = rd::Key::KEY_ARROW_DOWN;
-        sdl_control_map[SDLK_LEFT] = rd::Key::KEY_ARROW_LEFT;
-        sdl_control_map[SDLK_RIGHT] = rd::Key::KEY_ARROW_RIGHT;
-        sdl_control_map[SDLK_RETURN] = rd::Key::KEY_ENTER;
+        sdl_control_map[SDLK_SPACE] = Key::KEY_SPACE;
+        sdl_control_map[SDLK_ESCAPE] = Key::KEY_ESCAPE;
+        sdl_control_map[SDLK_BACKSPACE] = Key::KEY_BACKSPACE;
+        sdl_control_map[SDLK_UP] = Key::KEY_ARROW_UP;
+        sdl_control_map[SDLK_DOWN] = Key::KEY_ARROW_DOWN;
+        sdl_control_map[SDLK_LEFT] = Key::KEY_ARROW_LEFT;
+        sdl_control_map[SDLK_RIGHT] = Key::KEY_ARROW_RIGHT;
+        sdl_control_map[SDLK_RETURN] = Key::KEY_ENTER;
 
         initialized = true;
     }
@@ -74,7 +74,7 @@ rd::WindowEvent rd::SDLEventFactory::makeWindowEvent(SDL_WindowEvent windowEvent
 {
     switch ( windowEvent.event )
     {
-    case SDL_WINDOWEVENT_CLOSE: return rd::WindowEvent::WINDOW_CLOSE;
-    default:                    return rd::WindowEvent::WINDOW_UNKNOWN;
+    case SDL_WINDOWEVENT_CLOSE: return WindowEvent::WINDOW_CLOSE;
+    default:                    return WindowEvent::WINDOW_UNKNOWN;
     }
 }

@@ -49,14 +49,14 @@ class NetworkManager: public MentalMapEventListener
          * @return By default, if no id is specified, this will return a reference to the first
          * ImageManager that it can find in the registry, or NULL if no NetworkManager was registered.
          */
-       static rd::NetworkManager *getNetworkManager();
+        static NetworkManager *getNetworkManager();
 
         /**
          * @brief Get a reference to the NetworkManager
          * @return The NetworkManager registered with the given id, NULL if the id is not found in
          * the registry.
          */
-        static rd::NetworkManager *getNetworkManager(std::string id);
+        static NetworkManager *getNetworkManager(std::string id);
 
         //! @brief Deallocate all the registered NetworkManager
         static bool destroyNetworkManager();
@@ -108,10 +108,10 @@ class NetworkManager: public MentalMapEventListener
         //-- MentalMap listener API
         //-------------------------------------------------------------------------------------------
         //! @brief Implementation of MentalMapEventListener interface
-        bool onTargetHit(rd::Target target, rd::Player player, rd::Weapon weapon);
+        bool onTargetHit(Target target, Player player, Weapon weapon);
 
         //! @brief Implementation of MentalMapEventListener interface
-        bool onRespawn(rd::Player player);
+        bool onRespawn(Player player);
 
 
 protected:

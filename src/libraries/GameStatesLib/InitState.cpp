@@ -109,7 +109,7 @@ bool rd::InitState::onKeyDown(const rd::Key & k)
 
 bool rd::InitState::onKeyUp(const rd::Key & k)
 {
-    if (k.getValue() == rd::Key::KEY_ESCAPE)
+    if (k.getValue() == Key::KEY_ESCAPE)
     {
         RD_DEBUG("Escape was pressed!\n");
         received_exit = true;
@@ -127,7 +127,7 @@ bool rd::InitState::onKeyUp(const rd::Key & k)
 
 bool rd::InitState::onWindowEvent(const rd::WindowEvent & event)
 {
-    if (event.getEvent() == rd::WindowEvent::WINDOW_CLOSE)
+    if (event.getEvent() == WindowEvent::WINDOW_CLOSE)
     {
         RD_DEBUG("Exit was triggered!\n");
         received_exit = true;
