@@ -60,12 +60,7 @@ class RobotManager
         //-- Constants
         static const int UNUSED = -1;
 
-        RobotManager(const std::string& robotName) {
-            this->robotName = robotName;
-        }
-
     protected:
-        std::string robotName;
 };
 
 }

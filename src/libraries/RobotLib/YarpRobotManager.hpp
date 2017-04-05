@@ -66,6 +66,7 @@ class YarpRobotManager : public RobotManager
         yarp::os::RpcClient rpcClient;
 
     private:
+        std::string robotName;
         bool enabled;
         bool connected;
 

@@ -70,11 +70,13 @@ class MockRobotManager : public RobotManager
         static const int CAMERA_NONE;
 
     private:
+        std::string robotName;
+        bool enabled;
+        bool connected;
+
         int movement_direction;
         int camera_movement_direction;
 
-        bool enabled;
-        bool connected;
 };
 
 }
