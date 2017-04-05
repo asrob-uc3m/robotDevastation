@@ -3,9 +3,6 @@
 #ifndef __RD_ROBOT_MANAGER_HPP__
 #define __RD_ROBOT_MANAGER_HPP__
 
-#include <string>
-#include <vector>
-#include <map>
 
 namespace rd{
 
@@ -57,17 +54,10 @@ class RobotManager
         virtual void onDestroy() = 0;
         virtual ~RobotManager() {}
 
+    protected:
         //-- Constants
         static const int UNUSED = -1;
 
-        RobotManager(const std::string& robotName) {
-            this->robotName = robotName;
-        }
-
-    protected:
-        std::string robotName;
-        bool connected;
-        bool enabled;
 };
 
 }
