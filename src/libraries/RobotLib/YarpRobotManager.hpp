@@ -67,6 +67,7 @@ class YarpRobotManager : public RobotManager
 
     private:
         bool enabled;
+        bool connected;
 
         bool send1vocab1int(int vocab, int integer);
         bool send1vocab(int vocab);
