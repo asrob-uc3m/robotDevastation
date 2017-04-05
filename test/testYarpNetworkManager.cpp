@@ -44,8 +44,6 @@ class RunningServerThread: public yarp::os::Thread
     private:
         yarp::os::ResourceFinder rf;
         Server rdServer;
-        int argc;
-        char** argv;
 };
 
 class YarpNetworkManagerTest : public testing::Test
