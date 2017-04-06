@@ -60,8 +60,8 @@ bool rd::SDLScreenManager::show()
     //-- Resize window if required
     int h, w;
     SDL_GetWindowSize(window, &w, &h);
-    if (screen->w != w || screen->h != h)
-        SDL_SetWindowSize(window, screen->w, screen->h);
+    if (screen->getWidth() != w || screen->getHeight() != h)
+        SDL_SetWindowSize(window, screen->getWidth(), screen->getHeight());
 
     //-- Get writable surface
     SDL_Surface * screen_surface = SDL_GetWindowSurface(window);

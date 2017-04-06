@@ -34,3 +34,13 @@ bool rd::Screen::update(std::string parameter, rd::Weapon value)
 {
     return true;
 }
+
+int rd::Screen::getHeight() const
+{
+    return h;
+}
+
+int rd::Screen::getWidth() const
+{
+    return w;
+}

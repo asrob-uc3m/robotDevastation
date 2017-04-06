@@ -37,12 +37,14 @@ class Screen
         virtual bool update(std::string parameter, std::vector<Player> value); //-- Required by GameScreen
         virtual bool update(std::string parameter, std::vector<Target> value); //-- Required by GameScreen
         virtual bool update(std::string parameter, Weapon value); //-- Required by GameScreen
+        virtual int getHeight() const;
+        virtual int getWidth() const;
         virtual ~Screen() {}
-
-        int h, w; //-- Screen size
 
     protected:
         Screen();
+
+        int h, w; //-- Screen size
 };
 
 }
