@@ -10,7 +10,8 @@
 Welcome to Robot Devastation! If you're lost, you probably just want to go back to the <a class="el" href="http://asrob.uc3m.es/index.php/Robot_Devastation">Robot Devastation Wiki</a>.
 Or stay for the fun!
 
- \li <a class="el" href="http://asrob.uc3m.es/index.php/C%C3%B3mo_instalar_Robot_Devastation_sobre_Ubuntu_14.10">Install Robot Devastation on Ubuntu</a>
+ \li <a class="el" href="https://www.gitbook.com/book/asrob-uc3m/robotdevastation-user-manual">Robot Devastation - user manual</a>
+ \li <a class="el" href="https://www.gitbook.com/book/asrob-uc3m/robotdevastation-developer-manual">Robot Devastation - developer manual</a>
  \li \ref rd_post_install
 
 Other internal links of interest:
@@ -21,9 +22,9 @@ Other internal links of interest:
  \li <a class="el" href="https://github.com/asrob-uc3m/robotDevastation-robots" target="_blank">robotDevastation-robots @ GitHub</a>
 
 External links of interest:
- \li <a class=el href="http://eris.liralab.it/yarpdoc/index.html" target="_blank">YARP doc</a> / <a class=el href="https://github.com/robotology/yarp" target="_blank">YARP @ GitHub</a>
- \li <a class=el href="http://eris.liralab.it/iCub/main/dox/html/index.html" target="_blank">iCub Software Repository Documentation</a>
- \li <a class=el href="http://roboticslab.sourceforge.net/asibot" target="_blank">ASIBOT</a>
+ \li <a class=el href="http://www.yarp.it/" target="_blank">YARP doc</a> / <a class=el href="https://github.com/robotology/yarp" target="_blank">YARP @ GitHub</a>
+ \li <a class=el href="http://wiki.icub.org/iCub/main/dox/html/index.html" target="_blank">iCub Software Repository Documentation</a>
+ \li <a class=el href="http://robots.uc3m.es/dox-asibot-main/" target="_blank">ASIBOT</a>
 
 <hr>
 
