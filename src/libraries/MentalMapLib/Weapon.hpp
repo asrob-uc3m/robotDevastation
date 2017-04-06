@@ -22,7 +22,7 @@ class Weapon
 public:
     //! @brief Constructs a default, dummy weapon. (That is invalid for the game, by the way)
     Weapon();
-    Weapon(std::string name, int damage, int max_ammo);
+    Weapon(const std::string & name, int damage, int max_ammo);
 
     //! @brief Checks if the target is within the weapon's current range and can be hit by it
     bool canShootTarget(Target& target);

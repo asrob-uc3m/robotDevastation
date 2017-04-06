@@ -75,7 +75,7 @@ bool rd::YarpLocalImageManager::setEnabled(bool enabled)
     return true;
 }
 
-bool rd::YarpLocalImageManager::configure(std::string parameter, std::string value)
+bool rd::YarpLocalImageManager::configure(const std::string & parameter, const std::string & value)
 {
     if ( parameter.compare("remote_img_port") == 0 && value.compare("") != 0)
     {

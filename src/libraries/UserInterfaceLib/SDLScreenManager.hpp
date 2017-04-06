@@ -37,22 +37,22 @@ class SDLScreenManager : public ScreenManager
         virtual bool show();
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, std::string value);
+        virtual bool update(const std::string & parameter, const std::string & value);
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, Image value); //-- Required by GameScreen and DeadScreen
+        virtual bool update(const std::string & parameter, Image value); //-- Required by GameScreen and DeadScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, Player value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, Player value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, std::vector<Player> value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const std::vector<Player> & value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, std::vector<Target> value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const std::vector<Target> & value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, Weapon value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, Weapon value); //-- Required by GameScreen
 
         //! @brief SDL initialization
         static bool initSDL();
@@ -62,7 +62,7 @@ class SDLScreenManager : public ScreenManager
 
         //------------------------------ Configuration ----------------------------------------------------------------//
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, std::string value);
+        virtual bool configure(const std::string & parameter, const std::string & value);
 
         static const std::string PARAM_FULLSCREEN;
 

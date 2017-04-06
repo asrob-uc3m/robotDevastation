@@ -187,7 +187,7 @@ bool rd::MentalMap::reload()
     return weapons[current_weapon].reload();
 }
 
-bool rd::MentalMap::updatePlayers(std::vector<rd::Player> new_player_vector)
+bool rd::MentalMap::updatePlayers(const std::vector<rd::Player> & new_player_vector)
 {
     //-- Right now, this just replaces the players inside the mental map
 
@@ -207,7 +207,7 @@ bool rd::MentalMap::updatePlayers(std::vector<rd::Player> new_player_vector)
     return true;
 }
 
-bool rd::MentalMap::updateTargets(std::vector<Target> new_target_detections)
+bool rd::MentalMap::updateTargets(const std::vector<Target> & new_target_detections)
 {
     //-- Reduce the belief of all the targets and deletes them when belief is 0
     for( std::map<int, Target>::iterator it = targets.begin(); it != targets.end(); ++it)
@@ -249,7 +249,7 @@ bool rd::MentalMap::removeMentalMapEventListeners()
     return true;
 }
 
-bool rd::MentalMap::onDataArrived(std::vector<rd::Player> players)
+bool rd::MentalMap::onDataArrived(const std::vector<rd::Player> & players)
 {
     return updatePlayers(players);
 }

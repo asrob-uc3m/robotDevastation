@@ -26,7 +26,7 @@ rd::ScreenManager *rd::ScreenManager::getScreenManager()
     return screenManagerInstance;
 }
 
-rd::ScreenManager *rd::ScreenManager::getScreenManager(std::string id)
+rd::ScreenManager *rd::ScreenManager::getScreenManager(const std::string & id)
 {
     if (screenManagerInstance == NULL )
     {
@@ -85,7 +85,7 @@ rd::ScreenManager::~ScreenManager()
 {
 }
 
-bool rd::ScreenManager::configure(std::string parameter, std::string value)
+bool rd::ScreenManager::configure(const std::string & parameter, const std::string & value)
 {
     return true;
 }
@@ -95,37 +95,37 @@ void rd::ScreenManager::setCurrentScreen(rd::Screen *screen)
     this->screen = screen;
 }
 
-bool rd::ScreenManager::update(std::string parameter, std::string value)
+bool rd::ScreenManager::update(const std::string & parameter, const std::string & value)
 {
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(std::string parameter, rd::Image value)
+bool rd::ScreenManager::update(const std::string & parameter, rd::Image value)
 {
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(std::string parameter, rd::Player value)
+bool rd::ScreenManager::update(const std::string & parameter, rd::Player value)
 {
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(std::string parameter, std::vector<rd::Player> value)
+bool rd::ScreenManager::update(const std::string & parameter, const std::vector<rd::Player> & value)
 {
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(std::string parameter, std::vector<rd::Target> value)
+bool rd::ScreenManager::update(const std::string & parameter, const std::vector<rd::Target> & value)
 {
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(std::string parameter, rd::Weapon value)
+bool rd::ScreenManager::update(const std::string & parameter, rd::Weapon value)
 {
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::Register(rd::ScreenManager *manager, std::string id)
+bool rd::ScreenManager::Register(rd::ScreenManager *manager, const std::string & id)
 {
     if ( screenManagerRegistry.find(id) == screenManagerRegistry.end())
     {

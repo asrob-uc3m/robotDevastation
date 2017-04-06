@@ -110,7 +110,7 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
     return true;
 }
 
-bool rd::ProcessorImageEventListener::isInteger(std::string s) const
+bool rd::ProcessorImageEventListener::isInteger(const std::string & s) const
 {
     //-- Code adapted from: http://stackoverflow.com/questions/2844817/how-do-i-check-if-a-c-string-is-an-int
    if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false ;

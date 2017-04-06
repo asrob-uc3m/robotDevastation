@@ -26,7 +26,7 @@ rd::InputManager *rd::InputManager::getInputManager()
     return inputManagerInstance;
 }
 
-rd::InputManager *rd::InputManager::getInputManager(std::string id)
+rd::InputManager *rd::InputManager::getInputManager(const std::string & id)
 {
     if (inputManagerInstance == NULL )
     {
@@ -97,7 +97,7 @@ bool rd::InputManager::removeInputEventListeners()
     return true;
 }
 
-bool rd::InputManager::configure(std::string parameter, std::string value)
+bool rd::InputManager::configure(const std::string & parameter, const std::string & value)
 {
     return true;
 }
@@ -108,7 +108,7 @@ bool rd::InputManager::refreshEvents()
     return true;
 }
 
-bool rd::InputManager::Register(rd::InputManager *manager, std::string id)
+bool rd::InputManager::Register(rd::InputManager *manager, const std::string & id)
 {
     if ( inputManagerRegistry.find(id) == inputManagerRegistry.end())
     {

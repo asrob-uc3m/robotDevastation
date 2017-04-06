@@ -58,7 +58,7 @@ class YarpNetworkManager: public NetworkManager,
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, Player value);
+        virtual bool configure(const std::string & parameter, Player value);
 
         //------------------ Server API ----------------------------------------------------------------------------//
         virtual bool sendPlayerHit(Player player, int damage);

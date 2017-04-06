@@ -113,7 +113,7 @@ rd::DeadScreen::~DeadScreen()
 
 }
 
-bool rd::DeadScreen::update(std::string parameter, std::string value)
+bool rd::DeadScreen::update(const std::string & parameter, const std::string & value)
 {
     if (parameter == PARAM_REMAINING_TIME)
     {
@@ -127,7 +127,7 @@ bool rd::DeadScreen::update(std::string parameter, std::string value)
     return false;
 }
 
-bool rd::DeadScreen::update(std::string parameter, rd::Image value)
+bool rd::DeadScreen::update(const std::string & parameter, rd::Image value)
 {
     if (value.width() == 0 || value.height() == 0)
     {

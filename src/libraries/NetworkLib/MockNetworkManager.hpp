@@ -52,7 +52,7 @@ class MockNetworkManager : public NetworkManager
         virtual bool stop();
 
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, Player value);
+        virtual bool configure(const std::string & parameter, Player value);
 
         //-- Server API
         //--------------------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ class MockNetworkManager : public NetworkManager
         bool isLoggedIn() const;
         bool isStopped() const;
 
-        bool setPlayerData(std::vector<Player> game_players);
+        bool setPlayerData(const std::vector<Player> & game_players);
         std::vector<Player> getPlayerData() const;
         bool sendPlayerData();
         bool setLoggedIn(bool logged_in);

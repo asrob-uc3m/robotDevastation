@@ -31,7 +31,7 @@ class ProcessorImageEventListener : public ImageEventListener
 
 
     private:
-        bool isInteger(std::string s) const;
+        bool isInteger(const std::string & s) const;
         Image received_image;
 
         int cameraWidth;

@@ -36,7 +36,7 @@ bool rd::MockNetworkManager::stop()
     return true;
 }
 
-bool rd::MockNetworkManager::configure(std::string parameter, Player value)
+bool rd::MockNetworkManager::configure(const std::string & parameter, Player value)
 {
     if (parameter.compare("player") == 0)
     {
@@ -148,7 +148,7 @@ bool rd::MockNetworkManager::isStopped() const
     return stopped;
 }
 
-bool rd::MockNetworkManager::setPlayerData(std::vector<rd::Player> players)
+bool rd::MockNetworkManager::setPlayerData(const std::vector<rd::Player> & players)
 {
     players_dic.clear();
 

@@ -32,7 +32,7 @@ bool rd::SDLInputManager::isStopped() const
     return stopped;
 }
 
-bool rd::SDLInputManager::configure(std::string parameter, std::string value)
+bool rd::SDLInputManager::configure(const std::string & parameter, const std::string & value)
 {
     return InputManager::configure(parameter, value);
 }

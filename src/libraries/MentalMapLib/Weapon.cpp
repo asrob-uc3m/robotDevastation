@@ -12,7 +12,7 @@ rd::Weapon::Weapon()
     current_ammo = -1;
 }
 
-rd::Weapon::Weapon(std::string name, int damage, int max_ammo)
+rd::Weapon::Weapon(const std::string & name, int damage, int max_ammo)
 {
     this->name = name;
     this->damage = damage;

@@ -144,7 +144,7 @@ rd::MockScreen::~MockScreen()
 
 }
 
-bool rd::MockScreen::update(std::string parameter, std::string value)
+bool rd::MockScreen::update(const std::string & parameter, const std::string & value)
 {
     if (parameter == PARAM_MESSAGE)
     {

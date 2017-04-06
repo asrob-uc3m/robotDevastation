@@ -34,7 +34,7 @@ class MockImageManager : public ImageManager
         virtual bool isStopped() const;
         virtual bool setEnabled(bool enabled);
         virtual bool isEnabled() const;
-        virtual bool configure(std::string parameter, std::string value);
+        virtual bool configure(const std::string & parameter, const std::string & value);
         virtual Image getImage() const;
 
         /**

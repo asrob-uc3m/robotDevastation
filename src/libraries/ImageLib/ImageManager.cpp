@@ -25,7 +25,7 @@ rd::ImageManager *rd::ImageManager::getImageManager()
     return imageManagerInstance;
 }
 
-rd::ImageManager *rd::ImageManager::getImageManager(std::string id)
+rd::ImageManager *rd::ImageManager::getImageManager(const std::string & id)
 {
     if (imageManagerInstance == NULL )
     {
@@ -98,12 +98,12 @@ bool rd::ImageManager::removeImageEventListeners()
     return true;
 }
 
-bool rd::ImageManager::configure(std::string parameter, std::string value)
+bool rd::ImageManager::configure(const std::string & parameter, const std::string & value)
 {
     return true;
 }
 
-bool rd::ImageManager::Register(rd::ImageManager *manager, std::string id)
+bool rd::ImageManager::Register(rd::ImageManager *manager, const std::string & id)
 {
     if ( imageManagerRegistry.find(id) == imageManagerRegistry.end())
     {

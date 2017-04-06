@@ -55,7 +55,7 @@ class ScreenManager
          * @return The ScreenManager registered with the given id, NULL if the id is not found in
          * the registry.
          */
-        static ScreenManager * getScreenManager(std::string id);
+        static ScreenManager * getScreenManager(const std::string & id);
 
         //! @brief Deallocate all the registered ScreenManager
         static bool destroyScreenManager();
@@ -78,7 +78,7 @@ class ScreenManager
 
         //------------------------------ Configuration ----------------------------------------------------------------//
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, std::string value);
+        virtual bool configure(const std::string & parameter, const std::string & value);
 
 
         //------------------------------- Screen Manager functions -----------------------------------------------------//
@@ -89,29 +89,29 @@ class ScreenManager
         virtual bool show() = 0;
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, std::string value);
+        virtual bool update(const std::string & parameter, const std::string & value);
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, Image value); //-- Required by GameScreen and DeadScreen
+        virtual bool update(const std::string & parameter, Image value); //-- Required by GameScreen and DeadScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, Player value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, Player value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, std::vector<Player> value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const std::vector<Player> & value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, std::vector<Target> value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const std::vector<Target> & value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, Weapon value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, Weapon value); //-- Required by GameScreen
 
     protected:
         /**
          * @brief This function allows subclasses to install their unique instances in the singleton register to be
          * selected later by the user
          */
-        static bool Register(ScreenManager * manager, std::string id);
+        static bool Register(ScreenManager * manager, const std::string & id);
 
         Screen * screen;
 
