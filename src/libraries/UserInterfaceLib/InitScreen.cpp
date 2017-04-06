@@ -12,6 +12,9 @@ const std::string rd::InitScreen::FONT_PATH = "../fonts/FreeMono.ttf";
 rd::InitScreen::InitScreen()
 {
     w = 200; h = 100; //-- Arbitrary size initialization
+    font = NULL;
+    text_surface = NULL;
+    image = NULL;
 }
 
 bool rd::InitScreen::init()

@@ -48,6 +48,7 @@ class DeadStateTestEnvironment : public testing::Environment
         {
             this->argc = argc;
             this->argv = argv;
+            screenManager = NULL;
         }
 
         virtual void SetUp()
@@ -72,15 +73,12 @@ class DeadStateTestEnvironment : public testing::Environment
             ScreenManager::destroyScreenManager();
         }
 
-
     private:
         int argc;
         char ** argv;
 
     protected:
         ScreenManager * screenManager;
-
-
 };
 
 //-- Class for the setup of each test
