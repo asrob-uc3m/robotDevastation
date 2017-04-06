@@ -35,6 +35,8 @@ class InputEventListener
          * @param event Object that wraps the window event
          */
         virtual bool onWindowEvent( const WindowEvent & event ) = 0;
+
+        virtual ~InputEventListener() {}
 };
 
 }

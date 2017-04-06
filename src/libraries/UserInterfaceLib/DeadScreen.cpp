@@ -20,6 +20,10 @@ const SDL_Color rd::DeadScreen::TEXT_COLOR = {0,255,0,0};
 rd::DeadScreen::DeadScreen()
 {
     w = 200; h = 100; //-- Arbitrary size initialization
+    font = NULL;
+    text_surface = NULL;
+    skull_image = NULL;
+    camera_frame = NULL;
 }
 
 bool rd::DeadScreen::init()

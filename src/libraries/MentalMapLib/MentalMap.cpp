@@ -10,6 +10,8 @@ rd::MentalMap * rd::MentalMap::mentalMapInstance = NULL;
 rd::MentalMap::MentalMap()
 {
     current_weapon = 0;
+    my_id = -1;
+    myself = NULL;
     SDLAudioManager::RegisterManager();
     audioManager = AudioManager::getAudioManager("SDL");
 }

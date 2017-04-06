@@ -28,7 +28,7 @@ class MockInputManager : public InputManager
 
         //------------------------------ Construction & destruction ---------------------------------------------------//
         MockInputManager();
-        ~MockInputManager();
+        virtual ~MockInputManager();
 
         /**
          * @brief Register this manager in the InputManager registry so that can be used

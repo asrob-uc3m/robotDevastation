@@ -18,7 +18,11 @@ const SDL_Color rd::MockScreen::TEXT_COLOR = {255,0,0,0};
 rd::MockScreen::MockScreen()
 {
     w = 200; h = 100; //-- Arbitrary size initialization
+    window = NULL;
     screen = NULL;
+    font = NULL;
+    text_surface = NULL;
+    background = NULL;
 }
 
 bool rd::MockScreen::init()

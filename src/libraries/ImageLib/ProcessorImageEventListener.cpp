@@ -14,6 +14,7 @@ rd::ProcessorImageEventListener::ProcessorImageEventListener()
 {
     //images_arrived = 0;
     cameraInitialized = false;
+    cameraWidth = cameraHeight = 0;
     rimage = NULL;
 
     mentalMap = MentalMap::getMentalMap();

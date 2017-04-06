@@ -7,6 +7,8 @@ rd::ManagerHub::ManagerHub()
     inputManager = NULL;
     mentalMap = NULL;
     robotManager = NULL;
+    audioManager = NULL;
+    screenManager = NULL;
 }
 
 rd::ManagerHub::ManagerHub(rd::NetworkManager *networkManager, rd::ImageManager *imageManager,

@@ -42,7 +42,7 @@ class MockNetworkManager : public NetworkManager
          */
         static bool RegisterManager();
 
-        ~MockNetworkManager();
+        virtual ~MockNetworkManager();
 
         //! @brief String that identifies this manager
         static const std::string id;

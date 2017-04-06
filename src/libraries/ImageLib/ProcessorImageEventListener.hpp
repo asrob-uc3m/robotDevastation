@@ -25,7 +25,7 @@ class ProcessorImageEventListener : public ImageEventListener
 {
     public:
         ProcessorImageEventListener();
-        ~ProcessorImageEventListener();
+        virtual ~ProcessorImageEventListener();
 
         virtual bool onImageArrived( ImageManager * manager );
 

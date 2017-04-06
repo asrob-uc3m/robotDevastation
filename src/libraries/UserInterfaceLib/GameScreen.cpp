@@ -21,6 +21,9 @@ rd::GameScreen::GameScreen()
     update_required = true;
     w = 640; h = 480;
     camera_frame_surface = NULL;
+    player_font = NULL;
+    target_font = NULL;
+    weapon_font = NULL;
 }
 
 bool rd::GameScreen::init()

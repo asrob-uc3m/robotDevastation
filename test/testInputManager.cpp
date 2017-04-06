@@ -43,7 +43,7 @@ class TestEventListener : public InputEventListener
             audioManager->load( "../sounds/01_milshot.wav", "shoot", SDLAudioManager::FX);
         }
 
-        ~TestEventListener()
+        virtual ~TestEventListener()
         {
             SDLAudioManager::destroyAudioManager();
         }
