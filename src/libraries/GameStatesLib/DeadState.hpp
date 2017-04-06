@@ -58,7 +58,6 @@ public:
 
 protected:
     DeadScreen screen;
-    int last_transition; //-- Stores the transition that triggered the cleanup
     bool received_respawn;
     bool received_exit;
     int elapsed_time; //-- Time elapsed in ms
