@@ -2,7 +2,7 @@
 
 rd::Screen::Screen()
 {
-
+    w = 200; h = 100; //-- Arbitrary size initialization
 }
 
 bool rd::Screen::update(std::string parameter, std::string value)
