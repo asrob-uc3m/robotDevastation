@@ -14,8 +14,9 @@ rd::DeadState::DeadState(rd::NetworkManager *networkManager, rd::ImageManager *i
                 ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager,
                            audioManager, screenManager)
 {
-    this->state_id = "DeadState";
-
+    state_id = "DeadState";
+    elapsed_time = timer = 0;
+    received_respawn = received_exit = false;
 }
 
 rd::DeadState::~DeadState()
