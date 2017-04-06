@@ -17,8 +17,9 @@ const int rd::MockRobotManager::CAMERA_NONE = 0;
 
 namespace rd
 {
-MockRobotManager:: MockRobotManager(const std::string& robotName): RobotManager(robotName)
-{ 
+MockRobotManager::MockRobotManager(const std::string& robotName)
+{
+    this->robotName = robotName;
     connected = false;
     enabled = false;
     movement_direction = NONE;
