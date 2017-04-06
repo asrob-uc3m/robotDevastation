@@ -14,6 +14,7 @@ namespace rd{
  * \defgroup MusicLib
  *
  * @brief The MusicLib library contains classes related to game music and sound effects
+ */
 
 /**
  * @ingroup MusicLib
