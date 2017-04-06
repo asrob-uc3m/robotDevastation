@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __ROBOT_MANAGER_HPP__
-#define __ROBOT_MANAGER_HPP__
+#ifndef __RD_ROBOT_MANAGER_HPP__
+#define __RD_ROBOT_MANAGER_HPP__
 
 
 namespace rd{
@@ -64,4 +64,4 @@ class RobotManager
 
 
 
-#endif //-- __ROBOT_MANAGER_HPP__
+#endif //-- __RD_ROBOT_MANAGER_HPP__
