@@ -42,9 +42,6 @@ class Server : public yarp::os::RFModule
         double getPeriod();
         bool updateModule();
 
-        /** @brief Watchdog period [s]. */
-        double watchdog;
-
         int serverStatus;
 
         std::map <int, Player> players;
