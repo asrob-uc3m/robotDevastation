@@ -22,6 +22,14 @@
 namespace rd{
 
 /**
+ * @ingroup rd_libraries
+ *
+ * \defgroup GameStatesLib
+ *
+ * @brief The GameStatesLib library contains classes derived from the State class
+ */
+
+/**
 * @ingroup GameStatesLib
 *
 * @brief Game State
