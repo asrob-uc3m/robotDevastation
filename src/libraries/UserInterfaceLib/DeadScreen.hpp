@@ -13,6 +13,11 @@
 
 namespace rd {
 
+/**
+ * @ingroup UserInterfaceLib
+ *
+ * @brief A User Interface.
+ */
 class DeadScreen : public Screen
 {
     public:

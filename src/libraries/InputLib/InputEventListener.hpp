@@ -32,7 +32,7 @@ class InputEventListener
 
         /**
          * @brief This function will be called whenever a window event is raised
-         * @param event Object that wraps the window event
+         * @param event WindowEvent object that wraps the window event
          */
         virtual bool onWindowEvent( const WindowEvent & event ) = 0;
 

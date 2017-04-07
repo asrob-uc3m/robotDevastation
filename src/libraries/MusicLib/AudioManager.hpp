@@ -49,7 +49,7 @@ class AudioManager
          */
         static AudioManager * getAudioManager(const std::string & id);
 
-        //! @brief Deallocate all the registered InputManager
+        //! @brief Deallocate all the registered AudioManager
         static bool destroyAudioManager();
 
         virtual ~AudioManager();
@@ -119,7 +119,7 @@ class AudioManager
         //! \brief Stores the id of the current unique instance used
         static std::string currentId;
 
-        //! \brief Stores all the InputManager that have been registered
+        //! \brief Stores all the AudioManager that have been registered
         static std::map< std::string, AudioManager * > audioManagerRegistry;
 
 };

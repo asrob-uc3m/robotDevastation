@@ -15,18 +15,20 @@
 namespace rd
 {
 
+/**
+ * @ingroup ServerLib
+ */
 class RpcResponder : public yarp::os::PortReader
 {
 public:
     void setPlayers(std::map<int,Player> *value, std::map <int,int>* players_belief,
                     yarp::os::Mutex* players_mutex);
 
-    static const int MAX_BELIEF; //-- Timeout [s] / Period [s]
+    //! @brief Timeout [s] / Period [s]
+    static const int MAX_BELIEF;
 
 private:
-    /**
-    * Implement the actual responder (callback on RPC).
-    */
+    //! @brief Implements the actual responder (callback on RPC).
     virtual bool read(yarp::os::ConnectionReader& connection);
 
     yarp::os::Port* rdBroadcast;

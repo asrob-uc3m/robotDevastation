@@ -29,7 +29,7 @@
  * It should be straightforward to run the default test mode. Just click on the icon or open a terminal and write:
  *
 \verbatim
-rdClient
+robotDevastation
 \endverbatim
  *
  * @section interfacing Interfacing with robotDevastation

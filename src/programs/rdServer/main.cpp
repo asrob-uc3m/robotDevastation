@@ -21,18 +21,16 @@
  *
  * @section installation Installation
  *
- * The module is compiled when ENABLE_robotDevastation is activated (default: ON). For further
+ * The module is compiled when ENABLE_rdServer is activated (default: ON). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
  * @section running Running (assuming correct installation, see previous section)
  * 
- * It should be straightforward to run the default test mode. Just click on the icon or open a terminal and write:
+ * It should be straightforward to run the default mode. Just click open a terminal and write:
  *
 \verbatim
-rdClient
+rdServer
 \endverbatim
- *
- * @section interfacing Interfacing with rdServer
  *
  * @section modify Modify
  * 

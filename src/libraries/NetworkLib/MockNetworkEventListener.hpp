@@ -7,14 +7,16 @@
 #include "Player.hpp"
 
 namespace rd {
+
 /**
+ * @ingroup NetworkLib
+ *
  * @brief Dummy NetworkEventListener used for testing
  *
  * The required pure virtual members are left with their function body empty.
  *
  * This mock object allows to access the received data and has a counter of
- * the incoming messages received
- *
+ * the incoming messages received.
  */
 
 class MockNetworkEventListener : public NetworkEventListener

@@ -13,7 +13,6 @@ namespace rd{
  * @ingroup StateMachineLib
  *
  * @brief A base class for controlling flow of States of a Finite State Machine.
- *
  */
 class StateDirector
 {
@@ -28,16 +27,16 @@ class StateDirector
         /**
          * @brief Function that starts the attached State
          *
-         * Calls the setup() function of the State once, and then runs a thread
-         * for the loop() function
+         * Calls the State.setup() function once, and then runs a thread
+         * for the State.loop() function.
          */
         virtual bool Start() = 0;
 
         /**
          * @brief Function to stop the attached State
          *
-         * This should stop the thread running the loop() function and call the
-         * cleanup() function of the State
+         * This should stop thread running the State.loop() function and call the
+         * State.cleanup() function.
          */
         virtual bool Stop() = 0;
 
@@ -48,7 +47,7 @@ class StateDirector
          */
         virtual bool addTransition( StateDirector * nextState, int condition);
 
-        //! @brief Returns the current state of the state
+        //! @brief Returns the current state of the State
         virtual bool isActive() const;
 
     protected:

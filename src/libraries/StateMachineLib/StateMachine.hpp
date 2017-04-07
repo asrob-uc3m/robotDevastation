@@ -21,7 +21,6 @@ namespace rd{
  * @ingroup StateMachineLib
  *
  * @brief Class implementing a finite state machine
- *
  */
 class FiniteStateMachine
 {

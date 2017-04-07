@@ -9,8 +9,13 @@
 
 namespace rd {
 
+//! @ingroup UtilsLib
 SDL_Surface * RdImage2SDLImage(const Image & image);
+
+//! @ingroup UtilsLib
 bool initSDL();
+
+//! @ingroup UtilsLib
 bool cleanupSDL();
 
 }

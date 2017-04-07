@@ -33,7 +33,7 @@ class MockInputManager : public InputManager
         /**
          * @brief Register this manager in the InputManager registry so that can be used
          *
-         * It ensures that only one manager of this type is created (unique instance)
+         * It ensures that only one manager of this type is created (unique instance).
          */
         static bool RegisterManager();
 

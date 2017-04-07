@@ -20,7 +20,16 @@
 namespace rd{
 
 /**
- * @ingroup rdServer
+ * @ingroup rd_libraries
+ *
+ * @defgroup ServerLib
+ *
+ * @brief The ServerLib library contains the Server and RpcResponder classes.
+ */
+
+/**
+ * @ingroup ServerLib
+ *
  * @brief The parent Robot Devastation class of the \ref rdServer program.
  */
 class Server : public yarp::os::RFModule
@@ -28,7 +37,7 @@ class Server : public yarp::os::RFModule
 
     public:
         /**
-         * Run the program.
+         * @brief Run the program.
          *
          * @return true/false upon success/failure
          */
@@ -41,7 +50,7 @@ class Server : public yarp::os::RFModule
         double getPeriod();
         bool updateModule();
 
-        /** Watchdog period [s]. */
+        /** @brief Watchdog period [s]. */
         double watchdog;
 
         int serverStatus;

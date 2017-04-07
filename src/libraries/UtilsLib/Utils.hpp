@@ -19,6 +19,7 @@
 
 //-- Misc utils ----------------------------------------------//
 
+//! @ingroup UtilsLib
 template<typename T> std::string number2str(T number)
 {
     std::stringstream sstream;

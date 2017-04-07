@@ -15,7 +15,7 @@ namespace rd{
  *
  * \defgroup UserInterfaceLib
  *
- * @brief The UserInterfaceLib library contains the \ref GameScreen class.
+ * @brief The UserInterfaceLib library contains the \ref Screen related classes.
  */
 
 /**

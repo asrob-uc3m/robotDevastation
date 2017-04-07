@@ -14,7 +14,7 @@ namespace rd{
 /**
  * @ingroup InputLib
  *
- * @brief User input manager ( keyboard, mouse, joysticks, etc) using SDL
+ * @brief User input manager (keyboard, mouse, joysticks, etc) using SDL
  *
  * SDLInputManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
@@ -27,7 +27,7 @@ namespace rd{
  * a unified interface to the different managers for the mouse, keyboard, etc.
  *
  * Input events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
- * along with the data relevant to the event triggered (i.e. what key was pressed)
+ * along with the data relevant to the event triggered (i.e. what key was pressed).
  *
  */
 class SDLInputManager : public InputManager
@@ -40,9 +40,9 @@ class SDLInputManager : public InputManager
         virtual bool configure(const std::string & parameter, const std::string & value);
 
         /**
-         * @brief Register this manager in the ImageManager registry so that can be used
+         * @brief Register this manager in the InputManager registry so that can be used
          *
-         * It ensures that only one manager of this type is created (unique instance)
+         * It ensures that only one manager of this type is created (unique instance).
          */
         static bool RegisterManager();
 
@@ -55,7 +55,7 @@ class SDLInputManager : public InputManager
         /**
          * @brief Get SDL info about input events
          *
-         * In SDL, this function has to be called frequently, and in the same thread as the graphic output
+         * In SDL, this function has to be called frequently, and in the same thread as the graphic output.
          */
         virtual bool refreshEvents();
 
@@ -64,7 +64,7 @@ class SDLInputManager : public InputManager
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getInputManager() method
+         * and the instantiation is done at the getInputManager() method.
          */
         SDLInputManager();
 
