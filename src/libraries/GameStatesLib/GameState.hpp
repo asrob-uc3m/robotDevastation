@@ -33,6 +33,7 @@ namespace rd{
 * @ingroup GameStatesLib
 *
 * @brief Game State
+*
 * Behavior:
 *  - Manages game interaction (movement, hits, player info updates)
 *  - When user presses the Esc key, logs out
@@ -50,8 +51,6 @@ class GameState : public State, public ManagerHub,
         virtual bool setup();
         virtual bool loop();
         virtual bool cleanup();
-
-        //! @brief Returns the internal variable value as condition evaluation result
         virtual int evaluateConditions();
 
         static const int KILLED;
