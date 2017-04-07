@@ -21,10 +21,17 @@ class Vector2dBase {
         Vector2dBase(): x(0), y(0) {}
         T x, y;
         
-        bool operator==( const Vector2dBase<T>& other_vector) { return this->x == other_vector.x
-                    && this->y == other_vector.y; }
+        bool operator==( const Vector2dBase<T>& other_vector )
+        {
+            return x == other_vector.x && y == other_vector.y;
+        }
 
-        Vector2dBase& operator+=( const Vector2dBase<T>&a ) { x+=a.x; y+=a.y; return *this;}
+        Vector2dBase& operator+=( const Vector2dBase<T>&a )
+        {
+            x += a.x;
+            y += a.y;
+            return *this;
+        }
 };
 
 //! @brief Default 2D vector

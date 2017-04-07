@@ -53,8 +53,8 @@ bool rd::DeadScreen::init()
     //-- Default values:
     w = skull_image->w;
     h = skull_image->h;
-    this->camera_frame = NULL;
-    this->update(PARAM_REMAINING_TIME, "10");
+    camera_frame = NULL;
+    update(PARAM_REMAINING_TIME, "10");
 
     return true;
 }

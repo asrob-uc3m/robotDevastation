@@ -17,7 +17,7 @@ rd::Weapon::Weapon(const std::string & name, int damage, int max_ammo)
     this->name = name;
     this->damage = damage;
     this->max_ammo = max_ammo;
-    this->current_ammo = max_ammo;
+    current_ammo = max_ammo;
 }
 
 bool rd::Weapon::canShootTarget(Target &target)

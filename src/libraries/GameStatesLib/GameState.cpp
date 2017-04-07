@@ -23,7 +23,7 @@ rd::GameState::GameState(NetworkManager *networkManager, ImageManager *imageMana
                     ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager,
                                audioManager, screenManager)
 {
-    this->state_id = "GameState";
+    state_id = "GameState";
     received_exit = false;
 }
 

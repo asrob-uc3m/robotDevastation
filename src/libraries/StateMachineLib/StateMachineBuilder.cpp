@@ -5,8 +5,8 @@
 rd::StateMachineBuilder::StateMachineBuilder()
 {
     //-- Default parameters:
-    this->type = "YARP";
-    this->initial_state_id = 0;
+    type = "YARP";
+    initial_state_id = 0;
 }
 
 bool rd::StateMachineBuilder::setDirectorType(const std::string &type)

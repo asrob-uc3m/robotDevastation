@@ -50,7 +50,7 @@ bool rd::SDLInputManager::RegisterManager()
 rd::SDLInputManager::~SDLInputManager()
 {
     //-- Stop this thread
-    this->stop();
+    stop();
     uniqueInstance = NULL;
 }
 

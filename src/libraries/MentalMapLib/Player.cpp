@@ -5,12 +5,12 @@
 rd::Player::Player()
 {
     //-- Default values
-    this->id = -1;
-    this->name = "Dummy";
-    this->health = -1;
-    this->max_health = -1;
-    this->team_id = -1;
-    this->score = -1;
+    id = -1;
+    name = "Dummy";
+    health = -1;
+    max_health = -1;
+    team_id = -1;
+    score = -1;
 }
 
 rd::Player::Player(int id, const std::string & name, int health, int max_health, int team_id, int score)

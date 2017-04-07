@@ -90,7 +90,7 @@ bool rd::SDLScreenManager::show()
 bool rd::SDLScreenManager::update(const std::string & parameter, const std::string & value)
 {
     mutex.lock();
-    bool ret = this->screen->update(parameter, value);
+    bool ret = screen->update(parameter, value);
     mutex.unlock();
     return ret;
 }
@@ -98,7 +98,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, const std::stri
 bool rd::SDLScreenManager::update(const std::string & parameter, Image value)
 {
     mutex.lock();
-    bool ret = this->screen->update(parameter, value);
+    bool ret = screen->update(parameter, value);
     mutex.unlock();
     return ret;
 }
@@ -106,7 +106,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, Image value)
 bool rd::SDLScreenManager::update(const std::string & parameter, Player value)
 {
     mutex.lock();
-    bool ret = this->screen->update(parameter, value);
+    bool ret = screen->update(parameter, value);
     mutex.unlock();
     return ret;
 }
@@ -114,7 +114,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, Player value)
 bool rd::SDLScreenManager::update(const std::string & parameter, const std::vector<Player> & value)
 {
     mutex.lock();
-    bool ret = this->screen->update(parameter, value);
+    bool ret = screen->update(parameter, value);
     mutex.unlock();
     return ret;
 }
@@ -122,7 +122,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, const std::vect
 bool rd::SDLScreenManager::update(const std::string & parameter, const std::vector<Target> & value)
 {
     mutex.lock();
-    bool ret = this->screen->update(parameter, value);
+    bool ret = screen->update(parameter, value);
     mutex.unlock();
     return ret;
 }
@@ -130,7 +130,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, const std::vect
 bool rd::SDLScreenManager::update(const std::string & parameter, Weapon value)
 {
     mutex.lock();
-    bool ret = this->screen->update(parameter, value);
+    bool ret = screen->update(parameter, value);
     mutex.unlock();
     return ret;
 }
@@ -236,6 +236,6 @@ rd::SDLScreenManager::~SDLScreenManager()
     }
 
     //-- Stop this manager
-    this->stop();
+    stop();
     uniqueInstance = NULL;
 }

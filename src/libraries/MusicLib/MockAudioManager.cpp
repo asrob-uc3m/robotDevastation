@@ -164,6 +164,6 @@ bool rd::MockAudioManager::RegisterManager()
 rd::MockAudioManager::~MockAudioManager()
 {
     //-- Stop this manager
-    this->stop();
+    stop();
     uniqueInstance = NULL;
 }

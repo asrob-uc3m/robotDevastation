@@ -97,32 +97,32 @@ void rd::ScreenManager::setCurrentScreen(Screen *screen)
 
 bool rd::ScreenManager::update(const std::string & parameter, const std::string & value)
 {
-    return this->screen->update(parameter, value);
+    return screen->update(parameter, value);
 }
 
 bool rd::ScreenManager::update(const std::string & parameter, Image value)
 {
-    return this->screen->update(parameter, value);
+    return screen->update(parameter, value);
 }
 
 bool rd::ScreenManager::update(const std::string & parameter, Player value)
 {
-    return this->screen->update(parameter, value);
+    return screen->update(parameter, value);
 }
 
 bool rd::ScreenManager::update(const std::string & parameter, const std::vector<Player> & value)
 {
-    return this->screen->update(parameter, value);
+    return screen->update(parameter, value);
 }
 
 bool rd::ScreenManager::update(const std::string & parameter, const std::vector<Target> & value)
 {
-    return this->screen->update(parameter, value);
+    return screen->update(parameter, value);
 }
 
 bool rd::ScreenManager::update(const std::string & parameter, Weapon value)
 {
-    return this->screen->update(parameter, value);
+    return screen->update(parameter, value);
 }
 
 bool rd::ScreenManager::Register(ScreenManager *manager, const std::string & id)

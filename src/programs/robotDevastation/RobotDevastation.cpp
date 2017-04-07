@@ -115,7 +115,7 @@ bool rd::RobotDevastation::updateModule()
     //-- Check if FSM has arrived the end-state
     if (gameFSM->getCurrentState() == -1)
     {
-        this->stopModule();
+        stopModule();
         return true;
     }
 
@@ -295,6 +295,6 @@ bool rd::RobotDevastation::cleanup()
 bool rd::RobotDevastation::interruptModule()
 {
     RD_INFO("Closing program...\n");
-    return this->cleanup();
+    return cleanup();
 }
 

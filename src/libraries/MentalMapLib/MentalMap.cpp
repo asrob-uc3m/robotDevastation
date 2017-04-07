@@ -37,8 +37,8 @@ bool rd::MentalMap::destroyMentalMap()
 
 bool rd::MentalMap::configure(const int &player_id)
 {
-    this->my_id = player_id;
-    this->myself = NULL;
+    my_id = player_id;
+    myself = NULL;
     return true;
 }
 

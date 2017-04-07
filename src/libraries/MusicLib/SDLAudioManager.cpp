@@ -121,6 +121,6 @@ bool rd::SDLAudioManager::RegisterManager()
 rd::SDLAudioManager::~SDLAudioManager()
 {
     //-- Stop this manager
-    this->stop();
+    stop();
     uniqueInstance = NULL;
 }

@@ -52,7 +52,7 @@ bool rd::MockScreen::init()
     window = NULL;
 
     //-- Default values:
-    this->update(PARAM_MESSAGE, "");
+    update(PARAM_MESSAGE, "");
     w = background->w;
     h = background->h;
 

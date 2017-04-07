@@ -155,7 +155,7 @@ bool rd::MockNetworkManager::setPlayerData(const std::vector<Player> & players)
     for (int i = 0; i < (int) players.size(); i++)
     {
         int id = players[i].getId();
-        this->players_dic[id] = players[i];
+        players_dic[id] = players[i];
     }
 
     sendPlayerData();
@@ -178,7 +178,7 @@ bool rd::MockNetworkManager::sendPlayerData()
 {
     //-- Notify listeners
     for(int i = 0; i < listeners.size(); i++)
-        listeners[i]->onDataArrived(this->getPlayerData());
+        listeners[i]->onDataArrived(getPlayerData());
     return true;
 }
 

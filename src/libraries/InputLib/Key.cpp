@@ -61,10 +61,10 @@ int rd::Key::getValue() const
 
 bool rd::Key::operator==(const Key &k) const
 {
-    if (this->isPrintable() && k.isPrintable())
-        return this->char_value == k.char_value;
-    if (this->isControlKey() && k.isControlKey())
-        return this->key_value == k.key_value;
+    if (isPrintable() && k.isPrintable())
+        return char_value == k.char_value;
+    if (isControlKey() && k.isControlKey())
+        return key_value == k.key_value;
     return false;
 }
 
