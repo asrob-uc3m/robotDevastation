@@ -18,14 +18,6 @@ typedef yarp::sig::ImageOf<yarp::sig::PixelRgb> Image;
 class ImageEventListener; //-- Required to avoid recurrent loops in dependencies
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup ImageLib
- *
- * @brief The ImageLib library contains classes related to image input (from cameras, etc)
- */
-
-/**
  * @ingroup ImageLib
  *
  * @brief Generic image input manager

@@ -7,14 +7,6 @@
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup RobotLib
- *
- * @brief The RobotLib library contains the \ref RobotManager base class and derived classes.
- */
-
-/**
  * @ingroup RobotLib
  *
  * @brief A base class for Robot Managers.

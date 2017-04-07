@@ -4,13 +4,6 @@
 #include <string>
 #include <sstream>
 
-/**
- * @ingroup rd_libraries
- *
- * \defgroup UtilsLib
- *
- * @brief The UtilsLib library contains miscellaneous macros and utilities
- */
 //-- Include all utils
 #include "Vocabs.hpp"
 #include "Macros.hpp"

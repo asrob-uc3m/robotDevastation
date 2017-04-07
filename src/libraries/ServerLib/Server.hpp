@@ -20,14 +20,6 @@
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * @defgroup ServerLib
- *
- * @brief The ServerLib library contains the Server and RpcResponder classes.
- */
-
-/**
  * @ingroup ServerLib
  *
  * @brief The parent Robot Devastation class of the \ref rdServer program.

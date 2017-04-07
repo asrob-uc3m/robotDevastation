@@ -9,14 +9,6 @@
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup MusicLib
- *
- * @brief The MusicLib library contains classes related to game music and sound effects
- */
-
-/**
  * @ingroup MusicLib
  *
  * @brief Music and sound effects manager

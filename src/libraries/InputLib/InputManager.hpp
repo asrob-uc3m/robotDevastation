@@ -12,14 +12,6 @@
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup InputLib
- *
- * @brief The InputLib library contains classes related to user input (keyboard, mouse, etc).
- */
-
-/**
  * @ingroup InputLib
  *
  * @brief User input manager (keyboard, mouse, joysticks, etc)

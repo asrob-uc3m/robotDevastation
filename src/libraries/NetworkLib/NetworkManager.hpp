@@ -17,14 +17,6 @@
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup NetworkLib
- *
- * @brief The NetworkLib library contains everything related to the communications with the RobotDevastation network
- */
-
-/**
  * @ingroup NetworkLib
  *
  * @brief Manages the communications between the user and the RobotDevastation network
