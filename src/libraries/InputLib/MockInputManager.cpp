@@ -4,7 +4,7 @@
 rd::MockInputManager * rd::MockInputManager::uniqueInstance = NULL;
 const std::string rd::MockInputManager::id = "MOCK";
 
-bool rd::MockInputManager::sendKeyPress(const rd::Key & key)
+bool rd::MockInputManager::sendKeyPress(const Key & key)
 {
     if (stopped)
         return false;
@@ -18,7 +18,7 @@ bool rd::MockInputManager::sendKeyPress(const rd::Key & key)
     return true;
 }
 
-bool rd::MockInputManager::sendKeyUp(const rd::Key & key)
+bool rd::MockInputManager::sendKeyUp(const Key & key)
 {
     if (stopped)
         return false;
@@ -29,7 +29,7 @@ bool rd::MockInputManager::sendKeyUp(const rd::Key & key)
     return true;
 }
 
-bool rd::MockInputManager::sendKeyDown(const rd::Key & key)
+bool rd::MockInputManager::sendKeyDown(const Key & key)
 {
     if (stopped)
         return false;
@@ -40,7 +40,7 @@ bool rd::MockInputManager::sendKeyDown(const rd::Key & key)
     return true;
 }
 
-bool rd::MockInputManager::sendWindowEvent(const rd::WindowEvent & event)
+bool rd::MockInputManager::sendWindowEvent(const WindowEvent & event)
 {
     if (stopped)
         return false;

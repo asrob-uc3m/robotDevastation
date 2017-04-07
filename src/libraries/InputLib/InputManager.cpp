@@ -85,7 +85,7 @@ rd::InputManager::~InputManager()
 {
 }
 
-bool rd::InputManager::addInputEventListener(rd::InputEventListener *listener)
+bool rd::InputManager::addInputEventListener(InputEventListener *listener)
 {
     listeners.push_back(listener);
     return true;
@@ -108,7 +108,7 @@ bool rd::InputManager::refreshEvents()
     return true;
 }
 
-bool rd::InputManager::Register(rd::InputManager *manager, const std::string & id)
+bool rd::InputManager::Register(InputManager *manager, const std::string & id)
 {
     if ( inputManagerRegistry.find(id) == inputManagerRegistry.end())
     {

@@ -47,7 +47,7 @@ bool rd::MockNetworkManager::configure(const std::string & parameter, Player val
     return NetworkManager::configure(parameter, value);
 }
 
-bool rd::MockNetworkManager::sendPlayerHit(rd::Player player, int damage)
+bool rd::MockNetworkManager::sendPlayerHit(Player player, int damage)
 {
     int id = player.getId();
 
@@ -148,7 +148,7 @@ bool rd::MockNetworkManager::isStopped() const
     return stopped;
 }
 
-bool rd::MockNetworkManager::setPlayerData(const std::vector<rd::Player> & players)
+bool rd::MockNetworkManager::setPlayerData(const std::vector<Player> & players)
 {
     players_dic.clear();
 

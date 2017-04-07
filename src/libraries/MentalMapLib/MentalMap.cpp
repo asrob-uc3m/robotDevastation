@@ -187,7 +187,7 @@ bool rd::MentalMap::reload()
     return weapons[current_weapon].reload();
 }
 
-bool rd::MentalMap::updatePlayers(const std::vector<rd::Player> & new_player_vector)
+bool rd::MentalMap::updatePlayers(const std::vector<Player> & new_player_vector)
 {
     //-- Right now, this just replaces the players inside the mental map
 
@@ -237,7 +237,7 @@ bool rd::MentalMap::respawn()
     return true;
 }
 
-bool rd::MentalMap::addMentalMapEventListener(rd::MentalMapEventListener *listener)
+bool rd::MentalMap::addMentalMapEventListener(MentalMapEventListener *listener)
 {
     listeners.push_back(listener);
     return true;
@@ -249,7 +249,7 @@ bool rd::MentalMap::removeMentalMapEventListeners()
     return true;
 }
 
-bool rd::MentalMap::onDataArrived(const std::vector<rd::Player> & players)
+bool rd::MentalMap::onDataArrived(const std::vector<Player> & players)
 {
     return updatePlayers(players);
 }

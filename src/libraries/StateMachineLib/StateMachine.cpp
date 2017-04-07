@@ -3,7 +3,7 @@
 #include "StateMachine.hpp"
 
 
-rd::FiniteStateMachine::FiniteStateMachine(const std::vector<rd::StateDirector *> & stateDirectors, int initial_state_id)
+rd::FiniteStateMachine::FiniteStateMachine(const std::vector<StateDirector *> & stateDirectors, int initial_state_id)
 {
     this->stateDirectors = stateDirectors;
     this->initial_state_id = initial_state_id;

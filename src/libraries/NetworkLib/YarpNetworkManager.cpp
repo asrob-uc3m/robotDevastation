@@ -174,7 +174,7 @@ bool rd::YarpNetworkManager::configure(const std::string & parameter, Player val
     return NetworkManager::configure(parameter, value);
 }
 
-bool rd::YarpNetworkManager::sendPlayerHit(rd::Player player, int damage)
+bool rd::YarpNetworkManager::sendPlayerHit(Player player, int damage)
 {
     if (!started)
     {

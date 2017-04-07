@@ -18,9 +18,9 @@ rd::SDLScreenManager::SDLScreenManager()
     window = NULL;
 }
 
-void rd::SDLScreenManager::setCurrentScreen(rd::Screen *screen)
+void rd::SDLScreenManager::setCurrentScreen(Screen *screen)
 {
-    rd::ScreenManager::setCurrentScreen(screen);
+    ScreenManager::setCurrentScreen(screen);
     if (window != NULL)
     {
         SDL_DestroyWindow(window);
@@ -95,7 +95,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, const std::stri
     return ret;
 }
 
-bool rd::SDLScreenManager::update(const std::string & parameter, rd::Image value)
+bool rd::SDLScreenManager::update(const std::string & parameter, Image value)
 {
     mutex.lock();
     bool ret = this->screen->update(parameter, value);
@@ -103,7 +103,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, rd::Image value
     return ret;
 }
 
-bool rd::SDLScreenManager::update(const std::string & parameter, rd::Player value)
+bool rd::SDLScreenManager::update(const std::string & parameter, Player value)
 {
     mutex.lock();
     bool ret = this->screen->update(parameter, value);
@@ -111,7 +111,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, rd::Player valu
     return ret;
 }
 
-bool rd::SDLScreenManager::update(const std::string & parameter, const std::vector<rd::Player> & value)
+bool rd::SDLScreenManager::update(const std::string & parameter, const std::vector<Player> & value)
 {
     mutex.lock();
     bool ret = this->screen->update(parameter, value);
@@ -119,7 +119,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, const std::vect
     return ret;
 }
 
-bool rd::SDLScreenManager::update(const std::string & parameter, const std::vector<rd::Target> & value)
+bool rd::SDLScreenManager::update(const std::string & parameter, const std::vector<Target> & value)
 {
     mutex.lock();
     bool ret = this->screen->update(parameter, value);
@@ -127,7 +127,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, const std::vect
     return ret;
 }
 
-bool rd::SDLScreenManager::update(const std::string & parameter, rd::Weapon value)
+bool rd::SDLScreenManager::update(const std::string & parameter, Weapon value)
 {
     mutex.lock();
     bool ret = this->screen->update(parameter, value);
@@ -189,7 +189,7 @@ bool rd::SDLScreenManager::configure(const std::string & parameter, const std::s
         }
     }
 
-    return rd::ScreenManager::configure(parameter, value);
+    return ScreenManager::configure(parameter, value);
 }
 
 bool rd::SDLScreenManager::start()

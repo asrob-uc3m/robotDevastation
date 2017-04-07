@@ -68,7 +68,7 @@ rd::MockImageManager::~MockImageManager()
     uniqueInstance = NULL;
 }
 
-bool rd::MockImageManager::receiveImage(rd::Image received_image)
+bool rd::MockImageManager::receiveImage(Image received_image)
 {
     semaphore.wait();
     image = received_image;

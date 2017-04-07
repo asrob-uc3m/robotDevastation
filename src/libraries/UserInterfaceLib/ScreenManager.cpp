@@ -90,7 +90,7 @@ bool rd::ScreenManager::configure(const std::string & parameter, const std::stri
     return true;
 }
 
-void rd::ScreenManager::setCurrentScreen(rd::Screen *screen)
+void rd::ScreenManager::setCurrentScreen(Screen *screen)
 {
     this->screen = screen;
 }
@@ -100,32 +100,32 @@ bool rd::ScreenManager::update(const std::string & parameter, const std::string 
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(const std::string & parameter, rd::Image value)
+bool rd::ScreenManager::update(const std::string & parameter, Image value)
 {
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(const std::string & parameter, rd::Player value)
+bool rd::ScreenManager::update(const std::string & parameter, Player value)
 {
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(const std::string & parameter, const std::vector<rd::Player> & value)
+bool rd::ScreenManager::update(const std::string & parameter, const std::vector<Player> & value)
 {
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(const std::string & parameter, const std::vector<rd::Target> & value)
+bool rd::ScreenManager::update(const std::string & parameter, const std::vector<Target> & value)
 {
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(const std::string & parameter, rd::Weapon value)
+bool rd::ScreenManager::update(const std::string & parameter, Weapon value)
 {
     return this->screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::Register(rd::ScreenManager *manager, const std::string & id)
+bool rd::ScreenManager::Register(ScreenManager *manager, const std::string & id)
 {
     if ( screenManagerRegistry.find(id) == screenManagerRegistry.end())
     {

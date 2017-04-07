@@ -83,7 +83,7 @@ bool rd::NetworkManager::destroyNetworkManager()
 
 rd::NetworkManager::~NetworkManager() { }
 
-bool rd::NetworkManager::addNetworkEventListener(rd::NetworkEventListener *listener)
+bool rd::NetworkManager::addNetworkEventListener(NetworkEventListener *listener)
 {
     listeners.push_back(listener);
     return true;
@@ -100,17 +100,17 @@ bool rd::NetworkManager::configure(const std::string & parameter, Player value)
     return true;
 }
 
-bool rd::NetworkManager::onTargetHit(rd::Target target, rd::Player player, rd::Weapon weapon)
+bool rd::NetworkManager::onTargetHit(Target target, Player player, Weapon weapon)
 {
     return sendPlayerHit(player, weapon.getDamage());
 }
 
-bool rd::NetworkManager::onRespawn(rd::Player player)
+bool rd::NetworkManager::onRespawn(Player player)
 {
     return sendPlayerHit(player, -1*player.getMaxHealth()); //-- This is a quick and dirty hack
 }
 
-bool rd::NetworkManager::Register(rd::NetworkManager *manager, const std::string & id)
+bool rd::NetworkManager::Register(NetworkManager *manager, const std::string & id)
 {
     if ( networkManagerRegistry.find(id) == networkManagerRegistry.end())
     {

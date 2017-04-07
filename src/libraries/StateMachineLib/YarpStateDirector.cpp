@@ -3,7 +3,7 @@
 
 const int rd::YarpStateDirector::DEFAULT_RATE_MS = 100;
 
-rd::YarpStateDirector::YarpStateDirector(rd::State *state) : StateDirector(state), RateThread(DEFAULT_RATE_MS)
+rd::YarpStateDirector::YarpStateDirector(State *state) : StateDirector(state), RateThread(DEFAULT_RATE_MS)
 {
 
 }

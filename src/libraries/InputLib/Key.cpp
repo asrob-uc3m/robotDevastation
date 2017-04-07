@@ -59,7 +59,7 @@ int rd::Key::getValue() const
     return key_value;
 }
 
-bool rd::Key::operator==(const rd::Key &k) const
+bool rd::Key::operator==(const Key &k) const
 {
     if (this->isPrintable() && k.isPrintable())
         return this->char_value == k.char_value;

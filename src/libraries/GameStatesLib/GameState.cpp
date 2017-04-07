@@ -16,10 +16,10 @@ const rd::Key rd::GameState::KEY_PAN_RIGHT = rd::Key::KEY_ARROW_RIGHT;
 const rd::Key rd::GameState::KEY_TILT_UP = rd::Key::KEY_ARROW_UP;
 const rd::Key rd::GameState::KEY_TILT_DOWN = rd::Key::KEY_ARROW_DOWN;
 
-rd::GameState::GameState(rd::NetworkManager *networkManager, rd::ImageManager *imageManager,
-                         rd::InputManager *inputManager, rd::MentalMap *mentalMap,
-                         rd::RobotManager *robotManager, rd::AudioManager *audioManager,
-                         rd::ScreenManager *screenManager) :
+rd::GameState::GameState(NetworkManager *networkManager, ImageManager *imageManager,
+                         InputManager *inputManager, MentalMap *mentalMap,
+                         RobotManager *robotManager, AudioManager *audioManager,
+                         ScreenManager *screenManager) :
                     ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager,
                                audioManager, screenManager)
 {
@@ -156,7 +156,7 @@ int rd::GameState::evaluateConditions()
     return -1;
 }
 
-bool rd::GameState::onKeyDown(const rd::Key & k)
+bool rd::GameState::onKeyDown(const Key & k)
 {
     if (k == KEY_SHOOT)
     {
@@ -232,7 +232,7 @@ bool rd::GameState::onKeyDown(const rd::Key & k)
     return false;
 }
 
-bool rd::GameState::onKeyUp(const rd::Key & k)
+bool rd::GameState::onKeyUp(const Key & k)
 {
     //-- Movement control
     if (k == KEY_TURN_LEFT)
@@ -288,7 +288,7 @@ bool rd::GameState::onKeyUp(const rd::Key & k)
     return false;
 }
 
-bool rd::GameState::onWindowEvent(const rd::WindowEvent & event)
+bool rd::GameState::onWindowEvent(const WindowEvent & event)
 {
     if (event.getEvent() == WindowEvent::WINDOW_CLOSE)
     {
@@ -299,7 +299,7 @@ bool rd::GameState::onWindowEvent(const rd::WindowEvent & event)
     return false;
 }
 
-bool rd::GameState::onImageArrived(rd::ImageManager *manager)
+bool rd::GameState::onImageArrived(ImageManager *manager)
 {
     //-- Don't know if this is safe enough or some mutex is required
     screenManager->update(GameScreen::PARAM_CAMERA_FRAME, manager->getImage());

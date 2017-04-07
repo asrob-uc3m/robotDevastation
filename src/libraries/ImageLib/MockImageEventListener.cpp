@@ -6,7 +6,7 @@ rd::MockImageEventListener::MockImageEventListener()
     images_arrived = 0;
 }
 
-bool rd::MockImageEventListener::onImageArrived(rd::ImageManager *manager)
+bool rd::MockImageEventListener::onImageArrived(ImageManager *manager)
 {
     stored_image = manager->getImage();
     images_arrived++;

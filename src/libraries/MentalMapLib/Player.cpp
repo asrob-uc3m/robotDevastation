@@ -53,7 +53,7 @@ void rd::Player::setHealth(int value)
     health = value;
 }
 
-bool rd::Player::getDamageFromWeapon(rd::Weapon &weapon)
+bool rd::Player::getDamageFromWeapon(Weapon &weapon)
 {
     health -= weapon.getDamage();
     if (health < 0)

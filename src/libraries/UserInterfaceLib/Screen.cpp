@@ -10,27 +10,27 @@ bool rd::Screen::update(const std::string & parameter, const std::string & value
     return true;
 }
 
-bool rd::Screen::update(const std::string & parameter, rd::Image value)
+bool rd::Screen::update(const std::string & parameter, Image value)
 {
     return true;
 }
 
-bool rd::Screen::update(const std::string & parameter, rd::Player value)
+bool rd::Screen::update(const std::string & parameter, Player value)
 {
     return true;
 }
 
-bool rd::Screen::update(const std::string & parameter, const std::vector<rd::Player> & value)
+bool rd::Screen::update(const std::string & parameter, const std::vector<Player> & value)
 {
     return true;
 }
 
-bool rd::Screen::update(const std::string & parameter, const std::vector<rd::Target> & value)
+bool rd::Screen::update(const std::string & parameter, const std::vector<Target> & value)
 {
     return true;
 }
 
-bool rd::Screen::update(const std::string & parameter, rd::Weapon value)
+bool rd::Screen::update(const std::string & parameter, Weapon value)
 {
     return true;
 }

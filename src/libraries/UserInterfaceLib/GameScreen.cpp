@@ -135,7 +135,7 @@ bool rd::GameScreen::update(const std::string & parameter, const std::string & v
     return false;
 }
 
-bool rd::GameScreen::update(const std::string & parameter, rd::Player value)
+bool rd::GameScreen::update(const std::string & parameter, Player value)
 {
     if (parameter == PARAM_MYSELF)
     {
@@ -148,7 +148,7 @@ bool rd::GameScreen::update(const std::string & parameter, rd::Player value)
     return false;
 }
 
-bool rd::GameScreen::update(const std::string & parameter, const std::vector<rd::Player> & value)
+bool rd::GameScreen::update(const std::string & parameter, const std::vector<Player> & value)
 {
     if (parameter == PARAM_PLAYERS)
     {
@@ -161,7 +161,7 @@ bool rd::GameScreen::update(const std::string & parameter, const std::vector<rd:
     return false;
 }
 
-bool rd::GameScreen::update(const std::string & parameter, const std::vector<rd::Target> & value)
+bool rd::GameScreen::update(const std::string & parameter, const std::vector<Target> & value)
 {
     if (parameter == PARAM_TARGETS)
     {
@@ -174,7 +174,7 @@ bool rd::GameScreen::update(const std::string & parameter, const std::vector<rd:
     return false;
 }
 
-bool rd::GameScreen::update(const std::string & parameter, rd::Weapon value)
+bool rd::GameScreen::update(const std::string & parameter, Weapon value)
 {
     if (parameter == PARAM_WEAPON)
     {
@@ -187,7 +187,7 @@ bool rd::GameScreen::update(const std::string & parameter, rd::Weapon value)
     return false;
 }
 
-bool rd::GameScreen::update(const std::string & parameter, rd::Image value)
+bool rd::GameScreen::update(const std::string & parameter, Image value)
 {    if (value.width() == 0 || value.height() == 0)
     {
         RD_ERROR("Invalid image");
@@ -219,7 +219,7 @@ bool rd::GameScreen::update(const std::string & parameter, rd::Image value)
      return false;
 }
 
-bool rd::GameScreen::drawUserUI(SDL_Surface *screen, rd::Player user, rd::Weapon weapon)
+bool rd::GameScreen::drawUserUI(SDL_Surface *screen, Player user, Weapon weapon)
 {
     //-- User health bar:
     //--------------------------------------------------------------------------------------------

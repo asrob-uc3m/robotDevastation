@@ -135,7 +135,7 @@ rd::YarpImageManager::~YarpImageManager()
     uniqueInstance = NULL;
 }
 
-void rd::YarpImageManager::onRead(rd::Image &image)
+void rd::YarpImageManager::onRead(Image &image)
 {
     semaphore.wait();
     this->image=image;

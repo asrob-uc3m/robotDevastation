@@ -86,7 +86,7 @@ rd::ImageManager::~ImageManager()
 
 }
 
-bool rd::ImageManager::addImageEventListener(rd::ImageEventListener *listener)
+bool rd::ImageManager::addImageEventListener(ImageEventListener *listener)
 {
     listeners.push_back(listener);
     return true;
@@ -103,7 +103,7 @@ bool rd::ImageManager::configure(const std::string & parameter, const std::strin
     return true;
 }
 
-bool rd::ImageManager::Register(rd::ImageManager *manager, const std::string & id)
+bool rd::ImageManager::Register(ImageManager *manager, const std::string & id)
 {
     if ( imageManagerRegistry.find(id) == imageManagerRegistry.end())
     {

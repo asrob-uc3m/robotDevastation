@@ -21,7 +21,7 @@ bool rd::StateMachineBuilder::setInitialState(int initial_state_id)
     return true;
 }
 
-int rd::StateMachineBuilder::addState(rd::State *state)
+int rd::StateMachineBuilder::addState(State *state)
 {
     states.push_back(state);
     return states.size() -1;
