@@ -17,6 +17,8 @@
 #include "Vector2dBase.hpp"
 #include "IniReader.hpp"
 
+namespace rd{
+
 //-- Misc utils ----------------------------------------------//
 
 template<typename T> std::string number2str(T number)
@@ -24,6 +26,8 @@ template<typename T> std::string number2str(T number)
     std::stringstream sstream;
     sstream << number;
     return sstream.str();
+}
+
 }
 
 #endif

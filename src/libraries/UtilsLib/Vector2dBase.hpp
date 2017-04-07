@@ -4,6 +4,8 @@
 #ifndef __RD_VECTOR_BASE_HPP__
 #define __RD_VECTOR_BASE_HPP__
 
+namespace rd{
+
 /**
  * @ingroup UtilsLib
  *
@@ -27,6 +29,8 @@ class Vector2dBase {
 
 //! @brief Default 2D vector
 typedef Vector2dBase<int> Vector2d;
+
+}
 
 #endif // __RD_VECTOR_BASE_HPP__
 

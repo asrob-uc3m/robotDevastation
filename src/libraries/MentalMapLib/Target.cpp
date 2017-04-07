@@ -8,7 +8,7 @@ rd::Target::Target()
     this->belief = -1;
 }
 
-rd::Target::Target(int player_id, Vector2d pos, Vector2d dimensions)
+rd::Target::Target(int player_id, rd::Vector2d pos, rd::Vector2d dimensions)
 {
     this->player_id = player_id;
     this->pos = pos;
@@ -26,22 +26,22 @@ void rd::Target::setPlayerId(int id)
     player_id = id;
 }
 
-Vector2d rd::Target::getPos() const
+rd::Vector2d rd::Target::getPos() const
 {
     return pos;
 }
 
-void rd::Target::setPos(const Vector2d &pos)
+void rd::Target::setPos(const rd::Vector2d &pos)
 {
     this->pos = pos;
 }
 
-Vector2d rd::Target::getDimensions() const
+rd::Vector2d rd::Target::getDimensions() const
 {
     return dimensions;
 }
 
-void rd::Target::setDimensions(const Vector2d &dimensions)
+void rd::Target::setDimensions(const rd::Vector2d &dimensions)
 {
    this->dimensions = dimensions;
 }
