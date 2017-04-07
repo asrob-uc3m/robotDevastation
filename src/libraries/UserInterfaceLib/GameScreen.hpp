@@ -18,14 +18,6 @@
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup UserInterfaceLib
- *
- * @brief The UserInterfaceLib library contains the different game screens
- */
-
-/**
  * @ingroup UserInterfaceLib
  *
  * @brief A User Interface.

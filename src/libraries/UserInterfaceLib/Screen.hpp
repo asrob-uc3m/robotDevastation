@@ -11,14 +11,6 @@
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup UserInterfaceLib
- *
- * @brief The UserInterfaceLib library contains the \ref Screen related classes.
- */
-
-/**
  * @ingroup UserInterfaceLib
  *
  * @brief A User Interface.
