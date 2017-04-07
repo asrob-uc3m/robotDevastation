@@ -26,7 +26,7 @@ namespace rd{
  * When the program finishes, the MockNetworkManager can be deallocated using destroyNetworkManager().
  *
  * Network events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
- * along with the data relevant to the event triggered (i.e. data that just arrived)
+ * along with the data relevant to the event triggered (i.e. data that just arrived).
  *
  */
 
@@ -38,7 +38,7 @@ class MockNetworkManager : public NetworkManager
         /**
          * @brief Register this manager in the NetworkManager registry so that can be used
          *
-         * It ensures that only one manager of this type is created (unique instance)
+         * It ensures that only one manager of this type is created (unique instance).
          */
         static bool RegisterManager();
 
@@ -76,7 +76,7 @@ class MockNetworkManager : public NetworkManager
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getNetworkManager() method
+         * and the instantiation is done at the getNetworkManager() method.
          */
         MockNetworkManager();
 

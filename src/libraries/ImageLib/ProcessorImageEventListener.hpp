@@ -15,10 +15,12 @@ namespace rd
 {
 
 /**
+ * @ingroup ImageLib
+ *
  * @brief ProcessorImageEventListener used for processing
  *
  * This object allows to access the received image and has a counter of
- * the incoming images received
+ * the incoming images received.
  *
  */
 class ProcessorImageEventListener : public ImageEventListener

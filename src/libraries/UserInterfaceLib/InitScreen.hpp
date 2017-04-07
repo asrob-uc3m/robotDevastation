@@ -12,6 +12,11 @@
 
 namespace rd {
 
+/**
+ * @ingroup UserInterfaceLib
+ *
+ * @brief A User Interface.
+ */
 class InitScreen : public Screen
 {
     public:

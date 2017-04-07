@@ -10,18 +10,9 @@
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup StateMachineLib
- *
- * @brief The StateMachineLib library contains the \ref StateMachine base class and derived classes.
- */
-
-/**
  * @ingroup StateMachineLib
  *
  * @brief Class implementing a finite state machine
- *
  */
 class FiniteStateMachine
 {

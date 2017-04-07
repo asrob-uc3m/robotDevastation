@@ -22,23 +22,8 @@ class SDLAudioManager : public AudioManager
 {
     public:
         //---------------- Audio-related Stuff ----------------------------------------------------------------------//
-        /**
-         * @brief Loads an audio file, assigning it a string as identifier
-         * @param music_filepath Path to the file to be loaded
-         * @param id String that will identify the audio loaded
-         * @param type Can take a value of MUSIC or FX depending if the audio is to be loaded as game music or
-         * sound effect
-         * @return True if sound was loaded successfully, false otherwise
-         */
-        bool load( const std::string& music_filepath, const std::string& id, const int& type);
-
-        //! @brief Plays a music/sound effect file previously loaded
+        bool load(const std::string& music_filepath, const std::string& id, const int& type);
         bool play(const std::string &id, int loop);
-
-        /**
-         * @brief Stops the music being played currently
-         * @return False if the music could not be stopped
-         */
         bool stopMusic();
 
 
@@ -48,9 +33,9 @@ class SDLAudioManager : public AudioManager
         virtual bool isStopped() const;
 
         /**
-         * @brief Register this manager in the ImageManager registry so that can be used
+         * @brief Register this manager in the AudioManager registry so that can be used
          *
-         * It ensures that only one manager of this type is created (unique instance)
+         * It ensures that only one manager of this type is created (unique instance).
          */
         static bool RegisterManager();
 

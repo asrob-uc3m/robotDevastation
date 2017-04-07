@@ -17,14 +17,6 @@
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup NetworkLib
- *
- * @brief The NetworkLib library contains everything related to the communications with the RobotDevastation network
- */
-
-/**
  * @ingroup NetworkLib
  *
  * @brief Manages the communications between the user and the RobotDevastation network
@@ -37,7 +29,7 @@ namespace rd{
  * When the program finishes, the NetworkManager can be deallocated using destroyNetworkManager().
  *
  * Network events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
- * along with the data relevant to the event triggered (i.e. data that just arrived)
+ * along with the data relevant to the event triggered (i.e. data that just arrived).
  *
  */
 class NetworkManager: public MentalMapEventListener
@@ -47,7 +39,7 @@ class NetworkManager: public MentalMapEventListener
         /**
          * @brief Get a reference to the NetworkManager
          * @return By default, if no id is specified, this will return a reference to the first
-         * ImageManager that it can find in the registry, or NULL if no NetworkManager was registered.
+         * NetworkManager that it can find in the registry, or NULL if no NetworkManager was registered.
          */
         static NetworkManager *getNetworkManager();
 
@@ -80,10 +72,10 @@ class NetworkManager: public MentalMapEventListener
 
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
-        //! @brief Adds a InputEventListener to the list of observers to be notified of events
+        //! @brief Adds a NetworkEventListener to the list of observers to be notified of events
         bool addNetworkEventListener( NetworkEventListener * listener );
 
-        //! @brief Unregisters all the InputEventListener stored
+        //! @brief Unregisters all the NetworkEventListener stored
         bool removeNetworkEventListeners();
 
         //! @brief Configures a parameter with a value
@@ -126,13 +118,13 @@ protected:
 
 
     private:
-        //! \brief Stores the unique instance of the InputManager
+        //! \brief Stores the unique instance of the NetworkManager
         static NetworkManager * networkManagerInstance;
 
         //! \brief Stores the id of the current unique instance used
         static std::string currentId;
 
-        //! \brief Stores all the ImageManager that have been registered
+        //! \brief Stores all the NetworkManager that have been registered
         static std::map< std::string, NetworkManager * > networkManagerRegistry;
 
 

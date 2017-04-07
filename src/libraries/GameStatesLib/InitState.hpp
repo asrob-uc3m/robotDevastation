@@ -23,6 +23,7 @@ namespace rd{
 * @ingroup GameStatesLib
 *
 * @brief Game Initial State
+*
 * Behavior:
 *  - Waits for user input (showing nice RobotDevastation screen)
 *  - When user presses a button (Enter?), connects to the server and
@@ -42,8 +43,6 @@ class InitState : public State, public ManagerHub, public InputEventListener
         virtual bool setup();
         virtual bool loop();
         virtual bool cleanup();
-
-        //! @brief Returns the internal variable value as condition evaluation result
         virtual int evaluateConditions();
 
         static const int LOGIN_SUCCESSFUL;

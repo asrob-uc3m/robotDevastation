@@ -18,14 +18,6 @@ typedef yarp::sig::ImageOf<yarp::sig::PixelRgb> Image;
 class ImageEventListener; //-- Required to avoid recurrent loops in dependencies
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup ImageLib
- *
- * @brief The ImageLib library contains classes related to image input (from cameras, etc)
- */
-
-/**
  * @ingroup ImageLib
  *
  * @brief Generic image input manager
@@ -33,13 +25,13 @@ class ImageEventListener; //-- Required to avoid recurrent loops in dependencies
  * ImageManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
  * class, we first register the needed subclasses of this class. This way, we can later get the reference
- * to the ImageManager with getImageManager and the name of the desired registered subclass. Later calls
+ * to the ImageManager with getImageManager() the name of the desired registered subclass. Later calls
  * to getImageManager() will return that selected subclass.
  *
  * When the program finishes, the ImageManager can be deallocated using destroyImageManager().
  *
  * Imnage events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
- * along with the reference to the manager that triggered them to be able to access the image
+ * along with the reference to the manager that triggered them to be able to access the image.
  *
  */
 class ImageManager

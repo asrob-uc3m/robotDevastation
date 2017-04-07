@@ -10,7 +10,7 @@
 namespace rd{
 
 /**
- * @ingroup RobotManagerLib
+ * @ingroup RobotLib
  *
  * @brief The Robot Manager for testing
  *

@@ -8,6 +8,11 @@
 
 namespace rd{
 
+/**
+ * @ingroup NetworkLib
+ *
+ * @brief Interface for objects that can be notified of input events by the NetworkManager
+ */
 class NetworkEventListener
 {
     public:

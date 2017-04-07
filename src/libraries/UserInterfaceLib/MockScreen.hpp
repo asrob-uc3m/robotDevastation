@@ -12,6 +12,11 @@
 
 namespace rd {
 
+/**
+ * @ingroup UserInterfaceLib
+ *
+ * @brief A User Interface for testing purposes.
+ */
 class MockScreen : public Screen
 {
     public:

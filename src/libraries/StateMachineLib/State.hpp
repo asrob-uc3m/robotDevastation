@@ -40,7 +40,7 @@ class State
         /**
          * @brief This function is called after each call to loop() in order to know the transition to make
          *
-         * An integer value is assigned to each possible transition to identify them
+         * An integer value is assigned to each possible transition to identify them.
          *
          * @return Transition selected depending on the conditions of the state
          */
@@ -53,7 +53,7 @@ class State
         static State *getEndState();
 
    protected:
-        //! @variable Name of the current state
+        //! @brief Name of the current state
         std::string state_id;
 
 };

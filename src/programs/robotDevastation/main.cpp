@@ -5,9 +5,9 @@
  * @ingroup rd_programs
  * \defgroup robotDevastation robotDevastation
  *
- * @brief The Robot Devastation PC client. Creates an instance of the RobotDevastation class.
+ * @brief The Robot Devastation PC client. Creates an instance of the rd::RobotDevastation class.
  *
- * @section legal Legal
+ * @section rd_robot_devastation_legal Legal
  *
  * Copyright: ASROB 2012-2014 (C) Robotics Society of the Universidad Carlos III de Madrid (http://asrob.uc3m.es)
  * Robot Devastation project
@@ -19,24 +19,24 @@
  *
  * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see $RD_ROOT/main/doc/LGPL.TXT
  *
- * @section installation Installation
+ * @section rd_robot_devastation_installation Installation
  *
  * The module is compiled when ENABLE_robotDevastation is activated (default: ON). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
- * @section running Running (assuming correct installation, see previous section)
+ * @section rd_robot_devastation_running Running (assuming correct installation, see previous section)
  * 
  * It should be straightforward to run the default test mode. Just click on the icon or open a terminal and write:
  *
 \verbatim
-rdClient
+robotDevastation
 \endverbatim
  *
- * @section interfacing Interfacing with robotDevastation
+ * @section rd_robot_devastation_interfacing Interfacing with robotDevastation
  *
  * Press 'space' to shoot!
  *
- * @section modify Modify
+ * @section rd_robot_devastation_modify Modify
  * 
  * This file can be edited at 
  * $RD_ROOT/src/programs/robotDevastation/main.cpp

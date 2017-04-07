@@ -16,15 +16,6 @@
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup UserInterfaceLib
- *
- * @brief The UserInterfaceLib library contains classes related to the game graphical user interface
- *
- **/
-
-/**
  * @ingroup UserInterfaceLib
  *
  * @brief Manage game screens

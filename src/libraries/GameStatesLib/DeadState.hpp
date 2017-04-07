@@ -23,6 +23,7 @@ namespace rd{
 * @ingroup GameStatesLib
 *
 * @brief Game Dead State
+*
 * Behavior:
 *  - Waits for 10 seconds showing dead screen
 *  - Then, it enables input:
@@ -40,8 +41,6 @@ public:
     virtual bool setup();
     virtual bool loop();
     virtual bool cleanup();
-
-    //! @brief Returns the internal variable value as condition evaluation result
     virtual int evaluateConditions();
 
     //enum DeadStateOption {RESPAWN_SELECTED, EXIT_SELECTED};

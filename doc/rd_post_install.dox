@@ -5,7 +5,7 @@ Now that you have installed the basic Robot Devastation repository, you're proba
 
 @section post_install_init_comms Initializing the communication servers
 
-Our current implementation uses <a class="el" href="http://eris.liralab.it/yarpdoc/what_is_yarp.html">YARP</a> for communication. Basic use of YARP requires the use of a centralized server. This server associates the low-level implementation of the communication ports with the names we give them. Before executing any Robot Devastation program, please launch a yarp server:
+Our current implementation uses <a class="el" href="http://www.yarp.it/what_is_yarp.html">YARP</a> for communication. Basic use of YARP requires the use of a centralized server. This server associates the low-level implementation of the communication ports with the names we give them. Before executing any Robot Devastation program, please launch a yarp server:
 
 \verbatim
 [server PC, terminal 1] yarp server

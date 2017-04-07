@@ -15,14 +15,6 @@
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup MentalMapLib
- *
- * @brief The MentalMapLib library contains all the classes related to game information storage (e.g. players, targets, weapons, etc)
- */
-
-/**
  * @ingroup MentalMapLib
  *
  * @brief Mental map is a repository for information about the players, targets and weapons.
@@ -109,7 +101,7 @@ class MentalMap : public NetworkEventListener
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getMentalMap() method
+         * and the instantiation is done at the getMentalMap() method.
          */
         MentalMap();
 

@@ -29,13 +29,8 @@ class MockAudioManager : public AudioManager,
 
 
         //---------------- Audio-related Stuff ----------------------------------------------------------------------//
-        //! @brief Loads an audio file, assigning it a string as identifier
         bool load( const std::string& music_filepath, const std::string& id, const int& type);
-
-        //! @brief Plays a music/sound effect file previously loaded
         bool play(const std::string &id, int loop);
-
-        //! @brief Stops the music being played currently
         bool stopMusic();
 
 
@@ -45,9 +40,9 @@ class MockAudioManager : public AudioManager,
         virtual bool isStopped() const;
 
         /**
-         * @brief Register this manager in the ImageManager registry so that can be used
+         * @brief Register this manager in the AudioManager registry so that can be used
          *
-         * It ensures that only one manager of this type is created (unique instance)
+         * It ensures that only one manager of this type is created (unique instance).
          */
         static bool RegisterManager();
 
@@ -68,7 +63,7 @@ class MockAudioManager : public AudioManager,
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getAudioManager() method
+         * and the instantiation is done at the getAudioManager() method.
          */
         MockAudioManager();
 
