@@ -95,9 +95,9 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
              //RD_DEBUG("%d: %d %d\n",i,coord.x,coord.y);
              coords.push_back(coord);
         }
-        int qrWidth = fabs(float(coords[2].x - coords[1].x));
-		int qrHeight = fabs(float(coords[1].y - coords[0].y));
-        Vector2d qrCenter(coords[0].x+(qrWidth/2), coords[0].y+(qrHeight/2) );
+        int qrWidth = fabs(float(coords[2].getX() - coords[1].getX()));
+		int qrHeight = fabs(float(coords[1].getY() - coords[0].getY()));
+        Vector2d qrCenter(coords[0].getX() + (qrWidth / 2), coords[0].getY() + (qrHeight / 2) );
 
         Target target( identifier_int,
                          qrCenter,

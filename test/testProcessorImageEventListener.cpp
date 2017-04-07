@@ -69,10 +69,10 @@ const std::string ProcessorImageEventListenerTest::bad_image_filename = "../imag
 void compare_targets(Target target1, Target target2, int threshold = 20)
 {
     ASSERT_EQ(target1.getPlayerId(), target2.getPlayerId());
-    ASSERT_NEAR(target1.getPos().x, target2.getPos().x, threshold);
-    ASSERT_NEAR(target1.getPos().y, target2.getPos().y, threshold);
-    ASSERT_NEAR(target1.getDimensions().x, target2.getDimensions().x, threshold);
-    ASSERT_NEAR(target1.getDimensions().y, target2.getDimensions().y, threshold);
+    ASSERT_NEAR(target1.getPos().getX(), target2.getPos().getX(), threshold);
+    ASSERT_NEAR(target1.getPos().getY(), target2.getPos().getY(), threshold);
+    ASSERT_NEAR(target1.getDimensions().getX(), target2.getDimensions().getX(), threshold);
+    ASSERT_NEAR(target1.getDimensions().getY(), target2.getDimensions().getY(), threshold);
 }
 
 TEST_F(ProcessorImageEventListenerTest, TargetDetectionWorks)

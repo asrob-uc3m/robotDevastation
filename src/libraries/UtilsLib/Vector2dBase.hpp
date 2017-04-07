@@ -19,7 +19,6 @@ class Vector2dBase {
     public:
         Vector2dBase( T x, T y): x(x), y(y) {}
         Vector2dBase(): x(0), y(0) {}
-        T x, y;
         
         bool operator==( const Vector2dBase<T>& other_vector )
         {
@@ -32,6 +31,19 @@ class Vector2dBase {
             y += a.y;
             return *this;
         }
+
+        T getX() const
+        {
+            return x;
+        }
+
+        T getY() const
+        {
+            return y;
+        }
+
+    private:
+        T x, y;
 };
 
 //! @brief Default 2D vector

@@ -23,11 +23,11 @@ rd::Weapon::Weapon(const std::string & name, int damage, int max_ammo)
 bool rd::Weapon::canShootTarget(Target &target)
 {
     //-- Calculate target limits:
-    int target_top_left_x = target.getPos().x - target.getDimensions().x / 2;
-    int target_top_left_y = target.getPos().y - target.getDimensions().y / 2;
+    int target_top_left_x = target.getPos().getX() - target.getDimensions().getX() / 2;
+    int target_top_left_y = target.getPos().getY() - target.getDimensions().getY() / 2;
 
-    int target_bottom_right_x = target.getPos().x + target.getDimensions().x / 2;
-    int target_bottom_right_y = target.getPos().y + target.getDimensions().y / 2;
+    int target_bottom_right_x = target.getPos().getX() + target.getDimensions().getX() / 2;
+    int target_bottom_right_y = target.getPos().getY() + target.getDimensions().getY() / 2;
 
     //-- Check if the scope is within target limits:
     if ( target_top_left_x <= SCOPE_X && target_top_left_y <= SCOPE_Y
