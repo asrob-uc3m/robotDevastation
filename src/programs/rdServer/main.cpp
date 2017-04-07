@@ -5,9 +5,9 @@
  * @ingroup rd_programs
  * \defgroup rdServer rdServer
  *
- * @brief The Robot Devastation PC server. Creates an instance of the Server class.
+ * @brief The Robot Devastation PC server. Creates an instance of the rd::Server class.
  *
- * @section legal Legal
+ * @section rd_server_legal Legal
  *
  * Copyright: ASROB 2012-2014 (C) Robotics Society of the Universidad Carlos III de Madrid (http://asrob.uc3m.es)
  * Robot Devastation project
@@ -19,12 +19,12 @@
  *
  * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see $RD_ROOT/main/doc/LGPL.TXT
  *
- * @section installation Installation
+ * @section rd_server_installation Installation
  *
  * The module is compiled when ENABLE_rdServer is activated (default: ON). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
- * @section running Running (assuming correct installation, see previous section)
+ * @section rd_server_running Running (assuming correct installation, see previous section)
  * 
  * It should be straightforward to run the default mode. Just click open a terminal and write:
  *
@@ -32,7 +32,7 @@
 rdServer
 \endverbatim
  *
- * @section modify Modify
+ * @section rd_server_modify Modify
  * 
  * This file can be edited at 
  * $RD_ROOT/src/programs/rdServer/main.cpp
