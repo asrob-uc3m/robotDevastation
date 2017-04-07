@@ -12,18 +12,18 @@
 namespace rd{
 
 /**
- * @ingroup ImageManagerLib
+ * @ingroup ImageLib
  *
  * @brief Image input manager based in YARP
  *
  * ImageManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
- * class, we first have to register the manager with the RegisterManager method.
+ * class, we first have to register the manager with the RegisterManager() method.
  * Then, we can get the reference to the MockImageManager with ImageManager::getImageManager(), using
  * the corresponding id and access the manager with that reference.
  *
  * Imnage events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
- * along with the reference to the manager that triggered them to be able to access the image
+ * along with the reference to the manager that triggered them to be able to access the image.
  *
  */
 class MockImageManager : public ImageManager
@@ -40,7 +40,7 @@ class MockImageManager : public ImageManager
         /**
          * @brief Register this manager in the ImageManager registry so that can be used
          *
-         * It ensures that only one manager of this type is created (unique instance)
+         * It ensures that only one manager of this type is created (unique instance).
          */
         static bool RegisterManager();
 
@@ -58,7 +58,7 @@ class MockImageManager : public ImageManager
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getMentalMap() method
+         * and the instantiation is done at the getMentalMap() method.
          */
         MockImageManager();
 
