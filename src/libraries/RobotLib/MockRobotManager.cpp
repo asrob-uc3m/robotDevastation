@@ -15,9 +15,7 @@ const int rd::MockRobotManager::CAMERA_LEFT = 4;
 const int rd::MockRobotManager::CAMERA_RIGHT = 8;
 const int rd::MockRobotManager::CAMERA_NONE = 0; 
 
-namespace rd
-{
-MockRobotManager::MockRobotManager(const std::string& robotName)
+rd::MockRobotManager::MockRobotManager(const std::string& robotName)
 {
     this->robotName = robotName;
     connected = false;
@@ -26,7 +24,7 @@ MockRobotManager::MockRobotManager(const std::string& robotName)
     camera_movement_direction = CAMERA_NONE;
 }
 
-bool MockRobotManager::moveForward(int velocity) 
+bool rd::MockRobotManager::moveForward(int velocity)
 {
     if (connected)
     {
@@ -48,7 +46,7 @@ bool MockRobotManager::moveForward(int velocity)
     }
 }
 
-bool MockRobotManager::moveBackwards(int velocity)
+bool rd::MockRobotManager::moveBackwards(int velocity)
 {
     if (connected)
     {
@@ -70,7 +68,7 @@ bool MockRobotManager::moveBackwards(int velocity)
     }
 }
 
-bool MockRobotManager::turnLeft(int velocity) 
+bool rd::MockRobotManager::turnLeft(int velocity)
 {
     if (connected)
     {
@@ -92,7 +90,7 @@ bool MockRobotManager::turnLeft(int velocity)
     }
 }
 
-bool MockRobotManager::turnRight(int velocity)
+bool rd::MockRobotManager::turnRight(int velocity)
 {
     if (connected)
     {
@@ -114,7 +112,7 @@ bool MockRobotManager::turnRight(int velocity)
     }
 }
 
-bool MockRobotManager::stopMovement()
+bool rd::MockRobotManager::stopMovement()
 {
     if (connected)
     {
@@ -136,7 +134,7 @@ bool MockRobotManager::stopMovement()
     }
 }
 
-bool MockRobotManager::tiltUp(int velocity)
+bool rd::MockRobotManager::tiltUp(int velocity)
 {
     if (connected)
     {
@@ -158,7 +156,7 @@ bool MockRobotManager::tiltUp(int velocity)
     }
 }
 
-bool MockRobotManager::tiltDown(int velocity)
+bool rd::MockRobotManager::tiltDown(int velocity)
 {
     if (connected)
     {
@@ -180,7 +178,7 @@ bool MockRobotManager::tiltDown(int velocity)
     }
 }
 
-bool MockRobotManager::panLeft(int velocity)
+bool rd::MockRobotManager::panLeft(int velocity)
 {
     if (connected)
     {
@@ -202,7 +200,7 @@ bool MockRobotManager::panLeft(int velocity)
     }
 }
 
-bool MockRobotManager::panRight(int velocity)
+bool rd::MockRobotManager::panRight(int velocity)
 {
     if (connected)
     {
@@ -224,7 +222,7 @@ bool MockRobotManager::panRight(int velocity)
     }
 }
 
-bool MockRobotManager::stopCameraMovement()
+bool rd::MockRobotManager::stopCameraMovement()
 {
     if (connected)
     {
@@ -246,7 +244,7 @@ bool MockRobotManager::stopCameraMovement()
     }
 }
         
-bool MockRobotManager::connect()  
+bool rd::MockRobotManager::connect()
 {
     if (!connected)
     {
@@ -260,7 +258,7 @@ bool MockRobotManager::connect()
     }
 }
 
-bool MockRobotManager::disconnect()  
+bool rd::MockRobotManager::disconnect()
 {
     if (connected)
     {
@@ -274,12 +272,12 @@ bool MockRobotManager::disconnect()
     }
 }
 
-bool MockRobotManager::test()  {
+bool rd::MockRobotManager::test()  {
     RD_DEBUG("\n");
     return false;
 }
 
-void MockRobotManager::setEnabled(bool enabled)
+void rd::MockRobotManager::setEnabled(bool enabled)
 {
     this->enabled = enabled;
     if (enabled)
@@ -290,39 +288,37 @@ void MockRobotManager::setEnabled(bool enabled)
         RD_DEBUG("MockRobotManager disabled\n");
 }
 
-void MockRobotManager::onDestroy(){
+void rd::MockRobotManager::onDestroy(){
     RD_DEBUG("\n");
     return;
 }
 
-bool MockRobotManager::isConnected() const
+bool rd::MockRobotManager::isConnected() const
 {
     return connected;
 }
 
-bool MockRobotManager::isEnabled() const
+bool rd::MockRobotManager::isEnabled() const
 {
     return enabled;
 }
 
-bool MockRobotManager::isMoving() const
+bool rd::MockRobotManager::isMoving() const
 {
     return movement_direction!=NONE;
 }
 
-int MockRobotManager::getMovementDirection() 
+int rd::MockRobotManager::getMovementDirection()
 {
     return movement_direction;
 }
 
-bool MockRobotManager::isCameraMoving()
+bool rd::MockRobotManager::isCameraMoving()
 {
     return camera_movement_direction != NONE;
 }
 
-int MockRobotManager::getCameraMovementDirection()
+int rd::MockRobotManager::getCameraMovementDirection()
 {
     return camera_movement_direction;
 }
-
-} //rd
