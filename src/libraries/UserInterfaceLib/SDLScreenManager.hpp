@@ -103,7 +103,7 @@ class SDLScreenManager : public ScreenManager
         bool fullscreen;
 
         SDL_Window * window;
-        yarp::os::Mutex mutex;
+        mutable yarp::os::Mutex mutex;
 };
 
 }
