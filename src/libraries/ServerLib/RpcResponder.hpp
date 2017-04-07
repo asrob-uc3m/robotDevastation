@@ -17,6 +17,8 @@ namespace rd
 
 /**
  * @ingroup ServerLib
+ *
+ * @brief RPC broadcast port
  */
 class RpcResponder : public yarp::os::PortReader
 {

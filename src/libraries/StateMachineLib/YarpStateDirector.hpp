@@ -10,6 +10,8 @@ namespace rd {
 
 /**
  * @ingroup StateMachineLib
+ *
+ * @brief StateDirector based on YARP, creates a separate thread
  */
 class YarpStateDirector : public StateDirector, private yarp::os::RateThread
 {
