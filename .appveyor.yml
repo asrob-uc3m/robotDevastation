@@ -75,14 +75,11 @@ install:
   - cmd: echo Downloading %SDL2_MIXER_DOWNLOAD_URL%
   - cmd: appveyor DownloadFile "%SDL2_MIXER_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\sdl2_mixer.zip"
 
-  - cmd: 7z x -y -o"%DOWNLOADS_PATH%" "%DOWNLOADS_PATH%\sdl2*.zip"
+  - cmd: 7z x -y -o"%DOWNLOADS_PATH%\SDL2_temp" "%DOWNLOADS_PATH%\sdl2*.zip"
+  - cmd: for /D %%i in ("%DOWNLOADS_PATH%\SDL2_temp\*") do xcopy "%%i" C:\SDL2 /e /i /y /q
 
-  - cmd: set SDL2DIR=%DOWNLOADS_PATH%\SDL2-2.0.5
-  - cmd: set SDL2IMAGEDIR=%DOWNLOADS_PATH%\SDL2_image-2.0.1
-  - cmd: set SDL2TTFDIR=%DOWNLOADS_PATH%\SDL2_ttf-2.0.14
-  - cmd: set SDL2_MIXER_HOME=%DOWNLOADS_PATH%\SDL2_mixer-2.0.1
-
-  - cmd: set PATH=%PATH%;%SDL2DIR%\lib\%SYSTEM_ARCH%;%SDL2IMAGEDIR%\lib\%SYSTEM_ARCH%;%SDL2TTFDIR%\lib\%SYSTEM_ARCH%;%SDL2_MIXER_HOME%\lib\%SYSTEM_ARCH%
+  - cmd: set SDL2DIR=C:\SDL2
+  - cmd: set PATH=%PATH%;%SDL2DIR%\lib\%SYSTEM_ARCH%
 
   # Download ZBar
   - cmd: 
