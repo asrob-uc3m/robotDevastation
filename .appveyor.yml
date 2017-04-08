@@ -16,6 +16,7 @@ configuration:
 
 cache:
   - C:\ACE -> appveyor.yml
+  - C:\SDL2 -> appveyor.yml
 
 init:
   # System related variables
@@ -72,21 +73,26 @@ install:
   - cmd: set YARP_ROOT=%REPOS_PATH%\yarp\build
   - cmd: set PATH=%PATH%;%YARP_ROOT%\bin
 
-  # Download SDL2 libraries
-  - cmd: echo Downloading %SDL2_DOWNLOAD_URL%
-  - cmd: appveyor DownloadFile "%SDL2_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\sdl2.zip"
-
-  - cmd: echo Downloading %SDL2_IMAGE_DOWNLOAD_URL%
-  - cmd: appveyor DownloadFile "%SDL2_IMAGE_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\sdl2_image.zip"
-
-  - cmd: echo Downloading %SDL2_TTF_DOWNLOAD_URL%
-  - cmd: appveyor DownloadFile "%SDL2_TTF_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\sdl2_ttf.zip"
-
-  - cmd: echo Downloading %SDL2_MIXER_DOWNLOAD_URL%
-  - cmd: appveyor DownloadFile "%SDL2_MIXER_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\sdl2_mixer.zip"
-
-  - cmd: 7z x -y -o"%DOWNLOADS_PATH%\SDL2_temp" "%DOWNLOADS_PATH%\sdl2*.zip"
-  - cmd: for /D %%i in ("%DOWNLOADS_PATH%\SDL2_temp\*") do xcopy "%%i" C:\SDL2 /e /i /y /q
+  # Download and extract SDL2 libraries (if not in cache)
+  - ps: >-
+        if (Test-Path -Path "C:\SDL2") {
+            Write-Host "SDL2 found in cache"
+        } else {
+            Write-Host "SDL2 not in cache, running download and extract step..."
+            Write-Host "Downloading $env:SDL2_DOWNLOAD_URL"
+            Start-FileDownload "$env:SDL2_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\sdl2.zip"
+            Write-Host "Downloading $env:SDL2_IMAGE_DOWNLOAD_URL"
+            Start-FileDownload "$env:SDL2_IMAGE_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\sdl2_image.zip"
+            Write-Host "Downloading $env:SDL2_TTF_DOWNLOAD_URL"
+            Start-FileDownload "$env:SDL2_TTF_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\sdl2_ttf.zip"
+            Write-Host "Downloading $env:SDL2_MIXER_DOWNLOAD_URL"
+            Start-FileDownload "$env:SDL2_MIXER_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\sdl2_mixer.zip"
+            7z x -y -o"$env:DOWNLOADS_PATH\SDL2_temp" "$env:DOWNLOADS_PATH\sdl2*.zip"
+            Write-Host "Copying contents of $env:DOWNLOADS_PATH\SDL2_temp to C:\SDL2"
+            Get-ChildItem -Directory "$env:DOWNLOADS_PATH\SDL2_temp" | ?{ $_.PSIsContainer } | ForEach-Object {
+                xcopy /E /I /Y /Q $_.FullName C:\SDL2
+            }
+        }
 
   - cmd: set SDL2DIR=C:\SDL2
   - cmd: set PATH=%PATH%;%SDL2DIR%\lib\%SYSTEM_ARCH%
