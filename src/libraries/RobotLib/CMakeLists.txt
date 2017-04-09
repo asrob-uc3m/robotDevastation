@@ -9,7 +9,7 @@ find_package(YARP REQUIRED)
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} RobotManager.cpp YarpRobotManager.cpp MockRobotManager.cpp)
+add_library(${KEYWORD} YarpRobotManager.cpp MockRobotManager.cpp)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 install(TARGETS ${KEYWORD} DESTINATION lib)
 

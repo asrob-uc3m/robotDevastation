@@ -13,77 +13,105 @@
 #include "YarpNetworkManager.hpp"
 #include "MockNetworkEventListener.hpp"
 #include "Server.hpp"
+#include "RpcResponder.hpp"
 
 #include "gtest/gtest.h"
 
-using namespace rd;
+namespace rd
+{
+    class YarpNetworkManagerNoKeepAlive;
+}
 
-class RunningServerThread: public yarp::os::Thread
+class rd::YarpNetworkManagerNoKeepAlive : public YarpNetworkManager
 {
     public:
-        RunningServerThread(yarp::os::ResourceFinder& rf) {
-            this->rf = rf;
-        }
+        static bool RegisterManager();
 
-        virtual void run() {
-            rdServer.runModule(rf);
-            RD_DEBUG("Run Module!\n");
-        }
+        static const std::string id;
 
-        virtual void onStop() {
-            RD_DEBUG("Request Module stop\n");
-            rdServer.stopModule(true);
-            RD_DEBUG("Module stopped\n");
+    protected:
+        void run()
+        {
+            // noop, overrides YarpNetworkManager::run
         }
-
-        virtual ~RunningServerThread() {}
 
     private:
-        yarp::os::ResourceFinder rf;
-        rd::Server rdServer;
-        int argc;
-        char** argv;
+        YarpNetworkManagerNoKeepAlive() {}
+
+        static YarpNetworkManagerNoKeepAlive * uniqueInstance;
 };
 
-class YarpNetworkManagerTest : public testing::Test
+using namespace rd;
+
+YarpNetworkManagerNoKeepAlive * YarpNetworkManagerNoKeepAlive::uniqueInstance = NULL;
+const std::string YarpNetworkManagerNoKeepAlive::id = "YARP_NO_KEEP_ALIVE";
+
+bool YarpNetworkManagerNoKeepAlive::RegisterManager()
 {
-    public:    
+    if (uniqueInstance == NULL)
+    {
+        uniqueInstance = new YarpNetworkManagerNoKeepAlive();
+    }
+
+    return Register(uniqueInstance, id);
+}
+
+class YarpNetworkManagerTestBase : public testing::Test
+{
+    public:
         virtual void SetUp()
         {
-            ASSERT_TRUE(YarpNetworkManager::RegisterManager());
-            networkManager = YarpNetworkManager::getNetworkManager();
+            ASSERT_TRUE(registerNetworkManager());
+            networkManager = NetworkManager::getNetworkManager();
             ASSERT_TRUE(networkManager);
 
             me = Player(0, "me", 100, 100, 0, 0);
             other_player = Player(1, "dummy", 100, 100, 1, 0);
 
             RD_DEBUG("Running rdServer\n");
-            yarp::os::ResourceFinder rf;
-            rdServer = new RunningServerThread(rf);
-            rdServer->start();
-            yarp::os::Time::delay(1);
+            rf = new yarp::os::ResourceFinder();
+            rf->setDefault("quiet", yarp::os::Value());
+            rdServer.configure(*rf);
+            rdServer.runModuleThreaded();
             RD_DEBUG("rdServer now running\n");
         }
 
         virtual void TearDown()
         {
             RD_DEBUG("Stopping rdServer\n");
-            rdServer->stop();
-            delete rdServer;
-            rdServer = NULL;
+            rdServer.stopModule(true);
+            ASSERT_TRUE(NetworkManager::destroyNetworkManager());
 
-            ASSERT_TRUE(YarpNetworkManager::destroyNetworkManager());
+            delete rf;
+            rf = NULL;
         }
 
         Player me, other_player;
 
     protected:
-        NetworkManager * networkManager;
-        RunningServerThread * rdServer;
+        virtual bool registerNetworkManager() = 0;
 
-    private:
-        int argc;
-        char ** argv;
+        yarp::os::ResourceFinder * rf;
+        NetworkManager * networkManager;
+        Server rdServer;
+};
+
+class YarpNetworkManagerTest : public YarpNetworkManagerTestBase
+{
+    protected:
+        virtual bool registerNetworkManager()
+        {
+            return YarpNetworkManager::RegisterManager();
+        }
+};
+
+class YarpNetworkManagerNoKeepAliveTest : public YarpNetworkManagerTestBase
+{
+    protected:
+        virtual bool registerNetworkManager()
+        {
+            return YarpNetworkManagerNoKeepAlive::RegisterManager();
+        }
 };
 
 
@@ -137,8 +165,8 @@ TEST_F(YarpNetworkManagerTest, NetworkManagerIsSingleton)
 TEST_F(YarpNetworkManagerTest, NetworkManagerAPIWorks)
 {
     MockNetworkEventListener listener;
-    NetworkEventListener * plistener = (NetworkEventListener *) &listener;
-    ASSERT_TRUE(((NetworkManager*)networkManager)->addNetworkEventListener(plistener));
+    NetworkEventListener * plistener = &listener;
+    ASSERT_TRUE(networkManager->addNetworkEventListener(plistener));
 
     //-- Startup
     networkManager->configure("player", me);
@@ -184,11 +212,11 @@ TEST_F(YarpNetworkManagerTest, NetworkManagerAPIWorks)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
-TEST_F(YarpNetworkManagerTest, DisconnectedIfNoKeepAlive)
+TEST_F(YarpNetworkManagerNoKeepAliveTest, DisconnectedIfNoKeepAlive)
 {
     MockNetworkEventListener listener;
-    NetworkEventListener * plistener = (NetworkEventListener *) &listener;
-    ASSERT_TRUE(((NetworkManager*)networkManager)->addNetworkEventListener(plistener));
+    NetworkEventListener * plistener = &listener;
+    ASSERT_TRUE(networkManager->addNetworkEventListener(plistener));
 
     //-- Startup
     networkManager->configure("player", me);
@@ -206,7 +234,9 @@ TEST_F(YarpNetworkManagerTest, DisconnectedIfNoKeepAlive)
     listener.resetDataArrived();
 
     //-- Wait more than the timeout time
-    yarp::os::Time::delay(60+1); //-- This should be really hardcoded, but it is the fastest implementation right now
+    const int delay = RpcResponder::MAX_BELIEF * rdServer.getPeriod();
+    RD_INFO("Waiting %d + 1 seconds...\n", delay);
+    yarp::os::Time::delay(delay + 1);
 
     //-- Check that I'm no longer logged in
     players = listener.getStoredPlayers();

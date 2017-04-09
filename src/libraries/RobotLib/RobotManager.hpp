@@ -3,9 +3,6 @@
 #ifndef __RD_ROBOT_MANAGER_HPP__
 #define __RD_ROBOT_MANAGER_HPP__
 
-#include <string>
-#include <vector>
-#include <map>
 
 namespace rd{
 
@@ -20,7 +17,7 @@ namespace rd{
 /**
  * @ingroup RobotLib
  *
- * @brief A base class for Robot Managers.
+ * @brief Base class for Robot Managers. Original copy of this file at https://github.com/asrob-uc3m/robotDevastation/blob/develop/src/libraries/RobotLib/RobotManager.hpp
  *
  */
 class RobotManager
@@ -57,17 +54,10 @@ class RobotManager
         virtual void onDestroy() = 0;
         virtual ~RobotManager() {}
 
+    protected:
         //-- Constants
         static const int UNUSED = -1;
 
-        RobotManager(const std::string& robotName) {
-            this->robotName = robotName;
-        }
-
-    protected:
-        std::string robotName;
-        bool connected;
-        bool enabled;
 };
 
 }
