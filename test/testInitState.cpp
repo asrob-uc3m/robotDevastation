@@ -225,7 +225,7 @@ TEST_F(InitStateTest, InitStateGoesToLogin)
 
 }
 
-TEST_F(InitStateTest, InitStateGoesToExit)
+TEST_F(InitStateTest, InitStateGoesToExitKeyPress)
 {
     //-- Create fsm with InitState
     StateMachineBuilder builder;
@@ -274,6 +274,78 @@ TEST_F(InitStateTest, InitStateGoesToExit)
 
     //-- When esc is pressed, the system should exit the game:
     mockInputManager->sendKeyPress(Key::KEY_ESCAPE);
+    yarp::os::Time::delay(0.5);
+
+    //-- Check that it has stopped things and it is in the final state (cleanup):
+    ASSERT_TRUE(mockImageManager->isStopped());
+    ASSERT_FALSE(mockImageManager->isEnabled());
+
+    ASSERT_TRUE(mockInputManager->isStopped());
+    ASSERT_EQ(0, mockInputManager->getNumListeners());
+
+    ASSERT_TRUE(mockAudioManager->isStopped());
+    ASSERT_FALSE(mockAudioManager->isPlaying("RD_THEME"));
+
+    ASSERT_TRUE(mockNetworkManager->isStopped());
+    ASSERT_FALSE(mockNetworkManager->isLoggedIn());
+
+    ASSERT_FALSE(mockRobotManager->isConnected());
+    ASSERT_FALSE(mockRobotManager->isEnabled());
+
+    //-- Check that end state is active
+    ASSERT_EQ(-1, fsm->getCurrentState()); //-- (When FSM is ended, no state is active, hence -1)
+
+}
+
+TEST_F(InitStateTest, InitStateGoesToExitWindowEvent)
+{
+    //-- Create fsm with InitState
+    StateMachineBuilder builder;
+    ASSERT_TRUE(builder.setDirectorType("YARP"));
+
+    int init_state_id = builder.addState(new InitState(networkManager, imageManager, inputManager, mentalMap,
+                                                       robotManager, audioManager, screenManager));
+    int end_state_id = builder.addState(State::getEndState());
+
+    ASSERT_NE(-1, init_state_id);
+    ASSERT_TRUE(builder.addTransition(init_state_id, end_state_id, InitState::LOGIN_SUCCESSFUL));
+    ASSERT_TRUE(builder.addTransition(init_state_id, end_state_id, InitState::EXIT_REQUESTED));
+    ASSERT_TRUE(builder.setInitialState(init_state_id));
+
+    fsm = builder.buildStateMachine();
+    ASSERT_NE((FiniteStateMachine*)NULL, fsm);
+
+    //-- Check things that should happen before fsm starts (before setup):
+    ASSERT_TRUE(mockAudioManager->isStopped());
+    ASSERT_TRUE(mockNetworkManager->isStopped());
+    ASSERT_TRUE(mockImageManager->isStopped());
+    ASSERT_TRUE(mockInputManager->isStopped());
+    ASSERT_FALSE(mockRobotManager->isConnected());
+    ASSERT_FALSE(mockRobotManager->isEnabled());
+
+    //-- Start state machine
+    ASSERT_TRUE(fsm->start());
+
+    //-- Check things that should happen in initial state before exit (loop):
+
+    //yarp::os::Time::delay(1);
+    ASSERT_FALSE(mockAudioManager->isStopped());
+    ASSERT_TRUE(mockAudioManager->isPlaying("RD_THEME"));
+
+    ASSERT_FALSE(mockNetworkManager->isStopped());
+    ASSERT_FALSE(mockNetworkManager->isLoggedIn());
+
+    ASSERT_TRUE(mockImageManager->isStopped());
+    ASSERT_FALSE(mockImageManager->isEnabled());
+
+    ASSERT_FALSE(mockInputManager->isStopped());
+    ASSERT_EQ(1, mockInputManager->getNumListeners());
+
+    ASSERT_FALSE(mockRobotManager->isConnected());
+    ASSERT_FALSE(mockRobotManager->isEnabled());
+
+    //-- When the window is closed, the system should exit the game:
+    mockInputManager->sendWindowEvent(WindowEvent::WINDOW_CLOSE);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has stopped things and it is in the final state (cleanup):
