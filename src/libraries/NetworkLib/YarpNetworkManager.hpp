@@ -32,10 +32,9 @@ namespace rd{
  * along with the data relevant to the event triggered (i.e. data that just arrived).
  *
  */
-class YarpNetworkManager: public NetworkManager,
-                            private yarp::os::RateThread,
-                            public yarp::os::TypedReaderCallback<yarp::os::Bottle>
-
+class YarpNetworkManager : public NetworkManager,
+                           private yarp::os::RateThread,
+                           public yarp::os::TypedReaderCallback<yarp::os::Bottle>
 {
     public:
         //------------------ Creation and configuration --------------------------------------------------------------//
@@ -67,23 +66,23 @@ class YarpNetworkManager: public NetworkManager,
         virtual bool keepAlive();
 
     protected:
-        //! @brief Yarp callback for incoming messages
-        void onRead(yarp::os::Bottle& b);
-
-    private:
         /**
          * @brief Constructor
          *
-         * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getNetworkManager() method.
+         * Constructor for this class is non-public since the singleton can only be instantiated once,
+         * and the instantiation is done at the RegisterManager() method. Declared protected to allow
+         * subclassing.
          */
         YarpNetworkManager();
 
-
-        //! @brief Reference to this manager (unique instance)
-        static YarpNetworkManager * uniqueInstance;
+        //! @brief Yarp callback for incoming messages
+        void onRead(yarp::os::Bottle& b);
 
         void run();
+
+    private:
+        //! @brief Reference to this manager (unique instance)
+        static YarpNetworkManager * uniqueInstance;
 
         //! @brief Period of the keep alive (called by run() )
         static const int KEEPALIVE_RATE_MS;

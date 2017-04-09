@@ -9,7 +9,7 @@ namespace rd{
 /**
  * @ingroup RobotLib
  *
- * @brief A base class for Robot Managers.
+ * @brief Base class for Robot Managers. Original copy of this file at https://github.com/asrob-uc3m/robotDevastation/blob/develop/src/libraries/RobotLib/RobotManager.hpp
  *
  */
 class RobotManager
