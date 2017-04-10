@@ -9,7 +9,7 @@ using namespace rd;
 
 class MockAudioManagerTest : public testing::Test
 {
-	public:
+    public:
         virtual void SetUp()
         {
             SDLAudioManager::RegisterManager();
@@ -31,7 +31,7 @@ class MockAudioManagerTest : public testing::Test
         }
 
 
-	protected:
+    protected:
         AudioManager * audioManager;
         static const std::string sound_bso;
         static const std::string sound_shoot;

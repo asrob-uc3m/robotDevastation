@@ -35,12 +35,12 @@ bool rd::YarpLocalImageManager::start()
     if(! yarp::os::Network::connect( remote_port_name.c_str(), local_port_name.c_str(), "mjpeg" ) )
     {
         RD_WARNING("Could not connect to robot camera via mjpeg.\n");
-		if (!yarp::os::Network::connect(remote_port_name.c_str(), local_port_name.c_str()))
-		{
-		RD_WARNING("Could not connect to robot camera.\n");
-		return false;
-		}
-	}
+        if (!yarp::os::Network::connect(remote_port_name.c_str(), local_port_name.c_str()))
+        {
+            RD_WARNING("Could not connect to robot camera.\n");
+            return false;
+        }
+    }
 
     RD_SUCCESS("Connected to robot camera.\n");
 

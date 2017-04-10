@@ -248,7 +248,7 @@ bool rd::MockRobotManager::connect()
 {
     if (!connected)
     {
-	connected = true;
+        connected = true;
         return true;
     }
     else
@@ -262,7 +262,7 @@ bool rd::MockRobotManager::disconnect()
 {
     if (connected)
     {
-	connected = false;
+        connected = false;
         return true;
     }
     else

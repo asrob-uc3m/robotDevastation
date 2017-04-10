@@ -96,7 +96,7 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
              coords.push_back(coord);
         }
         int qrWidth = fabs(float(coords[2].getX() - coords[1].getX()));
-		int qrHeight = fabs(float(coords[1].getY() - coords[0].getY()));
+        int qrHeight = fabs(float(coords[1].getY() - coords[0].getY()));
         Vector2d qrCenter(coords[0].getX() + (qrWidth / 2), coords[0].getY() + (qrHeight / 2) );
 
         Target target( identifier_int,
