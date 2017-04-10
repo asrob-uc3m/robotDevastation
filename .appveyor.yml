@@ -98,9 +98,10 @@ install:
   # Download and install ZBar
   - cmd: echo Downloading %ZBAR_DOWNLOAD_URL%
   - cmd: appveyor DownloadFile "%ZBAR_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\zbar.exe"
-  - cmd: start "" /WAIT "%DOWNLOADS_PATH%\zbar.exe" /S
+  - cmd: start "" /WAIT "%DOWNLOADS_PATH%\zbar.exe" /S /D=C:\ZBar
   - cmd: timeout 10
-  - cmd: set PATH=%PATH%;%ProgramFiles%\ZBar\bin
+  - cmd: set ZBAR_DIR=C:\ZBar
+  - cmd: set PATH=%PATH%;%ZBAR_DIR%\bin
 
 before_build:
   - cmd: echo Configuring project %APPVEYOR_PROJECT_NAME%

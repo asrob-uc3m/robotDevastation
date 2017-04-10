@@ -27,11 +27,11 @@ ELSE (ZBAR_INCLUDE_DIR AND ZBAR_LIBRARIES)
 		FIND_PATH(ZBAR_LIBRARY_DIR
 							WIN32_DEBUG_POSTFIX d
 							NAMES "bin/libzbar-0.dll"
-              HINTS "C:/Programme/" "C:/Program Files"
+              HINTS "C:/Programme/" "C:/Program Files" "C:/"
 							PATH_SUFFIXES ZBar
               )
-		FIND_LIBRARY(ZBAR_LIBRARIES NAMES libzbar-0.dll HINTS ${ZBAR_LIBRARY_DIR}/bin)
-		FIND_PATH(ZBAR_INCLUDE_DIR NAMES Decoder.h HINTS ${ZBAR_LIBRARY_DIR} PATH_SUFFIXES include/zbar)
+		FIND_LIBRARY(ZBAR_LIBRARIES NAMES libzbar-0.lib HINTS ${ZBAR_LIBRARY_DIR}/lib)
+		FIND_PATH(ZBAR_INCLUDE_DIR NAMES zbar.h HINTS ${ZBAR_LIBRARY_DIR} PATH_SUFFIXES include/zbar)
 	ELSE(WIN32)
     FIND_PACKAGE(PkgConfig)
 #     pkg_check_modules(PC_QCA2 QUIET qca2)
