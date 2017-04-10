@@ -22,29 +22,33 @@ IF (ZBAR_INCLUDE_DIR AND ZBAR_LIBRARIES)
 
 ELSE (ZBAR_INCLUDE_DIR AND ZBAR_LIBRARIES)
 
-
   IF (WIN32)
-		FIND_PATH(ZBAR_LIBRARY_DIR
-							WIN32_DEBUG_POSTFIX d
-							NAMES "bin/libzbar-0.dll"
-              HINTS "C:/Programme/" "C:/Program Files" "C:/"
-							PATH_SUFFIXES ZBar
-              )
-		FIND_LIBRARY(ZBAR_LIBRARIES NAMES libzbar-0.lib HINTS ${ZBAR_LIBRARY_DIR}/lib)
-		FIND_PATH(ZBAR_INCLUDE_DIR NAMES zbar.h HINTS ${ZBAR_LIBRARY_DIR} PATH_SUFFIXES include/zbar)
-	ELSE(WIN32)
+    FIND_PATH(ZBAR_LIBRARY_DIR
+              NAMES bin/libzbar-0.dll
+              HINTS "C:/Program Files" "C:/Program Files (x86)" "C:/"
+              PATH_SUFFIXES ZBar)
+
+    FIND_LIBRARY(ZBAR_LIBRARIES
+                 NAMES libzbar-0.lib
+                 HINTS ${ZBAR_LIBRARY_DIR}/lib)
+
+    FIND_PATH(ZBAR_INCLUDE_DIR
+              NAMES zbar.h
+              HINTS ${ZBAR_LIBRARY_DIR}
+              PATH_SUFFIXES include)
+  ELSE(WIN32)
     FIND_PACKAGE(PkgConfig)
-#     pkg_check_modules(PC_QCA2 QUIET qca2)
+    #pkg_check_modules(PC_QCA2 QUIET qca2)
     pkg_check_modules(PC_ZBAR zbar)
     SET(ZBAR_DEFINITIONS ${PC_ZBAR_CFLAGS_OTHER})
-		FIND_LIBRARY(ZBAR_LIBRARIES
-                  WIN32_DEBUG_POSTFIX d
-                  NAMES zbar
-                  HINTS ${PC_ZBAR_LIBDIR} ${PC_ZBAR_LIBRARY_DIRS}
-                  )
-		FIND_PATH(ZBAR_INCLUDE_DIR Decoder.h
-            	HINTS ${PC_ZBAR_INCLUDEDIR} ${PC_ZBAR_INCLUDE_DIRS}
-            	PATH_SUFFIXES zbar)
+
+    FIND_LIBRARY(ZBAR_LIBRARIES
+                 NAMES zbar
+                 HINTS ${PC_ZBAR_LIBDIR} ${PC_ZBAR_LIBRARY_DIRS})
+
+    FIND_PATH(ZBAR_INCLUDE_DIR Decoder.h
+              HINTS ${PC_ZBAR_INCLUDEDIR} ${PC_ZBAR_INCLUDE_DIRS}
+              PATH_SUFFIXES zbar)
   ENDIF (WIN32)
 
   INCLUDE(FindPackageHandleStandardArgs)
