@@ -7,6 +7,12 @@
 #include <string>  // std::string
 #include <string.h>  // strrchr
 
+//-- Fix for old Windows versions.
+//-- Thanks: tomlogic @ http://stackoverflow.com/questions/2281970/cross-platform-defining-define-for-macros-function-and-func
+#if defined(WIN32) && !defined(__func__)
+#define __func__ __FUNCTION__
+#endif
+
 //-- Thanks http://stackoverflow.com/questions/8487986/file-macro-shows-full-path
 #ifdef WIN32
 #define __REL_FILE__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
