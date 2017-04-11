@@ -14,6 +14,10 @@ configuration:
 
 #environment:
 
+cache:
+  - C:\ACE -> .appveyor.yml
+  - C:\SDL2 -> .appveyor.yml
+
 init:
   # System related variables
   - cmd: set CMAKE_GENERATOR=Visual Studio 12 2013
@@ -58,14 +62,22 @@ install:
   - cmd: md %DOWNLOADS_PATH%
   - cmd: md %REPOS_PATH%
 
-  # Download and build ACE
-  - cmd: echo Downloading %ACE_DOWNLOAD_URL%
-  - cmd: appveyor DownloadFile "%ACE_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\ace.zip"
-  - cmd: 7z x -y -o"%DOWNLOADS_PATH%" "%DOWNLOADS_PATH%\ace.zip"
-  - cmd: set ACE_ROOT=%DOWNLOADS_PATH%\ACE_wrappers
-  - cmd: >
-         echo #include "ace/config-win32.h" > %ACE_ROOT%\ace\config.h
-  - cmd: msbuild "%ACE_ROOT%\ACE_wrappers_vc12.sln" /m /v:m
+  # Download and build ACE (if not in cache)
+  - ps: >-
+        if (Test-Path -Path "C:\ACE") {
+            Write-Host "ACE found in cache"
+        } else {
+            Write-Host "ACE not in cache, running download and build step..."
+            Write-Host "Downloading $env:ACE_DOWNLOAD_URL"
+            Start-FileDownload "$env:ACE_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\ace.zip"
+            7z x -y -o"$env:DOWNLOADS_PATH" "$env:DOWNLOADS_PATH\ace.zip"
+            Add-Content "$env:DOWNLOADS_PATH\ACE_wrappers\ace\config.h" "#include `"ace/config-win32.h`""
+            msbuild "$env:DOWNLOADS_PATH\ACE_wrappers\ACE_wrappers_vc12.sln" /m /v:m
+            Write-Host "Copying selected contents of $env:DOWNLOADS_PATH\ACE_wrappers to C:\ACE"
+            robocopy "$env:DOWNLOADS_PATH\ACE_wrappers\ace" C:\ACE\ace /e /xd "$env:DOWNLOADS_PATH\ACE_wrappers\ace\$env:CONFIGURATION" /ns /ns /nfl /ndl /njh
+            xcopy "$env:DOWNLOADS_PATH\ACE_wrappers\lib" C:\ACE\lib /e /i /y /q
+        }
+  - cmd: set ACE_ROOT=C:\ACE
   - cmd: set PATH=%PATH%;%ACE_ROOT%\lib
 
   # Clone and build YARP
@@ -76,21 +88,26 @@ install:
   - cmd: set YARP_ROOT=%REPOS_PATH%\yarp\build
   - cmd: set PATH=%PATH%;%YARP_ROOT%\bin
 
-  # Download SDL2 libraries
-  - cmd: echo Downloading %SDL2_DOWNLOAD_URL%
-  - cmd: appveyor DownloadFile "%SDL2_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\sdl2.zip"
-
-  - cmd: echo Downloading %SDL2_IMAGE_DOWNLOAD_URL%
-  - cmd: appveyor DownloadFile "%SDL2_IMAGE_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\sdl2_image.zip"
-
-  - cmd: echo Downloading %SDL2_TTF_DOWNLOAD_URL%
-  - cmd: appveyor DownloadFile "%SDL2_TTF_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\sdl2_ttf.zip"
-
-  - cmd: echo Downloading %SDL2_MIXER_DOWNLOAD_URL%
-  - cmd: appveyor DownloadFile "%SDL2_MIXER_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\sdl2_mixer.zip"
-
-  - cmd: 7z x -y -o"%DOWNLOADS_PATH%\SDL2_temp" "%DOWNLOADS_PATH%\sdl2*.zip"
-  - cmd: for /D %%i in ("%DOWNLOADS_PATH%\SDL2_temp\*") do xcopy "%%i" C:\SDL2 /e /i /y /q
+  # Download and extract SDL2 libraries (if not in cache)
+  - ps: >-
+        if (Test-Path -Path "C:\SDL2") {
+            Write-Host "SDL2 found in cache"
+        } else {
+            Write-Host "SDL2 not in cache, running download and extract step..."
+            Write-Host "Downloading $env:SDL2_DOWNLOAD_URL"
+            Start-FileDownload "$env:SDL2_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\sdl2.zip"
+            Write-Host "Downloading $env:SDL2_IMAGE_DOWNLOAD_URL"
+            Start-FileDownload "$env:SDL2_IMAGE_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\sdl2_image.zip"
+            Write-Host "Downloading $env:SDL2_TTF_DOWNLOAD_URL"
+            Start-FileDownload "$env:SDL2_TTF_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\sdl2_ttf.zip"
+            Write-Host "Downloading $env:SDL2_MIXER_DOWNLOAD_URL"
+            Start-FileDownload "$env:SDL2_MIXER_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\sdl2_mixer.zip"
+            7z x -y -o"$env:DOWNLOADS_PATH\SDL2_temp" "$env:DOWNLOADS_PATH\sdl2*.zip"
+            Write-Host "Copying contents of $env:DOWNLOADS_PATH\SDL2_temp to C:\SDL2"
+            Get-ChildItem -Directory "$env:DOWNLOADS_PATH\SDL2_temp" | ?{ $_.PSIsContainer } | ForEach-Object {
+                xcopy $_.FullName C:\SDL2 /e /i /y /q
+            }
+        }
 
   - cmd: set SDL2DIR=C:\SDL2
   - cmd: set PATH=%PATH%;%SDL2DIR%\lib\%SYSTEM_ARCH%
