@@ -65,7 +65,7 @@ install:
   - cmd: set ACE_ROOT=%DOWNLOADS_PATH%\ACE_wrappers
   - cmd: >
          echo #include "ace/config-win32.h" > %ACE_ROOT%\ace\config.h
-  - cmd: msbuild "%ACE_ROOT%\ACE_wrappers_vc12.sln" /m /v:m /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+  - cmd: msbuild "%ACE_ROOT%\ACE_wrappers_vc12.sln" /m /v:m
   - cmd: set PATH=%PATH%;%ACE_ROOT%\lib
 
   # Clone and build YARP
