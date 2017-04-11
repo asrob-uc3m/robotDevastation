@@ -21,25 +21,25 @@ IF (ZBAR_INCLUDE_DIR AND ZBAR_LIBRARIES)
   SET(ZBAR_FOUND TRUE)
 
 ELSE (ZBAR_INCLUDE_DIR AND ZBAR_LIBRARIES)
-message(STATUS "Entering if")
+
   IF (WIN32)
-    message(STATUS "WIN32")
+
     FIND_PATH(ZBAR_LIBRARY_DIR
               NAMES bin/libzbar-0.dll
               HINTS "C:/Program Files" "C:/Program Files (x86)" "C:/"
               PATH_SUFFIXES ZBar)
-    message(STATUS "ZBAR_LIBRARY_DIR=${ZBAR_LIBRARY_DIR}")
+
     FIND_LIBRARY(ZBAR_LIBRARIES
                  NAMES zbar-0 libzbar-0
                  HINTS ${ZBAR_LIBRARY_DIR}/lib)
-    message(STATUS "ZBAR_LIBRARIES=${ZBAR_LIBRARIES}")
+
     FIND_PATH(ZBAR_INCLUDE_DIR
               NAMES zbar.h
               HINTS ${ZBAR_LIBRARY_DIR}
               PATH_SUFFIXES include)
-    message(STATUS "ZBAR_INCLUDE_DIR=${ZBAR_INCLUDE_DIR}")
+
   ELSE(WIN32)
-    message(STATUS "Not WIN32")
+
     FIND_PACKAGE(PkgConfig)
     #pkg_check_modules(PC_QCA2 QUIET qca2)
     pkg_check_modules(PC_ZBAR zbar)
@@ -52,6 +52,7 @@ message(STATUS "Entering if")
     FIND_PATH(ZBAR_INCLUDE_DIR Decoder.h
               HINTS ${PC_ZBAR_INCLUDEDIR} ${PC_ZBAR_INCLUDE_DIRS}
               PATH_SUFFIXES zbar)
+
   ENDIF (WIN32)
 
   INCLUDE(FindPackageHandleStandardArgs)
