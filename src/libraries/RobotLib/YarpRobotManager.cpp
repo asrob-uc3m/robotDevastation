@@ -4,8 +4,9 @@
 
 namespace rd
 {
-YarpRobotManager::YarpRobotManager(const std::string& robotName): RobotManager(robotName)
+YarpRobotManager::YarpRobotManager(const std::string& robotName)
 {
+    this->robotName = robotName;
     connected = false;
     enabled = false;
 }

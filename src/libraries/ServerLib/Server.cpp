@@ -4,6 +4,11 @@
 
 bool rd::Server::configure(yarp::os::ResourceFinder &rf)
 {
+    if (rf.check("quiet"))
+    {
+        RD_INFO("stdout feedback disabled\n");
+        quiet = true;
+    }
     rdRpcResponder.setPlayers(&players, &players_belief, &players_mutex);
     rdBroadcast.open("/rdServer/info:o");
     rpcServer.open("/rdServer/rpc:s");
@@ -27,22 +32,22 @@ bool rd::Server::updateModule()
     players_mutex.lock();
     yarp::os::Bottle msgBroadcast;
     msgBroadcast.addVocab(VOCAB_RD_PLAYERS);
-    printf("=======rdServer=======\n");
-    printf("Number of players: %zd\n",players.size());
+    quiet || printf("=======rdServer=======\n");
+    quiet || printf("Number of players: %zd\n",players.size());
 
     typedef std::map<int, Player>::iterator it_type;
     for(it_type iterator = players.begin(); iterator != players.end(); iterator++)
     {
-       printf("----------------------\n%s\n", (iterator->second).str().c_str());
-       printf("Belief: %d\n", players_belief[iterator->first]);
-       yarp::os::Bottle msgPlayer;
-       msgPlayer.addInt( (iterator->second).getId() );
-       msgPlayer.addString( (iterator->second).getName().c_str() );
-       msgPlayer.addInt( (iterator->second).getHealth() );
-       msgPlayer.addInt( (iterator->second).getMaxHealth() );
-       msgPlayer.addInt( (iterator->second).getTeamId() );
-       msgPlayer.addInt( (iterator->second).getScore() );
-       msgBroadcast.addList() = msgPlayer;
+        quiet || printf("----------------------\n%s\n", (iterator->second).str().c_str());
+        quiet || printf("Belief: %d\n", players_belief[iterator->first]);
+        yarp::os::Bottle msgPlayer;
+        msgPlayer.addInt( (iterator->second).getId() );
+        msgPlayer.addString( (iterator->second).getName().c_str() );
+        msgPlayer.addInt( (iterator->second).getHealth() );
+        msgPlayer.addInt( (iterator->second).getMaxHealth() );
+        msgPlayer.addInt( (iterator->second).getTeamId() );
+        msgPlayer.addInt( (iterator->second).getScore() );
+        msgBroadcast.addList() = msgPlayer;
     }
 
     //printf("======================\n");

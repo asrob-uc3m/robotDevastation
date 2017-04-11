@@ -116,3 +116,10 @@ TEST_F(ProcessorImageEventListenerTest, BadQRsAreIgnored)
     std::vector<Target> targets_detected = ProcessorImageEventListenerTest::mentalMap->getTargets();
     ASSERT_EQ(0, targets_detected.size());
 }
+
+//--- Main -------------------------------------------------------------------------------------------
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}

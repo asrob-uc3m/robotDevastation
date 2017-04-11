@@ -240,3 +240,10 @@ TEST_F(MockInputManagerTest, WindowEventSentAndReceivedCorrectly)
     ASSERT_TRUE(inputManager->stop());
     ASSERT_TRUE(inputManager->isStopped());
 }
+
+//--- Main -------------------------------------------------------------------------------------------
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
