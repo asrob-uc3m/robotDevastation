@@ -124,3 +124,10 @@ TEST_F( MockAudioManagerTest, AudioManagerPlaysAllSounds )
     EXPECT_FALSE(mockManager->isPlaying("explosion"));
     EXPECT_TRUE(audioManager->stop());
 }
+
+//--- Main -------------------------------------------------------------------------------------------
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
