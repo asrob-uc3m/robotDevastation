@@ -73,8 +73,9 @@ install:
             7z x -y -o"$env:DOWNLOADS_PATH" "$env:DOWNLOADS_PATH\ace.zip"
             Add-Content "$env:DOWNLOADS_PATH\ACE_wrappers\ace\config.h" "#include `"ace/config-win32.h`""
             msbuild "$env:DOWNLOADS_PATH\ACE_wrappers\ACE_wrappers_vc12.sln" /m /v:m /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-            Write-Host "Copying contents of $env:DOWNLOADS_PATH\ACE_wrappers to C:\ACE"
-            xcopy /E /I /Y /Q "$env:DOWNLOADS_PATH\ACE_wrappers" C:\ACE
+            Write-Host "Copying selected contents of $env:DOWNLOADS_PATH\ACE_wrappers to C:\ACE"
+            xcopy /E /I /Y /Q "$env:DOWNLOADS_PATH\ACE_wrappers\ace" C:\ACE\ace
+            xcopy /E /I /Y /Q "$env:DOWNLOADS_PATH\ACE_wrappers\lib" C:\ACE\lib
         }
   - cmd: set ACE_ROOT=C:\ACE
   - cmd: set PATH=%PATH%;%ACE_ROOT%\lib
