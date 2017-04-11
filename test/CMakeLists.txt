@@ -1,5 +1,5 @@
 # Testing things #########################################################################################
-set(gtest_force_shared_crt ON) # needed for Windows
+set(gtest_force_shared_crt ON CACHE INTERNAL "") # needed for Windows
 add_subdirectory(gtest-1.7.0)
 enable_testing()
 
