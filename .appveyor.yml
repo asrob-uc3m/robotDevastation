@@ -15,8 +15,8 @@ configuration:
 #environment:
 
 cache:
-  - C:\ACE -> appveyor.yml
-  - C:\SDL2 -> appveyor.yml
+  - C:\ACE -> .appveyor.yml
+  - C:\SDL2 -> .appveyor.yml
 
 init:
   # System related variables
