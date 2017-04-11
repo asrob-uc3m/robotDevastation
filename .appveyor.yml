@@ -76,6 +76,7 @@ install:
             Write-Host "Copying selected contents of $env:DOWNLOADS_PATH\ACE_wrappers to C:\ACE"
             xcopy /E /I /Y /Q "$env:DOWNLOADS_PATH\ACE_wrappers\ace" C:\ACE\ace
             xcopy /E /I /Y /Q "$env:DOWNLOADS_PATH\ACE_wrappers\lib" C:\ACE\lib
+            rmdir "C:\ACE\ace\%CONFIGURATION%" /S /Q
         }
   - cmd: set ACE_ROOT=C:\ACE
   - cmd: set PATH=%PATH%;%ACE_ROOT%\lib
