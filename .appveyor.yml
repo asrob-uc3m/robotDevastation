@@ -112,6 +112,9 @@ build:
   parallel: false
   verbosity: minimal
 
+after_build:
+  - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target INSTALL -- /v:m
+
 test_script:
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testDeadState.exe"'
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testFSMBuilder.exe"'
