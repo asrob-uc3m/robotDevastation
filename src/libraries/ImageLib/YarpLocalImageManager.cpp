@@ -129,8 +129,12 @@ void rd::YarpLocalImageManager::onRead(Image &image)
 
     //-- Notify listeners
     if (enabled)
-        for (int i = 0; i < listeners.size(); i++)
-            listeners[i]->onImageArrived(this);
+    {
+        for (std::vector<ImageEventListener *>::iterator it = listeners.begin(); it != listeners.end(); ++it)
+        {
+            (*it)->onImageArrived(this);
+        }
+    }
     else
     {
         RD_WARNING("YarpImageManager is disabled!\n");

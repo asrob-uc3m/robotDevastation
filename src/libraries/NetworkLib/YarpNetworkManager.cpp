@@ -112,9 +112,8 @@ void rd::YarpNetworkManager::onRead(yarp::os::Bottle &b)
     if ((b.get(0).asString() == "players")||(b.get(0).asVocab() == VOCAB_RD_PLAYERS)) {  // players //
         //RD_INFO("Number of players: %d\n",b.size()-1);  // -1 because of vocab.
         std::vector< Player > players;
-        for(size_t i=1;i<b.size();i++)
+        for (int i = 1; i < b.size(); i++)
         {
-
             Player rdPlayer(b.get(i).asList()->get(0).asInt(),
                               b.get(i).asList()->get(1).asString().c_str(),
                               b.get(i).asList()->get(2).asInt(),
@@ -122,12 +121,14 @@ void rd::YarpNetworkManager::onRead(yarp::os::Bottle &b)
                               b.get(i).asList()->get(4).asInt(),
                               b.get(i).asList()->get(5).asInt()
                               );
-             players.push_back(rdPlayer);
+            players.push_back(rdPlayer);
         }
 
         //-- Notify listeners
-        for(int i = 0; i < listeners.size(); i++)
-            listeners[i]->onDataArrived(players);
+        for (std::vector<NetworkEventListener *>::iterator it = listeners.begin(); it != listeners.end(); ++it)
+        {
+            (*it)->onDataArrived(players);
+        }
     }
     else
     {
