@@ -44,19 +44,19 @@ class MockState : public State, public yarp::os::PortReader, public yarp::os::Rp
         virtual bool read(yarp::os::ConnectionReader & connection);
 
         //! @brief Indicates that the State has been initialized
-        static const unsigned int STATE_INITIAL;
+        static const int STATE_INITIAL;
 
         //! @brief Indicates that the State has called setup()
-        static const unsigned int STATE_SETUP;
+        static const int STATE_SETUP;
 
         //! @brief Indicates that the State has called loop()
-        static const unsigned int STATE_LOOP;
+        static const int STATE_LOOP;
 
         //! @brief Indicates that the State has called cleanup()
-        static const unsigned int STATE_CLEANUP;
+        static const int STATE_CLEANUP;
 
         //! @brief Request identifier for RPC communication
-        static const unsigned int REQUEST_STATE;
+        static const int REQUEST_STATE;
 
     private:
         int id;

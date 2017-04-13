@@ -47,9 +47,9 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
 
     //-- Convert from YARP rgb to zbar b/w.
 
-    for( unsigned y = 0; y < cameraHeight; y++ )
+    for( int y = 0; y < cameraHeight; y++ )
     {
-        for( unsigned x = 0; x < cameraWidth; x++ )
+        for( int x = 0; x < cameraWidth; x++ )
         {
             //Convert to Y800
             int data = received_image.pixel(x,y).r + received_image.pixel(x,y).g + received_image.pixel(x,y).b;
