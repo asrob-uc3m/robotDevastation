@@ -12,7 +12,8 @@ configuration:
   - Release
 #  - Debug
 
-#environment:
+environment:
+  SDL_AUDIODRIVER: dummy
 
 init:
   # System related variables
