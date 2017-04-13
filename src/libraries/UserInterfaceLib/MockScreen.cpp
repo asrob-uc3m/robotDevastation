@@ -1,8 +1,9 @@
+#include "MockScreen.hpp"
+
 #include <SDL_image.h>
 
 #include <yarp/os/ResourceFinder.h>
 
-#include "MockScreen.hpp"
 #include "Macros.hpp"
 
 //-- Public

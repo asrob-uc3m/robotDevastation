@@ -1,6 +1,6 @@
-#include <sstream>
-
 #include "Player.hpp"
+
+#include <sstream>
 
 rd::Player::Player()
 {

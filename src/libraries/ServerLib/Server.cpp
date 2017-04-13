@@ -1,10 +1,11 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
+#include "Server.hpp"
+
 #include <stdio.h>
 
 #include <yarp/os/Bottle.h>
 
-#include "Server.hpp"
 #include "Macros.hpp"
 #include "Vocabs.hpp"
 

@@ -1,6 +1,7 @@
+#include "MentalMap.hpp"
+
 #include <map>
 
-#include "MentalMap.hpp"
 #include "SDLAudioManager.hpp"
 #include "Macros.hpp"
 

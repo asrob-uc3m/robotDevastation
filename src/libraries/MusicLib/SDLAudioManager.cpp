@@ -1,6 +1,7 @@
+#include "SDLAudioManager.hpp"
+
 #include <SDL.h>
 
-#include "SDLAudioManager.hpp"
 #include "Macros.hpp"
 
 //-- This is very important:

@@ -1,9 +1,10 @@
+#include "MockState.hpp"
+
 #include <sstream>
 
 #include <yarp/os/Bottle.h>
 #include <yarp/os/ConnectionWriter.h>
 
-#include "MockState.hpp"
 #include "Macros.hpp"
 
 const int rd::MockState::STATE_INITIAL = 0;

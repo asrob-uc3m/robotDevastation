@@ -1,7 +1,8 @@
+#include "YarpImageManager.hpp"
+
 #include <yarp/os/Time.h>
 #include <yarp/os/Network.h>
 
-#include "YarpImageManager.hpp"
 #include "Macros.hpp"
 
 //-- Initialize static members

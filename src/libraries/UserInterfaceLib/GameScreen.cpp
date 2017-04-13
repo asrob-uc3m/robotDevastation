@@ -1,8 +1,9 @@
+#include "GameScreen.hpp"
+
 #include <sstream>
 
 #include <yarp/os/ResourceFinder.h>
 
-#include "GameScreen.hpp"
 #include "SDLUtils.hpp"
 #include "Macros.hpp"
 

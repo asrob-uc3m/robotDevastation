@@ -1,9 +1,10 @@
-#include <sstream>
+#include "YarpNetworkManager.hpp"
+
 #include <string.h> // strcmp()
+#include <sstream>
 
 #include <yarp/os/Network.h>
 
-#include "YarpNetworkManager.hpp"
 #include "Macros.hpp"
 #include "Vocabs.hpp"
 

@@ -4,8 +4,8 @@
 #define __RD_MACROS_HPP__
 
 #include <stdio.h>
-#include <string>  // std::string
 #include <string.h>  // strrchr
+#include <string>  // std::string
 
 //-- Thanks http://stackoverflow.com/questions/8487986/file-macro-shows-full-path
 #ifdef WIN32

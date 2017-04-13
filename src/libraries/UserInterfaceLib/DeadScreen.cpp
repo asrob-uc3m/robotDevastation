@@ -1,8 +1,9 @@
+#include "DeadScreen.hpp"
+
 #include <SDL_image.h>
 
 #include <yarp/os/ResourceFinder.h>
 
-#include "DeadScreen.hpp"
 #include "SDLUtils.hpp"
 #include "Macros.hpp"
 
