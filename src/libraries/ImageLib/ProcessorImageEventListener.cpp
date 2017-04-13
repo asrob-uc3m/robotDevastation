@@ -1,6 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#include <math.h>  //-- Just for fabs to make it a bit failproof.
+#include <stdlib.h> //-- malloc(), free(), abs(), strtol()
+#include <ctype.h>  //-- isdigit()
 #include <stddef.h> //-- Just for NULL
 #include <vector>
 #include <sstream>
@@ -95,8 +96,8 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
              //RD_DEBUG("%d: %d %d\n",i,coord.x,coord.y);
              coords.push_back(coord);
         }
-        int qrWidth = fabs(float(coords[2].getX() - coords[1].getX()));
-        int qrHeight = fabs(float(coords[1].getY() - coords[0].getY()));
+        int qrWidth = abs(coords[2].getX() - coords[1].getX());
+        int qrHeight = abs(coords[1].getY() - coords[0].getY());
         Vector2d qrCenter(coords[0].getX() + (qrWidth / 2), coords[0].getY() + (qrHeight / 2) );
 
         Target target( identifier_int,
