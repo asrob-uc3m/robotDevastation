@@ -45,7 +45,7 @@ bool rd::Weapon::reload()
     return true;
 }
 
-std::string rd::Weapon::getName() const
+const std::string & rd::Weapon::getName() const
 {
     return name;
 }

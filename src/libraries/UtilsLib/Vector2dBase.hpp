@@ -32,12 +32,12 @@ class Vector2dBase {
             return *this;
         }
 
-        T getX() const
+        const T & getX() const
         {
             return x;
         }
 
-        T getY() const
+        const T & getY() const
         {
             return y;
         }

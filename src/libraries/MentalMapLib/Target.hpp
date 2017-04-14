@@ -23,10 +23,10 @@ public:
     int getPlayerId() const;
     void setPlayerId(int id);
 
-    Vector2d getPos() const;
+    const Vector2d & getPos() const;
     void setPos(const Vector2d &pos);
 
-    Vector2d getDimensions() const;
+    const Vector2d & getDimensions() const;
     void setDimensions(const Vector2d &dimensions);
 
     int getBelief() const;

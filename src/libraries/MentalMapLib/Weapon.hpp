@@ -30,8 +30,7 @@ public:
     //! @brief Increases the current ammo to max_ammo
     bool reload();
 
-
-    std::string getName() const;
+    const std::string & getName() const;
     int getDamage() const;
     int getCurrentAmmo() const;
     bool setCurrentAmmo(int current_ammo);

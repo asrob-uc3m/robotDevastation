@@ -33,7 +33,7 @@ void rd::Player::setId(int value)
     id = value;
 }
 
-std::string rd::Player::getName() const
+const std::string & rd::Player::getName() const
 {
     return name;
 }

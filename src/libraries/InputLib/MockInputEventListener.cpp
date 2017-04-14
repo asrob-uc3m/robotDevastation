@@ -59,17 +59,17 @@ bool rd::MockInputEventListener::clear()
     return true;
 }
 
-std::vector<rd::Key> rd::MockInputEventListener::getStoredKeyUpPresses() const
+const std::vector<rd::Key>& rd::MockInputEventListener::getStoredKeyUpPresses() const
 {
     return stored_keyup_presses;
 }
 
-std::vector<rd::Key> rd::MockInputEventListener::getStoredKeyDownPresses() const
+const std::vector<rd::Key>& rd::MockInputEventListener::getStoredKeyDownPresses() const
 {
     return stored_keydown_presses;
 }
 
-std::vector<rd::WindowEvent> rd::MockInputEventListener::getStoredWindowEvents() const
+const std::vector<rd::WindowEvent>& rd::MockInputEventListener::getStoredWindowEvents() const
 {
     return stored_window_events;
 }

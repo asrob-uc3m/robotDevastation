@@ -48,7 +48,7 @@ class State
 
 
         //! @brief Returns the string that identifies the state
-        std::string getStateId() const;
+        const std::string & getStateId() const;
 
         static State *getEndState();
 

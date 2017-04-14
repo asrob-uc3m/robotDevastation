@@ -11,7 +11,7 @@ rd::State::~State()
 
 }
 
-std::string rd::State::getStateId() const
+const std::string & rd::State::getStateId() const
 {
     return state_id;
 }

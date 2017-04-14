@@ -31,9 +31,9 @@ class MockInputEventListener : public InputEventListener
 
         bool clear();
 
-        std::vector<Key> getStoredKeyUpPresses() const;
-        std::vector<Key> getStoredKeyDownPresses() const;
-        std::vector<WindowEvent> getStoredWindowEvents() const;
+        const std::vector<Key>& getStoredKeyUpPresses() const;
+        const std::vector<Key>& getStoredKeyDownPresses() const;
+        const std::vector<WindowEvent>& getStoredWindowEvents() const;
 
     private:
         int num_keydown_presses;

@@ -26,7 +26,7 @@ void rd::Target::setPlayerId(int id)
     player_id = id;
 }
 
-rd::Vector2d rd::Target::getPos() const
+const rd::Vector2d & rd::Target::getPos() const
 {
     return pos;
 }
@@ -36,7 +36,7 @@ void rd::Target::setPos(const Vector2d &pos)
     this->pos = pos;
 }
 
-rd::Vector2d rd::Target::getDimensions() const
+const rd::Vector2d & rd::Target::getDimensions() const
 {
     return dimensions;
 }
