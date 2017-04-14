@@ -33,7 +33,7 @@ public:
     void setHealth(int value);
 
     //! @brief Reduces this player's health by an amount specified by the weapon used
-    bool getDamageFromWeapon(Weapon& weapon);
+    bool getDamageFromWeapon(const Weapon& weapon);
 
     int getMaxHealth() const;
     void setMaxHealth(int value);

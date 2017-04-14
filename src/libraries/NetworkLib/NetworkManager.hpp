@@ -79,14 +79,14 @@ class NetworkManager: public MentalMapEventListener
         bool removeNetworkEventListeners();
 
         //! @brief Configures a parameter with a value
-        virtual bool configure(const std::string & parameter, Player value);
+        virtual bool configure(const std::string & parameter, const Player & value);
 
 
 
         //-- Network API
         //--------------------------------------------------------------------------------------------
         //! @brief Communicate to the network that a player has been hit by the user
-        virtual bool sendPlayerHit(Player player, int damage) = 0;
+        virtual bool sendPlayerHit(const Player & player, int damage) = 0;
 
         //! @brief Log the user into the network
         virtual bool login() = 0;
@@ -100,10 +100,10 @@ class NetworkManager: public MentalMapEventListener
         //-- MentalMap listener API
         //-------------------------------------------------------------------------------------------
         //! @brief Implementation of MentalMapEventListener interface
-        bool onTargetHit(Target target, Player player, Weapon weapon);
+        bool onTargetHit(const Target & target, const Player & player, const Weapon & weapon);
 
         //! @brief Implementation of MentalMapEventListener interface
-        bool onRespawn(Player player);
+        bool onRespawn(const Player & player);
 
 
 protected:

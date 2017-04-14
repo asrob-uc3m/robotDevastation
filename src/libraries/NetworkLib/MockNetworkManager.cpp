@@ -36,7 +36,7 @@ bool rd::MockNetworkManager::stop()
     return true;
 }
 
-bool rd::MockNetworkManager::configure(const std::string & parameter, Player value)
+bool rd::MockNetworkManager::configure(const std::string & parameter, const Player & value)
 {
     if (parameter.compare("player") == 0)
     {
@@ -47,7 +47,7 @@ bool rd::MockNetworkManager::configure(const std::string & parameter, Player val
     return NetworkManager::configure(parameter, value);
 }
 
-bool rd::MockNetworkManager::sendPlayerHit(Player player, int damage)
+bool rd::MockNetworkManager::sendPlayerHit(const Player & player, int damage)
 {
     int id = player.getId();
 

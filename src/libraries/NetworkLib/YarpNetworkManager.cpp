@@ -165,7 +165,7 @@ bool rd::YarpNetworkManager::isStopped() const
     return !started;
 }
 
-bool rd::YarpNetworkManager::configure(const std::string & parameter, Player value)
+bool rd::YarpNetworkManager::configure(const std::string & parameter, const Player & value)
 {
     if (parameter.compare("player") == 0)
     {
@@ -176,7 +176,7 @@ bool rd::YarpNetworkManager::configure(const std::string & parameter, Player val
     return NetworkManager::configure(parameter, value);
 }
 
-bool rd::YarpNetworkManager::sendPlayerHit(Player player, int damage)
+bool rd::YarpNetworkManager::sendPlayerHit(const Player & player, int damage)
 {
     if (!started)
     {

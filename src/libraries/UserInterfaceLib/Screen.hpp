@@ -24,11 +24,11 @@ class Screen
         virtual bool cleanup() = 0;
         virtual bool drawScreen(void *screen) = 0;
         virtual bool update(const std::string & parameter, const std::string & value);
-        virtual bool update(const std::string & parameter, Image value); //-- Required by GameScreen and DeadScreen
-        virtual bool update(const std::string & parameter, Player value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const Image & value); //-- Required by GameScreen and DeadScreen
+        virtual bool update(const std::string & parameter, const Player & value); //-- Required by GameScreen
         virtual bool update(const std::string & parameter, const std::vector<Player> & value); //-- Required by GameScreen
         virtual bool update(const std::string & parameter, const std::vector<Target> & value); //-- Required by GameScreen
-        virtual bool update(const std::string & parameter, Weapon value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const Weapon & value); //-- Required by GameScreen
         virtual int getHeight() const;
         virtual int getWidth() const;
         virtual ~Screen() {}

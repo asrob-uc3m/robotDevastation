@@ -51,7 +51,7 @@ class MockImageManager : public ImageManager
         static const std::string id;
 
         //! @brief Simulate image has been received from device
-        bool receiveImage(Image received_image);
+        bool receiveImage(const Image & received_image);
 
     private:
         /**

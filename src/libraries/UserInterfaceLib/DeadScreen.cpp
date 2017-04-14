@@ -128,7 +128,7 @@ bool rd::DeadScreen::update(const std::string & parameter, const std::string & v
     return false;
 }
 
-bool rd::DeadScreen::update(const std::string & parameter, Image value)
+bool rd::DeadScreen::update(const std::string & parameter, const Image & value)
 {
     if (value.width() == 0 || value.height() == 0)
     {

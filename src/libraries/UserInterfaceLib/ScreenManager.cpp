@@ -100,12 +100,12 @@ bool rd::ScreenManager::update(const std::string & parameter, const std::string 
     return screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(const std::string & parameter, Image value)
+bool rd::ScreenManager::update(const std::string & parameter, const Image & value)
 {
     return screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(const std::string & parameter, Player value)
+bool rd::ScreenManager::update(const std::string & parameter, const Player & value)
 {
     return screen->update(parameter, value);
 }
@@ -120,7 +120,7 @@ bool rd::ScreenManager::update(const std::string & parameter, const std::vector<
     return screen->update(parameter, value);
 }
 
-bool rd::ScreenManager::update(const std::string & parameter, Weapon value)
+bool rd::ScreenManager::update(const std::string & parameter, const Weapon & value)
 {
     return screen->update(parameter, value);
 }

@@ -52,11 +52,11 @@ class MockNetworkManager : public NetworkManager
         virtual bool stop();
 
         //! @brief Configures a parameter with a value
-        virtual bool configure(const std::string & parameter, Player value);
+        virtual bool configure(const std::string & parameter, const Player & value);
 
         //-- Server API
         //--------------------------------------------------------------------------------------------
-        virtual bool sendPlayerHit(Player player, int damage);
+        virtual bool sendPlayerHit(const Player & player, int damage);
         virtual bool login();
         virtual bool logout();
         virtual bool keepAlive();

@@ -83,10 +83,10 @@ class ScreenManager
         virtual bool update(const std::string & parameter, const std::string & value);
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(const std::string & parameter, Image value); //-- Required by GameScreen and DeadScreen
+        virtual bool update(const std::string & parameter, const Image & value); //-- Required by GameScreen and DeadScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(const std::string & parameter, Player value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const Player & value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
         virtual bool update(const std::string & parameter, const std::vector<Player> & value); //-- Required by GameScreen
@@ -95,7 +95,7 @@ class ScreenManager
         virtual bool update(const std::string & parameter, const std::vector<Target> & value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(const std::string & parameter, Weapon value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const Weapon & value); //-- Required by GameScreen
 
     protected:
         /**

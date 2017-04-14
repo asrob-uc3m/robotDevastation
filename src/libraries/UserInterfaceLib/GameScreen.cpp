@@ -136,7 +136,7 @@ bool rd::GameScreen::update(const std::string & parameter, const std::string & v
     return false;
 }
 
-bool rd::GameScreen::update(const std::string & parameter, Player value)
+bool rd::GameScreen::update(const std::string & parameter, const Player & value)
 {
     if (parameter == PARAM_MYSELF)
     {
@@ -175,7 +175,7 @@ bool rd::GameScreen::update(const std::string & parameter, const std::vector<Tar
     return false;
 }
 
-bool rd::GameScreen::update(const std::string & parameter, Weapon value)
+bool rd::GameScreen::update(const std::string & parameter, const Weapon & value)
 {
     if (parameter == PARAM_WEAPON)
     {
@@ -188,7 +188,7 @@ bool rd::GameScreen::update(const std::string & parameter, Weapon value)
     return false;
 }
 
-bool rd::GameScreen::update(const std::string & parameter, Image value)
+bool rd::GameScreen::update(const std::string & parameter, const Image & value)
 {    if (value.width() == 0 || value.height() == 0)
     {
         RD_ERROR("Invalid image");
@@ -220,7 +220,7 @@ bool rd::GameScreen::update(const std::string & parameter, Image value)
      return false;
 }
 
-bool rd::GameScreen::drawUserUI(SDL_Surface *screen, Player user, Weapon weapon)
+bool rd::GameScreen::drawUserUI(SDL_Surface *screen, const Player & user, const Weapon & weapon)
 {
     //-- User health bar:
     //--------------------------------------------------------------------------------------------
@@ -269,7 +269,7 @@ bool rd::GameScreen::drawUserUI(SDL_Surface *screen, Player user, Weapon weapon)
     return true;
 }
 
-bool rd::GameScreen::drawPlayerUI(SDL_Surface *screen, Player player, int x, int y)
+bool rd::GameScreen::drawPlayerUI(SDL_Surface *screen, const Player & player, int x, int y)
 {
     //-- Player interface:
     SDL_Surface * text_surface = TTF_RenderText_Solid(player_font, player.getName().c_str(), greencolor );
@@ -290,7 +290,7 @@ bool rd::GameScreen::drawPlayerUI(SDL_Surface *screen, Player player, int x, int
     return true;
 }
 
-bool rd::GameScreen::drawTargetUI(SDL_Surface *screen, Target target, Player player_data)
+bool rd::GameScreen::drawTargetUI(SDL_Surface *screen, const Target & target, const Player & player_data)
 {
     //-- Check that the dimensions of the target are feasible
     if (target.getDimensions().getX() < 0 || target.getDimensions().getY() < 0 ||

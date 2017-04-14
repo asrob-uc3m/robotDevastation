@@ -25,7 +25,7 @@ public:
     Weapon(const std::string & name, int damage, int max_ammo);
 
     //! @brief Checks if the target is within the weapon's current range and can be hit by it
-    bool canShootTarget(Target& target);
+    bool canShootTarget(const Target& target);
 
     //! @brief Increases the current ammo to max_ammo
     bool reload();

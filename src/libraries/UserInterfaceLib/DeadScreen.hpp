@@ -27,7 +27,7 @@ class DeadScreen : public Screen
         virtual bool drawScreen(void *screen);
         virtual ~DeadScreen();
         virtual bool update(const std::string & parameter, const std::string & value);
-        virtual bool update(const std::string & parameter, Image value);
+        virtual bool update(const std::string & parameter, const Image & value);
 
         //-- Available parameters:
         static const std::string PARAM_REMAINING_TIME;

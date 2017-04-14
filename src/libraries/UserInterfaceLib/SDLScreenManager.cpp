@@ -96,7 +96,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, const std::stri
     return ret;
 }
 
-bool rd::SDLScreenManager::update(const std::string & parameter, Image value)
+bool rd::SDLScreenManager::update(const std::string & parameter, const Image & value)
 {
     mutex.lock();
     bool ret = screen->update(parameter, value);
@@ -104,7 +104,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, Image value)
     return ret;
 }
 
-bool rd::SDLScreenManager::update(const std::string & parameter, Player value)
+bool rd::SDLScreenManager::update(const std::string & parameter, const Player & value)
 {
     mutex.lock();
     bool ret = screen->update(parameter, value);
@@ -128,7 +128,7 @@ bool rd::SDLScreenManager::update(const std::string & parameter, const std::vect
     return ret;
 }
 
-bool rd::SDLScreenManager::update(const std::string & parameter, Weapon value)
+bool rd::SDLScreenManager::update(const std::string & parameter, const Weapon & value)
 {
     mutex.lock();
     bool ret = screen->update(parameter, value);

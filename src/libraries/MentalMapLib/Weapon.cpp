@@ -20,7 +20,7 @@ rd::Weapon::Weapon(const std::string & name, int damage, int max_ammo)
     current_ammo = max_ammo;
 }
 
-bool rd::Weapon::canShootTarget(Target &target)
+bool rd::Weapon::canShootTarget(const Target &target)
 {
     //-- Calculate target limits:
     int target_top_left_x = target.getPos().getX() - target.getDimensions().getX() / 2;

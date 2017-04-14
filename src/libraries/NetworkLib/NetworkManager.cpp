@@ -95,17 +95,17 @@ bool rd::NetworkManager::removeNetworkEventListeners()
     return true;
 }
 
-bool rd::NetworkManager::configure(const std::string & parameter, Player value)
+bool rd::NetworkManager::configure(const std::string & parameter, const Player & value)
 {
     return true;
 }
 
-bool rd::NetworkManager::onTargetHit(Target target, Player player, Weapon weapon)
+bool rd::NetworkManager::onTargetHit(const Target & target, const Player & player, const Weapon & weapon)
 {
     return sendPlayerHit(player, weapon.getDamage());
 }
 
-bool rd::NetworkManager::onRespawn(Player player)
+bool rd::NetworkManager::onRespawn(const Player & player)
 {
     return sendPlayerHit(player, -1*player.getMaxHealth()); //-- This is a quick and dirty hack
 }

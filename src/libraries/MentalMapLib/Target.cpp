@@ -8,7 +8,7 @@ rd::Target::Target()
     belief = -1;
 }
 
-rd::Target::Target(int player_id, Vector2d pos, Vector2d dimensions)
+rd::Target::Target(int player_id, const Vector2d &pos, const Vector2d &dimensions)
 {
     this->player_id = player_id;
     this->pos = pos;
