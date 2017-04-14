@@ -134,6 +134,9 @@ after_build:
   - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target INSTALL -- /v:m
   - cmd: set YARP_DATA_DIRS=%APPVEYOR_BUILD_FOLDER%\install\share\rd
 
+before_test:
+  - cmd: echo %PATH%
+
 test_script:
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testDeadState.exe"'
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testFSMBuilder.exe"'
