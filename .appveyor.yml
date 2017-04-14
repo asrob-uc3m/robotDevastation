@@ -34,7 +34,7 @@ init:
   - cmd: echo SYSTEM_ARCH_ZBAR=%SYSTEM_ARCH_ZBAR%
 
   # Dependency version tags
-  - cmd: set ACE_LATEST=6.4.0
+  - cmd: set ACE_LATEST=6.4.2
   - cmd: set SDL2_LATEST=2.0.5
   - cmd: set SDL2_IMAGE_LATEST=2.0.1
   - cmd: set SDL2_TTF_LATEST=2.0.14
