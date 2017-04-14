@@ -95,7 +95,7 @@ install:
             cmake --build "$env:REPOS_PATH\yarp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
         }
   - cmd: set YARP_DIR=C:\YARP\cmake
-  - cmd: set PATH=%PATH%;%YARP_DIR%\bin
+  - cmd: set PATH=%PATH%;C:\YARP\bin
 
   # Download and extract SDL2 libraries (if not in cache)
   - ps: >-
