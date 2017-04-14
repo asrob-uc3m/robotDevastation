@@ -17,6 +17,7 @@ environment:
 
 cache:
   - C:\ACE -> .appveyor.yml
+  - C:\YARP -> .appveyor.yml
   - C:\SDL2 -> .appveyor.yml
 
 init:
@@ -81,13 +82,20 @@ install:
   - cmd: set ACE_ROOT=C:\ACE
   - cmd: set PATH=%PATH%;%ACE_ROOT%\lib
 
-  # Clone and build YARP
-  - cmd: echo Cloning %YARP_CLONE_URL%
-  - cmd: git clone -q --branch=master "%YARP_CLONE_URL%" "%REPOS_PATH%\yarp"
-  - cmd: cmake -H"%REPOS_PATH%\yarp" -B"%REPOS_PATH%\yarp\build" -G"%CMAKE_GENERATOR%"
-  - cmd: cmake --build "%REPOS_PATH%\yarp\build" --config "%CONFIGURATION%" -- /m /v:m
-  - cmd: set YARP_DIR=%REPOS_PATH%\yarp\build
-  - cmd: set PATH=%PATH%;%YARP_DIR%\bin\%CONFIGURATION%
+  # Clone and build YARP (if not in cache)
+  - ps: >-
+        if (Test-Path -Path "C:\YARP") {
+            Write-Host "YARP found in cache"
+        } else {
+            Write-Host "YARP not in cache, running clone and build step..."
+            Write-Host "Cloning $env:YARP_CLONE_URL"
+            git clone -q --branch=master "$env:YARP_CLONE_URL" "$env:REPOS_PATH\yarp"
+            cmake -H"$env:REPOS_PATH\yarp" -B"$env:REPOS_PATH\yarp\build" -G"$env:CMAKE_GENERATOR" -DCMAKE_INSTALL_PREFIX:PATH=C:\YARP
+            cmake --build "$env:REPOS_PATH\yarp\build" --config "$env:CONFIGURATION" -- /m /v:m
+            cmake --build "$env:REPOS_PATH\yarp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
+        }
+  - cmd: set YARP_DIR=C:\YARP\cmake
+  - cmd: set PATH=%PATH%;%YARP_DIR%\bin
 
   # Download and extract SDL2 libraries (if not in cache)
   - ps: >-
@@ -109,7 +117,6 @@ install:
                 xcopy $_.FullName C:\SDL2 /e /i /y /q
             }
         }
-
   - cmd: set SDL2DIR=C:\SDL2
   - cmd: set PATH=%PATH%;%SDL2DIR%\lib\%SYSTEM_ARCH%
 
