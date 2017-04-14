@@ -1,17 +1,24 @@
 version: appveyor.{build}
 
-platform:
-  - Win32
-  - x64
+image: Visual Studio 2015
 
-os:
- - Visual Studio 2015
-
-configuration:
-  - Release
+configuration: Release
 
 environment:
-  SDL_AUDIODRIVER: dummy
+  global:
+    SDL_AUDIODRIVER: dummy
+    ACE_VC_SLN: ACE_wrappers_vc14.sln
+  
+  matrix:
+    - platform: Win32
+      cmake_generator: Visual Studio 14 2015
+      system_arch: x86
+      zbar_arch: i686
+
+    - platform: x64
+      cmake_generator: Visual Studio 14 2015 Win64
+      system_arch: x64
+      zbar_arch: x86_64
 
 cache:
   - C:\ACE -> .appveyor.yml
@@ -19,23 +26,9 @@ cache:
   - C:\SDL2 -> .appveyor.yml
 
 init:
-  # System related variables
-  - cmd: set CMAKE_GENERATOR=Visual Studio 14 2015
-  - cmd: if "%PLATFORM%"=="x64" set CMAKE_GENERATOR=%CMAKE_GENERATOR% Win64
-  - cmd: echo CMAKE_GENERATOR=%CMAKE_GENERATOR%
-
-  - cmd: set SYSTEM_ARCH=%PLATFORM%
-  - cmd: if "%PLATFORM%"=="Win32" set SYSTEM_ARCH=x86
-  - cmd: echo SYSTEM_ARCH=%SYSTEM_ARCH%
-
-  - cmd: set SYSTEM_ARCH_ZBAR=x86_64
-  - cmd: if "%PLATFORM%"=="Win32" set SYSTEM_ARCH_ZBAR=i686
-  - cmd: echo SYSTEM_ARCH_ZBAR=%SYSTEM_ARCH_ZBAR%
-  
-  - cmd: set ACE_VC_SLN=ACE_wrappers_vc14.sln
-
   # Dependency version tags
   - cmd: set ACE_LATEST=6.4.2
+  - cmd: set YARP_LATEST=2.3.68
   - cmd: set SDL2_LATEST=2.0.5
   - cmd: set SDL2_IMAGE_LATEST=2.0.1
   - cmd: set SDL2_TTF_LATEST=2.0.14
@@ -44,15 +37,14 @@ init:
 
   # Download/clone paths and URLs
   - cmd: set DOWNLOADS_PATH=C:\downloads
-  - cmd: set REPOS_PATH=C:\repos
 
   - cmd: set ACE_DOWNLOAD_URL=http://download.dre.vanderbilt.edu/previous_versions/ACE-%ACE_LATEST%.zip
-  - cmd: set YARP_CLONE_URL=https://github.com/robotology/yarp.git
+  - cmd: set YARP_DOWNLOAD_URL=https://github.com/robotology/yarp/archive/v%YARP_LATEST%.zip
   - cmd: set SDL2_DOWNLOAD_URL=https://www.libsdl.org/release/SDL2-devel-%SDL2_LATEST%-VC.zip
   - cmd: set SDL2_IMAGE_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-%SDL2_IMAGE_LATEST%-VC.zip
   - cmd: set SDL2_TTF_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-%SDL2_TTF_LATEST%-VC.zip
   - cmd: set SDL2_MIXER_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-%SDL2_MIXER_LATEST%-VC.zip
-  - cmd: set ZBAR_DOWNLOAD_URL=https://github.com/asrob-uc3m/ZBar/releases/download/%ZBAR_LATEST%/zbar-%ZBAR_LATEST%-%SYSTEM_ARCH_ZBAR%-setup.exe
+  - cmd: set ZBAR_DOWNLOAD_URL=https://github.com/asrob-uc3m/ZBar/releases/download/%ZBAR_LATEST%/zbar-%ZBAR_LATEST%-%ZBAR_ARCH%-setup.exe
 
   # Print some useful informations:
   - cmd: set
@@ -62,7 +54,6 @@ init:
 install:
   # Create folders
   - cmd: md %DOWNLOADS_PATH%
-  - cmd: md %REPOS_PATH%
 
   # Download and build ACE (if not in cache)
   - ps: >-
@@ -82,17 +73,19 @@ install:
   - cmd: set ACE_ROOT=C:\ACE
   - cmd: set PATH=%PATH%;%ACE_ROOT%\lib
 
-  # Clone and build YARP (if not in cache)
+  # Download and build YARP (if not in cache)
   - ps: >-
         if (Test-Path -Path "C:\YARP") {
             Write-Host "YARP found in cache"
         } else {
-            Write-Host "YARP not in cache, running clone and build step..."
-            Write-Host "Cloning $env:YARP_CLONE_URL"
-            git clone -q --branch=master "$env:YARP_CLONE_URL" "$env:REPOS_PATH\yarp"
-            cmake -H"$env:REPOS_PATH\yarp" -B"$env:REPOS_PATH\yarp\build" -G"$env:CMAKE_GENERATOR" -DCMAKE_INSTALL_PREFIX:PATH=C:\YARP
-            cmake --build "$env:REPOS_PATH\yarp\build" --config "$env:CONFIGURATION" -- /m /v:m
-            cmake --build "$env:REPOS_PATH\yarp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
+            Write-Host "YARP not in cache, running download and build step..."
+            Write-Host "Downloading $env:YARP_DOWNLOAD_URL"
+            Start-FileDownload "$env:YARP_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\yarp.zip"
+            7z x -y -o"$env:DOWNLOADS_PATH" "$env:DOWNLOADS_PATH\yarp.zip"
+            $env:yarp_temp = "$env:DOWNLOADS_PATH\yarp-$env:YARP_LATEST"
+            cmake -H"$env:yarp_temp" -B"$env:yarp_temp\build" -G"$env:CMAKE_GENERATOR" -DCMAKE_INSTALL_PREFIX:PATH=C:\YARP
+            cmake --build "$env:yarp_temp\build" --config "$env:CONFIGURATION" -- /m /v:m
+            cmake --build "$env:yarp_temp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
         }
   - cmd: set YARP_DIR=C:\YARP\cmake
   - cmd: set PATH=%PATH%;C:\YARP\bin
