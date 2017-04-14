@@ -1,17 +1,24 @@
 version: appveyor.{build}
 
-platform:
-  - Win32
-  - x64
+image: Visual Studio 2015
 
-os:
- - Visual Studio 2015
-
-configuration:
-  - Release
+configuration: Release
 
 environment:
-  SDL_AUDIODRIVER: dummy
+  global:
+    SDL_AUDIODRIVER: dummy
+    ACE_VC_SLN: ACE_wrappers_vc14.sln
+  
+  matrix:
+    - platform: Win32
+      CMAKE_GENERATOR: Visual Studio 14 2015
+      SYSTEM_ARCH: x86
+      SYSTEM_ARCH_ZBAR: i686
+
+    - platform: x86
+      CMAKE_GENERATOR: Visual Studio 14 2015 Win64
+      SYSTEM_ARCH: x64
+      SYSTEM_ARCH_ZBAR: x86_64
 
 cache:
   - C:\ACE -> .appveyor.yml
@@ -19,21 +26,6 @@ cache:
   - C:\SDL2 -> .appveyor.yml
 
 init:
-  # System related variables
-  - cmd: set CMAKE_GENERATOR=Visual Studio 14 2015
-  - cmd: if "%PLATFORM%"=="x64" set CMAKE_GENERATOR=%CMAKE_GENERATOR% Win64
-  - cmd: echo CMAKE_GENERATOR=%CMAKE_GENERATOR%
-
-  - cmd: set SYSTEM_ARCH=%PLATFORM%
-  - cmd: if "%PLATFORM%"=="Win32" set SYSTEM_ARCH=x86
-  - cmd: echo SYSTEM_ARCH=%SYSTEM_ARCH%
-
-  - cmd: set SYSTEM_ARCH_ZBAR=x86_64
-  - cmd: if "%PLATFORM%"=="Win32" set SYSTEM_ARCH_ZBAR=i686
-  - cmd: echo SYSTEM_ARCH_ZBAR=%SYSTEM_ARCH_ZBAR%
-  
-  - cmd: set ACE_VC_SLN=ACE_wrappers_vc14.sln
-
   # Dependency version tags
   - cmd: set ACE_LATEST=6.4.2
   - cmd: set SDL2_LATEST=2.0.5
