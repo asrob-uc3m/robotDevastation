@@ -68,7 +68,7 @@ rd::FiniteStateMachine *rd::StateMachineBuilder::buildStateMachine()
     {
         //-- Extract data of current entry:
         int origin_id = it->first;
-        if (origin_id >= stateDirectors.size())
+        if (origin_id >= (int) stateDirectors.size())
         {
             RD_ERROR("Bad transition found: origin state %d does not exist.\n", origin_id);
             return NULL;
@@ -80,7 +80,7 @@ rd::FiniteStateMachine *rd::StateMachineBuilder::buildStateMachine()
         for (std::vector< std::pair<int, int> >::iterator itt = transitions.begin(); itt != transitions.end(); ++itt)
         {
             int dest_id = itt->first;
-            if (dest_id >= stateDirectors.size())
+            if (dest_id >= (int) stateDirectors.size())
             {
                 RD_ERROR("Bad transition found: destination state %d does not exist.\n", dest_id);
                 return NULL;
@@ -92,7 +92,7 @@ rd::FiniteStateMachine *rd::StateMachineBuilder::buildStateMachine()
     }
 
     //-- Check that initial_state_id is within limits:
-    if (initial_state_id >= stateDirectors.size())
+    if (initial_state_id >= (int) stateDirectors.size())
     {
         RD_ERROR("Error: initial state provided (%d) does not exist.\n", initial_state_id);
         return NULL;
