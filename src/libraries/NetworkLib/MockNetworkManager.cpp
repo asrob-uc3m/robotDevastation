@@ -59,12 +59,12 @@ bool rd::MockNetworkManager::sendPlayerHit(Player player, int damage)
 
     if ( players_dic.find(id) != players_dic.end() )  // if found, we can shoot
     {
-        int new_health = players_dic.operator[](id).getHealth() - damage;
+        int new_health = players_dic[id].getHealth() - damage;
 
         if (new_health < 0)
             new_health = 0;
 
-        players_dic.operator[](id).setHealth(new_health);
+        players_dic[id].setHealth(new_health);
 
     }
     else
@@ -91,7 +91,7 @@ bool rd::MockNetworkManager::login()
 
     if ( players_dic.find(loginId) == players_dic.end() )  // if not found, we can create
     {
-        players_dic.operator[](loginId) = player;
+        players_dic[loginId] = player;
         logged_in = true;
     }
     else
