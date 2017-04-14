@@ -177,8 +177,10 @@ std::vector<rd::Player> rd::MockNetworkManager::getPlayerData() const
 bool rd::MockNetworkManager::sendPlayerData()
 {
     //-- Notify listeners
-    for(int i = 0; i < listeners.size(); i++)
-        listeners[i]->onDataArrived(getPlayerData());
+    for (std::vector<NetworkEventListener *>::iterator it = listeners.begin(); it != listeners.end(); ++it)
+    {
+        (*it)->onDataArrived(getPlayerData());
+    }
     return true;
 }
 

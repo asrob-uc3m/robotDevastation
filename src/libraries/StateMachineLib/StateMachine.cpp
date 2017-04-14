@@ -12,10 +12,10 @@ rd::FiniteStateMachine::FiniteStateMachine(const std::vector<StateDirector *> & 
 rd::FiniteStateMachine::~FiniteStateMachine()
 {
     //-- Delete state directors:
-    for (int i = 0; i < stateDirectors.size(); i++)
+    for (std::vector<StateDirector *>::iterator it = stateDirectors.begin(); it != stateDirectors.end(); ++it)
     {
-        delete stateDirectors[i];
-        stateDirectors[i] = NULL;
+        delete *it;
+        *it = NULL;
     }
 
     stateDirectors.clear();
@@ -28,10 +28,12 @@ bool rd::FiniteStateMachine::start()
 
 bool rd::FiniteStateMachine::stop()
 {
-    for (int i = 0; i < stateDirectors.size(); i++)
+    for (std::vector<StateDirector *>::iterator it = stateDirectors.begin(); it != stateDirectors.end(); ++it)
     {
-        if ( !stateDirectors[i]->Stop())
+        if (!(*it)->Stop())
+        {
             return false;
+        }
     }
 
     return true;
@@ -39,13 +41,14 @@ bool rd::FiniteStateMachine::stop()
 
 int rd::FiniteStateMachine::getCurrentState() const
 {
-    int i = 0;
-    while (i < stateDirectors.size())
+    for (std::vector<StateDirector *>::const_iterator it = stateDirectors.begin(); it != stateDirectors.end(); ++it)
     {
-        if ( stateDirectors[i]->isActive())
-            return i;
-        i++;
+        if ((*it)->isActive())
+        {
+            return std::distance(stateDirectors.begin(), it);
+        }
     }
+
     return -1;
 }
 

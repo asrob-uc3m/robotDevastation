@@ -105,3 +105,10 @@ TEST_F( SDLAudioManagerTest, AudioManagerPlaysAllSounds )
     yarp::os::Time::delay(4);
     EXPECT_TRUE(audioManager->stopMusic());
 }
+
+//--- Main -------------------------------------------------------------------------------------------
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}

@@ -14,13 +14,21 @@ IF(SDL2_Mixer_INCLUDE_DIRS)
 
 ELSE(SDL2_Mixer_INCLUDE_DIRS)
 
+  if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(VC_LIB_PATH_SUFFIX lib/x64)
+  else()
+    set(VC_LIB_PATH_SUFFIX lib/x86)
+  endif()
+
   SET(TRIAL_LIBRARY_PATHS
+    $ENV{SDL2DIR}/${VC_LIB_PATH_SUFFIX}
     $ENV{SDL2_MIXER_HOME}/lib
     /usr/lib
     /usr/local/lib
     /sw/lib
   ) 
   SET(TRIAL_INCLUDE_PATHS
+    $ENV{SDL2DIR}/include
     $ENV{SDL2_MIXER_HOME}/include/SDL2
     /usr/include/SDL2
     /usr/local/include/SDL2

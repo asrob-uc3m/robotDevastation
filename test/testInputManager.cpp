@@ -9,6 +9,9 @@
  * ESCAPE or q - exit
  *
  ***/
+#include <cstdio>
+#include <cstdlib> // atexit()
+
 #include "InputManager.hpp"
 #include "SDLInputManager.hpp"
 #include "InputEventListener.hpp"
@@ -17,8 +20,6 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
-
-#include <cstdlib> // atexit()
 
 using namespace rd;
 
@@ -177,10 +178,10 @@ int main(void)
 {
     // Load SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
+        std::fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
         return false;
     }
-    atexit(SDL_Quit); // Clean it up nicely :)
+    std::atexit(SDL_Quit); // Clean it up nicely :)
 
     //-- Init screen
     SDL_Window * window = SDL_CreateWindow("Robot Devastation",
@@ -189,7 +190,7 @@ int main(void)
                               640, 480,
                               0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
     if (!window) {
-        fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
+        std::fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
         return false;
     }
     //-- Screen surface

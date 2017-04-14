@@ -3,15 +3,20 @@
 #ifndef __RD_MACROS_HPP__
 #define __RD_MACROS_HPP__
 
-#include <stdio.h>
-#include <string.h>  // strrchr
-#include <string>  // std::string
+#include <cstdio>
+#include <cstring>  // strrchr()
+
+//-- Fix for old Windows versions.
+//-- Thanks: tomlogic @ http://stackoverflow.com/questions/2281970/cross-platform-defining-define-for-macros-function-and-func
+#if defined(WIN32) && !defined(__func__)
+#define __func__ __FUNCTION__
+#endif
 
 //-- Thanks http://stackoverflow.com/questions/8487986/file-macro-shows-full-path
 #ifdef WIN32
-#define __REL_FILE__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
+#define __REL_FILE__ (std::strrchr(__FILE__, '\\') ? std::strrchr(__FILE__, '\\') + 1 : __FILE__)
 #else
-#define __REL_FILE__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
+#define __REL_FILE__ (std::strrchr(__FILE__, '/') ? std::strrchr(__FILE__, '/') + 1 : __FILE__)
 #endif
 
 #ifdef WIN32
@@ -56,19 +61,19 @@
 
 // http://en.wikipedia.org/wiki/Variadic_macro
 // http://stackoverflow.com/questions/15549893/modify-printfs-via-macro-to-include-file-and-line-number-information
-#define RD_ERROR(...) { fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                         fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET); }
+#define RD_ERROR(...) { std::fprintf(stderr,RED); do{std::fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                        std::fprintf(stderr, __VA_ARGS__);} while(0); std::fprintf(stderr,RESET); }
 
-#define RD_WARNING(...) { fprintf(stderr,YELLOW); do{fprintf(stderr, "[warning] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET); }
+#define RD_WARNING(...) { std::fprintf(stderr,YELLOW); do{std::fprintf(stderr, "[warning] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                          std::fprintf(stderr, __VA_ARGS__);} while(0); std::fprintf(stderr,RESET); }
 
-#define RD_SUCCESS(...) { fprintf(stderr,GREEN); do{printf("[success] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET); }
+#define RD_SUCCESS(...) { std::fprintf(stderr,GREEN); do{std::printf("[success] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                          std::printf(__VA_ARGS__);} while(0); std::fprintf(stderr,RESET); }
 
-#define RD_INFO(...) { do{printf("[info] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           printf(__VA_ARGS__);} while(0); }  
+#define RD_INFO(...) { do{std::printf("[info] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                          std::printf(__VA_ARGS__);} while(0); }
 
-#define RD_DEBUG(...) { fprintf(stderr,BLUE); do{printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET); }
+#define RD_DEBUG(...) { std::fprintf(stderr,BLUE); do{std::printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                        std::printf(__VA_ARGS__);} while(0); std::fprintf(stderr,RESET); }
 
 #endif  // __RD_MACROS_HPP__
