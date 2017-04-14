@@ -37,10 +37,9 @@ init:
 
   # Download/clone paths and URLs
   - cmd: set DOWNLOADS_PATH=C:\downloads
-  - cmd: set REPOS_PATH=C:\repos
 
   - cmd: set ACE_DOWNLOAD_URL=http://download.dre.vanderbilt.edu/previous_versions/ACE-%ACE_LATEST%.zip
-  - cmd: set YARP_CLONE_URL=https://github.com/robotology/yarp.git
+  - cmd: set YARP_DOWNLOAD_URL=https://github.com/robotology/yarp/archive/v%YARP_LATEST%.zip
   - cmd: set SDL2_DOWNLOAD_URL=https://www.libsdl.org/release/SDL2-devel-%SDL2_LATEST%-VC.zip
   - cmd: set SDL2_IMAGE_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-%SDL2_IMAGE_LATEST%-VC.zip
   - cmd: set SDL2_TTF_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-%SDL2_TTF_LATEST%-VC.zip
@@ -55,7 +54,6 @@ init:
 install:
   # Create folders
   - cmd: md %DOWNLOADS_PATH%
-  - cmd: md %REPOS_PATH%
 
   # Download and build ACE (if not in cache)
   - ps: >-
@@ -75,17 +73,19 @@ install:
   - cmd: set ACE_ROOT=C:\ACE
   - cmd: set PATH=%PATH%;%ACE_ROOT%\lib
 
-  # Clone and build YARP (if not in cache)
+  # Download and build YARP (if not in cache)
   - ps: >-
         if (Test-Path -Path "C:\YARP") {
             Write-Host "YARP found in cache"
         } else {
-            Write-Host "YARP not in cache, running clone and build step..."
-            Write-Host "Cloning $env:YARP_CLONE_URL"
-            git clone -q --branch="v$env:YARP_LATEST" --depth=1 "$env:YARP_CLONE_URL" "$env:REPOS_PATH\yarp"
-            cmake -H"$env:REPOS_PATH\yarp" -B"$env:REPOS_PATH\yarp\build" -G"$env:CMAKE_GENERATOR" -DCMAKE_INSTALL_PREFIX:PATH=C:\YARP
-            cmake --build "$env:REPOS_PATH\yarp\build" --config "$env:CONFIGURATION" -- /m /v:m
-            cmake --build "$env:REPOS_PATH\yarp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
+            Write-Host "YARP not in cache, running download and build step..."
+            Write-Host "Downloading $env:YARP_DOWNLOAD_URL"
+            Start-FileDownload "$env:YARP_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\yarp.zip"
+            7z x -y -o"$env:DOWNLOADS_PATH" "$env:DOWNLOADS_PATH\yarp.zip"
+            $env:yarp_temp = "$env:DOWNLOADS_PATH\yarp-$env:YARP_LATEST"
+            cmake -H"$env:yarp_temp" -B"$env:yarp_temp\build" -G"$env:CMAKE_GENERATOR" -DCMAKE_INSTALL_PREFIX:PATH=C:\YARP
+            cmake --build "$env:yarp_temp\build" --config "$env:CONFIGURATION" -- /m /v:m
+            cmake --build "$env:yarp_temp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
         }
   - cmd: set YARP_DIR=C:\YARP\cmake
   - cmd: set PATH=%PATH%;C:\YARP\bin
