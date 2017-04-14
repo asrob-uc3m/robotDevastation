@@ -11,14 +11,14 @@ environment:
   
   matrix:
     - platform: Win32
-      CMAKE_GENERATOR: Visual Studio 14 2015
-      SYSTEM_ARCH: x86
-      SYSTEM_ARCH_ZBAR: i686
+      cmake_generator: Visual Studio 14 2015
+      system_arch: x86
+      zbar_arch: i686
 
-    - platform: x86
-      CMAKE_GENERATOR: Visual Studio 14 2015 Win64
-      SYSTEM_ARCH: x64
-      SYSTEM_ARCH_ZBAR: x86_64
+    - platform: x64
+      cmake_generator: Visual Studio 14 2015 Win64
+      system_arch: x64
+      zbar_arch: x86_64
 
 cache:
   - C:\ACE -> .appveyor.yml
@@ -28,6 +28,7 @@ cache:
 init:
   # Dependency version tags
   - cmd: set ACE_LATEST=6.4.2
+  - cmd: set YARP_LATEST=2.3.68
   - cmd: set SDL2_LATEST=2.0.5
   - cmd: set SDL2_IMAGE_LATEST=2.0.1
   - cmd: set SDL2_TTF_LATEST=2.0.14
@@ -44,7 +45,7 @@ init:
   - cmd: set SDL2_IMAGE_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-%SDL2_IMAGE_LATEST%-VC.zip
   - cmd: set SDL2_TTF_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-%SDL2_TTF_LATEST%-VC.zip
   - cmd: set SDL2_MIXER_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-%SDL2_MIXER_LATEST%-VC.zip
-  - cmd: set ZBAR_DOWNLOAD_URL=https://github.com/asrob-uc3m/ZBar/releases/download/%ZBAR_LATEST%/zbar-%ZBAR_LATEST%-%SYSTEM_ARCH_ZBAR%-setup.exe
+  - cmd: set ZBAR_DOWNLOAD_URL=https://github.com/asrob-uc3m/ZBar/releases/download/%ZBAR_LATEST%/zbar-%ZBAR_LATEST%-%ZBAR_ARCH%-setup.exe
 
   # Print some useful informations:
   - cmd: set
@@ -81,7 +82,7 @@ install:
         } else {
             Write-Host "YARP not in cache, running clone and build step..."
             Write-Host "Cloning $env:YARP_CLONE_URL"
-            git clone -q --branch=master "$env:YARP_CLONE_URL" "$env:REPOS_PATH\yarp"
+            git clone -q --branch="v$env:YARP_LATEST" --depth=1 "$env:YARP_CLONE_URL" "$env:REPOS_PATH\yarp"
             cmake -H"$env:REPOS_PATH\yarp" -B"$env:REPOS_PATH\yarp\build" -G"$env:CMAKE_GENERATOR" -DCMAKE_INSTALL_PREFIX:PATH=C:\YARP
             cmake --build "$env:REPOS_PATH\yarp\build" --config "$env:CONFIGURATION" -- /m /v:m
             cmake --build "$env:REPOS_PATH\yarp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
