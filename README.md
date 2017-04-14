@@ -10,7 +10,9 @@ Link to Doxygen documentation: http://asrob.uc3m.es/rddoc/index.html
 
 Link to Wiki: http://asrob.uc3m.es/index.php/Robot_Devastation
 
-[![Build Status (Linux/OSX)](https://travis-ci.org/asrob-uc3m/robotDevastation.svg?branch=master)](https://travis-ci.org/asrob-uc3m/robotDevastation)
+[![Build Status (Linux/OSX)](https://travis-ci.org/asrob-uc3m/robotDevastation.svg?branch=develop)](https://travis-ci.org/asrob-uc3m/robotDevastation)
+
+[![Build Status (Windows)](https://ci.appveyor.com/api/projects/status/github/asrob-uc3m/robotdevastation?branch=develop&svg=true)](https://ci.appveyor.com/project/asrob-uc3m/robotdevastation)
 
 [![Coverage Status](https://coveralls.io/repos/asrob-uc3m/robotDevastation/badge.svg)](https://coveralls.io/r/asrob-uc3m/robotDevastation)
 

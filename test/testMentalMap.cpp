@@ -327,18 +327,9 @@ TEST_F( MentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
 
 }
 
-
-
-//---------------------------------------------------------------------------------------
-//-- Thread-safe functions
-//---------------------------------------------------------------------------------------
-
-//TEST_F( MentalMapTest, TargetsLockedWhenModified)
-//{
-//    ASSERT_TRUE(false);
-//}
-
-//TEST_F( MentalMapTest, PlayersLockedWhenModified)
-//{
-//    ASSERT_FALSE(true);
-//}
+//--- Main -------------------------------------------------------------------------------------------
+int main(int argc, char **argv)
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
