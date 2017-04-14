@@ -30,6 +30,8 @@ init:
   - cmd: set SYSTEM_ARCH_ZBAR=x86_64
   - cmd: if "%PLATFORM%"=="Win32" set SYSTEM_ARCH_ZBAR=i686
   - cmd: echo SYSTEM_ARCH_ZBAR=%SYSTEM_ARCH_ZBAR%
+  
+  - cmd: set ACE_VC_SLN=ACE_wrappers_vc14.sln
 
   # Dependency version tags
   - cmd: set ACE_LATEST=6.4.2
@@ -71,7 +73,7 @@ install:
             Start-FileDownload "$env:ACE_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\ace.zip"
             7z x -y -o"$env:DOWNLOADS_PATH" "$env:DOWNLOADS_PATH\ace.zip"
             Add-Content "$env:DOWNLOADS_PATH\ACE_wrappers\ace\config.h" "#include `"ace/config-win32.h`""
-            msbuild "$env:DOWNLOADS_PATH\ACE_wrappers\ACE_wrappers_vc12.sln" /m /v:m
+            msbuild "$env:DOWNLOADS_PATH\ACE_wrappers\$env:ACE_VC_SLN" /m /v:m
             Write-Host "Copying selected contents of $env:DOWNLOADS_PATH\ACE_wrappers to C:\ACE"
             robocopy "$env:DOWNLOADS_PATH\ACE_wrappers\ace" C:\ACE\ace /e /xd "$env:DOWNLOADS_PATH\ACE_wrappers\ace\$env:CONFIGURATION" /ns /ns /nfl /ndl /njh
             xcopy "$env:DOWNLOADS_PATH\ACE_wrappers\lib" C:\ACE\lib /e /i /y /q
