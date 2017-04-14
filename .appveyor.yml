@@ -19,7 +19,7 @@ cache:
 
 init:
   # System related variables
-  - cmd: set CMAKE_GENERATOR=Visual Studio 12 2013
+  - cmd: set CMAKE_GENERATOR=Visual Studio 14 2015
   - cmd: if "%PLATFORM%"=="x64" set CMAKE_GENERATOR=%CMAKE_GENERATOR% Win64
   - cmd: echo CMAKE_GENERATOR=%CMAKE_GENERATOR%
 
