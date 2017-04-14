@@ -3,6 +3,7 @@
 #ifndef __ROBOT_DEVASTATION_HPP__
 #define __ROBOT_DEVASTATION_HPP__
 
+#include <cstdio>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -55,7 +56,7 @@ class RobotDevastation : public yarp::os::RFModule
 
             std::string answer;
             do {
-                printf("%s?>",question.c_str());
+                std::printf("%s?>",question.c_str());
                 std::getline(std::cin, answer);
             } while(no_empty && answer.empty());
 

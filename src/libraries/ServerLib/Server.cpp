@@ -1,6 +1,6 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#include <stdio.h>
+#include <cstdio>
 
 #include <yarp/os/Bottle.h>
 
@@ -38,14 +38,14 @@ bool rd::Server::updateModule()
     players_mutex.lock();
     yarp::os::Bottle msgBroadcast;
     msgBroadcast.addVocab(VOCAB_RD_PLAYERS);
-    quiet || printf("=======rdServer=======\n");
-    quiet || printf("Number of players: %zd\n",players.size());
+    quiet || std::printf("=======rdServer=======\n");
+    quiet || std::printf("Number of players: %zd\n",players.size());
 
     typedef std::map<int, Player>::iterator it_type;
     for(it_type iterator = players.begin(); iterator != players.end(); iterator++)
     {
-        quiet || printf("----------------------\n%s\n", (iterator->second).str().c_str());
-        quiet || printf("Belief: %d\n", players_belief[iterator->first]);
+        quiet || std::printf("----------------------\n%s\n", (iterator->second).str().c_str());
+        quiet || std::printf("Belief: %d\n", players_belief[iterator->first]);
         yarp::os::Bottle msgPlayer;
         msgPlayer.addInt( (iterator->second).getId() );
         msgPlayer.addString( (iterator->second).getName().c_str() );
@@ -56,7 +56,7 @@ bool rd::Server::updateModule()
         msgBroadcast.addList() = msgPlayer;
     }
 
-    //printf("======================\n");
+    //std::printf("======================\n");
     rdBroadcast.write(msgBroadcast);
     players_mutex.unlock();
 
@@ -87,7 +87,7 @@ bool rd::Server::updateModule()
 }
 
 bool rd::Server::interruptModule() {
-    printf("Server closing...\n");
+    std::printf("Server closing...\n");
     rdBroadcast.interrupt();
     rpcServer.interrupt();
     rdBroadcast.close();

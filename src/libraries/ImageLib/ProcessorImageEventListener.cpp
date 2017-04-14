@@ -1,8 +1,8 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#include <stdlib.h> //-- malloc(), free(), abs(), strtol()
-#include <ctype.h>  //-- isdigit()
-#include <stddef.h> //-- Just for NULL
+#include <cstdlib> //-- malloc(), free(), abs(), strtol()
+#include <cctype>  //-- isdigit()
+#include <cstddef> //-- NULL
 #include <vector>
 #include <sstream>
 
@@ -27,7 +27,7 @@ rd::ProcessorImageEventListener::~ProcessorImageEventListener()
 {
     if (rimage!=NULL)
     {
-        free(rimage);
+        std::free(rimage);
         rimage = NULL;
     }
 }
@@ -43,7 +43,7 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
         cameraWidth = received_image.width();
         cameraHeight = received_image.height();
         cameraInitialized = true;
-        rimage = (unsigned char*)malloc( cameraWidth * cameraHeight );
+        rimage = (unsigned char*)std::malloc( cameraWidth * cameraHeight );
     }
 
     //-- Convert from YARP rgb to zbar b/w.
@@ -96,8 +96,8 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
              //RD_DEBUG("%d: %d %d\n",i,coord.x,coord.y);
              coords.push_back(coord);
         }
-        int qrWidth = abs(coords[2].getX() - coords[1].getX());
-        int qrHeight = abs(coords[1].getY() - coords[0].getY());
+        int qrWidth = std::abs(coords[2].getX() - coords[1].getX());
+        int qrHeight = std::abs(coords[1].getY() - coords[0].getY());
         Vector2d qrCenter(coords[0].getX() + (qrWidth / 2), coords[0].getY() + (qrHeight / 2) );
 
         Target target( identifier_int,
@@ -114,11 +114,11 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
 bool rd::ProcessorImageEventListener::isInteger(const std::string & s) const
 {
     //-- Code adapted from: http://stackoverflow.com/questions/2844817/how-do-i-check-if-a-c-string-is-an-int
-   if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false ;
+   if(s.empty() || ((!std::isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
 
-   char * p ;
-   strtol(s.c_str(), &p, 10) ;
+   char * p;
+   std::strtol(s.c_str(), &p, 10);
 
-   return (*p == 0) ;
+   return (*p == 0);
 }
 

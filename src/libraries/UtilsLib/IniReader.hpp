@@ -33,7 +33,7 @@ class IniReader {
                 RD_SUCCESS("vector implementation opened file: %s\n",fileName);
             }
             std::string line;
-            while (getline(ifs, line)) {
+            while (std::getline(ifs, line)) {
                 //std::cout << "--------------------------" << std::endl;
                 int separator = (int)line.find(' ', 0);
                 if(separator == std::string::npos) continue;
@@ -63,7 +63,7 @@ class IniReader {
                 RD_SUCCESS("map implementation opened file: %s\n",fileName);
             }
             std::string line;
-            while (getline(ifs, line)) {
+            while (std::getline(ifs, line)) {
                 //std::cout << "--------------------------" << std::endl;
                 int separator = (int)line.find(' ', 0);
                 if(separator == std::string::npos) continue;

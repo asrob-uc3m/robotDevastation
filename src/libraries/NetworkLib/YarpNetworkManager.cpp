@@ -1,5 +1,5 @@
 #include <sstream>
-#include <string.h> // strcmp()
+#include <cstring> // strcmp()
 
 #include <yarp/os/Network.h>
 
@@ -192,7 +192,7 @@ bool rd::YarpNetworkManager::sendPlayerHit(Player player, int damage)
     RD_INFO("rdServer response from hit: %s\n",response.toString().c_str());
 
     //-- Check response
-    if ( strcmp( response.toString().c_str(), "[ok]") == 0)
+    if (std::strcmp(response.toString().c_str(), "[ok]") == 0)
         return true;
     else
         return false;
@@ -224,7 +224,7 @@ bool rd::YarpNetworkManager::login()
     RD_INFO("rdServer response from login: %s\n",res.toString().c_str());
 
     //-- Check response
-    if ( strcmp( res.toString().c_str(), "[ok]") == 0)
+    if (std::strcmp(res.toString().c_str(), "[ok]") == 0)
         return true;
     else
         return false;
@@ -246,7 +246,7 @@ bool rd::YarpNetworkManager::logout()
     RD_INFO("rdServer response from logout: %s\n",res.toString().c_str());
 
     //-- Check response
-    if ( strcmp( res.toString().c_str(), "[ok]") == 0)
+    if (std::strcmp(res.toString().c_str(), "[ok]") == 0)
     {
         RD_SUCCESS("Logout ok\n");
         return true;
@@ -273,7 +273,7 @@ bool rd::YarpNetworkManager::keepAlive()
     rpcClient.write(msgRdPlayer,res);
 
     //-- Check response
-    if ( strcmp( res.toString().c_str(), "[ok]") == 0)
+    if (std::strcmp(res.toString().c_str(), "[ok]") == 0)
     {
         return true;
     }

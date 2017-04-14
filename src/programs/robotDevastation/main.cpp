@@ -43,8 +43,8 @@ robotDevastation
  *
  */
 
+#include <cstdio>
 #include <iostream>
-#include <stdio.h>
 
 #include <yarp/os/Network.h>
 #include <yarp/os/ResourceFinder.h>
@@ -52,23 +52,23 @@ robotDevastation
 #include "RobotDevastation.hpp"
 #include "Macros.hpp"
 
-int main(int argc, char *argv[]) {
-
-    printf("--------------------------------------------------------------\n");
-    printf("Robot Devastation @ ASROB 2014 (C) Robotics Society of the Universidad Carlos III de Madrid\n");
-    printf("Welcome to Robot Devastation v0.2, developed by David Estevez and Juan G Victores.\n");
-    printf("Based on Robot Devastation v0.1, developed by Santiago Morante and Juan G Victores.\n");
-    printf(GREEN);
-    printf(" ____       _           _   ____                      _        _   _             \n");
-    printf("|  _ \\ ___ | |__   ___ | |_|  _ \\  _____   ____ _ ___| |_ __ _| |_(_) ___  _ __  \n");
-    printf("| |_) / _ \\| '_ \\ / _ \\| __| | | |/ _ \\ \\ / / _` / __| __/ _` | __| |/ _ \\| '_ \\ \n");
-    printf("|  _ < (_) | |_) | (_) | |_| |_| |  __/\\ V / (_| \\__ \\ || (_| | |_| | (_) | | | |\n");
-    printf("|_| \\_\\___/|_.__/ \\___/ \\__|____/ \\___| \\_/ \\__,_|___/\\__\\__,_|\\__|_|\\___/|_| |_|\n");
-    printf(RESET);
-    printf("\n");
-    printf("Fire with 'space'. Reload with 'r'. Move with 'Left, Up, Down, Right'. Run \"robotDevastation --help\" for help.\n");
-    printf("For a full description, please visit http://asrob.uc3m.es/rddoc/group__robotDevastation.html.\n");
-    printf("--------------------------------------------------------------\n");
+int main(int argc, char *argv[])
+{
+    std::printf("--------------------------------------------------------------\n");
+    std::printf("Robot Devastation @ ASROB 2014 (C) Robotics Society of the Universidad Carlos III de Madrid\n");
+    std::printf("Welcome to Robot Devastation v0.2, developed by David Estevez and Juan G Victores.\n");
+    std::printf("Based on Robot Devastation v0.1, developed by Santiago Morante and Juan G Victores.\n");
+    std::printf(GREEN);
+    std::printf(" ____       _           _   ____                      _        _   _             \n");
+    std::printf("|  _ \\ ___ | |__   ___ | |_|  _ \\  _____   ____ _ ___| |_ __ _| |_(_) ___  _ __  \n");
+    std::printf("| |_) / _ \\| '_ \\ / _ \\| __| | | |/ _ \\ \\ / / _` / __| __/ _` | __| |/ _ \\| '_ \\ \n");
+    std::printf("|  _ < (_) | |_) | (_) | |_| |_| |  __/\\ V / (_| \\__ \\ || (_| | |_| | (_) | | | |\n");
+    std::printf("|_| \\_\\___/|_.__/ \\___/ \\__|____/ \\___| \\_/ \\__,_|___/\\__\\__,_|\\__|_|\\___/|_| |_|\n");
+    std::printf(RESET);
+    std::printf("\n");
+    std::printf("Fire with 'space'. Reload with 'r'. Move with 'Left, Up, Down, Right'. Run \"robotDevastation --help\" for help.\n");
+    std::printf("For a full description, please visit http://asrob.uc3m.es/rddoc/group__robotDevastation.html.\n");
+    std::printf("--------------------------------------------------------------\n");
 
     yarp::os::ResourceFinder rf;
     rf.setVerbose(false);
@@ -78,12 +78,12 @@ int main(int argc, char *argv[]) {
 
     if(rf.check("help"))
     {
-        printf("RobotDevastation optional parameters:\n");
-        printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        printf("\t--mockRobotManager  //-- Fake robot motors\n");
-        printf("\t--mockImageManager  //-- Fake robot camera\n");
-        printf("\t--yarpLocalImageManager  //-- Local webcam as camera\n");
-        printf("\t--fullscreen //-- Fullscreen mode (experimental)\n");
+        std::printf("RobotDevastation optional parameters:\n");
+        std::printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
+        std::printf("\t--mockRobotManager  //-- Fake robot motors\n");
+        std::printf("\t--mockImageManager  //-- Fake robot camera\n");
+        std::printf("\t--yarpLocalImageManager  //-- Local webcam as camera\n");
+        std::printf("\t--fullscreen //-- Fullscreen mode (experimental)\n");
         return 0;
     }
 

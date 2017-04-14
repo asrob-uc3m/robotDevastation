@@ -1,6 +1,8 @@
+#include <cstdio>
+#include <cstdlib> // atexit()
+
 #include <SDL.h>
 #include <SDL_ttf.h>
-#include <cstdlib> // atexit()
 #include <iostream>
 #include <yarp/os/ResourceFinder.h>
 
@@ -20,18 +22,18 @@ int main(void)
 
     // Load SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-    fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
+    std::fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
     return false;
     }
-    atexit(SDL_Quit); // Clean it up nicely :)
+    std::atexit(SDL_Quit); // Clean it up nicely :)
 
     //-- Init ttf
     if (TTF_Init() == -1)
     {
-      printf("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
+      std::printf("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
       return false;
     }
-    atexit(TTF_Quit);
+    std::atexit(TTF_Quit);
 
     //-- Init screen
     SDL_Window * window = SDL_CreateWindow("Robot Devastation",
@@ -40,14 +42,14 @@ int main(void)
                               SCREEN_WIDTH, SCREEN_HEIGHT,
                               0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
     if (!window) {
-        fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
+        std::fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
         return false;
     }
     //-- Screen surface
     SDL_Surface * screen = SDL_GetWindowSurface( window );
 
     if (!screen) {
-        fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
+        std::fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
         return false;
     }
 
@@ -55,7 +57,7 @@ int main(void)
     std::string font_name("../fonts/FreeMono.ttf");
     TTF_Font *font = TTF_OpenFont(rf.findFileByName(font_name).c_str(), 28);
     if (font == NULL){
-        printf("Unable to load font: %s %s \n", rf.findFileByName(font_name).c_str(), TTF_GetError());
+        std::printf("Unable to load font: %s %s \n", rf.findFileByName(font_name).c_str(), TTF_GetError());
         return false;
     }
 
