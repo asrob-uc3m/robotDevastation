@@ -101,7 +101,7 @@ install:
   - cmd: set PATH=%PATH%;C:\YARP\bin
 
   # Download and extract SDL2 libraries (if not in cache)
-  - ps: $sdl2_releases = @("$env:SDL2_LATEST","$env:SDL2_IMAGE_LATEST","$env:SDL2_TTF_LATEST","$env:SDL2_MIXER_LATEST")
+  - ps: $sdl2_releases = @("$env:SDL2_LATEST", "image_$env:SDL2_IMAGE_LATEST", "ttf_$env:SDL2_TTF_LATEST", "mixer_$env:SDL2_MIXER_LATEST")
   - ps: >-
         if (
             (Test-Path -Path C:\SDL2 -PathType Container) -And
