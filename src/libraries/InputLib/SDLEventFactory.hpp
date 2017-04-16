@@ -21,10 +21,10 @@ namespace rd{
 class SDLEventFactory
 {
     public:
-        //! @brief Creates a \ref Key from a SDL keycode
+        //! @brief Creates a Key from a SDL keycode
         static Key makeKey(SDL_Keycode keycode);
 
-        //! @brief Creates a \ref WindowEvent from a SDL window event structure
+        //! @brief Creates a WindowEvent from a SDL window event structure
         static WindowEvent makeWindowEvent(SDL_WindowEvent windowEvent);
 
         //! @brief Initialize the lookup tables
