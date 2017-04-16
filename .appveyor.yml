@@ -23,7 +23,7 @@ environment:
 cache:
   - C:\ACE
   - C:\YARP
-  - C:\SDL2 -> .appveyor.yml
+  - C:\SDL2
 
 init:
   # Dependency version tags
@@ -73,7 +73,7 @@ install:
             Write-Host "Copying selected contents of $env:DOWNLOADS_PATH\ACE_wrappers to C:\ACE"
             robocopy "$env:DOWNLOADS_PATH\ACE_wrappers\ace" C:\ACE\ace /e /xd "$env:DOWNLOADS_PATH\ACE_wrappers\ace\$env:CONFIGURATION" /ns /ns /nfl /ndl /njh
             xcopy "$env:DOWNLOADS_PATH\ACE_wrappers\lib" C:\ACE\lib /e /i /y /q
-            Add-Content C:\ACE\.version "$env:ACE_LATEST"
+            Set-Content C:\ACE\.version "$env:ACE_LATEST"
         }
   - cmd: set ACE_ROOT=C:\ACE
   - cmd: set PATH=%PATH%;%ACE_ROOT%\lib
@@ -95,17 +95,26 @@ install:
             cmake -H"$env:yarp_temp" -B"$env:yarp_temp\build" -G"$env:CMAKE_GENERATOR" -DCMAKE_INSTALL_PREFIX:PATH=C:\YARP
             cmake --build "$env:yarp_temp\build" --config "$env:CONFIGURATION" -- /m /v:m
             cmake --build "$env:yarp_temp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
-            Add-Content C:\YARP\.version "$env:YARP_LATEST"
+            Set-Content C:\YARP\.version "$env:YARP_LATEST"
         }
   - cmd: set YARP_DIR=C:\YARP\cmake
   - cmd: set PATH=%PATH%;C:\YARP\bin
 
   # Download and extract SDL2 libraries (if not in cache)
+  - ps: $sdl2_releases = @("$env:SDL2_LATEST","$env:SDL2_IMAGE_LATEST","$env:SDL2_TTF_LATEST","$env:SDL2_MIXER_LATEST")
   - ps: >-
-        if (Test-Path -Path "C:\SDL2") {
-            Write-Host "SDL2 found in cache"
+        if (
+            (Test-Path -Path C:\SDL2 -PathType Container) -And
+            (Test-Path -Path C:\SDL2\.version -PathType Leaf) -And
+            -Not (Compare-Object -ReferenceObject (Get-Content C:\SDL2\.version) -DifferenceObject $sdl2_releases -PassThru)
+        ) {
+            Write-Host "SDL2 found in cache:"
+            Write-Host "SDL2 = $env:SDL2_LATEST"
+            Write-Host "SDL2_image = $env:SDL2_IMAGE_LATEST"
+            Write-Host "SDL2_ttf = $env:SDL2_TTF_LATEST"
+            Write-Host "SDL2_mixer = $env:SDL2_MIXER_LATEST"
         } else {
-            Write-Host "SDL2 not in cache, running download and extract step..."
+            Write-Host "SDL2 not in cache or version mismatch, running download and extract step..."
             Write-Host "Downloading $env:SDL2_DOWNLOAD_URL"
             Start-FileDownload "$env:SDL2_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\sdl2.zip"
             Write-Host "Downloading $env:SDL2_IMAGE_DOWNLOAD_URL"
@@ -119,6 +128,7 @@ install:
             Get-ChildItem -Directory "$env:DOWNLOADS_PATH\SDL2_temp" | ?{ $_.PSIsContainer } | ForEach-Object {
                 xcopy $_.FullName C:\SDL2 /e /i /y /q
             }
+            $sdl2_releases | Set-Content C:\SDL2\.version
         }
   - cmd: set SDL2DIR=C:\SDL2
   - cmd: set PATH=%PATH%;%SDL2DIR%\lib\%SYSTEM_ARCH%
