@@ -322,7 +322,7 @@ TEST_F(DeadStateTest, DeadStateGoesToRespawn)
 
 }
 
-TEST_F(DeadStateTest, DeadStateGoesToLogout)
+TEST_F(DeadStateTest, DeadStateGoesToLogoutKeyPress)
 {
     //-- Create fsm with DeadState
     StateMachineBuilder builder;
@@ -389,6 +389,92 @@ TEST_F(DeadStateTest, DeadStateGoesToLogout)
     yarp::os::Time::delay(10);
     ASSERT_EQ(1, mockInputManager->getNumListeners());
     mockInputManager->sendKeyPress(Key::KEY_ESCAPE);
+    yarp::os::Time::delay(0.5);
+
+    //-- Check that it has stopped things and it is in the final state (cleanup):
+    ASSERT_TRUE(mockImageManager->isStopped());
+    ASSERT_FALSE(mockImageManager->isEnabled());
+    ASSERT_TRUE(mockInputManager->isStopped());
+    ASSERT_EQ(0, mockInputManager->getNumListeners());
+    ASSERT_TRUE(mockAudioManager->isStopped());
+    ASSERT_FALSE(mockAudioManager->isPlaying("RD_THEME"));
+    ASSERT_FALSE(mockAudioManager->isPlaying("RD_DEAD"));
+    ASSERT_TRUE(mockNetworkManager->isStopped());
+    ASSERT_FALSE(mockNetworkManager->isLoggedIn());
+    ASSERT_FALSE(mockRobotManager->isConnected());
+    ASSERT_FALSE(mockRobotManager->isEnabled());
+
+    //-- Check that end state is active
+    ASSERT_EQ(-1, fsm->getCurrentState()); //-- (When FSM is ended, no state is active, hence -1)
+}
+
+TEST_F(DeadStateTest, DeadStateGoesToLogoutWindowEvent)
+{
+    //-- Create fsm with DeadState
+    StateMachineBuilder builder;
+    ASSERT_TRUE(builder.setDirectorType("YARP"));
+
+    int dead_state_id = builder.addState(new DeadState(networkManager, imageManager, inputManager,
+                                                       mentalMap, robotManager, audioManager, screenManager));
+    ASSERT_NE(-1, dead_state_id);
+    int game_state_id = builder.addState(new MockState(1));
+    ASSERT_NE(-1, game_state_id);
+    int exit_state_id = builder.addState(State::getEndState());
+    ASSERT_NE(-1, exit_state_id);
+
+    ASSERT_TRUE(builder.addTransition(dead_state_id, game_state_id, DeadState::RESPAWN_SELECTED));
+    ASSERT_TRUE(builder.addTransition(dead_state_id, exit_state_id, DeadState::EXIT_SELECTED));
+    ASSERT_TRUE(builder.setInitialState(dead_state_id));
+
+    fsm = builder.buildStateMachine();
+    ASSERT_NE((FiniteStateMachine*)NULL, fsm);
+
+    //-- Check things that should happen before fsm starts (before setup):
+    // Player is dead
+    // Stuff is enabled
+    ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
+    ASSERT_FALSE(mockImageManager->isStopped());
+    ASSERT_TRUE(mockImageManager->isEnabled());
+    ASSERT_FALSE(mockInputManager->isStopped());
+    ASSERT_EQ(1, mockInputManager->getNumListeners());
+    ASSERT_FALSE(mockAudioManager->isStopped());
+    ASSERT_TRUE(mockAudioManager->isPlaying("RD_THEME"));
+    ASSERT_FALSE(mockAudioManager->isPlaying("RD_DEAD"));
+    ASSERT_FALSE(mockNetworkManager->isStopped());
+    ASSERT_TRUE(mockNetworkManager->isLoggedIn());
+    ASSERT_TRUE(mockRobotManager->isConnected());
+    ASSERT_TRUE(mockRobotManager->isEnabled());
+
+    //-- Start state machine
+    ASSERT_TRUE(fsm->start());
+
+    //-- Check things that should happen in dead state before time runs out (setup):
+    ASSERT_EQ(0, mentalMap->getMyself().getHealth()); //-- Important thing to check
+    ASSERT_FALSE(mockImageManager->isStopped());
+    ASSERT_FALSE(mockImageManager->isEnabled());
+    ASSERT_FALSE(mockInputManager->isStopped());
+    ASSERT_EQ(0, mockInputManager->getNumListeners());
+    ASSERT_FALSE(mockAudioManager->isStopped());
+    ASSERT_FALSE(mockAudioManager->isPlaying("RD_THEME"));
+    ASSERT_TRUE(mockAudioManager->isPlaying("RD_DEAD"));
+    ASSERT_FALSE(mockNetworkManager->isStopped());
+    ASSERT_TRUE(mockNetworkManager->isLoggedIn());
+    ASSERT_TRUE(mockRobotManager->isConnected());
+    ASSERT_FALSE(mockRobotManager->isEnabled());
+
+    //-- Check that deadState is active
+    ASSERT_EQ(dead_state_id, fsm->getCurrentState());
+
+    //-- When enter is pressed, but the countdown is still active, input is ignored
+    yarp::os::Time::delay(0.5);
+    mockInputManager->sendKeyPress(Key::KEY_ENTER);
+    yarp::os::Time::delay(0.5);
+    ASSERT_EQ(dead_state_id, fsm->getCurrentState());
+
+    //-- When time is up, and the window is closed, the system should exit the game:
+    yarp::os::Time::delay(10);
+    ASSERT_EQ(1, mockInputManager->getNumListeners());
+    mockInputManager->sendWindowEvent(WindowEvent::WINDOW_CLOSE);
     yarp::os::Time::delay(0.5);
 
     //-- Check that it has stopped things and it is in the final state (cleanup):

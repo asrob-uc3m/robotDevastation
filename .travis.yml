@@ -16,7 +16,7 @@ matrix:
 
 env:
   # avoid ALSA errors
-  - AUDIODEV=null
+  - SDL_AUDIODRIVER=dummy
 
 before_install:
   #ubuntu dependencies
