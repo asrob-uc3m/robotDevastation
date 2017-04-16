@@ -14,9 +14,6 @@
 #include "Player.hpp"
 #include "RpcResponder.hpp"
 
-#define DEFAULT_WATCHDOG    1.0       // [s]
-
-
 namespace rd{
 
 /**
