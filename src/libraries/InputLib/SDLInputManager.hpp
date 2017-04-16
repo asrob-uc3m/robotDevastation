@@ -64,9 +64,12 @@ class SDLInputManager : public InputManager
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getInputManager() method.
+         * and the instantiation is done at the RegisterManager() method.
          */
         SDLInputManager();
+
+        SDLInputManager(const SDLInputManager &);
+        SDLInputManager & operator=(const SDLInputManager &);
 
         // This static function is the real callback function.  It's compatible
         // with the C-style CallbackFunctionPtr.  The extra void* is used to

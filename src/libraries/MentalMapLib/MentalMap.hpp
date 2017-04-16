@@ -105,6 +105,9 @@ class MentalMap : public NetworkEventListener
          */
         MentalMap();
 
+        MentalMap(const MentalMap &);
+        MentalMap & operator=(const MentalMap &);
+
         //! @brief Stores the unique instance of the MentalMap
         static MentalMap * mentalMapInstance;
 

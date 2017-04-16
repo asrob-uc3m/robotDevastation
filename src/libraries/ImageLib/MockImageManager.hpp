@@ -58,9 +58,12 @@ class MockImageManager : public ImageManager
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getMentalMap() method.
+         * and the instantiation is done at the RegisterManager() method.
          */
         MockImageManager();
+
+        MockImageManager(const MockImageManager &);
+        MockImageManager & operator=(const MockImageManager &);
 
         //! @brief Reference to this manager (unique instance)
         static MockImageManager * uniqueInstance;

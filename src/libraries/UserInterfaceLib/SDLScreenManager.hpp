@@ -91,9 +91,12 @@ class SDLScreenManager : public ScreenManager
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getScreenManager() method
+         * and the instantiation is done at the RegisterManager() method
          */
         SDLScreenManager();
+
+        SDLScreenManager(const SDLScreenManager &);
+        SDLScreenManager & operator=(const SDLScreenManager &);
 
         //! \brief Stores the unique instance of the SDLScreenManager
         static SDLScreenManager * uniqueInstance;

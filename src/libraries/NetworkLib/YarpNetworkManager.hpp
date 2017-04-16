@@ -81,6 +81,9 @@ class YarpNetworkManager : public NetworkManager,
         void run();
 
     private:
+        YarpNetworkManager(const YarpNetworkManager &);
+        YarpNetworkManager & operator=(const YarpNetworkManager &);
+
         //! @brief Reference to this manager (unique instance)
         static YarpNetworkManager * uniqueInstance;
 

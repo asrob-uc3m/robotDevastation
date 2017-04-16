@@ -63,9 +63,12 @@ class MockAudioManager : public AudioManager,
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getAudioManager() method.
+         * and the instantiation is done at the RegisterManager() method.
          */
         MockAudioManager();
+
+        MockAudioManager(const MockAudioManager &);
+        MockAudioManager & operator=(const MockAudioManager &);
 
         //! @brief Method called periodically from the RateThread class. It simply calls the update() method.
         void run();

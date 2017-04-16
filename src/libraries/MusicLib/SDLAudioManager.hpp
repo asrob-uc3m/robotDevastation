@@ -52,9 +52,12 @@ class SDLAudioManager : public AudioManager
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getAudioManager() method
+         * and the instantiation is done at the RegisterManager() method
          */
         SDLAudioManager();
+
+        SDLAudioManager(const SDLAudioManager &);
+        SDLAudioManager & operator=(const SDLAudioManager &);
 
         //! \brief Stores the unique instance of the AudioManager
         static SDLAudioManager * uniqueInstance;
