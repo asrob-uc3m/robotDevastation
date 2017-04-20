@@ -3,7 +3,7 @@
 #ifndef __RD_MACROS_HPP__
 #define __RD_MACROS_HPP__
 
-#include <cstdio>
+#include <cstdio>   // fflush()
 #include <cstring>  // strrchr()
 
 //-- Fix for old Windows versions.
@@ -61,19 +61,19 @@
 
 // http://en.wikipedia.org/wiki/Variadic_macro
 // http://stackoverflow.com/questions/15549893/modify-printfs-via-macro-to-include-file-and-line-number-information
-#define RD_ERROR(...) { std::fprintf(stderr,RED); do{std::fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                        std::fprintf(stderr, __VA_ARGS__);} while(0); std::fprintf(stderr,RESET); }
+#define RD_ERROR(...) { std::fprintf(stderr, RED); do{std::fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                        std::fprintf(stderr, __VA_ARGS__);} while(0); std::fprintf(stderr, RESET); std::fflush(stderr); }
 
-#define RD_WARNING(...) { std::fprintf(stderr,YELLOW); do{std::fprintf(stderr, "[warning] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                          std::fprintf(stderr, __VA_ARGS__);} while(0); std::fprintf(stderr,RESET); }
+#define RD_WARNING(...) { std::fprintf(stderr, YELLOW); do{std::fprintf(stderr, "[warning] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                          std::fprintf(stderr, __VA_ARGS__);} while(0); std::fprintf(stderr, RESET); std::fflush(stderr); }
 
-#define RD_SUCCESS(...) { std::fprintf(stderr,GREEN); do{std::printf("[success] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                          std::printf(__VA_ARGS__);} while(0); std::fprintf(stderr,RESET); }
+#define RD_SUCCESS(...) { std::printf(GREEN); do{std::printf("[success] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                          std::printf(__VA_ARGS__);} while(0); std::printf(RESET); std::fflush(stdout); }
 
 #define RD_INFO(...) { do{std::printf("[info] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                          std::printf(__VA_ARGS__);} while(0); }
+                          std::printf(__VA_ARGS__);} while(0); std::fflush(stdout); }
 
-#define RD_DEBUG(...) { std::fprintf(stderr,BLUE); do{std::printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                        std::printf(__VA_ARGS__);} while(0); std::fprintf(stderr,RESET); }
+#define RD_DEBUG(...) { std::printf(BLUE); do{std::printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                        std::printf(__VA_ARGS__);} while(0); std::printf(RESET); std::fflush(stdout); }
 
 #endif  // __RD_MACROS_HPP__
