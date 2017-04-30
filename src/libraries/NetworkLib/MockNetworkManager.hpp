@@ -1,9 +1,12 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCK_NETWORK_MANAGER_HPP__
-#define __MOCK_NETWORK_MANAGER_HPP__
+#ifndef __RD_MOCK_NETWORK_MANAGER_HPP__
+#define __RD_MOCK_NETWORK_MANAGER_HPP__
 
-#include "Utils.hpp"
+#include <string>
+#include <vector>
+#include <map>
+
 #include "NetworkManager.hpp"
 #include "NetworkEventListener.hpp"
 #include "Player.hpp"
@@ -23,7 +26,7 @@ namespace rd{
  * When the program finishes, the MockNetworkManager can be deallocated using destroyNetworkManager().
  *
  * Network events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
- * along with the data relevant to the event triggered (i.e. data that just arrived)
+ * along with the data relevant to the event triggered (i.e. data that just arrived).
  *
  */
 
@@ -35,11 +38,11 @@ class MockNetworkManager : public NetworkManager
         /**
          * @brief Register this manager in the NetworkManager registry so that can be used
          *
-         * It ensures that only one manager of this type is created (unique instance)
+         * It ensures that only one manager of this type is created (unique instance).
          */
         static bool RegisterManager();
 
-        ~MockNetworkManager();
+        virtual ~MockNetworkManager();
 
         //! @brief String that identifies this manager
         static const std::string id;
@@ -49,22 +52,22 @@ class MockNetworkManager : public NetworkManager
         virtual bool stop();
 
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, Player value);
+        virtual bool configure(const std::string & parameter, const Player & value);
 
         //-- Server API
         //--------------------------------------------------------------------------------------------
-        virtual bool sendPlayerHit(Player player, int damage);
+        virtual bool sendPlayerHit(const Player & player, int damage);
         virtual bool login();
         virtual bool logout();
         virtual bool keepAlive();
 
         //-- Mock object API
         //--------------------------------------------------------------------------------------------
-        bool isLoggedIn();
-        bool isStopped();
+        bool isLoggedIn() const;
+        bool isStopped() const;
 
-        bool setPlayerData(std::vector<Player> game_players);
-        std::vector<Player> getPlayerData();
+        bool setPlayerData(const std::vector<Player> & game_players);
+        std::vector<Player> getPlayerData() const;
         bool sendPlayerData();
         bool setLoggedIn(bool logged_in);
 
@@ -73,9 +76,12 @@ class MockNetworkManager : public NetworkManager
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getNetworkManager() method
+         * and the instantiation is done at the RegisterManager() method.
          */
         MockNetworkManager();
+
+        MockNetworkManager(const MockNetworkManager &);
+        MockNetworkManager & operator=(const MockNetworkManager &);
 
         //! @brief Reference to this manager (unique instance)
         static MockNetworkManager * uniqueInstance;
@@ -91,4 +97,4 @@ class MockNetworkManager : public NetworkManager
 };
 }
 
-#endif //-- __MOCK_NETWORK_MANAGER_HPP__
+#endif //-- __RD_MOCK_NETWORK_MANAGER_HPP__

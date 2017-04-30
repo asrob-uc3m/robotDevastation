@@ -1,11 +1,18 @@
 #include "MockState.hpp"
 
-const unsigned int rd::MockState::STATE_INITIAL = 0;
-const unsigned int rd::MockState::STATE_SETUP = 1;
-const unsigned int rd::MockState::STATE_LOOP = 2;
-const unsigned int rd::MockState::STATE_CLEANUP = 4;
+#include <sstream>
 
-const unsigned int rd::MockState::REQUEST_STATE = 0;
+#include <yarp/os/Bottle.h>
+#include <yarp/os/ConnectionWriter.h>
+
+#include "Macros.hpp"
+
+const int rd::MockState::STATE_INITIAL = 0;
+const int rd::MockState::STATE_SETUP = 1;
+const int rd::MockState::STATE_LOOP = 2;
+const int rd::MockState::STATE_CLEANUP = 4;
+
+const int rd::MockState::REQUEST_STATE = 0;
 
 rd::MockState::MockState(int id)
 {

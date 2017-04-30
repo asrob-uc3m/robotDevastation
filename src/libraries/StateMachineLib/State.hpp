@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __STATE_HPP__
-#define __STATE_HPP__
+#ifndef __RD_STATE_HPP__
+#define __RD_STATE_HPP__
 
 #include <string>
 
@@ -40,7 +40,7 @@ class State
         /**
          * @brief This function is called after each call to loop() in order to know the transition to make
          *
-         * An integer value is assigned to each possible transition to identify them
+         * An integer value is assigned to each possible transition to identify them.
          *
          * @return Transition selected depending on the conditions of the state
          */
@@ -48,16 +48,16 @@ class State
 
 
         //! @brief Returns the string that identifies the state
-        std::string getStateId();
+        const std::string & getStateId() const;
 
         static State *getEndState();
 
    protected:
-        //! @variable Name of the current state
+        //! @brief Name of the current state
         std::string state_id;
 
 };
 
 }
 
-#endif //-- __STATE_HPP__
+#endif //-- __RD_STATE_HPP__

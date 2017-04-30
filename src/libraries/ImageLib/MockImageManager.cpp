@@ -1,5 +1,5 @@
 #include "MockImageManager.hpp"
-
+#include "Macros.hpp"
 
 //-- Initialize static members
 rd::MockImageManager * rd::MockImageManager::uniqueInstance = NULL;
@@ -22,7 +22,7 @@ bool rd::MockImageManager::stop()
     return true;
 }
 
-bool rd::MockImageManager::isStopped()
+bool rd::MockImageManager::isStopped() const
 {
     return stopped;
 }
@@ -33,21 +33,21 @@ bool rd::MockImageManager::setEnabled(bool enabled)
     return true;
 }
 
-bool rd::MockImageManager::isEnabled()
+bool rd::MockImageManager::isEnabled() const
 {
     return enabled;
 }
 
-bool rd::MockImageManager::configure(std::string parameter, std::string value)
+bool rd::MockImageManager::configure(const std::string & parameter, const std::string & value)
 {
     RD_DEBUG("Configure called for parameter: \"%s\" with value: \"%s\"\n", parameter.c_str(), value.c_str());
     return ImageManager::configure(parameter, value);
 }
 
-rd::Image rd::MockImageManager::getImage()
+rd::Image rd::MockImageManager::getImage() const
 {
     semaphore.wait();
-    Image return_image(image);
+    Image return_image = image;
     semaphore.post();
 
     return return_image;
@@ -68,7 +68,7 @@ rd::MockImageManager::~MockImageManager()
     uniqueInstance = NULL;
 }
 
-bool rd::MockImageManager::receiveImage(rd::Image received_image)
+bool rd::MockImageManager::receiveImage(const Image & received_image)
 {
     semaphore.wait();
     image = received_image;
@@ -76,8 +76,12 @@ bool rd::MockImageManager::receiveImage(rd::Image received_image)
 
     //-- Notify listeners
     if (enabled)
-        for (int i = 0; i < listeners.size(); i++)
-            listeners[i]->onImageArrived(this);
+    {
+        for (std::vector<ImageEventListener *>::iterator it = listeners.begin(); it != listeners.end(); ++it)
+        {
+            (*it)->onImageArrived(this);
+        }
+    }
     else
     {
         RD_WARNING("MockImageManager is disabled!\n");

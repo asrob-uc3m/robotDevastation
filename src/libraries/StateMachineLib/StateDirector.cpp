@@ -1,7 +1,7 @@
 #include "StateDirector.hpp"
+#include "Macros.hpp"
 
-
-rd::StateDirector::StateDirector(rd::State *state)
+rd::StateDirector::StateDirector(State *state)
 {
     this->state = state;
     active = false;
@@ -15,7 +15,7 @@ rd::StateDirector::~StateDirector()
     state = NULL;
 }
 
-std::string rd::StateDirector::getStateId()
+std::string rd::StateDirector::getStateId() const
 {
     if (state != NULL)
         return state->getStateId();
@@ -23,7 +23,7 @@ std::string rd::StateDirector::getStateId()
         return "";
 }
 
-bool rd::StateDirector::addTransition(rd::StateDirector *nextState, int condition)
+bool rd::StateDirector::addTransition(StateDirector *nextState, int condition)
 {
     if ( nextStates.find(condition) == nextStates.end())
     {
@@ -39,7 +39,7 @@ bool rd::StateDirector::addTransition(rd::StateDirector *nextState, int conditio
     }
 }
 
-bool rd::StateDirector::isActive()
+bool rd::StateDirector::isActive() const
 {
     return active;
 }

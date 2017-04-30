@@ -1,4 +1,5 @@
 #include "NetworkManager.hpp"
+#include "Macros.hpp"
 
 //-- Static members initialization:
 rd::NetworkManager * rd::NetworkManager::networkManagerInstance = NULL;
@@ -24,7 +25,7 @@ rd::NetworkManager *rd::NetworkManager::getNetworkManager()
     return networkManagerInstance;
 }
 
-rd::NetworkManager *rd::NetworkManager::getNetworkManager(std::string id)
+rd::NetworkManager *rd::NetworkManager::getNetworkManager(const std::string & id)
 {
     if (networkManagerInstance == NULL )
     {
@@ -82,7 +83,7 @@ bool rd::NetworkManager::destroyNetworkManager()
 
 rd::NetworkManager::~NetworkManager() { }
 
-bool rd::NetworkManager::addNetworkEventListener(rd::NetworkEventListener *listener)
+bool rd::NetworkManager::addNetworkEventListener(NetworkEventListener *listener)
 {
     listeners.push_back(listener);
     return true;
@@ -94,22 +95,22 @@ bool rd::NetworkManager::removeNetworkEventListeners()
     return true;
 }
 
-bool rd::NetworkManager::configure(std::string parameter, Player value)
+bool rd::NetworkManager::configure(const std::string & parameter, const Player & value)
 {
     return true;
 }
 
-bool rd::NetworkManager::onTargetHit(rd::Target target, rd::Player player, rd::Weapon weapon)
+bool rd::NetworkManager::onTargetHit(const Target & target, const Player & player, const Weapon & weapon)
 {
     return sendPlayerHit(player, weapon.getDamage());
 }
 
-bool rd::NetworkManager::onRespawn(rd::Player player)
+bool rd::NetworkManager::onRespawn(const Player & player)
 {
     return sendPlayerHit(player, -1*player.getMaxHealth()); //-- This is a quick and dirty hack
 }
 
-bool rd::NetworkManager::Register(rd::NetworkManager *manager, std::string id)
+bool rd::NetworkManager::Register(NetworkManager *manager, const std::string & id)
 {
     if ( networkManagerRegistry.find(id) == networkManagerRegistry.end())
     {

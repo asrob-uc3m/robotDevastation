@@ -1,5 +1,11 @@
 #include "MockScreen.hpp"
 
+#include <SDL_image.h>
+
+#include <yarp/os/ResourceFinder.h>
+
+#include "Macros.hpp"
+
 //-- Public
 const std::string rd::MockScreen::PARAM_MESSAGE = "message";
 
@@ -13,7 +19,11 @@ const SDL_Color rd::MockScreen::TEXT_COLOR = {255,0,0,0};
 rd::MockScreen::MockScreen()
 {
     w = 200; h = 100; //-- Arbitrary size initialization
+    window = NULL;
     screen = NULL;
+    font = NULL;
+    text_surface = NULL;
+    background = NULL;
 }
 
 bool rd::MockScreen::init()
@@ -43,7 +53,7 @@ bool rd::MockScreen::init()
     window = NULL;
 
     //-- Default values:
-    this->update(PARAM_MESSAGE, "");
+    update(PARAM_MESSAGE, "");
     w = background->w;
     h = background->h;
 
@@ -135,7 +145,7 @@ rd::MockScreen::~MockScreen()
 
 }
 
-bool rd::MockScreen::update(std::string parameter, std::string value)
+bool rd::MockScreen::update(const std::string & parameter, const std::string & value)
 {
     if (parameter == PARAM_MESSAGE)
     {

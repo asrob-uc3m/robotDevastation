@@ -9,8 +9,14 @@
  */
 
 #include "gtest/gtest.h"
+
 #include <string>
 #include <vector>
+
+#include <yarp/sig/all.h>
+#include <yarp/os/Network.h>
+#include <yarp/os/Time.h>
+#include <yarp/os/ResourceFinder.h>
 
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
@@ -29,11 +35,6 @@
 #include "MockAudioManager.hpp"
 #include "SDLScreenManager.hpp"
 
-#include <yarp/sig/all.h>
-#include <yarp/os/Network.h>
-#include <yarp/os/Time.h>
-#include <yarp/os/ResourceFinder.h>
-
 using namespace rd;
 
 //-- Class for the setup of the enviroment for all the tests
@@ -47,6 +48,7 @@ class DeadStateTestEnvironment : public testing::Environment
         {
             this->argc = argc;
             this->argv = argv;
+            screenManager = NULL;
         }
 
         virtual void SetUp()
@@ -71,15 +73,12 @@ class DeadStateTestEnvironment : public testing::Environment
             ScreenManager::destroyScreenManager();
         }
 
-
     private:
         int argc;
         char ** argv;
 
     protected:
         ScreenManager * screenManager;
-
-
 };
 
 //-- Class for the setup of each test

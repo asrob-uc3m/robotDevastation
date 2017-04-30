@@ -3,22 +3,22 @@
 #ifndef __RD_SERVER_HPP__
 #define __RD_SERVER_HPP__
 
-#include <yarp/os/RFModule.h>
-#include <yarp/os/RpcServer.h>
-#include <yarp/os/Mutex.h>
-
 #include <map>
 
-#include "Utils.hpp"
+#include <yarp/os/RFModule.h>
+#include <yarp/os/ResourceFinder.h>
+#include <yarp/os/RpcServer.h>
+#include <yarp/os/Mutex.h>
+#include <yarp/os/Port.h>
+
+#include "Player.hpp"
 #include "RpcResponder.hpp"
-
-#define DEFAULT_WATCHDOG    1.0       // [s]
-
 
 namespace rd{
 
 /**
- * @ingroup rdServer
+ * @ingroup ServerLib
+ *
  * @brief The parent Robot Devastation class of the \ref rdServer program.
  */
 class Server : public yarp::os::RFModule
@@ -26,7 +26,7 @@ class Server : public yarp::os::RFModule
 
     public:
         /**
-         * Run the program.
+         * @brief Run the program.
          *
          * @return true/false upon success/failure
          */
@@ -45,9 +45,6 @@ class Server : public yarp::os::RFModule
     protected:
         bool interruptModule();
         bool updateModule();
-
-        /** Watchdog period [s]. */
-        double watchdog;
 
         /** Disable stdout feedback. */
         bool quiet;

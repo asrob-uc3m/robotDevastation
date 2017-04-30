@@ -11,12 +11,12 @@ rd::State::~State()
 
 }
 
-std::string rd::State::getStateId()
+const std::string & rd::State::getStateId() const
 {
     return state_id;
 }
 
 rd::State *rd::State::getEndState()
 {
-    return (rd::State *)NULL;
+    return (State *)NULL;
 }

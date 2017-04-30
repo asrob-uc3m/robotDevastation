@@ -1,9 +1,13 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCK_INPUT_EVENT_LISTENER_HPP__
-#define __MOCK_INPUT_EVENT_LISTENER_HPP__
+#ifndef __RD_MOCK_INPUT_EVENT_LISTENER_HPP__
+#define __RD_MOCK_INPUT_EVENT_LISTENER_HPP__
+
+#include <vector>
 
 #include "InputEventListener.hpp"
+#include "Key.hpp"
+#include "WindowEvent.hpp"
 
 namespace rd{
 
@@ -21,15 +25,15 @@ class MockInputEventListener : public InputEventListener
         virtual bool onKeyUp( const Key & k );
         virtual bool onWindowEvent( const WindowEvent & event );
 
-        int getNumKeyDownPresses();
-        int getNumKeyUpPresses();
-        int getNumWindowEvents();
+        int getNumKeyDownPresses() const;
+        int getNumKeyUpPresses() const;
+        int getNumWindowEvents() const;
 
         bool clear();
 
-        std::vector<Key> getStoredKeyUpPresses();
-        std::vector<Key> getStoredKeyDownPresses();
-        std::vector<WindowEvent> getStoredWindowEvents();
+        const std::vector<Key>& getStoredKeyUpPresses() const;
+        const std::vector<Key>& getStoredKeyDownPresses() const;
+        const std::vector<WindowEvent>& getStoredWindowEvents() const;
 
     private:
         int num_keydown_presses;
@@ -43,4 +47,4 @@ class MockInputEventListener : public InputEventListener
 
 };
 }
-#endif // __MOCK_INPUT_EVENT_LISTENER_HPP__
+#endif // __RD_MOCK_INPUT_EVENT_LISTENER_HPP__

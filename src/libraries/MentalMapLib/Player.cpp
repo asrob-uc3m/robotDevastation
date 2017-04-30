@@ -1,17 +1,19 @@
 #include "Player.hpp"
 
+#include <sstream>
+
 rd::Player::Player()
 {
     //-- Default values
-    this->id = -1;
-    this->name = "Dummy";
-    this->health = -1;
-    this->max_health = -1;
-    this->team_id = -1;
-    this->score = -1;
+    id = -1;
+    name = "Dummy";
+    health = -1;
+    max_health = -1;
+    team_id = -1;
+    score = -1;
 }
 
-rd::Player::Player(int id, std::string name, int health, int max_health, int team_id, int score)
+rd::Player::Player(int id, const std::string & name, int health, int max_health, int team_id, int score)
 {
     this->id = id;
     this->name = name;
@@ -31,7 +33,7 @@ void rd::Player::setId(int value)
     id = value;
 }
 
-std::string rd::Player::getName() const
+const std::string & rd::Player::getName() const
 {
     return name;
 }
@@ -51,7 +53,7 @@ void rd::Player::setHealth(int value)
     health = value;
 }
 
-bool rd::Player::getDamageFromWeapon(rd::Weapon &weapon)
+bool rd::Player::getDamageFromWeapon(const Weapon &weapon)
 {
     health -= weapon.getDamage();
     if (health < 0)
@@ -89,7 +91,7 @@ void rd::Player::setScore(int value)
     score = value;
 }
 
-std::string rd::Player::str()
+std::string rd::Player::str() const
 {
     std::stringstream sstream;
     sstream << "ID: " << id << std::endl;

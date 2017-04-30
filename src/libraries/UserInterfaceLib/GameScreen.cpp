@@ -1,5 +1,11 @@
-
 #include "GameScreen.hpp"
+
+#include <sstream>
+
+#include <yarp/os/ResourceFinder.h>
+
+#include "SDLUtils.hpp"
+#include "Macros.hpp"
 
 const std::string rd::GameScreen::PARAM_CAMERA_FRAME = "camera_frame";
 const std::string rd::GameScreen::PARAM_MYSELF = "myself";
@@ -16,6 +22,9 @@ rd::GameScreen::GameScreen()
     update_required = true;
     w = 640; h = 480;
     camera_frame_surface = NULL;
+    player_font = NULL;
+    target_font = NULL;
+    weapon_font = NULL;
 }
 
 bool rd::GameScreen::init()
@@ -121,13 +130,13 @@ rd::GameScreen::~GameScreen()
 
 }
 
-bool rd::GameScreen::update(std::string parameter, std::string value)
+bool rd::GameScreen::update(const std::string & parameter, const std::string & value)
 {
     RD_ERROR("No string parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, rd::Player value)
+bool rd::GameScreen::update(const std::string & parameter, const Player & value)
 {
     if (parameter == PARAM_MYSELF)
     {
@@ -140,7 +149,7 @@ bool rd::GameScreen::update(std::string parameter, rd::Player value)
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, std::vector<rd::Player> value)
+bool rd::GameScreen::update(const std::string & parameter, const std::vector<Player> & value)
 {
     if (parameter == PARAM_PLAYERS)
     {
@@ -153,7 +162,7 @@ bool rd::GameScreen::update(std::string parameter, std::vector<rd::Player> value
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, std::vector<rd::Target> value)
+bool rd::GameScreen::update(const std::string & parameter, const std::vector<Target> & value)
 {
     if (parameter == PARAM_TARGETS)
     {
@@ -166,7 +175,7 @@ bool rd::GameScreen::update(std::string parameter, std::vector<rd::Target> value
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, rd::Weapon value)
+bool rd::GameScreen::update(const std::string & parameter, const Weapon & value)
 {
     if (parameter == PARAM_WEAPON)
     {
@@ -179,7 +188,7 @@ bool rd::GameScreen::update(std::string parameter, rd::Weapon value)
     return false;
 }
 
-bool rd::GameScreen::update(std::string parameter, rd::Image value)
+bool rd::GameScreen::update(const std::string & parameter, const Image & value)
 {    if (value.width() == 0 || value.height() == 0)
     {
         RD_ERROR("Invalid image");
@@ -211,7 +220,7 @@ bool rd::GameScreen::update(std::string parameter, rd::Image value)
      return false;
 }
 
-bool rd::GameScreen::drawUserUI(SDL_Surface *screen, rd::Player user, rd::Weapon weapon)
+bool rd::GameScreen::drawUserUI(SDL_Surface *screen, const Player & user, const Weapon & weapon)
 {
     //-- User health bar:
     //--------------------------------------------------------------------------------------------
@@ -260,7 +269,7 @@ bool rd::GameScreen::drawUserUI(SDL_Surface *screen, rd::Player user, rd::Weapon
     return true;
 }
 
-bool rd::GameScreen::drawPlayerUI(SDL_Surface *screen, Player player, int x, int y)
+bool rd::GameScreen::drawPlayerUI(SDL_Surface *screen, const Player & player, int x, int y)
 {
     //-- Player interface:
     SDL_Surface * text_surface = TTF_RenderText_Solid(player_font, player.getName().c_str(), greencolor );
@@ -281,21 +290,21 @@ bool rd::GameScreen::drawPlayerUI(SDL_Surface *screen, Player player, int x, int
     return true;
 }
 
-bool rd::GameScreen::drawTargetUI(SDL_Surface *screen, Target target, Player player_data)
+bool rd::GameScreen::drawTargetUI(SDL_Surface *screen, const Target & target, const Player & player_data)
 {
     //-- Check that the dimensions of the target are feasible
-    if (target.getDimensions().x < 0 || target.getDimensions().y < 0 ||
-            target.getPos().x < 0 || target.getPos().y < 0)
+    if (target.getDimensions().getX() < 0 || target.getDimensions().getY() < 0 ||
+            target.getPos().getX() < 0 || target.getPos().getY() < 0)
     {
         RD_ERROR("Trying to draw an invalid target: %s\n", player_data.getName().c_str());
         return false;
     }
 
     //-- Convert target coordinates from center+dimensions to corner+dimensions
-    int target_top_left_x = target.getPos().x - target.getDimensions().x / 2;
-    int target_top_left_y = target.getPos().y - target.getDimensions().y / 2;
-    int target_dimensions_x = target.getDimensions().x;
-    int target_dimensions_y = target.getDimensions().y;
+    int target_top_left_x = target.getPos().getX() - target.getDimensions().getX() / 2;
+    int target_top_left_y = target.getPos().getY() - target.getDimensions().getY() / 2;
+    int target_dimensions_x = target.getDimensions().getX();
+    int target_dimensions_y = target.getDimensions().getY();
 
     //-- Put enclosing box, which is made of 4 rectangles (one for each side):
     SDL_Rect target_rect_top = { target_top_left_x, target_top_left_y,
@@ -318,7 +327,7 @@ bool rd::GameScreen::drawTargetUI(SDL_Surface *screen, Target target, Player pla
     SDL_Surface * text_surface = TTF_RenderText_Solid(target_font, player_data.getName().c_str(), redcolor);
     SDL_Rect text_rect = { target_top_left_x, target_top_left_y - TARGET_TEXT_BOX_HEIGHT,
                            target_dimensions_x, TARGET_TEXT_BOX_HEIGHT};
-    SDL_Rect source_rect = {0, 0, target.getDimensions().x, TARGET_TEXT_BOX_HEIGHT};
+    SDL_Rect source_rect = {0, 0, target.getDimensions().getX(), TARGET_TEXT_BOX_HEIGHT};
     SDL_BlitSurface(text_surface, &source_rect, screen, &text_rect);
 
     //-- Put target health bar:

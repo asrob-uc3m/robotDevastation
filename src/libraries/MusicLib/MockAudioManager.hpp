@@ -1,15 +1,15 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCK_AUDIO_MANAGER_HPP__
-#define __MOCK_AUDIO_MANAGER_HPP__
+#ifndef __RD_MOCK_AUDIO_MANAGER_HPP__
+#define __RD_MOCK_AUDIO_MANAGER_HPP__
 
+#include <string>
 #include <map>
-
-#include "Macros.hpp"
-#include "AudioManager.hpp"
 
 #include <yarp/os/RateThread.h>
 #include <yarp/os/Mutex.h>
+
+#include "AudioManager.hpp"
 
 namespace rd{
 
@@ -25,34 +25,29 @@ class MockAudioManager : public AudioManager,
     public:
         //---------------- Mock interface -------------------------------------------------------------------------//
          //! @brief Whether the sound with the given id is being played or not
-        bool isPlaying(const std::string& id);
+        bool isPlaying(const std::string& id) const;
 
 
         //---------------- Audio-related Stuff ----------------------------------------------------------------------//
-        //! @brief Loads an audio file, assigning it a string as identifier
         bool load( const std::string& music_filepath, const std::string& id, const int& type);
-
-        //! @brief Plays a music/sound effect file previously loaded
         bool play(const std::string &id, int loop);
-
-        //! @brief Stops the music being played currently
         bool stopMusic();
 
 
         //---------------- Manager Stuff ----------------------------------------------------------------------//
         virtual bool start();
         virtual bool stop();
-        virtual bool isStopped();
+        virtual bool isStopped() const;
 
         /**
-         * @brief Register this manager in the ImageManager registry so that can be used
+         * @brief Register this manager in the AudioManager registry so that can be used
          *
-         * It ensures that only one manager of this type is created (unique instance)
+         * It ensures that only one manager of this type is created (unique instance).
          */
         static bool RegisterManager();
 
         //! @brief Destructor. Used to reset the local static reference after destroying this manager
-        ~MockAudioManager();
+        virtual ~MockAudioManager();
 
         //! @brief String that identifies this manager
         static const std::string id;
@@ -68,9 +63,12 @@ class MockAudioManager : public AudioManager,
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getAudioManager() method
+         * and the instantiation is done at the RegisterManager() method.
          */
         MockAudioManager();
+
+        MockAudioManager(const MockAudioManager &);
+        MockAudioManager & operator=(const MockAudioManager &);
 
         //! @brief Method called periodically from the RateThread class. It simply calls the update() method.
         void run();
@@ -79,11 +77,11 @@ class MockAudioManager : public AudioManager,
         static MockAudioManager * uniqueInstance;
 
         //! \brief Dictionary for sound durations:
-        yarp::os::Mutex durations_mutex;
+        mutable yarp::os::Mutex durations_mutex;
         std::map<std::string, int> durations;
 
         //! \brief Dictionary for loop times
-        yarp::os::Mutex loop_times_mutex;
+        mutable yarp::os::Mutex loop_times_mutex;
         std::map<std::string, int> loop_times;
 
         bool stopped;
@@ -91,4 +89,4 @@ class MockAudioManager : public AudioManager,
 
 }
 
-#endif //-- __MOCK_AUDIO_MANAGER_HPP__
+#endif //-- __RD_MOCK_AUDIO_MANAGER_HPP__

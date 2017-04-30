@@ -122,11 +122,11 @@ class FSMTest : public testing::Test
         }
 
     protected:
-        bool awaitStateCheck(const std::string & state_id, const unsigned int reference_state)
+        bool awaitStateCheck(const std::string & state_id, const int reference_state)
         {
             RD_DEBUG("%s\n", state_id.c_str());
 
-            unsigned int retry_count = 0;
+            int retry_count = 0;
             int currentState = 0;
             yarp::os::Bottle command, response;
 
@@ -153,7 +153,7 @@ class FSMTest : public testing::Test
         StateDirector *stateDirector1, *stateDirector2, *stateDirector3, *nullStateDirector;
 
         static const std::string debug_port_name;
-        static const unsigned int max_retries;
+        static const int max_retries;
         static const double delay_s;
 
         yarp::os::RpcClient rpcClient;
@@ -161,7 +161,7 @@ class FSMTest : public testing::Test
 };
 
 const std::string FSMTest::debug_port_name = "/debug";
-const unsigned int FSMTest::max_retries = 10;
+const int FSMTest::max_retries = 10;
 const double FSMTest::delay_s = 0.5;
 
 

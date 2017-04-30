@@ -269,10 +269,10 @@ TEST_F( MentalMapTest, UpdateTargetsUpdateTargets)
     std::vector<Target> targets_stored = mentalMap->getTargets();
     ASSERT_EQ(1, targets_stored.size());
     EXPECT_EQ(1, targets_stored[0].getPlayerId());
-    EXPECT_EQ(100, targets_stored[0].getPos().x);
-    EXPECT_EQ(100, targets_stored[0].getPos().y);
-    EXPECT_EQ(50, targets_stored[0].getDimensions().x);
-    EXPECT_EQ(50, targets_stored[0].getDimensions().y);
+    EXPECT_EQ(100, targets_stored[0].getPos().getX());
+    EXPECT_EQ(100, targets_stored[0].getPos().getY());
+    EXPECT_EQ(50, targets_stored[0].getDimensions().getX());
+    EXPECT_EQ(50, targets_stored[0].getDimensions().getY());
     EXPECT_EQ(100, targets_stored[0].getBelief());
 
 }
@@ -310,10 +310,10 @@ TEST_F( MentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
     //-- Check targets:
     Target target_not_updated = mentalMap->getTarget(1);
     EXPECT_EQ(1, target_not_updated.getPlayerId());
-    EXPECT_EQ(100, target_not_updated.getPos().x);
-    EXPECT_EQ(100, target_not_updated.getPos().y);
-    EXPECT_EQ(50, target_not_updated.getDimensions().x);
-    EXPECT_EQ(50, target_not_updated.getDimensions().y);
+    EXPECT_EQ(100, target_not_updated.getPos().getX());
+    EXPECT_EQ(100, target_not_updated.getPos().getY());
+    EXPECT_EQ(50, target_not_updated.getDimensions().getX());
+    EXPECT_EQ(50, target_not_updated.getDimensions().getY());
     EXPECT_EQ(90, target_not_updated.getBelief());
 
 

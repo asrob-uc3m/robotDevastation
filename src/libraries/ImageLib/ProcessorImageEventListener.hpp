@@ -3,36 +3,37 @@
 #ifndef __RD_PROCESSOR_IMAGE_EVENT_LISTENER_HPP__
 #define __RD_PROCESSOR_IMAGE_EVENT_LISTENER_HPP__
 
-#include <math.h>  //-- Just for fabs to make it a bit failproof.
+#include <string>
 
-#include <stddef.h> //-- Just for NULL
 #include <zbar.h>
 
 #include "ImageManager.hpp"
-#include "Macros.hpp"
+#include "ImageEventListener.hpp"
 #include "MentalMap.hpp"
 
 namespace rd
 {
 
 /**
+ * @ingroup ImageLib
+ *
  * @brief ProcessorImageEventListener used for processing
  *
  * This object allows to access the received image and has a counter of
- * the incoming images received
+ * the incoming images received.
  *
  */
 class ProcessorImageEventListener : public ImageEventListener
 {
     public:
         ProcessorImageEventListener();
-        ~ProcessorImageEventListener();
+        virtual ~ProcessorImageEventListener();
 
         virtual bool onImageArrived( ImageManager * manager );
 
 
     private:
-        bool isInteger(std::string s);
+        bool isInteger(const std::string & s) const;
         Image received_image;
 
         int cameraWidth;

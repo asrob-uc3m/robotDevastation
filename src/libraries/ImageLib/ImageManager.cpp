@@ -1,11 +1,10 @@
 #include "ImageManager.hpp"
-
+#include "Macros.hpp"
 
 //-- Static members initialization:
 rd::ImageManager * rd::ImageManager::imageManagerInstance = NULL;
 std::string rd::ImageManager::currentId = "";
 std::map<std::string, rd::ImageManager *> rd::ImageManager::imageManagerRegistry = std::map<std::string, rd::ImageManager *>();
-
 
 rd::ImageManager *rd::ImageManager::getImageManager()
 {
@@ -26,7 +25,7 @@ rd::ImageManager *rd::ImageManager::getImageManager()
     return imageManagerInstance;
 }
 
-rd::ImageManager *rd::ImageManager::getImageManager(std::string id)
+rd::ImageManager *rd::ImageManager::getImageManager(const std::string & id)
 {
     if (imageManagerInstance == NULL )
     {
@@ -87,7 +86,7 @@ rd::ImageManager::~ImageManager()
 
 }
 
-bool rd::ImageManager::addImageEventListener(rd::ImageEventListener *listener)
+bool rd::ImageManager::addImageEventListener(ImageEventListener *listener)
 {
     listeners.push_back(listener);
     return true;
@@ -99,12 +98,12 @@ bool rd::ImageManager::removeImageEventListeners()
     return true;
 }
 
-bool rd::ImageManager::configure(std::string parameter, std::string value)
+bool rd::ImageManager::configure(const std::string & parameter, const std::string & value)
 {
     return true;
 }
 
-bool rd::ImageManager::Register(rd::ImageManager *manager, std::string id)
+bool rd::ImageManager::Register(ImageManager *manager, const std::string & id)
 {
     if ( imageManagerRegistry.find(id) == imageManagerRegistry.end())
     {

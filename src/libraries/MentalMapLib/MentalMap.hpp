@@ -3,28 +3,16 @@
 #ifndef __RD_MENTAL_MAP_HPP__
 #define __RD_MENTAL_MAP_HPP__
 
-#include <map>
 #include <vector>
-#include <iterator>
 
 #include "Player.hpp"
 #include "Target.hpp"
 #include "Weapon.hpp"
-#include "Utils.hpp"
 #include "MentalMapEventListener.hpp"
 #include "NetworkEventListener.hpp"
-#include "NetworkManager.hpp"
 #include "AudioManager.hpp"
 
 namespace rd{
-
-/**
- * @ingroup rd_libraries
- *
- * \defgroup MentalMapLib
- *
- * @brief The MentalMapLib library contains all the classes related to game information storage (e.g. players, targets, weapons, etc)
- */
 
 /**
  * @ingroup MentalMapLib
@@ -62,19 +50,19 @@ class MentalMap : public NetworkEventListener
 
         //-- Interface to get data
         //--------------------------------------------------------------------------------------------
-        std::vector<Target> getTargets();
-        std::vector<Player> getPlayers();
-        Target getTarget(const int& id = -1);
-        Player getPlayer(const int& id = -1);
+        std::vector<Target> getTargets() const;
+        std::vector<Player> getPlayers() const;
+        Target getTarget(const int& id = -1) const;
+        Player getPlayer(const int& id = -1) const;
 
         //! @brief Get the player corresponding to the user
-        Player getMyself();
+        Player getMyself() const;
 
 
         //-- Weapon interface
         //--------------------------------------------------------------------------------------------
         void addWeapon(Weapon weapon);
-        Weapon getCurrentWeapon();
+        Weapon getCurrentWeapon() const;
 
         //! @brief Manage all the actions to be carried out when the user shoots (sound, update players, etc)
         bool shoot();
@@ -86,7 +74,7 @@ class MentalMap : public NetworkEventListener
         //-- Functions to update data
         //--------------------------------------------------------------------------------------------
         //! @brief  The current implementation just replaces the players inside the mental map by the new players
-        bool updatePlayers(std::vector<Player> new_player_vector);
+        bool updatePlayers(const std::vector<Player> & new_player_vector);
 
         /**
          * @brief Update the targets stored in the mental map
@@ -94,7 +82,7 @@ class MentalMap : public NetworkEventListener
          * If a target previously detected is no longer present in the new detections, decreases the belief value
          * until reaching 0. Then, it deletes that target.
          */
-        bool updateTargets(std::vector<Target> new_target_detections);
+        bool updateTargets(const std::vector<Target> & new_target_detections);
 
         //! @brief Restores the health of current player (and does more stuff if needed)
         bool respawn();
@@ -113,9 +101,12 @@ class MentalMap : public NetworkEventListener
          * @brief Constructor
          *
          * Constructor for this class is private, since the singleton can only be instantiated once,
-         * and the instantiation is done at the getMentalMap() method
+         * and the instantiation is done at the getMentalMap() method.
          */
         MentalMap();
+
+        MentalMap(const MentalMap &);
+        MentalMap & operator=(const MentalMap &);
 
         //! @brief Stores the unique instance of the MentalMap
         static MentalMap * mentalMapInstance;
@@ -152,7 +143,7 @@ class MentalMap : public NetworkEventListener
         //-- Implementation of NetworkEventListener functions
         //--------------------------------------------------------------------------------------------
         //! @brief Updates the local information about the players with the new data received by the NetworkManager.
-        bool onDataArrived(std::vector<Player> players);
+        bool onDataArrived(const std::vector<Player> & players);
 };
 
 }

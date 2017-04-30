@@ -80,11 +80,11 @@ class FSMBuilderTest : public testing::Test
         }
 
     protected:
-        bool awaitStateCheck(const std::string & state_id, const unsigned int reference_state)
+        bool awaitStateCheck(const std::string & state_id, const int reference_state)
         {
             RD_DEBUG("%s\n", state_id.c_str());
 
-            unsigned int retry_count = 0;
+            int retry_count = 0;
             int currentState = 0;
             yarp::os::Bottle command, response;
 
@@ -110,14 +110,14 @@ class FSMBuilderTest : public testing::Test
         FiniteStateMachine *fsm;
 
         static const std::string debug_port_name;
-        static const unsigned int max_retries;
+        static const int max_retries;
         static const double delay_s;
 
         yarp::os::RpcClient rpcClient;
 };
 
 const std::string FSMBuilderTest::debug_port_name = "/debug";
-const unsigned int FSMBuilderTest::max_retries = 10;
+const int FSMBuilderTest::max_retries = 10;
 const double FSMBuilderTest::delay_s = 0.5;
 
 

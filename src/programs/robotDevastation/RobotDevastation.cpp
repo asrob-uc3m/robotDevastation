@@ -2,6 +2,8 @@
 
 #include "RobotDevastation.hpp"
 
+#include <cstdio>
+
 bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 {
     //-- Get player data
@@ -115,19 +117,19 @@ bool rd::RobotDevastation::updateModule()
     //-- Check if FSM has arrived the end-state
     if (gameFSM->getCurrentState() == -1)
     {
-        this->stopModule();
+        stopModule();
         return true;
     }
 
     if (mentalMap != NULL)
     {
-        printf("===robotDevastation===\n");
-        printf("Number of players: %zd\n",mentalMap->getPlayers().size());
+        std::printf("===robotDevastation===\n");
+        std::printf("Number of players: %zd\n",mentalMap->getPlayers().size());
         for(size_t i=0;i<mentalMap->getPlayers().size();i++)
         {
-           printf("----------------------\n%s\n",mentalMap->getPlayers().at(i).str().c_str());
+            std::printf("----------------------\n%s\n",mentalMap->getPlayers().at(i).str().c_str());
         }
-        //printf("======================\n");
+        //std::printf("======================\n");
         return true;
     }
 
@@ -190,12 +192,12 @@ bool rd::RobotDevastation::initPlayerInfo(yarp::os::ResourceFinder &rf)
         getInfoFromUser("Insert robotName []", robotName, true);
     }
 
-    printf("\n\n");
-    printf("Player information:\n");
-    printf("\t-id: %d\n", id);
-    printf("\t-name: %s\n", name.c_str());
-    printf("\t-team: %d\n", team);
-    printf("\t-robotName: %s\n", robotName.c_str());
+    std::printf("\n\n");
+    std::printf("Player information:\n");
+    std::printf("\t-id: %d\n", id);
+    std::printf("\t-name: %s\n", name.c_str());
+    std::printf("\t-team: %d\n", team);
+    std::printf("\t-robotName: %s\n", robotName.c_str());
     return true;
 }
 
@@ -295,6 +297,6 @@ bool rd::RobotDevastation::cleanup()
 bool rd::RobotDevastation::interruptModule()
 {
     RD_INFO("Closing program...\n");
-    return this->cleanup();
+    return cleanup();
 }
 

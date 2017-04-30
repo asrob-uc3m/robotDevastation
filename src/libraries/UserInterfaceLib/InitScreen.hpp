@@ -1,19 +1,22 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __INIT_SCREEN_HPP__
-#define __INIT_SCREEN_HPP__
+#ifndef __RD_INIT_SCREEN_HPP__
+#define __RD_INIT_SCREEN_HPP__
+
+#include <string>
 
 #include <SDL.h>
-#include <SDL_image.h>
 #include <SDL_ttf.h>
-#include <string>
-#include <yarp/os/ResourceFinder.h>
 
 #include "Screen.hpp"
-#include "Utils.hpp"
 
 namespace rd {
 
+/**
+ * @ingroup UserInterfaceLib
+ *
+ * @brief A User Interface.
+ */
 class InitScreen : public Screen
 {
     public:
@@ -35,4 +38,4 @@ class InitScreen : public Screen
 
 }
 
-#endif // __INIT_SCREEN_HPP__
+#endif // __RD_INIT_SCREEN_HPP__

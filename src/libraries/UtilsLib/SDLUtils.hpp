@@ -1,19 +1,23 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __SDL_UTILS_HPP__
-#define __SDL_UTILS_HPP__
+#ifndef __RD_SDL_UTILS_HPP__
+#define __RD_SDL_UTILS_HPP__
+
+#include <SDL.h>
 
 #include "ImageManager.hpp"
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
 
 namespace rd {
 
+//! @ingroup UtilsLib
 SDL_Surface * RdImage2SDLImage(const Image & image);
+
+//! @ingroup UtilsLib
 bool initSDL();
+
+//! @ingroup UtilsLib
 bool cleanupSDL();
 
 }
 
-#endif  // __SDL_UTILS_HPP__
+#endif  // __RD_SDL_UTILS_HPP__

@@ -361,7 +361,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     mockInputManager->sendKeyPress(GameState::KEY_SHOOT);
     std::vector<Player> players_after = mentalMap->getPlayers();
     ASSERT_EQ(players_before.size(), players_after.size());
-    for(int i = 0; i < players_before.size(); i++)
+    for(int i = 0; i < (int) players_before.size(); i++)
         EXPECT_EQ(players_before[i].getHealth(), players_after[i].getHealth());
 
     //-- If I shoot all ammo, I run out of ammo, and I cannot shoot until reloading
@@ -382,7 +382,7 @@ TEST_F(GameStateTest, GameStateGameFlowIsCorrect)
     yarp::os::Time::delay(0.5);
     players_after = mentalMap->getPlayers();
     ASSERT_EQ(players_before.size(), players_after.size());
-    for(int i = 0; i < players_before.size(); i++)
+    for(int i = 0; i < (int) players_before.size(); i++)
         if (players_before[i].getId() != mentalMap->getMyself().getId())
         {
             ASSERT_EQ(players_before[i].getId(), players_after[i].getId());

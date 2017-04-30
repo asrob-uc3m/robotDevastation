@@ -1,5 +1,11 @@
 #include "YarpLocalImageManager.hpp"
 
+#include <sstream>
+
+#include <yarp/os/Network.h>
+#include <yarp/os/Property.h>
+
+#include "Macros.hpp"
 
 //-- Initialize static members
 rd::YarpLocalImageManager * rd::YarpLocalImageManager::uniqueInstance = NULL;
@@ -30,12 +36,12 @@ bool rd::YarpLocalImageManager::start()
     if(! yarp::os::Network::connect( remote_port_name.c_str(), local_port_name.c_str(), "mjpeg" ) )
     {
         RD_WARNING("Could not connect to robot camera via mjpeg.\n");
-		if (!yarp::os::Network::connect(remote_port_name.c_str(), local_port_name.c_str()))
-		{
-		RD_WARNING("Could not connect to robot camera.\n");
-		return false;
-		}
-	}
+        if (!yarp::os::Network::connect(remote_port_name.c_str(), local_port_name.c_str()))
+        {
+            RD_WARNING("Could not connect to robot camera.\n");
+            return false;
+        }
+    }
 
     RD_SUCCESS("Connected to robot camera.\n");
 
@@ -59,7 +65,7 @@ bool rd::YarpLocalImageManager::stop()
     return true;
 }
 
-bool rd::YarpLocalImageManager::isStopped()
+bool rd::YarpLocalImageManager::isStopped() const
 {
     return stopped;
 }
@@ -70,7 +76,7 @@ bool rd::YarpLocalImageManager::setEnabled(bool enabled)
     return true;
 }
 
-bool rd::YarpLocalImageManager::configure(std::string parameter, std::string value)
+bool rd::YarpLocalImageManager::configure(const std::string & parameter, const std::string & value)
 {
     if ( parameter.compare("remote_img_port") == 0 && value.compare("") != 0)
     {
@@ -92,10 +98,10 @@ bool rd::YarpLocalImageManager::configure(std::string parameter, std::string val
         return ImageManager::configure(parameter, value);
 }
 
-rd::Image rd::YarpLocalImageManager::getImage()
+rd::Image rd::YarpLocalImageManager::getImage() const
 {
     semaphore.wait();
-    Image return_image(image);
+    Image return_image = image;
     semaphore.post();
 
     return return_image;
@@ -116,7 +122,7 @@ rd::YarpLocalImageManager::~YarpLocalImageManager()
     uniqueInstance = NULL;
 }
 
-void rd::YarpLocalImageManager::onRead(rd::Image &image)
+void rd::YarpLocalImageManager::onRead(Image &image)
 {
     semaphore.wait();
     this->image=image;
@@ -124,8 +130,12 @@ void rd::YarpLocalImageManager::onRead(rd::Image &image)
 
     //-- Notify listeners
     if (enabled)
-        for (int i = 0; i < listeners.size(); i++)
-            listeners[i]->onImageArrived(this);
+    {
+        for (std::vector<ImageEventListener *>::iterator it = listeners.begin(); it != listeners.end(); ++it)
+        {
+            (*it)->onImageArrived(this);
+        }
+    }
     else
     {
         RD_WARNING("YarpImageManager is disabled!\n");

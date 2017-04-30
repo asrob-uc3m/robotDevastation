@@ -1,5 +1,8 @@
-
 #include "SDLAudioManager.hpp"
+
+#include <SDL.h>
+
+#include "Macros.hpp"
 
 //-- This is very important:
 rd::SDLAudioManager * rd::SDLAudioManager::uniqueInstance = NULL;
@@ -101,7 +104,7 @@ bool rd::SDLAudioManager::stop()
     return true;
 }
 
-bool rd::SDLAudioManager::isStopped()
+bool rd::SDLAudioManager::isStopped() const
 {
     return stopped;
 }
@@ -119,6 +122,6 @@ bool rd::SDLAudioManager::RegisterManager()
 rd::SDLAudioManager::~SDLAudioManager()
 {
     //-- Stop this manager
-    this->stop();
+    stop();
     uniqueInstance = NULL;
 }

@@ -1,18 +1,13 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCK_STATE_HPP__
-#define __MOCK_STATE_HPP__
+#ifndef __RD_MOCK_STATE_HPP__
+#define __RD_MOCK_STATE_HPP__
 
-#include "State.hpp"
-#include "Utils.hpp"
-
-#include <string>
-#include <sstream>
-
-#include <yarp/os/Bottle.h>
 #include <yarp/os/PortReader.h>
 #include <yarp/os/RpcServer.h>
+#include <yarp/os/ConnectionReader.h>
 
+#include "State.hpp"
 
 namespace rd{
 
@@ -49,19 +44,19 @@ class MockState : public State, public yarp::os::PortReader, public yarp::os::Rp
         virtual bool read(yarp::os::ConnectionReader & connection);
 
         //! @brief Indicates that the State has been initialized
-        static const unsigned int STATE_INITIAL;
+        static const int STATE_INITIAL;
 
         //! @brief Indicates that the State has called setup()
-        static const unsigned int STATE_SETUP;
+        static const int STATE_SETUP;
 
         //! @brief Indicates that the State has called loop()
-        static const unsigned int STATE_LOOP;
+        static const int STATE_LOOP;
 
         //! @brief Indicates that the State has called cleanup()
-        static const unsigned int STATE_CLEANUP;
+        static const int STATE_CLEANUP;
 
         //! @brief Request identifier for RPC communication
-        static const unsigned int REQUEST_STATE;
+        static const int REQUEST_STATE;
 
     private:
         int id;
@@ -73,4 +68,4 @@ class MockState : public State, public yarp::os::PortReader, public yarp::os::Rp
 
 
 }
-#endif // __MOCK_STATE_HPP__
+#endif // __RD_MOCK_STATE_HPP__

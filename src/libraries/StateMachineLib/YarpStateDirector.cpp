@@ -1,9 +1,9 @@
 #include "YarpStateDirector.hpp"
-
+#include "Macros.hpp"
 
 const int rd::YarpStateDirector::DEFAULT_RATE_MS = 100;
 
-rd::YarpStateDirector::YarpStateDirector(rd::State *state) : StateDirector(state), RateThread(DEFAULT_RATE_MS)
+rd::YarpStateDirector::YarpStateDirector(State *state) : StateDirector(state), RateThread(DEFAULT_RATE_MS)
 {
 
 }
@@ -13,7 +13,7 @@ bool rd::YarpStateDirector::Start()
     if (state == NULL)
     {
         RD_DEBUG("Null state. Exiting...\n");
-        return this->Stop();
+        return Stop();
     }
 
     RD_DEBUG("Starting StateDirector for id %s\n", state->getStateId().c_str());
@@ -48,13 +48,13 @@ void rd::YarpStateDirector::run()
     if ( !state->loop() )
     {
         RD_ERROR("Error in loop. Stopping this state...\n");
-        this->Stop();
+        Stop();
     }
     int condition = state->evaluateConditions();
 
     if (nextStates.find(condition) != nextStates.end())
     {
-        this->Stop();
+        Stop();
         nextStates.find(condition)->second->Start();
     }
 

@@ -1,5 +1,9 @@
 #include "YarpImageManager.hpp"
 
+#include <yarp/os/Time.h>
+#include <yarp/os/Network.h>
+
+#include "Macros.hpp"
 
 //-- Initialize static members
 rd::YarpImageManager * rd::YarpImageManager::uniqueInstance = NULL;
@@ -81,7 +85,7 @@ bool rd::YarpImageManager::stop()
     return true;
 }
 
-bool rd::YarpImageManager::isStopped()
+bool rd::YarpImageManager::isStopped() const
 {
     return stopped;
 }
@@ -92,7 +96,7 @@ bool rd::YarpImageManager::setEnabled(bool enabled)
     return true;
 }
 
-bool rd::YarpImageManager::configure(std::string parameter, std::string value)
+bool rd::YarpImageManager::configure(const std::string & parameter, const std::string & value)
 {
     if ( parameter.compare("remote_img_port") == 0 && value.compare("") != 0)
     {
@@ -108,10 +112,10 @@ bool rd::YarpImageManager::configure(std::string parameter, std::string value)
         return ImageManager::configure(parameter, value);
 }
 
-rd::Image rd::YarpImageManager::getImage()
+rd::Image rd::YarpImageManager::getImage() const
 {
     semaphore.wait();
-    Image return_image(image);
+    Image return_image = image;
     semaphore.post();
 
     return return_image;
@@ -132,7 +136,7 @@ rd::YarpImageManager::~YarpImageManager()
     uniqueInstance = NULL;
 }
 
-void rd::YarpImageManager::onRead(rd::Image &image)
+void rd::YarpImageManager::onRead(Image &image)
 {
     semaphore.wait();
     this->image=image;
@@ -140,8 +144,12 @@ void rd::YarpImageManager::onRead(rd::Image &image)
 
     //-- Notify listeners
     if (enabled)
-        for (int i = 0; i < listeners.size(); i++)
-            listeners[i]->onImageArrived(this);
+    {
+        for (std::vector<ImageEventListener *>::iterator it = listeners.begin(); it != listeners.end(); ++it)
+        {
+            (*it)->onImageArrived(this);
+        }
+    }
     else
     {
         RD_WARNING("YarpImageManager is disabled!\n");

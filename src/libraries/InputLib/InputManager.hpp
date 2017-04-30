@@ -3,27 +3,18 @@
 #ifndef __RD_INPUT_MANAGER_HPP__
 #define __RD_INPUT_MANAGER_HPP__
 
-
-
+#include <string>
 #include <vector>
+#include <map>
 
-#include "Utils.hpp"
 #include "InputEventListener.hpp"
 
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup InputLib
- *
- * @brief The InputLib library contains classes related to user input (keyboard, mouse, etc).
- */
-
-/**
  * @ingroup InputLib
  *
- * @brief User input manager ( keyboard, mouse, joysticks, etc)
+ * @brief User input manager (keyboard, mouse, joysticks, etc)
  *
  * InputManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
@@ -36,7 +27,7 @@ namespace rd{
  * a unified interface to the different managers for the mouse, keyboard, etc.
  *
  * Input events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
- * along with the data relevant to the event triggered (i.e. what key was pressed)
+ * along with the data relevant to the event triggered (i.e. what key was pressed).
  *
  */
 class InputManager
@@ -55,7 +46,7 @@ class InputManager
          * @return The InputManager registered with the given id, NULL if the id is not found in
          * the registry.
          */
-        static InputManager * getInputManager(std::string id);
+        static InputManager * getInputManager(const std::string & id);
 
         //! @brief Deallocate all the registered InputManager
         static bool destroyInputManager();
@@ -75,7 +66,7 @@ class InputManager
         virtual bool stop() = 0;
 
         //! @brief True if the manager is not active
-        virtual bool isStopped() = 0;
+        virtual bool isStopped() const = 0;
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Adds a InputEventListener to the list of observers to be notified of events
@@ -85,7 +76,7 @@ class InputManager
         bool removeInputEventListeners();
 
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, std::string value);
+        virtual bool configure(const std::string & parameter, const std::string & value);
 
         //------------------------------ Input Manager API ------------------------------------------------------------//
         //! @brief Get system info about input events
@@ -96,7 +87,7 @@ class InputManager
          * @brief This function allows subclasses to install their unique instances in the singleton register to be
          * selected later by the user
          */
-        static bool Register( InputManager * manager, std::string id);
+        static bool Register( InputManager * manager, const std::string & id);
 
         //! @brief Observers registered to be notified of input events
         std::vector<InputEventListener *> listeners;

@@ -3,11 +3,6 @@
 #ifndef __RD_KEY_HPP__
 #define __RD_KEY_HPP__
 
-#include "Utils.hpp"
-
-#include <SDL.h>
-#include <map>
-
 namespace rd{
 
 /**
@@ -21,7 +16,7 @@ namespace rd{
  * it is considered both printable and control key.
  *
  * This class must not be inherited from. Use factory classes and functions to perform custom
- * initialization (see \ref rd::SDLEventFactory).
+ * initialization (see rd::SDLEventFactory).
  */
 class Key
 {

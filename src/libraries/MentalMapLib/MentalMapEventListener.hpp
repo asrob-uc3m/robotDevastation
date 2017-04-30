@@ -25,13 +25,15 @@ class MentalMapEventListener
          * @param player Player corresponding to the target hit
          * @param weapon Weapon used to hit the target
          */
-        virtual bool onTargetHit(Target target, Player player, Weapon weapon) = 0;
+        virtual bool onTargetHit(const Target & target, const Player & player, const Weapon & weapon) = 0;
 
         /**
          * @brief This function will be called whenever the player is respawned
          * @param player Player to respawn
          */
-        virtual bool onRespawn(Player player) = 0;
+        virtual bool onRespawn(const Player & player) = 0;
+
+        virtual ~MentalMapEventListener() {}
 };
 
 }

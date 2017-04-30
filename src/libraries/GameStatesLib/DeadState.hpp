@@ -1,16 +1,21 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __DEAD_STATE_HPP__
-#define __DEAD_STATE_HPP__
+#ifndef __RD_DEAD_STATE_HPP__
+#define __RD_DEAD_STATE_HPP__
 
 #include "State.hpp"
-#include "StateDirector.hpp"
-#include "Utils.hpp"
 #include "Hub.hpp"
-#include "YarpNetworkManager.hpp"
+#include "InputEventListener.hpp"
+#include "NetworkManager.hpp"
+#include "ImageManager.hpp"
+#include "InputManager.hpp"
+#include "MentalMap.hpp"
+#include "RobotManager.hpp"
+#include "AudioManager.hpp"
+#include "ScreenManager.hpp"
 #include "DeadScreen.hpp"
+#include "Key.hpp"
 #include "WindowEvent.hpp"
-
 
 namespace rd{
 
@@ -18,6 +23,7 @@ namespace rd{
 * @ingroup GameStatesLib
 *
 * @brief Game Dead State
+*
 * Behavior:
 *  - Waits for 10 seconds showing dead screen
 *  - Then, it enables input:
@@ -35,8 +41,6 @@ public:
     virtual bool setup();
     virtual bool loop();
     virtual bool cleanup();
-
-    //! @brief Returns the internal variable value as condition evaluation result
     virtual int evaluateConditions();
 
     //enum DeadStateOption {RESPAWN_SELECTED, EXIT_SELECTED};
@@ -53,11 +57,10 @@ public:
 
 protected:
     DeadScreen screen;
-    int last_transition; //-- Stores the transition that triggered the cleanup
     bool received_respawn;
     bool received_exit;
     int elapsed_time; //-- Time elapsed in ms
     int timer; //-- Countdown timer in s
 };
 }
-#endif // __DEAD_STATE_HPP__
+#endif // __RD_DEAD_STATE_HPP__

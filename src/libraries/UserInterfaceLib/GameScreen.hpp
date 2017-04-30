@@ -3,30 +3,19 @@
 #ifndef __RD_GAME_SCREEN_HPP__
 #define __RD_GAME_SCREEN_HPP__
 
-#include <SDL.h>
-#include <SDL_ttf.h>
-#include <iostream>
 #include <string>
 #include <vector>
-#include <yarp/os/ResourceFinder.h>
 
-#include "MentalMap.hpp"
+#include <SDL.h>
+#include <SDL_ttf.h>
+
 #include "Target.hpp"
 #include "Player.hpp"
 #include "Weapon.hpp"
 #include "Screen.hpp"
-#include "Utils.hpp"
-#include "SDLUtils.hpp"
+#include "ImageManager.hpp"
 
 namespace rd{
-
-/**
- * @ingroup rd_libraries
- *
- * \defgroup UserInterfaceLib
- *
- * @brief The UserInterfaceLib library contains the different game screens
- */
 
 /**
  * @ingroup UserInterfaceLib
@@ -42,12 +31,12 @@ class GameScreen : public Screen
         virtual bool cleanup();
         virtual bool drawScreen(void *screen);
         virtual ~GameScreen();
-        virtual bool update(std::string parameter, std::string value);
-        virtual bool update(std::string parameter, Player value);
-        virtual bool update(std::string parameter, std::vector<Player> value);
-        virtual bool update(std::string parameter, std::vector<Target> value);
-        virtual bool update(std::string parameter, Weapon value);
-        virtual bool update(std::string parameter, Image value);
+        virtual bool update(const std::string & parameter, const std::string & value);
+        virtual bool update(const std::string & parameter, const Player & value);
+        virtual bool update(const std::string & parameter, const std::vector<Player> & value);
+        virtual bool update(const std::string & parameter, const std::vector<Target> & value);
+        virtual bool update(const std::string & parameter, const Weapon & value);
+        virtual bool update(const std::string & parameter, const Image & value);
 
         //-- Screen interface parameters
         static const std::string PARAM_CAMERA_FRAME;
@@ -57,9 +46,9 @@ class GameScreen : public Screen
         static const std::string PARAM_WEAPON;
 
     private:
-        bool drawUserUI(SDL_Surface * screen, Player user, Weapon weapon);
-        bool drawPlayerUI( SDL_Surface * screen, Player player, int x, int y);
-        bool drawTargetUI( SDL_Surface * screen, Target target, Player player_data);
+        bool drawUserUI(SDL_Surface * screen, const Player & user, const Weapon & weapon);
+        bool drawPlayerUI( SDL_Surface * screen, const Player & player, int x, int y);
+        bool drawTargetUI( SDL_Surface * screen, const Target & target, const Player & player_data);
         bool drawScope( SDL_Surface * screen );
 
         //-- Screen constants (that should not be constant)

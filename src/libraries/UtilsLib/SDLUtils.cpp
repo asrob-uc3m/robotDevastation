@@ -1,5 +1,10 @@
 #include "SDLUtils.hpp"
 
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+
+#include "Macros.hpp"
+
 SDL_Surface * rd::RdImage2SDLImage(const Image & image)
 {
     if (image.width()==0)

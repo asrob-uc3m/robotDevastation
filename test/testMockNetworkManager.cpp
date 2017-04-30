@@ -246,9 +246,9 @@ TEST_F(MockNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
 
     //-- Check everything worked as expected
     std::vector<Player> players_after = mentalMap->getPlayers();
-    for(int i = 0; i < players_after.size(); i++)
-        if (players_after[i].getId() == 2)
-            ASSERT_LT(players_after[i].getHealth(), 100);
+    for (std::vector<Player>::iterator it = players_after.begin(); it != players_after.end(); ++it)
+        if (it->getId() == 2)
+            ASSERT_LT(it->getHealth(), 100);
 
     //-- Cleanup
     ASSERT_TRUE(networkManager->stop());

@@ -1,25 +1,21 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __INIT_STATE_HPP__
-#define __INIT_STATE_HPP__
+#ifndef __RD_INIT_STATE_HPP__
+#define __RD_INIT_STATE_HPP__
 
 #include "State.hpp"
-#include "StateDirector.hpp"
-#include "Utils.hpp"
 #include "Hub.hpp"
-#include "YarpNetworkManager.hpp"
+#include "InputEventListener.hpp"
+#include "NetworkManager.hpp"
+#include "ImageManager.hpp"
+#include "InputManager.hpp"
+#include "MentalMap.hpp"
+#include "RobotManager.hpp"
+#include "AudioManager.hpp"
 #include "ScreenManager.hpp"
-#include "InitScreen.hpp"
+#include "Key.hpp"
 #include "WindowEvent.hpp"
-
-#include <string>
-#include <sstream>
-
-#include <yarp/os/Network.h>
-#include <yarp/os/Bottle.h>
-#include <yarp/os/Port.h>
-#include <yarp/os/BufferedPort.h>
-
+#include "InitScreen.hpp"
 
 namespace rd{
 
@@ -27,6 +23,7 @@ namespace rd{
 * @ingroup GameStatesLib
 *
 * @brief Game Initial State
+*
 * Behavior:
 *  - Waits for user input (showing nice RobotDevastation screen)
 *  - When user presses a button (Enter?), connects to the server and
@@ -46,8 +43,6 @@ class InitState : public State, public ManagerHub, public InputEventListener
         virtual bool setup();
         virtual bool loop();
         virtual bool cleanup();
-
-        //! @brief Returns the internal variable value as condition evaluation result
         virtual int evaluateConditions();
 
         static const int LOGIN_SUCCESSFUL;
@@ -69,4 +64,4 @@ class InitState : public State, public ManagerHub, public InputEventListener
 
 
 }
-#endif // __INIT_STATE_HPP__
+#endif // __RD_INIT_STATE_HPP__

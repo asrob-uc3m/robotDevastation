@@ -3,14 +3,14 @@
 #ifndef __RD_INI_READER_HPP__
 #define __RD_INI_READER_HPP__
 
-#include "Macros.hpp"
-
-//#include <iostream>
+#include <string>
 #include <fstream>
 #include <sstream>
-
 #include <vector>
 #include <map>
+#include <utility>
+
+#include "Macros.hpp"
 
 namespace rd{
 
@@ -33,7 +33,7 @@ class IniReader {
                 RD_SUCCESS("vector implementation opened file: %s\n",fileName);
             }
             std::string line;
-            while (getline(ifs, line)) {
+            while (std::getline(ifs, line)) {
                 //std::cout << "--------------------------" << std::endl;
                 int separator = (int)line.find(' ', 0);
                 if(separator == std::string::npos) continue;
@@ -63,7 +63,7 @@ class IniReader {
                 RD_SUCCESS("map implementation opened file: %s\n",fileName);
             }
             std::string line;
-            while (getline(ifs, line)) {
+            while (std::getline(ifs, line)) {
                 //std::cout << "--------------------------" << std::endl;
                 int separator = (int)line.find(' ', 0);
                 if(separator == std::string::npos) continue;

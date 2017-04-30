@@ -13,7 +13,7 @@ class MockInputManagerTest : public testing::Test
         {
             ASSERT_TRUE(MockInputManager::RegisterManager());
             inputManager = (MockInputManager *) MockInputManager::getInputManager(MockInputManager::id);
-            ASSERT_TRUE(inputManager);
+            ASSERT_NE((InputManager *)NULL, inputManager);
         }
 
         virtual void TearDown()

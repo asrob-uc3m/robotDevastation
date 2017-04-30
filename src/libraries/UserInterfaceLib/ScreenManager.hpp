@@ -1,24 +1,19 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __SCREEN_MANAGER_HPP__
-#define __SCREEN_MANAGER_HPP__
+#ifndef __RD_SCREEN_MANAGER_HPP__
+#define __RD_SCREEN_MANAGER_HPP__
 
-#include <iostream>
+#include <string>
+#include <vector>
 #include <map>
 
-#include "Macros.hpp"
 #include "Screen.hpp"
+#include "ImageManager.hpp"
+#include "Player.hpp"
+#include "Target.hpp"
+#include "Weapon.hpp"
 
 namespace rd{
-
-/**
- * @ingroup rd_libraries
- *
- * \defgroup UserInterfaceLib
- *
- * @brief The UserInterfaceLib library contains classes related to the game graphical user interface
- *
- **/
 
 /**
  * @ingroup UserInterfaceLib
@@ -51,7 +46,7 @@ class ScreenManager
          * @return The ScreenManager registered with the given id, NULL if the id is not found in
          * the registry.
          */
-        static ScreenManager * getScreenManager(std::string id);
+        static ScreenManager * getScreenManager(const std::string & id);
 
         //! @brief Deallocate all the registered ScreenManager
         static bool destroyScreenManager();
@@ -70,11 +65,11 @@ class ScreenManager
         virtual bool stop() = 0;
 
         //! @brief True if the manager is not active
-        virtual bool isStopped() = 0;
+        virtual bool isStopped() const = 0;
 
         //------------------------------ Configuration ----------------------------------------------------------------//
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, std::string value);
+        virtual bool configure(const std::string & parameter, const std::string & value);
 
 
         //------------------------------- Screen Manager functions -----------------------------------------------------//
@@ -85,29 +80,29 @@ class ScreenManager
         virtual bool show() = 0;
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, std::string value);
+        virtual bool update(const std::string & parameter, const std::string & value);
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, Image value); //-- Required by GameScreen and DeadScreen
+        virtual bool update(const std::string & parameter, const Image & value); //-- Required by GameScreen and DeadScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, Player value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const Player & value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, std::vector<Player> value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const std::vector<Player> & value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, std::vector<Target> value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const std::vector<Target> & value); //-- Required by GameScreen
 
         //! @brief Update some Screen parameter through the ScreenManager
-        virtual bool update(std::string parameter, Weapon value); //-- Required by GameScreen
+        virtual bool update(const std::string & parameter, const Weapon & value); //-- Required by GameScreen
 
     protected:
         /**
          * @brief This function allows subclasses to install their unique instances in the singleton register to be
          * selected later by the user
          */
-        static bool Register(ScreenManager * manager, std::string id);
+        static bool Register(ScreenManager * manager, const std::string & id);
 
         Screen * screen;
 
@@ -127,4 +122,4 @@ class ScreenManager
 
 }
 
-#endif //-- __SCREEN_MANAGER_HPP__
+#endif //-- __RD_SCREEN_MANAGER_HPP__

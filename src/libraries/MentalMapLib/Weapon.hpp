@@ -4,10 +4,8 @@
 #define __RD_WEAPON_HPP__
 
 #include <string>
-#include "Utils.hpp"
+
 #include "Target.hpp"
-#include "Player.hpp"
-#include "SDLAudioManager.hpp"
 
 namespace rd {
 
@@ -24,20 +22,19 @@ class Weapon
 public:
     //! @brief Constructs a default, dummy weapon. (That is invalid for the game, by the way)
     Weapon();
-    Weapon(std::string name, int damage, int max_ammo);
+    Weapon(const std::string & name, int damage, int max_ammo);
 
     //! @brief Checks if the target is within the weapon's current range and can be hit by it
-    bool canShootTarget(Target& target);
+    bool canShootTarget(const Target& target);
 
     //! @brief Increases the current ammo to max_ammo
     bool reload();
 
-
-    std::string getName();
-    int getDamage();
-    int getCurrentAmmo();
+    const std::string & getName() const;
+    int getDamage() const;
+    int getCurrentAmmo() const;
     bool setCurrentAmmo(int current_ammo);
-    int getMaxAmmo();
+    int getMaxAmmo() const;
 
     //! @brief X coordinate of the weapon's scope
     static const int SCOPE_X;

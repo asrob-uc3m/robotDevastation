@@ -1,11 +1,18 @@
 #include "MentalMap.hpp"
 
+#include <map>
+
+#include "SDLAudioManager.hpp"
+#include "Macros.hpp"
+
 //-- This is very important:
 rd::MentalMap * rd::MentalMap::mentalMapInstance = NULL;
 
 rd::MentalMap::MentalMap()
 {
     current_weapon = 0;
+    my_id = -1;
+    myself = NULL;
     SDLAudioManager::RegisterManager();
     audioManager = AudioManager::getAudioManager("SDL");
 }
@@ -31,12 +38,12 @@ bool rd::MentalMap::destroyMentalMap()
 
 bool rd::MentalMap::configure(const int &player_id)
 {
-    this->my_id = player_id;
-    this->myself = NULL;
+    my_id = player_id;
+    myself = NULL;
     return true;
 }
 
-std::vector<rd::Target> rd::MentalMap::getTargets()
+std::vector<rd::Target> rd::MentalMap::getTargets() const
 {
     std::vector<Target> target_vector;
 
@@ -49,7 +56,7 @@ std::vector<rd::Target> rd::MentalMap::getTargets()
 
 }
 
-std::vector<rd::Player> rd::MentalMap::getPlayers()
+std::vector<rd::Player> rd::MentalMap::getPlayers() const
 {
     std::vector<Player> player_vector;
 
@@ -61,11 +68,11 @@ std::vector<rd::Player> rd::MentalMap::getPlayers()
     return player_vector;
 }
 
-rd::Target rd::MentalMap::getTarget(const int &id)
+rd::Target rd::MentalMap::getTarget(const int &id) const
 {
     if ( targets.find(id) != targets.end() )
     {
-        return targets[id];
+        return targets.at(id);
     }
     else
     {
@@ -75,11 +82,11 @@ rd::Target rd::MentalMap::getTarget(const int &id)
     }
 }
 
-rd::Player rd::MentalMap::getPlayer(const int &id)
+rd::Player rd::MentalMap::getPlayer(const int &id) const
 {
     if ( players.find(id) != players.end() )
     {
-        return players[id];
+        return players.at(id);
     }
     else
     {
@@ -89,7 +96,7 @@ rd::Player rd::MentalMap::getPlayer(const int &id)
     }
 }
 
-rd::Player rd::MentalMap::getMyself()
+rd::Player rd::MentalMap::getMyself() const
 {
     if (!myself)
     {
@@ -103,7 +110,7 @@ rd::Player rd::MentalMap::getMyself()
     }
 }
 
-rd::Weapon rd::MentalMap::getCurrentWeapon()
+rd::Weapon rd::MentalMap::getCurrentWeapon() const
 {
     if ( (int)weapons.size() >= current_weapon)
         return weapons[current_weapon];
@@ -181,7 +188,7 @@ bool rd::MentalMap::reload()
     return weapons[current_weapon].reload();
 }
 
-bool rd::MentalMap::updatePlayers(std::vector<rd::Player> new_player_vector)
+bool rd::MentalMap::updatePlayers(const std::vector<Player> & new_player_vector)
 {
     //-- Right now, this just replaces the players inside the mental map
 
@@ -201,7 +208,7 @@ bool rd::MentalMap::updatePlayers(std::vector<rd::Player> new_player_vector)
     return true;
 }
 
-bool rd::MentalMap::updateTargets(std::vector<Target> new_target_detections)
+bool rd::MentalMap::updateTargets(const std::vector<Target> & new_target_detections)
 {
     //-- Reduce the belief of all the targets and deletes them when belief is 0
     for( std::map<int, Target>::iterator it = targets.begin(); it != targets.end(); ++it)
@@ -231,7 +238,7 @@ bool rd::MentalMap::respawn()
     return true;
 }
 
-bool rd::MentalMap::addMentalMapEventListener(rd::MentalMapEventListener *listener)
+bool rd::MentalMap::addMentalMapEventListener(MentalMapEventListener *listener)
 {
     listeners.push_back(listener);
     return true;
@@ -243,7 +250,7 @@ bool rd::MentalMap::removeMentalMapEventListeners()
     return true;
 }
 
-bool rd::MentalMap::onDataArrived(std::vector<rd::Player> players)
+bool rd::MentalMap::onDataArrived(const std::vector<Player> & players)
 {
     return updatePlayers(players);
 }

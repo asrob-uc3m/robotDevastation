@@ -1,21 +1,22 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOCK_SCREEN_HPP__
-#define __MOCK_SCREEN_HPP__
+#ifndef __RD_MOCK_SCREEN_HPP__
+#define __RD_MOCK_SCREEN_HPP__
+
+#include <string>
 
 #include <SDL.h>
-#include <SDL_image.h>
 #include <SDL_ttf.h>
-#include <string>
-#include <yarp/os/ResourceFinder.h>
 
 #include "Screen.hpp"
 
-#include "Utils.hpp"
-#include "SDLUtils.hpp"
-
 namespace rd {
 
+/**
+ * @ingroup UserInterfaceLib
+ *
+ * @brief A User Interface for testing purposes.
+ */
 class MockScreen : public Screen
 {
     public:
@@ -25,7 +26,7 @@ class MockScreen : public Screen
         virtual bool show();
         virtual bool drawScreen(void *screen);
         virtual ~MockScreen();
-        virtual bool update(std::string parameter, std::string value);
+        virtual bool update(const std::string & parameter, const std::string & value);
 
         //-- Available parameters:
         static const std::string PARAM_MESSAGE;
@@ -47,4 +48,4 @@ class MockScreen : public Screen
 
 }
 
-#endif // __MOCK_SCREEN_HPP__
+#endif // __RD_MOCK_SCREEN_HPP__

@@ -7,9 +7,9 @@
 
 using namespace rd;
 
-class MockAudioManagerTest : public testing::Test
+class SDLAudioManagerTest : public testing::Test
 {
-	public:
+    public:
         virtual void SetUp()
         {
             SDLAudioManager::RegisterManager();
@@ -31,7 +31,7 @@ class MockAudioManagerTest : public testing::Test
         }
 
 
-	protected:
+    protected:
         AudioManager * audioManager;
         static const std::string sound_bso;
         static const std::string sound_shoot;
@@ -43,12 +43,12 @@ class MockAudioManagerTest : public testing::Test
 };
 
 
-const std::string MockAudioManagerTest::sound_bso = "../sounds/RobotDevastationBSO.mp3";
-const std::string MockAudioManagerTest::sound_shoot = "../sounds/01_milshot.wav";
-const std::string MockAudioManagerTest::sound_explosion = "../sounds/15_explosion.wav";
+const std::string SDLAudioManagerTest::sound_bso = "../sounds/RobotDevastationBSO.mp3";
+const std::string SDLAudioManagerTest::sound_shoot = "../sounds/01_milshot.wav";
+const std::string SDLAudioManagerTest::sound_explosion = "../sounds/15_explosion.wav";
 
 
-TEST_F( MockAudioManagerTest, AudioManagerIsSingleton)
+TEST_F( SDLAudioManagerTest, AudioManagerIsSingleton)
 {
     AudioManager * manager2 = NULL;
     manager2 = AudioManager::getAudioManager("SDL");
@@ -58,7 +58,7 @@ TEST_F( MockAudioManagerTest, AudioManagerIsSingleton)
     ASSERT_EQ(audioManager, manager2);
 }
 
-TEST_F( MockAudioManagerTest, AudioManagerLoadsAudio)
+TEST_F( SDLAudioManagerTest, AudioManagerLoadsAudio)
 {
     ASSERT_NE((AudioManager *)NULL, audioManager);
     ASSERT_TRUE(audioManager->load(sound_bso_realpath, "bso", SDLAudioManager::MUSIC));
@@ -66,7 +66,7 @@ TEST_F( MockAudioManagerTest, AudioManagerLoadsAudio)
     ASSERT_TRUE(audioManager->load(sound_explosion_realpath, "explosion", SDLAudioManager::FX));
 }
 
-TEST_F( MockAudioManagerTest, AudioManagerPlaysOneSound )
+TEST_F( SDLAudioManagerTest, AudioManagerPlaysOneSound )
 {
     ASSERT_NE((AudioManager *)NULL, audioManager);
 
@@ -77,7 +77,7 @@ TEST_F( MockAudioManagerTest, AudioManagerPlaysOneSound )
     EXPECT_TRUE(audioManager->stopMusic());
 }
 
-TEST_F( MockAudioManagerTest, AudioManagerPlaysFx )
+TEST_F( SDLAudioManagerTest, AudioManagerPlaysFx )
 {
     ASSERT_NE((AudioManager *)NULL, audioManager);
 
@@ -90,7 +90,7 @@ TEST_F( MockAudioManagerTest, AudioManagerPlaysFx )
     yarp::os::Time::delay(2);
 }
 
-TEST_F( MockAudioManagerTest, AudioManagerPlaysAllSounds )
+TEST_F( SDLAudioManagerTest, AudioManagerPlaysAllSounds )
 {
     ASSERT_NE((AudioManager *)NULL, audioManager);
 

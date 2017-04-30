@@ -25,6 +25,7 @@ class ImageEventListener
          */
         virtual bool onImageArrived( ImageManager * manager ) = 0;
 
+        virtual ~ImageEventListener() {}
 };
 
 }

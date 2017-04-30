@@ -2,10 +2,21 @@
 
 #include "ProcessorImageEventListener.hpp"
 
+#include <cstdlib> //-- malloc(), free(), abs(), strtol()
+#include <cctype>  //-- isdigit()
+#include <cstddef> //-- NULL
+#include <vector>
+#include <sstream>
+
+#include "Target.hpp"
+#include "Vector2dBase.hpp"
+#include "Macros.hpp"
+
 rd::ProcessorImageEventListener::ProcessorImageEventListener()
 {
     //images_arrived = 0;
     cameraInitialized = false;
+    cameraWidth = cameraHeight = 0;
     rimage = NULL;
 
     mentalMap = MentalMap::getMentalMap();
@@ -17,7 +28,7 @@ rd::ProcessorImageEventListener::~ProcessorImageEventListener()
 {
     if (rimage!=NULL)
     {
-        free(rimage);
+        std::free(rimage);
         rimage = NULL;
     }
 }
@@ -33,14 +44,14 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
         cameraWidth = received_image.width();
         cameraHeight = received_image.height();
         cameraInitialized = true;
-        rimage = (unsigned char*)malloc( cameraWidth * cameraHeight );
+        rimage = (unsigned char*)std::malloc( cameraWidth * cameraHeight );
     }
 
     //-- Convert from YARP rgb to zbar b/w.
 
-    for( unsigned y = 0; y < cameraHeight; y++ )
+    for( int y = 0; y < cameraHeight; y++ )
     {
-        for( unsigned x = 0; x < cameraWidth; x++ )
+        for( int x = 0; x < cameraWidth; x++ )
         {
             //Convert to Y800
             int data = received_image.pixel(x,y).r + received_image.pixel(x,y).g + received_image.pixel(x,y).b;
@@ -86,9 +97,9 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
              //RD_DEBUG("%d: %d %d\n",i,coord.x,coord.y);
              coords.push_back(coord);
         }
-        int qrWidth = fabs(float(coords[2].x - coords[1].x));
-		int qrHeight = fabs(float(coords[1].y - coords[0].y));
-        Vector2d qrCenter(coords[0].x+(qrWidth/2), coords[0].y+(qrHeight/2) );
+        int qrWidth = std::abs(coords[2].getX() - coords[1].getX());
+        int qrHeight = std::abs(coords[1].getY() - coords[0].getY());
+        Vector2d qrCenter(coords[0].getX() + (qrWidth / 2), coords[0].getY() + (qrHeight / 2) );
 
         Target target( identifier_int,
                          qrCenter,
@@ -101,14 +112,14 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
     return true;
 }
 
-bool rd::ProcessorImageEventListener::isInteger(std::string s)
+bool rd::ProcessorImageEventListener::isInteger(const std::string & s) const
 {
     //-- Code adapted from: http://stackoverflow.com/questions/2844817/how-do-i-check-if-a-c-string-is-an-int
-   if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false ;
+   if(s.empty() || ((!std::isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
 
-   char * p ;
-   strtol(s.c_str(), &p, 10) ;
+   char * p;
+   std::strtol(s.c_str(), &p, 10);
 
-   return (*p == 0) ;
+   return (*p == 0);
 }
 

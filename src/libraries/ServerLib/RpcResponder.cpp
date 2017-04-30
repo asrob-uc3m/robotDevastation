@@ -2,6 +2,12 @@
 
 #include "RpcResponder.hpp"
 
+#include <yarp/os/Bottle.h>
+#include <yarp/os/ConnectionWriter.h>
+
+#include "Macros.hpp"
+#include "Vocabs.hpp"
+
 const int rd::RpcResponder::MAX_BELIEF = 600;
 
 bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
@@ -53,8 +59,8 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
             //-- Player( int id, std::string name, int health, int max_health, int team_id, int score);
             Player rdPlayer( loginId, in.get(2).asString().c_str(),100,100,in.get(3).asInt(),0);
 
-            players->operator [](loginId) = rdPlayer;
-            players_belief->operator [](loginId) = MAX_BELIEF;
+            (*players)[loginId] = rdPlayer;
+            (*players_belief)[loginId] = MAX_BELIEF;
 
             out.addVocab(VOCAB_RD_OK);
         }
@@ -119,7 +125,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
     }
     else
     {
-		RD_ERROR("Unkown command: %s.\n", in.toString().c_str());
+        RD_ERROR("Unkown command: %s.\n", in.toString().c_str());
         out.addVocab(VOCAB_RD_FAIL);
     }
     return out.write(*returnToSender);

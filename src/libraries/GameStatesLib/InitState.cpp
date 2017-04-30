@@ -1,12 +1,14 @@
 #include "InitState.hpp"
+#include "YarpNetworkManager.hpp"
+#include "Macros.hpp"
 
 const int rd::InitState::LOGIN_SUCCESSFUL = 1;
 const int rd::InitState::EXIT_REQUESTED = 2;
 
-rd::InitState::InitState(rd::NetworkManager *networkManager, rd::ImageManager *imageManager,
-                         rd::InputManager *inputManager, rd::MentalMap *mentalMap,
-                         rd::RobotManager *robotManager, AudioManager *audioManager,
-                         rd::ScreenManager *screenManager) :
+rd::InitState::InitState(NetworkManager *networkManager, ImageManager *imageManager,
+                         InputManager *inputManager, MentalMap *mentalMap,
+                         RobotManager *robotManager, AudioManager *audioManager,
+                         ScreenManager *screenManager) :
     ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager, audioManager, screenManager)
 {
     state_id = "InitState";
@@ -100,14 +102,14 @@ int rd::InitState::evaluateConditions()
     return -1;
 }
 
-bool rd::InitState::onKeyDown(const rd::Key & k)
+bool rd::InitState::onKeyDown(const Key & k)
 {
     return true;
 }
 
-bool rd::InitState::onKeyUp(const rd::Key & k)
+bool rd::InitState::onKeyUp(const Key & k)
 {
-    if (k.getValue() == rd::Key::KEY_ESCAPE)
+    if (k.getValue() == Key::KEY_ESCAPE)
     {
         RD_DEBUG("Escape was pressed!\n");
         received_exit = true;
@@ -123,9 +125,9 @@ bool rd::InitState::onKeyUp(const rd::Key & k)
     return false;
 }
 
-bool rd::InitState::onWindowEvent(const rd::WindowEvent & event)
+bool rd::InitState::onWindowEvent(const WindowEvent & event)
 {
-    if (event.getEvent() == rd::WindowEvent::WINDOW_CLOSE)
+    if (event.getEvent() == WindowEvent::WINDOW_CLOSE)
     {
         RD_DEBUG("Exit was triggered!\n");
         received_exit = true;

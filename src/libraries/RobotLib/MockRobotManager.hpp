@@ -3,17 +3,14 @@
 #ifndef __RD_MOCK_ROBOT_MANAGER_HPP__
 #define __RD_MOCK_ROBOT_MANAGER_HPP__
 
-
-#include <sstream>
+#include <string>
 
 #include "RobotManager.hpp"
-
-#include "Macros.hpp"
 
 namespace rd{
 
 /**
- * @ingroup RobotManagerLib
+ * @ingroup RobotLib
  *
  * @brief The Robot Manager for testing
  *
@@ -50,10 +47,10 @@ class MockRobotManager : public RobotManager
 
         //-- Mock functionality
         //-----------------------------------------------------
-        bool isConnected();
-        bool isEnabled();
+        bool isConnected() const;
+        bool isEnabled() const;
 
-        bool isMoving();
+        bool isMoving() const;
         int getMovementDirection();
         static const int FORWARD;
         static const int BACKWARDS;

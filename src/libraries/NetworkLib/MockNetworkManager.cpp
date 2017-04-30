@@ -1,4 +1,5 @@
 #include "MockNetworkManager.hpp"
+#include "Macros.hpp"
 
 //-- Initialize static members
 rd::MockNetworkManager * rd::MockNetworkManager::uniqueInstance = NULL;
@@ -35,7 +36,7 @@ bool rd::MockNetworkManager::stop()
     return true;
 }
 
-bool rd::MockNetworkManager::configure(std::string parameter, Player value)
+bool rd::MockNetworkManager::configure(const std::string & parameter, const Player & value)
 {
     if (parameter.compare("player") == 0)
     {
@@ -46,7 +47,7 @@ bool rd::MockNetworkManager::configure(std::string parameter, Player value)
     return NetworkManager::configure(parameter, value);
 }
 
-bool rd::MockNetworkManager::sendPlayerHit(rd::Player player, int damage)
+bool rd::MockNetworkManager::sendPlayerHit(const Player & player, int damage)
 {
     int id = player.getId();
 
@@ -58,12 +59,12 @@ bool rd::MockNetworkManager::sendPlayerHit(rd::Player player, int damage)
 
     if ( players_dic.find(id) != players_dic.end() )  // if found, we can shoot
     {
-        int new_health = players_dic.operator[](id).getHealth() - damage;
+        int new_health = players_dic[id].getHealth() - damage;
 
         if (new_health < 0)
             new_health = 0;
 
-        players_dic.operator[](id).setHealth(new_health);
+        players_dic[id].setHealth(new_health);
 
     }
     else
@@ -90,7 +91,7 @@ bool rd::MockNetworkManager::login()
 
     if ( players_dic.find(loginId) == players_dic.end() )  // if not found, we can create
     {
-        players_dic.operator[](loginId) = player;
+        players_dic[loginId] = player;
         logged_in = true;
     }
     else
@@ -137,31 +138,31 @@ bool rd::MockNetworkManager::keepAlive()
     return true; //-- Not really required in mock object
 }
 
-bool rd::MockNetworkManager::isLoggedIn()
+bool rd::MockNetworkManager::isLoggedIn() const
 {
     return logged_in;
 }
 
-bool rd::MockNetworkManager::isStopped()
+bool rd::MockNetworkManager::isStopped() const
 {
     return stopped;
 }
 
-bool rd::MockNetworkManager::setPlayerData(std::vector<rd::Player> players)
+bool rd::MockNetworkManager::setPlayerData(const std::vector<Player> & players)
 {
     players_dic.clear();
 
     for (int i = 0; i < (int) players.size(); i++)
     {
         int id = players[i].getId();
-        this->players_dic[id] = players[i];
+        players_dic[id] = players[i];
     }
 
     sendPlayerData();
     return true;
 }
 
-std::vector<rd::Player> rd::MockNetworkManager::getPlayerData()
+std::vector<rd::Player> rd::MockNetworkManager::getPlayerData() const
 {
     std::vector<Player> player_vector;
 
@@ -176,8 +177,10 @@ std::vector<rd::Player> rd::MockNetworkManager::getPlayerData()
 bool rd::MockNetworkManager::sendPlayerData()
 {
     //-- Notify listeners
-    for(int i = 0; i < listeners.size(); i++)
-        listeners[i]->onDataArrived(this->getPlayerData());
+    for (std::vector<NetworkEventListener *>::iterator it = listeners.begin(); it != listeners.end(); ++it)
+    {
+        (*it)->onDataArrived(getPlayerData());
+    }
     return true;
 }
 

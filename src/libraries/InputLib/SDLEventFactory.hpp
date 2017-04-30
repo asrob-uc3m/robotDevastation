@@ -3,12 +3,12 @@
 #ifndef __RD_SDL_EVENT_FACTORY__
 #define __RD_SDL_EVENT_FACTORY__
 
+#include <map>
+
+#include <SDL.h>
 
 #include "Key.hpp"
 #include "WindowEvent.hpp"
-#include <map>
-#include <SDL.h>
-
 
 namespace rd{
 
@@ -21,11 +21,11 @@ namespace rd{
 class SDLEventFactory
 {
     public:
-        //! @brief Creates a \ref Key from a SDL keycode
-        static rd::Key makeKey(SDL_Keycode keycode);
+        //! @brief Creates a Key from a SDL keycode
+        static Key makeKey(SDL_Keycode keycode);
 
-        //! @brief Creates a \ref WindowEvent from a SDL window event structure
-        static rd::WindowEvent makeWindowEvent(SDL_WindowEvent windowEvent);
+        //! @brief Creates a WindowEvent from a SDL window event structure
+        static WindowEvent makeWindowEvent(SDL_WindowEvent windowEvent);
 
         //! @brief Initialize the lookup tables
         static bool initLookupTables();

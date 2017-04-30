@@ -9,11 +9,14 @@
 
 #include <yarp/os/Thread.h>
 #include <yarp/os/ResourceFinder.h>
+#include <yarp/os/Network.h>
+#include <yarp/os/Time.h>
 
 #include "YarpNetworkManager.hpp"
 #include "MockNetworkEventListener.hpp"
 #include "Server.hpp"
 #include "RpcResponder.hpp"
+#include "Macros.hpp"
 
 #include "gtest/gtest.h"
 
@@ -63,7 +66,7 @@ class YarpNetworkManagerTestBase : public testing::Test
         {
             ASSERT_TRUE(registerNetworkManager());
             networkManager = NetworkManager::getNetworkManager();
-            ASSERT_TRUE(networkManager);
+            ASSERT_NE((NetworkManager *)NULL, networkManager);
 
             me = Player(0, "me", 100, 100, 0, 0);
             other_player = Player(1, "dummy", 100, 100, 1, 0);
@@ -234,8 +237,8 @@ TEST_F(YarpNetworkManagerNoKeepAliveTest, DisconnectedIfNoKeepAlive)
     listener.resetDataArrived();
 
     //-- Wait more than the timeout time
-    const int delay = RpcResponder::MAX_BELIEF * rdServer.getPeriod();
-    RD_INFO("Waiting %d + 1 seconds...\n", delay);
+    double delay = RpcResponder::MAX_BELIEF * rdServer.getPeriod();
+    RD_INFO("Waiting %.1f + 1 seconds...\n", delay);
     yarp::os::Time::delay(delay + 1);
 
     //-- Check that I'm no longer logged in

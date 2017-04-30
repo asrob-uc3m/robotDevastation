@@ -1,21 +1,23 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __DEAD_SCREEN_HPP__
-#define __DEAD_SCREEN_HPP__
+#ifndef __RD_DEAD_SCREEN_HPP__
+#define __RD_DEAD_SCREEN_HPP__
+
+#include <string>
 
 #include <SDL.h>
-#include <SDL_image.h>
 #include <SDL_ttf.h>
-#include <string>
-#include <yarp/os/ResourceFinder.h>
 
 #include "Screen.hpp"
-
-#include "Utils.hpp"
-#include "SDLUtils.hpp"
+#include "ImageManager.hpp"
 
 namespace rd {
 
+/**
+ * @ingroup UserInterfaceLib
+ *
+ * @brief A User Interface.
+ */
 class DeadScreen : public Screen
 {
     public:
@@ -24,8 +26,8 @@ class DeadScreen : public Screen
         virtual bool cleanup();
         virtual bool drawScreen(void *screen);
         virtual ~DeadScreen();
-        virtual bool update(std::string parameter, std::string value);
-        virtual bool update(std::string parameter, Image value);
+        virtual bool update(const std::string & parameter, const std::string & value);
+        virtual bool update(const std::string & parameter, const Image & value);
 
         //-- Available parameters:
         static const std::string PARAM_REMAINING_TIME;
@@ -48,4 +50,4 @@ class DeadScreen : public Screen
 
 }
 
-#endif // __DEAD_SCREEN_HPP__
+#endif // __RD_DEAD_SCREEN_HPP__

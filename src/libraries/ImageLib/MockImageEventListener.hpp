@@ -1,19 +1,22 @@
 #ifndef __RD_MOCK_IMAGE_EVENT_LISTENER_HPP__
 #define __RD_MOCK_IMAGE_EVENT_LISTENER_HPP__
 
+#include "ImageManager.hpp"
 #include "ImageEventListener.hpp"
 
 namespace rd{
 
 /**
+ * @ingroup ImageLib
+ *
  * @brief Dummy ImageEventListener used for testing
  *
  * The required pure virtual members are left with their function body empty.
  *
  * This mock object allows to access the received image and has a counter of
- * the incoming images received
+ * the incoming images received.
  *
- *  @todo Move this class to ImageLib, set it to be compiled only with the tests
+ *  @todo Move this class to ImageLib, set it to be compiled only with the tests.
  */
 class MockImageEventListener : public ImageEventListener
 {
@@ -22,7 +25,7 @@ class MockImageEventListener : public ImageEventListener
 
         virtual bool onImageArrived( ImageManager * manager );
 
-        int getImagesArrived();
+        int getImagesArrived() const;
         void resetImagesArrived();
 
         Image getStoredImage();

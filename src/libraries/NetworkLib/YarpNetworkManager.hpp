@@ -3,17 +3,16 @@
 #ifndef __RD_YARP_NETWORK_MANAGER_HPP__
 #define __RD_YARP_NETWORK_MANAGER_HPP__
 
-#include <yarp/os/Port.h>
-#include <yarp/os/BufferedPort.h>
-#include <yarp/os/Semaphore.h>
-#include <yarp/os/RpcClient.h>
-#include <yarp/os/RateThread.h>
-#include <yarp/os/Time.h>
-#include <yarp/os/Network.h>
+#include <string>
 
-#include "Utils.hpp"
+#include <yarp/os/RateThread.h>
+#include <yarp/os/PortReaderBuffer.h>
+#include <yarp/os/Bottle.h>
+#include <yarp/os/RpcClient.h>
+#include <yarp/os/BufferedPort.h>
+
 #include "NetworkManager.hpp"
-#include "NetworkEventListener.hpp"
+#include "Player.hpp"
 
 namespace rd{
 
@@ -30,7 +29,7 @@ namespace rd{
  * When the program finishes, the YarpNetworkManager can be deallocated using destroyNetworkManager().
  *
  * Network events are broadcasted to the registered <a href="http://en.wikipedia.org/wiki/Observer_pattern">listeners</a>,
- * along with the data relevant to the event triggered (i.e. data that just arrived)
+ * along with the data relevant to the event triggered (i.e. data that just arrived).
  *
  */
 class YarpNetworkManager : public NetworkManager,
@@ -42,11 +41,11 @@ class YarpNetworkManager : public NetworkManager,
         /**
          * @brief Register this manager in the NetworkManager registry so that can be used
          *
-         * It ensures that only one manager of this type is created (unique instance)
+         * It ensures that only one manager of this type is created (unique instance).
          */
         static bool RegisterManager();
 
-        ~YarpNetworkManager();
+        virtual ~YarpNetworkManager();
 
         //! @brief String that identifies this manager
         static const std::string id;
@@ -54,14 +53,14 @@ class YarpNetworkManager : public NetworkManager,
         //------------------ Manager Startup & Halting ---------------------------------------------------------------//
         virtual bool start();
         virtual bool stop();
-        virtual bool isStopped();
+        virtual bool isStopped() const;
 
         //------------------------------ Configuration & Listeners ----------------------------------------------------//
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, Player value);
+        virtual bool configure(const std::string & parameter, const Player & value);
 
         //------------------ Server API ----------------------------------------------------------------------------//
-        virtual bool sendPlayerHit(Player player, int damage);
+        virtual bool sendPlayerHit(const Player & player, int damage);
         virtual bool login();
         virtual bool logout();
         virtual bool keepAlive();
@@ -72,7 +71,7 @@ class YarpNetworkManager : public NetworkManager,
          *
          * Constructor for this class is non-public since the singleton can only be instantiated once,
          * and the instantiation is done at the RegisterManager() method. Declared protected to allow
-         * subclassing
+         * subclassing.
          */
         YarpNetworkManager();
 
@@ -82,6 +81,9 @@ class YarpNetworkManager : public NetworkManager,
         void run();
 
     private:
+        YarpNetworkManager(const YarpNetworkManager &);
+        YarpNetworkManager & operator=(const YarpNetworkManager &);
+
         //! @brief Reference to this manager (unique instance)
         static YarpNetworkManager * uniqueInstance;
 

@@ -1,4 +1,5 @@
 #include "AudioManager.hpp"
+#include "Macros.hpp"
 
 //-- This is very important:
 rd::AudioManager * rd::AudioManager::audioManagerInstance = NULL;
@@ -28,7 +29,7 @@ rd::AudioManager *rd::AudioManager::getAudioManager()
     return audioManagerInstance;
 }
 
-rd::AudioManager *rd::AudioManager::getAudioManager(std::string id)
+rd::AudioManager *rd::AudioManager::getAudioManager(const std::string & id)
 {
     if (audioManagerInstance == NULL )
     {
@@ -87,12 +88,12 @@ rd::AudioManager::~AudioManager()
 {
 }
 
-bool rd::AudioManager::configure(std::string parameter, std::string value)
+bool rd::AudioManager::configure(const std::string & parameter, const std::string & value)
 {
     return true;
 }
 
-bool rd::AudioManager::Register(rd::AudioManager *manager, std::string id)
+bool rd::AudioManager::Register(AudioManager *manager, const std::string & id)
 {
     if ( audioManagerRegistry.find(id) == audioManagerRegistry.end())
     {

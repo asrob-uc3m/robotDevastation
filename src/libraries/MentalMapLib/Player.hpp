@@ -4,7 +4,6 @@
 #define __RD_PLAYER_HPP__
 
 #include <string>
-#include <sstream>
 #include "Weapon.hpp"
 
 namespace rd{
@@ -22,19 +21,19 @@ class Player
 public:
     //! @brief Constructs a default, dummy player. (That is invalid for the game, by the way)
     Player();
-    Player ( int id, std::string name, int health, int max_health, int team_id, int score);
+    Player(int id, const std::string & name, int health, int max_health, int team_id, int score);
 
     int getId() const;
     void setId(int value);
 
-    std::string getName() const;
+    const std::string & getName() const;
     void setName(const std::string &value);
 
     int getHealth() const;
     void setHealth(int value);
 
     //! @brief Reduces this player's health by an amount specified by the weapon used
-    bool getDamageFromWeapon(Weapon& weapon);
+    bool getDamageFromWeapon(const Weapon& weapon);
 
     int getMaxHealth() const;
     void setMaxHealth(int value);
@@ -46,7 +45,7 @@ public:
     void setScore(int value);
 
     //! @brief Returns a string representing this object
-    std::string str();
+    std::string str() const;
 
 private:
     std::string name;

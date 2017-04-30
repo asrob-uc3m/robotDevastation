@@ -4,6 +4,8 @@
 #ifndef __RD_VECTOR_BASE_HPP__
 #define __RD_VECTOR_BASE_HPP__
 
+namespace rd{
+
 /**
  * @ingroup UtilsLib
  *
@@ -17,16 +19,37 @@ class Vector2dBase {
     public:
         Vector2dBase( T x, T y): x(x), y(y) {}
         Vector2dBase(): x(0), y(0) {}
-        T x, y;
         
-        bool operator==( const Vector2dBase<T>& other_vector) { return this->x == other_vector.x
-                    && this->y == other_vector.y; }
+        bool operator==( const Vector2dBase<T>& other_vector )
+        {
+            return x == other_vector.x && y == other_vector.y;
+        }
 
-        Vector2dBase& operator+=( const Vector2dBase<T>&a ) { x+=a.x; y+=a.y; return *this;}
+        Vector2dBase& operator+=( const Vector2dBase<T>&a )
+        {
+            x += a.x;
+            y += a.y;
+            return *this;
+        }
+
+        const T & getX() const
+        {
+            return x;
+        }
+
+        const T & getY() const
+        {
+            return y;
+        }
+
+    private:
+        T x, y;
 };
 
 //! @brief Default 2D vector
 typedef Vector2dBase<int> Vector2d;
+
+}
 
 #endif // __RD_VECTOR_BASE_HPP__
 

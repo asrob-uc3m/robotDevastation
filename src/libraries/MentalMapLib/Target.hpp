@@ -3,7 +3,6 @@
 #ifndef __RD_TARGET_HPP__
 #define __RD_TARGET_HPP__
 
-#include "Player.hpp"
 #include "Vector2dBase.hpp"
 
 namespace rd{
@@ -19,18 +18,18 @@ class Target
 public:
     //! @brief Constructs a default, dummy target. (That is invalid for the game, by the way)
     Target();
-    Target( int player_id, Vector2d pos, Vector2d dimensions);
+    Target( int player_id, const Vector2d &pos, const Vector2d &dimensions);
 
-    int getPlayerId();
+    int getPlayerId() const;
     void setPlayerId(int id);
 
-    Vector2d getPos();
+    const Vector2d & getPos() const;
     void setPos(const Vector2d &pos);
 
-    Vector2d getDimensions();
+    const Vector2d & getDimensions() const;
     void setDimensions(const Vector2d &dimensions);
 
-    int getBelief();
+    int getBelief() const;
     bool reduceBelief(int amount);
     bool resetBelief();
 

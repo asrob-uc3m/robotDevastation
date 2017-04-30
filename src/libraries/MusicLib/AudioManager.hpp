@@ -1,21 +1,12 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __AUDIO_MANAGER_HPP__
-#define __AUDIO_MANAGER_HPP__
+#ifndef __RD_AUDIO_MANAGER_HPP__
+#define __RD_AUDIO_MANAGER_HPP__
 
-#include <iostream>
+#include <string>
 #include <map>
 
-#include "Macros.hpp"
-
 namespace rd{
-
-/**
- * @ingroup rd_libraries
- *
- * \defgroup MusicLib
- *
- * @brief The MusicLib library contains classes related to game music and sound effects
 
 /**
  * @ingroup MusicLib
@@ -48,9 +39,9 @@ class AudioManager
          * @return The AudioManager registered with the given id, NULL if the id is not found in
          * the registry.
          */
-        static AudioManager * getAudioManager(std::string id);
+        static AudioManager * getAudioManager(const std::string & id);
 
-        //! @brief Deallocate all the registered InputManager
+        //! @brief Deallocate all the registered AudioManager
         static bool destroyAudioManager();
 
         virtual ~AudioManager();
@@ -68,11 +59,11 @@ class AudioManager
         virtual bool stop() = 0;
 
         //! @brief True if the manager is not active
-        virtual bool isStopped() = 0;
+        virtual bool isStopped() const = 0;
 
         //------------------------------ Configuration ----------------------------------------------------------------//
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, std::string value);
+        virtual bool configure(const std::string & parameter, const std::string & value);
 
 
         //------------------------------- Audio Manager functions -----------------------------------------------------//
@@ -110,7 +101,7 @@ class AudioManager
          * @brief This function allows subclasses to install their unique instances in the singleton register to be
          * selected later by the user
          */
-        static bool Register( AudioManager * manager, std::string id);
+        static bool Register( AudioManager * manager, const std::string & id);
 
 
     private:
@@ -120,11 +111,11 @@ class AudioManager
         //! \brief Stores the id of the current unique instance used
         static std::string currentId;
 
-        //! \brief Stores all the InputManager that have been registered
+        //! \brief Stores all the AudioManager that have been registered
         static std::map< std::string, AudioManager * > audioManagerRegistry;
 
 };
 
 }
 
-#endif //-- __AUDIO_MANAGER_HPP__
+#endif //-- __RD_AUDIO_MANAGER_HPP__

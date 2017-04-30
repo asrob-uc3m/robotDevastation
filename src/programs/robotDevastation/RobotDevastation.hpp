@@ -3,11 +3,13 @@
 #ifndef __ROBOT_DEVASTATION_HPP__
 #define __ROBOT_DEVASTATION_HPP__
 
-#include <iostream>
+#include <cstdio>
 #include <string>
 #include <sstream>
+#include <vector>
 
 #include <yarp/os/RFModule.h>
+#include <yarp/os/ResourceFinder.h>
 
 #include "Utils.hpp"
 #include "SDLAudioManager.hpp"
@@ -54,7 +56,7 @@ class RobotDevastation : public yarp::os::RFModule
 
             std::string answer;
             do {
-                printf("%s?>",question.c_str());
+                std::printf("%s?>",question.c_str());
                 std::getline(std::cin, answer);
             } while(no_empty && answer.empty());
 

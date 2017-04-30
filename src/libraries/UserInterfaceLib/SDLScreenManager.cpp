@@ -1,5 +1,10 @@
 #include "SDLScreenManager.hpp"
 
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+
+#include "Macros.hpp"
+
 //-- This is very important:
 rd::SDLScreenManager * rd::SDLScreenManager::uniqueInstance = NULL;
 const std::string rd::SDLScreenManager::id = "SDL";
@@ -14,9 +19,9 @@ rd::SDLScreenManager::SDLScreenManager()
     window = NULL;
 }
 
-void rd::SDLScreenManager::setCurrentScreen(rd::Screen *screen)
+void rd::SDLScreenManager::setCurrentScreen(Screen *screen)
 {
-    rd::ScreenManager::setCurrentScreen(screen);
+    ScreenManager::setCurrentScreen(screen);
     if (window != NULL)
     {
         SDL_DestroyWindow(window);
@@ -56,8 +61,8 @@ bool rd::SDLScreenManager::show()
     //-- Resize window if required
     int h, w;
     SDL_GetWindowSize(window, &w, &h);
-    if (screen->w != w || screen->h != h)
-        SDL_SetWindowSize(window, screen->w, screen->h);
+    if (screen->getWidth() != w || screen->getHeight() != h)
+        SDL_SetWindowSize(window, screen->getWidth(), screen->getHeight());
 
     //-- Get writable surface
     SDL_Surface * screen_surface = SDL_GetWindowSurface(window);
@@ -83,50 +88,50 @@ bool rd::SDLScreenManager::show()
     return true;
 }
 
-bool rd::SDLScreenManager::update(std::string parameter, std::string value)
+bool rd::SDLScreenManager::update(const std::string & parameter, const std::string & value)
 {
     mutex.lock();
-    bool ret = this->screen->update(parameter, value);
+    bool ret = screen->update(parameter, value);
     mutex.unlock();
     return ret;
 }
 
-bool rd::SDLScreenManager::update(std::string parameter, rd::Image value)
+bool rd::SDLScreenManager::update(const std::string & parameter, const Image & value)
 {
     mutex.lock();
-    bool ret = this->screen->update(parameter, value);
+    bool ret = screen->update(parameter, value);
     mutex.unlock();
     return ret;
 }
 
-bool rd::SDLScreenManager::update(std::string parameter, rd::Player value)
+bool rd::SDLScreenManager::update(const std::string & parameter, const Player & value)
 {
     mutex.lock();
-    bool ret = this->screen->update(parameter, value);
+    bool ret = screen->update(parameter, value);
     mutex.unlock();
     return ret;
 }
 
-bool rd::SDLScreenManager::update(std::string parameter, std::vector<rd::Player> value)
+bool rd::SDLScreenManager::update(const std::string & parameter, const std::vector<Player> & value)
 {
     mutex.lock();
-    bool ret = this->screen->update(parameter, value);
+    bool ret = screen->update(parameter, value);
     mutex.unlock();
     return ret;
 }
 
-bool rd::SDLScreenManager::update(std::string parameter, std::vector<rd::Target> value)
+bool rd::SDLScreenManager::update(const std::string & parameter, const std::vector<Target> & value)
 {
     mutex.lock();
-    bool ret = this->screen->update(parameter, value);
+    bool ret = screen->update(parameter, value);
     mutex.unlock();
     return ret;
 }
 
-bool rd::SDLScreenManager::update(std::string parameter, rd::Weapon value)
+bool rd::SDLScreenManager::update(const std::string & parameter, const Weapon & value)
 {
     mutex.lock();
-    bool ret = this->screen->update(parameter, value);
+    bool ret = screen->update(parameter, value);
     mutex.unlock();
     return ret;
 }
@@ -167,7 +172,7 @@ bool rd::SDLScreenManager::cleanupSDL()
     return true;
 }
 
-bool rd::SDLScreenManager::configure(std::string parameter, std::string value)
+bool rd::SDLScreenManager::configure(const std::string & parameter, const std::string & value)
 {
     if (parameter==PARAM_FULLSCREEN)
     {
@@ -185,7 +190,7 @@ bool rd::SDLScreenManager::configure(std::string parameter, std::string value)
         }
     }
 
-    return rd::ScreenManager::configure(parameter, value);
+    return ScreenManager::configure(parameter, value);
 }
 
 bool rd::SDLScreenManager::start()
@@ -208,7 +213,7 @@ bool rd::SDLScreenManager::stop()
     return true;
 }
 
-bool rd::SDLScreenManager::isStopped()
+bool rd::SDLScreenManager::isStopped() const
 {
     return stopped;
 }
@@ -232,6 +237,6 @@ rd::SDLScreenManager::~SDLScreenManager()
     }
 
     //-- Stop this manager
-    this->stop();
+    stop();
     uniqueInstance = NULL;
 }

@@ -1,11 +1,21 @@
 #include "InitScreen.hpp"
 
+#include <SDL_image.h>
+
+#include <yarp/os/ResourceFinder.h>
+#include <yarp/os/ConstString.h>
+
+#include "Macros.hpp"
+
 const std::string rd::InitScreen::SPLASH_PATH = "../images/800px-Devastation-thin.png";
 const std::string rd::InitScreen::FONT_PATH = "../fonts/FreeMono.ttf";
 
 rd::InitScreen::InitScreen()
 {
     w = 200; h = 100; //-- Arbitrary size initialization
+    font = NULL;
+    text_surface = NULL;
+    image = NULL;
 }
 
 bool rd::InitScreen::init()

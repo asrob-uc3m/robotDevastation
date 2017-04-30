@@ -1,4 +1,5 @@
 #include "DeadState.hpp"
+#include "Utils.hpp"
 
 const int rd::DeadState::RESPAWN_SELECTED = 1;
 const int rd::DeadState::EXIT_SELECTED = 2;
@@ -6,15 +7,16 @@ const int rd::DeadState::DEFAULT_RATE_MS = 100;
 const int rd::DeadState::MAX_HEALTH = 100;
 
 
-rd::DeadState::DeadState(rd::NetworkManager *networkManager, rd::ImageManager *imageManager,
-                         rd::InputManager *inputManager, rd::MentalMap *mentalMap,
-                         rd::RobotManager *robotManager, AudioManager *audioManager,
-                         rd::ScreenManager *screenManager) :
+rd::DeadState::DeadState(NetworkManager *networkManager, ImageManager *imageManager,
+                         InputManager *inputManager, MentalMap *mentalMap,
+                         RobotManager *robotManager, AudioManager *audioManager,
+                         ScreenManager *screenManager) :
                 ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager,
                            audioManager, screenManager)
 {
-    this->state_id = "DeadState";
-
+    state_id = "DeadState";
+    elapsed_time = timer = 0;
+    received_respawn = received_exit = false;
 }
 
 rd::DeadState::~DeadState()
@@ -133,12 +135,12 @@ int rd::DeadState::evaluateConditions()
     return -1;
 }
 
-bool rd::DeadState::onKeyDown(const rd::Key & k)
+bool rd::DeadState::onKeyDown(const Key & k)
 {
     return true;
 }
 
-bool rd::DeadState::onKeyUp(const rd::Key & k)
+bool rd::DeadState::onKeyUp(const Key & k)
 {
     if (received_respawn || received_exit)
         return false;

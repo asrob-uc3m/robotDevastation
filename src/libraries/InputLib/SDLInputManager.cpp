@@ -1,4 +1,7 @@
 #include "SDLInputManager.hpp"
+#include "SDLEventFactory.hpp"
+#include "Key.hpp"
+#include "WindowEvent.hpp"
 
 //-- Initialize static members
 rd::SDLInputManager * rd::SDLInputManager::uniqueInstance = NULL;
@@ -24,12 +27,12 @@ bool rd::SDLInputManager::stop()
     return true;
 }
 
-bool rd::SDLInputManager::isStopped()
+bool rd::SDLInputManager::isStopped() const
 {
     return stopped;
 }
 
-bool rd::SDLInputManager::configure(std::string parameter, std::string value)
+bool rd::SDLInputManager::configure(const std::string & parameter, const std::string & value)
 {
     return InputManager::configure(parameter, value);
 }
@@ -47,7 +50,7 @@ bool rd::SDLInputManager::RegisterManager()
 rd::SDLInputManager::~SDLInputManager()
 {
     //-- Stop this thread
-    this->stop();
+    stop();
     uniqueInstance = NULL;
 }
 

@@ -1,5 +1,12 @@
 #include "DeadScreen.hpp"
 
+#include <SDL_image.h>
+
+#include <yarp/os/ResourceFinder.h>
+
+#include "SDLUtils.hpp"
+#include "Macros.hpp"
+
 //-- Public
 const std::string rd::DeadScreen::PARAM_REMAINING_TIME = "remaining_time";
 const std::string rd::DeadScreen::PARAM_LAST_CAMERA_FRAME = "last_camera_frame";
@@ -14,6 +21,10 @@ const SDL_Color rd::DeadScreen::TEXT_COLOR = {0,255,0,0};
 rd::DeadScreen::DeadScreen()
 {
     w = 200; h = 100; //-- Arbitrary size initialization
+    font = NULL;
+    text_surface = NULL;
+    skull_image = NULL;
+    camera_frame = NULL;
 }
 
 bool rd::DeadScreen::init()
@@ -43,8 +54,8 @@ bool rd::DeadScreen::init()
     //-- Default values:
     w = skull_image->w;
     h = skull_image->h;
-    this->camera_frame = NULL;
-    this->update(PARAM_REMAINING_TIME, "10");
+    camera_frame = NULL;
+    update(PARAM_REMAINING_TIME, "10");
 
     return true;
 }
@@ -103,7 +114,7 @@ rd::DeadScreen::~DeadScreen()
 
 }
 
-bool rd::DeadScreen::update(std::string parameter, std::string value)
+bool rd::DeadScreen::update(const std::string & parameter, const std::string & value)
 {
     if (parameter == PARAM_REMAINING_TIME)
     {
@@ -117,7 +128,7 @@ bool rd::DeadScreen::update(std::string parameter, std::string value)
     return false;
 }
 
-bool rd::DeadScreen::update(std::string parameter, rd::Image value)
+bool rd::DeadScreen::update(const std::string & parameter, const Image & value)
 {
     if (value.width() == 0 || value.height() == 0)
     {

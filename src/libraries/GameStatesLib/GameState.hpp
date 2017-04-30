@@ -1,25 +1,23 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __GAME_STATE_HPP__
-#define __GAME_STATE_HPP__
+#ifndef __RD_GAME_STATE_HPP__
+#define __RD_GAME_STATE_HPP__
 
 #include "State.hpp"
-#include "StateDirector.hpp"
-#include "Utils.hpp"
 #include "Hub.hpp"
-#include "YarpNetworkManager.hpp"
-#include "GameScreen.hpp"
-#include "ProcessorImageEventListener.hpp"
+#include "InputEventListener.hpp"
+#include "ImageEventListener.hpp"
+#include "NetworkManager.hpp"
+#include "ImageManager.hpp"
+#include "InputManager.hpp"
+#include "MentalMap.hpp"
+#include "RobotManager.hpp"
+#include "AudioManager.hpp"
+#include "ScreenManager.hpp"
+#include "Key.hpp"
 #include "WindowEvent.hpp"
-
-#include <string>
-#include <sstream>
-
-#include <yarp/os/Network.h>
-#include <yarp/os/Bottle.h>
-#include <yarp/os/Port.h>
-#include <yarp/os/BufferedPort.h>
-
+#include "ProcessorImageEventListener.hpp"
+#include "GameScreen.hpp"
 
 namespace rd{
 
@@ -27,6 +25,7 @@ namespace rd{
 * @ingroup GameStatesLib
 *
 * @brief Game State
+*
 * Behavior:
 *  - Manages game interaction (movement, hits, player info updates)
 *  - When user presses the Esc key, logs out
@@ -44,8 +43,6 @@ class GameState : public State, public ManagerHub,
         virtual bool setup();
         virtual bool loop();
         virtual bool cleanup();
-
-        //! @brief Returns the internal variable value as condition evaluation result
         virtual int evaluateConditions();
 
         static const int KILLED;
@@ -83,4 +80,4 @@ class GameState : public State, public ManagerHub,
 
 
 }
-#endif // __GAME_STATE_HPP__
+#endif // __RD_GAME_STATE_HPP__
