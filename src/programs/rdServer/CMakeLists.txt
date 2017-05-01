@@ -1,6 +1,3 @@
-
-cmake_minimum_required(VERSION 2.8.7)
-
 IF (ENABLE_rdServer)
 
 set(KEYWORD "rdServer")
