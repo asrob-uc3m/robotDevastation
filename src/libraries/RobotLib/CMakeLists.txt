@@ -11,7 +11,6 @@ include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} YarpRobotManager.cpp MockRobotManager.cpp)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
 set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent

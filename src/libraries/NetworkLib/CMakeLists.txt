@@ -11,7 +11,6 @@ include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} NetworkManager.cpp YarpNetworkManager.cpp NetworkEventListener.hpp MockNetworkManager.cpp MockNetworkEventListener.cpp)
 target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${RD_LIBRARIES})
-install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
 #set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent

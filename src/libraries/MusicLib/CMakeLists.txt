@@ -14,7 +14,6 @@ include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} AudioManager.cpp SDLAudioManager.cpp MockAudioManager.cpp)
 target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARIES})
-install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
 set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_MIXER_INCLUDE_DIRS} CACHE INTERNAL "appended header dirs") # done in parent

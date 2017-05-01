@@ -16,7 +16,6 @@ add_library(${KEYWORD} InputManager.cpp SDLInputManager.cpp MockInputManager.cpp
 SDLEventFactory.cpp InputEventListener.hpp MockInputEventListener.cpp)
 
 target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${YARP_LIBRARIES})
-install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
 set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent

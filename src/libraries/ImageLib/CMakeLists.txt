@@ -15,7 +15,6 @@ add_library(${KEYWORD} ImageManager.cpp ImageEventListener.hpp YarpImageManager.
      ProcessorImageEventListener.hpp ProcessorImageEventListener.cpp
      MockImageManager.cpp MockImageEventListener.cpp)
 target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${ZBAR_LIBRARIES} ${RD_LIBRARIES})
-install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
 set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${ZBAR_INCLUDE_DIR} CACHE INTERNAL "appended header dirs") # done in parent

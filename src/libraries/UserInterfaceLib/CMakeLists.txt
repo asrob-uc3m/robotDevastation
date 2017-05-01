@@ -15,7 +15,6 @@ include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} ScreenManager.cpp SDLScreenManager.cpp Screen.cpp InitScreen.cpp GameScreen.cpp DeadScreen.cpp MockScreen.cpp)
 target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${RD_LIBRARIES})
-install(TARGETS ${KEYWORD} DESTINATION lib)
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...
 set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} CACHE INTERNAL "appended header dirs") # done in parent
