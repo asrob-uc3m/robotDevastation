@@ -9,9 +9,20 @@ include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${ZBAR_INCLUDE_DIR})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} ImageManager.cpp ImageEventListener.hpp YarpImageManager.cpp YarpLocalImageManager.hpp YarpLocalImageManager.cpp
-     ProcessorImageEventListener.hpp ProcessorImageEventListener.cpp
-     MockImageManager.cpp MockImageEventListener.cpp)
+add_library(${KEYWORD} ImageEventListener.hpp
+                       ImageManager.hpp
+                       ImageManager.cpp
+                       MockImageEventListener.hpp
+                       MockImageEventListener.cpp
+                       MockImageManager.hpp
+                       MockImageManager.cpp
+                       ProcessorImageEventListener.hpp
+                       ProcessorImageEventListener.cpp
+                       YarpImageManager.hpp
+                       YarpImageManager.cpp
+                       YarpLocalImageManager.hpp
+                       YarpLocalImageManager.cpp)
+
 target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${ZBAR_LIBRARIES} ${RD_LIBRARIES})
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...

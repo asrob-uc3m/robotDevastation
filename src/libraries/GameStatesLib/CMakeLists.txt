@@ -7,7 +7,12 @@ find_package(YARP REQUIRED)
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} InitState.cpp GameState.cpp DeadState.cpp)
+add_library(${KEYWORD} DeadState.hpp
+                       DeadState.cpp
+                       GameState.hpp
+                       GameState.cpp
+                       InitState.hpp
+                       InitState.cpp)
 
 target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES} UserInterfaceLib StateMachineLib UtilsLib)
 

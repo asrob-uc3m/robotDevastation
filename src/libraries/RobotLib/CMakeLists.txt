@@ -7,7 +7,12 @@ find_package(YARP REQUIRED)
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} YarpRobotManager.cpp MockRobotManager.cpp)
+add_library(${KEYWORD} MockRobotManager.hpp
+                       MockRobotManager.cpp
+                       RobotManager.hpp
+                       YarpRobotManager.hpp
+                       YarpRobotManager.cpp)
+
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...

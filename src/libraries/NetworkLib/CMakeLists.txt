@@ -7,7 +7,16 @@ find_package(YARP REQUIRED)
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} NetworkManager.cpp YarpNetworkManager.cpp NetworkEventListener.hpp MockNetworkManager.cpp MockNetworkEventListener.cpp)
+add_library(${KEYWORD} MockNetworkEventListener.hpp
+                       MockNetworkEventListener.cpp
+                       MockNetworkManager.hpp
+                       MockNetworkManager.cpp
+                       NetworkEventListener.hpp
+                       NetworkManager.hpp
+                       NetworkManager.cpp
+                       YarpNetworkManager.hpp
+                       YarpNetworkManager.cpp)
+
 target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${RD_LIBRARIES})
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...

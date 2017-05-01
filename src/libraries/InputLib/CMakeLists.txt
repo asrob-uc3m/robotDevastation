@@ -10,8 +10,21 @@ include_directories(${SDL2_INCLUDE_DIR})
 include_directories(${RD_INCLUDE_DIRS})
 
 
-add_library(${KEYWORD} InputManager.cpp SDLInputManager.cpp MockInputManager.cpp Key.cpp WindowEvent.cpp
-SDLEventFactory.cpp InputEventListener.hpp MockInputEventListener.cpp)
+add_library(${KEYWORD} InputEventListener.hpp
+                       InputManager.hpp
+                       InputManager.cpp
+                       Key.hpp
+                       Key.cpp
+                       MockInputEventListener.hpp
+                       MockInputEventListener.cpp
+                       MockInputManager.hpp
+                       MockInputManager.cpp
+                       SDLEventFactory.hpp
+                       SDLEventFactory.cpp
+                       SDLInputManager.hpp
+                       SDLInputManager.cpp
+                       WindowEvent.hpp
+                       WindowEvent.cpp)
 
 target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${YARP_LIBRARIES})
 

@@ -10,7 +10,13 @@ include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_MIXER_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} AudioManager.cpp SDLAudioManager.cpp MockAudioManager.cpp)
+add_library(${KEYWORD} AudioManager.hpp
+                       AudioManager.cpp
+                       MockAudioManager.hpp
+                       MockAudioManager.cpp
+                       SDLAudioManager.hpp
+                       SDLAudioManager.cpp)
+
 target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARIES})
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...

@@ -12,7 +12,16 @@ include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_MIXER_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIR})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} Hub.cpp IniReader.hpp Macros.hpp Utils.hpp Vector2dBase.hpp Vocabs.hpp SDLUtils.cpp)
+add_library(${KEYWORD} Hub.hpp
+                       Hub.cpp
+                       IniReader.hpp
+                       Macros.hpp
+                       SDLUtils.hpp
+                       SDLUtils.cpp
+                       Utils.hpp
+                       Vector2dBase.hpp
+                       Vocabs.hpp)
+
 target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${YARP_LIBRARIES} ${RD_LIBRARIES})
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...

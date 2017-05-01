@@ -7,7 +7,16 @@ find_package(YARP REQUIRED)
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-add_library(${KEYWORD} MentalMap.cpp MentalMapEventListener.hpp Player.cpp Target.cpp Weapon.cpp)
+add_library(${KEYWORD} MentalMap.hpp
+                       MentalMap.cpp
+                       MentalMapEventListener.hpp
+                       Player.hpp
+                       Player.cpp
+                       Target.hpp
+                       Target.cpp
+                       Weapon.hpp
+                       Weapon.cpp)
+
 target_link_libraries(${KEYWORD})
 
 # Exporting dependencies for RDConfig.cmake quite manually for now...

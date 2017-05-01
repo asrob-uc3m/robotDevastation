@@ -12,31 +12,17 @@ list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH})
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
-# Search for source code.
-file(GLOB folder_source *.cpp *.cc *.c)
-file(GLOB folder_header include/*.hpp)
-source_group("Source Files" FILES ${folder_source})
-source_group("Header Files" FILES ${folder_header})
-
-# Automatically add include directories if needed.
-foreach(header_file ${folder_header})
-  get_filename_component(p ${header_file} PATH)
-  include_directories(${p})
-endforeach(header_file ${folder_header})
-
-# Inclue any directories needed
+# Include any directories needed
 include_directories(${YARP_INCLUDE_DIRS})
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIRS})
 include_directories(${RD_INCLUDE_DIRS})
 
-# Set up our main executable.
-if (folder_source)
-  add_executable(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES})
-  install(TARGETS ${KEYWORD} DESTINATION bin)
-else (folder_source)
-  message(FATAL_ERROR "No source code files found. Please add something")
-endif (folder_source)
+add_executable(${KEYWORD} main.cpp
+                          RobotDevastation.hpp
+                          RobotDevastation.cpp)
+
+target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES})
+install(TARGETS ${KEYWORD} DESTINATION bin)
 
 ENDIF (ENABLE_robotDevastation)
 
