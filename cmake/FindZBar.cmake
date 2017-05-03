@@ -57,6 +57,7 @@ ELSE (ZBAR_INCLUDE_DIR AND ZBAR_LIBRARIES)
 
   INCLUDE(FindPackageHandleStandardArgs)
   find_package_handle_standard_args(ZBAR  DEFAULT_MSG  ZBAR_LIBRARIES ZBAR_INCLUDE_DIR)
+  mark_as_advanced(ZBAR_LIBRARIES ZBAR_INCLUDE_DIR)
 
 # mark_as_advanced(QCA2_INCLUDE_DIR QCA2_LIBRARIES)
 
