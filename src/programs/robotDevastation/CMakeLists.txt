@@ -24,6 +24,8 @@ target_link_libraries(robotDevastation YARP::YARP_OS
                                        UserInterfaceLib
                                        GameStatesLib)
 
+target_compile_definitions(robotDevastation PUBLIC SDL_MAIN_HANDLED)
+
 install(TARGETS robotDevastation DESTINATION bin)
 
 endif()
