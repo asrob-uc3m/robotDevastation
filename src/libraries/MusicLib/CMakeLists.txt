@@ -12,6 +12,7 @@ add_library(MusicLib AudioManager.hpp
                      SDLAudioManager.cpp)
 
 target_include_directories(MusicLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+                                           ${YARP_INCLUDE_DIRS}
                                            ${SDL2_INCLUDE_DIR}
                                            ${SDL2_MIXER_INCLUDE_DIRS})
 

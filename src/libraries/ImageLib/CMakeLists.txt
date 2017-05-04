@@ -18,6 +18,7 @@ add_library(ImageLib ImageEventListener.hpp
                      YarpLocalImageManager.cpp)
 
 target_include_directories(ImageLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+                                           ${YARP_INCLUDE_DIRS}
                                            ${ZBAR_INCLUDE_DIR})
 
 target_link_libraries(ImageLib PUBLIC YARP::YARP_OS

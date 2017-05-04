@@ -17,6 +17,7 @@ add_library(UtilsLib Hub.hpp
                      Vocabs.hpp)
 
 target_include_directories(UtilsLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+                                           ${YARP_INCLUDE_DIRS}
                                            ${SDL2_INCLUDE_DIR})
 
 target_include_directories(UtilsLib PRIVATE ${SDL2_IMAGE_INCLUDE_DIR}

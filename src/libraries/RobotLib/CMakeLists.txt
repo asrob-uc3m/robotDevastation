@@ -8,7 +8,8 @@ add_library(RobotLib MockRobotManager.hpp
                      YarpRobotManager.hpp
                      YarpRobotManager.cpp)
 
-target_include_directories(RobotLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(RobotLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+                                           ${YARP_INCLUDE_DIRS})
 
 target_link_libraries(RobotLib PUBLIC YARP::YARP_OS
                                       YARP::YARP_dev)

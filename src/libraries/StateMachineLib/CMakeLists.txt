@@ -15,7 +15,8 @@ add_library(StateMachineLib MockState.hpp
                             YarpStateDirector.hpp
                             YarpStateDirector.cpp)
 
-target_include_directories(StateMachineLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(StateMachineLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+                                                  ${YARP_INCLUDE_DIRS})
 
 target_link_libraries(StateMachineLib PUBLIC YARP::YARP_OS
                                       PRIVATE UtilsLib)

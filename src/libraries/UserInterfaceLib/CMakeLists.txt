@@ -22,6 +22,7 @@ add_library(UserInterfaceLib DeadScreen.hpp
                              SDLScreenManager.cpp)
 
 target_include_directories(UserInterfaceLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+                                                   ${YARP_INCLUDE_DIRS}
                                                    ${SDL2_INCLUDE_DIR}
                                                    ${SDL2_TTF_INCLUDE_DIRS})
 
