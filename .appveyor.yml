@@ -71,7 +71,7 @@ install:
             Add-Content "$env:DOWNLOADS_PATH\ACE_wrappers\ace\config.h" "#include `"ace/config-win32.h`""
             msbuild "$env:DOWNLOADS_PATH\ACE_wrappers\$env:ACE_VC_SLN" /m /v:m
             Write-Host "Copying selected contents of $env:DOWNLOADS_PATH\ACE_wrappers to C:\ACE"
-            robocopy "$env:DOWNLOADS_PATH\ACE_wrappers\ace" C:\ACE\ace /e /xd "$env:DOWNLOADS_PATH\ACE_wrappers\ace\$env:CONFIGURATION" /ns /ns /nfl /ndl /njh
+            robocopy "$env:DOWNLOADS_PATH\ACE_wrappers\ace" C:\ACE\ace /e /xd "$env:DOWNLOADS_PATH\ACE_wrappers\ace\$env:CONFIGURATION" /ns /nc /nfl /ndl /njh
             xcopy "$env:DOWNLOADS_PATH\ACE_wrappers\lib" C:\ACE\lib /e /i /y /q
             Set-Content C:\ACE\.version "$env:ACE_LATEST"
         }
@@ -93,7 +93,6 @@ install:
             7z x -y -o"$env:DOWNLOADS_PATH" "$env:DOWNLOADS_PATH\yarp.zip"
             $env:yarp_temp = "$env:DOWNLOADS_PATH\yarp-$env:YARP_LATEST"
             cmake -H"$env:yarp_temp" -B"$env:yarp_temp\build" -G"$env:CMAKE_GENERATOR" -DCMAKE_INSTALL_PREFIX:PATH=C:\YARP
-            cmake --build "$env:yarp_temp\build" --config "$env:CONFIGURATION" -- /m /v:m
             cmake --build "$env:yarp_temp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
             Set-Content C:\YARP\.version "$env:YARP_LATEST"
         }
