@@ -2,29 +2,27 @@
 
 if(ENABLE_robotDevastation)
 
-set(KEYWORD "robotDevastation")
-
 # Find YARP.  Point the YARP_DIR environment variable at your build.
 find_package(YARP REQUIRED)
 
-add_executable(${KEYWORD} main.cpp
-                          RobotDevastation.hpp
-                          RobotDevastation.cpp)
+add_executable(robotDevastation main.cpp
+                                RobotDevastation.hpp
+                                RobotDevastation.cpp)
 
-target_include_directories(${KEYWORD} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(robotDevastation PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(${KEYWORD} YARP::YARP_OS
-                                 UtilsLib
-                                 MusicLib
-                                 MentalMapLib
-                                 InputLib
-                                 NetworkLib
-                                 RobotLib
-                                 StateMachineLib
-                                 ImageLib
-                                 UserInterfaceLib
-                                 GameStatesLib)
+target_link_libraries(robotDevastation YARP::YARP_OS
+                                       UtilsLib
+                                       MusicLib
+                                       MentalMapLib
+                                       InputLib
+                                       NetworkLib
+                                       RobotLib
+                                       StateMachineLib
+                                       ImageLib
+                                       UserInterfaceLib
+                                       GameStatesLib)
 
-install(TARGETS ${KEYWORD} DESTINATION bin)
+install(TARGETS robotDevastation DESTINATION bin)
 
 endif()
