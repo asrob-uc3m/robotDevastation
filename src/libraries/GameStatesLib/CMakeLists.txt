@@ -2,11 +2,6 @@
 
 set(KEYWORD "GameStatesLib")
 
-find_package(YARP REQUIRED)
-
-include_directories(${YARP_INCLUDE_DIRS})
-include_directories(${RD_INCLUDE_DIRS})
-
 add_library(${KEYWORD} DeadState.hpp
                        DeadState.cpp
                        GameState.hpp
@@ -14,9 +9,14 @@ add_library(${KEYWORD} DeadState.hpp
                        InitState.hpp
                        InitState.cpp)
 
-target_link_libraries(${KEYWORD} ${RD_LIBRARIES} ${YARP_LIBRARIES} UserInterfaceLib StateMachineLib UtilsLib)
+target_include_directories(${KEYWORD} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-# Exporting dependencies for RDConfig.cmake quite manually for now...
-#set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
-set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
-
+target_link_libraries(${KEYWORD} PUBLIC UtilsLib
+                                        StateMachineLib
+                                        InputLib
+                                        NetworkLib
+                                        ImageLib
+                                        MentalMapLib
+                                        RobotLib
+                                        MusicLib
+                                        UserInterfaceLib)

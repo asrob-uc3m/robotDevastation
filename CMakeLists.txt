@@ -8,12 +8,7 @@
 #
 # CopyPolicy: Released under the terms of the LGPLv2.1 or later, see $RD_ROOT/main/doc/LGPL.TXT
 
-# Reduce warning level with cmake 2.6
-cmake_minimum_required(VERSION 2.6)
-# Cmake policies
-if(COMMAND cmake_policy)
-  cmake_policy(SET CMP0003 NEW)
-endif(COMMAND cmake_policy)
+cmake_minimum_required(VERSION 2.8.11)
 
 project(robotDevastation)
 

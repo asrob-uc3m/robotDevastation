@@ -3,13 +3,10 @@
 set(KEYWORD "UserInterfaceLib")
 
 find_package(YARP REQUIRED)
+
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
-
-include_directories(${YARP_INCLUDE_DIRS})
-include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
-include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} DeadScreen.hpp
                        DeadScreen.cpp
@@ -26,11 +23,17 @@ add_library(${KEYWORD} DeadScreen.hpp
                        SDLScreenManager.hpp
                        SDLScreenManager.cpp)
 
-target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${RD_LIBRARIES})
+target_include_directories(${KEYWORD} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+                                             ${SDL2_INCLUDE_DIR}
+                                             ${SDL2_TTF_INCLUDE_DIRS})
 
-# Exporting dependencies for RDConfig.cmake quite manually for now...
-set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} CACHE INTERNAL "appended header dirs") # done in parent
-set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} CACHE INTERNAL "appended libraries") # Not for now as it is a header
+target_include_directories(${KEYWORD} PRIVATE ${SDL2_IMAGE_INCLUDE_DIRS})
 
+target_link_libraries(${KEYWORD} PUBLIC YARP::YARP_OS
+                                        ${SDL2_LIBRARY}
+                                        ${SDL2_TTF_LIBRARIES}
+                                        ImageLib
+                                        MentalMapLib)
 
-
+target_link_libraries(${KEYWORD} PRIVATE ${SDL2_IMAGE_LIBRARIES}
+                                         UtilsLib)

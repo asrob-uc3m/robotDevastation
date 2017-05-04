@@ -3,14 +3,10 @@
 set(KEYWORD "UtilsLib")
 
 find_package(YARP REQUIRED)
+
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
-find_package(SDL2_mixer REQUIRED)
 find_package(SDL2_ttf REQUIRED)
-
-include_directories(${YARP_INCLUDE_DIRS})
-include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_MIXER_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIR})
-include_directories(${RD_INCLUDE_DIRS})
 
 add_library(${KEYWORD} Hub.hpp
                        Hub.cpp
@@ -22,8 +18,21 @@ add_library(${KEYWORD} Hub.hpp
                        Vector2dBase.hpp
                        Vocabs.hpp)
 
-target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${YARP_LIBRARIES} ${RD_LIBRARIES})
+target_include_directories(${KEYWORD} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+                                             ${SDL2_INCLUDE_DIR})
 
-# Exporting dependencies for RDConfig.cmake quite manually for now...
-set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR}${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
-set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} CACHE INTERNAL "appended libraries") # Not for now as it is a header
+target_include_directories(${KEYWORD} PRIVATE ${SDL2_IMAGE_INCLUDE_DIR}
+                                              ${SDL2_TTF_INCLUDE_DIR})
+
+target_link_libraries(${KEYWORD} PUBLIC YARP::YARP_OS
+                                        ${SDL2_LIBRARY}
+                                        ImageLib
+                                        InputLib
+                                        MentalMapLib
+                                        NetworkLib
+                                        RobotLib
+                                        MusicLib
+                                        UserInterfaceLib)
+
+target_link_libraries(${KEYWORD} PRIVATE ${SDL2_IMAGE_LIBRARIES}
+                                         ${SDL2_TTF_LIBRARIES})

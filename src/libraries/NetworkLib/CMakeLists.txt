@@ -4,9 +4,6 @@ set(KEYWORD "NetworkLib")
 
 find_package(YARP REQUIRED)
 
-include_directories(${YARP_INCLUDE_DIRS})
-include_directories(${RD_INCLUDE_DIRS})
-
 add_library(${KEYWORD} MockNetworkEventListener.hpp
                        MockNetworkEventListener.cpp
                        MockNetworkManager.hpp
@@ -17,10 +14,9 @@ add_library(${KEYWORD} MockNetworkEventListener.hpp
                        YarpNetworkManager.hpp
                        YarpNetworkManager.cpp)
 
-target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${RD_LIBRARIES})
+target_include_directories(${KEYWORD} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-# Exporting dependencies for RDConfig.cmake quite manually for now...
-#set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs") # done in parent
-set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
+target_link_libraries(${KEYWORD} PUBLIC YARP::YARP_OS
+                                        MentalMapLib)
 
-
+target_link_libraries(${KEYWORD} PRIVATE UtilsLib)

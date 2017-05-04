@@ -6,10 +6,6 @@ find_package(YARP REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 
-include_directories(${YARP_INCLUDE_DIRS})
-include_directories(${SDL2_INCLUDE_DIR} ${SDL2_MIXER_INCLUDE_DIRS})
-include_directories(${RD_INCLUDE_DIRS})
-
 add_library(${KEYWORD} AudioManager.hpp
                        AudioManager.cpp
                        MockAudioManager.hpp
@@ -17,11 +13,12 @@ add_library(${KEYWORD} AudioManager.hpp
                        SDLAudioManager.hpp
                        SDLAudioManager.cpp)
 
-target_link_libraries(${KEYWORD} ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARIES})
+target_include_directories(${KEYWORD} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+                                             ${SDL2_INCLUDE_DIR}
+                                             ${SDL2_MIXER_INCLUDE_DIRS})
 
-# Exporting dependencies for RDConfig.cmake quite manually for now...
-set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_MIXER_INCLUDE_DIRS} CACHE INTERNAL "appended header dirs") # done in parent
-set(RD_LIBRARIES ${RD_LIBRARIES} ${KEYWORD} ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARIES} ${SDLMIXER_LIBRARY} CACHE INTERNAL "appended libraries") # Not for now as it is a header
+target_link_libraries(${KEYWORD} PUBLIC YARP::YARP_OS
+                                        ${SDL2_LIBRARY}
+                                        ${SDL2_MIXER_LIBRARIES})
 
-
-
+target_link_libraries(${KEYWORD} PRIVATE UtilsLib)
