@@ -45,7 +45,9 @@ message(STATUS "Executables go to ${EXECUTABLE_OUTPUT_PATH}")
 
 # Pick up our scripts - they are all in the /cmake subdirectory
 set(RD_MODULE_DIR ${CMAKE_SOURCE_DIR}/cmake)
-list(APPEND CMAKE_MODULE_PATH ${RD_MODULE_DIR})
+
+list(APPEND CMAKE_MODULE_PATH ${RD_MODULE_DIR}
+                              ${RD_MODULE_DIR}/find-modules)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage") # enabling coverage
@@ -60,7 +62,4 @@ if(ENABLE_tests)
 endif()
 
 # uninstall target
-configure_file("${CMAKE_SOURCE_DIR}/cmake/template/RDConfigUninstall.cmake.in"
-               "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake" @ONLY)
-
-add_custom_target(uninstall COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/RDConfigUninstall.cmake)
+include(AddUninstallTarget)
