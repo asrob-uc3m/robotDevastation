@@ -26,6 +26,6 @@ target_link_libraries(robotDevastation YARP::YARP_OS
 
 target_compile_definitions(robotDevastation PUBLIC SDL_MAIN_HANDLED)
 
-install(TARGETS robotDevastation DESTINATION ${CMAKE_INSTALL_BIN})
+install(TARGETS robotDevastation DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 endif()

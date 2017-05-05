@@ -15,6 +15,6 @@ target_link_libraries(rdServer YARP::YARP_init
 
 target_compile_definitions(rdServer PUBLIC SDL_MAIN_HANDLED)
 
-install(TARGETS rdServer DESTINATION ${CMAKE_INSTALL_BIN})
+install(TARGETS rdServer DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 endif()
