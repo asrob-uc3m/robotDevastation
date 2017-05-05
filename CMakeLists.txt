@@ -24,13 +24,27 @@ if(MSVC)
     set(CMAKE_DEBUG_POSTFIX "d")
 endif()
 
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Release" CACHE STRING 
-        "Choose the type of build, recommanded options are: Debug or Release")
+# Let the user specify a configuration (only single-config generators).
+if(NOT CMAKE_CONFIGURATION_TYPES)
+    # Possible values.
+    set(_configurations Debug Release MinSizeRel RelWithDebInfo)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS ${_configurations})
+
+    foreach(_conf ${_configurations})
+        set(_conf_string "${_conf_string} ${_conf}")
+    endforeach()
+
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY HELPSTRING
+                 "Choose the type of build, options are:${_conf_string}")
 endif()
-# Hide variable to MSVC users, since it is not needed
-if(MSVC)
-    mark_as_advanced(CMAKE_BUILD_TYPE)
+
+if(NOT CMAKE_BUILD_TYPE)
+    if(NOT MSVC)
+        # Encourage the user to specify build type.
+        message(STATUS "Setting build type to 'Release' as none was specified.")
+    endif()
+
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY VALUE Release)
 endif()
 
 # Standard installation directories.
