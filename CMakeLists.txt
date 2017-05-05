@@ -36,15 +36,12 @@ if(NOT CMAKE_CONFIGURATION_TYPES)
 
     set_property(CACHE CMAKE_BUILD_TYPE PROPERTY HELPSTRING
                  "Choose the type of build, options are:${_conf_string}")
-endif()
 
-if(NOT CMAKE_BUILD_TYPE)
-    if(NOT MSVC)
+    if(NOT CMAKE_BUILD_TYPE)
         # Encourage the user to specify build type.
         message(STATUS "Setting build type to 'Release' as none was specified.")
+        set_property(CACHE CMAKE_BUILD_TYPE PROPERTY VALUE Release)
     endif()
-
-    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY VALUE Release)
 endif()
 
 # Standard installation directories.
