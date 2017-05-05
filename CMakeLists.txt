@@ -6,7 +6,7 @@
 # <a href="http://roboticslab.uc3m.es/roboticslab/people/jg-victores">Juan G. Victores</a> (2012-present),
 # <a href="http://www.mendeley.com/profiles/santiago-morante-cendrero/">Santiago Morante</a> (2012-2014).
 #
-# CopyPolicy: Released under the terms of the LGPLv2.1 or later, see $RD_ROOT/main/doc/LGPL.TXT
+# CopyPolicy: Released under the terms of the LGPLv2.1 or later, see $RD_ROOT/LICENSE
 
 cmake_minimum_required(VERSION 2.8.11)
 
@@ -20,18 +20,18 @@ option(ENABLE_rdServer "Choose if you want to compile rdServer" TRUE)
 option(ENABLE_tests "Choose if you want to compile tests" TRUE)
 
 if(MSVC)
-  MESSAGE(STATUS "Running on windows")    
-  set(CMAKE_DEBUG_POSTFIX "d")
-endif(MSVC)
+    message(STATUS "Running on windows")    
+    set(CMAKE_DEBUG_POSTFIX "d")
+endif()
 
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "Release" CACHE STRING 
-    "Choose the type of build, recommanded options are: Debug or Release")
-endif(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING 
+        "Choose the type of build, recommanded options are: Debug or Release")
+endif()
 # Hide variable to MSVC users, since it is not needed
-if (MSVC)
-   mark_as_advanced(CMAKE_BUILD_TYPE)
-endif(MSVC)
+if(MSVC)
+    mark_as_advanced(CMAKE_BUILD_TYPE)
+endif()
 
 ######################
 
@@ -40,51 +40,27 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 message(STATUS "Libraries go to ${LIBRARY_OUTPUT_PATH}")
 message(STATUS "Executables go to ${EXECUTABLE_OUTPUT_PATH}")
-# this doesn't happen automatically for makefiles
-make_directory(${LIBRARY_OUTPUT_PATH})
-make_directory(${EXECUTABLE_OUTPUT_PATH})
-# and let us clean their contents on a "make clean"
-##set_directory_properties(PROPERTIES LIBRARY_OUTPUT_PATH ADDITIONAL_MAKE_CLEAN_FILES)
-##set_directory_properties(PROPERTIES EXECUTABLE_OUTPUT_PATH ADDITIONAL_MAKE_CLEAN_FILES)
-mark_as_advanced(LIBRARY_OUTPUT_PATH EXECUTABLE_OUTPUT_PATH)
-mark_as_advanced(CMAKE_BACKWARDS_COMPATIBILITY)
+
 ##########################################
 
-# Pick up our scripts - they are all in the cmake conf subdirectory
-set(RD_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-list(APPEND CMAKE_MODULE_PATH ${RD_MODULE_PATH})
-
-#set_property(GLOBAL PROPERTY RD_INCLUDE_DIRS)
-#set_property(GLOBAL PROPERTY RD_LINK_DIRS)
-#set_property(GLOBAL PROPERTY RD_LIBRARIES)
-#set_property(GLOBAL PROPERTY RD_TARGETS)
-set(RD_INCLUDE_DIRS CACHE INTERNAL "appended header dirs" FORCE)
-set(RD_LINK_DIRS CACHE INTERNAL "appended link dirs" FORCE)
-set(RD_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
+# Pick up our scripts - they are all in the /cmake subdirectory
+set(RD_MODULE_DIR ${CMAKE_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${RD_MODULE_DIR})
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage") # enabling coverage
-endif(CMAKE_COMPILER_IS_GNUCXX)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage") # enabling coverage
+endif()
 
 # add main contents
 add_subdirectory(share)
 add_subdirectory(src)
-if (ENABLE_tests)
-    add_subdirectory(test)
-endif (ENABLE_tests)
 
-# export our variables to a RDConfig.cmake creation
-set(RD_LINK_DIRS ${RD_LINK_DIRS} ${LIBRARY_OUTPUT_PATH})
-configure_file(${CMAKE_SOURCE_DIR}/cmake/template/RDConfig.cmake.in
-               ${CMAKE_BINARY_DIR}/RDConfig.cmake @ONLY)
+if(ENABLE_tests)
+    add_subdirectory(test)
+endif()
 
 # uninstall target
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/RDConfigUninstall.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/RDConfigUninstall.cmake" IMMEDIATE @ONLY)
+configure_file("${CMAKE_SOURCE_DIR}/cmake/template/RDConfigUninstall.cmake.in"
+               "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake" @ONLY)
 
-add_custom_target(uninstall
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/RDConfigUninstall.cmake)
-
-#MESSAGE("\nDon't forget to set: " ${CMAKE_BINARY_DIR} " as your \${RD_DIR} !!!\n")
-
+add_custom_target(uninstall COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/RDConfigUninstall.cmake)
