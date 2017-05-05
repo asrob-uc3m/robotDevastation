@@ -33,15 +33,13 @@ if(MSVC)
     mark_as_advanced(CMAKE_BUILD_TYPE)
 endif()
 
-######################
+# Standard installation directories.
+include(GNUInstallDirs)
 
-### this makes everything go in $RD_DIR/lib and $RD_DIR/bin
-set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
-message(STATUS "Libraries go to ${LIBRARY_OUTPUT_PATH}")
-message(STATUS "Executables go to ${EXECUTABLE_OUTPUT_PATH}")
-
-##########################################
+# Control where libraries and executables are placed during the build.
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 
 # Pick up our scripts - they are all in the /cmake subdirectory
 set(RD_MODULE_DIR ${CMAKE_SOURCE_DIR}/cmake)
