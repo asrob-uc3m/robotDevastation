@@ -107,3 +107,31 @@ target_include_directories(testDeadState PUBLIC ${YARP_INCLUDE_DIRS})
 add_executable(testRobotDevastation testRobotDevastation.cpp)
 target_link_libraries(testRobotDevastation YARP::YARP_OS YARP::YARP_sig StateMachineLib GameStatesLib NetworkLib ImageLib InputLib MentalMapLib RobotLib MusicLib UserInterfaceLib UtilsLib gtest_main)
 target_include_directories(testRobotDevastation PUBLIC ${YARP_INCLUDE_DIRS})
+
+# Organize targets in folders (Visual Studio)
+set_target_properties(testSDLTextDisplay
+                      testInitScreen
+                      testGameScreen
+                      testDeadScreen
+                      testMockScreen
+                      testSDLScreenManager
+                      testMockAudioManager
+                      testSDLAudioManager
+                      testInputManager
+                      testMockInputManager
+                      testMentalMap
+                      testYarpNetworkManager
+                      testMockNetworkManager
+                      testYarpImageManager
+                      testMockImageManager
+                      testProcessorImageEventListener
+                      testMockRobotManager
+                      testFSM
+                      testFSMBuilder
+                      testInitState
+                      testGameState
+                      testDeadState
+                      testRobotDevastation
+                      PROPERTIES FOLDER Tests)
+
+set_target_properties(gtest gtest_main PROPERTIES FOLDER Tests/gtest)

@@ -62,6 +62,9 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage") # enabling coverage
 endif()
 
+# let CMake organize projects in folders (in IDEs that support this)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
 # add main contents
 add_subdirectory(share)
 add_subdirectory(src)
