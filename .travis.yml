@@ -64,9 +64,10 @@ before_script:
   - cd $TRAVIS_BUILD_DIR
   - mkdir build
   - cd build 
-  - cmake ../ ${CMAKE_OPTIONS}
+  - cmake ../ ${CMAKE_OPTIONS} -DENABLE_coverage:BOOL=ON
   - cmake --build .
   - sudo make install
+
   # SDL stuff
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"

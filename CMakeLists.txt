@@ -19,6 +19,9 @@ option(ENABLE_rdServer "Choose if you want to compile rdServer" TRUE)
 ##### tests options
 option(ENABLE_tests "Choose if you want to compile tests" TRUE)
 
+##### other
+option(ENABLE_coverage "Choose if you want to enable coverage" FALSE)
+
 if(MSVC)
     message(STATUS "Running on windows")    
     set(CMAKE_DEBUG_POSTFIX "d")
@@ -58,8 +61,11 @@ set(RD_MODULE_DIR ${CMAKE_SOURCE_DIR}/cmake)
 list(APPEND CMAKE_MODULE_PATH ${RD_MODULE_DIR}
                               ${RD_MODULE_DIR}/find-modules)
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage") # enabling coverage
+if(ENABLE_coverage)
+    # List supported compilers.
+    if(CMAKE_COMPILER_IS_GNUCXX)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+    endif()
 endif()
 
 # let CMake organize projects in folders (in IDEs that support this)
