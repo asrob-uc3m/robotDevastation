@@ -12,6 +12,8 @@ cmake_minimum_required(VERSION 2.8.11)
 
 project(robotDevastation)
 
+include(CMakeDependentOption)
+
 ##### program options
 option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" TRUE)
 option(ENABLE_rdServer "Choose if you want to compile rdServer" TRUE)
@@ -77,6 +79,29 @@ add_subdirectory(src)
 
 if(ENABLE_tests)
     add_subdirectory(test)
+endif()
+
+# generate documentation
+find_package(Doxygen QUIET)
+
+cmake_dependent_option(GENERATE_doc_html "Choose if you want to generate HTML documentation through Doxygen" OFF
+                       DOXYGEN_FOUND OFF)
+
+if(GENERATE_doc_html)
+    if(CMAKE_GENERATOR MATCHES "^(Visual Studio|Xcode)")
+        set(_dox DOX)
+    else()
+        set(_dox dox)
+    endif()
+
+    add_custom_target(${_dox}
+                      COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/doc/Doxyfile
+                      COMMENT "Generating doxygen documentation")
+
+    set_property(TARGET ${_dox} PROPERTY FOLDER CMakePredefinedTargets)
+
+    install(DIRECTORY ${CMAKE_BINARY_DIR}/html
+            DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
 
 # uninstall target
