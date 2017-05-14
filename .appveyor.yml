@@ -180,7 +180,11 @@ before_test:
 test_script:
   - ps: >-
         foreach ($test in $tests) {
-            "$env:TEST_PATH\$test.exe"
+            Update-AppveyorTest -Name "$test" -Framework "$env:TEST_FRAMEWORK" -FileName "$test.exe" -Outcome Running
+            $date1 = Get-Date
+            & "$env:TEST_PATH\$test.exe"
+            $date2 = Get-Date
+            $duration = [long](New-TimeSpan -Start $date1 -End $date2).TotalMilliseconds
             $outcome = If ($LASTEXITCODE -eq 0) {"Passed"} Else {"Failed"}
-            Update-AppveyorTest -Name "$test" -Framework "$env:TEST_FRAMEWORK" -FileName "$test.exe" -Outcome "$outcome"
+            Update-AppveyorTest -Name "$test" -Framework "$env:TEST_FRAMEWORK" -FileName "$test.exe" -Outcome "$outcome" -Duration $duration
         }
