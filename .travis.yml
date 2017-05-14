@@ -99,4 +99,11 @@ after_success:
   #- if [ "$CXX" = "g++" ]; then coveralls-lcov --source-encoding=ISO-8859-1 --repo-token InWqFy6VWMrEUzr2Rn8XV0cGqv3wXWo2d coverage.info; fi
   - if [ "$CXX" = "g++" ]; then coveralls-lcov --source-encoding=ISO-8859-1 coverage.info; fi
 
-  - sudo make uninstall
+deploy:
+  provider: releases
+  api_key:
+    secure: ZYIom8JMgB5Nl97parzXJsG3IeQFXYsXOOOvQef3z4BUAJsx93Fb6my9/JdFbs/YBt6MN8Ft1xXvRt5RjEQaCGdONcx6C6jS991ADUIxRe+CNxiEZdqSk3zVd9ayLXtxzrMBZZY3Th82ezNFRtDUo2J3oOZ9gJXcunVojyYv7cs545+CvIzpSjuttMI4/gssfDlc87BC3QhXqD+urHrofl5qvs3SRBZzjNa3C8BpecZoCC4JXo/oGHfZy4u4RfCFoPGQbxy56+dYM1KyfmJtHhS+zswKa+SwFfm7rrh7uNg74lm9S0JcyQKamSQjesXuZYD54wg7WbIPN+2aI7DicIX+8qehvmyaCiJQF9OlX53Q8YwsrgyKUxJDJDxstoBqVFjz9TCSZxy9LjnhcQjjQr3O7ROvaM6JoFRnTcqOvFG23qIsii3SQkaTx+IZi376LaWahpkdYD3cmSrP4v9IPzQKbzV6tYJOeIw4EMb+hmO58ukQgnQwN75MKUnFXbHglVXe1Fh9a2ZGtX6LTTLu68x9eaCTIHBf5iFpUR2T2sHqoNFJ3DjUy8f8goUb8oUJ2QdA80VCHfmus7cVy34S1fSaPXKVYgzwAPLp51g5FPDR9ME7uXaBF4cbSNFVX2jrA/x0PCAUTRHDbNNt1/FRsCkbRF6YR/+cbMLuKKS1xSs=
+  file: build/bin/robotDevastation
+  skip_cleanup: true
+  on:
+    tags: true
