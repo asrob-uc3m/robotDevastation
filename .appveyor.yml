@@ -169,3 +169,9 @@ test_script:
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testYarpNetworkManager.exe"'
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testSDLAudioManager.exe"'
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testRobotDevastation.exe"'
+
+after_test:
+  - cmd: move "%APPVEYOR_BUILD_FOLDER%\install" "%APPVEYOR_BUILD_FOLDER%\robotDevastation_appveyor-%APPVEYOR_BUILD_ID%_v14_%SYSTEM_ARCH%"
+
+artifacts:
+  - path: robotDevastation_appveyor-$(APPVEYOR_BUILD_ID)_v14_$(SYSTEM_ARCH)
