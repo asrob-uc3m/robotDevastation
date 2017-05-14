@@ -177,6 +177,7 @@ artifacts:
   - path: robotDevastation_appveyor-$(APPVEYOR_BUILD_ID)_v14_$(SYSTEM_ARCH)
 
 deploy:
+  tag: $(APPVEYOR_REPO_TAG_NAME)
   release: 'RD AppVeyor test deploy $(APPVEYOR_BUILD_NUMBER)'
   description: 'Release description'
   provider: GitHub
