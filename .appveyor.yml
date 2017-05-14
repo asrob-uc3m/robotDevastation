@@ -175,3 +175,12 @@ after_test:
 
 artifacts:
   - path: robotDevastation_appveyor-$(APPVEYOR_BUILD_ID)_v14_$(SYSTEM_ARCH)
+
+deploy:
+  release: 'RD AppVeyor test deploy $(APPVEYOR_BUILD_NUMBER)'
+  description: 'Release description'
+  provider: GitHub
+  auth_token:
+    secure: UyeTTltPoNLejs/HZoY9PyIVpHrq1xGomkdbrbUfMpv5FrQIY7AYeE6J7nRwb2Qz
+  on:
+    appveyor_repo_tag: true
