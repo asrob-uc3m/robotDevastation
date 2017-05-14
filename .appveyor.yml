@@ -153,9 +153,9 @@ after_build:
   - cmd: set YARP_DATA_DIRS=%APPVEYOR_BUILD_FOLDER%\install\share\rd
 
 before_test:
-  - cmd: echo %PATH%
-  - cmd: set TEST_PATH=%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%
-  - cmd: set TEST_FRAMEWORK=Google Test
+  - ps: Write-Host "$env:PATH"
+  - ps: $testPath = "$env:APPVEYOR_BUILD_FOLDER\build\bin\$env:CONFIGURATION"
+  - ps: $testFramework = "Google Test"
   - ps: >-
         $tests = @(
             "testDeadState",
@@ -174,17 +174,23 @@ before_test:
         )
   - ps: >-
         foreach ($test in $tests) {
-            Add-AppveyorTest -Name "$test" -Framework "$env:TEST_FRAMEWORK" -FileName "$test.exe" -Outcome None
+            Add-AppveyorTest -Name "$test" -Framework "$testFramework" -FileName "$test.exe" -Outcome None
         }
+  - ps: $testsHavePassed = $true
 
 test_script:
   - ps: >-
         foreach ($test in $tests) {
-            Update-AppveyorTest -Name "$test" -Framework "$env:TEST_FRAMEWORK" -FileName "$test.exe" -Outcome Running
+            Update-AppveyorTest -Name "$test" -Framework "$testFramework" -FileName "$test.exe" -Outcome Running
             $date1 = Get-Date
-            & "$env:TEST_PATH\$test.exe"
+            cmd /c "$testPath\$test.exe"
             $date2 = Get-Date
+            $exitCode = $LASTEXITCODE
             $duration = [long](New-TimeSpan -Start $date1 -End $date2).TotalMilliseconds
-            $outcome = If ($LASTEXITCODE -eq 0) {"Passed"} Else {"Failed"}
-            Update-AppveyorTest -Name "$test" -Framework "$env:TEST_FRAMEWORK" -FileName "$test.exe" -Outcome "$outcome" -Duration $duration
+            $outcome = If ($exitCode -eq 0) { "Passed" } Else { "Failed" }
+            Update-AppveyorTest -Name "$test" -Framework "$testFramework" -FileName "$test.exe" -Outcome "$outcome" -Duration $duration
+            $testsHavePassed = $testsHavePassed -And ($exitCode -eq 0)
         }
+
+after_test:
+  - ps: If (-Not $testsHavePassed) { exit 1 }
