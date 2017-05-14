@@ -154,18 +154,33 @@ after_build:
 
 before_test:
   - cmd: echo %PATH%
+  - cmd: set TEST_PATH=%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%
+  - cmd: set TEST_FRAMEWORK=Google Test
+  - ps: >-
+        $tests = @(
+            "testDeadState",
+            "testFSMBuilder",
+            "testFSM",
+            "testGameState",
+            "testInitState",
+            "testMentalMap",
+            "testMockAudioManager",
+            "testMockInputManager",
+            "testMockRobotManager",
+            "testProcessorImageEventListener",
+            "testYarpNetworkManager",
+            "testSDLAudioManager",
+            "testRobotDevastation"
+        )
+  - ps: >-
+        foreach ($test in $tests) {
+            Add-AppveyorTest -Name "$test" -Framework "$env:TEST_FRAMEWORK" -FileName "$test.exe" -Outcome None
+        }
 
 test_script:
-  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testDeadState.exe"'
-  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testFSMBuilder.exe"'
-  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testFSM.exe"'
-  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testGameState.exe"'
-  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testInitState.exe"'
-  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testMentalMap.exe"'
-  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testMockAudioManager.exe"'
-  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testMockInputManager.exe"'
-  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testMockRobotManager.exe"'
-  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testProcessorImageEventListener.exe"'
-  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testYarpNetworkManager.exe"'
-  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testSDLAudioManager.exe"'
-  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testRobotDevastation.exe"'
+  - ps: >-
+        foreach ($test in $tests) {
+            "$env:TEST_PATH\$test.exe"
+            $outcome = If ($LASTEXITCODE -eq 0) {"Passed"} Else {"Failed"}
+            Update-AppveyorTest -Name "$test" -Framework "$env:TEST_FRAMEWORK" -FileName "$test.exe" -Outcome "$outcome"
+        }
