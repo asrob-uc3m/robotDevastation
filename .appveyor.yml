@@ -181,12 +181,19 @@ before_test:
 test_script:
   - ps: >-
         foreach ($test in $tests) {
-            Update-AppveyorTest -Name "$test" -Framework "$testFramework" -FileName "$test.exe" -Outcome Running
-            $date1 = Get-Date
+            $startDate = Get-Date
+            $duration = 0
+            Start-Job -Name "$test" -ScriptBlock {
+                while ($true) {
+                    $currentDate = Get-Date
+                    $global:duration = [long](New-TimeSpan -Start $startDate -End $currentDate).TotalMilliseconds
+                    Update-AppveyorTest -Name "$test" -Framework "$testFramework" -FileName "$test.exe" -Outcome Running -Duration $duration
+                    Start-Sleep -s 1
+                }
+            }
             & "$testPath\$test.exe"
-            $date2 = Get-Date
+            Stop-Job -Name "$test"
             $exitCode = $LastExitCode
-            $duration = [long](New-TimeSpan -Start $date1 -End $date2).TotalMilliseconds
             $outcome = If ($exitCode -eq 0) { "Passed" } Else { "Failed" }
             Update-AppveyorTest -Name "$test" -Framework "$testFramework" -FileName "$test.exe" -Outcome "$outcome" -Duration $duration
             $testsHavePassed = $testsHavePassed -And ($exitCode -eq 0)
