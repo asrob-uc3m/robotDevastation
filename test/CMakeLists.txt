@@ -9,7 +9,10 @@ find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-add_definitions(-DSDL_MAIN_HANDLED) # needed for Windows
+
+if(WIN32)
+    add_definitions(-DSDL_MAIN_HANDLED)
+endif()
 
 # UI related
 add_executable(testSDLTextDisplay testSDLTextDisplay.cpp)

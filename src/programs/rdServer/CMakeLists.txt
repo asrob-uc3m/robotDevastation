@@ -13,7 +13,9 @@ target_link_libraries(rdServer YARP::YARP_init
                                ServerLib
                                UtilsLib)
 
-target_compile_definitions(rdServer PUBLIC SDL_MAIN_HANDLED)
+if(WIN32)
+    target_compile_definitions(rdServer PUBLIC SDL_MAIN_HANDLED)
+endif()
 
 install(TARGETS rdServer DESTINATION ${CMAKE_INSTALL_BINDIR})
 
