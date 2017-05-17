@@ -178,10 +178,10 @@ artifacts:
 
 deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
-  release: 'RD AppVeyor test deploy $(APPVEYOR_BUILD_NUMBER)'
-  description: 'Release description'
+  release: 'Robot Devastation $(APPVEYOR_REPO_TAG_NAME)'
+  description: 'Put a description here.'
   provider: GitHub
   auth_token:
-    secure: UyeTTltPoNLejs/HZoY9PyIVpHrq1xGomkdbrbUfMpv5FrQIY7AYeE6J7nRwb2Qz
+    secure: JFMs6z5fq7S+KUKDv28tvulATkez+MUpK0ujlQtg49HDPX2nawFM6WkyBpQed0nj
   on:
     appveyor_repo_tag: true
