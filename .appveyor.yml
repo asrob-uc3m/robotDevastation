@@ -169,3 +169,20 @@ test_script:
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testYarpNetworkManager.exe"'
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testSDLAudioManager.exe"'
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testRobotDevastation.exe"'
+
+after_test:
+  - cmd: set DEPLOY_SUFFIX=appveyor-%APPVEYOR_BUILD_NUMBER%_v14_%SYSTEM_ARCH%
+  - cmd: move "%APPVEYOR_BUILD_FOLDER%\install" "%APPVEYOR_BUILD_FOLDER%\robotDevastation_%DEPLOY_SUFFIX%"
+
+artifacts:
+  - path: robotDevastation_%DEPLOY_SUFFIX%
+
+deploy:
+  tag: $(APPVEYOR_REPO_TAG_NAME)
+  release: 'Robot Devastation $(APPVEYOR_REPO_TAG_NAME)'
+  description: 'Put a description here.'
+  provider: GitHub
+  auth_token:
+    secure: '1MhIS1JCjeWkXo60v14wxONNDvSSEOJK95HEzkEXCA6B1eJx1sle/N5aEwlJv3lD'
+  on:
+    appveyor_repo_tag: true
