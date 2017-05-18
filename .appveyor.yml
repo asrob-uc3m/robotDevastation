@@ -171,10 +171,11 @@ test_script:
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testRobotDevastation.exe"'
 
 after_test:
-  - cmd: move "%APPVEYOR_BUILD_FOLDER%\install" "%APPVEYOR_BUILD_FOLDER%\robotDevastation_appveyor-%APPVEYOR_BUILD_NUMBER%_v14_%SYSTEM_ARCH%"
+  - cmd: set DEPLOY_SUFFIX=appveyor-%APPVEYOR_BUILD_NUMBER%_v14_%SYSTEM_ARCH%
+  - cmd: move "%APPVEYOR_BUILD_FOLDER%\install" "%APPVEYOR_BUILD_FOLDER%\robotDevastation_%DEPLOY_SUFFIX%"
 
 artifacts:
-  - path: robotDevastation_appveyor-*
+  - path: robotDevastation_%DEPLOY_SUFFIX%
 
 deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
