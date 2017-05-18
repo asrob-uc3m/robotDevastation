@@ -64,9 +64,9 @@ before_script:
   - cd $TRAVIS_BUILD_DIR
   - mkdir build
   - cd build 
-  - cmake ../ ${CMAKE_OPTIONS} -DENABLE_coverage:BOOL=ON
-  - cmake --build .
-  - sudo make install
+  - cmake .. -DCMAKE_INSTALL_PREFIX:PATH=$PWD/install -DENABLE_coverage:BOOL=ON
+  - cmake --build . --target install
+  - export YARP_DATA_DIRS=$YARP_DATA_DIRS:$PWD/install/share/rd
 
   # SDL stuff
   - "export DISPLAY=:99.0"
@@ -100,4 +100,17 @@ after_success:
   #- if [ "$CXX" = "g++" ]; then coveralls-lcov --source-encoding=ISO-8859-1 --repo-token InWqFy6VWMrEUzr2Rn8XV0cGqv3wXWo2d coverage.info; fi
   - if [ "$CXX" = "g++" ]; then coveralls-lcov --source-encoding=ISO-8859-1 coverage.info; fi
 
-  - sudo make uninstall
+before_deploy:
+  - cd install
+  - tar -zcvf robotDevastation_travis-${TRAVIS_BUILD_NUMBER}_trusty_x64.tar.gz *
+
+deploy:
+  provider: releases
+  api_key:
+    secure: DORjZTWdhauq/l3s+pQj0ywjtkKxb00YNy9Tj3RH5+4I8/aRF2u6nFP61tnLUEEzz6GcEDp/lyIOtbuOI+hKO2M4Nq2stI++8FNvPjA8sdmNGXm3w2yIQFY+wFwZyLcn9y3l/7I8FeiQnfFk47/vHfy5DrdsqOr3Z6Ub7xINpKM=
+  file_glob: true  
+  file: '*.tar.gz'
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: $CXX = g++

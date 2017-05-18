@@ -71,7 +71,7 @@ install:
             Add-Content "$env:DOWNLOADS_PATH\ACE_wrappers\ace\config.h" "#include `"ace/config-win32.h`""
             msbuild "$env:DOWNLOADS_PATH\ACE_wrappers\$env:ACE_VC_SLN" /m /v:m
             Write-Host "Copying selected contents of $env:DOWNLOADS_PATH\ACE_wrappers to C:\ACE"
-            robocopy "$env:DOWNLOADS_PATH\ACE_wrappers\ace" C:\ACE\ace /e /xd "$env:DOWNLOADS_PATH\ACE_wrappers\ace\$env:CONFIGURATION" /ns /ns /nfl /ndl /njh
+            robocopy "$env:DOWNLOADS_PATH\ACE_wrappers\ace" C:\ACE\ace /e /xd "$env:DOWNLOADS_PATH\ACE_wrappers\ace\$env:CONFIGURATION" /ns /nc /nfl /ndl /njh
             xcopy "$env:DOWNLOADS_PATH\ACE_wrappers\lib" C:\ACE\lib /e /i /y /q
             Set-Content C:\ACE\.version "$env:ACE_LATEST"
         }
@@ -93,7 +93,6 @@ install:
             7z x -y -o"$env:DOWNLOADS_PATH" "$env:DOWNLOADS_PATH\yarp.zip"
             $env:yarp_temp = "$env:DOWNLOADS_PATH\yarp-$env:YARP_LATEST"
             cmake -H"$env:yarp_temp" -B"$env:yarp_temp\build" -G"$env:CMAKE_GENERATOR" -DCMAKE_INSTALL_PREFIX:PATH=C:\YARP
-            cmake --build "$env:yarp_temp\build" --config "$env:CONFIGURATION" -- /m /v:m
             cmake --build "$env:yarp_temp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
             Set-Content C:\YARP\.version "$env:YARP_LATEST"
         }
@@ -170,3 +169,20 @@ test_script:
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testYarpNetworkManager.exe"'
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testSDLAudioManager.exe"'
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testRobotDevastation.exe"'
+
+after_test:
+  - cmd: set DEPLOY_SUFFIX=appveyor-%APPVEYOR_BUILD_NUMBER%_v14_%SYSTEM_ARCH%
+  - cmd: move "%APPVEYOR_BUILD_FOLDER%\install" "%APPVEYOR_BUILD_FOLDER%\robotDevastation_%DEPLOY_SUFFIX%"
+
+artifacts:
+  - path: robotDevastation_%DEPLOY_SUFFIX%
+
+deploy:
+  tag: $(APPVEYOR_REPO_TAG_NAME)
+  release: 'Robot Devastation $(APPVEYOR_REPO_TAG_NAME)'
+  description: 'Put a description here.'
+  provider: GitHub
+  auth_token:
+    secure: '1MhIS1JCjeWkXo60v14wxONNDvSSEOJK95HEzkEXCA6B1eJx1sle/N5aEwlJv3lD'
+  on:
+    appveyor_repo_tag: true
