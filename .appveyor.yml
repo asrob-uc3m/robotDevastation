@@ -174,7 +174,7 @@ after_test:
   - cmd: move "%APPVEYOR_BUILD_FOLDER%\install" "%APPVEYOR_BUILD_FOLDER%\robotDevastation_appveyor-%APPVEYOR_BUILD_NUMBER%_v14_%SYSTEM_ARCH%"
 
 artifacts:
-  - path: robotDevastation_appveyor-$(APPVEYOR_BUILD_NUMBER)_v14_$(SYSTEM_ARCH)
+  - path: robotDevastation_appveyor-*
 
 deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
@@ -182,6 +182,6 @@ deploy:
   description: 'Put a description here.'
   provider: GitHub
   auth_token:
-    secure: JFMs6z5fq7S+KUKDv28tvulATkez+MUpK0ujlQtg49HDPX2nawFM6WkyBpQed0nj
+    secure: '1MhIS1JCjeWkXo60v14wxONNDvSSEOJK95HEzkEXCA6B1eJx1sle/N5aEwlJv3lD'
   on:
     appveyor_repo_tag: true
