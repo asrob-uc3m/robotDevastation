@@ -42,10 +42,12 @@ before_install:
   #use the same set of cmake options used in the dashboard build
   # - source ./admin/scripts/generate-cmake-options.sh # no special cmake options for now.
 
+  - '[[ "$TRAVIS_EVENT_TYPE" = cron ]] && export YARP_CHECKOUT=devel || export YARP_CHECKOUT=master'
+
 install:
   #install yarp from master
   - cd
-  - git clone --depth=1 --branch=master https://github.com/robotology/yarp
+  - git clone --depth=1 --branch=$YARP_CHECKOUT https://github.com/robotology/yarp
   - cd yarp
   - mkdir build
   - cd build
