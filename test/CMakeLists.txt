@@ -1,5 +1,5 @@
 # Testing things #########################################################################################
-option(ENABLE_tests "Choose if you want to compile tests" ON)
+option(ENABLE_tests "Choose if you want to compile tests" OFF)
 
 if(ENABLE_tests)
     
