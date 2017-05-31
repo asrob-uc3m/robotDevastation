@@ -1,3 +1,5 @@
+option(ENABLE_rdServer "Choose if you want to compile rdServer" ON)
+
 if(ENABLE_rdServer)
 
 # Find YARP.  Point the YARP_DIR environment variable at your build.
@@ -19,4 +21,7 @@ endif()
 
 install(TARGETS rdServer DESTINATION ${CMAKE_INSTALL_BINDIR})
 
-endif()
+# Organize targets in folders (Visual Studio)
+set_target_properties(rdServer PROPERTIES FOLDER Programs)
+
+endif() # ENABLE_rdServer

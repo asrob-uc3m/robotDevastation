@@ -14,16 +14,6 @@ project(robotDevastation)
 
 include(CMakeDependentOption)
 
-##### program options
-option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" TRUE)
-option(ENABLE_rdServer "Choose if you want to compile rdServer" TRUE)
-
-##### tests options
-option(ENABLE_tests "Choose if you want to compile tests" TRUE)
-
-##### other
-option(ENABLE_coverage "Choose if you want to enable coverage" FALSE)
-
 if(MSVC)
     message(STATUS "Running on windows")    
     set(CMAKE_DEBUG_POSTFIX "d")
@@ -63,6 +53,8 @@ set(RD_MODULE_DIR ${CMAKE_SOURCE_DIR}/cmake)
 list(APPEND CMAKE_MODULE_PATH ${RD_MODULE_DIR}
                               ${RD_MODULE_DIR}/find-modules)
 
+option(ENABLE_coverage "Choose if you want to enable coverage" OFF)
+
 if(ENABLE_coverage)
     # List supported compilers.
     if(CMAKE_COMPILER_IS_GNUCXX)
@@ -76,10 +68,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # add main contents
 add_subdirectory(share)
 add_subdirectory(src)
-
-if(ENABLE_tests)
-    add_subdirectory(test)
-endif()
+add_subdirectory(test)
 
 # generate documentation
 find_package(Doxygen QUIET)

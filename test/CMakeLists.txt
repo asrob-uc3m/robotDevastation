@@ -1,4 +1,8 @@
 # Testing things #########################################################################################
+option(ENABLE_tests "Choose if you want to compile tests" ON)
+
+if(ENABLE_tests)
+    
 set(gtest_force_shared_crt ON CACHE INTERNAL "") # needed for Windows
 add_subdirectory(gtest-1.7.0)
 enable_testing()
@@ -138,3 +142,5 @@ set_target_properties(testSDLTextDisplay
                       PROPERTIES FOLDER Tests)
 
 set_target_properties(gtest gtest_main PROPERTIES FOLDER Tests/gtest)
+
+endif() # ENABLE_tests
