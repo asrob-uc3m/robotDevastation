@@ -20,12 +20,8 @@ env:
 
 before_install:
   #ubuntu dependencies
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo sh -c 'echo "deb http://www.icub.org/ubuntu precise contrib/science" > /etc/apt/sources.list.d/icub.list'; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo add-apt-repository -y ppa:kubuntu-ppa/backports; fi 
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo add-apt-repository -y ppa:robotology/ppa; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get update; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install cmake; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get --force-yes install icub-common libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libzbar-dev; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq update; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y --no-install-recommends install libace-dev libjpeg-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libzbar-dev; fi
 
   #OS X dependencies
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export XQUARTZ_VERSION=2.7.6;fi
@@ -42,16 +38,19 @@ before_install:
   #use the same set of cmake options used in the dashboard build
   # - source ./admin/scripts/generate-cmake-options.sh # no special cmake options for now.
 
+  # use YARP devel on cron jobs
+  - '[[ "$TRAVIS_EVENT_TYPE" = cron ]] && export YARP_CHECKOUT=devel || export YARP_CHECKOUT=master'
+
+  # print system info
+  - cmake --version
+
 install:
   #install yarp from master
   - cd
-  - git clone --depth=1 --branch=master https://github.com/robotology/yarp
-  - cd yarp
-  - mkdir build
-  - cd build
-  - cmake ../ -DCREATE_OPTIONAL_CARRIERS:BOOL=ON -DENABLE_yarpcar_mjpeg:BOOL=ON
-  - make -j2
-  - sudo make install
+  - git clone --depth=1 --branch=$YARP_CHECKOUT https://github.com/robotology/yarp
+  - mkdir -p yarp/build && cd "$_"
+  - cmake .. -DCREATE_OPTIONAL_CARRIERS:BOOL=ON -DENABLE_yarpcar_mjpeg:BOOL=ON
+  - sudo make -j2 install
 
   # see http://gronlier.fr/blog/2015/01/adding-code-coverage-to-your-c-project/
   - cd
@@ -61,9 +60,7 @@ install:
   - if [ "$CXX" = "g++" ]; then gem install coveralls-lcov; fi
 
 before_script:
-  - cd $TRAVIS_BUILD_DIR
-  - mkdir build
-  - cd build 
+  - mkdir -p "$TRAVIS_BUILD_DIR/build" && cd "$_"
   - cmake .. -DCMAKE_INSTALL_PREFIX:PATH=$PWD/install -DENABLE_coverage:BOOL=ON
   - cmake --build . --target install
   - export YARP_DATA_DIRS=$YARP_DATA_DIRS:$PWD/install/share/rd
@@ -89,7 +86,6 @@ script:
   - bin/testRobotDevastation
 
 after_success:
-  #  - cd $TRAVIS_BUILD_DIR
   # capture coverage info
   - if [ "$CXX" = "g++" ]; then lcov --directory . --capture --output-file coverage.info; fi
   # filter out system and test code
