@@ -15,7 +15,7 @@ project(robotDevastation)
 include(CMakeDependentOption)
 
 if(MSVC)
-    message(STATUS "Running on windows")    
+    message(STATUS "Running on windows")
     set(CMAKE_DEBUG_POSTFIX "d")
 endif()
 
@@ -96,6 +96,9 @@ if(GENERATE_doc_html)
     install(DIRECTORY ${CMAKE_BINARY_DIR}/html
             DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
+
+# packaging
+include(RDPackage)
 
 # uninstall target
 include(AddUninstallTarget)
