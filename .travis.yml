@@ -97,6 +97,11 @@ after_success:
   - if [ "$CXX" = "g++" ]; then coveralls-lcov --source-encoding=ISO-8859-1 coverage.info; fi
 
 before_deploy:
+  # install again, now with generated documentation
+  - sudo apt-get -y --no-install-recommends install doxygen
+  - cmake .. -DGENERATE_doc_html:BOOL=ON
+  - cmake --build . --target dox
+  - cmake --build . --target install
   - cd install
   - tar -zcvf robotDevastation_travis-${TRAVIS_BUILD_NUMBER}_trusty_x64.tar.gz *
 

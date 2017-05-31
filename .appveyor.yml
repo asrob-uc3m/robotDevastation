@@ -37,6 +37,7 @@ init:
 
   # Download/clone paths and URLs
   - cmd: set DOWNLOADS_PATH=C:\downloads
+  - cmd: set NUGET_PATH=C:\nuget_packages
 
   - cmd: set ACE_DOWNLOAD_URL=http://download.dre.vanderbilt.edu/previous_versions/ACE-%ACE_LATEST%.zip
   - cmd: set YARP_DOWNLOAD_URL=https://github.com/robotology/yarp/archive/v%YARP_LATEST%.zip
@@ -54,6 +55,7 @@ init:
 install:
   # Create folders
   - cmd: md %DOWNLOADS_PATH%
+  - cmd: md %NUGET_PATH%
 
   # Download and build ACE (if not in cache)
   - ps: >-
@@ -139,9 +141,13 @@ install:
   - cmd: set ZBAR_DIR=C:\ZBar
   - cmd: set PATH=%PATH%;%ZBAR_DIR%\bin
 
+  # Download and install Doxygen (NuGet package)
+  - cmd: nuget install Doxygen -OutputDirectory "%NUGET_PATH%" -ExcludeVersion
+  - cmd: set PATH=%PATH%;%NUGET_PATH%\Doxygen\tools
+
 before_build:
   - cmd: echo Configuring project %APPVEYOR_PROJECT_NAME%
-  - cmd: cmake -H"%APPVEYOR_BUILD_FOLDER%" -B"%APPVEYOR_BUILD_FOLDER%\build" -G"%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX:PATH="%APPVEYOR_BUILD_FOLDER%\install"
+  - cmd: cmake -H"%APPVEYOR_BUILD_FOLDER%" -B"%APPVEYOR_BUILD_FOLDER%\build" -G"%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX:PATH="%APPVEYOR_BUILD_FOLDER%\install" -DGENERATE_doc_html:BOOL=ON
 
 build:
   project: build\robotDevastation.sln
@@ -149,6 +155,7 @@ build:
   verbosity: minimal
 
 after_build:
+  - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target DOX -- /v:m
   - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target INSTALL -- /v:m
   - cmd: set YARP_DATA_DIRS=%APPVEYOR_BUILD_FOLDER%\install\share\rd
 
