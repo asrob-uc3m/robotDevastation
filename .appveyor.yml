@@ -141,9 +141,10 @@ install:
   - cmd: set ZBAR_DIR=C:\ZBar
   - cmd: set PATH=%PATH%;%ZBAR_DIR%\bin
 
-  # Download and install Doxygen (NuGet package)
+  # Download and install NuGet packages
   - cmd: nuget install Doxygen -OutputDirectory "%NUGET_PATH%" -ExcludeVersion
-  - cmd: set PATH=%PATH%;%NUGET_PATH%\Doxygen\tools
+  - cmd: nuget install Graphviz -OutputDirectory "%NUGET_PATH%" -ExcludeVersion
+  - cmd: set PATH=%PATH%;%NUGET_PATH%\Doxygen\tools;%NUGET_PATH%\Graphviz
 
 before_build:
   - cmd: echo Configuring project %APPVEYOR_PROJECT_NAME%
