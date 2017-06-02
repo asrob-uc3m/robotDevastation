@@ -89,7 +89,8 @@ if(GENERATE_doc_html)
 
     add_custom_target(${_dox}
                       COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_BINARY_DIR}/Doxyfile
-                      COMMENT "Generating doxygen documentation")
+                      COMMENT "Generating doxygen documentation"
+                      SOURCES ${CMAKE_SOURCE_DIR}/cmake/templates/Doxyfile.in)
 
     set_property(TARGET ${_dox} PROPERTY FOLDER CMakePredefinedTargets)
 
