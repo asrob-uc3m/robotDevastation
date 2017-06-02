@@ -148,17 +148,21 @@ install:
 
 before_build:
   - cmd: echo Configuring project %APPVEYOR_PROJECT_NAME%
-  - cmd: cmake -H"%APPVEYOR_BUILD_FOLDER%" -B"%APPVEYOR_BUILD_FOLDER%\build" -G"%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX:PATH="%APPVEYOR_BUILD_FOLDER%\install" -DENABLE_tests:BOOL=ON -DGENERATE_doc_html:BOOL=ON
+  - cmd: cmake -H"%APPVEYOR_BUILD_FOLDER%" -B"%APPVEYOR_BUILD_FOLDER%\build" -G"%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX:PATH="%APPVEYOR_BUILD_FOLDER%\build\install" -DENABLE_tests:BOOL=ON -DGENERATE_doc_html:BOOL=ON -DCPACK_BINARY_NSIS:BOOL=ON -DCPACK_BINARY_ZIP:BOOL=ON
 
 build:
   project: build\robotDevastation.sln
   parallel: false
   verbosity: minimal
 
-after_build:
+before_package:
   - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target DOX -- /v:m
+  - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target PACKAGE -- /v:m
+
+after_build:
   - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target INSTALL -- /v:m
-  - cmd: set YARP_DATA_DIRS=%APPVEYOR_BUILD_FOLDER%\install\share\rd
+  - cmd: set YARP_DATA_DIRS=%APPVEYOR_BUILD_FOLDER%\build\install\share\rd
+  - cmd: dir "%APPVEYOR_BUILD_FOLDER%\build"
 
 before_test:
   - cmd: echo %PATH%
@@ -178,12 +182,11 @@ test_script:
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testSDLAudioManager.exe"'
   - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testRobotDevastation.exe"'
 
-after_test:
-  - cmd: set DEPLOY_SUFFIX=appveyor-%APPVEYOR_BUILD_NUMBER%_v14_%SYSTEM_ARCH%
-  - cmd: move "%APPVEYOR_BUILD_FOLDER%\install" "%APPVEYOR_BUILD_FOLDER%\robotDevastation_%DEPLOY_SUFFIX%"
-
 artifacts:
-  - path: robotDevastation_%DEPLOY_SUFFIX%
+  - path: 'build/robotDevastation_*.zip'
+    name: RD_ZIP
+  - path: 'build/robotDevastation_*.exe'
+    name: RD_NSIS
 
 deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
