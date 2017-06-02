@@ -11,6 +11,11 @@ set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
 set(CPACK_PACKAGE_VERSION_MAJOR 0)
 set(CPACK_PACKAGE_VERSION_MINOR 3)
 set(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_STRING ${CPACK_PACKAGE_VERSION})
+
+if(DEFINED _CPACK_CI_VERSION)
+    set(CPACK_PACKAGE_VERSION_STRING ${_CPACK_CI_VERSION})
+endif()
 
 # Configure components.
 include(CPackComponent)
@@ -69,7 +74,7 @@ if(WIN32 AND CMAKE_GENERATOR MATCHES "^Visual Studio")
     endif()
 
     # Package name.
-    set(CPACK_PACKAGE_FILE_NAME "robotDevastation_${CPACK_PACKAGE_VERSION}_${CPACK_SYSTEM_NAME}")
+    set(CPACK_PACKAGE_FILE_NAME "robotDevastation_${CPACK_PACKAGE_VERSION_STRING}_${CPACK_SYSTEM_NAME}")
 
     # Miscellanea.
     set(CPACK_NSIS_HELP_LINK "https://github.com/asrob-uc3m/robotDevastation/issues/")
@@ -105,7 +110,7 @@ if(UNIX)
     endif()
 
     # Package name.
-    set(CPACK_PACKAGE_FILE_NAME "robotDevastation-${CPACK_PACKAGE_VERSION}.${CPACK_SYSTEM_NAME}")
+    set(CPACK_PACKAGE_FILE_NAME "robotDevastation-${CPACK_PACKAGE_VERSION_STRING}.${CPACK_SYSTEM_NAME}")
 endif()
 
 # Launch CPack.
