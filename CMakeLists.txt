@@ -94,7 +94,8 @@ if(GENERATE_doc_html)
     set_property(TARGET ${_dox} PROPERTY FOLDER CMakePredefinedTargets)
 
     install(DIRECTORY ${CMAKE_BINARY_DIR}/html
-            DESTINATION ${CMAKE_INSTALL_DOCDIR})
+            DESTINATION ${CMAKE_INSTALL_DOCDIR}
+            COMPONENT docs)
 endif()
 
 # packaging

@@ -19,7 +19,9 @@ if(WIN32)
     target_compile_definitions(rdServer PUBLIC SDL_MAIN_HANDLED)
 endif()
 
-install(TARGETS rdServer DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS rdServer
+        DESTINATION ${CMAKE_INSTALL_BINDIR}
+        COMPONENT rd_server)
 
 # Organize targets in folders (Visual Studio)
 set_target_properties(rdServer PROPERTIES FOLDER Programs)

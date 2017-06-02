@@ -13,6 +13,6 @@ file(GLOB wavs ${CMAKE_CURRENT_SOURCE_DIR}/*.wav)
 #yarp_install(FILES ${conf} DESTINATION ${RD_CONTEXTS_INSTALL_DIR}/${appname})
 #yarp_install(FILES ${scripts} DESTINATION ${RD_APPLICATIONS_TEMPLATES_INSTALL_DIR})
 
-yarp_install(FILES ${mp3s} DESTINATION ${RD_CONTEXTS_INSTALL_DIR}/${appname})
-yarp_install(FILES ${wavs} DESTINATION ${RD_CONTEXTS_INSTALL_DIR}/${appname})
-
+yarp_install(FILES ${mp3s} ${wavs}
+             DESTINATION ${RD_CONTEXTS_INSTALL_DIR}/${appname}
+             COMPONENT resources)

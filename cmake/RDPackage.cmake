@@ -1,32 +1,36 @@
 # Set CPack variables.
 
 # Miscellanea.
+set(CPACK_PACKAGE_NAME "Robot Devastation")
 set(CPACK_PACKAGE_VENDOR "Universidad Carlos III de Madrid")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Robot Devastation software for PC")
-set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_PACKAGE_CONTACT "Asociación de Robótica UC3M (ASROB)")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
 
 # Package version.
-set(CPACK_PACKAGE_VERSION "0.3")
+set(CPACK_PACKAGE_VERSION_MAJOR 0)
+set(CPACK_PACKAGE_VERSION_MINOR 3)
+set(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}")
 
 # Configure components.
 include(CPackComponent)
 
 cpack_add_component(rd_server
                     DISPLAY_NAME "RD Server"
-                    DESCRIPTION "Robot Devastation server application."
-                    INSTALL_TYPES full)
+                    DESCRIPTION "Robot Devastation server application.")
 
 cpack_add_component(rd_game
                     DISPLAY_NAME "RD Game"
                     DESCRIPTION "Robot Devastation client application."
-                    INSTALL_TYPES full)
+                    DEPENDS resources)
 
 cpack_add_component(docs
                     DISPLAY_NAME "Documentation"
-                    DESCRIPTION "HTML generated documentation."
-                    INSTALL_TYPES full)
+                    DESCRIPTION "HTML generated documentation.")
+
+cpack_add_component(resources
+                    DISPLAY_NAME "Resources"
+                    DESCRIPTION "Dynamically loaded game resources.")
 
 # Create shortcuts for executables.
 
@@ -58,14 +62,14 @@ if(WIN32 AND CMAKE_GENERATOR MATCHES "^Visual Studio")
     # Architecture-dependent configuration.
     if(CMAKE_GENERATOR_PLATFORM MATCHES "x64" OR CMAKE_GENERATOR MATCHES "Win64")
         set(CPACK_SYSTEM_NAME "${CPACK_SYSTEM_NAME}_x86_amd64")
-        #set(CPACK_NSIS_INSTALL_ROOT "\\$PROGRAMFILES64\\\\RD")
+        set(CPACK_NSIS_INSTALL_ROOT "\\$PROGRAMFILES64\\\\ASROB UC3M")
     elseif(NOT CMAKE_GENERATOR MATCHES "ARM")
         set(CPACK_SYSTEM_NAME "${CPACK_SYSTEM_NAME}_x86")
-        #set(CPACK_NSIS_INSTALL_ROOT "\\$PROGRAMFILES32\\\\RD")
+        set(CPACK_NSIS_INSTALL_ROOT "\\$PROGRAMFILES32\\\\ASROB UC3M")
     endif()
 
     # Package name.
-    set(CPACK_PACKAGE_FILE_NAME "rd_${CPACK_PACKAGE_VERSION}_${CPACK_SYSTEM_NAME}")
+    set(CPACK_PACKAGE_FILE_NAME "robotDevastation_${CPACK_PACKAGE_VERSION}_${CPACK_SYSTEM_NAME}")
 
     # Miscellanea.
     set(CPACK_NSIS_HELP_LINK "https://github.com/asrob-uc3m/robotDevastation/issues/")
@@ -101,7 +105,7 @@ if(UNIX)
     endif()
 
     # Package name.
-    set(CPACK_PACKAGE_FILE_NAME "rd-${CPACK_PACKAGE_VERSION}.${CPACK_SYSTEM_NAME}")
+    set(CPACK_PACKAGE_FILE_NAME "robotDevastation-${CPACK_PACKAGE_VERSION}.${CPACK_SYSTEM_NAME}")
 endif()
 
 # Launch CPack.

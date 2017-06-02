@@ -30,7 +30,9 @@ if(WIN32)
     target_compile_definitions(robotDevastation PUBLIC SDL_MAIN_HANDLED)
 endif()
 
-install(TARGETS robotDevastation DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS robotDevastation
+        DESTINATION ${CMAKE_INSTALL_BINDIR}
+        COMPONENT rd_game)
 
 # Organize targets in folders (Visual Studio)
 set_target_properties(robotDevastation PROPERTIES FOLDER Programs)
