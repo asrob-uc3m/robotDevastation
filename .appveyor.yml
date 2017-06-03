@@ -158,11 +158,12 @@ build:
 before_package:
   - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target DOX -- /v:m
   - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target PACKAGE -- /v:m
+  - cmd: dir "%APPVEYOR_BUILD_FOLDER%\build"
 
 after_build:
   - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target INSTALL -- /v:m
   - cmd: set YARP_DATA_DIRS=%APPVEYOR_BUILD_FOLDER%\build\install\share\rd
-  - cmd: dir "%APPVEYOR_BUILD_FOLDER%\build"
+  - cmd: dir "%APPVEYOR_BUILD_FOLDER%\build\install\bin"
 
 before_test:
   - cmd: echo %PATH%

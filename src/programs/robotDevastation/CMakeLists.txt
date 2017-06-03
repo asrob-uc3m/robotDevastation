@@ -34,6 +34,14 @@ install(TARGETS robotDevastation
         DESTINATION ${CMAKE_INSTALL_BINDIR}
         COMPONENT rd_game)
 
+set(_bundled_app robotDevastation)
+
+configure_file(${CMAKE_SOURCE_DIR}/cmake/templates/fixup_bundle.cmake.in
+               ${CMAKE_BINARY_DIR}/fixup_bundle_robotDevastation.cmake @ONLY)
+
+install(SCRIPT ${CMAKE_BINARY_DIR}/fixup_bundle_robotDevastation.cmake
+        COMPONENT rd_game)
+
 # Organize targets in folders (Visual Studio)
 set_target_properties(robotDevastation PROPERTIES FOLDER Programs)
 

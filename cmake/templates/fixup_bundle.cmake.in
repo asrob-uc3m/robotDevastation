@@ -1,0 +1,3 @@
+include(BundleUtilities)
+
+fixup_bundle("${CMAKE_INSTALL_PREFIX}/@CMAKE_INSTALL_BINDIR@/@_bundled_app@@CMAKE_EXECUTABLE_SUFFIX@" "" "")

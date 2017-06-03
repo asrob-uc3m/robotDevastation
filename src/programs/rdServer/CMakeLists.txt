@@ -23,6 +23,14 @@ install(TARGETS rdServer
         DESTINATION ${CMAKE_INSTALL_BINDIR}
         COMPONENT rd_server)
 
+set(_bundled_app rdServer)
+
+configure_file(${CMAKE_SOURCE_DIR}/cmake/templates/fixup_bundle.cmake.in
+               ${CMAKE_BINARY_DIR}/fixup_bundle_rdServer.cmake @ONLY)
+
+install(SCRIPT ${CMAKE_BINARY_DIR}/fixup_bundle_rdServer.cmake
+        COMPONENT rd_server)
+
 # Organize targets in folders (Visual Studio)
 set_target_properties(rdServer PROPERTIES FOLDER Programs)
 
