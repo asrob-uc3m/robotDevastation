@@ -57,6 +57,13 @@ install:
   - cmd: md %DOWNLOADS_PATH%
   - cmd: md %NUGET_PATH%
 
+  # Download and install ZBar (placed first since it might shadow zlib1.dll bundled with SDL2 libs)
+  - cmd: echo Downloading %ZBAR_DOWNLOAD_URL%
+  - cmd: appveyor DownloadFile "%ZBAR_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\zbar.exe"
+  - cmd: '"%DOWNLOADS_PATH%\zbar.exe" /S /D=C:\ZBar'
+  - cmd: set ZBAR_DIR=C:\ZBar
+  - cmd: set PATH=%ZBAR_DIR%\bin;%PATH%
+
   # Download and build ACE (if not in cache)
   - ps: >-
         if (
@@ -78,7 +85,7 @@ install:
             Set-Content C:\ACE\.version "$env:ACE_LATEST"
         }
   - cmd: set ACE_ROOT=C:\ACE
-  - cmd: set PATH=%PATH%;%ACE_ROOT%\lib
+  - cmd: set PATH=%ACE_ROOT%\lib;%PATH%
 
   # Download and build YARP (if not in cache)
   - ps: >-
@@ -99,7 +106,7 @@ install:
             Set-Content C:\YARP\.version "$env:YARP_LATEST"
         }
   - cmd: set YARP_DIR=C:\YARP\cmake
-  - cmd: set PATH=%PATH%;C:\YARP\bin
+  - cmd: set PATH=C:\YARP\bin;%PATH%
 
   # Download and extract SDL2 libraries (if not in cache)
   - ps: $sdl2_releases = @("$env:SDL2_LATEST", "image_$env:SDL2_IMAGE_LATEST", "ttf_$env:SDL2_TTF_LATEST", "mixer_$env:SDL2_MIXER_LATEST")
@@ -132,16 +139,9 @@ install:
             $sdl2_releases | Set-Content C:\SDL2\.version
         }
   - cmd: set SDL2DIR=C:\SDL2
-  - cmd: set PATH=%PATH%;%SDL2DIR%\lib\%SYSTEM_ARCH%
+  - cmd: set PATH=%SDL2DIR%\lib\%SYSTEM_ARCH%;%PATH%
 
-  # Download and install ZBar
-  - cmd: echo Downloading %ZBAR_DOWNLOAD_URL%
-  - cmd: appveyor DownloadFile "%ZBAR_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\zbar.exe"
-  - cmd: '"%DOWNLOADS_PATH%\zbar.exe" /S /D=C:\ZBar'
-  - cmd: set ZBAR_DIR=C:\ZBar
-  - cmd: set PATH=%PATH%;%ZBAR_DIR%\bin
-
-  # Download and install NuGet packages
+  # Download and install NuGet packages (append to PATH to avoid shadowing previous DLLs)
   - cmd: nuget install Doxygen -OutputDirectory "%NUGET_PATH%" -ExcludeVersion
   - cmd: nuget install Graphviz -OutputDirectory "%NUGET_PATH%" -ExcludeVersion
   - cmd: set PATH=%PATH%;%NUGET_PATH%\Doxygen\tools;%NUGET_PATH%\Graphviz
