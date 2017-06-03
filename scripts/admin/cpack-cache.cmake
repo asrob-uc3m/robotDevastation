@@ -26,7 +26,7 @@ if("True" STREQUAL "$ENV{APPVEYOR}")
 endif()
 
 if("true" STREQUAL "$ENV{TRAVIS}")
-    if("$ENV{TRAVIS_TAG}")
+    if(NOT "" STREQUAL "$ENV{TRAVIS_TAG}")
         string(REGEX REPLACE ${_version_regex_pattern} "" _tagged_version "$ENV{TRAVIS_TAG}")
         set(_CPACK_CI_VERSION ${_tagged_version} CACHE STRING "")
         unset(_tagged_version)
