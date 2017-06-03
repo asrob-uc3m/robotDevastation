@@ -92,6 +92,9 @@ endif()
 
 if(UNIX)
     set(CPACK_DEBIAN_PACKAGE_NAME robotdevastation)
+    set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "http://asrob.uc3m.es/index.php/Robot_Devastation")
+    set(CPACK_DEBIAN_PACKAGE_SECTION games)
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libsdl2-dev, libsdl2-image-dev, libsdl2-mixer-dev, libsdl2-ttf-dev, libzbar-dev")
 
     find_program(LSB_RELEASE_EXEC lsb_release)
 
