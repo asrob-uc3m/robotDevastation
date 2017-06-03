@@ -91,6 +91,8 @@ if(WIN32 AND CMAKE_GENERATOR MATCHES "^Visual Studio")
 endif()
 
 if(UNIX)
+    set(CPACK_DEBIAN_PACKAGE_NAME robotdevastation)
+
     find_program(LSB_RELEASE_EXEC lsb_release)
 
     # Detect Linux platform.
