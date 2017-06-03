@@ -148,7 +148,7 @@ install:
 
 before_build:
   - cmd: echo Configuring project %APPVEYOR_PROJECT_NAME%
-  - cmd: cmake -H"%APPVEYOR_BUILD_FOLDER%" -B"%APPVEYOR_BUILD_FOLDER%\build" -G"%CMAKE_GENERATOR%" -C"%APPVEYOR_BUILD_FOLDER%\scripts\admin\cpack-cache.cmake" -DCMAKE_INSTALL_PREFIX:PATH="%APPVEYOR_BUILD_FOLDER%\build\install"
+  - cmd: cmake -H"%APPVEYOR_BUILD_FOLDER%" -B"%APPVEYOR_BUILD_FOLDER%\build" -G"%CMAKE_GENERATOR%" -C"%APPVEYOR_BUILD_FOLDER%\scripts\admin\cpack-cache.cmake" -DCMAKE_INSTALL_PREFIX:PATH="%APPVEYOR_BUILD_FOLDER%\build\install" -DENABLE_tests:BOOL=ON
 
 build:
   project: build\robotDevastation.sln
