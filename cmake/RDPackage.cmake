@@ -36,6 +36,10 @@ cpack_add_component(docs
 cpack_add_component(resources
                     DISPLAY_NAME "Resources"
                     DESCRIPTION "Dynamically loaded game resources.")
+					
+cpack_add_component(runtime
+                    DISPLAY_NAME "Runtime"
+                    DESCRIPTION "System runtime libraries.")
 
 # Create shortcuts for executables.
 

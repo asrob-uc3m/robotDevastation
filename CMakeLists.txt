@@ -98,6 +98,10 @@ if(GENERATE_doc_html)
             COMPONENT docs)
 endif()
 
+# Install system runtime libraries.
+set(CMAKE_INSTALL_SYSTEM_RUNTIME_COMPONENT runtime)
+include(InstallRequiredSystemLibraries)
+
 # packaging
 include(RDPackage)
 
