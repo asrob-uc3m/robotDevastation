@@ -14,9 +14,9 @@ project(robotDevastation)
 
 include(CMakeDependentOption)
 
-if(MSVC)
-    message(STATUS "Running on windows")
+if(WIN32)
     set(CMAKE_DEBUG_POSTFIX "d")
+    option(BUNDLE_DEPS "Choose if you want to bundle system and 3rd-party dependencies on install" OFF)
 endif()
 
 # Let the user specify a configuration (only single-config generators).
@@ -98,9 +98,11 @@ if(GENERATE_doc_html)
             COMPONENT docs)
 endif()
 
-# Install system runtime libraries.
-set(CMAKE_INSTALL_SYSTEM_RUNTIME_COMPONENT runtime)
-include(InstallRequiredSystemLibraries)
+if(BUNDLE_DEPS)
+    # Install system runtime libraries.
+    set(CMAKE_INSTALL_SYSTEM_RUNTIME_COMPONENT runtime)
+    include(InstallRequiredSystemLibraries)
+endif()
 
 # packaging
 include(RDPackage)

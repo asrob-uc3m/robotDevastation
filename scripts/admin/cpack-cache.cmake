@@ -45,4 +45,8 @@ if("true" STREQUAL "$ENV{TRAVIS}")
     endif()
 endif()
 
+if(WIN32)
+    set(BUNDLE_DEPS ON CACHE BOOL "" FORCE)
+endif()
+
 unset(_version_regex_pattern)
