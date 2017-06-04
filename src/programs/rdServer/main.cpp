@@ -74,7 +74,10 @@ int main(int argc, char *argv[]) {
 
     rd::Server rdServer;
     if(rf.check("help")) {
-        return rdServer.runModule(rf);
+        std::printf("RobotDevastation server optional parameters:\n");
+        std::printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
+        std::printf("\t--quiet  //-- Suppress all console output\n");
+        return 0;
     }
 
     std::printf("Run \"%s --help\" for options.\n",argv[0]);
