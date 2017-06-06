@@ -68,7 +68,7 @@ install:
       sudo make -j2 install
     elif [ ! "$(ls -A "$YARP_CACHE_DIR")" ] || [ ! -f "$YARP_CACHE_DIR/.version" ] || [ ! $(cat "$YARP_CACHE_DIR/.version") = "$YARP_VER" ]; then
       echo "YARP not in cache or wrong version"
-      rm -rf "$YARP_CACHE_DIR/*"
+      rm -rf "$YARP_CACHE_DIR"/*
       cd
       wget -qO- "https://github.com/robotology/yarp/archive/v$YARP_VER.tar.gz" | tar xz
       mkdir -p "yarp-$YARP_VER/build" && cd "$_"
