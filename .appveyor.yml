@@ -25,6 +25,10 @@ cache:
   - C:\YARP
   - C:\SDL2
 
+branches:
+  except:
+  - /^.*travis.*$/
+
 init:
   # Dependency version tags
   - cmd: set ACE_LATEST=6.4.2
