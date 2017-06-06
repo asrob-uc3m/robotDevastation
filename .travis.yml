@@ -15,15 +15,27 @@ matrix:
   - os: osx
 
 env:
-  # avoid ALSA errors
-  - SDL_AUDIODRIVER=dummy
+  global:
+    # avoid ALSA errors
+    - SDL_AUDIODRIVER=dummy
+    # YARP cache
+    - YARP_VER=2.3.68
+    - YARP_CACHE_DIR=~/.yarp
+
+cache:
+  directories:
+    - $YARP_CACHE_DIR
+
+branches:
+  except:
+  - /^.*appveyor.*$/
 
 before_install:
-  #ubuntu dependencies
+  # ubuntu dependencies
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq update; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y --no-install-recommends install libace-dev libjpeg-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libzbar-dev; fi
 
-  #OS X dependencies
+  # OS X dependencies
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export XQUARTZ_VERSION=2.7.6;fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then curl -L -O http://xquartz.macosforge.org/downloads/SL/XQuartz-${XQUARTZ_VERSION}.dmg; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then hdiutil mount XQuartz-${XQUARTZ_VERSION}.dmg; fi
@@ -38,19 +50,37 @@ before_install:
   #use the same set of cmake options used in the dashboard build
   # - source ./admin/scripts/generate-cmake-options.sh # no special cmake options for now.
 
-  # use YARP devel on cron jobs
-  - '[[ "$TRAVIS_EVENT_TYPE" = cron ]] && export YARP_CHECKOUT=devel || export YARP_CHECKOUT=master'
+  # prepare CMake options for YARP builds
+  - export YARP_CMAKE_OPTIONS="-DCREATE_OPTIONAL_CARRIERS:BOOL=ON -DENABLE_yarpcar_mjpeg:BOOL=ON"
 
   # print system info
   - cmake --version
 
 install:
-  #install yarp from master
-  - cd
-  - git clone --depth=1 --branch=$YARP_CHECKOUT https://github.com/robotology/yarp
-  - mkdir -p yarp/build && cd "$_"
-  - cmake .. -DCREATE_OPTIONAL_CARRIERS:BOOL=ON -DENABLE_yarpcar_mjpeg:BOOL=ON
-  - sudo make -j2 install
+  # clone and build YARP if not in cache
+  - >-
+    if [ "$TRAVIS_EVENT_TYPE" = cron ]; then
+      echo "Cloning YARP's devel branch"
+      cd
+      git clone --depth=1 --branch=devel https://github.com/robotology/yarp
+      mkdir -p yarp/build && cd "$_"
+      cmake .. $YARP_CMAKE_OPTIONS
+      sudo make -j2 install
+    elif [ ! "$(ls -A "$YARP_CACHE_DIR")" ] || [ ! -f "$YARP_CACHE_DIR/.version" ] || [ ! $(cat "$YARP_CACHE_DIR/.version") = "$YARP_VER" ]; then
+      echo "YARP not in cache or wrong version"
+      rm -rf "$YARP_CACHE_DIR/*"
+      cd
+      wget -qO- "https://github.com/robotology/yarp/archive/v$YARP_VER.tar.gz" | tar xz
+      mkdir -p "yarp-$YARP_VER/build" && cd "$_"
+      cmake .. -DCMAKE_INSTALL_PREFIX:PATH="$YARP_CACHE_DIR" $YARP_CMAKE_OPTIONS
+      sudo make -j2 install
+      echo "$YARP_VER" > "$YARP_CACHE_DIR/.version"
+    else
+      echo "YARP directory found in cache (version $(cat "$YARP_CACHE_DIR/.version"))"
+    fi
+
+  # make installed YARP discoverable by CMake's find_package() command
+  - if [ ! "$TRAVIS_EVENT_TYPE" = cron ]; then export YARP_DIR=$YARP_CACHE_DIR/lib/YARP; fi
 
   # see http://gronlier.fr/blog/2015/01/adding-code-coverage-to-your-c-project/
   - cd
