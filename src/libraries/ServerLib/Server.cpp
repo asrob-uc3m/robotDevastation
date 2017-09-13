@@ -11,11 +11,13 @@
 
 bool rd::Server::configure(yarp::os::ResourceFinder &rf)
 {
+    quiet = false;
     if (rf.check("quiet"))
     {
         RD_INFO("stdout feedback disabled\n");
         quiet = true;
     }
+
     rdRpcResponder.setPlayers(&players, &players_belief, &players_mutex);
     rdBroadcast.open("/rdServer/info:o");
     rpcServer.open("/rdServer/rpc:s");
