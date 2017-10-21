@@ -191,7 +191,7 @@ bool rd::GameScreen::update(const std::string & parameter, const Weapon & value)
 bool rd::GameScreen::update(const std::string & parameter, const Image & value)
 {    if (value.width() == 0 || value.height() == 0)
     {
-        RD_ERROR("Invalid image");
+        RD_ERROR("Invalid image\n");
         return false;
     }
 
