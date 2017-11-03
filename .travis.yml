@@ -19,7 +19,7 @@ env:
     # avoid ALSA errors
     - SDL_AUDIODRIVER=dummy
     # YARP cache
-    - YARP_VER=2.3.70
+    - YARP_VER=2.3.70.1
     - YARP_CACHE_DIR=~/.yarp
 
 cache:
