@@ -80,7 +80,7 @@ install:
             Set-Content C:\ACE\.version "$env:ACE_LATEST"
         }
   - cmd: set ACE_ROOT=C:\ACE
-  - cmd: set PATH=%PATH%;%ACE_ROOT%\lib
+  - cmd: set PATH=%ACE_ROOT%\lib;%PATH%
 
   # Download and build YARP (if not in cache)
   - ps: >-
@@ -101,8 +101,15 @@ install:
             Set-Content C:\YARP\.version "$env:YARP_LATEST"
         }
   - cmd: set YARP_DIR=C:\YARP\cmake
-  - cmd: set PATH=%PATH%;C:\YARP\bin
+  - cmd: set PATH=C:\YARP\bin;%PATH%
 
+  # Download and install ZBar (keep this section before the SDL2 one)
+  - cmd: echo Downloading %ZBAR_DOWNLOAD_URL%
+  - cmd: appveyor DownloadFile "%ZBAR_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\zbar.exe"
+  - cmd: '"%DOWNLOADS_PATH%\zbar.exe" /S /D=C:\ZBar'
+  - cmd: set ZBAR_DIR=C:\ZBar
+  - cmd: set PATH=%ZBAR_DIR%\bin;%PATH% # final PATH must give precedence to SDL2 due to overlapping versions of the zlib1.dll dependency
+  
   # Download and extract SDL2 libraries (if not in cache)
   - ps: $sdl2_releases = @("$env:SDL2_LATEST", "image_$env:SDL2_IMAGE_LATEST", "ttf_$env:SDL2_TTF_LATEST", "mixer_$env:SDL2_MIXER_LATEST")
   - ps: >-
@@ -134,14 +141,7 @@ install:
             $sdl2_releases | Set-Content C:\SDL2\.version
         }
   - cmd: set SDL2DIR=C:\SDL2
-  - cmd: set PATH=%PATH%;%SDL2DIR%\lib\%SYSTEM_ARCH%
-
-  # Download and install ZBar
-  - cmd: echo Downloading %ZBAR_DOWNLOAD_URL%
-  - cmd: appveyor DownloadFile "%ZBAR_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\zbar.exe"
-  - cmd: '"%DOWNLOADS_PATH%\zbar.exe" /S /D=C:\ZBar'
-  - cmd: set ZBAR_DIR=C:\ZBar
-  - cmd: set PATH=%PATH%;%ZBAR_DIR%\bin
+  - cmd: set PATH=%SDL2DIR%\lib\%SYSTEM_ARCH%;%PATH%
 
 before_build:
   - cmd: echo Configuring project %APPVEYOR_PROJECT_NAME%
