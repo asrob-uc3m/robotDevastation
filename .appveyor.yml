@@ -136,7 +136,7 @@ install:
             7z x -y -o"$env:DOWNLOADS_PATH\SDL2_temp" "$env:DOWNLOADS_PATH\sdl2*.zip"
             Write-Host "Copying contents of $env:DOWNLOADS_PATH\SDL2_temp to C:\SDL2"
             Get-ChildItem -Directory "$env:DOWNLOADS_PATH\SDL2_temp" | ?{ $_.PSIsContainer } | ForEach-Object {
-                xcopy $_.FullName C:\SDL2 /e /i /y /q
+                xcopy $_.FullName C:\SDL2 /e /i /d /y /q
             }
             $sdl2_releases | Set-Content C:\SDL2\.version
         }
