@@ -1,4 +1,8 @@
 # Testing things #########################################################################################
+option(ENABLE_tests "Choose if you want to compile tests" OFF)
+
+if(ENABLE_tests)
+    
 set(gtest_force_shared_crt ON CACHE INTERNAL "") # needed for Windows
 add_subdirectory(gtest-1.7.0)
 enable_testing()
@@ -8,85 +12,135 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} ${RD_INCLUDE_DIRS} ${YARP_INCLUDE_DIRS})
-include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
-link_directories(${RD_LINK_DIRS})
-add_definitions(-DSDL_MAIN_HANDLED) # needed for Windows
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+
+if(WIN32)
+    add_definitions(-DSDL_MAIN_HANDLED)
+endif()
 
 # UI related
 add_executable(testSDLTextDisplay testSDLTextDisplay.cpp)
-target_link_libraries(testSDLTextDisplay ${RD_LIBRARIES} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_link_libraries(testSDLTextDisplay YARP::YARP_OS ${SDL2_LIBRARY} ${SDL2_TTF_LIBRARIES})
+target_include_directories(testSDLTextDisplay PUBLIC ${YARP_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIRS})
 
 add_executable(testInitScreen testInitScreen.cpp)
-target_link_libraries(testInitScreen ${RD_LIBRARIES} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} gtest gtest_main)
+target_link_libraries(testInitScreen YARP::YARP_OS UserInterfaceLib gtest_main)
+target_include_directories(testInitScreen PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testGameScreen testGameScreen.cpp)
-target_link_libraries(testGameScreen ${RD_LIBRARIES} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} gtest gtest_main)
+target_link_libraries(testGameScreen YARP::YARP_OS YARP::YARP_sig MentalMapLib UserInterfaceLib gtest_main)
+target_include_directories(testGameScreen PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testDeadScreen testDeadScreen.cpp)
-target_link_libraries(testDeadScreen ${RD_LIBRARIES} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} gtest gtest_main)
+target_link_libraries(testDeadScreen YARP::YARP_OS YARP::YARP_sig UserInterfaceLib ImageLib UtilsLib gtest_main)
+target_include_directories(testDeadScreen PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testMockScreen testMockScreen.cpp)
-target_link_libraries(testMockScreen ${RD_LIBRARIES})
+target_link_libraries(testMockScreen YARP::YARP_OS UserInterfaceLib UtilsLib)
+target_include_directories(testMockScreen PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testSDLScreenManager testSDLScreenManager.cpp)
-target_link_libraries(testSDLScreenManager ${RD_LIBRARIES} UserInterfaceLib)
+target_link_libraries(testSDLScreenManager YARP::YARP_OS UserInterfaceLib)
+target_include_directories(testSDLScreenManager PUBLIC ${YARP_INCLUDE_DIRS})
 
 # Audio manager related
 add_executable(testMockAudioManager testMockAudioManager.cpp)
-target_link_libraries(testMockAudioManager ${RD_LIBRARIES} ${SDL2_LIBRARY} MusicLib gtest gtest_main)
+target_link_libraries(testMockAudioManager YARP::YARP_OS MusicLib gtest_main)
+target_include_directories(testMockAudioManager PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testSDLAudioManager testSDLAudioManager.cpp)
-target_link_libraries(testSDLAudioManager ${RD_LIBRARIES} ${SDL2_LIBRARY} MusicLib gtest gtest_main)
+target_link_libraries(testSDLAudioManager YARP::YARP_OS MusicLib gtest_main)
+target_include_directories(testSDLAudioManager PUBLIC ${YARP_INCLUDE_DIRS})
 
 # Input manager related
 add_executable(testInputManager testInputManager.cpp)
-target_link_libraries(testInputManager ${RD_LIBRARIES} InputLib gtest gtest_main)
+target_link_libraries(testInputManager InputLib MusicLib UtilsLib ${SDL2_LIBRARY} ${SDL2_TTF_LIBRARIES} gtest_main)
+target_include_directories(testInputManager PUBLIC ${YARP_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIRS})
 
 add_executable(testMockInputManager testMockInputManager.cpp)
-target_link_libraries(testMockInputManager ${RD_LIBRARIES} ${SDL2_LIBRARY} InputLib gtest gtest_main)
+target_link_libraries(testMockInputManager InputLib gtest_main)
 
 # Mental Map related
 add_executable(testMentalMap testMentalMap.cpp)
-target_link_libraries(testMentalMap ${RD_LIBRARIES} ${SDL2_LIBRARY} MentalMapLib gtest gtest_main)
+target_link_libraries(testMentalMap MentalMapLib MusicLib gtest_main)
 
 # Network manager related
 add_executable(testYarpNetworkManager testYarpNetworkManager.cpp)
-target_link_libraries(testYarpNetworkManager ${RD_LIBRARIES} NetworkLib gtest gtest_main)
+target_link_libraries(testYarpNetworkManager YARP::YARP_OS NetworkLib ServerLib UtilsLib gtest_main)
+target_include_directories(testYarpNetworkManager PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testMockNetworkManager testMockNetworkManager.cpp)
-target_link_libraries(testMockNetworkManager ${RD_LIBRARIES} ${SDL2_LIBRARY} NetworkLib gtest gtest_main)
+target_link_libraries(testMockNetworkManager MentalMapLib NetworkLib gtest_main)
 
 # Image manager related
 add_executable(testYarpImageManager testYarpImageManager.cpp)
-target_link_libraries(testYarpImageManager ${RD_LIBRARIES} ImageLib gtest gtest_main)
+target_link_libraries(testYarpImageManager YARP::YARP_OS YARP::YARP_dev ImageLib UtilsLib gtest_main)
+target_include_directories(testYarpImageManager PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testMockImageManager testMockImageManager.cpp)
-target_link_libraries(testMockImageManager ${RD_LIBRARIES} ImageLib gtest gtest_main)
+target_link_libraries(testMockImageManager YARP::YARP_OS YARP::YARP_dev YARP::YARP_sig ImageLib gtest_main)
+target_include_directories(testMockImageManager PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testProcessorImageEventListener testProcessorImageEventListener.cpp)
-target_link_libraries(testProcessorImageEventListener ${RD_LIBRARIES} ${SDL2_LIBRARY} ImageLib gtest gtest_main)
+target_link_libraries(testProcessorImageEventListener YARP::YARP_OS YARP::YARP_sig ImageLib MentalMapLib gtest_main)
+target_include_directories(testProcessorImageEventListener PUBLIC ${YARP_INCLUDE_DIRS})
 
 # Robot manager related
 add_executable(testMockRobotManager testMockRobotManager.cpp)
-target_link_libraries(testMockRobotManager ${RD_LIBRARIES} ${SDL2_LIBRARY} RobotLib gtest gtest_main)
+target_link_libraries(testMockRobotManager RobotLib gtest_main)
 
 # State machine related
 add_executable(testFSM testFSM.cpp)
-target_link_libraries(testFSM ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
+target_link_libraries(testFSM YARP::YARP_OS StateMachineLib UtilsLib gtest_main)
+target_include_directories(testFSM PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testFSMBuilder testFSMBuilder.cpp)
-target_link_libraries(testFSMBuilder ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
+target_link_libraries(testFSMBuilder YARP::YARP_OS StateMachineLib UtilsLib gtest_main)
+target_include_directories(testFSMBuilder PUBLIC ${YARP_INCLUDE_DIRS})
 
 # Game States related
 add_executable(testInitState testInitState.cpp)
-target_link_libraries(testInitState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
+target_link_libraries(testInitState YARP::YARP_OS StateMachineLib GameStatesLib NetworkLib ImageLib InputLib MentalMapLib RobotLib MusicLib UserInterfaceLib UtilsLib gtest_main)
+target_include_directories(testInitState PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testGameState testGameState.cpp)
-target_link_libraries(testGameState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
+target_link_libraries(testGameState YARP::YARP_OS YARP::YARP_sig StateMachineLib GameStatesLib NetworkLib ImageLib InputLib MentalMapLib RobotLib MusicLib UserInterfaceLib UtilsLib gtest_main)
+target_include_directories(testGameState PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testDeadState testDeadState.cpp)
-target_link_libraries(testDeadState ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
+target_link_libraries(testDeadState YARP::YARP_OS YARP::YARP_sig StateMachineLib GameStatesLib NetworkLib ImageLib InputLib MentalMapLib RobotLib MusicLib UserInterfaceLib UtilsLib gtest_main)
+target_include_directories(testDeadState PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testRobotDevastation testRobotDevastation.cpp)
-target_link_libraries(testRobotDevastation ${RD_LIBRARIES} StateMachineLib gtest gtest_main)
+target_link_libraries(testRobotDevastation YARP::YARP_OS YARP::YARP_sig StateMachineLib GameStatesLib NetworkLib ImageLib InputLib MentalMapLib RobotLib MusicLib UserInterfaceLib UtilsLib gtest_main)
+target_include_directories(testRobotDevastation PUBLIC ${YARP_INCLUDE_DIRS})
+
+# Organize targets in folders (Visual Studio)
+set_target_properties(testSDLTextDisplay
+                      testInitScreen
+                      testGameScreen
+                      testDeadScreen
+                      testMockScreen
+                      testSDLScreenManager
+                      testMockAudioManager
+                      testSDLAudioManager
+                      testInputManager
+                      testMockInputManager
+                      testMentalMap
+                      testYarpNetworkManager
+                      testMockNetworkManager
+                      testYarpImageManager
+                      testMockImageManager
+                      testProcessorImageEventListener
+                      testMockRobotManager
+                      testFSM
+                      testFSMBuilder
+                      testInitState
+                      testGameState
+                      testDeadState
+                      testRobotDevastation
+                      PROPERTIES FOLDER Tests)
+
+set_target_properties(gtest gtest_main PROPERTIES FOLDER Tests/gtest)
+
+endif() # ENABLE_tests
