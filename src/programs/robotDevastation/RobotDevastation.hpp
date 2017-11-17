@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <string>
 #include <sstream>
+#include <iostream>
 #include <vector>
 
 #include <yarp/os/RFModule.h>
