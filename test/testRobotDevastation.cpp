@@ -30,8 +30,11 @@
 #include "GameState.hpp"
 #include "DeadState.hpp"
 
+namespace rd
+{
 
-using namespace rd;
+namespace test
+{
 
 class RobotDevastationTestEnvironment : public testing::Environment
 {
@@ -426,10 +429,14 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
 
 }
 
+}  // namespace test
+
+}  // namespace rd
+
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
   testing::InitGoogleTest(&argc, argv);
-  testing::Environment* env = testing::AddGlobalTestEnvironment(new RobotDevastationTestEnvironment(argc, argv));
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new rd::test::RobotDevastationTestEnvironment(argc, argv));
   return RUN_ALL_TESTS();
 }

@@ -6,7 +6,11 @@
 #include "MockInputManager.hpp"
 #include "MockInputEventListener.hpp"
 
-using namespace rd;
+namespace rd
+{
+
+namespace test
+{
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
@@ -244,6 +248,10 @@ TEST_F(MockInputManagerTest, WindowEventSentAndReceivedCorrectly)
     ASSERT_TRUE(inputManager->stop());
     ASSERT_TRUE(inputManager->isStopped());
 }
+
+}  // namespace test
+
+}  // namespace rd
 
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)

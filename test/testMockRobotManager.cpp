@@ -6,7 +6,11 @@
 
 #include "MockRobotManager.cpp"
 
-using namespace rd;
+namespace rd
+{
+
+namespace test
+{
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
@@ -163,6 +167,10 @@ TEST_F(MockRobotManagerTest, MockRobotCameraMoves)
 
     ASSERT_TRUE(robotManager->disconnect());
 }
+
+}  // namespace test
+
+}  // namespace rd
 
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)

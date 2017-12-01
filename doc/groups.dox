@@ -1,8 +1,13 @@
-
 /**
  * @brief The main, catch-all namespace for Robot Devastation.
  */
-namespace rd {}
+namespace rd
+{
+    /**
+     * @brief Contains classes related to unit testing.
+     */
+    namespace test {}
+}
 
 /**
 * \defgroup rd_programs List of Robot Devastation programs

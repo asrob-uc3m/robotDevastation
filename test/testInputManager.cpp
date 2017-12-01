@@ -25,7 +25,11 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-using namespace rd;
+namespace rd
+{
+
+namespace test
+{
 
 bool finished = false;
 int x_pos = 0;
@@ -178,8 +182,15 @@ class TestEventListener : public InputEventListener
         AudioManager * audioManager;
 };
 
+}  // namespace test
+
+}  // namespace rd
+
 int main(void)
 {
+    using namespace rd;
+    using namespace rd::test;
+
     // Load SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         std::fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
