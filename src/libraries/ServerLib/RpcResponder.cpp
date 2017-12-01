@@ -1,4 +1,6 @@
-// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "RpcResponder.hpp"
 
@@ -138,5 +140,3 @@ void rd::RpcResponder::setPlayers(std::map<int,Player> *value, std::map<int, int
     this->players_belief = players_belief;
     this->players_mutex = players_mutex;
 }
-
-

@@ -1,4 +1,6 @@
-// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
 
 /**
  * 
@@ -6,18 +8,6 @@
  * \defgroup rdServer rdServer
  *
  * @brief The Robot Devastation PC server. Creates an instance of the rd::Server class.
- *
- * @section rd_server_legal Legal
- *
- * Copyright: ASROB 2012-2014 (C) Robotics Society of the Universidad Carlos III de Madrid (http://asrob.uc3m.es)
- * Robot Devastation project
- *
- * Authors:
- * <a href="https://plus.google.com/+davidestevezfernandez">David Estevez</a> (2014-present),
- * <a href="http://roboticslab.uc3m.es/roboticslab/people/jg-victores">Juan G. Victores</a> (2012-present),
- * <a href="http://www.mendeley.com/profiles/santiago-morante-cendrero/">Santiago Morante</a> (2012-2014).
- *
- * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see $RD_ROOT/main/doc/LGPL.TXT
  *
  * @section rd_server_installation Installation
  *
@@ -92,4 +82,3 @@ int main(int argc, char *argv[]) {
     return rdServer.runModule(rf);
 
 }
-

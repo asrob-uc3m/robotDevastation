@@ -1,3 +1,7 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
+
 #ifndef _RD_MOCK_NETWORK_EVENT_LISTENER_HPP_
 #define _RD_MOCK_NETWORK_EVENT_LISTENER_HPP_
 
