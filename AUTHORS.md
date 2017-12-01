@@ -1,11 +1,15 @@
-Current maintainers (contributors that authored at least one commit in the past year):
+# AUTHORS
 
-* Juan Carlos González Víctores ([@jgvictores](https://github.com/jgvictores))
+## Current maintainers
+
+Contributors that authored at least one commit in the past year, in chronological order:
+
+* Juan Carlos González Víctores ([@jgvictores](https://jgvictores.github.io/))
 * Bartek Łukawski ([@PeterBowman](https://github.com/PeterBowman))
+* David Estévez Fernández ([@David-Estevez](http://destevez.me/))
 
-Former maintainers:
-* David Estévez Fernández ([@David-Estevez](https://github.com/David-Estevez))
-* Santiago Morante ([@smorante](https://github.com/smorante))
+## Former maintainers
 
-Other collaborators (users with no commits that opened at least one issue):
+Contributors that authored at least one commit, in chronological order:
 * Rodrigo Mompo Redoli ([@Rodriwp](https://github.com/Rodriwp))
+* Santiago Morante ([@smorante](https://www.linkedin.com/in/santimorante/))
