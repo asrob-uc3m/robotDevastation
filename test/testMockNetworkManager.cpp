@@ -7,7 +7,11 @@
 #include "MockNetworkEventListener.hpp"
 #include "MentalMap.hpp"
 
-using namespace rd;
+namespace rd
+{
+
+namespace test
+{
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
@@ -259,6 +263,10 @@ TEST_F(MockNetworkManagerTest, ManagerIsIntegratedWithMentalMap)
     ASSERT_TRUE(networkManager->isStopped());
     MentalMap::destroyMentalMap();
 }
+
+}  // namespace test
+
+}  // namespace rd
 
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)

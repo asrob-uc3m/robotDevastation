@@ -13,8 +13,11 @@
 #include "MockImageEventListener.hpp"
 #include "Utils.hpp"
 
-using namespace rd;
+namespace rd
+{
 
+namespace test
+{
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
@@ -136,10 +139,14 @@ TEST_F( YarpImageManagerTest, YarpImageManagerWorks)
     ASSERT_TRUE(imageManager->stop());
 }
 
+}  // namespace test
+
+}  // namespace rd
+
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
   testing::InitGoogleTest(&argc, argv);
-  testing::Environment* env = testing::AddGlobalTestEnvironment(new YarpImageManagerEnvironment(argc, argv));
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new rd::test::YarpImageManagerEnvironment(argc, argv));
   return RUN_ALL_TESTS();
 }

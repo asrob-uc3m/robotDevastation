@@ -20,7 +20,11 @@
 #include <yarp/os/PortReader.h>
 #include <yarp/os/Time.h>
 
-using namespace rd;
+namespace rd
+{
+
+namespace test
+{
 
 //-- Class for the setup of the enviroment for all the tests
 //----------------------------------------------------------------------------------------
@@ -279,10 +283,14 @@ TEST_F(FSMTest, StateMachineStopsAtNULL)
     ASSERT_FALSE(stateDirector1->isActive());
 }
 
+}  // namespace test
+
+}  // namespace rd
+
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
   testing::InitGoogleTest(&argc, argv);
-  testing::Environment* env = testing::AddGlobalTestEnvironment(new FSMTestEnvironment(argc, argv));
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new rd::test::FSMTestEnvironment(argc, argv));
   return RUN_ALL_TESTS();
 }

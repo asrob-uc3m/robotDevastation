@@ -10,7 +10,11 @@
 #include <yarp/os/Time.h>
 #include <yarp/os/ResourceFinder.h>
 
-using namespace rd;
+namespace rd
+{
+
+namespace test
+{
 
 class MockAudioManagerTest : public testing::Test
 {
@@ -128,6 +132,10 @@ TEST_F( MockAudioManagerTest, AudioManagerPlaysAllSounds )
     EXPECT_FALSE(mockManager->isPlaying("explosion"));
     EXPECT_TRUE(audioManager->stop());
 }
+
+}  // namespace test
+
+}  // namespace rd
 
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)

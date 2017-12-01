@@ -23,8 +23,11 @@
 #include <yarp/os/Network.h>
 #include <yarp/os/Time.h>
 
-using namespace rd;
+namespace rd
+{
 
+namespace test
+{
 
 class InitStateTestEnvironment : public testing::Environment
 {
@@ -373,10 +376,14 @@ TEST_F(InitStateTest, InitStateGoesToExitWindowEvent)
 
 }
 
+}  // namespace test
+
+}  // namespace rd
+
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
   testing::InitGoogleTest(&argc, argv);
-  testing::Environment* env = testing::AddGlobalTestEnvironment(new InitStateTestEnvironment(argc, argv));
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new rd::test::InitStateTestEnvironment(argc, argv));
   return RUN_ALL_TESTS();
 }

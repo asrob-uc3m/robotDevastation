@@ -11,7 +11,11 @@
 #include "Player.hpp"
 #include "SDLAudioManager.hpp"
 
-using namespace rd;
+namespace rd
+{
+
+namespace test
+{
 
 class MentalMapTest : public testing::Test
 {
@@ -330,6 +334,10 @@ TEST_F( MentalMapTest, UpdateEnemiesEventuallyDeletesEnemies)
     EXPECT_EQ(100, mentalMap->getTargets()[0].getBelief());
 
 }
+
+}  // namespace test
+
+}  // namespace rd
 
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)
