@@ -4,7 +4,7 @@
 
 Contributors that authored at least one commit in the past year, in chronological order:
 
-* Juan Carlos González Víctores ([@jgvictores](https://jgvictores.github.io/))
+* Juan G. Victores ([@jgvictores](https://jgvictores.github.io/))
 * Bartek Łukawski ([@PeterBowman](https://github.com/PeterBowman))
 * David Estévez Fernández ([@David-Estevez](http://destevez.me/))
 
