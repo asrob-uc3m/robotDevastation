@@ -77,18 +77,15 @@ if(GENERATE_doc_html)
         set(_dox dox)
     endif()
 
-    # Configure Doxyfile.
-    configure_file(${CMAKE_SOURCE_DIR}/cmake/templates/Doxyfile.in
-                   ${CMAKE_BINARY_DIR}/Doxyfile @ONLY)
-
     add_custom_target(${_dox}
-                      COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_BINARY_DIR}/Doxyfile
+                      COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/doc/Doxyfile
+                      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/doc
                       COMMENT "Generating doxygen documentation"
-                      SOURCES ${CMAKE_SOURCE_DIR}/cmake/templates/Doxyfile.in)
+                      SOURCES ${CMAKE_SOURCE_DIR}/doc/Doxyfile)
 
     set_property(TARGET ${_dox} PROPERTY FOLDER CMakePredefinedTargets)
 
-    install(DIRECTORY ${CMAKE_BINARY_DIR}/html
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/doc/html
             DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
 
