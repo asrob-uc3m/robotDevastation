@@ -10,7 +10,7 @@
 #include <yarp/os/RpcClient.h>
 #include <yarp/dev/all.h> // VOCAB macros
 
-#include "RobotManager.hpp"
+#include "IRobotManager.hpp"
 
 #define VOCAB_MOVE_FORWARD VOCAB4('m','o','v','f')
 #define VOCAB_MOVE_BACKWARDS VOCAB4('m','o','v','b')
@@ -32,24 +32,24 @@ namespace rd{
  * @brief The Robot Manager for the Rd1 robot.
  *
  */
-class YarpRobotManager : public RobotManager
+class YarpRobotManager : public IRobotManager
 {
     public:
 
         YarpRobotManager(const std::string& robotName);
 
         //-- Robot movement related functions    
-        virtual bool moveForward(int velocity = UNUSED);
-        virtual bool moveBackwards(int velocity = UNUSED);
-        virtual bool turnLeft(int velocity = UNUSED);
-        virtual bool turnRight(int velocity = UNUSED);
+        virtual bool moveForward(int velocity);
+        virtual bool moveBackwards(int velocity);
+        virtual bool turnLeft(int velocity);
+        virtual bool turnRight(int velocity);
         virtual bool stopMovement();
 
         //-- Robot camera related functions
-        virtual bool tiltUp(int velocity = UNUSED);
-        virtual bool tiltDown(int velocity = UNUSED);
-        virtual bool panLeft(int velocity = UNUSED);
-        virtual bool panRight(int velocity = UNUSED);
+        virtual bool tiltUp(int velocity);
+        virtual bool tiltDown(int velocity);
+        virtual bool panLeft(int velocity);
+        virtual bool panRight(int velocity);
         virtual bool stopCameraMovement();
         
         //-- Robot connection related functions

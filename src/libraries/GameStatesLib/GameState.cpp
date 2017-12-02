@@ -22,7 +22,7 @@ const rd::Key rd::GameState::KEY_TILT_DOWN = rd::Key::KEY_ARROW_DOWN;
 
 rd::GameState::GameState(NetworkManager *networkManager, ImageManager *imageManager,
                          InputManager *inputManager, MentalMap *mentalMap,
-                         RobotManager *robotManager, AudioManager *audioManager,
+                         IRobotManager *robotManager, AudioManager *audioManager,
                          ScreenManager *screenManager) :
                     ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager,
                                audioManager, screenManager)
@@ -185,25 +185,25 @@ bool rd::GameState::onKeyDown(const Key & k)
     if (k == KEY_TURN_LEFT)
     {
         RD_DEBUG("Turn left was triggered!\n");
-        robotManager->turnLeft();
+        robotManager->turnLeft(100.0);
         return true;
     }
     if (k == KEY_TURN_RIGHT)
     {
         RD_DEBUG("Turn right was triggered!\n");
-        robotManager->turnRight();
+        robotManager->turnRight(100.0);
         return true;
     }
     if (k == KEY_MOVE_FWD)
     {
         RD_DEBUG("Move forward was triggered!\n");
-        robotManager->moveForward();
+        robotManager->moveForward(100.0);
         return true;
     }
     if (k == KEY_MOVE_BACK)
     {
         RD_DEBUG("Move backwards was triggered!\n");
-        robotManager->moveBackwards();
+        robotManager->moveBackwards(100.0);
         return true;
     }
 
@@ -211,25 +211,25 @@ bool rd::GameState::onKeyDown(const Key & k)
     if (k == KEY_PAN_LEFT)
     {
         RD_DEBUG("Pan left was triggered!\n");
-        robotManager->panLeft();
+        robotManager->panLeft(100.0);
         return true;
     }
     if (k == KEY_PAN_RIGHT)
     {
         RD_DEBUG("Pan right was triggered!\n");
-        robotManager->panRight();
+        robotManager->panRight(100.0);
         return true;
     }
     if (k == KEY_TILT_UP)
     {
         RD_DEBUG("Tilt pos was triggered!\n");
-        robotManager->tiltUp();
+        robotManager->tiltUp(100.0);
         return true;
     }
     if (k == KEY_TILT_DOWN)
     {
         RD_DEBUG("Tilt neg was triggered!\n");
-        robotManager->tiltDown();
+        robotManager->tiltDown(100.0);
         return true;
     }
 

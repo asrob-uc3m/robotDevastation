@@ -17,7 +17,7 @@ rd::ManagerHub::ManagerHub()
 
 rd::ManagerHub::ManagerHub(NetworkManager *networkManager, ImageManager *imageManager,
                            InputManager *inputManager, MentalMap *mentalMap,
-                           RobotManager *robotManager, AudioManager *audioManager,
+                           IRobotManager *robotManager, AudioManager *audioManager,
                            ScreenManager *screenManager)
 {
     this->networkManager = networkManager;
@@ -33,6 +33,6 @@ bool rd::ManagerHub::setNetworkManager(NetworkManager *networkManager) { this->n
 bool rd::ManagerHub::setImageManager(ImageManager *imageManager) { this->imageManager = imageManager; return true; }
 bool rd::ManagerHub::setInputManager(InputManager *inputManager) { this->inputManager = inputManager; return true; }
 bool rd::ManagerHub::setMentalMap(MentalMap *mentalMap) { this->mentalMap = mentalMap; return true; }
-bool rd::ManagerHub::setRobotManager(RobotManager *robotManager) { this->robotManager = robotManager; return true; }
+bool rd::ManagerHub::setRobotManager(IRobotManager *robotManager) { this->robotManager = robotManager; return true; }
 bool rd::ManagerHub::setAudioManager(AudioManager *audioManager) { this->audioManager = audioManager; return true; }
 bool rd::ManagerHub::setScreenManager(ScreenManager *screenManager) { this->screenManager = screenManager; return true; }
