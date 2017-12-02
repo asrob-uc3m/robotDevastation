@@ -10,7 +10,7 @@
 #include <yarp/os/RpcClient.h>
 #include <yarp/dev/all.h> // VOCAB macros
 
-#include "RobotManager.hpp"
+#include "IRobotManager.hpp"
 
 #define VOCAB_MOVE_FORWARD VOCAB4('m','o','v','f')
 #define VOCAB_MOVE_BACKWARDS VOCAB4('m','o','v','b')

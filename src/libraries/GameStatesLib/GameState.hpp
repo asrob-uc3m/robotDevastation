@@ -13,7 +13,7 @@
 #include "ImageManager.hpp"
 #include "InputManager.hpp"
 #include "MentalMap.hpp"
-#include "RobotManager.hpp"
+#include "IRobotManager.hpp"
 #include "AudioManager.hpp"
 #include "ScreenManager.hpp"
 #include "Key.hpp"

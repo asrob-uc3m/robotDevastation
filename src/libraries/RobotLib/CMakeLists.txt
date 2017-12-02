@@ -4,9 +4,9 @@
 
 find_package(YARP REQUIRED)
 
-add_library(RobotLib MockRobotManager.hpp
+add_library(RobotLib IRobotManager.hpp
                      MockRobotManager.cpp
-                     RobotManager.hpp
+                     MockRobotManager.hpp
                      YarpRobotManager.hpp
                      YarpRobotManager.cpp)
 

@@ -21,7 +21,7 @@
 #include "SDLInputManager.hpp"
 #include "InputEventListener.hpp"
 #include "YarpNetworkManager.hpp"
-#include "RobotManager.hpp"
+#include "IRobotManager.hpp"
 #include "YarpRobotManager.hpp"
 #include "MockRobotManager.hpp"
 #include "StateMachine.hpp"
