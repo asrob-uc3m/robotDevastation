@@ -1,3 +1,7 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
+
 #include "YarpLocalImageManager.hpp"
 
 #include <sstream>
@@ -127,7 +131,6 @@ void rd::YarpLocalImageManager::onRead(Image &image)
     semaphore.wait();
     this->image=image;
     semaphore.post();
-
     //-- Notify listeners
     if (enabled)
     {
@@ -146,5 +149,5 @@ rd::YarpLocalImageManager::YarpLocalImageManager()
 {
     stopped = true;
     enabled = false;
-    camera_id = -1;
+    camera_id = 0; // see OpenCV C API: CV_CAP_ANY
 }

@@ -1,3 +1,7 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
+
 /***
  * testYarpNetworkManager
  *
@@ -22,10 +26,11 @@
 
 namespace rd
 {
-    class YarpNetworkManagerNoKeepAlive;
-}
 
-class rd::YarpNetworkManagerNoKeepAlive : public YarpNetworkManager
+namespace test
+{
+
+class YarpNetworkManagerNoKeepAlive : public YarpNetworkManager
 {
     public:
         static bool RegisterManager();
@@ -43,8 +48,6 @@ class rd::YarpNetworkManagerNoKeepAlive : public YarpNetworkManager
 
         static YarpNetworkManagerNoKeepAlive * uniqueInstance;
 };
-
-using namespace rd;
 
 YarpNetworkManagerNoKeepAlive * YarpNetworkManagerNoKeepAlive::uniqueInstance = NULL;
 const std::string YarpNetworkManagerNoKeepAlive::id = "YARP_NO_KEEP_ALIVE";
@@ -255,10 +258,14 @@ TEST_F(YarpNetworkManagerNoKeepAliveTest, DisconnectedIfNoKeepAlive)
     ASSERT_TRUE(networkManager->isStopped());
 }
 
+}  // namespace test
+
+}  // namespace rd
+
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
   testing::InitGoogleTest(&argc, argv);
-  testing::Environment* env = testing::AddGlobalTestEnvironment(new YarpNetworkManagerEnvironment(argc, argv));
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new rd::test::YarpNetworkManagerEnvironment(argc, argv));
   return RUN_ALL_TESTS();
 }

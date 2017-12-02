@@ -1,8 +1,16 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
+
 #include "gtest/gtest.h"
 #include "MockInputManager.hpp"
 #include "MockInputEventListener.hpp"
 
-using namespace rd;
+namespace rd
+{
+
+namespace test
+{
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
@@ -240,6 +248,10 @@ TEST_F(MockInputManagerTest, WindowEventSentAndReceivedCorrectly)
     ASSERT_TRUE(inputManager->stop());
     ASSERT_TRUE(inputManager->isStopped());
 }
+
+}  // namespace test
+
+}  // namespace rd
 
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)

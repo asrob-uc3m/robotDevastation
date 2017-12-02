@@ -1,3 +1,7 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
+
 #include "Target.hpp"
 
 rd::Target::Target()
@@ -69,4 +73,3 @@ bool rd::Target::resetBelief()
     belief = MAX_BELIEF;
     return true;
 }
-

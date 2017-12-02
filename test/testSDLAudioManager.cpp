@@ -1,3 +1,7 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
+
 #include "gtest/gtest.h"
 #include <string>
 #include <yarp/os/ResourceFinder.h>
@@ -5,7 +9,11 @@
 
 #include "SDLAudioManager.hpp"
 
-using namespace rd;
+namespace rd
+{
+
+namespace test
+{
 
 class SDLAudioManagerTest : public testing::Test
 {
@@ -105,6 +113,10 @@ TEST_F( SDLAudioManagerTest, AudioManagerPlaysAllSounds )
     yarp::os::Time::delay(4);
     EXPECT_TRUE(audioManager->stopMusic());
 }
+
+}  // namespace test
+
+}  // namespace rd
 
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)

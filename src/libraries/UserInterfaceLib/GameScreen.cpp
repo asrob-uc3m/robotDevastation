@@ -1,3 +1,7 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
+
 #include "GameScreen.hpp"
 
 #include <sstream>
@@ -191,7 +195,7 @@ bool rd::GameScreen::update(const std::string & parameter, const Weapon & value)
 bool rd::GameScreen::update(const std::string & parameter, const Image & value)
 {    if (value.width() == 0 || value.height() == 0)
     {
-        RD_ERROR("Invalid image");
+        RD_ERROR("Invalid image\n");
         return false;
     }
 
@@ -375,4 +379,3 @@ bool rd::GameScreen::drawScope(SDL_Surface *screen)
 
     return true;
 }
-

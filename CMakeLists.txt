@@ -1,12 +1,6 @@
-# Copyright: ASROB 2012 (C) Robotics Society of the Universidad Carlos III de Madrid
-#     (http://asrob.uc3m.es) RD Project
-#
-# Authors:
-# <a href="https://plus.google.com/+davidestevezfernandez">David Estevez</a> (2014-present),
-# <a href="http://roboticslab.uc3m.es/roboticslab/people/jg-victores">Juan G. Victores</a> (2012-present),
-# <a href="http://www.mendeley.com/profiles/santiago-morante-cendrero/">Santiago Morante</a> (2012-2014).
-#
-# CopyPolicy: Released under the terms of the LGPLv2.1 or later, see $RD_ROOT/LICENSE
+# Authors: see AUTHORS.md at project root.
+# CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+# URL: https://github.com/asrob-uc3m/robotDevastation
 
 cmake_minimum_required(VERSION 2.8.11)
 
@@ -83,18 +77,15 @@ if(GENERATE_doc_html)
         set(_dox dox)
     endif()
 
-    # Configure Doxyfile.
-    configure_file(${CMAKE_SOURCE_DIR}/cmake/templates/Doxyfile.in
-                   ${CMAKE_BINARY_DIR}/Doxyfile @ONLY)
-
     add_custom_target(${_dox}
-                      COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_BINARY_DIR}/Doxyfile
+                      COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/doc/Doxyfile
+                      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/doc
                       COMMENT "Generating doxygen documentation"
-                      SOURCES ${CMAKE_SOURCE_DIR}/cmake/templates/Doxyfile.in)
+                      SOURCES ${CMAKE_SOURCE_DIR}/doc/Doxyfile)
 
     set_property(TARGET ${_dox} PROPERTY FOLDER CMakePredefinedTargets)
 
-    install(DIRECTORY ${CMAKE_BINARY_DIR}/html
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/doc/html
             DESTINATION ${CMAKE_INSTALL_DOCDIR}
             COMPONENT docs)
 endif()

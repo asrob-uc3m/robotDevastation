@@ -1,3 +1,7 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
+
 #include "gtest/gtest.h"
 #include <string>
 #include <vector>
@@ -23,7 +27,11 @@
 #include "MockAudioManager.hpp"
 #include "SDLScreenManager.hpp"
 
-using namespace rd;
+namespace rd
+{
+
+namespace test
+{
 
 //-- Class for the setup of the enviroment for all the tests
 //----------------------------------------------------------------------------------------
@@ -564,10 +572,14 @@ TEST_F(GameStateTest, GameStateQuitsWhenRequestedWindowEvent)
     ASSERT_EQ(-1, fsm->getCurrentState()); //-- (When FSM is ended, no state is active, hence -1)
 }
 
+}  // namespace test
+
+}  // namespace rd
+
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
   testing::InitGoogleTest(&argc, argv);
-  testing::Environment* env = testing::AddGlobalTestEnvironment(new GameStateTestEnvironment(argc, argv));
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new rd::test::GameStateTestEnvironment(argc, argv));
   return RUN_ALL_TESTS();
 }

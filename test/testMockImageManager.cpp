@@ -1,3 +1,7 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
+
 #include "gtest/gtest.h"
 #include <yarp/os/Property.h>
 #include <yarp/dev/PolyDriver.h>
@@ -9,8 +13,11 @@
 #include "MockImageManager.hpp"
 #include "MockImageEventListener.hpp"
 
-using namespace rd;
+namespace rd
+{
 
+namespace test
+{
 
 //-- Class for the setup of each test
 //--------------------------------------------------------------------------------------
@@ -128,10 +135,14 @@ TEST_F(MockImageManagerTest, MockImageManagerNotificationWorks)
     ASSERT_FALSE(((MockImageManager *) imageManager)->isEnabled());
 }
 
+}  // namespace test
+
+}  // namespace rd
+
 //--- Main -------------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
   testing::InitGoogleTest(&argc, argv);
-  testing::Environment* env = testing::AddGlobalTestEnvironment(new MockImageManagerEnvironment(argc, argv));
+  testing::Environment* env = testing::AddGlobalTestEnvironment(new rd::test::MockImageManagerEnvironment(argc, argv));
   return RUN_ALL_TESTS();
 }

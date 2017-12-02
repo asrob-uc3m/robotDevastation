@@ -1,4 +1,6 @@
-// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
 
 #ifndef __ROBOT_DEVASTATION_HPP__
 #define __ROBOT_DEVASTATION_HPP__
@@ -6,6 +8,7 @@
 #include <cstdio>
 #include <string>
 #include <sstream>
+#include <iostream>
 #include <vector>
 
 #include <yarp/os/RFModule.h>
@@ -96,4 +99,3 @@ class RobotDevastation : public yarp::os::RFModule
 }  // namespace rd
 
 #endif  // __ROBOT_DEVASTATION_HPP__
-
