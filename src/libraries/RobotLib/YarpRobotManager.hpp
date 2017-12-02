@@ -32,7 +32,7 @@ namespace rd{
  * @brief The Robot Manager for the Rd1 robot.
  *
  */
-class YarpRobotManager : public RobotManager
+class YarpRobotManager : public IRobotManager
 {
     public:
 

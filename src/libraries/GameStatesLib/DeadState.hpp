@@ -37,7 +37,7 @@ class DeadState : public State, public ManagerHub, public InputEventListener
 public:
     DeadState(NetworkManager * networkManager, ImageManager * imageManager,
               InputManager * inputManager, MentalMap * mentalMap,
-              RobotManager * robotManager, AudioManager * audioManager,
+              IRobotManager * robotManager, AudioManager * audioManager,
               ScreenManager * screenManager);
     virtual ~DeadState();
     virtual bool setup();

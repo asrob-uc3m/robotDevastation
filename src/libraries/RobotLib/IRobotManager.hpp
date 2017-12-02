@@ -2,8 +2,8 @@
 // CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
-#ifndef __RD_ROBOT_MANAGER_HPP__
-#define __RD_ROBOT_MANAGER_HPP__
+#ifndef __RD_I_ROBOT_MANAGER_HPP__
+#define __RD_I_ROBOT_MANAGER_HPP__
 
 
 namespace rd{
@@ -11,10 +11,10 @@ namespace rd{
 /**
  * @ingroup RobotLib
  *
- * @brief Base class for Robot Managers. Original copy of this file at https://github.com/asrob-uc3m/robotDevastation/blob/develop/src/libraries/RobotLib/RobotManager.hpp
+ * @brief Base class for Robot Managers. Original copy of this file at https://github.com/asrob-uc3m/robotDevastation/blob/develop/src/libraries/RobotLib/IRobotManager.hpp
  *
  */
-class RobotManager
+class IRobotManager
 {
     public:
         //-- Robot movement related functions    
@@ -46,7 +46,7 @@ class RobotManager
 
         //-- Other
         virtual void onDestroy() = 0;
-        virtual ~RobotManager() {}
+        virtual ~IRobotManager() {}
 
     protected:
         //-- Constants
@@ -58,4 +58,4 @@ class RobotManager
 
 
 
-#endif //-- __RD_ROBOT_MANAGER_HPP__
+#endif //-- __RD_I_ROBOT_MANAGER_HPP__

@@ -39,7 +39,7 @@ class InitState : public State, public ManagerHub, public InputEventListener
         //InitState();
         InitState(NetworkManager * networkManager, ImageManager * imageManager,
                   InputManager * inputManager, MentalMap * mentalMap,
-                  RobotManager * robotManager, AudioManager * audioManager,
+                  IRobotManager * robotManager, AudioManager * audioManager,
                   ScreenManager * screenManager);
         virtual ~InitState();
         virtual bool setup();
