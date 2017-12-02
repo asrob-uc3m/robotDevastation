@@ -50,16 +50,16 @@ TEST_F(MockRobotManagerTest, MockRobotConnectionIsOk)
 
 TEST_F(MockRobotManagerTest, MockRobotCannotMoveIfDisconnected)
 {
-    EXPECT_FALSE(robotManager->moveForward());
-    EXPECT_FALSE(robotManager->moveBackwards());
-    EXPECT_FALSE(robotManager->turnLeft());
-    EXPECT_FALSE(robotManager->turnRight());
+    EXPECT_FALSE(robotManager->moveForward(100.0));
+    EXPECT_FALSE(robotManager->moveBackwards(100.0));
+    EXPECT_FALSE(robotManager->turnLeft(100.0));
+    EXPECT_FALSE(robotManager->turnRight(100.0));
     EXPECT_FALSE(robotManager->stopMovement());
 
-    EXPECT_FALSE(robotManager->tiltUp());
-    EXPECT_FALSE(robotManager->tiltDown());
-    EXPECT_FALSE(robotManager->panLeft());
-    EXPECT_FALSE(robotManager->panRight());
+    EXPECT_FALSE(robotManager->tiltUp(100.0));
+    EXPECT_FALSE(robotManager->tiltDown(100.0));
+    EXPECT_FALSE(robotManager->panLeft(100.0));
+    EXPECT_FALSE(robotManager->panRight(100.0));
     EXPECT_FALSE(robotManager->isCameraMoving());
 }
 
@@ -70,16 +70,16 @@ TEST_F(MockRobotManagerTest, MockRobotCannotMoveIfDisabled)
     robotManager->setEnabled(false);
     ASSERT_FALSE(robotManager->isEnabled());
 
-    EXPECT_FALSE(robotManager->moveForward());
-    EXPECT_FALSE(robotManager->moveBackwards());
-    EXPECT_FALSE(robotManager->turnLeft());
-    EXPECT_FALSE(robotManager->turnRight());
+    EXPECT_FALSE(robotManager->moveForward(100.0));
+    EXPECT_FALSE(robotManager->moveBackwards(100.0));
+    EXPECT_FALSE(robotManager->turnLeft(100.0));
+    EXPECT_FALSE(robotManager->turnRight(100.0));
     EXPECT_FALSE(robotManager->stopMovement());
 
-    EXPECT_FALSE(robotManager->tiltUp());
-    EXPECT_FALSE(robotManager->tiltDown());
-    EXPECT_FALSE(robotManager->panLeft());
-    EXPECT_FALSE(robotManager->panRight());
+    EXPECT_FALSE(robotManager->tiltUp(100.0));
+    EXPECT_FALSE(robotManager->tiltDown(100.0));
+    EXPECT_FALSE(robotManager->panLeft(100.0));
+    EXPECT_FALSE(robotManager->panRight(100.0));
     EXPECT_FALSE(robotManager->isCameraMoving());
 
     ASSERT_TRUE(robotManager->disconnect());
@@ -93,7 +93,7 @@ TEST_F(MockRobotManagerTest, MockRobotMoves)
     ASSERT_TRUE(robotManager->isEnabled());
 
     //-- Moving forward (and stop)
-    EXPECT_TRUE(robotManager->moveForward());
+    EXPECT_TRUE(robotManager->moveForward(100.0));
     EXPECT_TRUE(robotManager->isMoving());
     EXPECT_EQ(MockRobotManager::FORWARD, robotManager->getMovementDirection());
     EXPECT_TRUE(robotManager->stopMovement());
@@ -101,7 +101,7 @@ TEST_F(MockRobotManagerTest, MockRobotMoves)
     EXPECT_EQ(MockRobotManager::NONE, robotManager->getMovementDirection());
 
     //-- Moving backwards (and stop)
-    EXPECT_TRUE(robotManager->moveBackwards());
+    EXPECT_TRUE(robotManager->moveBackwards(100.0));
     EXPECT_TRUE(robotManager->isMoving());
     EXPECT_EQ(MockRobotManager::BACKWARDS, robotManager->getMovementDirection());
     EXPECT_TRUE(robotManager->stopMovement());
@@ -109,7 +109,7 @@ TEST_F(MockRobotManagerTest, MockRobotMoves)
     EXPECT_EQ(MockRobotManager::NONE, robotManager->getMovementDirection());
 
     //-- Turning left (and stop)
-    EXPECT_TRUE(robotManager->turnLeft());
+    EXPECT_TRUE(robotManager->turnLeft(100.0));
     EXPECT_TRUE(robotManager->isMoving());
     EXPECT_EQ(MockRobotManager::LEFT, robotManager->getMovementDirection());
     EXPECT_TRUE(robotManager->stopMovement());
@@ -117,7 +117,7 @@ TEST_F(MockRobotManagerTest, MockRobotMoves)
     EXPECT_EQ(MockRobotManager::NONE, robotManager->getMovementDirection());
 
     //-- Turning right (and stop)
-    EXPECT_TRUE(robotManager->turnRight());
+    EXPECT_TRUE(robotManager->turnRight(100.0));
     EXPECT_TRUE(robotManager->isMoving());
     EXPECT_EQ(MockRobotManager::RIGHT, robotManager->getMovementDirection());
     EXPECT_TRUE(robotManager->stopMovement());
@@ -134,7 +134,7 @@ TEST_F(MockRobotManagerTest, MockRobotCameraMoves)
     ASSERT_TRUE(robotManager->isEnabled());
 
     //-- Tilting up (and stop)
-    EXPECT_TRUE(robotManager->tiltUp());
+    EXPECT_TRUE(robotManager->tiltUp(100.0));
     EXPECT_TRUE(robotManager->isCameraMoving());
     EXPECT_EQ(MockRobotManager::CAMERA_UP, robotManager->getCameraMovementDirection());
     EXPECT_TRUE(robotManager->stopCameraMovement());
@@ -142,7 +142,7 @@ TEST_F(MockRobotManagerTest, MockRobotCameraMoves)
     EXPECT_EQ(MockRobotManager::CAMERA_NONE, robotManager->getCameraMovementDirection());
 
     //-- Tilting down (and stop)
-    EXPECT_TRUE(robotManager->tiltDown());
+    EXPECT_TRUE(robotManager->tiltDown(100.0));
     EXPECT_TRUE(robotManager->isCameraMoving());
     EXPECT_EQ(MockRobotManager::CAMERA_DOWN, robotManager->getCameraMovementDirection());
     EXPECT_TRUE(robotManager->stopCameraMovement());
@@ -150,7 +150,7 @@ TEST_F(MockRobotManagerTest, MockRobotCameraMoves)
     EXPECT_EQ(MockRobotManager::CAMERA_NONE, robotManager->getCameraMovementDirection());
 
     //-- Panning left (and stop)
-    EXPECT_TRUE(robotManager->panLeft());
+    EXPECT_TRUE(robotManager->panLeft(100.0));
     EXPECT_TRUE(robotManager->isCameraMoving());
     EXPECT_EQ(MockRobotManager::CAMERA_LEFT, robotManager->getCameraMovementDirection());
     EXPECT_TRUE(robotManager->stopCameraMovement());
@@ -158,7 +158,7 @@ TEST_F(MockRobotManagerTest, MockRobotCameraMoves)
     EXPECT_EQ(MockRobotManager::CAMERA_NONE, robotManager->getCameraMovementDirection());
 
     //-- Panning right (and stop)
-    EXPECT_TRUE(robotManager->panRight());
+    EXPECT_TRUE(robotManager->panRight(100.0));
     EXPECT_TRUE(robotManager->isCameraMoving());
     EXPECT_EQ(MockRobotManager::CAMERA_RIGHT, robotManager->getCameraMovementDirection());
     EXPECT_TRUE(robotManager->stopCameraMovement());

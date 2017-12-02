@@ -104,9 +104,9 @@ class RobotDevastationTest : public testing::Test
 
             //-- Init robot:
             mockRobotManager = new MockRobotManager("MOCK");
-            robotManager = (RobotManager *) mockRobotManager;
+            robotManager = (IRobotManager *) mockRobotManager;
             ASSERT_NE((MockRobotManager*) NULL, mockRobotManager);
-            ASSERT_NE((RobotManager*) NULL, robotManager);
+            ASSERT_NE((IRobotManager*) NULL, robotManager);
 
             //-- Init image manager
             MockImageManager::RegisterManager();
@@ -223,7 +223,7 @@ class RobotDevastationTest : public testing::Test
         MentalMap * mentalMap;
 
         MockRobotManager * mockRobotManager;
-        RobotManager * robotManager;
+        IRobotManager * robotManager;
 
         ScreenManager * screenManager;
 
