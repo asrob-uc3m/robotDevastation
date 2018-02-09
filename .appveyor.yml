@@ -35,8 +35,8 @@ branches:
 
 init:
   # Dependency version tags
-  - cmd: set ACE_LATEST=6.4.5
-  - cmd: set YARP_LATEST=2.3.70.1
+  - cmd: set ACE_LATEST=6.4.6
+  - cmd: set YARP_LATEST=2.3.70.2
   - cmd: set SDL2_LATEST=2.0.7
   - cmd: set SDL2_IMAGE_LATEST=2.0.2
   - cmd: set SDL2_TTF_LATEST=2.0.14
