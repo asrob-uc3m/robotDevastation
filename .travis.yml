@@ -37,7 +37,7 @@ branches:
 before_install:
   # ubuntu dependencies
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq update; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y --no-install-recommends install libace-dev libjpeg-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libzbar-dev; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y --no-install-recommends install libace-dev libjpeg-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libzbar-dev libgtest-dev; fi
 
   # OS X dependencies
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export XQUARTZ_VERSION=2.7.6;fi

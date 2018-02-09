@@ -42,6 +42,7 @@ init:
   - cmd: set SDL2_TTF_LATEST=2.0.14
   - cmd: set SDL2_MIXER_LATEST=2.0.2
   - cmd: set ZBAR_LATEST=0.10-rd1
+  - cmd: set GTEST_LATEST=1.8.0
 
   # Download/clone paths and URLs
   - cmd: set DOWNLOADS_PATH=C:\downloads
@@ -54,6 +55,7 @@ init:
   - cmd: set SDL2_TTF_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-%SDL2_TTF_LATEST%-VC.zip
   - cmd: set SDL2_MIXER_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-%SDL2_MIXER_LATEST%-VC.zip
   - cmd: set ZBAR_DOWNLOAD_URL=https://github.com/asrob-uc3m/ZBar/releases/download/%ZBAR_LATEST%/zbar-%ZBAR_LATEST%-%ZBAR_ARCH%-setup.exe
+  - cmd: set GTEST_DOWNLOAD_URL=https://github.com/google/googletest/archive/release-%GTEST_LATEST%.zip
 
   # Print some useful informations:
   - cmd: set
@@ -148,6 +150,12 @@ install:
         }
   - cmd: set SDL2DIR=C:\SDL2
   - cmd: set PATH=%SDL2DIR%\lib\%SYSTEM_ARCH%;%PATH%
+
+  # Download googletest
+  - cmd: echo Downloading %GTEST_DOWNLOAD_URL%
+  - cmd: appveyor DownloadFile "%GTEST_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\gtest.zip"
+  - cmd: 7z x -y -o"%DOWNLOADS_PATH%" "%DOWNLOADS_PATH%\gtest.zip"
+  - cmd: set GTEST_ROOT=%DOWNLOADS_PATH%\googletest-release-%GTEST_LATEST%
 
   # Download and install NuGet packages
   - cmd: nuget install Doxygen -OutputDirectory "%NUGET_PATH%" -ExcludeVersion
