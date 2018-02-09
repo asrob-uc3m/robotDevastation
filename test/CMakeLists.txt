@@ -2,20 +2,26 @@
 # CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
-option(ENABLE_tests "Choose if you want to compile tests" OFF)
+find_package(GTestSources 1.6.0 QUIET)
+
+if(NOT GTestSources_FOUND AND (NOT DEFINED ENABLE_tests OR ENABLE_tests))
+    message(WARNING "GTestSources package not found, disabling tests")
+endif()
+
+cmake_dependent_option(ENABLE_tests "Enable/disable unit tests" ON
+                       GTestSources_FOUND OFF)
 
 if(ENABLE_tests)
     
 set(gtest_force_shared_crt ON CACHE INTERNAL "") # needed for Windows
-add_subdirectory(gtest-1.7.0)
-enable_testing()
+add_subdirectory(${GTestSources_SOURCE_DIR} ${CMAKE_BINARY_DIR}/gtest)
 
 find_package(YARP REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+include_directories(${GTestSources_INCLUDE_DIR})
 
 if(WIN32)
     add_definitions(-DSDL_MAIN_HANDLED)
@@ -145,5 +151,9 @@ set_target_properties(testSDLTextDisplay
                       PROPERTIES FOLDER Tests)
 
 set_target_properties(gtest gtest_main PROPERTIES FOLDER Tests/gtest)
+
+else()
+
+set(ENABLE_tests OFF CACHE BOOL "Enable/disable unit tests" FORCE)
 
 endif() # ENABLE_tests
