@@ -9,7 +9,7 @@ project(robotDevastation)
 include(CMakeDependentOption)
 
 if(MSVC)
-    message(STATUS "Running on windows")    
+    message(STATUS "Running on windows")
     set(CMAKE_DEBUG_POSTFIX "d")
 endif()
 
@@ -62,7 +62,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # add main contents
 add_subdirectory(share)
 add_subdirectory(src)
-add_subdirectory(test)
+add_subdirectory(tests)
 
 # generate documentation
 find_package(Doxygen QUIET)
