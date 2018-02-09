@@ -164,7 +164,7 @@ install:
 
 before_build:
   - cmd: echo Configuring project %APPVEYOR_PROJECT_NAME%
-  - cmd: cmake -H"%APPVEYOR_BUILD_FOLDER%" -B"%APPVEYOR_BUILD_FOLDER%\build" -G"%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX:PATH="%APPVEYOR_BUILD_FOLDER%\install" -DENABLE_tests:BOOL=ON -DGENERATE_doc_html:BOOL=ON
+  - cmd: cmake -H"%APPVEYOR_BUILD_FOLDER%" -B"%APPVEYOR_BUILD_FOLDER%\build" -G"%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX:PATH="%APPVEYOR_BUILD_FOLDER%\install" -DGENERATE_doc_html:BOOL=ON
 
 build:
   project: build\robotDevastation.sln
