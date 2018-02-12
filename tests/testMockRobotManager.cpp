@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 
-#include "MockRobotManager.cpp"
+#include "MockRobotManager.hpp"
 
 namespace rd
 {
