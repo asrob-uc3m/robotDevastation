@@ -13,6 +13,8 @@ add_executable(robotDevastation main.cpp
                                 RobotDevastation.hpp
                                 RobotDevastation.cpp)
 
+add_dependencies(robotDevastation ASROB_YARP_DEVICES)
+
 target_include_directories(robotDevastation PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                                    ${YARP_INCLUDE_DIRS})
 
@@ -22,11 +24,11 @@ target_link_libraries(robotDevastation YARP::YARP_OS
                                        MentalMapLib
                                        InputLib
                                        NetworkLib
-                                       RobotLib
                                        StateMachineLib
                                        ImageLib
                                        UserInterfaceLib
-                                       GameStatesLib)
+                                       GameStatesLib
+                                       ASROB::RobotInterfaces)
 
 if(WIN32)
     target_compile_definitions(robotDevastation PUBLIC SDL_MAIN_HANDLED)

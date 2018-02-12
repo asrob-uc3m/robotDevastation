@@ -28,14 +28,14 @@ class ManagerHub
 
     ManagerHub(NetworkManager * networkManager, ImageManager * imageManager,
                InputManager * inputManager, MentalMap * mentalMap,
-               IRobotManager * robotManager, AudioManager * audioManager,
+               asrob::IRobotManager * robotManager, AudioManager * audioManager,
                ScreenManager * screenManager);
 
         bool setNetworkManager(NetworkManager * networkManager);
         bool setImageManager(ImageManager * imageManager);
         bool setInputManager(InputManager * inputManager);
         bool setMentalMap(MentalMap * mentalMap);
-        bool setRobotManager(IRobotManager * robotManager);
+        bool setRobotManager(asrob::IRobotManager * robotManager);
         bool setAudioManager(AudioManager * audioManager);
         bool setScreenManager(ScreenManager * screenManager);
 
@@ -45,7 +45,7 @@ class ManagerHub
         ImageManager * imageManager;
         InputManager * inputManager;
         MentalMap * mentalMap;
-        IRobotManager * robotManager;
+        asrob::IRobotManager * robotManager;
         AudioManager * audioManager;
         ScreenManager * screenManager;
 };

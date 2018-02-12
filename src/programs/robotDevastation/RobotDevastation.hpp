@@ -76,7 +76,7 @@ class RobotDevastation : public yarp::os::RFModule
         AudioManager * audioManager;
         MentalMap * mentalMap;
         NetworkManager * networkManager;
-        IRobotManager * robotManager;
+        asrob::IRobotManager * robotManager;
         ImageManager * imageManager;
         ScreenManager * screenManager;
 

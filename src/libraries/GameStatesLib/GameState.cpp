@@ -22,7 +22,7 @@ const rd::Key rd::GameState::KEY_TILT_DOWN = rd::Key::KEY_ARROW_DOWN;
 
 rd::GameState::GameState(NetworkManager *networkManager, ImageManager *imageManager,
                          InputManager *inputManager, MentalMap *mentalMap,
-                         IRobotManager *robotManager, AudioManager *audioManager,
+                         asrob::IRobotManager *robotManager, AudioManager *audioManager,
                          ScreenManager *screenManager) :
                     ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager,
                                audioManager, screenManager)
