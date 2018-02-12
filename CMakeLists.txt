@@ -57,9 +57,10 @@ if(ENABLE_coverage)
     endif()
 endif()
 
-# Superbuild phase - include color-debug.
+# Superbuild phase - find or download remote packages.
 include(FindOrBuildPackage)
 find_or_build_package(COLOR_DEBUG)
+find_or_build_package(ASROB_YARP_DEVICES)
 
 # find_or_build_package() doesn't bring into scope COLOR_DEBUG_INCLUDE_DIRS
 # nor other config variables. If a system copy is found, we have to call the
@@ -68,6 +69,17 @@ if(USE_SYSTEM_COLOR_DEBUG)
     find_package(COLOR_DEBUG REQUIRED)
     include_directories(${COLOR_DEBUG_INCLUDE_DIRS})
 endif()
+
+if(USE_SYSTEM_ASROB_YARP_DEVICES)
+    find_package(ASROB_YARP_DEVICES REQUIRED)
+endif()
+
+# Prepare install/ directory (might be empty).
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/install)
+
+# Install downloaded packages.
+install(DIRECTORY ${CMAKE_BINARY_DIR}/install/
+        DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 # let CMake organize projects in folders (in IDEs that support this)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
