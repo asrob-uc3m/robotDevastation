@@ -41,7 +41,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Select robot device
     std::string robotDeviceName;
     if( rf.check("mockRobotManager") )
-        robotDeviceName = "RobotMock";
+        robotDeviceName = "FakeMotorController";
     else
         robotDeviceName = "RobotClient";
 
