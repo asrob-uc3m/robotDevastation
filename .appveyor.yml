@@ -57,6 +57,10 @@ init:
   - cmd: set ZBAR_DOWNLOAD_URL=https://github.com/asrob-uc3m/ZBar/releases/download/%ZBAR_LATEST%/zbar-%ZBAR_LATEST%-%ZBAR_ARCH%-setup.exe
   - cmd: set GTEST_DOWNLOAD_URL=https://github.com/google/googletest/archive/release-%GTEST_LATEST%.zip
 
+  # Configure git for use by YCM
+  - cmd: git config --global user.email "user@example.com"
+  - cmd: git config --global user.name "Travis CI"
+
   # Print some useful informations:
   - cmd: set
   - cmd: cmake --version
