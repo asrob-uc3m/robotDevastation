@@ -53,7 +53,7 @@ option(ENABLE_coverage "Choose if you want to enable coverage" OFF)
 if(ENABLE_coverage)
     # List supported compilers.
     if(CMAKE_COMPILER_IS_GNUCXX)
-        add_compile_options(-fprofile-arcs -ftest-coverage)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
     endif()
 endif()
 
@@ -89,12 +89,12 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Create targets if specific requirements are satisfied.
 include(CMakeDependentOption)
 
-# add main contents
+# Add main contents.
 add_subdirectory(share)
 add_subdirectory(src)
 add_subdirectory(tests)
 
-# generate documentation
+# Generate documentation.
 find_package(Doxygen QUIET)
 
 cmake_dependent_option(GENERATE_doc_html "Choose if you want to generate HTML documentation through Doxygen" OFF
@@ -119,5 +119,5 @@ if(GENERATE_doc_html)
             DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
 
-# uninstall target
+# Uninstall target.
 include(AddUninstallTarget)
