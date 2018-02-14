@@ -108,7 +108,7 @@ install:
             cmake --build "$env:yarp_temp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
             Set-Content C:\YARP\.version "$env:YARP_LATEST"
         }
-  - cmd: set YARP_DIR=C:\YARP\cmake
+  - cmd: set YARP_DIR=C:\YARP\CMake
   - cmd: set PATH=C:\YARP\bin;%PATH%
 
   # Download and install ZBar (keep this section before the SDL2 one)
