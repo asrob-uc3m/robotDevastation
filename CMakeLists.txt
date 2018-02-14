@@ -68,6 +68,7 @@ find_or_build_package(ASROB_YARP_DEVICES)
 if(USE_SYSTEM_COLOR_DEBUG)
     find_package(COLOR_DEBUG REQUIRED)
     include_directories(${COLOR_DEBUG_INCLUDE_DIRS})
+    add_library(COLOR_DEBUG UNKNOWN IMPORTED)
 endif()
 
 if(USE_SYSTEM_ASROB_YARP_DEVICES)
