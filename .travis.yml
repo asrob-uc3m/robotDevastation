@@ -23,7 +23,7 @@ env:
     # avoid ALSA errors
     - SDL_AUDIODRIVER=dummy
     # YARP cache
-    - YARP_VER=2.3.70.2
+    - YARP_VER=2.3.72
     - YARP_CACHE_DIR=~/.yarp
 
 cache:
@@ -84,7 +84,7 @@ install:
     fi
 
   # make installed YARP discoverable by CMake's find_package() command
-  - if [ ! "$TRAVIS_EVENT_TYPE" = cron ]; then export YARP_DIR=$YARP_CACHE_DIR/lib/YARP; fi
+  - if [ ! "$TRAVIS_EVENT_TYPE" = cron ]; then export YARP_DIR=$YARP_CACHE_DIR/lib/cmake/YARP; fi
 
   # see http://gronlier.fr/blog/2015/01/adding-code-coverage-to-your-c-project/
   - cd
