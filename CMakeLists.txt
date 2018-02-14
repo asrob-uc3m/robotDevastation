@@ -73,6 +73,7 @@ endif()
 
 if(USE_SYSTEM_ASROB_YARP_DEVICES)
     find_package(ASROB_YARP_DEVICES REQUIRED)
+    add_library(ASROB_YARP_DEVICES UNKNOWN IMPORTED)
 endif()
 
 # Prepare install/ directory (might be empty).
