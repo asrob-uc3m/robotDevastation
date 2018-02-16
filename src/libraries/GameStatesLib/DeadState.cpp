@@ -13,7 +13,7 @@ const int rd::DeadState::MAX_HEALTH = 100;
 
 rd::DeadState::DeadState(NetworkManager *networkManager, ImageManager *imageManager,
                          InputManager *inputManager, MentalMap *mentalMap,
-                         IRobotManager *robotManager, AudioManager *audioManager,
+                         asrob::IRobotManager *robotManager, AudioManager *audioManager,
                          ScreenManager *screenManager) :
                 ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager,
                            audioManager, screenManager)

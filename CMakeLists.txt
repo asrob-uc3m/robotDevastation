@@ -2,11 +2,9 @@
 # CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 project(robotDevastation)
-
-include(CMakeDependentOption)
 
 if(MSVC)
     message(STATUS "Running on windows")
@@ -33,6 +31,15 @@ if(NOT CMAKE_CONFIGURATION_TYPES)
     endif()
 endif()
 
+# Pick up our CMake modules.
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake
+                              ${CMAKE_SOURCE_DIR}/cmake/find-modules
+                              ${CMAKE_SOURCE_DIR}/cmake/ycm-modules)
+
+# Bootstrap YCM. Make sure it's compatible with cmake_minimum_required().
+set(YCM_TAG v0.6.0)
+include(YCMBootstrap)
+
 # Standard installation directories.
 include(GNUInstallDirs)
 
@@ -40,12 +47,6 @@ include(GNUInstallDirs)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
-
-# Pick up our scripts - they are all in the /cmake subdirectory
-set(RD_MODULE_DIR ${CMAKE_SOURCE_DIR}/cmake)
-
-list(APPEND CMAKE_MODULE_PATH ${RD_MODULE_DIR}
-                              ${RD_MODULE_DIR}/find-modules)
 
 option(ENABLE_coverage "Choose if you want to enable coverage" OFF)
 
@@ -56,15 +57,44 @@ if(ENABLE_coverage)
     endif()
 endif()
 
+# Superbuild phase - find or download remote packages.
+include(FindOrBuildPackage)
+find_or_build_package(COLOR_DEBUG)
+find_or_build_package(ASROB_YARP_DEVICES)
+
+# find_or_build_package() doesn't bring into scope COLOR_DEBUG_INCLUDE_DIRS
+# nor other config variables. If a system copy is found, we have to call the
+# find_package() command and proceed as usual.
+if(USE_SYSTEM_COLOR_DEBUG)
+    find_package(COLOR_DEBUG REQUIRED)
+    include_directories(${COLOR_DEBUG_INCLUDE_DIRS})
+    add_library(COLOR_DEBUG UNKNOWN IMPORTED)
+endif()
+
+if(USE_SYSTEM_ASROB_YARP_DEVICES)
+    find_package(ASROB_YARP_DEVICES REQUIRED)
+    add_library(ASROB_YARP_DEVICES UNKNOWN IMPORTED)
+endif()
+
+# Prepare install/ directory (might be empty).
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/install)
+
+# Install downloaded packages.
+install(DIRECTORY ${CMAKE_BINARY_DIR}/install/
+        DESTINATION ${CMAKE_INSTALL_PREFIX})
+
 # let CMake organize projects in folders (in IDEs that support this)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-# add main contents
+# Create targets if specific requirements are satisfied.
+include(CMakeDependentOption)
+
+# Add main contents.
 add_subdirectory(share)
 add_subdirectory(src)
 add_subdirectory(tests)
 
-# generate documentation
+# Generate documentation.
 find_package(Doxygen QUIET)
 
 cmake_dependent_option(GENERATE_doc_html "Choose if you want to generate HTML documentation through Doxygen" OFF
@@ -89,5 +119,5 @@ if(GENERATE_doc_html)
             DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
 
-# uninstall target
+# Uninstall target.
 include(AddUninstallTarget)

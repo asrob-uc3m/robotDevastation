@@ -9,6 +9,8 @@ add_library(GameStatesLib DeadState.hpp
                           InitState.hpp
                           InitState.cpp)
 
+add_dependencies(GameStatesLib ASROB_YARP_DEVICES)
+
 target_include_directories(GameStatesLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(GameStatesLib PUBLIC UtilsLib
@@ -17,6 +19,6 @@ target_link_libraries(GameStatesLib PUBLIC UtilsLib
                                            NetworkLib
                                            ImageLib
                                            MentalMapLib
-                                           RobotLib
                                            MusicLib
-                                           UserInterfaceLib)
+                                           UserInterfaceLib
+                                           ASROB::RobotInterfaces)

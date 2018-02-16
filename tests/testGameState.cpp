@@ -134,9 +134,9 @@ class GameStateTest : public testing::Test
             networkManager->configure("player", players[1]);
 
             mockRobotManager = new MockRobotManager("MOCK");
-            robotManager = (IRobotManager *) mockRobotManager;
+            robotManager = (asrob::IRobotManager *) mockRobotManager;
             ASSERT_NE((MockRobotManager*) NULL, mockRobotManager);
-            ASSERT_NE((IRobotManager*) NULL, robotManager);
+            ASSERT_NE((asrob::IRobotManager*) NULL, robotManager);
 
             screenManager = ScreenManager::getScreenManager("SDL");
             ASSERT_NE((ScreenManager*) NULL, screenManager);
@@ -203,7 +203,7 @@ class GameStateTest : public testing::Test
         MentalMap * mentalMap;
 
         MockRobotManager * mockRobotManager;
-        IRobotManager * robotManager;
+        asrob::IRobotManager * robotManager;
 
         ScreenManager * screenManager;
 

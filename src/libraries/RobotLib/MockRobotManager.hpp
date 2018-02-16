@@ -17,7 +17,7 @@ namespace rd{
  * @brief The Robot Manager for testing
  *
  */
-class MockRobotManager : public IRobotManager
+class MockRobotManager : public asrob::IRobotManager
 {
     public:
 

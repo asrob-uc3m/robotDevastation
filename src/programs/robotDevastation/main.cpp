@@ -70,8 +70,8 @@ int main(int argc, char *argv[])
     {
         std::printf("RobotDevastation optional parameters:\n");
         std::printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        std::printf("\t--mockRobotManager  //-- Fake robot motors\n");
-        std::printf("\t--mockImageManager  //-- Fake robot camera\n");
+        std::printf("\t--fakeRobotManager  //-- Fake robot motors\n");
+        std::printf("\t--fakeImageManager  //-- Fake robot camera\n");
         std::printf("\t--yarpLocalImageManager  //-- Local webcam as camera\n");
         std::printf("\t--fullscreen //-- Fullscreen mode (experimental)\n");
         return 0;

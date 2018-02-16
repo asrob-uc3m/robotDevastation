@@ -4,16 +4,14 @@
 
 find_package(YARP REQUIRED)
 
-add_library(RobotLib IRobotManager.hpp
-                     MockRobotManager.cpp
-                     MockRobotManager.hpp
-                     YarpRobotManager.hpp
-                     YarpRobotManager.cpp)
+add_library(RobotLib MockRobotManager.cpp
+                     MockRobotManager.hpp)
+
+add_dependencies(RobotLib ASROB_YARP_DEVICES)
 
 target_include_directories(RobotLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                            ${YARP_INCLUDE_DIRS})
 
-target_link_libraries(RobotLib PUBLIC YARP::YARP_OS
-                                      YARP::YARP_dev)
+target_link_libraries(RobotLib PUBLIC ASROB::RobotInterfaces)
 
 target_link_libraries(RobotLib PRIVATE UtilsLib)

@@ -14,6 +14,8 @@
 #include <yarp/os/RFModule.h>
 #include <yarp/os/ResourceFinder.h>
 
+#include <yarp/dev/PolyDriver.h>
+
 #include "Utils.hpp"
 #include "SDLAudioManager.hpp"
 #include "MentalMap.hpp"
@@ -22,8 +24,6 @@
 #include "InputEventListener.hpp"
 #include "YarpNetworkManager.hpp"
 #include "IRobotManager.hpp"
-#include "YarpRobotManager.hpp"
-#include "MockRobotManager.hpp"
 #include "StateMachine.hpp"
 #include "ImageManager.hpp"
 #include "YarpImageManager.hpp"
@@ -76,9 +76,11 @@ class RobotDevastation : public yarp::os::RFModule
         AudioManager * audioManager;
         MentalMap * mentalMap;
         NetworkManager * networkManager;
-        IRobotManager * robotManager;
+        asrob::IRobotManager * robotManager;
         ImageManager * imageManager;
         ScreenManager * screenManager;
+
+        yarp::dev::PolyDriver robotDevice;
 
         bool interruptModule();
         double getPeriod();

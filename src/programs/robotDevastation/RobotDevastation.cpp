@@ -6,6 +6,8 @@
 
 #include <cstdio>
 
+#include <yarp/os/Property.h>
+
 bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 {
     //-- Get player data
@@ -36,14 +38,30 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     if( ! initSound(rf) )
         return false;
 
-    //-- Init robot
-    if( rf.check("mockRobotManager") )
-        robotManager = new MockRobotManager(robotName);
+    //-- Configure robot device
+    yarp::os::Property robotOptions;
+    if( rf.check("fakeRobotManager") )
+        robotOptions.put("device", "FakeMotorController");
     else
-        robotManager = new YarpRobotManager(robotName);
+        robotOptions.put("device", "RobotClient");
+    robotOptions.put("name", "/" + robotName);
+
+    //-- Start robot device
+    if( ! robotDevice.open(robotOptions) )
+    {
+        RD_ERROR("Could not open robot device\n");
+        return false;
+    }
+
+    //-- Acquire robot interface
+    if( ! robotDevice.view(robotManager) )
+    {
+        RD_ERROR("Could not acquire robot interface\n");
+        return false;
+    }
 
     //-- Init image manager
-    if( rf.check("mockImageManager") )
+    if( rf.check("fakeImageManager") )
     {
         MockImageManager::RegisterManager();
         imageManager = ImageManager::getImageManager(MockImageManager::id);
@@ -281,8 +299,7 @@ bool rd::RobotDevastation::cleanup()
     imageManager = NULL;
 
     //-- Close robot:
-    delete robotManager;
-    robotManager = NULL;
+    robotDevice.close();
 
     //-- Delete FSM:
     delete gameFSM;

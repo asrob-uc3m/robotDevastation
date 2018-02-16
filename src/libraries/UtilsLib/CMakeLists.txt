@@ -18,6 +18,8 @@ add_library(UtilsLib Hub.hpp
                      Vector2dBase.hpp
                      Vocabs.hpp)
 
+add_dependencies(UtilsLib ASROB_YARP_DEVICES)
+
 target_include_directories(UtilsLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                            ${YARP_INCLUDE_DIRS}
                                            ${SDL2_INCLUDE_DIR})
@@ -31,9 +33,9 @@ target_link_libraries(UtilsLib PUBLIC YARP::YARP_OS
                                       InputLib
                                       MentalMapLib
                                       NetworkLib
-                                      RobotLib
                                       MusicLib
-                                      UserInterfaceLib)
+                                      UserInterfaceLib
+                                      ASROB::RobotInterfaces)
 
 target_link_libraries(UtilsLib PRIVATE ${SDL2_IMAGE_LIBRARIES}
                                        ${SDL2_TTF_LIBRARIES})
