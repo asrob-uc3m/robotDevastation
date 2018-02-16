@@ -38,16 +38,12 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     if( ! initSound(rf) )
         return false;
 
-    //-- Select robot device
-    std::string robotDeviceName;
-    if( rf.check("mockRobotManager") )
-        robotDeviceName = "FakeMotorController";
-    else
-        robotDeviceName = "RobotClient";
-
     //-- Configure robot device
     yarp::os::Property robotOptions;
-    robotOptions.put("device", robotDeviceName);
+    if( rf.check("fakeRobotManager") )
+        robotOptions.put("device", "FakeMotorController");
+    else
+        robotOptions.put("device", "RobotClient");
     robotOptions.put("name", "/" + robotName);
 
     //-- Start robot device
@@ -65,7 +61,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     }
 
     //-- Init image manager
-    if( rf.check("mockImageManager") )
+    if( rf.check("fakeImageManager") )
     {
         MockImageManager::RegisterManager();
         imageManager = ImageManager::getImageManager(MockImageManager::id);

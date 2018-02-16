@@ -21,7 +21,7 @@ bool rd::YarpImageManager::start()
     if ( ! yarp::os::NetworkBase::checkNetwork() )
     {
         RD_ERROR("Found no yarp network. Bye!\n");
-        RD_INFO("try running 'yarpserver &'', or '--mockImageManager' or '--yarpLocalImageManager' for Fake robot camera.\n");
+        RD_INFO("try running 'yarpserver &'', or '--fakeImageManager' or '--yarpLocalImageManager' for Fake robot camera.\n");
         return false;
     }
 
@@ -55,7 +55,7 @@ bool rd::YarpImageManager::start()
         {
             RD_ERROR("Timeout for connect from robot camera to robotDevastation (NON-mjpeg).\n");
             RD_ERROR("Could not connect to robot camera.\n");
-            RD_INFO("If you prefer a fake camera use the '--mockImageManager' or '--yarpLocalImageManager' parameter to run robotDevastation.\n");
+            RD_INFO("If you prefer a fake camera use the '--fakeImageManager' or '--yarpLocalImageManager' parameter to run robotDevastation.\n");
             return false;
         }
         else
