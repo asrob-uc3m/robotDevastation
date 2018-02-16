@@ -3,7 +3,8 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "InputManager.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 //-- This is very important:
 rd::InputManager * rd::InputManager::inputManagerInstance = NULL;
@@ -23,7 +24,7 @@ rd::InputManager *rd::InputManager::getInputManager()
         }
         else
         {
-            RD_ERROR("No InputManager registered!! Returning null\n");
+            CD_ERROR("No InputManager registered!! Returning null\n");
         }
     }
 
@@ -41,7 +42,7 @@ rd::InputManager *rd::InputManager::getInputManager(const std::string & id)
         }
         else
         {
-            RD_ERROR("InputManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            CD_ERROR("InputManager %s not found! (Maybe it was not registered?)\n", id.c_str());
         }
     }
 
@@ -108,7 +109,7 @@ bool rd::InputManager::configure(const std::string & parameter, const std::strin
 
 bool rd::InputManager::refreshEvents()
 {
-    RD_INFO("Base implementation, does nothing!\n");
+    CD_INFO("Base implementation, does nothing!\n");
     return true;
 }
 
@@ -123,13 +124,13 @@ bool rd::InputManager::Register(InputManager *manager, const std::string & id)
         }
         else
         {
-            RD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
+            CD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
             return false;
         }
     }
     else
     {
-        RD_ERROR( "InputManager with id \"%s\" was already registered\n", id.c_str());
+        CD_ERROR( "InputManager with id \"%s\" was already registered\n", id.c_str());
         return false;
     }
 

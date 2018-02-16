@@ -24,7 +24,6 @@
 
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
-#include "Utils.hpp"
 #include "SDLUtils.hpp"
 #include "DeadState.hpp"
 #include "InitState.hpp"

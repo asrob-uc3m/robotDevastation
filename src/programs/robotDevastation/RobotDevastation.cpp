@@ -8,6 +8,8 @@
 
 #include <yarp/os/Property.h>
 
+#include <ColorDebug.hpp>
+
 bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 {
     //-- Get player data
@@ -22,7 +24,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     screenManager = ScreenManager::getScreenManager(SDLScreenManager::id);
     if (screenManager==NULL)
     {
-        RD_ERROR("Could not create ScreenManager\n");
+        CD_ERROR("Could not create ScreenManager\n");
         return false;
     }
     if( rf.check("fullscreen") )
@@ -49,14 +51,14 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Start robot device
     if( ! robotDevice.open(robotOptions) )
     {
-        RD_ERROR("Could not open robot device\n");
+        CD_ERROR("Could not open robot device\n");
         return false;
     }
 
     //-- Acquire robot interface
     if( ! robotDevice.view(robotManager) )
     {
-        RD_ERROR("Could not acquire robot interface\n");
+        CD_ERROR("Could not acquire robot interface\n");
         return false;
     }
 
@@ -72,7 +74,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         imageManager = ImageManager::getImageManager(YarpLocalImageManager::id);
         if (imageManager == NULL)
         {
-            RD_ERROR("Could not create yarpLocalImageManager\n");
+            CD_ERROR("Could not create yarpLocalImageManager\n");
             return false;
         }
 
@@ -80,7 +82,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         {
             std::stringstream camera_id_ss;
             camera_id_ss << rf.find("camera_id").asInt();
-            RD_INFO("YarpLocalImageManager is using camera with index %s.\n", camera_id_ss.str().c_str())
+            CD_INFO("YarpLocalImageManager is using camera with index %s.\n", camera_id_ss.str().c_str())
             imageManager->configure("camera_id", camera_id_ss.str());
         }
     }
@@ -153,7 +155,7 @@ bool rd::RobotDevastation::updateModule()
         return true;
     }
 
-    RD_DEBUG("Current state id: %d\n", gameFSM->getCurrentState());
+    CD_DEBUG("Current state id: %d\n", gameFSM->getCurrentState());
     return true;
 }
 
@@ -315,6 +317,6 @@ bool rd::RobotDevastation::cleanup()
 
 bool rd::RobotDevastation::interruptModule()
 {
-    RD_INFO("Closing program...\n");
+    CD_INFO("Closing program...\n");
     return cleanup();
 }

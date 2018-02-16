@@ -8,7 +8,6 @@
 
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
-#include "Utils.hpp"
 #include "SDLUtils.hpp"
 #include "InitState.hpp"
 

@@ -16,7 +16,6 @@
 
 #include <yarp/dev/PolyDriver.h>
 
-#include "Utils.hpp"
 #include "SDLAudioManager.hpp"
 #include "MentalMap.hpp"
 #include "InputManager.hpp"

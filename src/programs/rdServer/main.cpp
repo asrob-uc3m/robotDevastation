@@ -35,7 +35,8 @@ rdServer
 #include <yarp/os/Network.h>
 #include <yarp/os/ResourceFinder.h>
 
-#include "Macros.hpp"
+#include <ColorDebug.hpp>
+
 #include "Server.hpp"
 
 int main(int argc, char *argv[]) {

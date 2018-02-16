@@ -11,14 +11,13 @@ find_package(SDL2_ttf REQUIRED)
 add_library(UtilsLib Hub.hpp
                      Hub.cpp
                      IniReader.hpp
-                     Macros.hpp
                      SDLUtils.hpp
                      SDLUtils.cpp
                      Utils.hpp
                      Vector2dBase.hpp
                      Vocabs.hpp)
 
-add_dependencies(UtilsLib ASROB_YARP_DEVICES)
+add_dependencies(UtilsLib COLOR_DEBUG ASROB_YARP_DEVICES)
 
 target_include_directories(UtilsLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                            ${YARP_INCLUDE_DIRS}

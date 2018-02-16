@@ -37,7 +37,7 @@ target_link_libraries(testInitScreen YARP::YARP_OS UserInterfaceLib gtest_main)
 target_include_directories(testInitScreen PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testGameScreen testGameScreen.cpp)
-target_link_libraries(testGameScreen YARP::YARP_OS YARP::YARP_sig MentalMapLib UserInterfaceLib gtest_main)
+target_link_libraries(testGameScreen YARP::YARP_OS YARP::YARP_sig MentalMapLib UserInterfaceLib UtilsLib gtest_main)
 target_include_directories(testGameScreen PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testDeadScreen testDeadScreen.cpp)
@@ -63,7 +63,8 @@ target_include_directories(testSDLAudioManager PUBLIC ${YARP_INCLUDE_DIRS})
 
 # Input manager related
 add_executable(testInputManager testInputManager.cpp)
-target_link_libraries(testInputManager InputLib MusicLib UtilsLib ${SDL2_LIBRARY} ${SDL2_TTF_LIBRARIES} gtest_main)
+add_dependencies(testInputManager COLOR_DEBUG)
+target_link_libraries(testInputManager InputLib MusicLib ${SDL2_LIBRARY} ${SDL2_TTF_LIBRARIES} gtest_main)
 target_include_directories(testInputManager PUBLIC ${YARP_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIRS})
 
 add_executable(testMockInputManager testMockInputManager.cpp)
@@ -71,19 +72,21 @@ target_link_libraries(testMockInputManager InputLib gtest_main)
 
 # Mental Map related
 add_executable(testMentalMap testMentalMap.cpp)
-target_link_libraries(testMentalMap MentalMapLib MusicLib gtest_main)
+target_link_libraries(testMentalMap MentalMapLib MusicLib UtilsLib gtest_main)
 
 # Network manager related
 add_executable(testYarpNetworkManager testYarpNetworkManager.cpp)
-target_link_libraries(testYarpNetworkManager YARP::YARP_OS NetworkLib ServerLib UtilsLib gtest_main)
+add_dependencies(testYarpNetworkManager COLOR_DEBUG)
+target_link_libraries(testYarpNetworkManager YARP::YARP_OS NetworkLib ServerLib gtest_main)
 target_include_directories(testYarpNetworkManager PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testMockNetworkManager testMockNetworkManager.cpp)
-target_link_libraries(testMockNetworkManager MentalMapLib NetworkLib gtest_main)
+target_link_libraries(testMockNetworkManager MentalMapLib NetworkLib UtilsLib gtest_main)
 
 # Image manager related
 add_executable(testYarpImageManager testYarpImageManager.cpp)
-target_link_libraries(testYarpImageManager YARP::YARP_OS YARP::YARP_dev ImageLib UtilsLib gtest_main)
+add_dependencies(testYarpImageManager COLOR_DEBUG)
+target_link_libraries(testYarpImageManager YARP::YARP_OS YARP::YARP_dev ImageLib gtest_main)
 target_include_directories(testYarpImageManager PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testMockImageManager testMockImageManager.cpp)
@@ -91,7 +94,7 @@ target_link_libraries(testMockImageManager YARP::YARP_OS YARP::YARP_dev YARP::YA
 target_include_directories(testMockImageManager PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testProcessorImageEventListener testProcessorImageEventListener.cpp)
-target_link_libraries(testProcessorImageEventListener YARP::YARP_OS YARP::YARP_sig ImageLib MentalMapLib gtest_main)
+target_link_libraries(testProcessorImageEventListener YARP::YARP_OS YARP::YARP_sig ImageLib MentalMapLib UtilsLib gtest_main)
 target_include_directories(testProcessorImageEventListener PUBLIC ${YARP_INCLUDE_DIRS})
 
 # Robot manager related
@@ -100,11 +103,13 @@ target_link_libraries(testMockRobotManager RobotLib gtest_main)
 
 # State machine related
 add_executable(testFSM testFSM.cpp)
-target_link_libraries(testFSM YARP::YARP_OS StateMachineLib UtilsLib gtest_main)
+add_dependencies(testFSM COLOR_DEBUG)
+target_link_libraries(testFSM YARP::YARP_OS YARP::YARP_init StateMachineLib gtest_main)
 target_include_directories(testFSM PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testFSMBuilder testFSMBuilder.cpp)
-target_link_libraries(testFSMBuilder YARP::YARP_OS StateMachineLib UtilsLib gtest_main)
+add_dependencies(testFSMBuilder COLOR_DEBUG)
+target_link_libraries(testFSMBuilder YARP::YARP_OS YARP::YARP_init StateMachineLib gtest_main)
 target_include_directories(testFSMBuilder PUBLIC ${YARP_INCLUDE_DIRS})
 
 # Game States related

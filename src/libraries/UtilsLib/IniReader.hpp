@@ -12,7 +12,7 @@
 #include <map>
 #include <utility>
 
-#include "Macros.hpp"
+#include <ColorDebug.hpp>
 
 namespace rd{
 
@@ -30,9 +30,9 @@ class IniReader {
         void parseFile(const char* fileName, std::vector< std::pair< T1, T2 > >& data) {
             std::ifstream ifs(fileName);
             if(!ifs.is_open()) {
-                RD_ERROR("vector implementation could not open file: %s\n",fileName);
+                CD_ERROR("vector implementation could not open file: %s\n",fileName);
             } else {
-                RD_SUCCESS("vector implementation opened file: %s\n",fileName);
+                CD_SUCCESS("vector implementation opened file: %s\n",fileName);
             }
             std::string line;
             while (std::getline(ifs, line)) {
@@ -54,15 +54,15 @@ class IniReader {
             }
             //std::cout << "--------------------------" << std::endl;
             ifs.close();
-            RD_INFO("vector implementation past close file: %s\n",fileName);
+            CD_INFO("vector implementation past close file: %s\n",fileName);
         }
 
         void parseFile(const char* fileName, std::map< T1, T2 >& data) {
             std::ifstream ifs(fileName);
             if(!ifs.is_open()) {
-                RD_ERROR("map implementation could not open file: %s\n",fileName);
+                CD_ERROR("map implementation could not open file: %s\n",fileName);
             } else {
-                RD_SUCCESS("map implementation opened file: %s\n",fileName);
+                CD_SUCCESS("map implementation opened file: %s\n",fileName);
             }
             std::string line;
             while (std::getline(ifs, line)) {
@@ -84,7 +84,7 @@ class IniReader {
             }
             //std::cout << "--------------------------" << std::endl;
             ifs.close();
-            RD_INFO("map implementation past close file: %s\n",fileName);
+            CD_INFO("map implementation past close file: %s\n",fileName);
         }
 };
 

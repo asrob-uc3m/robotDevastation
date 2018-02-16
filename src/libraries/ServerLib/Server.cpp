@@ -8,7 +8,8 @@
 
 #include <yarp/os/Bottle.h>
 
-#include "Macros.hpp"
+#include <ColorDebug.hpp>
+
 #include "Vocabs.hpp"
 
 bool rd::Server::configure(yarp::os::ResourceFinder &rf)
@@ -16,7 +17,7 @@ bool rd::Server::configure(yarp::os::ResourceFinder &rf)
     quiet = false;
     if (rf.check("quiet"))
     {
-        RD_INFO("stdout feedback disabled\n");
+        CD_INFO("stdout feedback disabled\n");
         quiet = true;
     }
 

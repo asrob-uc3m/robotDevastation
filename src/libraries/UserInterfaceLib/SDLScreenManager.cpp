@@ -7,7 +7,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-#include "Macros.hpp"
+#include <ColorDebug.hpp>
 
 //-- This is very important:
 rd::SDLScreenManager * rd::SDLScreenManager::uniqueInstance = NULL;
@@ -57,7 +57,7 @@ bool rd::SDLScreenManager::show()
         }
         if (window==NULL)
         {
-            RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
+            CD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
             return false;
         }
     }
@@ -72,14 +72,14 @@ bool rd::SDLScreenManager::show()
     SDL_Surface * screen_surface = SDL_GetWindowSurface(window);
     if (screen_surface == NULL)
     {
-        RD_ERROR("Could not get SDL screen surface!\n");
+        CD_ERROR("Could not get SDL screen surface!\n");
         return false;
     }
 
     //-- Draw current screen on surface
     if (!screen->drawScreen((void *)screen_surface))
     {
-        RD_ERROR("Could not draw screen!\n");
+        CD_ERROR("Could not draw screen!\n");
         return false;
     }
 
@@ -145,14 +145,14 @@ bool rd::SDLScreenManager::initSDL()
     //-- Init SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
-        RD_ERROR("SDL could not initialize!\n SDL Error: %s\n", SDL_GetError());
+        CD_ERROR("SDL could not initialize!\n SDL Error: %s\n", SDL_GetError());
         return false;
     }
 
     //-- Init ttf
     if (TTF_Init() == -1)
     {
-        RD_ERROR("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
+        CD_ERROR("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
         cleanupSDL();
         return false;
     }
@@ -160,7 +160,7 @@ bool rd::SDLScreenManager::initSDL()
     //Initialize PNG loading
     if(!(IMG_Init(IMG_INIT_PNG)&IMG_INIT_PNG))
     {
-        RD_ERROR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+        CD_ERROR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
         cleanupSDL();
         return false;
     }
@@ -169,7 +169,7 @@ bool rd::SDLScreenManager::initSDL()
 
 bool rd::SDLScreenManager::cleanupSDL()
 {
-    RD_INFO("Freeing resources...\n");
+    CD_INFO("Freeing resources...\n");
     IMG_Quit();
     TTF_Quit();
     SDL_Quit();
@@ -183,13 +183,13 @@ bool rd::SDLScreenManager::configure(const std::string & parameter, const std::s
         if (value=="enabled")
         {
             fullscreen = true;
-            RD_INFO("Fullscreen enabled!\n");
+            CD_INFO("Fullscreen enabled!\n");
             return true;
         }
         else if (value=="disabled")
         {
             fullscreen = false;
-            RD_INFO("Fullscreen disabled!\n");
+            CD_INFO("Fullscreen disabled!\n");
             return true;
         }
     }

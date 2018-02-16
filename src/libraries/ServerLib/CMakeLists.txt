@@ -9,6 +9,8 @@ add_library(ServerLib RpcResponder.hpp
                       Server.hpp
                       Server.cpp)
 
+add_dependencies(ServerLib COLOR_DEBUG)
+
 target_include_directories(ServerLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                             ${YARP_INCLUDE_DIRS})
 

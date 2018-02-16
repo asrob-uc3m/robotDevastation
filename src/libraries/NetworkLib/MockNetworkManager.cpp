@@ -3,7 +3,8 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "MockNetworkManager.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 //-- Initialize static members
 rd::MockNetworkManager * rd::MockNetworkManager::uniqueInstance = NULL;
@@ -57,7 +58,7 @@ bool rd::MockNetworkManager::sendPlayerHit(const Player & player, int damage)
 
     if (!logged_in)
     {
-        RD_ERROR("Not logged in, id: %d.\n",id);
+        CD_ERROR("Not logged in, id: %d.\n",id);
         return false;
     }
 
@@ -73,7 +74,7 @@ bool rd::MockNetworkManager::sendPlayerHit(const Player & player, int damage)
     }
     else
     {
-        RD_ERROR("Target does not exist, id: %d.\n",id);
+        CD_ERROR("Target does not exist, id: %d.\n",id);
         return false;
     }
 
@@ -89,7 +90,7 @@ bool rd::MockNetworkManager::login()
 
     if (logged_in)
     {
-        RD_ERROR("Already logged, id: %d.\n",loginId);
+        CD_ERROR("Already logged, id: %d.\n",loginId);
         return false;
     }
 
@@ -100,7 +101,7 @@ bool rd::MockNetworkManager::login()
     }
     else
     {
-        RD_ERROR("Already logged, id: %d.\n",loginId);
+        CD_ERROR("Already logged, id: %d.\n",loginId);
         return false;
     }
 
@@ -115,7 +116,7 @@ bool rd::MockNetworkManager::logout()
 
     if (!logged_in)
     {
-        RD_ERROR("Not logged in, id: %d.\n",id);
+        CD_ERROR("Not logged in, id: %d.\n",id);
         return false;
     }
 
@@ -128,7 +129,7 @@ bool rd::MockNetworkManager::logout()
     }
     else
     {
-        RD_ERROR("Not logged in, id: %d.\n",id);
+        CD_ERROR("Not logged in, id: %d.\n",id);
         return false;
     }
 
@@ -197,7 +198,7 @@ bool rd::MockNetworkManager::setLoggedIn(bool logged_in)
     }
     else
     {
-        RD_WARNING("Already in that state: %d", logged_in);
+        CD_WARNING("Already in that state: %d", logged_in);
         return false;
     }
 }

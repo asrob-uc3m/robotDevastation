@@ -4,7 +4,8 @@
 
 #include "StateMachineBuilder.hpp"
 #include "YarpStateDirector.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 rd::StateMachineBuilder::StateMachineBuilder()
 {
@@ -74,7 +75,7 @@ rd::FiniteStateMachine *rd::StateMachineBuilder::buildStateMachine()
         int origin_id = it->first;
         if (origin_id >= (int) stateDirectors.size())
         {
-            RD_ERROR("Bad transition found: origin state %d does not exist.\n", origin_id);
+            CD_ERROR("Bad transition found: origin state %d does not exist.\n", origin_id);
             return NULL;
         }
 
@@ -86,7 +87,7 @@ rd::FiniteStateMachine *rd::StateMachineBuilder::buildStateMachine()
             int dest_id = itt->first;
             if (dest_id >= (int) stateDirectors.size())
             {
-                RD_ERROR("Bad transition found: destination state %d does not exist.\n", dest_id);
+                CD_ERROR("Bad transition found: destination state %d does not exist.\n", dest_id);
                 return NULL;
             }
 
@@ -98,7 +99,7 @@ rd::FiniteStateMachine *rd::StateMachineBuilder::buildStateMachine()
     //-- Check that initial_state_id is within limits:
     if (initial_state_id >= (int) stateDirectors.size())
     {
-        RD_ERROR("Error: initial state provided (%d) does not exist.\n", initial_state_id);
+        CD_ERROR("Error: initial state provided (%d) does not exist.\n", initial_state_id);
         return NULL;
     }
 

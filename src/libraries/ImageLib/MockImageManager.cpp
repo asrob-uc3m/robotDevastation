@@ -3,7 +3,8 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "MockImageManager.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 //-- Initialize static members
 rd::MockImageManager * rd::MockImageManager::uniqueInstance = NULL;
@@ -12,7 +13,7 @@ const std::string rd::MockImageManager::id = "MOCK";
 
 bool rd::MockImageManager::start()
 {
-    RD_DEBUG("\n");
+    CD_DEBUG("\n");
     stopped = false;
     return true;
 
@@ -20,7 +21,7 @@ bool rd::MockImageManager::start()
 
 bool rd::MockImageManager::stop()
 {
-    RD_DEBUG("\n");
+    CD_DEBUG("\n");
     stopped = true;
     enabled = false;
     return true;
@@ -44,7 +45,7 @@ bool rd::MockImageManager::isEnabled() const
 
 bool rd::MockImageManager::configure(const std::string & parameter, const std::string & value)
 {
-    RD_DEBUG("Configure called for parameter: \"%s\" with value: \"%s\"\n", parameter.c_str(), value.c_str());
+    CD_DEBUG("Configure called for parameter: \"%s\" with value: \"%s\"\n", parameter.c_str(), value.c_str());
     return ImageManager::configure(parameter, value);
 }
 
@@ -88,7 +89,7 @@ bool rd::MockImageManager::receiveImage(const Image & received_image)
     }
     else
     {
-        RD_WARNING("MockImageManager is disabled!\n");
+        CD_WARNING("MockImageManager is disabled!\n");
         return false;
     }
 

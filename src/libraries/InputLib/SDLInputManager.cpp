@@ -104,7 +104,7 @@ bool rd::SDLInputManager::inputCallback(SDL_Event *event)
     }
     else
     {
-//          RD_WARNING("Unkown event ocurred! (Event is not supported yet)\n");
+//          CD_WARNING("Unkown event ocurred! (Event is not supported yet)\n");
         return false;
     }
 

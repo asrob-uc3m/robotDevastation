@@ -3,7 +3,8 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "MockAudioManager.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 //-- This is very important:
 rd::MockAudioManager * rd::MockAudioManager::uniqueInstance = NULL;
@@ -55,7 +56,7 @@ bool rd::MockAudioManager::isPlaying(const std::string &id) const
 
     if (durations.find(id) == durations.end() || loop_times.find(id) == loop_times.end())
     {
-        RD_ERROR("Sound \"%s\" not found (maybe it was not loaded?)\n", id.c_str());
+        CD_ERROR("Sound \"%s\" not found (maybe it was not loaded?)\n", id.c_str());
         durations_mutex.unlock();
         loop_times_mutex.unlock();
         return false;
@@ -79,7 +80,7 @@ bool rd::MockAudioManager::load(const std::string &music_filepath, const std::st
 
     if (durations.find(id) != durations.end() || loop_times.find(id) != loop_times.end())
     {
-        RD_ERROR("Sound \"%s\" already exists\n", id.c_str());
+        CD_ERROR("Sound \"%s\" already exists\n", id.c_str());
         durations_mutex.unlock();
         loop_times_mutex.unlock();
         return false;
@@ -101,7 +102,7 @@ bool rd::MockAudioManager::play(const std::string &id, int loop)
 
     if (durations.find(id) == durations.end() || loop_times.find(id) == loop_times.end())
     {
-        RD_ERROR("Sound \"%s\" not found (maybe it was not loaded?)\n", id.c_str());
+        CD_ERROR("Sound \"%s\" not found (maybe it was not loaded?)\n", id.c_str());
         durations_mutex.unlock();
         loop_times_mutex.unlock();
         return false;
