@@ -90,7 +90,7 @@ class FSMBuilderTest : public testing::Test
     protected:
         bool awaitStateCheck(const std::string & state_id, const int reference_state)
         {
-            RD_DEBUG("%s\n", state_id.c_str());
+            CD_DEBUG("%s\n", state_id.c_str());
 
             int retry_count = 0;
             int currentState = 0;

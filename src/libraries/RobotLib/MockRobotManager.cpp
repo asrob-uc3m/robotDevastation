@@ -3,7 +3,8 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "MockRobotManager.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 const int rd::MockRobotManager::FORWARD = 1;
 const int rd::MockRobotManager::BACKWARDS = 2;
@@ -37,13 +38,13 @@ bool rd::MockRobotManager::moveForward(int velocity)
         }
         else
         {
-            RD_ERROR("Robot is disabled\n");
+            CD_ERROR("Robot is disabled\n");
             return false;
         }
     }
     else
     {
-        RD_ERROR("Not connected\n");
+        CD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -59,13 +60,13 @@ bool rd::MockRobotManager::moveBackwards(int velocity)
         }
         else
         {
-            RD_ERROR("Robot is disabled\n");
+            CD_ERROR("Robot is disabled\n");
             return false;
         }
     }
     else
     {
-        RD_ERROR("Not connected\n");
+        CD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -81,13 +82,13 @@ bool rd::MockRobotManager::turnLeft(int velocity)
         }
         else
         {
-            RD_ERROR("Robot is disabled\n");
+            CD_ERROR("Robot is disabled\n");
             return false;
         }
     }
     else
     {
-        RD_ERROR("Not connected\n");
+        CD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -103,13 +104,13 @@ bool rd::MockRobotManager::turnRight(int velocity)
         }
         else
         {
-            RD_ERROR("Robot is disabled\n");
+            CD_ERROR("Robot is disabled\n");
             return false;
         }
     }
     else
     {
-        RD_ERROR("Not connected\n");
+        CD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -125,13 +126,13 @@ bool rd::MockRobotManager::stopMovement()
         }
         else
         {
-            RD_ERROR("Robot is disabled\n");
+            CD_ERROR("Robot is disabled\n");
             return false;
         }
     }
     else
     {
-        RD_ERROR("Not connected\n");
+        CD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -147,13 +148,13 @@ bool rd::MockRobotManager::tiltUp(int velocity)
         }
         else
         {
-            RD_ERROR("Robot is disabled\n");
+            CD_ERROR("Robot is disabled\n");
             return false;
         }
     }
     else
     {
-        RD_ERROR("Not connected\n");
+        CD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -169,13 +170,13 @@ bool rd::MockRobotManager::tiltDown(int velocity)
         }
         else
         {
-            RD_ERROR("Robot is disabled\n");
+            CD_ERROR("Robot is disabled\n");
             return false;
         }
     }
     else
     {
-        RD_ERROR("Not connected\n");
+        CD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -191,13 +192,13 @@ bool rd::MockRobotManager::panLeft(int velocity)
         }
         else
         {
-            RD_ERROR("Robot is disabled\n");
+            CD_ERROR("Robot is disabled\n");
             return false;
         }
     }
     else
     {
-        RD_ERROR("Not connected\n");
+        CD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -213,13 +214,13 @@ bool rd::MockRobotManager::panRight(int velocity)
         }
         else
         {
-            RD_ERROR("Robot is disabled\n");
+            CD_ERROR("Robot is disabled\n");
             return false;
         }
     }
     else
     {
-        RD_ERROR("Not connected\n");
+        CD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -235,13 +236,13 @@ bool rd::MockRobotManager::stopCameraMovement()
         }
         else
         {
-            RD_ERROR("Robot is disabled\n");
+            CD_ERROR("Robot is disabled\n");
             return false;
         }
     }
     else
     {
-        RD_ERROR("Not connected\n");
+        CD_ERROR("Not connected\n");
         return false;
     }
 }
@@ -255,7 +256,7 @@ bool rd::MockRobotManager::connect()
     }
     else
     {
-        RD_WARNING("Already connected\n");
+        CD_WARNING("Already connected\n");
         return true;
     }
 }
@@ -269,13 +270,13 @@ bool rd::MockRobotManager::disconnect()
     }
     else
     {
-        RD_ERROR("Not connected\n");
+        CD_ERROR("Not connected\n");
         return false;
     }
 }
 
 bool rd::MockRobotManager::test()  {
-    RD_DEBUG("\n");
+    CD_DEBUG("\n");
     return false;
 }
 
@@ -284,14 +285,14 @@ void rd::MockRobotManager::setEnabled(bool enabled)
     this->enabled = enabled;
     if (enabled)
     {
-        RD_DEBUG("MockRobotManager enabled\n");
+        CD_DEBUG("MockRobotManager enabled\n");
     }
     else
-        RD_DEBUG("MockRobotManager disabled\n");
+        CD_DEBUG("MockRobotManager disabled\n");
 }
 
 void rd::MockRobotManager::onDestroy(){
-    RD_DEBUG("\n");
+    CD_DEBUG("\n");
     return;
 }
 

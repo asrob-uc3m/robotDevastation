@@ -10,7 +10,6 @@
 
 //-- Include all utils
 #include "Vocabs.hpp"
-#include "Macros.hpp"
 #include "Vector2dBase.hpp"
 #include "IniReader.hpp"
 

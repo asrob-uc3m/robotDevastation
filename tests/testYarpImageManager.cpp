@@ -69,7 +69,7 @@ class YarpImageManagerEnvironment : public testing::Environment
 
             if (!cameraDevice.isValid())
             {
-                RD_ERROR("Camera class instantiation not worked.\n");
+                CD_ERROR("Camera class instantiation not worked.\n");
                 return;
             }
 

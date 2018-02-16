@@ -8,8 +8,9 @@
 
 #include <yarp/os/ResourceFinder.h>
 
+#include <ColorDebug.hpp>
+
 #include "SDLUtils.hpp"
-#include "Macros.hpp"
 
 const std::string rd::GameScreen::PARAM_CAMERA_FRAME = "camera_frame";
 const std::string rd::GameScreen::PARAM_MYSELF = "myself";
@@ -43,21 +44,21 @@ bool rd::GameScreen::init()
     player_font = TTF_OpenFont(rf.findFileByName(font_name).c_str(), 12);
     if (player_font == NULL)
     {
-        RD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(font_name).c_str(), TTF_GetError());
+        CD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(font_name).c_str(), TTF_GetError());
         return false;
     }
 
     target_font = TTF_OpenFont(rf.findFileByName(font_name).c_str(), 12);
     if (target_font == NULL)
     {
-        RD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(font_name).c_str(), TTF_GetError());
+        CD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(font_name).c_str(), TTF_GetError());
         return false;
     }
 
     weapon_font = TTF_OpenFont(rf.findFileByName(font_name).c_str(), 12);
     if (weapon_font == NULL)
     {
-        RD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(font_name).c_str(), TTF_GetError());
+        CD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(font_name).c_str(), TTF_GetError());
         return false;
     }
 
@@ -92,7 +93,7 @@ bool rd::GameScreen::drawScreen(void *screen)
             SDL_BlitSurface(camera_frame_surface, NULL, sdl_screen, &camera_frame_rect);
         }
         else
-            RD_WARNING("No camera frame received yet\n");
+            CD_WARNING("No camera frame received yet\n");
 
         //-- Draw enemies
         for (int i = 0; i < (int) targets.size(); i++)
@@ -136,7 +137,7 @@ rd::GameScreen::~GameScreen()
 
 bool rd::GameScreen::update(const std::string & parameter, const std::string & value)
 {
-    RD_ERROR("No string parameter %s exists.\n", parameter.c_str());
+    CD_ERROR("No string parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
@@ -149,7 +150,7 @@ bool rd::GameScreen::update(const std::string & parameter, const Player & value)
         return true;
     }
 
-    RD_ERROR("No Player parameter %s exists.\n", parameter.c_str());
+    CD_ERROR("No Player parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
@@ -162,7 +163,7 @@ bool rd::GameScreen::update(const std::string & parameter, const std::vector<Pla
         return true;
     }
 
-    RD_ERROR("No vector<Player> parameter %s exists.\n", parameter.c_str());
+    CD_ERROR("No vector<Player> parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
@@ -175,7 +176,7 @@ bool rd::GameScreen::update(const std::string & parameter, const std::vector<Tar
         return true;
     }
 
-    RD_ERROR("No vector<Target> parameter %s exists.\n", parameter.c_str());
+    CD_ERROR("No vector<Target> parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
@@ -188,14 +189,14 @@ bool rd::GameScreen::update(const std::string & parameter, const Weapon & value)
         return true;
     }
 
-    RD_ERROR("No Weapon parameter %s exists.\n", parameter.c_str());
+    CD_ERROR("No Weapon parameter %s exists.\n", parameter.c_str());
     return false;
 }
 
 bool rd::GameScreen::update(const std::string & parameter, const Image & value)
 {    if (value.width() == 0 || value.height() == 0)
     {
-        RD_ERROR("Invalid image\n");
+        CD_ERROR("Invalid image\n");
         return false;
     }
 
@@ -211,7 +212,7 @@ bool rd::GameScreen::update(const std::string & parameter, const Image & value)
         camera_frame_surface = RdImage2SDLImage(camera_frame);
         if (camera_frame_surface==NULL)
         {
-            RD_ERROR("Error converting Image to SDL\n");
+            CD_ERROR("Error converting Image to SDL\n");
             return false;
         }
         w = camera_frame_surface->w;
@@ -220,8 +221,8 @@ bool rd::GameScreen::update(const std::string & parameter, const Image & value)
         return true;
     }
 
-    RD_ERROR("No Image parameter %s exists.\n", parameter.c_str());
-     return false;
+    CD_ERROR("No Image parameter %s exists.\n", parameter.c_str());
+    return false;
 }
 
 bool rd::GameScreen::drawUserUI(SDL_Surface *screen, const Player & user, const Weapon & weapon)
@@ -300,7 +301,7 @@ bool rd::GameScreen::drawTargetUI(SDL_Surface *screen, const Target & target, co
     if (target.getDimensions().getX() < 0 || target.getDimensions().getY() < 0 ||
             target.getPos().getX() < 0 || target.getPos().getY() < 0)
     {
-        RD_ERROR("Trying to draw an invalid target: %s\n", player_data.getName().c_str());
+        CD_ERROR("Trying to draw an invalid target: %s\n", player_data.getName().c_str());
         return false;
     }
 

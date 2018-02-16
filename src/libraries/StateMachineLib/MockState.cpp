@@ -9,7 +9,7 @@
 #include <yarp/os/Bottle.h>
 #include <yarp/os/ConnectionWriter.h>
 
-#include "Macros.hpp"
+#include <ColorDebug.hpp>
 
 const int rd::MockState::STATE_INITIAL = 0;
 const int rd::MockState::STATE_SETUP = 1;
@@ -30,7 +30,7 @@ rd::MockState::MockState(int id)
     internal_variable = -1;
     state_history = STATE_INITIAL;
 
-    RD_DEBUG("Creating MockState with id: %s\n", state_id.c_str());
+    CD_DEBUG("Creating MockState with id: %s\n", state_id.c_str());
 }
 
 rd::MockState::~MockState()
@@ -39,7 +39,7 @@ rd::MockState::~MockState()
 
 bool rd::MockState::setup()
 {
-    RD_INFO("State with id %d entered in setup() function\n", id);
+    CD_INFO("State with id %d entered in setup() function\n", id);
 
     internal_variable = 0;
     state_history |= STATE_SETUP;
@@ -49,10 +49,10 @@ bool rd::MockState::setup()
 
 bool rd::MockState::loop()
 {
-    RD_INFO("State with id %d entered in loop() function\n", id);
+    CD_INFO("State with id %d entered in loop() function\n", id);
     if (!(state_history & STATE_LOOP))
     {
-        RD_DEBUG("First loop (id %d)\n", id);
+        CD_DEBUG("First loop (id %d)\n", id);
         state_history |= STATE_LOOP;
     }
 
@@ -61,7 +61,7 @@ bool rd::MockState::loop()
 
 bool rd::MockState::cleanup()
 {
-    RD_INFO("State with id %d entered in cleanup() function\n", id);
+    CD_INFO("State with id %d entered in cleanup() function\n", id);
 
     internal_variable = -1;
     state_history |= STATE_CLEANUP;
@@ -82,7 +82,7 @@ bool rd::MockState::read(yarp::os::ConnectionReader & connection)
 
     if (received != REQUEST_STATE)
     {
-        RD_INFO("Received: %d at state %s\n", received, state_id.c_str());
+        CD_INFO("Received: %d at state %s\n", received, state_id.c_str());
         internal_variable = received;
     }
 
@@ -90,7 +90,7 @@ bool rd::MockState::read(yarp::os::ConnectionReader & connection)
 
     if (returnToSender != NULL)
     {
-        RD_INFO("Preparing response...\n");
+        CD_INFO("Preparing response...\n");
         yarp::os::Bottle out;
         out.addInt(state_history);
         out.write(*returnToSender);

@@ -151,14 +151,14 @@ bool rd::DeadState::onKeyUp(const Key & k)
 
     if (k.getValue() == Key::KEY_ENTER)
     {
-        RD_DEBUG("Enter was pressed!\n");
+        CD_DEBUG("Enter was pressed!\n");
         received_respawn = true;
         return true;
     }
 
     if (k.getValue() == Key::KEY_ESCAPE)
     {
-        RD_DEBUG("Escape was pressed!\n");
+        CD_DEBUG("Escape was pressed!\n");
         received_exit = true;
         return true;
     }
@@ -170,7 +170,7 @@ bool rd::DeadState::onWindowEvent(const WindowEvent & event)
 {
     if (event.getEvent() == WindowEvent::WINDOW_CLOSE)
     {
-        RD_DEBUG("Exit was triggered!\n");
+        CD_DEBUG("Exit was triggered!\n");
         received_exit = true;
         return true;
     }

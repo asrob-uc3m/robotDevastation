@@ -9,7 +9,8 @@
 
 #include <yarp/os/Network.h>
 
-#include "Macros.hpp"
+#include <ColorDebug.hpp>
+
 #include "Vocabs.hpp"
 
 //-- Initialize static members
@@ -46,13 +47,13 @@ bool rd::YarpNetworkManager::start()
 {
     if (player.getId() == -1)
     {
-        RD_ERROR("NetworkManager not initialized, player id not set\n");
+        CD_ERROR("NetworkManager not initialized, player id not set\n");
         return false;
     }
 
     if (started)
     {
-        RD_ERROR("NetworkManager already started\n");
+        CD_ERROR("NetworkManager already started\n");
         return false;
     }
 
@@ -60,7 +61,7 @@ bool rd::YarpNetworkManager::start()
 
     if ( ! yarp::os::NetworkBase::checkNetwork() )
     {
-        RD_ERROR("Found no yarp network to connect to rdServer (try running 'yarpserver &'). Bye!\n");
+        CD_ERROR("Found no yarp network to connect to rdServer (try running 'yarpserver &'). Bye!\n");
         return false;
     }
 
@@ -71,7 +72,7 @@ bool rd::YarpNetworkManager::start()
     rpc_str << "/rdServer/rpc:c";
     if( ! rpcClient.open( rpc_str.str() ) )
     {
-        RD_ERROR("Could not open '%s'. Bye!\n",rpc_str.str().c_str());
+        CD_ERROR("Could not open '%s'. Bye!\n",rpc_str.str().c_str());
         return false;
     }
 
@@ -82,25 +83,25 @@ bool rd::YarpNetworkManager::start()
     callback_str << "/rdServer/info:i";
     if( ! callbackPort.open( callback_str.str() ) )
     {
-        RD_ERROR("Could not open '%s'. Bye!\n",callback_str.str().c_str());
+        CD_ERROR("Could not open '%s'. Bye!\n",callback_str.str().c_str());
         return false;
     }
 
     //-- Connect robotDevastation RpcClient to rdServer RpcServer
     if( ! yarp::os::Network::connect( rpc_str.str() , "/rdServer/rpc:s" ) )
     {
-        RD_ERROR("Could not connect robotDevastation RpcClient to rdServer RpcServer (launch 'rdServer' if not already launched).\n");
+        CD_ERROR("Could not connect robotDevastation RpcClient to rdServer RpcServer (launch 'rdServer' if not already launched).\n");
         return false;
     }
-    RD_SUCCESS("Connected robotDevastation RpcClient to rdServer RpcServer!\n");
+    CD_SUCCESS("Connected robotDevastation RpcClient to rdServer RpcServer!\n");
 
     //-- Connect from rdServer info to robotDevastation callbackPort
     if ( !yarp::os::Network::connect( "/rdServer/info:o", callback_str.str() ))
     {
-        RD_ERROR("Could not connect from rdServer info to robotDevastation callbackPort (launch 'rdServer' if not already launched).\n");
+        CD_ERROR("Could not connect from rdServer info to robotDevastation callbackPort (launch 'rdServer' if not already launched).\n");
         return false;
     }
-    RD_SUCCESS("Connected from rdServer info to robotDevastation callbackPort!\n");
+    CD_SUCCESS("Connected from rdServer info to robotDevastation callbackPort!\n");
 
     callbackPort.useCallback(*this);
 
@@ -113,9 +114,9 @@ bool rd::YarpNetworkManager::start()
 
 void rd::YarpNetworkManager::onRead(yarp::os::Bottle &b)
 {
-    //RD_INFO("Got %s\n", b.toString().c_str());
+    //CD_INFO("Got %s\n", b.toString().c_str());
     if ((b.get(0).asString() == "players")||(b.get(0).asVocab() == VOCAB_RD_PLAYERS)) {  // players //
-        //RD_INFO("Number of players: %d\n",b.size()-1);  // -1 because of vocab.
+        //CD_INFO("Number of players: %d\n",b.size()-1);  // -1 because of vocab.
         std::vector< Player > players;
         for (int i = 1; i < b.size(); i++)
         {
@@ -137,7 +138,7 @@ void rd::YarpNetworkManager::onRead(yarp::os::Bottle &b)
     }
     else
     {
-        RD_ERROR("What?\n");
+        CD_ERROR("What?\n");
     }
 
 }
@@ -146,7 +147,7 @@ bool rd::YarpNetworkManager::stop()
 {
     if (!started)
     {
-        RD_ERROR("Already stopped\n");
+        CD_ERROR("Already stopped\n");
         return false;
     }
 
@@ -184,7 +185,7 @@ bool rd::YarpNetworkManager::sendPlayerHit(const Player & player, int damage)
 {
     if (!started)
     {
-        RD_ERROR("NetworkManager has not been started\n");
+        CD_ERROR("NetworkManager has not been started\n");
         return false;
     }
 
@@ -194,7 +195,7 @@ bool rd::YarpNetworkManager::sendPlayerHit(const Player & player, int damage)
     msg_player_hit.addInt(player.getId());
     msg_player_hit.addInt(damage);
     rpcClient.write(msg_player_hit,response);
-    RD_INFO("rdServer response from hit: %s\n",response.toString().c_str());
+    CD_INFO("rdServer response from hit: %s\n",response.toString().c_str());
 
     //-- Check response
     if (std::strcmp(response.toString().c_str(), "[ok]") == 0)
@@ -207,10 +208,10 @@ bool rd::YarpNetworkManager::login()
 {
     if (!started)
     {
-        RD_WARNING("NetworkManager has not been started\n");
+        CD_WARNING("NetworkManager has not been started\n");
         if(!start())
         {
-            RD_ERROR("NetworkManager could not be started for player %d\n", player.getId() );
+            CD_ERROR("NetworkManager could not be started for player %d\n", player.getId() );
             return false;
         }
     }
@@ -226,7 +227,7 @@ bool rd::YarpNetworkManager::login()
     msgRdPlayer.addString(player.getName().c_str());
     msgRdPlayer.addInt(player.getTeamId());
     rpcClient.write(msgRdPlayer,res);
-    RD_INFO("rdServer response from login: %s\n",res.toString().c_str());
+    CD_INFO("rdServer response from login: %s\n",res.toString().c_str());
 
     //-- Check response
     if (std::strcmp(res.toString().c_str(), "[ok]") == 0)
@@ -239,26 +240,26 @@ bool rd::YarpNetworkManager::logout()
 {
     if (!started)
     {
-        RD_ERROR("NetworkManager has not been started\n");
+        CD_ERROR("NetworkManager has not been started\n");
         return false;
     }
 
-    RD_INFO("Logout...\n");
+    CD_INFO("Logout...\n");
     yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_LOGOUT);
     msgRdPlayer.addInt(player.getId());
     rpcClient.write(msgRdPlayer,res);
-    RD_INFO("rdServer response from logout: %s\n",res.toString().c_str());
+    CD_INFO("rdServer response from logout: %s\n",res.toString().c_str());
 
     //-- Check response
     if (std::strcmp(res.toString().c_str(), "[ok]") == 0)
     {
-        RD_SUCCESS("Logout ok\n");
+        CD_SUCCESS("Logout ok\n");
         return true;
     }
     else
     {
-        RD_ERROR("Logout failed\n");
+        CD_ERROR("Logout failed\n");
         return false;
     }
 }
@@ -267,11 +268,11 @@ bool rd::YarpNetworkManager::keepAlive()
 {
     if (!started)
     {
-        RD_ERROR("NetworkManager has not been started\n");
+        CD_ERROR("NetworkManager has not been started\n");
         return false;
     }
 
-    RD_INFO("Keep alive...\n");
+    CD_INFO("Keep alive...\n");
     yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_KEEPALIVE);
     msgRdPlayer.addInt(player.getId());
@@ -284,7 +285,7 @@ bool rd::YarpNetworkManager::keepAlive()
     }
     else
     {
-        RD_ERROR("Keep alive failed\n");
+        CD_ERROR("Keep alive failed\n");
         return false;
     }
 }

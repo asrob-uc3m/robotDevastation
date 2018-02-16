@@ -39,8 +39,9 @@ robotDevastation
 #include <yarp/os/Network.h>
 #include <yarp/os/ResourceFinder.h>
 
+#include <ColorDebug.hpp>
+
 #include "RobotDevastation.hpp"
-#include "Macros.hpp"
 
 int main(int argc, char *argv[])
 {

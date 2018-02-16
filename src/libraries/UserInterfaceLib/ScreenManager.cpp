@@ -3,7 +3,8 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "ScreenManager.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 //-- This is very important:
 rd::ScreenManager * rd::ScreenManager::screenManagerInstance = NULL;
@@ -23,7 +24,7 @@ rd::ScreenManager *rd::ScreenManager::getScreenManager()
         }
         else
         {
-            RD_ERROR("No ScreenManager registered!! Returning null\n");
+            CD_ERROR("No ScreenManager registered!! Returning null\n");
         }
     }
 
@@ -41,7 +42,7 @@ rd::ScreenManager *rd::ScreenManager::getScreenManager(const std::string & id)
         }
         else
         {
-            RD_ERROR("ScreenManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            CD_ERROR("ScreenManager %s not found! (Maybe it was not registered?)\n", id.c_str());
         }
     }
 
@@ -140,13 +141,13 @@ bool rd::ScreenManager::Register(ScreenManager *manager, const std::string & id)
         }
         else
         {
-            RD_ERROR("Trying to register a NULL ScreenManager with id \"%s\"\n", id.c_str());
+            CD_ERROR("Trying to register a NULL ScreenManager with id \"%s\"\n", id.c_str());
             return false;
         }
     }
     else
     {
-        RD_ERROR( "ScreenManager with id \"%s\" was already registered\n", id.c_str());
+        CD_ERROR( "ScreenManager with id \"%s\" was already registered\n", id.c_str());
         return false;
     }
 
