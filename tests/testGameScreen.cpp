@@ -26,6 +26,7 @@
 #include "SDLScreenManager.hpp"
 #include "Screen.hpp"
 #include "GameScreen.hpp"
+#include "Vector2dBase.hpp"
 
 using namespace rd;
 

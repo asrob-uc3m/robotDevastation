@@ -11,7 +11,6 @@
 #include "MockState.hpp"
 #include "StateDirector.hpp"
 #include "YarpStateDirector.hpp"
-#include "Utils.hpp"
 
 #include <yarp/os/Network.h>
 #include <yarp/os/Bottle.h>
@@ -19,6 +18,8 @@
 #include <yarp/os/RpcServer.h>
 #include <yarp/os/PortReader.h>
 #include <yarp/os/Time.h>
+
+#include <ColorDebug.hpp>
 
 namespace rd
 {
