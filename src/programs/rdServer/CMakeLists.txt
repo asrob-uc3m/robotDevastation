@@ -12,12 +12,13 @@ find_package(YARP REQUIRED)
 # Set up our main executable.
 add_executable(rdServer main.cpp)
 
+add_dependencies(rdServer COLOR_DEBUG)
+
 target_include_directories(rdServer PUBLIC ${YARP_INCLUDE_DIRS})
 
 target_link_libraries(rdServer YARP::YARP_init
                                YARP::YARP_OS
-                               ServerLib
-                               UtilsLib)
+                               ServerLib)
 
 if(WIN32)
     target_compile_definitions(rdServer PUBLIC SDL_MAIN_HANDLED)

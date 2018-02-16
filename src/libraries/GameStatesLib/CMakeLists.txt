@@ -9,7 +9,7 @@ add_library(GameStatesLib DeadState.hpp
                           InitState.hpp
                           InitState.cpp)
 
-add_dependencies(GameStatesLib ASROB_YARP_DEVICES)
+add_dependencies(GameStatesLib COLOR_DEBUG ASROB_YARP_DEVICES)
 
 target_include_directories(GameStatesLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
