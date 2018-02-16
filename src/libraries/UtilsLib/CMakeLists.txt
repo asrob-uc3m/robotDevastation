@@ -12,7 +12,6 @@ add_library(UtilsLib Hub.hpp
                      Hub.cpp
                      SDLUtils.hpp
                      SDLUtils.cpp
-                     Utils.hpp
                      Vector2dBase.hpp
                      Vocabs.hpp)
 

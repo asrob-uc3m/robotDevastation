@@ -3,7 +3,8 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "DeadState.hpp"
-#include "Utils.hpp"
+
+#include <sstream>
 
 #include <ColorDebug.hpp>
 
@@ -45,7 +46,10 @@ bool rd::DeadState::setup()
 
     Image last_camera_frame = imageManager->getImage();
     screenManager->update(DeadScreen::PARAM_LAST_CAMERA_FRAME, last_camera_frame);
-    screenManager->update(DeadScreen::PARAM_REMAINING_TIME, number2str(timer));
+
+    std::stringstream sstream;
+    sstream << timer;
+    screenManager->update(DeadScreen::PARAM_REMAINING_TIME, sstream.str());
 
     //-- Disable camera images
     imageManager->setEnabled(false);
@@ -77,7 +81,9 @@ bool rd::DeadState::loop()
         {
             timer--;
             elapsed_time = 0;
-            screenManager->update(DeadScreen::PARAM_REMAINING_TIME, number2str(timer));
+            std::stringstream sstream;
+            sstream << timer;
+            screenManager->update(DeadScreen::PARAM_REMAINING_TIME, sstream.str());
 
             if (timer == 0)
             {
