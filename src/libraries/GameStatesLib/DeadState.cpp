@@ -5,6 +5,8 @@
 #include "DeadState.hpp"
 #include "Utils.hpp"
 
+#include <ColorDebug.hpp>
+
 const int rd::DeadState::RESPAWN_SELECTED = 1;
 const int rd::DeadState::EXIT_SELECTED = 2;
 const int rd::DeadState::DEFAULT_RATE_MS = 100;

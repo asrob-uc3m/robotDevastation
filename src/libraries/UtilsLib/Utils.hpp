@@ -11,7 +11,6 @@
 //-- Include all utils
 #include "Vocabs.hpp"
 #include "Vector2dBase.hpp"
-#include "IniReader.hpp"
 
 namespace rd{
 
