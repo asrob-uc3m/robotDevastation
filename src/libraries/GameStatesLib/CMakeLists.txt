@@ -13,8 +13,7 @@ add_dependencies(GameStatesLib COLOR_DEBUG ASROB_YARP_DEVICES)
 
 target_include_directories(GameStatesLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(GameStatesLib PUBLIC UtilsLib
-                                           StateMachineLib
+target_link_libraries(GameStatesLib PUBLIC StateMachineLib
                                            InputLib
                                            NetworkLib
                                            ImageLib

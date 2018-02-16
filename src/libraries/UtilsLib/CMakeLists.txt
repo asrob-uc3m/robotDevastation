@@ -10,10 +10,8 @@ find_package(SDL2_ttf REQUIRED)
 
 add_library(UtilsLib Hub.hpp
                      Hub.cpp
-                     IniReader.hpp
                      SDLUtils.hpp
                      SDLUtils.cpp
-                     Utils.hpp
                      Vector2dBase.hpp
                      Vocabs.hpp)
 
