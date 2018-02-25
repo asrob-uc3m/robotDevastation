@@ -186,25 +186,25 @@ bool rd::GameState::onKeyDown(const Key & k)
     if (k == KEY_TURN_LEFT)
     {
         CD_DEBUG("Turn left was triggered!\n");
-        robotManager->turnLeft(100.0);
+        robotManager->turnLeft(1.0);
         return true;
     }
     if (k == KEY_TURN_RIGHT)
     {
         CD_DEBUG("Turn right was triggered!\n");
-        robotManager->turnRight(100.0);
+        robotManager->turnLeft(-1.0);
         return true;
     }
     if (k == KEY_MOVE_FWD)
     {
         CD_DEBUG("Move forward was triggered!\n");
-        robotManager->moveForward(100.0);
+        robotManager->moveForward(1.0);
         return true;
     }
     if (k == KEY_MOVE_BACK)
     {
         CD_DEBUG("Move backwards was triggered!\n");
-        robotManager->moveBackwards(100.0);
+        robotManager->moveForward(-1.0);
         return true;
     }
 
@@ -212,25 +212,25 @@ bool rd::GameState::onKeyDown(const Key & k)
     if (k == KEY_PAN_LEFT)
     {
         CD_DEBUG("Pan left was triggered!\n");
-        robotManager->panLeft(100.0);
+        robotManager->panLeft(30.0);
         return true;
     }
     if (k == KEY_PAN_RIGHT)
     {
         CD_DEBUG("Pan right was triggered!\n");
-        robotManager->panRight(100.0);
+        robotManager->panLeft(-30.0);
         return true;
     }
     if (k == KEY_TILT_UP)
     {
         CD_DEBUG("Tilt pos was triggered!\n");
-        robotManager->tiltUp(100.0);
+        robotManager->tiltDown(-30.0);
         return true;
     }
     if (k == KEY_TILT_DOWN)
     {
         CD_DEBUG("Tilt neg was triggered!\n");
-        robotManager->tiltDown(100.0);
+        robotManager->tiltDown(30.0);
         return true;
     }
 

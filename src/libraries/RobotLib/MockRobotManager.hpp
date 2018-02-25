@@ -26,17 +26,13 @@ class MockRobotManager : public asrob::IRobotManager
         //-- RobotManager interface
         //-----------------------------------------------------
         //-- Robot movement related functions
-        virtual bool moveForward(int velocity);
-        virtual bool moveBackwards(int velocity);
-        virtual bool turnLeft(int velocity);
-        virtual bool turnRight(int velocity);
+        virtual bool moveForward(double value);
+        virtual bool turnLeft(double value);
         virtual bool stopMovement();
 
         //-- Robot camera related functions
-        virtual bool tiltUp(int velocity);
-        virtual bool tiltDown(int velocity);
-        virtual bool panLeft(int velocity);
-        virtual bool panRight(int velocity);
+        virtual bool tiltDown(double value);
+        virtual bool panLeft(double value);
         virtual bool stopCameraMovement();
 
         //-- Robot connection related functions

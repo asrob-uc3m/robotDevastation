@@ -27,7 +27,7 @@ rd::MockRobotManager::MockRobotManager(const std::string& robotName)
     camera_movement_direction = CAMERA_NONE;
 }
 
-bool rd::MockRobotManager::moveForward(int velocity)
+bool rd::MockRobotManager::moveForward(double value)
 {
     if (connected)
     {
@@ -49,57 +49,13 @@ bool rd::MockRobotManager::moveForward(int velocity)
     }
 }
 
-bool rd::MockRobotManager::moveBackwards(int velocity)
-{
-    if (connected)
-    {
-        if (enabled)
-        {
-            movement_direction = BACKWARDS;
-            return true;
-        }
-        else
-        {
-            CD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
-    else
-    {
-        CD_ERROR("Not connected\n");
-        return false;
-    }
-}
-
-bool rd::MockRobotManager::turnLeft(int velocity)
+bool rd::MockRobotManager::turnLeft(double value)
 {
     if (connected)
     {
         if (enabled)
         {
             movement_direction = LEFT;
-            return true;
-        }
-        else
-        {
-            CD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
-    else
-    {
-        CD_ERROR("Not connected\n");
-        return false;
-    }
-}
-
-bool rd::MockRobotManager::turnRight(int velocity)
-{
-    if (connected)
-    {
-        if (enabled)
-        {
-            movement_direction = RIGHT;
             return true;
         }
         else
@@ -137,29 +93,7 @@ bool rd::MockRobotManager::stopMovement()
     }
 }
 
-bool rd::MockRobotManager::tiltUp(int velocity)
-{
-    if (connected)
-    {
-        if (enabled)
-        {
-            camera_movement_direction = CAMERA_UP;
-            return true;
-        }
-        else
-        {
-            CD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
-    else
-    {
-        CD_ERROR("Not connected\n");
-        return false;
-    }
-}
-
-bool rd::MockRobotManager::tiltDown(int velocity)
+bool rd::MockRobotManager::tiltDown(double value)
 {
     if (connected)
     {
@@ -181,35 +115,13 @@ bool rd::MockRobotManager::tiltDown(int velocity)
     }
 }
 
-bool rd::MockRobotManager::panLeft(int velocity)
+bool rd::MockRobotManager::panLeft(double value)
 {
     if (connected)
     {
         if (enabled)
         {
             camera_movement_direction = CAMERA_LEFT;
-            return true;
-        }
-        else
-        {
-            CD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
-    else
-    {
-        CD_ERROR("Not connected\n");
-        return false;
-    }
-}
-
-bool rd::MockRobotManager::panRight(int velocity)
-{
-    if (connected)
-    {
-        if (enabled)
-        {
-            camera_movement_direction = CAMERA_RIGHT;
             return true;
         }
         else
