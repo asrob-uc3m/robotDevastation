@@ -159,65 +159,6 @@ bool rd::MockRobotManager::stopCameraMovement()
     }
 }
         
-bool rd::MockRobotManager::connect()
-{
-    if (!connected)
-    {
-        connected = true;
-        return true;
-    }
-    else
-    {
-        CD_WARNING("Already connected\n");
-        return true;
-    }
-}
-
-bool rd::MockRobotManager::disconnect()
-{
-    if (connected)
-    {
-        connected = false;
-        return true;
-    }
-    else
-    {
-        CD_ERROR("Not connected\n");
-        return false;
-    }
-}
-
-bool rd::MockRobotManager::test()  {
-    CD_DEBUG("\n");
-    return false;
-}
-
-void rd::MockRobotManager::setEnabled(bool enabled)
-{
-    this->enabled = enabled;
-    if (enabled)
-    {
-        CD_DEBUG("MockRobotManager enabled\n");
-    }
-    else
-        CD_DEBUG("MockRobotManager disabled\n");
-}
-
-void rd::MockRobotManager::onDestroy(){
-    CD_DEBUG("\n");
-    return;
-}
-
-bool rd::MockRobotManager::isConnected() const
-{
-    return connected;
-}
-
-bool rd::MockRobotManager::isEnabled() const
-{
-    return enabled;
-}
-
 bool rd::MockRobotManager::isMoving() const
 {
     return movement_direction!=NONE;

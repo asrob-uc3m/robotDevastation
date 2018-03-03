@@ -59,9 +59,6 @@ bool rd::InitState::loop()
     //-- Do stuff
     if (login)
     {
-        if( ! robotManager->connect() )
-            return false;
-        robotManager->setEnabled(false);
         if( ! imageManager->start() )
             return false;
         //-- Log in
@@ -90,7 +87,6 @@ bool rd::InitState::cleanup()
         inputManager->stop();
         audioManager->stop();
         networkManager->stop();
-        robotManager->setEnabled(false);
     }
 
     return true;

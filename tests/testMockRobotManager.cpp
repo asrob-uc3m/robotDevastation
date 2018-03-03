@@ -39,51 +39,8 @@ const std::string MockRobotManagerTest::robot_name = "MockRobot";
 
 //-- Things that are being tested
 //-----------------------------------------------------------------------------------------------------
-TEST_F(MockRobotManagerTest, MockRobotConnectionIsOk)
-{
-    ASSERT_FALSE(robotManager->isConnected());
-    ASSERT_TRUE(robotManager->connect());
-    ASSERT_TRUE(robotManager->isConnected());
-    ASSERT_TRUE(robotManager->disconnect());
-    ASSERT_FALSE(robotManager->isConnected());
-}
-
-TEST_F(MockRobotManagerTest, MockRobotCannotMoveIfDisconnected)
-{
-    EXPECT_FALSE(robotManager->moveForward(100.0));
-    EXPECT_FALSE(robotManager->turnLeft(100.0));
-    EXPECT_FALSE(robotManager->stopMovement());
-
-    EXPECT_FALSE(robotManager->tiltDown(100.0));
-    EXPECT_FALSE(robotManager->panLeft(100.0));
-    EXPECT_FALSE(robotManager->isCameraMoving());
-}
-
-TEST_F(MockRobotManagerTest, MockRobotCannotMoveIfDisabled)
-{
-    ASSERT_FALSE(robotManager->isConnected());
-    ASSERT_TRUE(robotManager->connect());
-    robotManager->setEnabled(false);
-    ASSERT_FALSE(robotManager->isEnabled());
-
-    EXPECT_FALSE(robotManager->moveForward(100.0));
-    EXPECT_FALSE(robotManager->turnLeft(100.0));
-    EXPECT_FALSE(robotManager->stopMovement());
-
-    EXPECT_FALSE(robotManager->tiltDown(100.0));
-    EXPECT_FALSE(robotManager->panLeft(100.0));
-    EXPECT_FALSE(robotManager->isCameraMoving());
-
-    ASSERT_TRUE(robotManager->disconnect());
-    ASSERT_FALSE(robotManager->isConnected());
-}
-
 TEST_F(MockRobotManagerTest, MockRobotMoves)
 {
-    ASSERT_TRUE(robotManager->connect());
-    robotManager->setEnabled(true);
-    ASSERT_TRUE(robotManager->isEnabled());
-
     //-- Moving forward (and stop)
     EXPECT_TRUE(robotManager->moveForward(100.0));
     EXPECT_TRUE(robotManager->isMoving());
@@ -99,16 +56,10 @@ TEST_F(MockRobotManagerTest, MockRobotMoves)
     EXPECT_TRUE(robotManager->stopMovement());
     EXPECT_FALSE(robotManager->isMoving());
     EXPECT_EQ(MockRobotManager::NONE, robotManager->getMovementDirection());
-
-    ASSERT_TRUE(robotManager->disconnect());
 }
 
 TEST_F(MockRobotManagerTest, MockRobotCameraMoves)
 {
-    ASSERT_TRUE(robotManager->connect());
-    robotManager->setEnabled(true);
-    ASSERT_TRUE(robotManager->isEnabled());
-
     //-- Tilting down (and stop)
     EXPECT_TRUE(robotManager->tiltDown(100.0));
     EXPECT_TRUE(robotManager->isCameraMoving());
@@ -124,8 +75,6 @@ TEST_F(MockRobotManagerTest, MockRobotCameraMoves)
     EXPECT_TRUE(robotManager->stopCameraMovement());
     EXPECT_FALSE(robotManager->isCameraMoving());
     EXPECT_EQ(MockRobotManager::CAMERA_NONE, robotManager->getCameraMovementDirection());
-
-    ASSERT_TRUE(robotManager->disconnect());
 }
 
 }  // namespace test

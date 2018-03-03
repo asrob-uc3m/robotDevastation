@@ -61,9 +61,6 @@ bool rd::DeadState::setup()
     audioManager->stopMusic();
     audioManager->play("RD_DEAD");
 
-    //-- Disable robot controls
-    robotManager->setEnabled(false);
-
     return true;
 }
 
@@ -128,8 +125,6 @@ bool rd::DeadState::cleanup()
         audioManager->stop();
         networkManager->logout();
         networkManager->stop();
-        robotManager->setEnabled(false);
-        robotManager->disconnect();
         return true;
     }
     else

@@ -185,8 +185,6 @@ TEST_F(InitStateTest, InitStateGoesToLogin)
     ASSERT_TRUE(mockNetworkManager->isStopped());
     ASSERT_TRUE(mockImageManager->isStopped());
     ASSERT_TRUE(mockInputManager->isStopped());
-    ASSERT_FALSE(mockRobotManager->isConnected());
-    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
@@ -206,9 +204,6 @@ TEST_F(InitStateTest, InitStateGoesToLogin)
     ASSERT_FALSE(mockInputManager->isStopped());
     ASSERT_EQ(1, mockInputManager->getNumListeners());
 
-    ASSERT_FALSE(mockRobotManager->isConnected());
-    ASSERT_FALSE(mockRobotManager->isEnabled());
-
     //-- When enter is pressed, the system should log in and go to next state:
     mockInputManager->sendKeyPress(Key::KEY_ENTER);
     yarp::os::Time::delay(0.5);
@@ -225,9 +220,6 @@ TEST_F(InitStateTest, InitStateGoesToLogin)
 
     ASSERT_FALSE(mockInputManager->isStopped());
     ASSERT_EQ(0, mockInputManager->getNumListeners());
-
-    ASSERT_TRUE(mockRobotManager->isConnected());
-    ASSERT_FALSE(mockRobotManager->isEnabled());
 
 }
 
@@ -254,8 +246,6 @@ TEST_F(InitStateTest, InitStateGoesToExitKeyPress)
     ASSERT_TRUE(mockNetworkManager->isStopped());
     ASSERT_TRUE(mockImageManager->isStopped());
     ASSERT_TRUE(mockInputManager->isStopped());
-    ASSERT_FALSE(mockRobotManager->isConnected());
-    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
@@ -275,9 +265,6 @@ TEST_F(InitStateTest, InitStateGoesToExitKeyPress)
     ASSERT_FALSE(mockInputManager->isStopped());
     ASSERT_EQ(1, mockInputManager->getNumListeners());
 
-    ASSERT_FALSE(mockRobotManager->isConnected());
-    ASSERT_FALSE(mockRobotManager->isEnabled());
-
     //-- When esc is pressed, the system should exit the game:
     mockInputManager->sendKeyPress(Key::KEY_ESCAPE);
     yarp::os::Time::delay(0.5);
@@ -294,9 +281,6 @@ TEST_F(InitStateTest, InitStateGoesToExitKeyPress)
 
     ASSERT_TRUE(mockNetworkManager->isStopped());
     ASSERT_FALSE(mockNetworkManager->isLoggedIn());
-
-    ASSERT_FALSE(mockRobotManager->isConnected());
-    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- Check that end state is active
     ASSERT_EQ(-1, fsm->getCurrentState()); //-- (When FSM is ended, no state is active, hence -1)
@@ -326,8 +310,6 @@ TEST_F(InitStateTest, InitStateGoesToExitWindowEvent)
     ASSERT_TRUE(mockNetworkManager->isStopped());
     ASSERT_TRUE(mockImageManager->isStopped());
     ASSERT_TRUE(mockInputManager->isStopped());
-    ASSERT_FALSE(mockRobotManager->isConnected());
-    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
@@ -347,9 +329,6 @@ TEST_F(InitStateTest, InitStateGoesToExitWindowEvent)
     ASSERT_FALSE(mockInputManager->isStopped());
     ASSERT_EQ(1, mockInputManager->getNumListeners());
 
-    ASSERT_FALSE(mockRobotManager->isConnected());
-    ASSERT_FALSE(mockRobotManager->isEnabled());
-
     //-- When the window is closed, the system should exit the game:
     mockInputManager->sendWindowEvent(WindowEvent::WINDOW_CLOSE);
     yarp::os::Time::delay(0.5);
@@ -366,9 +345,6 @@ TEST_F(InitStateTest, InitStateGoesToExitWindowEvent)
 
     ASSERT_TRUE(mockNetworkManager->isStopped());
     ASSERT_FALSE(mockNetworkManager->isLoggedIn());
-
-    ASSERT_FALSE(mockRobotManager->isConnected());
-    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- Check that end state is active
     ASSERT_EQ(-1, fsm->getCurrentState()); //-- (When FSM is ended, no state is active, hence -1)
