@@ -25,23 +25,23 @@ class MockRobotManager : public asrob::IRobotManager
 
         //-- RobotManager interface
         //-----------------------------------------------------
-        //-- Robot movement related functions
+        /// @brief Robot: Move forward (use negative value for move backward). position mode [m]. Velocity mode [m/s].
         virtual bool moveForward(double value);
+
+        /// @brief Robot: Turn left (use negative value for turn left). position mode [deg]. Velocity mode [deg/s].
         virtual bool turnLeft(double value);
+
+        /// @brief Robot: Stop movement.
         virtual bool stopMovement();
 
-        //-- Robot camera related functions
+        /// @brief Robot camera: Tilt down (use negative value for tilt up). position mode [deg]. Velocity mode [deg/s].
         virtual bool tiltDown(double value);
+
+        /// @brief Robot camera: Pan left (use negative value for pan right). position mode [deg]. Velocity mode [deg/s].
         virtual bool panLeft(double value);
+
+        /// @brief Robot camera: Stop movement.
         virtual bool stopCameraMovement();
-
-        //-- Robot connection related functions
-        virtual bool connect();
-        virtual bool disconnect();
-        virtual bool test();
-        virtual void setEnabled(bool enabled);
-
-        virtual void onDestroy();
 
         //-- Mock functionality
         //-----------------------------------------------------

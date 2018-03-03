@@ -87,9 +87,6 @@ bool rd::GameState::setup()
         return false;
     }
 
-    //-- Robot Startup
-    robotManager->setEnabled(true);
-
     //-- Show Robot Devastation game screen:
     if (!screen.init())
     {
@@ -141,8 +138,6 @@ bool rd::GameState::cleanup()
         audioManager->stop();
         networkManager->logout();
         networkManager->stop();
-        robotManager->setEnabled(false);
-        robotManager->disconnect();
         return true;
     }
     else
