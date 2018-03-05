@@ -67,11 +67,11 @@ bool rd::MockRobotManager::tiltDown(double value)
 bool rd::MockRobotManager::panLeft(double value)
 {
     if(value > 0)
-        movement_direction = CAMERA_LEFT;
+        camera_movement_direction = CAMERA_LEFT;
     else if(value < 0)
-        movement_direction = CAMERA_RIGHT;
+        camera_movement_direction = CAMERA_RIGHT;
     else
-        movement_direction = CAMERA_NONE;
+        camera_movement_direction = CAMERA_NONE;
     return true;
 }
 
