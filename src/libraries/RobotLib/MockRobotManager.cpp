@@ -6,17 +6,17 @@
 
 #include <ColorDebug.hpp>
 
+const int rd::MockRobotManager::NONE = 0;
 const int rd::MockRobotManager::FORWARD = 1;
 const int rd::MockRobotManager::BACKWARDS = 2;
-const int rd::MockRobotManager::LEFT = 4;
-const int rd::MockRobotManager::RIGHT = 8;
-const int rd::MockRobotManager::NONE = 0;
+const int rd::MockRobotManager::LEFT = 3;
+const int rd::MockRobotManager::RIGHT = 4;
 
-const int rd::MockRobotManager::CAMERA_UP = 1;
-const int rd::MockRobotManager::CAMERA_DOWN = 2;
-const int rd::MockRobotManager::CAMERA_LEFT = 4;
-const int rd::MockRobotManager::CAMERA_RIGHT = 8;
-const int rd::MockRobotManager::CAMERA_NONE = 0; 
+const int rd::MockRobotManager::CAMERA_NONE = 5;
+const int rd::MockRobotManager::CAMERA_DOWN = 6;
+const int rd::MockRobotManager::CAMERA_UP = 7;
+const int rd::MockRobotManager::CAMERA_LEFT = 8;
+const int rd::MockRobotManager::CAMERA_RIGHT = 9;
 
 rd::MockRobotManager::MockRobotManager(const std::string& robotName)
 {
@@ -27,13 +27,23 @@ rd::MockRobotManager::MockRobotManager(const std::string& robotName)
 
 bool rd::MockRobotManager::moveForward(double value)
 {
-    movement_direction = FORWARD;
+    if(value > 0)
+        movement_direction = FORWARD;
+    else if(value < 0)
+        movement_direction = BACKWARDS;
+    else
+        movement_direction = NONE;
     return true;
 }
 
 bool rd::MockRobotManager::turnLeft(double value)
 {
-    movement_direction = LEFT;
+    if(value > 0)
+        movement_direction = LEFT;
+    else if(value < 0)
+        movement_direction = RIGHT;
+    else
+        movement_direction = NONE;
     return true;
 }
 
@@ -45,19 +55,29 @@ bool rd::MockRobotManager::stopMovement()
 
 bool rd::MockRobotManager::tiltDown(double value)
 {
-    camera_movement_direction = CAMERA_DOWN;
+    if(value > 0)
+        camera_movement_direction = CAMERA_DOWN;
+    else if(value < 0)
+        camera_movement_direction = CAMERA_UP;
+    else
+        camera_movement_direction = CAMERA_NONE;
     return true;
 }
 
 bool rd::MockRobotManager::panLeft(double value)
 {
-    camera_movement_direction = CAMERA_LEFT;
+    if(value > 0)
+        movement_direction = CAMERA_LEFT;
+    else if(value < 0)
+        movement_direction = CAMERA_RIGHT;
+    else
+        movement_direction = CAMERA_NONE;
     return true;
 }
 
 bool rd::MockRobotManager::stopCameraMovement()
 {
-    camera_movement_direction = NONE;
+    camera_movement_direction = CAMERA_NONE;
     return true;
 }
         
@@ -73,7 +93,7 @@ int rd::MockRobotManager::getMovementDirection()
 
 bool rd::MockRobotManager::isCameraMoving()
 {
-    return camera_movement_direction != NONE;
+    return camera_movement_direction != CAMERA_NONE;
 }
 
 int rd::MockRobotManager::getCameraMovementDirection()
