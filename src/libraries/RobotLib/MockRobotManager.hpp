@@ -66,8 +66,6 @@ class MockRobotManager : public asrob::IRobotManager
 
     private:
         std::string robotName;
-        bool enabled;
-        bool connected;
 
         int movement_direction;
         int camera_movement_direction;
