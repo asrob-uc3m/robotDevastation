@@ -81,7 +81,7 @@ file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/install)
 
 # Install downloaded packages.
 install(DIRECTORY ${CMAKE_BINARY_DIR}/install/
-        DESTINATION ${CMAKE_INSTALL_PREFIX})
+        DESTINATION "./")
 
 # let CMake organize projects in folders (in IDEs that support this)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
