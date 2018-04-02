@@ -11,7 +11,7 @@ const int rd::InitState::EXIT_REQUESTED = 2;
 
 rd::InitState::InitState(NetworkManager *networkManager, ImageManager *imageManager,
                          InputManager *inputManager, MentalMap *mentalMap,
-                         RobotManager *robotManager, AudioManager *audioManager,
+                         IRobotManager *robotManager, AudioManager *audioManager,
                          ScreenManager *screenManager) :
     ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager, audioManager, screenManager)
 {

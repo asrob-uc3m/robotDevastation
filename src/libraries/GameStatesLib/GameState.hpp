@@ -13,7 +13,7 @@
 #include "ImageManager.hpp"
 #include "InputManager.hpp"
 #include "MentalMap.hpp"
-#include "RobotManager.hpp"
+#include "IRobotManager.hpp"
 #include "AudioManager.hpp"
 #include "ScreenManager.hpp"
 #include "Key.hpp"
@@ -39,7 +39,7 @@ class GameState : public State, public ManagerHub,
     public:
         GameState(NetworkManager * networkManager, ImageManager * imageManager,
                   InputManager * inputManager, MentalMap * mentalMap,
-                  RobotManager * robotManager, AudioManager * audioManager,
+                  IRobotManager * robotManager, AudioManager * audioManager,
                   ScreenManager * screenManager);
         virtual ~GameState();
         virtual bool setup();

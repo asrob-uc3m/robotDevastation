@@ -23,7 +23,7 @@ env:
     # avoid ALSA errors
     - SDL_AUDIODRIVER=dummy
     # YARP cache
-    - YARP_VER=2.3.70.1
+    - YARP_VER=2.3.70.2
     - YARP_CACHE_DIR=~/.yarp
 
 cache:
@@ -37,7 +37,7 @@ branches:
 before_install:
   # ubuntu dependencies
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq update; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y --no-install-recommends install libace-dev libjpeg-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libzbar-dev; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y --no-install-recommends install libace-dev libjpeg-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libzbar-dev libgtest-dev; fi
 
   # OS X dependencies
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export XQUARTZ_VERSION=2.7.6;fi
@@ -95,7 +95,7 @@ install:
 
 before_script:
   - mkdir -p "$TRAVIS_BUILD_DIR/build" && cd "$_"
-  - cmake .. -DCMAKE_INSTALL_PREFIX:PATH=$PWD/install -DENABLE_coverage:BOOL=ON -DENABLE_tests:BOOL=ON
+  - cmake .. -DCMAKE_INSTALL_PREFIX:PATH=$PWD/install -DENABLE_coverage:BOOL=ON
   - cmake --build . --target install
   - export YARP_DATA_DIRS=$YARP_DATA_DIRS:$PWD/install/share/rd
 

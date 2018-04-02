@@ -21,7 +21,7 @@
 #include "SDLInputManager.hpp"
 #include "InputEventListener.hpp"
 #include "YarpNetworkManager.hpp"
-#include "RobotManager.hpp"
+#include "IRobotManager.hpp"
 #include "YarpRobotManager.hpp"
 #include "MockRobotManager.hpp"
 #include "StateMachine.hpp"
@@ -76,7 +76,7 @@ class RobotDevastation : public yarp::os::RFModule
         AudioManager * audioManager;
         MentalMap * mentalMap;
         NetworkManager * networkManager;
-        RobotManager * robotManager;
+        IRobotManager * robotManager;
         ImageManager * imageManager;
         ScreenManager * screenManager;
 

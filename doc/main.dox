@@ -7,24 +7,20 @@
 </a></center>
 \endhtmlonly
 
-Welcome to Robot Devastation! If you're lost, you probably just want to go back to the <a class="el" href="http://asrob.uc3m.es/index.php/Robot_Devastation">Robot Devastation Wiki</a>.
-Or stay for the fun!
+Welcome to robotDevastation!
 
  \li <a class="el" href="https://www.gitbook.com/book/asrob-uc3m/robotdevastation-user-manual">Robot Devastation - user manual</a>
  \li <a class="el" href="https://www.gitbook.com/book/asrob-uc3m/robotdevastation-developer-manual">Robot Devastation - developer manual</a>
- \li \ref rd_post_install
+ \li <a class="el" href="https://github.com/asrob-uc3m/robotDevastation" target="_blank">robotDevastation @ GitHub</a>
 
-Other internal links of interest:
+Internal links of interest:
 
  \li \ref rd_programs
  \li \ref rd_libraries
- \li <a class="el" href="https://github.com/asrob-uc3m/robotDevastation" target="_blank">robotDevastation @ GitHub</a>
- \li <a class="el" href="https://github.com/asrob-uc3m/robotDevastation-robots" target="_blank">robotDevastation-robots @ GitHub</a>
 
 External links of interest:
+ \li <a class="el" href="https://github.com/asrob-uc3m/robotDevastation-robots" target="_blank">robotDevastation-robots @ GitHub</a>
  \li <a class=el href="http://www.yarp.it/" target="_blank">YARP doc</a> / <a class=el href="https://github.com/robotology/yarp" target="_blank">YARP @ GitHub</a>
- \li <a class=el href="http://wiki.icub.org/iCub/main/dox/html/index.html" target="_blank">iCub Software Repository Documentation</a>
- \li <a class=el href="http://robots.uc3m.es/dox-asibot-main/" target="_blank">ASIBOT</a>
 
 <hr>
 
