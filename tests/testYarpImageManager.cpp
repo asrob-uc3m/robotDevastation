@@ -11,7 +11,8 @@
 #include "ImageManager.hpp"
 #include "YarpImageManager.hpp"
 #include "MockImageEventListener.hpp"
-#include "Utils.hpp"
+
+#include <ColorDebug.hpp>
 
 namespace rd
 {
@@ -69,7 +70,7 @@ class YarpImageManagerEnvironment : public testing::Environment
 
             if (!cameraDevice.isValid())
             {
-                RD_ERROR("Camera class instantiation not worked.\n");
+                CD_ERROR("Camera class instantiation not worked.\n");
                 return;
             }
 

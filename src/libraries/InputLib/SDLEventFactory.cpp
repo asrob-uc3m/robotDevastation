@@ -3,7 +3,8 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "SDLEventFactory.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 bool rd::SDLEventFactory::initialized = false;
 std::map<SDL_Keycode, char> rd::SDLEventFactory::sdl_printable_map = std::map<SDL_Keycode, char>();
@@ -32,7 +33,7 @@ rd::Key rd::SDLEventFactory::makeKey(SDL_Keycode keycode)
     }
     else
     {
-        RD_ERROR("Key not supported!\n");
+        CD_ERROR("Key not supported!\n");
         return Key::KEY_UNKNOWN;
     }
 }

@@ -4,14 +4,15 @@
 
 #include "InitState.hpp"
 #include "YarpNetworkManager.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 const int rd::InitState::LOGIN_SUCCESSFUL = 1;
 const int rd::InitState::EXIT_REQUESTED = 2;
 
 rd::InitState::InitState(NetworkManager *networkManager, ImageManager *imageManager,
                          InputManager *inputManager, MentalMap *mentalMap,
-                         IRobotManager *robotManager, AudioManager *audioManager,
+                         asrob::IRobotManager *robotManager, AudioManager *audioManager,
                          ScreenManager *screenManager) :
     ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager, audioManager, screenManager)
 {
@@ -58,9 +59,6 @@ bool rd::InitState::loop()
     //-- Do stuff
     if (login)
     {
-        if( ! robotManager->connect() )
-            return false;
-        robotManager->setEnabled(false);
         if( ! imageManager->start() )
             return false;
         //-- Log in
@@ -78,7 +76,7 @@ bool rd::InitState::loop()
 
 bool rd::InitState::cleanup()
 {
-    RD_DEBUG("Cleanup!!\n");
+    CD_DEBUG("Cleanup!!\n");
     audioManager->stopMusic();
     inputManager->removeInputEventListeners();
     screen.cleanup();
@@ -89,7 +87,6 @@ bool rd::InitState::cleanup()
         inputManager->stop();
         audioManager->stop();
         networkManager->stop();
-        robotManager->setEnabled(false);
     }
 
     return true;
@@ -115,13 +112,13 @@ bool rd::InitState::onKeyUp(const Key & k)
 {
     if (k.getValue() == Key::KEY_ESCAPE)
     {
-        RD_DEBUG("Escape was pressed!\n");
+        CD_DEBUG("Escape was pressed!\n");
         received_exit = true;
         return true;
     }
     else if (k.isControlKey() || k.isPrintable())
     {
-        RD_DEBUG("Key was pressed!\n");
+        CD_DEBUG("Key was pressed!\n");
         login = true;
         return true;
     }
@@ -133,7 +130,7 @@ bool rd::InitState::onWindowEvent(const WindowEvent & event)
 {
     if (event.getEvent() == WindowEvent::WINDOW_CLOSE)
     {
-        RD_DEBUG("Exit was triggered!\n");
+        CD_DEBUG("Exit was triggered!\n");
         received_exit = true;
         return true;
     }

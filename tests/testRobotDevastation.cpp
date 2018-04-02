@@ -12,7 +12,6 @@
 
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
-#include "Utils.hpp"
 #include "SDLUtils.hpp"
 
 #include "MockNetworkManager.hpp"
@@ -104,9 +103,9 @@ class RobotDevastationTest : public testing::Test
 
             //-- Init robot:
             mockRobotManager = new MockRobotManager("MOCK");
-            robotManager = (IRobotManager *) mockRobotManager;
+            robotManager = (asrob::IRobotManager *) mockRobotManager;
             ASSERT_NE((MockRobotManager*) NULL, mockRobotManager);
-            ASSERT_NE((IRobotManager*) NULL, robotManager);
+            ASSERT_NE((asrob::IRobotManager*) NULL, robotManager);
 
             //-- Init image manager
             MockImageManager::RegisterManager();
@@ -223,7 +222,7 @@ class RobotDevastationTest : public testing::Test
         MentalMap * mentalMap;
 
         MockRobotManager * mockRobotManager;
-        IRobotManager * robotManager;
+        asrob::IRobotManager * robotManager;
 
         ScreenManager * screenManager;
 
@@ -249,8 +248,6 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     ASSERT_TRUE(mockNetworkManager->isStopped());
     ASSERT_TRUE(mockImageManager->isStopped());
     ASSERT_TRUE(mockInputManager->isStopped());
-    ASSERT_FALSE(mockRobotManager->isConnected());
-    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- Start state machine
     ASSERT_TRUE(fsm->start());
@@ -266,8 +263,6 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     ASSERT_FALSE(mockImageManager->isEnabled());
     ASSERT_FALSE(mockInputManager->isStopped());
     ASSERT_EQ(1, mockInputManager->getNumListeners());
-    ASSERT_FALSE(mockRobotManager->isConnected());
-    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- When enter is pressed, the system should log in and go to next state:
     mockInputManager->sendKeyPress(Key::KEY_ENTER);
@@ -283,8 +278,6 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     ASSERT_TRUE(mockImageManager->isEnabled());
     ASSERT_FALSE(mockInputManager->isStopped());
     ASSERT_EQ(1, mockInputManager->getNumListeners());
-    ASSERT_TRUE(mockRobotManager->isConnected());
-    ASSERT_TRUE(mockRobotManager->isEnabled());
 
     //-- Testing game flow
     //-----------------------------------------------------------------------------
@@ -393,8 +386,6 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     ASSERT_TRUE(mockAudioManager->isPlaying("RD_DEAD"));
     ASSERT_FALSE(mockNetworkManager->isStopped());
     ASSERT_TRUE(mockNetworkManager->isLoggedIn());
-    ASSERT_TRUE(mockRobotManager->isConnected());
-    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- Check that deadState is active
     ASSERT_EQ(dead_state_id, fsm->getCurrentState());
@@ -421,8 +412,6 @@ TEST_F(RobotDevastationTest, RobotDevastationWorks)
     ASSERT_FALSE(mockAudioManager->isPlaying("RD_DEAD"));
     ASSERT_TRUE(mockNetworkManager->isStopped());
     ASSERT_FALSE(mockNetworkManager->isLoggedIn());
-    ASSERT_FALSE(mockRobotManager->isConnected());
-    ASSERT_FALSE(mockRobotManager->isEnabled());
 
     //-- Check that end state is active
     ASSERT_EQ(-1, fsm->getCurrentState()); //-- (When FSM is ended, no state is active, hence -1)

@@ -36,7 +36,7 @@ branches:
 init:
   # Dependency version tags
   - cmd: set ACE_LATEST=6.4.6
-  - cmd: set YARP_LATEST=2.3.70.2
+  - cmd: set YARP_LATEST=2.3.72
   - cmd: set SDL2_LATEST=2.0.7
   - cmd: set SDL2_IMAGE_LATEST=2.0.2
   - cmd: set SDL2_TTF_LATEST=2.0.14
@@ -56,6 +56,10 @@ init:
   - cmd: set SDL2_MIXER_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-%SDL2_MIXER_LATEST%-VC.zip
   - cmd: set ZBAR_DOWNLOAD_URL=https://github.com/asrob-uc3m/ZBar/releases/download/%ZBAR_LATEST%/zbar-%ZBAR_LATEST%-%ZBAR_ARCH%-setup.exe
   - cmd: set GTEST_DOWNLOAD_URL=https://github.com/google/googletest/archive/release-%GTEST_LATEST%.zip
+
+  # Configure git for use by YCM
+  - cmd: git config --global user.email "user@example.com"
+  - cmd: git config --global user.name "Travis CI"
 
   # Print some useful informations:
   - cmd: set
@@ -115,7 +119,7 @@ install:
             cmake --build "$env:yarp_temp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
             Set-Content C:\YARP\.version "$env:YARP_LATEST"
         }
-  - cmd: set YARP_DIR=C:\YARP\cmake
+  - cmd: set YARP_DIR=C:\YARP\CMake
   - cmd: set PATH=C:\YARP\bin;%PATH%
 
   # Download and install ZBar (keep this section before the SDL2 one)

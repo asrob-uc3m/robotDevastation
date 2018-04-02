@@ -19,6 +19,8 @@ add_library(ImageLib ImageEventListener.hpp
                      YarpLocalImageManager.hpp
                      YarpLocalImageManager.cpp)
 
+add_dependencies(ImageLib COLOR_DEBUG)
+
 target_include_directories(ImageLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                            ${YARP_INCLUDE_DIRS}
                                            ${ZBAR_INCLUDE_DIR})

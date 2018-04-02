@@ -3,7 +3,8 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "NetworkManager.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 //-- Static members initialization:
 rd::NetworkManager * rd::NetworkManager::networkManagerInstance = NULL;
@@ -22,7 +23,7 @@ rd::NetworkManager *rd::NetworkManager::getNetworkManager()
         }
         else
         {
-            RD_ERROR("No NetworkManager registered!! Returning null\n");
+            CD_ERROR("No NetworkManager registered!! Returning null\n");
         }
     }
 
@@ -40,7 +41,7 @@ rd::NetworkManager *rd::NetworkManager::getNetworkManager(const std::string & id
         }
         else
         {
-            RD_ERROR("ImageManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            CD_ERROR("ImageManager %s not found! (Maybe it was not registered?)\n", id.c_str());
         }
     }
 
@@ -125,13 +126,13 @@ bool rd::NetworkManager::Register(NetworkManager *manager, const std::string & i
         }
         else
         {
-            RD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
+            CD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
             return false;
         }
     }
     else
     {
-        RD_ERROR( "ImageManager with id \"%s\" was already registered\n", id.c_str());
+        CD_ERROR( "ImageManager with id \"%s\" was already registered\n", id.c_str());
         return false;
     }
 

@@ -20,8 +20,9 @@ add_library(InputLib InputEventListener.hpp
                      WindowEvent.hpp
                      WindowEvent.cpp)
 
+add_dependencies(InputLib COLOR_DEBUG)
+
 target_include_directories(InputLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                            ${SDL2_INCLUDE_DIR})
 
-target_link_libraries(InputLib PUBLIC ${SDL2_LIBRARY}
-                               PRIVATE UtilsLib)
+target_link_libraries(InputLib PUBLIC ${SDL2_LIBRARY})

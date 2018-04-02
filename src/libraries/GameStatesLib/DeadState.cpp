@@ -3,7 +3,10 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "DeadState.hpp"
-#include "Utils.hpp"
+
+#include <sstream>
+
+#include <ColorDebug.hpp>
 
 const int rd::DeadState::RESPAWN_SELECTED = 1;
 const int rd::DeadState::EXIT_SELECTED = 2;
@@ -13,7 +16,7 @@ const int rd::DeadState::MAX_HEALTH = 100;
 
 rd::DeadState::DeadState(NetworkManager *networkManager, ImageManager *imageManager,
                          InputManager *inputManager, MentalMap *mentalMap,
-                         IRobotManager *robotManager, AudioManager *audioManager,
+                         asrob::IRobotManager *robotManager, AudioManager *audioManager,
                          ScreenManager *screenManager) :
                 ManagerHub(networkManager, imageManager, inputManager, mentalMap, robotManager,
                            audioManager, screenManager)
@@ -43,7 +46,10 @@ bool rd::DeadState::setup()
 
     Image last_camera_frame = imageManager->getImage();
     screenManager->update(DeadScreen::PARAM_LAST_CAMERA_FRAME, last_camera_frame);
-    screenManager->update(DeadScreen::PARAM_REMAINING_TIME, number2str(timer));
+
+    std::stringstream sstream;
+    sstream << timer;
+    screenManager->update(DeadScreen::PARAM_REMAINING_TIME, sstream.str());
 
     //-- Disable camera images
     imageManager->setEnabled(false);
@@ -54,9 +60,6 @@ bool rd::DeadState::setup()
     //-- Change music to dead theme
     audioManager->stopMusic();
     audioManager->play("RD_DEAD");
-
-    //-- Disable robot controls
-    robotManager->setEnabled(false);
 
     return true;
 }
@@ -75,7 +78,9 @@ bool rd::DeadState::loop()
         {
             timer--;
             elapsed_time = 0;
-            screenManager->update(DeadScreen::PARAM_REMAINING_TIME, number2str(timer));
+            std::stringstream sstream;
+            sstream << timer;
+            screenManager->update(DeadScreen::PARAM_REMAINING_TIME, sstream.str());
 
             if (timer == 0)
             {
@@ -120,8 +125,6 @@ bool rd::DeadState::cleanup()
         audioManager->stop();
         networkManager->logout();
         networkManager->stop();
-        robotManager->setEnabled(false);
-        robotManager->disconnect();
         return true;
     }
     else
@@ -151,14 +154,14 @@ bool rd::DeadState::onKeyUp(const Key & k)
 
     if (k.getValue() == Key::KEY_ENTER)
     {
-        RD_DEBUG("Enter was pressed!\n");
+        CD_DEBUG("Enter was pressed!\n");
         received_respawn = true;
         return true;
     }
 
     if (k.getValue() == Key::KEY_ESCAPE)
     {
-        RD_DEBUG("Escape was pressed!\n");
+        CD_DEBUG("Escape was pressed!\n");
         received_exit = true;
         return true;
     }
@@ -170,7 +173,7 @@ bool rd::DeadState::onWindowEvent(const WindowEvent & event)
 {
     if (event.getEvent() == WindowEvent::WINDOW_CLOSE)
     {
-        RD_DEBUG("Exit was triggered!\n");
+        CD_DEBUG("Exit was triggered!\n");
         received_exit = true;
         return true;
     }

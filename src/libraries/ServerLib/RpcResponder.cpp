@@ -7,7 +7,8 @@
 #include <yarp/os/Bottle.h>
 #include <yarp/os/ConnectionWriter.h>
 
-#include "Macros.hpp"
+#include <ColorDebug.hpp>
+
 #include "Vocabs.hpp"
 
 const int rd::RpcResponder::MAX_BELIEF = 600;
@@ -16,7 +17,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
 {
     yarp::os::Bottle in, out;
     in.read(connection);
-    //RD_INFO("Got %s\n", in.toString().c_str());
+    //CD_INFO("Got %s\n", in.toString().c_str());
     out.clear();
     yarp::os::ConnectionWriter *returnToSender = connection.getWriter();
     if (returnToSender==NULL) return false;
@@ -46,7 +47,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         }
         else
         {
-            RD_ERROR("Player with id: %d not logged in!\n",hitId);
+            CD_ERROR("Player with id: %d not logged in!\n",hitId);
             out.addVocab(VOCAB_RD_FAIL);
         }
         players_mutex->unlock();
@@ -68,7 +69,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         }
         else
         {
-            RD_ERROR("Already logged, id: %d.\n",loginId);
+            CD_ERROR("Already logged, id: %d.\n",loginId);
             out.addVocab(VOCAB_RD_FAIL);
         }
         players_mutex->unlock();
@@ -80,7 +81,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         players_mutex->lock();
         if ( players->find(logoutId) == players->end() )
         {
-            RD_ERROR("Not logged to logout, id: %d.\n",logoutId);
+            CD_ERROR("Not logged to logout, id: %d.\n",logoutId);
             out.addVocab(VOCAB_RD_FAIL);
         }
         else
@@ -98,7 +99,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         players_mutex->lock();
         if ( players->find(respawnId) == players->end() )
         {
-            RD_ERROR("Could not respawn, player not logged in, id: %d.\n",respawnId);
+            CD_ERROR("Could not respawn, player not logged in, id: %d.\n",respawnId);
             out.addVocab(VOCAB_RD_FAIL);
         } else {
             int newHealth = players->at(respawnId).getMaxHealth();
@@ -115,7 +116,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         players_mutex->lock();
         if ( players->find(keepAliveId) == players->end() )
         {
-            RD_ERROR("Could not keep alive, player not logged in, id: %d.\n",keepAliveId);
+            CD_ERROR("Could not keep alive, player not logged in, id: %d.\n",keepAliveId);
             out.addVocab(VOCAB_RD_FAIL);
         }
         else
@@ -127,7 +128,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
     }
     else
     {
-        RD_ERROR("Unkown command: %s.\n", in.toString().c_str());
+        CD_ERROR("Unkown command: %s.\n", in.toString().c_str());
         out.addVocab(VOCAB_RD_FAIL);
     }
     return out.write(*returnToSender);

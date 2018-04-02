@@ -10,6 +10,7 @@
 #include "Target.hpp"
 #include "Player.hpp"
 #include "SDLAudioManager.hpp"
+#include "Vector2dBase.hpp"
 
 namespace rd
 {

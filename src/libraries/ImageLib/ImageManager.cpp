@@ -3,7 +3,8 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "ImageManager.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 //-- Static members initialization:
 rd::ImageManager * rd::ImageManager::imageManagerInstance = NULL;
@@ -22,7 +23,7 @@ rd::ImageManager *rd::ImageManager::getImageManager()
         }
         else
         {
-            RD_ERROR("No ImageManager registered!! Returning null\n");
+            CD_ERROR("No ImageManager registered!! Returning null\n");
         }
     }
 
@@ -40,7 +41,7 @@ rd::ImageManager *rd::ImageManager::getImageManager(const std::string & id)
         }
         else
         {
-            RD_ERROR("ImageManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            CD_ERROR("ImageManager %s not found! (Maybe it was not registered?)\n", id.c_str());
         }
     }
 
@@ -118,13 +119,13 @@ bool rd::ImageManager::Register(ImageManager *manager, const std::string & id)
         }
         else
         {
-            RD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
+            CD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
             return false;
         }
     }
     else
     {
-        RD_ERROR( "ImageManager with id \"%s\" was already registered\n", id.c_str());
+        CD_ERROR( "ImageManager with id \"%s\" was already registered\n", id.c_str());
         return false;
     }
 

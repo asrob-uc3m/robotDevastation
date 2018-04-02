@@ -13,6 +13,7 @@
  ***/
 
 #include <string>
+#include <sstream>
 
 #include <yarp/sig/ImageFile.h>
 #include <yarp/os/ResourceFinder.h>
@@ -23,7 +24,6 @@
 #include "Screen.hpp"
 #include "DeadScreen.hpp"
 #include "ImageManager.hpp"
-#include "Utils.hpp"
 
 using namespace rd;
 
@@ -55,7 +55,9 @@ int main()
 
     for (int i = 0; i < 10; i++)
     {
-        screenManager->update(DeadScreen::PARAM_REMAINING_TIME, number2str(10-i));
+        std::stringstream sstream;
+        sstream << (10-i);
+        screenManager->update(DeadScreen::PARAM_REMAINING_TIME, sstream.str());
         if(!screenManager->show())
             return 1;
         yarp::os::Time::delay(1);

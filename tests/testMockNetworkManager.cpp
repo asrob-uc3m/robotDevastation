@@ -6,6 +6,7 @@
 #include "MockNetworkManager.hpp"
 #include "MockNetworkEventListener.hpp"
 #include "MentalMap.hpp"
+#include "Vector2dBase.hpp"
 
 namespace rd
 {

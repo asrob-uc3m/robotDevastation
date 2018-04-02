@@ -3,7 +3,8 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "YarpStateDirector.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 const int rd::YarpStateDirector::DEFAULT_RATE_MS = 100;
 
@@ -16,15 +17,15 @@ bool rd::YarpStateDirector::Start()
 {
     if (state == NULL)
     {
-        RD_DEBUG("Null state. Exiting...\n");
+        CD_DEBUG("Null state. Exiting...\n");
         return Stop();
     }
 
-    RD_DEBUG("Starting StateDirector for id %s\n", state->getStateId().c_str());
+    CD_DEBUG("Starting StateDirector for id %s\n", state->getStateId().c_str());
     active = true;
     if (!state->setup())
     {
-        RD_ERROR("Error in state setup for id %s\n", state->getStateId().c_str());
+        CD_ERROR("Error in state setup for id %s\n", state->getStateId().c_str());
         return false;
     }
 
@@ -34,7 +35,7 @@ bool rd::YarpStateDirector::Start()
 bool rd::YarpStateDirector::Stop()
 {
     if (state != NULL)
-        RD_DEBUG("Stopping StateDirector for id %s\n", state->getStateId().c_str());
+        CD_DEBUG("Stopping StateDirector for id %s\n", state->getStateId().c_str());
 
     active = false;
 
@@ -48,10 +49,10 @@ bool rd::YarpStateDirector::Stop()
 
 void rd::YarpStateDirector::run()
 {
-    //RD_DEBUG("Entering loop in StateDirector with id %s\n", state->getStateId().c_str());
+    //CD_DEBUG("Entering loop in StateDirector with id %s\n", state->getStateId().c_str());
     if ( !state->loop() )
     {
-        RD_ERROR("Error in loop. Stopping this state...\n");
+        CD_ERROR("Error in loop. Stopping this state...\n");
         Stop();
     }
     int condition = state->evaluateConditions();

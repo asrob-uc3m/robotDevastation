@@ -3,7 +3,8 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "AudioManager.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 //-- This is very important:
 rd::AudioManager * rd::AudioManager::audioManagerInstance = NULL;
@@ -26,7 +27,7 @@ rd::AudioManager *rd::AudioManager::getAudioManager()
         }
         else
         {
-            RD_ERROR("No AudioManager registered!! Returning null\n");
+            CD_ERROR("No AudioManager registered!! Returning null\n");
         }
     }
 
@@ -44,7 +45,7 @@ rd::AudioManager *rd::AudioManager::getAudioManager(const std::string & id)
         }
         else
         {
-            RD_ERROR("AudioManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            CD_ERROR("AudioManager %s not found! (Maybe it was not registered?)\n", id.c_str());
         }
     }
 
@@ -108,13 +109,13 @@ bool rd::AudioManager::Register(AudioManager *manager, const std::string & id)
         }
         else
         {
-            RD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
+            CD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
             return false;
         }
     }
     else
     {
-        RD_ERROR( "AudioManager with id \"%s\" was already registered\n", id.c_str());
+        CD_ERROR( "AudioManager with id \"%s\" was already registered\n", id.c_str());
         return false;
     }
 

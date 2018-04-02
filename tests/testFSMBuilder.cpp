@@ -10,7 +10,6 @@
 #include "MockState.hpp"
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
-#include "Utils.hpp"
 
 #include <yarp/os/Network.h>
 #include <yarp/os/Bottle.h>
@@ -18,6 +17,8 @@
 #include <yarp/os/RpcServer.h>
 #include <yarp/os/PortReader.h>
 #include <yarp/os/Time.h>
+
+#include <ColorDebug.hpp>
 
 namespace rd
 {
@@ -90,7 +91,7 @@ class FSMBuilderTest : public testing::Test
     protected:
         bool awaitStateCheck(const std::string & state_id, const int reference_state)
         {
-            RD_DEBUG("%s\n", state_id.c_str());
+            CD_DEBUG("%s\n", state_id.c_str());
 
             int retry_count = 0;
             int currentState = 0;

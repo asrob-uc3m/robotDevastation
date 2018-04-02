@@ -12,7 +12,8 @@
 
 #include "Target.hpp"
 #include "Vector2dBase.hpp"
-#include "Macros.hpp"
+
+#include <ColorDebug.hpp>
 
 rd::ProcessorImageEventListener::ProcessorImageEventListener()
 {
@@ -39,7 +40,7 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
 {
     received_image = manager->getImage();
     //images_arrived++;
-    //RD_DEBUG("%d\n",images_arrived);
+    //CD_DEBUG("%d\n",images_arrived);
 
     if(!cameraInitialized)
     {
@@ -68,7 +69,7 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
     zbar::Image image(cameraWidth, cameraHeight, "Y800", rimage, cameraWidth * cameraHeight);
 
     int numDetected = scanner.scan(image);
-    //RD_DEBUG("How many detected QR: %d\n",numDetected);
+    //CD_DEBUG("How many detected QR: %d\n",numDetected);
 
     std::vector< Target > targets;
 
@@ -81,11 +82,11 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
         if (isInteger(identifier_str.str()))
         {
             identifier_str >> identifier_int;
-            RD_INFO("QR id: %d.\n",identifier_int);
+            CD_INFO("QR id: %d.\n",identifier_int);
         }
         else
         {
-            RD_WARNING("Ignoring QR with id:\"%s\".\n", identifier_str.str().c_str());
+            CD_WARNING("Ignoring QR with id:\"%s\".\n", identifier_str.str().c_str());
             continue;
         }
 
@@ -96,7 +97,7 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
         {
              Vector2d coord(symbol->get_location_x(i),symbol->get_location_y(i));
              //-- Check the following output if things ever start to fail.
-             //RD_DEBUG("%d: %d %d\n",i,coord.x,coord.y);
+             //CD_DEBUG("%d: %d %d\n",i,coord.x,coord.y);
              coords.push_back(coord);
         }
         int qrWidth = std::abs(coords[2].getX() - coords[1].getX());

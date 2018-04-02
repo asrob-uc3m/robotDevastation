@@ -3,308 +3,84 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "MockRobotManager.hpp"
-#include "Macros.hpp"
 
+#include <ColorDebug.hpp>
+
+const int rd::MockRobotManager::NONE = 0;
 const int rd::MockRobotManager::FORWARD = 1;
 const int rd::MockRobotManager::BACKWARDS = 2;
-const int rd::MockRobotManager::LEFT = 4;
-const int rd::MockRobotManager::RIGHT = 8;
-const int rd::MockRobotManager::NONE = 0;
+const int rd::MockRobotManager::LEFT = 3;
+const int rd::MockRobotManager::RIGHT = 4;
 
-const int rd::MockRobotManager::CAMERA_UP = 1;
-const int rd::MockRobotManager::CAMERA_DOWN = 2;
-const int rd::MockRobotManager::CAMERA_LEFT = 4;
-const int rd::MockRobotManager::CAMERA_RIGHT = 8;
-const int rd::MockRobotManager::CAMERA_NONE = 0; 
+const int rd::MockRobotManager::CAMERA_NONE = 5;
+const int rd::MockRobotManager::CAMERA_DOWN = 6;
+const int rd::MockRobotManager::CAMERA_UP = 7;
+const int rd::MockRobotManager::CAMERA_LEFT = 8;
+const int rd::MockRobotManager::CAMERA_RIGHT = 9;
 
 rd::MockRobotManager::MockRobotManager(const std::string& robotName)
 {
     this->robotName = robotName;
-    connected = false;
-    enabled = false;
     movement_direction = NONE;
     camera_movement_direction = CAMERA_NONE;
 }
 
-bool rd::MockRobotManager::moveForward(int velocity)
+bool rd::MockRobotManager::moveForward(double value)
 {
-    if (connected)
-    {
-        if (enabled)
-        {
-            movement_direction = FORWARD;
-            return true;
-        }
-        else
-        {
-            RD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
+    if(value > 0)
+        movement_direction = FORWARD;
+    else if(value < 0)
+        movement_direction = BACKWARDS;
     else
-    {
-        RD_ERROR("Not connected\n");
-        return false;
-    }
+        movement_direction = NONE;
+    return true;
 }
 
-bool rd::MockRobotManager::moveBackwards(int velocity)
+bool rd::MockRobotManager::turnLeft(double value)
 {
-    if (connected)
-    {
-        if (enabled)
-        {
-            movement_direction = BACKWARDS;
-            return true;
-        }
-        else
-        {
-            RD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
+    if(value > 0)
+        movement_direction = LEFT;
+    else if(value < 0)
+        movement_direction = RIGHT;
     else
-    {
-        RD_ERROR("Not connected\n");
-        return false;
-    }
-}
-
-bool rd::MockRobotManager::turnLeft(int velocity)
-{
-    if (connected)
-    {
-        if (enabled)
-        {
-            movement_direction = LEFT;
-            return true;
-        }
-        else
-        {
-            RD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
-    else
-    {
-        RD_ERROR("Not connected\n");
-        return false;
-    }
-}
-
-bool rd::MockRobotManager::turnRight(int velocity)
-{
-    if (connected)
-    {
-        if (enabled)
-        {
-            movement_direction = RIGHT;
-            return true;
-        }
-        else
-        {
-            RD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
-    else
-    {
-        RD_ERROR("Not connected\n");
-        return false;
-    }
+        movement_direction = NONE;
+    return true;
 }
 
 bool rd::MockRobotManager::stopMovement()
 {
-    if (connected)
-    {
-        if (enabled)
-        {
-            movement_direction = NONE;
-            return true;
-        }
-        else
-        {
-            RD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
-    else
-    {
-        RD_ERROR("Not connected\n");
-        return false;
-    }
+    movement_direction = NONE;
+    return true;
 }
 
-bool rd::MockRobotManager::tiltUp(int velocity)
+bool rd::MockRobotManager::tiltDown(double value)
 {
-    if (connected)
-    {
-        if (enabled)
-        {
-            camera_movement_direction = CAMERA_UP;
-            return true;
-        }
-        else
-        {
-            RD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
+    if(value > 0)
+        camera_movement_direction = CAMERA_DOWN;
+    else if(value < 0)
+        camera_movement_direction = CAMERA_UP;
     else
-    {
-        RD_ERROR("Not connected\n");
-        return false;
-    }
+        camera_movement_direction = CAMERA_NONE;
+    return true;
 }
 
-bool rd::MockRobotManager::tiltDown(int velocity)
+bool rd::MockRobotManager::panLeft(double value)
 {
-    if (connected)
-    {
-        if (enabled)
-        {
-            camera_movement_direction = CAMERA_DOWN;
-            return true;
-        }
-        else
-        {
-            RD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
+    if(value > 0)
+        camera_movement_direction = CAMERA_LEFT;
+    else if(value < 0)
+        camera_movement_direction = CAMERA_RIGHT;
     else
-    {
-        RD_ERROR("Not connected\n");
-        return false;
-    }
-}
-
-bool rd::MockRobotManager::panLeft(int velocity)
-{
-    if (connected)
-    {
-        if (enabled)
-        {
-            camera_movement_direction = CAMERA_LEFT;
-            return true;
-        }
-        else
-        {
-            RD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
-    else
-    {
-        RD_ERROR("Not connected\n");
-        return false;
-    }
-}
-
-bool rd::MockRobotManager::panRight(int velocity)
-{
-    if (connected)
-    {
-        if (enabled)
-        {
-            camera_movement_direction = CAMERA_RIGHT;
-            return true;
-        }
-        else
-        {
-            RD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
-    else
-    {
-        RD_ERROR("Not connected\n");
-        return false;
-    }
+        camera_movement_direction = CAMERA_NONE;
+    return true;
 }
 
 bool rd::MockRobotManager::stopCameraMovement()
 {
-    if (connected)
-    {
-        if (enabled)
-        {
-            camera_movement_direction = NONE;
-            return true;
-        }
-        else
-        {
-            RD_ERROR("Robot is disabled\n");
-            return false;
-        }
-    }
-    else
-    {
-        RD_ERROR("Not connected\n");
-        return false;
-    }
+    camera_movement_direction = CAMERA_NONE;
+    return true;
 }
         
-bool rd::MockRobotManager::connect()
-{
-    if (!connected)
-    {
-        connected = true;
-        return true;
-    }
-    else
-    {
-        RD_WARNING("Already connected\n");
-        return true;
-    }
-}
-
-bool rd::MockRobotManager::disconnect()
-{
-    if (connected)
-    {
-        connected = false;
-        return true;
-    }
-    else
-    {
-        RD_ERROR("Not connected\n");
-        return false;
-    }
-}
-
-bool rd::MockRobotManager::test()  {
-    RD_DEBUG("\n");
-    return false;
-}
-
-void rd::MockRobotManager::setEnabled(bool enabled)
-{
-    this->enabled = enabled;
-    if (enabled)
-    {
-        RD_DEBUG("MockRobotManager enabled\n");
-    }
-    else
-        RD_DEBUG("MockRobotManager disabled\n");
-}
-
-void rd::MockRobotManager::onDestroy(){
-    RD_DEBUG("\n");
-    return;
-}
-
-bool rd::MockRobotManager::isConnected() const
-{
-    return connected;
-}
-
-bool rd::MockRobotManager::isEnabled() const
-{
-    return enabled;
-}
-
 bool rd::MockRobotManager::isMoving() const
 {
     return movement_direction!=NONE;
@@ -317,7 +93,7 @@ int rd::MockRobotManager::getMovementDirection()
 
 bool rd::MockRobotManager::isCameraMoving()
 {
-    return camera_movement_direction != NONE;
+    return camera_movement_direction != CAMERA_NONE;
 }
 
 int rd::MockRobotManager::getCameraMovementDirection()

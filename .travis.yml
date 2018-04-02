@@ -23,7 +23,7 @@ env:
     # avoid ALSA errors
     - SDL_AUDIODRIVER=dummy
     # YARP cache
-    - YARP_VER=2.3.70.2
+    - YARP_VER=2.3.72
     - YARP_CACHE_DIR=~/.yarp
 
 cache:
@@ -35,6 +35,10 @@ branches:
   - /^.*appveyor.*$/
 
 before_install:
+  # configure git
+  - if [ ! `git config --get user.email` ]; then `git config --global user.email 'user@example.com'`; fi
+  - if [ ! `git config --get user.name` ]; then `git config --global user.name 'Travis CI'`; fi
+
   # ubuntu dependencies
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq update; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y --no-install-recommends install libace-dev libjpeg-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libzbar-dev libgtest-dev; fi
@@ -84,7 +88,7 @@ install:
     fi
 
   # make installed YARP discoverable by CMake's find_package() command
-  - if [ ! "$TRAVIS_EVENT_TYPE" = cron ]; then export YARP_DIR=$YARP_CACHE_DIR/lib/YARP; fi
+  - if [ ! "$TRAVIS_EVENT_TYPE" = cron ]; then export YARP_DIR=$YARP_CACHE_DIR/lib/cmake/YARP; fi
 
   # see http://gronlier.fr/blog/2015/01/adding-code-coverage-to-your-c-project/
   - cd

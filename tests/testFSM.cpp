@@ -11,7 +11,6 @@
 #include "MockState.hpp"
 #include "StateDirector.hpp"
 #include "YarpStateDirector.hpp"
-#include "Utils.hpp"
 
 #include <yarp/os/Network.h>
 #include <yarp/os/Bottle.h>
@@ -19,6 +18,8 @@
 #include <yarp/os/RpcServer.h>
 #include <yarp/os/PortReader.h>
 #include <yarp/os/Time.h>
+
+#include <ColorDebug.hpp>
 
 namespace rd
 {
@@ -132,7 +133,7 @@ class FSMTest : public testing::Test
     protected:
         bool awaitStateCheck(const std::string & state_id, const int reference_state)
         {
-            RD_DEBUG("%s\n", state_id.c_str());
+            CD_DEBUG("%s\n", state_id.c_str());
 
             int retry_count = 0;
             int currentState = 0;
@@ -176,7 +177,7 @@ const double FSMTest::delay_s = 0.5;
 //--- Tests ------------------------------------------------------------------------------------------
 TEST_F(FSMTest, StateMachineFlowIsCorrect)
 {
-    RD_INFO("Test Starts!\nAssigning transitions...\n");
+    CD_INFO("Test Starts!\nAssigning transitions...\n");
 
     //-- Setup state machine
     stateDirector1->addTransition(stateDirector2, 2);
@@ -253,7 +254,7 @@ TEST_F(FSMTest, StateMachineFlowIsCorrect)
 
 TEST_F(FSMTest, StateMachineStopsAtNULL)
 {
-    RD_INFO("Test Starts!\nAssigning transitions...\n");
+    CD_INFO("Test Starts!\nAssigning transitions...\n");
 
     //-- Setup state machine
     stateDirector1->addTransition(nullStateDirector, 2);

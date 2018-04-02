@@ -12,6 +12,7 @@
 #include "MockImageEventListener.hpp"
 #include "MentalMap.hpp"
 #include "ProcessorImageEventListener.hpp"
+#include "Vector2dBase.hpp"
 
 namespace rd
 {

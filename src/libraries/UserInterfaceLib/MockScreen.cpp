@@ -8,7 +8,7 @@
 
 #include <yarp/os/ResourceFinder.h>
 
-#include "Macros.hpp"
+#include <ColorDebug.hpp>
 
 //-- Public
 const std::string rd::MockScreen::PARAM_MESSAGE = "message";
@@ -41,7 +41,7 @@ bool rd::MockScreen::init()
     background = IMG_Load(rf.findFileByName(IMAGE_PATH).c_str());
     if (background == NULL)
     {
-        RD_ERROR("Unable to load background image (resource: %s)!\n SDL_image Error: %s\n", IMAGE_PATH.c_str(), IMG_GetError());
+        CD_ERROR("Unable to load background image (resource: %s)!\n SDL_image Error: %s\n", IMAGE_PATH.c_str(), IMG_GetError());
         return false;
     }
 
@@ -49,7 +49,7 @@ bool rd::MockScreen::init()
     font = TTF_OpenFont(rf.findFileByName(FONT_PATH).c_str(), 32);
     if (font == NULL)
     {
-        RD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(FONT_PATH).c_str(), TTF_GetError());
+        CD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(FONT_PATH).c_str(), TTF_GetError());
         return false;
     }
     TTF_SetFontStyle(font, TTF_STYLE_BOLD);
@@ -98,7 +98,7 @@ bool rd::MockScreen::show()
                                   0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
         if (!window)
         {
-            RD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
+            CD_ERROR("Unable to set video mode: %s\n", SDL_GetError());
             return false;
         }
 
@@ -158,6 +158,6 @@ bool rd::MockScreen::update(const std::string & parameter, const std::string & v
         return true;
     }
 
-    RD_ERROR("No string parameter %s exists.\n", parameter.c_str());
+    CD_ERROR("No string parameter %s exists.\n", parameter.c_str());
     return false;
 }
