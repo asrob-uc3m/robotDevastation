@@ -230,7 +230,8 @@ bool rd::RobotDevastation::initPlayerInfo(yarp::os::ResourceFinder &rf)
 
 bool rd::RobotDevastation::initSound(yarp::os::ResourceFinder &rf)
 {
-    SDLAudioManager::RegisterManager();
+    if( ! SDLAudioManager::RegisterManager() )
+        return false;
     audioManager = AudioManager::getAudioManager("SDL");
 
     std::string bsoStr( rf.findFileByName("../sounds/RobotDevastationBSO.mp3") );
