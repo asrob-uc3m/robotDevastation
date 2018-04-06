@@ -175,7 +175,7 @@ bool rd::YarpNetworkManager::stop()
 
 bool rd::YarpNetworkManager::isStopped() const
 {
-    return !started;
+    return ! started;
 }
 
 bool rd::YarpNetworkManager::configure(const std::string & parameter, const Player & value)
@@ -191,7 +191,7 @@ bool rd::YarpNetworkManager::configure(const std::string & parameter, const Play
 
 bool rd::YarpNetworkManager::sendPlayerHit(const Player & player, int damage)
 {
-    if (!started)
+    if ( ! started )
     {
         CD_ERROR("NetworkManager has not been started\n");
         return false;
