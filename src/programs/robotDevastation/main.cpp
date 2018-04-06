@@ -78,6 +78,17 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    CD_INFO_NO_HEADER("Checking for yarp network... ");
+    fflush(stdout);
+    yarp::os::Network yarp;
+    if ( ! yarp::os::Network::checkNetwork() )
+    {
+        CD_ERROR_NO_HEADER("[fail]\n");
+        CD_INFO_NO_HEADER("%s found no yarp network (try running \"yarpserver &\"), bye!\n",argv[0]);
+        return 1;
+    }
+    CD_SUCCESS_NO_HEADER("[ok]\n");
+
     rd::RobotDevastation robotDevastation;
     return robotDevastation.runModule(rf);  //-- Internally calls rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
