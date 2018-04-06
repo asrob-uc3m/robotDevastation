@@ -57,9 +57,9 @@ bool rd::YarpNetworkManager::start()
         return false;
     }
 
-    yarp::os::NetworkBase::initMinimum();
+    yarp::os::Network::initMinimum();
 
-    if ( ! yarp::os::NetworkBase::checkNetwork() )
+    if ( ! yarp::os::Network::checkNetwork() )
     {
         CD_ERROR("Found no yarp network to connect to rdServer (try running 'yarpserver &'). Bye!\n");
         return false;
