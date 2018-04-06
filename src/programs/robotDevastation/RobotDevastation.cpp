@@ -20,7 +20,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
 
     //-- Init screen manager
-    SDLScreenManager::RegisterManager();
+    if( ! SDLScreenManager::RegisterManager() )
+        return false;
     screenManager = ScreenManager::getScreenManager(SDLScreenManager::id);
     if (screenManager==NULL)
     {
@@ -33,7 +34,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     screenManager->start();
 
     //-- Init input manager
-    SDLInputManager::RegisterManager();
+    if( ! SDLInputManager::RegisterManager() )
+        return false;
     inputManager = InputManager::getInputManager("SDL");
 
     //-- Init sound
@@ -69,12 +71,14 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Init image manager
     if( rf.check("fakeImageManager") )
     {
-        MockImageManager::RegisterManager();
+        if( ! MockImageManager::RegisterManager() )
+            return false;
         imageManager = ImageManager::getImageManager(MockImageManager::id);
     }
     else if( rf.check("yarpLocalImageManager") )
     {
-        YarpLocalImageManager::RegisterManager();
+        if( ! YarpLocalImageManager::RegisterManager() )
+            return false;
         imageManager = ImageManager::getImageManager(YarpLocalImageManager::id);
         if (imageManager == NULL)
         {
@@ -92,7 +96,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     }
     else
     {
-        YarpImageManager::RegisterManager();
+        if( ! YarpImageManager::RegisterManager() )
+            return false;
         imageManager = ImageManager::getImageManager(YarpImageManager::id);
     }
 
@@ -119,7 +124,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     mentalMap->addWeapon(Weapon("Default gun", 10, 5));
 
     //-- Init network manager
-    YarpNetworkManager::RegisterManager();
+    if( ! YarpNetworkManager::RegisterManager() )
+        return false;
     networkManager = NetworkManager::getNetworkManager(YarpNetworkManager::id);
     networkManager->configure("player", players[0]);
 
