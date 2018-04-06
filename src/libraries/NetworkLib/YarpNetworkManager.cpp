@@ -89,21 +89,25 @@ bool rd::YarpNetworkManager::start()
         return false;
     }
 
+    CD_INFO_NO_HEADER("Checking for rdServer ports... ");
     //-- Connect robotDevastation RpcClient to rdServer RpcServer
-    if( ! yarp::os::Network::connect( rpc_str.str() , "/rdServer/rpc:s" ) )
+    std::string rdServerRpcS("/rdServer/rpc:s");
+    if( ! yarp::os::Network::connect( rpc_str.str() , rdServerRpcS ) )
     {
-        CD_ERROR("Could not connect robotDevastation RpcClient to rdServer RpcServer (launch 'rdServer' if not already launched).\n");
+        CD_ERROR_NO_HEADER("[fail]\n");
+        CD_INFO_NO_HEADER("Could not connect to rdServer '%s' port (try running \"rdServer &\"), bye!\n",rdServerRpcS.c_str());
         return false;
     }
-    CD_SUCCESS("Connected robotDevastation RpcClient to rdServer RpcServer!\n");
 
     //-- Connect from rdServer info to robotDevastation callbackPort
-    if ( !yarp::os::Network::connect( "/rdServer/info:o", callback_str.str() ))
+    std::string rdServerInfoO("/rdServer/info:o");
+    if ( ! yarp::os::Network::connect( rdServerInfoO, callback_str.str() ))
     {
-        CD_ERROR("Could not connect from rdServer info to robotDevastation callbackPort (launch 'rdServer' if not already launched).\n");
+        CD_ERROR_NO_HEADER("[fail]\n");
+        CD_INFO_NO_HEADER("Could not connect from rdServer '%s' port (try running \"rdServer &\"), bye!\n",rdServerInfoO.c_str());
         return false;
     }
-    CD_SUCCESS("Connected from rdServer info to robotDevastation callbackPort!\n");
+    CD_SUCCESS_NO_HEADER("[ok]\n");
 
     callbackPort.useCallback(*this);
 

@@ -60,7 +60,6 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Acquire robot interface
     if( ! robotDevice.view(robotManager) )
     {
-        CD_INFO_NO_HEADER("Checking for robot motors... ");
         CD_ERROR("Could not acquire robot interface\n");
         return false;
     }
