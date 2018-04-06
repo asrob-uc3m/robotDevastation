@@ -51,16 +51,21 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Start robot device
     if( ! robotDevice.open(robotOptions) )
     {
-        CD_ERROR("Could not open robot device\n");
+        CD_INFO_NO_HEADER("Checking for robot motors... ");
+        CD_ERROR_NO_HEADER("[fail]\n");
+        CD_INFO_NO_HEADER("Found no robot motors with robotName %s (try running with --fakeRobotManager if no robot), bye!\n", robotName.c_str());
         return false;
     }
 
     //-- Acquire robot interface
     if( ! robotDevice.view(robotManager) )
     {
+        CD_INFO_NO_HEADER("Checking for robot motors... ");
         CD_ERROR("Could not acquire robot interface\n");
         return false;
     }
+    CD_INFO_NO_HEADER("Checking for robot motors... ");
+    CD_SUCCESS_NO_HEADER("[ok]\n");
 
     //-- Init image manager
     if( rf.check("fakeImageManager") )
