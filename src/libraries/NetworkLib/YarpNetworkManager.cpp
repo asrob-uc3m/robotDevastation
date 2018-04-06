@@ -5,7 +5,6 @@
 #include "YarpNetworkManager.hpp"
 
 #include <sstream>
-#include <cstring> // strcmp()
 
 #include <yarp/os/Network.h>
 
@@ -206,10 +205,10 @@ bool rd::YarpNetworkManager::sendPlayerHit(const Player & player, int damage)
     CD_INFO("rdServer response from hit: %s\n",response.toString().c_str());
 
     //-- Check response
-    if (std::strcmp(response.toString().c_str(), "[ok]") == 0)
-        return true;
-    else
+    if (response.toString() != "[ok]")
         return false;
+
+    return true;
 }
 
 bool rd::YarpNetworkManager::login()
@@ -238,10 +237,10 @@ bool rd::YarpNetworkManager::login()
     CD_INFO("rdServer response from login: %s\n",res.toString().c_str());
 
     //-- Check response
-    if (std::strcmp(res.toString().c_str(), "[ok]") == 0)
-        return true;
-    else
+    if (res.toString() != "[ok]")
         return false;
+
+    return true;
 }
 
 bool rd::YarpNetworkManager::logout()
@@ -260,16 +259,14 @@ bool rd::YarpNetworkManager::logout()
     CD_INFO("rdServer response from logout: %s\n",res.toString().c_str());
 
     //-- Check response
-    if (std::strcmp(res.toString().c_str(), "[ok]") == 0)
-    {
-        CD_SUCCESS("Logout ok\n");
-        return true;
-    }
-    else
+    if (res.toString() != "[ok]")
     {
         CD_ERROR("Logout failed\n");
         return false;
     }
+
+    CD_SUCCESS("Logout ok\n");
+    return true;
 }
 
 bool rd::YarpNetworkManager::keepAlive()
@@ -287,13 +284,10 @@ bool rd::YarpNetworkManager::keepAlive()
     rpcClient.write(msgRdPlayer,res);
 
     //-- Check response
-    if (std::strcmp(res.toString().c_str(), "[ok]") == 0)
-    {
-        return true;
-    }
-    else
+    if (res.toString() != "[ok]")
     {
         CD_ERROR("Keep alive failed\n");
         return false;
     }
+    return true;
 }
