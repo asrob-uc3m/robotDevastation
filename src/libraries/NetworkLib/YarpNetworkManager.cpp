@@ -61,7 +61,9 @@ bool rd::YarpNetworkManager::start()
 
     if ( ! yarp::os::Network::checkNetwork() )
     {
-        CD_ERROR("Found no yarp network to connect to rdServer (try running 'yarpserver &'). Bye!\n");
+        CD_INFO_NO_HEADER("Checking for yarp network... ");
+        CD_ERROR_NO_HEADER("[fail]\n");
+        CD_INFO_NO_HEADER("Found no yarp network to connect to rdServer (try running \"yarpserver &\"), bye!\n");
         return false;
     }
 
