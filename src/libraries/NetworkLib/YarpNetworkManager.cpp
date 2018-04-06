@@ -67,7 +67,7 @@ bool rd::YarpNetworkManager::start()
         return false;
     }
 
-    //-- Open the rcpClient port with this player's id
+    //-- Open the rpcClient port with this player's id
     std::ostringstream rpc_str;
     rpc_str << "/robotDevastation/";
     rpc_str << player.getId();
