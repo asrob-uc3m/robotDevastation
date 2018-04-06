@@ -214,7 +214,7 @@ bool rd::YarpNetworkManager::sendPlayerHit(const Player & player, int damage)
 
 bool rd::YarpNetworkManager::login()
 {
-    if (!started)
+    if ( ! started )
     {
         CD_WARNING("NetworkManager has not been started\n");
         if( ! start() )
