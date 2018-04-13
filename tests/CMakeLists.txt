@@ -2,8 +2,6 @@
 # CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
-find_package(GTestSources 1.6.0 QUIET)
-
 if(NOT GTestSources_FOUND AND (NOT DEFINED ENABLE_tests OR ENABLE_tests))
     message(WARNING "GTestSources package not found, disabling tests")
 endif()
@@ -15,10 +13,6 @@ if(ENABLE_tests)
     
 set(gtest_force_shared_crt ON CACHE INTERNAL "") # needed for Windows
 add_subdirectory(${GTestSources_SOURCE_DIR} ${CMAKE_BINARY_DIR}/gtest)
-
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-find_package(SDL2_ttf REQUIRED)
 
 include_directories(${GTestSources_INCLUDE_DIR})
 

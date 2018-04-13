@@ -99,6 +99,16 @@ if(YARP_VERSION_SHORT VERSION_LESS 2.3.70)
     include(YarpInstallationHelpers)
 endif()
 
+# Find SDL and ZBar.
+find_package(SDL2 REQUIRED)
+find_package(SDL2_mixer REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(SDL2_ttf REQUIRED)
+find_package(ZBar REQUIRED)
+
+# Find googletest sources (for unit testing).
+find_package(GTestSources 1.6.0 QUIET)
+
 # Configure installation paths for YARP resources.
 yarp_configure_external_installation(rd)
 
