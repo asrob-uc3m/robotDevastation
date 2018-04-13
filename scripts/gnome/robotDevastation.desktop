@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=robotDevastation
-Type=Application
-MimeType=application/vnd.ms-htmlhelp;
-Exec=gnome-terminal --maximize -e robotDevastation
-NoDisplay=true
-StartupNotify=true
-Icon=/usr/local/share/rd/contexts/images/rd-icon-64x64.png
-Path=

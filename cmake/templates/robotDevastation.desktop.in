@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=robotDevastation
+Type=Application
+MimeType=application/vnd.ms-htmlhelp;
+Exec=gnome-terminal --maximize -e ${DESKTOP_SHORTCUT_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/robotDevastation
+NoDisplay=true
+StartupNotify=true
+Icon=${DESKTOP_SHORTCUT_INSTALL_PREFIX}/${RD_CONTEXTS_INSTALL_DIR}/images/rd-icon-64x64.png
+Path=

@@ -142,5 +142,11 @@ if(GENERATE_doc_html)
             DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
 
+# Configure and install desktop shortcut.
+if(UNIX)
+    include(DesktopShortcutHelpers)
+    configure_and_install_desktop_shortcut(${CMAKE_SOURCE_DIR}/cmake/templates/robotDevastation.desktop.in)
+endif()
+
 # Uninstall target.
 include(AddUninstallTarget)
