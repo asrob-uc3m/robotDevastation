@@ -5,7 +5,6 @@
 #include "YarpNetworkManager.hpp"
 
 #include <sstream>
-#include <cstring> // strcmp()
 
 #include <yarp/os/Network.h>
 
@@ -57,15 +56,17 @@ bool rd::YarpNetworkManager::start()
         return false;
     }
 
-    yarp::os::NetworkBase::initMinimum();
+    yarp::os::Network::initMinimum();
 
-    if ( ! yarp::os::NetworkBase::checkNetwork() )
+    if ( ! yarp::os::Network::checkNetwork() )
     {
-        CD_ERROR("Found no yarp network to connect to rdServer (try running 'yarpserver &'). Bye!\n");
+        CD_INFO_NO_HEADER("Checking for yarp network... ");
+        CD_ERROR_NO_HEADER("[fail]\n");
+        CD_INFO_NO_HEADER("Found no yarp network to connect to rdServer (try running \"yarpserver &\"), bye!\n");
         return false;
     }
 
-    //-- Open the rcpClient port with this player's id
+    //-- Open the rpcClient port with this player's id
     std::ostringstream rpc_str;
     rpc_str << "/robotDevastation/";
     rpc_str << player.getId();
@@ -88,20 +89,26 @@ bool rd::YarpNetworkManager::start()
     }
 
     //-- Connect robotDevastation RpcClient to rdServer RpcServer
-    if( ! yarp::os::Network::connect( rpc_str.str() , "/rdServer/rpc:s" ) )
+    std::string rdServerRpcS("/rdServer/rpc:s");
+    if( ! yarp::os::Network::connect( rpc_str.str() , rdServerRpcS ) )
     {
-        CD_ERROR("Could not connect robotDevastation RpcClient to rdServer RpcServer (launch 'rdServer' if not already launched).\n");
+        CD_INFO_NO_HEADER("Checking for rdServer ports... ");
+        CD_ERROR_NO_HEADER("[fail]\n");
+        CD_INFO_NO_HEADER("Could not connect to rdServer '%s' port (try running \"rdServer &\"), bye!\n",rdServerRpcS.c_str());
         return false;
     }
-    CD_SUCCESS("Connected robotDevastation RpcClient to rdServer RpcServer!\n");
 
     //-- Connect from rdServer info to robotDevastation callbackPort
-    if ( !yarp::os::Network::connect( "/rdServer/info:o", callback_str.str() ))
+    std::string rdServerInfoO("/rdServer/info:o");
+    if ( ! yarp::os::Network::connect( rdServerInfoO, callback_str.str() ))
     {
-        CD_ERROR("Could not connect from rdServer info to robotDevastation callbackPort (launch 'rdServer' if not already launched).\n");
+        CD_INFO_NO_HEADER("Checking for rdServer ports... ");
+        CD_ERROR_NO_HEADER("[fail]\n");
+        CD_INFO_NO_HEADER("Could not connect from rdServer '%s' port (try running \"rdServer &\"), bye!\n",rdServerInfoO.c_str());
         return false;
     }
-    CD_SUCCESS("Connected from rdServer info to robotDevastation callbackPort!\n");
+    CD_INFO_NO_HEADER("Checking for rdServer ports... ");
+    CD_SUCCESS_NO_HEADER("[ok]\n");
 
     callbackPort.useCallback(*this);
 
@@ -167,7 +174,7 @@ bool rd::YarpNetworkManager::stop()
 
 bool rd::YarpNetworkManager::isStopped() const
 {
-    return !started;
+    return ! started;
 }
 
 bool rd::YarpNetworkManager::configure(const std::string & parameter, const Player & value)
@@ -183,7 +190,7 @@ bool rd::YarpNetworkManager::configure(const std::string & parameter, const Play
 
 bool rd::YarpNetworkManager::sendPlayerHit(const Player & player, int damage)
 {
-    if (!started)
+    if ( ! started )
     {
         CD_ERROR("NetworkManager has not been started\n");
         return false;
@@ -198,18 +205,18 @@ bool rd::YarpNetworkManager::sendPlayerHit(const Player & player, int damage)
     CD_INFO("rdServer response from hit: %s\n",response.toString().c_str());
 
     //-- Check response
-    if (std::strcmp(response.toString().c_str(), "[ok]") == 0)
-        return true;
-    else
+    if (response.toString() != "[ok]")
         return false;
+
+    return true;
 }
 
 bool rd::YarpNetworkManager::login()
 {
-    if (!started)
+    if ( ! started )
     {
         CD_WARNING("NetworkManager has not been started\n");
-        if(!start())
+        if( ! start() )
         {
             CD_ERROR("NetworkManager could not be started for player %d\n", player.getId() );
             return false;
@@ -230,10 +237,10 @@ bool rd::YarpNetworkManager::login()
     CD_INFO("rdServer response from login: %s\n",res.toString().c_str());
 
     //-- Check response
-    if (std::strcmp(res.toString().c_str(), "[ok]") == 0)
-        return true;
-    else
+    if (res.toString() != "[ok]")
         return false;
+
+    return true;
 }
 
 bool rd::YarpNetworkManager::logout()
@@ -252,16 +259,14 @@ bool rd::YarpNetworkManager::logout()
     CD_INFO("rdServer response from logout: %s\n",res.toString().c_str());
 
     //-- Check response
-    if (std::strcmp(res.toString().c_str(), "[ok]") == 0)
-    {
-        CD_SUCCESS("Logout ok\n");
-        return true;
-    }
-    else
+    if (res.toString() != "[ok]")
     {
         CD_ERROR("Logout failed\n");
         return false;
     }
+
+    CD_SUCCESS("Logout ok\n");
+    return true;
 }
 
 bool rd::YarpNetworkManager::keepAlive()
@@ -279,13 +284,10 @@ bool rd::YarpNetworkManager::keepAlive()
     rpcClient.write(msgRdPlayer,res);
 
     //-- Check response
-    if (std::strcmp(res.toString().c_str(), "[ok]") == 0)
-    {
-        return true;
-    }
-    else
+    if (res.toString() != "[ok]")
     {
         CD_ERROR("Keep alive failed\n");
         return false;
     }
+    return true;
 }

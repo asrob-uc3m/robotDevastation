@@ -20,7 +20,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 
 
     //-- Init screen manager
-    SDLScreenManager::RegisterManager();
+    if( ! SDLScreenManager::RegisterManager() )
+        return false;
     screenManager = ScreenManager::getScreenManager(SDLScreenManager::id);
     if (screenManager==NULL)
     {
@@ -33,7 +34,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     screenManager->start();
 
     //-- Init input manager
-    SDLInputManager::RegisterManager();
+    if( ! SDLInputManager::RegisterManager() )
+        return false;
     inputManager = InputManager::getInputManager("SDL");
 
     //-- Init sound
@@ -51,7 +53,9 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Start robot device
     if( ! robotDevice.open(robotOptions) )
     {
-        CD_ERROR("Could not open robot device\n");
+        CD_INFO_NO_HEADER("Checking for robot motors... ");
+        CD_ERROR_NO_HEADER("[fail]\n");
+        CD_INFO_NO_HEADER("Found no robot motors with robotName %s (try running with --fakeRobotManager if no robot), bye!\n", robotName.c_str());
         return false;
     }
 
@@ -61,16 +65,20 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         CD_ERROR("Could not acquire robot interface\n");
         return false;
     }
+    CD_INFO_NO_HEADER("Checking for robot motors... ");
+    CD_SUCCESS_NO_HEADER("[ok]\n");
 
     //-- Init image manager
     if( rf.check("fakeImageManager") )
     {
-        MockImageManager::RegisterManager();
+        if( ! MockImageManager::RegisterManager() )
+            return false;
         imageManager = ImageManager::getImageManager(MockImageManager::id);
     }
     else if( rf.check("yarpLocalImageManager") )
     {
-        YarpLocalImageManager::RegisterManager();
+        if( ! YarpLocalImageManager::RegisterManager() )
+            return false;
         imageManager = ImageManager::getImageManager(YarpLocalImageManager::id);
         if (imageManager == NULL)
         {
@@ -88,7 +96,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     }
     else
     {
-        YarpImageManager::RegisterManager();
+        if( ! YarpImageManager::RegisterManager() )
+            return false;
         imageManager = ImageManager::getImageManager(YarpImageManager::id);
     }
 
@@ -115,7 +124,8 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     mentalMap->addWeapon(Weapon("Default gun", 10, 5));
 
     //-- Init network manager
-    YarpNetworkManager::RegisterManager();
+    if( ! YarpNetworkManager::RegisterManager() )
+        return false;
     networkManager = NetworkManager::getNetworkManager(YarpNetworkManager::id);
     networkManager->configure("player", players[0]);
 
@@ -225,7 +235,8 @@ bool rd::RobotDevastation::initPlayerInfo(yarp::os::ResourceFinder &rf)
 
 bool rd::RobotDevastation::initSound(yarp::os::ResourceFinder &rf)
 {
-    SDLAudioManager::RegisterManager();
+    if( ! SDLAudioManager::RegisterManager() )
+        return false;
     audioManager = AudioManager::getAudioManager("SDL");
 
     std::string bsoStr( rf.findFileByName("../sounds/RobotDevastationBSO.mp3") );

@@ -115,8 +115,8 @@ bool rd::AudioManager::Register(AudioManager *manager, const std::string & id)
     }
     else
     {
-        CD_ERROR( "AudioManager with id \"%s\" was already registered\n", id.c_str());
-        return false;
+        CD_WARNING( "(known issue) AudioManager with id \"%s\" was already registered\n", id.c_str());  // Change to CD_ERRROR after fixing #30
+        return true;  // Return false after fixing #30
     }
 
 }
