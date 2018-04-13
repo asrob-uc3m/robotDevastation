@@ -6,17 +6,17 @@ option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" 
 
 if(ENABLE_robotDevastation)
 
-# Find YARP.  Point the YARP_DIR environment variable at your build.
-find_package(YARP REQUIRED)
-
 add_executable(robotDevastation main.cpp
                                 RobotDevastation.hpp
                                 RobotDevastation.cpp)
 
 add_dependencies(robotDevastation COLOR_DEBUG ASROB_YARP_DEVICES)
 
-target_include_directories(robotDevastation PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-                                                   ${YARP_INCLUDE_DIRS})
+target_include_directories(robotDevastation PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+if(YARP_VERSION_SHORT VERSION_LESS 2.3.70)
+    target_include_directories(robotDevastation PUBLIC ${YARP_INCLUDE_DIRS})
+endif()
 
 target_link_libraries(robotDevastation YARP::YARP_OS
                                        MusicLib

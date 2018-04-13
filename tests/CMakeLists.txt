@@ -16,7 +16,6 @@ if(ENABLE_tests)
 set(gtest_force_shared_crt ON CACHE INTERNAL "") # needed for Windows
 add_subdirectory(${GTestSources_SOURCE_DIR} ${CMAKE_BINARY_DIR}/gtest)
 
-find_package(YARP REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
