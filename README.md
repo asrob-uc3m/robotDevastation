@@ -8,6 +8,8 @@
 
 - Developer Manual: https://www.gitbook.com/book/asrob-uc3m/robotdevastation-developer-manual
 
+- Robots repository: https://github.com/asrob-uc3m/robotDevastation-robots
+
 - Doxygen documentation: http://asrob.uc3m.es/rddoc/index.html
 
 - GitHub project: https://github.com/orgs/asrob-uc3m/projects/1
