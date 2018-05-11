@@ -14,6 +14,8 @@
 
 - Old Wiki: http://asrob.uc3m.es/index.php/Robot_Devastation
 
+## Status
+
 [![Build Status (Linux/OSX)](https://travis-ci.org/asrob-uc3m/robotDevastation.svg?branch=develop)](https://travis-ci.org/asrob-uc3m/robotDevastation)
 
 [![Build Status (Windows)](https://ci.appveyor.com/api/projects/status/github/asrob-uc3m/robotdevastation?branch=develop&svg=true)](https://ci.appveyor.com/project/asrob-uc3m/robotdevastation)
@@ -22,6 +24,7 @@
 
 [![Issues](https://img.shields.io/github/issues/asrob-uc3m/robotDevastation.svg?label=Issues)](https://github.com/asrob-uc3m/robotDevastation/issues)
 
-Credits:
+## Additional Credits
+
 * [Skull image by Sev](https://openclipart.org/detail/211414/skull-and-crossbones)
 * [Freemono by GNU Freefont](http://www.fontspace.com/gnu-freefont/freemono)
