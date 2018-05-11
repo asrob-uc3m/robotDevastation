@@ -9,7 +9,8 @@ Developer Manual: https://www.gitbook.com/book/asrob-uc3m/robotdevastation-devel
 
 Link to Doxygen documentation: http://asrob.uc3m.es/rddoc/index.html
 
-Link to Wiki: http://asrob.uc3m.es/index.php/Robot_Devastation
+Link to Old Wiki: http://asrob.uc3m.es/index.php/Robot_Devastation
+Link to Tracking Wiki: https://github.com/asrob-uc3m/robotDevastation/wiki/Cuaderno-de-Bit%C3%A1cora
 
 [![Build Status (Linux/OSX)](https://travis-ci.org/asrob-uc3m/robotDevastation.svg?branch=develop)](https://travis-ci.org/asrob-uc3m/robotDevastation)
 
