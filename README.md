@@ -5,10 +5,14 @@
 **Robot Devastation**: un shooter de nueva generación con realidad aumentada y robots reales. A través de tu smartphone o PC vas a poder jugar online con otros usuarios, manejando robots en campeonatos y campañas: ¡todo 24/7!
 
 - User Manual (includes Installation Guide): https://www.gitbook.com/book/asrob-uc3m/robotdevastation-user-manual
+
 - Developer Manual: https://www.gitbook.com/book/asrob-uc3m/robotdevastation-developer-manual
-- Link to Doxygen documentation: http://asrob.uc3m.es/rddoc/index.html
-- Link to Old Wiki: http://asrob.uc3m.es/index.php/Robot_Devastation
-- Link to Tracking Wiki: https://github.com/asrob-uc3m/robotDevastation/wiki/Cuaderno-de-Bit%C3%A1cora
+
+- Doxygen documentation: http://asrob.uc3m.es/rddoc/index.html
+
+- Tracking Wiki: https://github.com/asrob-uc3m/robotDevastation/wiki/Cuaderno-de-Bit%C3%A1cora
+
+- Old Wiki: http://asrob.uc3m.es/index.php/Robot_Devastation
 
 [![Build Status (Linux/OSX)](https://travis-ci.org/asrob-uc3m/robotDevastation.svg?branch=develop)](https://travis-ci.org/asrob-uc3m/robotDevastation)
 
