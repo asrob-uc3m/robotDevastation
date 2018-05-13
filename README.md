@@ -12,6 +12,7 @@
    - Developer Manual: https://www.gitbook.com/book/asrob-uc3m/robotdevastation-developer-manual
    - Doxygen API Documentation: http://asrob.uc3m.es/rddoc/index.html
 - Additional Links
+   - Official Site: http://asrob-uc3m.github.io/workgroups/2017-05-28-robot-devastation.html
    - Robots Repository: https://github.com/asrob-uc3m/robotDevastation-robots
    - Research Repository: https://github.com/asrob-uc3m/robotDevastation-research
    - YARP Devices Repository: https://github.com/asrob-uc3m/yarp-devices
