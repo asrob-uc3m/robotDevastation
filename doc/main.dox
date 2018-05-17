@@ -1,13 +1,9 @@
 /**
   * \mainpage Robot Devastation - The software side
 
-\htmlonly
-<center><a href="http://asrob.uc3m.es/index.php/Robot_Devastation">
-<img src="http://asrob.uc3m.es/images/thumb/2/24/Devastation-thin.png/800px-Devastation-thin.png" />
-</a></center>
-\endhtmlonly
+![Image](../../share/images/800px-Devastation-thin.png)
 
-Welcome to robotDevastation!
+Welcome to Robot Devastation!
 
  \li <a class="el" href="https://www.gitbook.com/book/asrob-uc3m/robotdevastation-user-manual">Robot Devastation - user manual</a>
  \li <a class="el" href="https://www.gitbook.com/book/asrob-uc3m/robotdevastation-developer-manual">Robot Devastation - developer manual</a>
