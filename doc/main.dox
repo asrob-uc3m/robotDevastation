@@ -1,7 +1,11 @@
 /**
-  * \mainpage Robot Devastation - The software side
+  * \mainpage Robot Devastation
 
-![Image](https://raw.githubusercontent.com/asrob-uc3m/robotDevastation/master/share/images/800px-Devastation-thin.png)
+\htmlonly
+<center><a href="http://asrob-uc3m.github.io/workgroups/2017-05-28-robot-devastation.html">
+<img src="https://raw.githubusercontent.com/asrob-uc3m/robotDevastation/master/share/images/800px-Devastation-thin.png" />
+</a></center>
+\endhtmlonly
 
 Welcome to Robot Devastation!
 
