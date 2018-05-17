@@ -14,8 +14,10 @@
 - Additional Links
    - [Official Site (web)](http://asrob-uc3m.github.io/workgroups/2017-05-28-robot-devastation.html)
    - [Robots Repository (robotDevastation-robots)](https://github.com/asrob-uc3m/robotDevastation-robots)
-   - [Research Repository (robotDevastation-research)](https://github.com/asrob-uc3m/robotDevastation-research)
    - [YARP Devices Repository (yarp-devices)](https://github.com/asrob-uc3m/yarp-devices)
+   - [Simulator Repository (robotDevastation-simulator)](https://github.com/asrob-uc3m/robotDevastation-simulator)
+   - [OpenRAVE Models Repository (robotDevastation-openrave-models)](https://github.com/asrob-uc3m/robotDevastation-openrave-models)
+   - [Research Repository (robotDevastation-research)](https://github.com/asrob-uc3m/robotDevastation-research)
    - [Old Wiki](http://asrob.uc3m.es/index.php/Robot_Devastation)
 
 ## Status
