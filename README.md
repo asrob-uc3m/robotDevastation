@@ -10,7 +10,6 @@
 - Development Tracking
    - [GitHub Project](https://github.com/orgs/asrob-uc3m/projects/1)
    - [GitHub Wiki (Cuaderno de Bitácora)](https://github.com/asrob-uc3m/robotDevastation/wiki/Cuaderno-de-Bitácora)
-- Development Info
 - Additional Links
    - [Official Site (web)](http://asrob-uc3m.github.io/workgroups/2017-05-28-robot-devastation.html)
    - [Robots Repository (robotDevastation-robots)](https://github.com/asrob-uc3m/robotDevastation-robots)
