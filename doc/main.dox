@@ -1,5 +1,6 @@
 /**
-  * \mainpage Robot Devastation - Doxygen API Documentation
+
+\mainpage Robot Devastation - Doxygen API Documentation
 
 \htmlonly
 <center><a href="http://asrob-uc3m.github.io/workgroups/2017-05-28-robot-devastation.html">
@@ -7,23 +8,27 @@
 </a></center>
 \endhtmlonly
 
-Welcome to Robot Devastation!
-
- \li <a class="el" href="https://www.gitbook.com/book/asrob-uc3m/robotdevastation-user-manual">Robot Devastation - user manual</a>
- \li <a class="el" href="https://www.gitbook.com/book/asrob-uc3m/robotdevastation-developer-manual">Robot Devastation - developer manual</a>
- \li <a class="el" href="https://github.com/asrob-uc3m/robotDevastation" target="_blank">robotDevastation @ GitHub</a>
+Welcome to the [Robot Devastation](http://asrob-uc3m.github.io/workgroups/2017-05-28-robot-devastation.html) Doxygen API Documentation.
 
 Internal links of interest:
 
- \li \ref rd_programs
- \li \ref rd_libraries
+- \ref rd_programs
+- \ref rd_libraries
 
 External links of interest:
- \li <a class="el" href="https://github.com/asrob-uc3m/robotDevastation-robots" target="_blank">robotDevastation-robots @ GitHub</a>
- \li <a class=el href="http://www.yarp.it/" target="_blank">YARP doc</a> / <a class=el href="https://github.com/robotology/yarp" target="_blank">YARP @ GitHub</a>
 
-<hr>
-
-This page can be edited at robotDevastation/doc/main.dox.
+- [User Manual](https://www.gitbook.com/book/asrob-uc3m/robotdevastation-user-manual) (includes Installation Guide)
+- Development Tracking
+   - [GitHub Project](https://github.com/orgs/asrob-uc3m/projects/1)
+   - [GitHub Wiki (Cuaderno de Bitácora)](https://github.com/asrob-uc3m/robotDevastation/wiki/Cuaderno-de-Bitácora)
+- Development Info
+   - [Developer Manual](https://www.gitbook.com/book/asrob-uc3m/robotdevastation-developer-manual)
+- Additional Links
+   - [Official Site (web)](http://asrob-uc3m.github.io/workgroups/2017-05-28-robot-devastation.html)
+   - [Main Repository (robotDevastation)](https://github.com/asrob-uc3m/robotDevastation)
+   - [Robots Repository (robotDevastation-robots)](https://github.com/asrob-uc3m/robotDevastation-robots)
+   - [Research Repository (robotDevastation-research)](https://github.com/asrob-uc3m/robotDevastation-research)
+   - [YARP Devices Repository (yarp-devices)](https://github.com/asrob-uc3m/yarp-devices)
+   - [Old Wiki](http://asrob.uc3m.es/index.php/Robot_Devastation)
 
 */
