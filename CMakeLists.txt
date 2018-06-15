@@ -33,12 +33,8 @@ endif()
 
 # Pick up our CMake modules.
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake
-                              ${CMAKE_SOURCE_DIR}/cmake/find-modules
-                              ${CMAKE_SOURCE_DIR}/cmake/ycm-modules)
-
-# Bootstrap YCM. Make sure it's compatible with cmake_minimum_required().
-set(YCM_TAG v0.6.0)
-include(YCMBootstrap)
+                              ${CMAKE_SOURCE_DIR}/cmake/modules
+                              ${CMAKE_SOURCE_DIR}/cmake/find-modules)
 
 # Standard installation directories.
 include(GNUInstallDirs)
