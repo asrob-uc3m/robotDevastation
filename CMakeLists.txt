@@ -2,7 +2,7 @@
 # CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
 project(robotDevastation LANGUAGES CXX)
 
@@ -55,6 +55,7 @@ endif()
 
 # Find project's hard dependencies.
 find_package(COLOR_DEBUG REQUIRED)
+find_package(YCM REQUIRED)
 find_package(ASROB_YARP_DEVICES REQUIRED)
 
 # let CMake organize projects in folders (in IDEs that support this)
