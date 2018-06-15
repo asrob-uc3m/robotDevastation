@@ -4,7 +4,7 @@
 
 #include "ScreenManager.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 //-- This is very important:
 rd::ScreenManager * rd::ScreenManager::screenManagerInstance = NULL;

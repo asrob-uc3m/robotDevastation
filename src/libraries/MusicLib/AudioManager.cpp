@@ -4,7 +4,7 @@
 
 #include "AudioManager.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 //-- This is very important:
 rd::AudioManager * rd::AudioManager::audioManagerInstance = NULL;

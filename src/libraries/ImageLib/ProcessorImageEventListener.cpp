@@ -13,7 +13,7 @@
 #include "Target.hpp"
 #include "Vector2dBase.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 rd::ProcessorImageEventListener::ProcessorImageEventListener()
 {

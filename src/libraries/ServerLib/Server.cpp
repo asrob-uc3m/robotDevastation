@@ -8,7 +8,7 @@
 
 #include <yarp/os/Bottle.h>
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 #include "Vocabs.hpp"
 

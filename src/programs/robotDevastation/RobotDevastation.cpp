@@ -8,7 +8,7 @@
 
 #include <yarp/os/Property.h>
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 {

@@ -4,7 +4,7 @@
 
 #include "NetworkManager.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 //-- Static members initialization:
 rd::NetworkManager * rd::NetworkManager::networkManagerInstance = NULL;

@@ -23,8 +23,6 @@ add_library(UserInterfaceLib DeadScreen.hpp
                              SDLScreenManager.hpp
                              SDLScreenManager.cpp)
 
-add_dependencies(UserInterfaceLib COLOR_DEBUG)
-
 target_include_directories(UserInterfaceLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                                    ${YARP_INCLUDE_DIRS}
                                                    ${SDL2_INCLUDE_DIR}
@@ -39,4 +37,5 @@ target_link_libraries(UserInterfaceLib PUBLIC YARP::YARP_OS
                                               MentalMapLib)
 
 target_link_libraries(UserInterfaceLib PRIVATE ${SDL2_IMAGE_LIBRARIES}
-                                               UtilsLib)
+                                               UtilsLib
+                                               ROBOTICSLAB::ColorDebug)

@@ -8,7 +8,7 @@
 
 #include "SDLAudioManager.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 //-- This is very important:
 rd::MentalMap * rd::MentalMap::mentalMapInstance = NULL;

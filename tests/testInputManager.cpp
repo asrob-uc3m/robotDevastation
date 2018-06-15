@@ -24,7 +24,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 namespace rd
 {

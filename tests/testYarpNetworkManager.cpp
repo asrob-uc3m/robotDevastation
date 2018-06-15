@@ -21,7 +21,7 @@
 #include "Server.hpp"
 #include "RpcResponder.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 #include "gtest/gtest.h"
 

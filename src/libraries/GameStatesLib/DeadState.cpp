@@ -6,7 +6,7 @@
 
 #include <sstream>
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 const int rd::DeadState::RESPAWN_SELECTED = 1;
 const int rd::DeadState::EXIT_SELECTED = 2;

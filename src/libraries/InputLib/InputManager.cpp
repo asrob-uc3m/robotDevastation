@@ -4,7 +4,7 @@
 
 #include "InputManager.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 //-- This is very important:
 rd::InputManager * rd::InputManager::inputManagerInstance = NULL;

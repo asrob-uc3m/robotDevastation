@@ -13,8 +13,6 @@ add_library(UtilsLib Hub.hpp
                      Vector2dBase.hpp
                      Vocabs.hpp)
 
-add_dependencies(UtilsLib COLOR_DEBUG ASROB_YARP_DEVICES)
-
 target_include_directories(UtilsLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                            ${SDL2_INCLUDE_DIR})
 
@@ -31,4 +29,5 @@ target_link_libraries(UtilsLib PUBLIC ${SDL2_LIBRARY}
                                       ASROB::RobotInterfaces)
 
 target_link_libraries(UtilsLib PRIVATE ${SDL2_IMAGE_LIBRARIES}
-                                       ${SDL2_TTF_LIBRARIES})
+                                       ${SDL2_TTF_LIBRARIES}
+                                       ROBOTICSLAB::ColorDebug)

@@ -4,7 +4,7 @@
 
 #include "GameState.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 const int rd::GameState::KILLED = 1;
 const int rd::GameState::EXIT_REQUESTED = 2;

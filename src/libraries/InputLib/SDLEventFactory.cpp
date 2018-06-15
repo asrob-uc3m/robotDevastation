@@ -4,7 +4,7 @@
 
 #include "SDLEventFactory.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 bool rd::SDLEventFactory::initialized = false;
 std::map<SDL_Keycode, char> rd::SDLEventFactory::sdl_printable_map = std::map<SDL_Keycode, char>();

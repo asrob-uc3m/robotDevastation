@@ -7,7 +7,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 SDL_Surface * rd::RdImage2SDLImage(const Image & image)
 {

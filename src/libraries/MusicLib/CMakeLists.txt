@@ -13,8 +13,6 @@ add_library(MusicLib AudioManager.hpp
                      SDLAudioManager.hpp
                      SDLAudioManager.cpp)
 
-add_dependencies(MusicLib COLOR_DEBUG)
-
 target_include_directories(MusicLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                            ${YARP_INCLUDE_DIRS}
                                            ${SDL2_INCLUDE_DIR}
@@ -23,3 +21,5 @@ target_include_directories(MusicLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 target_link_libraries(MusicLib PUBLIC YARP::YARP_OS
                                       ${SDL2_LIBRARY}
                                       ${SDL2_MIXER_LIBRARIES})
+
+target_link_libraries(MusicLib PRIVATE ROBOTICSLAB::ColorDebug)

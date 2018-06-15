@@ -9,7 +9,7 @@
 #include <yarp/os/Network.h>
 #include <yarp/os/Property.h>
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 //-- Initialize static members
 rd::YarpLocalImageManager * rd::YarpLocalImageManager::uniqueInstance = NULL;
