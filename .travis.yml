@@ -35,10 +35,6 @@ branches:
   - /^.*appveyor.*$/
 
 before_install:
-  # configure git
-  - if [ ! `git config --get user.email` ]; then `git config --global user.email 'user@example.com'`; fi
-  - if [ ! `git config --get user.name` ]; then `git config --global user.name 'Travis CI'`; fi
-
   # ubuntu dependencies
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq update; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y --no-install-recommends install libace-dev libjpeg-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libzbar-dev libgtest-dev; fi
@@ -65,6 +61,20 @@ before_install:
   - cmake --version
 
 install:
+  # clone and build color-debug
+  - cd
+  - git clone https://github.com/roboticslab-uc3m/color-debug
+  - mkdir -p color-debug/build && cd "$_"
+  - cmake ..
+  - sudo make -j2 install
+
+  # clone and build yarp-devices
+  - cd
+  - git clone https://github.com/asrob-uc3m/yarp-devices
+  - mkdir -p yarp-devices/build && cd "$_"
+  - cmake ..
+  - sudo make -j2 install
+
   # clone and build YARP if not in cache
   - >-
     if [ "$TRAVIS_EVENT_TYPE" = cron ]; then
