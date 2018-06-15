@@ -116,7 +116,7 @@ install:
             cmake --build "$env:ycm_temp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
             Set-Content C:\YCM\.version "$env:YCM_LATEST"
         }
-  - cmd: set YCM_DIR=C:\YCM\CMake
+  - cmd: set YCM_DIR=C:\YCM\share\YCM\cmake
 
   # Download and build YARP (if not in cache)
   - ps: >-

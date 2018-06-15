@@ -80,6 +80,9 @@ install:
       echo "YCM directory found in cache (version $(cat "$YCM_CACHE_DIR/.version"))"
     fi
 
+  # make installed YCM discoverable by CMake's find_package() command
+  - export YCM_DIR=$YCM_CACHE_DIR/share/YCM/cmake
+
   # clone and build YARP if not in cache
   - >-
     if [ "$TRAVIS_EVENT_TYPE" = cron ]; then
