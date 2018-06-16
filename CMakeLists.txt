@@ -36,6 +36,11 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake
                               ${CMAKE_SOURCE_DIR}/cmake/modules
                               ${CMAKE_SOURCE_DIR}/cmake/find-modules)
 
+# Find project's hard dependencies.
+find_package(YCM REQUIRED)
+find_package(COLOR_DEBUG REQUIRED)
+find_package(ASROB_YARP_DEVICES REQUIRED)
+
 # Standard installation directories.
 include(GNUInstallDirs)
 
@@ -53,12 +58,7 @@ if(ENABLE_coverage)
     endif()
 endif()
 
-# Find project's hard dependencies.
-find_package(COLOR_DEBUG REQUIRED)
-find_package(YCM REQUIRED)
-find_package(ASROB_YARP_DEVICES REQUIRED)
-
-# let CMake organize projects in folders (in IDEs that support this)
+# let CMake organize projects in folders (in IDEs that support this).
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Create targets if specific requirements are satisfied.
