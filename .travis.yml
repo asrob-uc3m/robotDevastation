@@ -15,7 +15,7 @@ compiler:
   - clang
 
 matrix:
-  allow_failures:
+  exclude:
   - os: osx
 
 env:
