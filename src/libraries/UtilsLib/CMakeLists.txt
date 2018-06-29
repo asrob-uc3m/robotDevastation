@@ -6,8 +6,8 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
-add_library(UtilsLib Hub.hpp
-                     Hub.cpp
+add_library(UtilsLib ManagerHub.hpp
+                     ManagerHub.cpp
                      SDLUtils.hpp
                      SDLUtils.cpp
                      Vector2dBase.hpp

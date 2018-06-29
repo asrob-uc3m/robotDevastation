@@ -2,7 +2,7 @@
 // CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
-#include "Hub.hpp"
+#include "ManagerHub.hpp"
 
 rd::ManagerHub::ManagerHub()
 {

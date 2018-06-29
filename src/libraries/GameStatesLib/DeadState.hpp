@@ -6,7 +6,7 @@
 #define __RD_DEAD_STATE_HPP__
 
 #include "State.hpp"
-#include "Hub.hpp"
+#include "ManagerHub.hpp"
 #include "InputEventListener.hpp"
 #include "NetworkManager.hpp"
 #include "ImageManager.hpp"
