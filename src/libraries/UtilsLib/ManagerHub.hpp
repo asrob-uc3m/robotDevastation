@@ -18,7 +18,11 @@ namespace rd{
 /**
  * @ingroup UtilsLib
  *
- * @brief A classs to interface all the robot devastation managers
+ * @brief A classs to interface all the robotDevastation managers. As some
+ * classes, such as the game states, require require interfacing with all the
+ * managers to access their functionallity, this class was created. It
+ * simplifies the code, as by simple inheritance any class can have simple
+ * access to all the required managers.
  *
  */
 class ManagerHub
