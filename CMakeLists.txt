@@ -40,6 +40,16 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake
 find_package(YCM REQUIRED)
 find_package(COLOR_DEBUG REQUIRED)
 find_package(ASROB_YARP_DEVICES REQUIRED)
+find_package(YARP REQUIRED)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(SDL2_mixer REQUIRED)
+find_package(SDL2_ttf REQUIRED)
+find_package(ZBar REQUIRED)
+
+# Find project's soft dependencies.
+find_package(Doxygen QUIET)
+find_package(GTestSources 1.6.0 QUIET)
 
 # Standard installation directories.
 include(GNUInstallDirs)
@@ -70,8 +80,6 @@ add_subdirectory(src)
 add_subdirectory(tests)
 
 # Generate documentation.
-find_package(Doxygen QUIET)
-
 cmake_dependent_option(GENERATE_doc_html "Choose if you want to generate HTML documentation through Doxygen" OFF
                        DOXYGEN_FOUND OFF)
 

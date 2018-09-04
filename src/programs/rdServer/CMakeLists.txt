@@ -6,9 +6,6 @@ option(ENABLE_rdServer "Choose if you want to compile rdServer" ON)
 
 if(ENABLE_rdServer)
 
-# Find YARP.  Point the YARP_DIR environment variable at your build.
-find_package(YARP REQUIRED)
-
 # Set up our main executable.
 add_executable(rdServer main.cpp)
 

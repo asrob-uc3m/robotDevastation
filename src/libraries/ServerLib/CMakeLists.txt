@@ -2,8 +2,6 @@
 # CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
-find_package(YARP REQUIRED)
-
 add_library(ServerLib RpcResponder.hpp
                       RpcResponder.cpp
                       Server.hpp

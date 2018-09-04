@@ -6,9 +6,6 @@ option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" 
 
 if(ENABLE_robotDevastation)
 
-# Find YARP.  Point the YARP_DIR environment variable at your build.
-find_package(YARP REQUIRED)
-
 add_executable(robotDevastation main.cpp
                                 RobotDevastation.hpp
                                 RobotDevastation.cpp)
