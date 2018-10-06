@@ -25,10 +25,6 @@ target_link_libraries(robotDevastation YARP::YARP_OS
                                        ASROB::RobotInterfaces
                                        ROBOTICSLAB::ColorDebug)
 
-if(WIN32)
-    target_compile_definitions(robotDevastation PUBLIC SDL_MAIN_HANDLED)
-endif()
-
 install(TARGETS robotDevastation DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 # Organize targets in folders (Visual Studio)

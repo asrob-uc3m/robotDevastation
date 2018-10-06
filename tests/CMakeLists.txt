@@ -16,10 +16,6 @@ add_subdirectory(${GTestSources_SOURCE_DIR} ${CMAKE_BINARY_DIR}/gtest)
 
 include_directories(${GTestSources_INCLUDE_DIR})
 
-if(WIN32)
-    add_definitions(-DSDL_MAIN_HANDLED)
-endif()
-
 # UI related
 add_executable(testSDLTextDisplay testSDLTextDisplay.cpp)
 target_link_libraries(testSDLTextDisplay YARP::YARP_OS ${SDL2_LIBRARY} ${SDL2_TTF_LIBRARIES})

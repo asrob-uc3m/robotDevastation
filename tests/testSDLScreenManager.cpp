@@ -20,7 +20,7 @@
 
 using namespace rd;
 
-int main()
+int main(int argc, char *argv[])
 {
     //-- Start SDL, Create SDLScreen Manager
     SDLScreenManager::RegisterManager();

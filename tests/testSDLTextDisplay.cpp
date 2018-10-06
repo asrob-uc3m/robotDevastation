@@ -17,7 +17,7 @@
 
 
 
-int main(void)
+int main(int argc, char *argv[])
 {
     //-- Configure Resourcefinder to ind the real path to the resources
     yarp::os::ResourceFinder rf;

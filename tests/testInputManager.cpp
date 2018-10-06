@@ -187,7 +187,7 @@ class TestEventListener : public InputEventListener
 
 }  // namespace rd
 
-int main(void)
+int main(int argc, char *argv[])
 {
     using namespace rd;
     using namespace rd::test;
