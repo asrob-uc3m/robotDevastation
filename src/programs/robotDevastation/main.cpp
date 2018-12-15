@@ -46,7 +46,7 @@ robotDevastation
 int main(int argc, char *argv[])
 {
     std::printf("--------------------------------------------------------------\n");
-    std::printf("Robot Devastation @ ASROB 2014 (C) Robotics Society of the Universidad Carlos III de Madrid\n");
+    std::printf("Robot Devastation @ ASROB 2018 (C) Robotics Society of the Universidad Carlos III de Madrid\n");
     std::printf("Welcome to Robot Devastation v0.2, developed by David Estevez and Juan G Victores.\n");
     std::printf("Based on Robot Devastation v0.1, developed by Santiago Morante and Juan G Victores.\n");
     std::printf(GREEN);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     std::printf(RESET);
     std::printf("\n");
     std::printf("Fire with 'space'. Reload with 'r'. Move with 'Left, Up, Down, Right'. Run \"robotDevastation --help\" for help.\n");
-    std::printf("For a full description, please visit http://asrob.uc3m.es/rddoc/group__robotDevastation.html.\n");
+    std::printf("For a full description, please visit http://wiki.asrob.uc3m.es/rddoc/group__robotDevastation.html.\n");
     std::printf("--------------------------------------------------------------\n");
 
     yarp::os::ResourceFinder rf;

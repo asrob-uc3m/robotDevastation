@@ -42,7 +42,7 @@ rdServer
 int main(int argc, char *argv[]) {
 
     std::cout << "--------------------------------------------------------------" << std::endl;
-    std::cout << "Robot Devastation @ ASROB 2014 (C) Robotics Society of the Universidad Carlos III de Madrid" << std::endl;
+    std::cout << "Robot Devastation @ ASROB 2018 (C) Robotics Society of the Universidad Carlos III de Madrid" << std::endl;
     std::cout << "Welcome to Robot Devastation v0.2, developed by David Estevez and Juan G Victores." << std::endl;
     std::cout << "Based on Robot Devastation v0.1, developed by Santiago Morante and Juan G Victores." << std::endl;
     std::printf(GREEN);
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
     std::printf(RESET);
     std::cout << std::endl;
     std::cout << "Fire with 'space'. Reload with 'r'. Move with 'a,s,d,w,x'. Run \"robotDevastation --help\" for options." << std::endl;
-    std::cout << "For a full description, please visit http://asrob.uc3m.es/rddoc/group__robotDevastation.html." << std::endl;
+    std::cout << "For a full description, please visit http://wiki.asrob.uc3m.es/rddoc/group__robotDevastation.html." << std::endl;
     std::cout << "--------------------------------------------------------------" << std::endl;
 
     yarp::os::ResourceFinder rf;
