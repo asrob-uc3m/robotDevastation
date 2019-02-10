@@ -46,16 +46,16 @@ robotDevastation
 int main(int argc, char *argv[])
 {
     std::printf("--------------------------------------------------------------\n");
-    std::printf("Robot Devastation @ ASROB 2018 (C) Robotics Society of the Universidad Carlos III de Madrid\n");
+    std::printf("Robot Devastation @ ASROB 2019 (C) Robotics Society of the Universidad Carlos III de Madrid\n");
     std::printf("Welcome to Robot Devastation v0.2, developed by David Estevez and Juan G Victores.\n");
     std::printf("Based on Robot Devastation v0.1, developed by Santiago Morante and Juan G Victores.\n");
-    std::printf(GREEN);
+    std::printf(CD_GREEN);
     std::printf(" ____       _           _   ____                      _        _   _             \n");
     std::printf("|  _ \\ ___ | |__   ___ | |_|  _ \\  _____   ____ _ ___| |_ __ _| |_(_) ___  _ __  \n");
     std::printf("| |_) / _ \\| '_ \\ / _ \\| __| | | |/ _ \\ \\ / / _` / __| __/ _` | __| |/ _ \\| '_ \\ \n");
     std::printf("|  _ < (_) | |_) | (_) | |_| |_| |  __/\\ V / (_| \\__ \\ || (_| | |_| | (_) | | | |\n");
     std::printf("|_| \\_\\___/|_.__/ \\___/ \\__|____/ \\___| \\_/ \\__,_|___/\\__\\__,_|\\__|_|\\___/|_| |_|\n");
-    std::printf(RESET);
+    std::printf(CD_RESET);
     std::printf("\n");
     std::printf("Fire with 'space'. Reload with 'r'. Move with 'Left, Up, Down, Right'. Run \"robotDevastation --help\" for help.\n");
     std::printf("For a full description, please visit http://wiki.asrob.uc3m.es/rddoc/group__robotDevastation.html.\n");
