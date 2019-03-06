@@ -2,14 +2,10 @@
 # CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
-find_package(YARP REQUIRED)
-
 add_library(ServerLib RpcResponder.hpp
                       RpcResponder.cpp
                       Server.hpp
                       Server.cpp)
-
-add_dependencies(ServerLib COLOR_DEBUG)
 
 target_include_directories(ServerLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                             ${YARP_INCLUDE_DIRS})
@@ -17,4 +13,5 @@ target_include_directories(ServerLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 target_link_libraries(ServerLib PUBLIC YARP::YARP_OS
                                        MentalMapLib)
 
-target_link_libraries(ServerLib PRIVATE UtilsLib)
+target_link_libraries(ServerLib PRIVATE UtilsLib
+                                        ROBOTICSLAB::ColorDebug)

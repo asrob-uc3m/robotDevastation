@@ -4,7 +4,7 @@
 
 #include "StateDirector.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 rd::StateDirector::StateDirector(State *state)
 {

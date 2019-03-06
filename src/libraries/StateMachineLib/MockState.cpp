@@ -9,7 +9,7 @@
 #include <yarp/os/Bottle.h>
 #include <yarp/os/ConnectionWriter.h>
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 const int rd::MockState::STATE_INITIAL = 0;
 const int rd::MockState::STATE_SETUP = 1;

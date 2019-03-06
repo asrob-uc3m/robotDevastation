@@ -6,7 +6,7 @@
 
 #include <SDL.h>
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 //-- This is very important:
 rd::SDLAudioManager * rd::SDLAudioManager::uniqueInstance = NULL;

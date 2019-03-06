@@ -45,9 +45,6 @@ class MockRobotManager : public asrob::IRobotManager
 
         //-- Mock functionality
         //-----------------------------------------------------
-        bool isConnected() const;
-        bool isEnabled() const;
-
         bool isMoving() const;
         int getMovementDirection();
         static const int FORWARD;

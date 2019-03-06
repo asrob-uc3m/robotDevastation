@@ -422,7 +422,7 @@ EXTRACT_ALL = NO
 # be included in the documentation.
 # The default value is: NO.
 
-EXTRACT_PRIVATE = NO
+EXTRACT_PRIVATE = YES
 
 # If the EXTRACT_PACKAGE tag is set to YES, all members with package or internal
 # scope will be included in the documentation.
@@ -1187,7 +1187,7 @@ HTML_TIMESTAMP = YES
 # The default value is: NO.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_DYNAMIC_SECTIONS = NO
+HTML_DYNAMIC_SECTIONS = YES
 
 # With HTML_INDEX_NUM_ENTRIES one can control the preferred number of entries
 # shown in the various tree structured indices initially; the user can expand
@@ -2194,7 +2194,7 @@ DOT_FONTPATH =
 # The default value is: YES.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-CLASS_GRAPH = NO
+CLASS_GRAPH = YES
 
 # If the COLLABORATION_GRAPH tag is set to YES then doxygen will generate a
 # graph for each documented class showing the direct and indirect implementation

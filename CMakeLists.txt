@@ -2,7 +2,7 @@
 # CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
 project(robotDevastation LANGUAGES CXX)
 
@@ -33,12 +33,23 @@ endif()
 
 # Pick up our CMake modules.
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake
-                              ${CMAKE_SOURCE_DIR}/cmake/find-modules
-                              ${CMAKE_SOURCE_DIR}/cmake/ycm-modules)
+                              ${CMAKE_SOURCE_DIR}/cmake/modules
+                              ${CMAKE_SOURCE_DIR}/cmake/find-modules)
 
-# Bootstrap YCM. Make sure it's compatible with cmake_minimum_required().
-set(YCM_TAG v0.6.0)
-include(YCMBootstrap)
+# Find project's hard dependencies.
+find_package(YCM REQUIRED)
+find_package(COLOR_DEBUG REQUIRED)
+find_package(ASROB_YARP_DEVICES REQUIRED)
+find_package(YARP REQUIRED)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(SDL2_mixer REQUIRED)
+find_package(SDL2_ttf REQUIRED)
+find_package(ZBar REQUIRED)
+
+# Find project's soft dependencies.
+find_package(Doxygen QUIET)
+find_package(GTestSources 1.6.0 QUIET)
 
 # Standard installation directories.
 include(GNUInstallDirs)
@@ -57,33 +68,7 @@ if(ENABLE_coverage)
     endif()
 endif()
 
-# Superbuild phase - find or download remote packages.
-include(FindOrBuildPackage)
-find_or_build_package(COLOR_DEBUG)
-find_or_build_package(ASROB_YARP_DEVICES)
-
-# find_or_build_package() doesn't bring into scope COLOR_DEBUG_INCLUDE_DIRS
-# nor other config variables. If a system copy is found, we have to call the
-# find_package() command and proceed as usual.
-if(USE_SYSTEM_COLOR_DEBUG)
-    find_package(COLOR_DEBUG REQUIRED)
-    include_directories(${COLOR_DEBUG_INCLUDE_DIRS})
-    add_library(COLOR_DEBUG UNKNOWN IMPORTED)
-endif()
-
-if(USE_SYSTEM_ASROB_YARP_DEVICES)
-    find_package(ASROB_YARP_DEVICES REQUIRED)
-    add_library(ASROB_YARP_DEVICES UNKNOWN IMPORTED)
-endif()
-
-# Prepare install/ directory (might be empty).
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/install)
-
-# Install downloaded packages.
-install(DIRECTORY ${CMAKE_BINARY_DIR}/install/
-        DESTINATION "./")
-
-# let CMake organize projects in folders (in IDEs that support this)
+# Let CMake organize projects in folders (in IDEs that support this).
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Create targets if specific requirements are satisfied.
@@ -95,8 +80,6 @@ add_subdirectory(src)
 add_subdirectory(tests)
 
 # Generate documentation.
-find_package(Doxygen QUIET)
-
 cmake_dependent_option(GENERATE_doc_html "Choose if you want to generate HTML documentation through Doxygen" OFF
                        DOXYGEN_FOUND OFF)
 

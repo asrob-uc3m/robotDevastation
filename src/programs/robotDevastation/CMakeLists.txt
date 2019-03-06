@@ -6,14 +6,9 @@ option(ENABLE_robotDevastation "Choose if you want to compile robotDevastation" 
 
 if(ENABLE_robotDevastation)
 
-# Find YARP.  Point the YARP_DIR environment variable at your build.
-find_package(YARP REQUIRED)
-
 add_executable(robotDevastation main.cpp
                                 RobotDevastation.hpp
                                 RobotDevastation.cpp)
-
-add_dependencies(robotDevastation COLOR_DEBUG ASROB_YARP_DEVICES)
 
 target_include_directories(robotDevastation PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                                    ${YARP_INCLUDE_DIRS})
@@ -27,7 +22,8 @@ target_link_libraries(robotDevastation YARP::YARP_OS
                                        ImageLib
                                        UserInterfaceLib
                                        GameStatesLib
-                                       ASROB::RobotInterfaces)
+                                       ASROB::RobotInterfaces
+                                       ROBOTICSLAB::ColorDebug)
 
 if(WIN32)
     target_compile_definitions(robotDevastation PUBLIC SDL_MAIN_HANDLED)

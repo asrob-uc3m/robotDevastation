@@ -12,7 +12,7 @@
 #include "YarpImageManager.hpp"
 #include "MockImageEventListener.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 namespace rd
 {

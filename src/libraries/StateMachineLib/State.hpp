@@ -12,7 +12,7 @@ namespace rd{
 /**
  * @ingroup StateMachineLib
  *
- * @brief A base class for States of a Finite State Machine.
+ * @brief Base class for each of the states of a FiniteStateMachine.
  *
  */
 class State

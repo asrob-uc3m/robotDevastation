@@ -5,7 +5,7 @@
 #include "InitState.hpp"
 #include "YarpNetworkManager.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 const int rd::InitState::LOGIN_SUCCESSFUL = 1;
 const int rd::InitState::EXIT_REQUESTED = 2;

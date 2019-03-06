@@ -9,7 +9,7 @@
 #include <yarp/os/ResourceFinder.h>
 #include <yarp/os/ConstString.h>
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 const std::string rd::InitScreen::SPLASH_PATH = "../images/800px-Devastation-thin.png";
 const std::string rd::InitScreen::FONT_PATH = "../fonts/FreeMono.ttf";

@@ -6,7 +6,7 @@
 #define __RD_GAME_STATE_HPP__
 
 #include "State.hpp"
-#include "Hub.hpp"
+#include "ManagerHub.hpp"
 #include "InputEventListener.hpp"
 #include "ImageEventListener.hpp"
 #include "NetworkManager.hpp"

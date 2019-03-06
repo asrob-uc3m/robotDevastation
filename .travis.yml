@@ -4,7 +4,6 @@
 
 language: cpp
 dist: trusty
-sudo: required
 
 os:
   - linux
@@ -15,34 +14,40 @@ compiler:
   - clang
 
 matrix:
-  allow_failures:
+  exclude:
   - os: osx
 
 env:
   global:
-    # avoid ALSA errors
-    - SDL_AUDIODRIVER=dummy
-    # YARP cache
-    - YARP_VER=2.3.72
-    - YARP_CACHE_DIR=~/.yarp
+    - SDL_AUDIODRIVER=dummy # avoid ALSA errors
+    - CACHE_DIR=~/cached-deps # common cache location
+  matrix:
+    - YARP_CHECKOUT=master
+    - YARP_CHECKOUT=30dce54 # hotfix for v3.0.1
+    - YARP_CHECKOUT=v2.3.72.1
+    - YARP_CHECKOUT=v2.3.70.2
 
 cache:
-  directories:
-    - $YARP_CACHE_DIR
+  directories: $CACHE_DIR
+
+addons:
+  apt:
+    packages:
+    - libjpeg-dev
+    - libsdl2-dev
+    - libsdl2-image-dev
+    - libsdl2-mixer-dev
+    - libsdl2-ttf-dev
+    - libzbar-dev
+    - libgtest-dev
+    - lcov
+    - doxygen
 
 branches:
   except:
   - /^.*appveyor.*$/
 
 before_install:
-  # configure git
-  - if [ ! `git config --get user.email` ]; then `git config --global user.email 'user@example.com'`; fi
-  - if [ ! `git config --get user.name` ]; then `git config --global user.name 'Travis CI'`; fi
-
-  # ubuntu dependencies
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq update; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -y --no-install-recommends install libace-dev libjpeg-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libzbar-dev libgtest-dev; fi
-
   # OS X dependencies
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export XQUARTZ_VERSION=2.7.6;fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then curl -L -O http://xquartz.macosforge.org/downloads/SL/XQuartz-${XQUARTZ_VERSION}.dmg; fi
@@ -55,53 +60,48 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew tap homebrew/science; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install opencv; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install --with-qt3support qt; fi
-  #use the same set of cmake options used in the dashboard build
-  # - source ./admin/scripts/generate-cmake-options.sh # no special cmake options for now.
 
-  # prepare CMake options for YARP builds
-  - export YARP_CMAKE_OPTIONS="-DCREATE_OPTIONAL_CARRIERS:BOOL=ON -DENABLE_yarpcar_mjpeg:BOOL=ON"
-
-  # print system info
-  - cmake --version
+  #-- Code coverage
+  - if [ "$CXX" = "g++" ]; then gem install coveralls-lcov; fi
 
 install:
-  # clone and build YARP if not in cache
-  - >-
-    if [ "$TRAVIS_EVENT_TYPE" = cron ]; then
-      echo "Cloning YARP's devel branch"
-      cd
-      git clone --depth=1 --branch=devel https://github.com/robotology/yarp
-      mkdir -p yarp/build && cd "$_"
-      cmake .. $YARP_CMAKE_OPTIONS
-      sudo make -j2 install
-    elif [ ! "$(ls -A "$YARP_CACHE_DIR")" ] || [ ! -f "$YARP_CACHE_DIR/.version" ] || [ ! $(cat "$YARP_CACHE_DIR/.version") = "$YARP_VER" ]; then
-      echo "YARP not in cache or wrong version"
-      rm -rf "$YARP_CACHE_DIR"/*
-      cd
-      wget -qO- "https://github.com/robotology/yarp/archive/v$YARP_VER.tar.gz" | tar xz
-      mkdir -p "yarp-$YARP_VER/build" && cd "$_"
-      cmake .. -DCMAKE_INSTALL_PREFIX:PATH="$YARP_CACHE_DIR" $YARP_CMAKE_OPTIONS
-      sudo make -j2 install
-      echo "$YARP_VER" > "$YARP_CACHE_DIR/.version"
-    else
-      echo "YARP directory found in cache (version $(cat "$YARP_CACHE_DIR/.version"))"
-    fi
+  #-- Install YCM
+  - >
+    source "$TRAVIS_BUILD_DIR/scripts/travis/git-cache-dependency.sh"
+    --package-name YCM
+    --repo-url https://github.com/robotology/ycm
+    --repo-checkout "${ROBOTOLOGY_CHECKOUT:-${YCM_CHECKOUT:-master}}"
 
-  # make installed YARP discoverable by CMake's find_package() command
-  - if [ ! "$TRAVIS_EVENT_TYPE" = cron ]; then export YARP_DIR=$YARP_CACHE_DIR/lib/cmake/YARP; fi
+  #-- Install YARP
+  - >
+    source "$TRAVIS_BUILD_DIR/scripts/travis/git-cache-dependency.sh"
+    --package-name YARP
+    --repo-url https://github.com/robotology/yarp
+    --repo-checkout "${ROBOTOLOGY_CHECKOUT:-$YARP_CHECKOUT}"
+    --additional-cmake-options "-DSKIP_ACE:BOOL=ON -DCREATE_OPTIONAL_CARRIERS:BOOL=ON -DENABLE_yarpcar_mjpeg:BOOL=ON"
+    --prepend-to-linker-path lib
+    --additional-export-paths "YARP_DATA_DIRS;share/yarp"
 
-  # see http://gronlier.fr/blog/2015/01/adding-code-coverage-to-your-c-project/
-  - cd
-  - if [ "$CXX" = "g++" ]; then wget http://ftp.de.debian.org/debian/pool/main/l/lcov/lcov_1.11.orig.tar.gz; fi
-  - if [ "$CXX" = "g++" ]; then tar xf lcov_1.11.orig.tar.gz; fi
-  - if [ "$CXX" = "g++" ]; then sudo make -C lcov-1.11/ install; fi
-  - if [ "$CXX" = "g++" ]; then gem install coveralls-lcov; fi
+  #-- Install color-debug
+  - >
+    source "$TRAVIS_BUILD_DIR/scripts/travis/git-cache-dependency.sh"
+    --package-name COLOR_DEBUG
+    --repo-url https://github.com/roboticslab-uc3m/color-debug
+    --repo-checkout master
+
+  #-- Install yarp-devices
+  - >
+    source "$TRAVIS_BUILD_DIR/scripts/travis/git-cache-dependency.sh"
+    --package-name ROBOTICSLAB_YARP_DEVICES
+    --repo-url https://github.com/asrob-uc3m/yarp-devices
+    --repo-checkout develop
+    --additional-export-paths "YARP_DATA_DIRS;share/asrob-yarp-devices"
 
 before_script:
   - mkdir -p "$TRAVIS_BUILD_DIR/build" && cd "$_"
-  - cmake .. -DCMAKE_INSTALL_PREFIX:PATH=$PWD/install -DENABLE_coverage:BOOL=ON
+  - cmake .. -DCMAKE_INSTALL_PREFIX:PATH="$PWD/install" -DENABLE_coverage:BOOL=ON
   - cmake --build . --target install
-  - export YARP_DATA_DIRS=$YARP_DATA_DIRS:$PWD/install/share/rd
+  - export YARP_DATA_DIRS=$PWD/install/share/rd:$YARP_DATA_DIRS
 
   # SDL stuff
   - "export DISPLAY=:99.0"
@@ -124,15 +124,8 @@ script:
   - bin/testRobotDevastation
 
 after_success:
-  # capture coverage info
-  - if [ "$CXX" = "g++" ]; then lcov --directory . --capture --output-file coverage.info; fi
-  # filter out system and test code
-  - if [ "$CXX" = "g++" ]; then lcov --remove coverage.info  '/usr/*' 'test/*' --output-file coverage.info; fi
-  # debug before upload
-  - if [ "$CXX" = "g++" ]; then lcov --list coverage.info; fi
-  # uploads to coveralls
-  #- if [ "$CXX" = "g++" ]; then coveralls-lcov --source-encoding=ISO-8859-1 --repo-token InWqFy6VWMrEUzr2Rn8XV0cGqv3wXWo2d coverage.info; fi
-  - if [ "$CXX" = "g++" ]; then coveralls-lcov --source-encoding=ISO-8859-1 coverage.info; fi
+  #-- Code coverage
+  - if [ "$CXX" = "g++" ]; then source "$TRAVIS_BUILD_DIR/scripts/travis/coverage.sh"; fi
 
 before_deploy:
   - sudo apt-get -y install doxygen graphviz

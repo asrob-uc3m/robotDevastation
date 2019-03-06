@@ -8,7 +8,7 @@
 
 #include <yarp/os/ResourceFinder.h>
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 //-- Public
 const std::string rd::MockScreen::PARAM_MESSAGE = "message";

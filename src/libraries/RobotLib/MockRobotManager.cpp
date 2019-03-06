@@ -4,7 +4,7 @@
 
 #include "MockRobotManager.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 const int rd::MockRobotManager::NONE = 0;
 const int rd::MockRobotManager::FORWARD = 1;

@@ -7,7 +7,7 @@
 #include <yarp/os/Time.h>
 #include <yarp/os/Network.h>
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 //-- Initialize static members
 rd::YarpImageManager * rd::YarpImageManager::uniqueInstance = NULL;

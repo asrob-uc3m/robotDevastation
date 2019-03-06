@@ -4,7 +4,7 @@
 
 #include "ImageManager.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 //-- Static members initialization:
 rd::ImageManager * rd::ImageManager::imageManagerInstance = NULL;

@@ -2,8 +2,6 @@
 # CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
-find_package(GTestSources 1.6.0 QUIET)
-
 if(NOT GTestSources_FOUND AND (NOT DEFINED ENABLE_tests OR ENABLE_tests))
     message(WARNING "GTestSources package not found, disabling tests")
 endif()
@@ -15,11 +13,6 @@ if(ENABLE_tests)
     
 set(gtest_force_shared_crt ON CACHE INTERNAL "") # needed for Windows
 add_subdirectory(${GTestSources_SOURCE_DIR} ${CMAKE_BINARY_DIR}/gtest)
-
-find_package(YARP REQUIRED)
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-find_package(SDL2_ttf REQUIRED)
 
 include_directories(${GTestSources_INCLUDE_DIR})
 
@@ -63,8 +56,7 @@ target_include_directories(testSDLAudioManager PUBLIC ${YARP_INCLUDE_DIRS})
 
 # Input manager related
 add_executable(testInputManager testInputManager.cpp)
-add_dependencies(testInputManager COLOR_DEBUG)
-target_link_libraries(testInputManager InputLib MusicLib ${SDL2_LIBRARY} ${SDL2_TTF_LIBRARIES} gtest_main)
+target_link_libraries(testInputManager InputLib MusicLib ${SDL2_LIBRARY} ${SDL2_TTF_LIBRARIES} ROBOTICSLAB::ColorDebug gtest_main)
 target_include_directories(testInputManager PUBLIC ${YARP_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIRS})
 
 add_executable(testMockInputManager testMockInputManager.cpp)
@@ -76,8 +68,7 @@ target_link_libraries(testMentalMap MentalMapLib MusicLib UtilsLib gtest_main)
 
 # Network manager related
 add_executable(testYarpNetworkManager testYarpNetworkManager.cpp)
-add_dependencies(testYarpNetworkManager COLOR_DEBUG)
-target_link_libraries(testYarpNetworkManager YARP::YARP_OS NetworkLib ServerLib gtest_main)
+target_link_libraries(testYarpNetworkManager YARP::YARP_OS NetworkLib ServerLib ROBOTICSLAB::ColorDebug gtest_main)
 target_include_directories(testYarpNetworkManager PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testMockNetworkManager testMockNetworkManager.cpp)
@@ -85,8 +76,7 @@ target_link_libraries(testMockNetworkManager MentalMapLib NetworkLib UtilsLib gt
 
 # Image manager related
 add_executable(testYarpImageManager testYarpImageManager.cpp)
-add_dependencies(testYarpImageManager COLOR_DEBUG)
-target_link_libraries(testYarpImageManager YARP::YARP_OS YARP::YARP_dev ImageLib gtest_main)
+target_link_libraries(testYarpImageManager YARP::YARP_OS YARP::YARP_dev ImageLib ROBOTICSLAB::ColorDebug gtest_main)
 target_include_directories(testYarpImageManager PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testMockImageManager testMockImageManager.cpp)
@@ -103,13 +93,11 @@ target_link_libraries(testMockRobotManager RobotLib gtest_main)
 
 # State machine related
 add_executable(testFSM testFSM.cpp)
-add_dependencies(testFSM COLOR_DEBUG)
-target_link_libraries(testFSM YARP::YARP_OS YARP::YARP_init StateMachineLib gtest_main)
+target_link_libraries(testFSM YARP::YARP_OS YARP::YARP_init StateMachineLib ROBOTICSLAB::ColorDebug gtest_main)
 target_include_directories(testFSM PUBLIC ${YARP_INCLUDE_DIRS})
 
 add_executable(testFSMBuilder testFSMBuilder.cpp)
-add_dependencies(testFSMBuilder COLOR_DEBUG)
-target_link_libraries(testFSMBuilder YARP::YARP_OS YARP::YARP_init StateMachineLib gtest_main)
+target_link_libraries(testFSMBuilder YARP::YARP_OS YARP::YARP_init StateMachineLib ROBOTICSLAB::ColorDebug gtest_main)
 target_include_directories(testFSMBuilder PUBLIC ${YARP_INCLUDE_DIRS})
 
 # Game States related

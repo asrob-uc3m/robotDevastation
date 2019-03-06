@@ -2,9 +2,6 @@
 # CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
-find_package(YARP REQUIRED)
-find_package(ZBar REQUIRED)
-
 add_library(ImageLib ImageEventListener.hpp
                      ImageManager.hpp
                      ImageManager.cpp
@@ -19,8 +16,6 @@ add_library(ImageLib ImageEventListener.hpp
                      YarpLocalImageManager.hpp
                      YarpLocalImageManager.cpp)
 
-add_dependencies(ImageLib COLOR_DEBUG)
-
 target_include_directories(ImageLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                            ${YARP_INCLUDE_DIRS}
                                            ${ZBAR_INCLUDE_DIR})
@@ -32,4 +27,5 @@ target_link_libraries(ImageLib PUBLIC YARP::YARP_OS
                                       MentalMapLib)
 
 target_link_libraries(ImageLib PRIVATE YARP::YARP_init
-                                       UtilsLib)
+                                       UtilsLib
+                                       ROBOTICSLAB::ColorDebug)

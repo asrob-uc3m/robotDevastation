@@ -4,7 +4,7 @@
 
 #include "YarpStateDirector.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 const int rd::YarpStateDirector::DEFAULT_RATE_MS = 100;
 

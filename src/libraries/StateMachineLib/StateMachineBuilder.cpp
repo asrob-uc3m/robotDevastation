@@ -5,7 +5,7 @@
 #include "StateMachineBuilder.hpp"
 #include "YarpStateDirector.hpp"
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 rd::StateMachineBuilder::StateMachineBuilder()
 {

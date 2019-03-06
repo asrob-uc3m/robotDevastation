@@ -26,6 +26,7 @@ environment:
 
 cache:
   - C:\ACE
+  - C:\YCM
   - C:\YARP
   - C:\SDL2
 
@@ -36,6 +37,7 @@ branches:
 init:
   # Dependency version tags
   - cmd: set ACE_LATEST=6.4.6
+  - cmd: set YCM_LATEST=0.8.1
   - cmd: set YARP_LATEST=2.3.72
   - cmd: set SDL2_LATEST=2.0.7
   - cmd: set SDL2_IMAGE_LATEST=2.0.2
@@ -45,10 +47,15 @@ init:
   - cmd: set GTEST_LATEST=1.8.0
 
   # Download/clone paths and URLs
+  - cmd: set CLONES_PATH=C:\git
   - cmd: set DOWNLOADS_PATH=C:\downloads
   - cmd: set NUGET_PATH=C:\nuget_packages
 
+  - cmd: set COLOR_DEBUG_CLONE_URL=https://github.com/roboticslab-uc3m/color-debug
+  - cmd: set YARP_DEVICES_CLONE_URL=https://github.com/asrob-uc3m/yarp-devices
+
   - cmd: set ACE_DOWNLOAD_URL=http://download.dre.vanderbilt.edu/previous_versions/ACE-%ACE_LATEST%.zip
+  - cmd: set YCM_DOWNLOAD_URL=https://github.com/robotology/ycm/archive/v%YCM_LATEST%.zip
   - cmd: set YARP_DOWNLOAD_URL=https://github.com/robotology/yarp/archive/v%YARP_LATEST%.zip
   - cmd: set SDL2_DOWNLOAD_URL=https://www.libsdl.org/release/SDL2-devel-%SDL2_LATEST%-VC.zip
   - cmd: set SDL2_IMAGE_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-%SDL2_IMAGE_LATEST%-VC.zip
@@ -57,17 +64,14 @@ init:
   - cmd: set ZBAR_DOWNLOAD_URL=https://github.com/asrob-uc3m/ZBar/releases/download/%ZBAR_LATEST%/zbar-%ZBAR_LATEST%-%ZBAR_ARCH%-setup.exe
   - cmd: set GTEST_DOWNLOAD_URL=https://github.com/google/googletest/archive/release-%GTEST_LATEST%.zip
 
-  # Configure git for use by YCM
-  - cmd: git config --global user.email "user@example.com"
-  - cmd: git config --global user.name "Travis CI"
-
-  # Print some useful informations:
+  # Print some useful informations
   - cmd: set
   - cmd: cmake --version
   - cmd: msbuild /version
 
 install:
   # Create folders
+  - cmd: md %CLONES_PATH%
   - cmd: md %DOWNLOADS_PATH%
   - cmd: md %NUGET_PATH%
 
@@ -101,6 +105,26 @@ install:
   - cmd: set ACE_ROOT=C:\ACE
   - cmd: set PATH=%ACE_ROOT%\lib;%PATH%
 
+  # Download and build YCM (if not in cache)
+  - ps: >-
+        if (
+            (Test-Path -Path C:\YCM -PathType Container) -And
+            (Test-Path -Path C:\YCM\.version -PathType Leaf) -And
+            (Get-Content C:\YCM\.version | Where-Object { $_.Equals("$env:YCM_LATEST") })
+        ) {
+            Write-Host "YCM found in cache ($env:YCM_LATEST)"
+        } else {
+            Write-Host "YCM not in cache or version mismatch, running download and build step..."
+            Write-Host "Downloading $env:YCM_DOWNLOAD_URL"
+            Start-FileDownload "$env:YCM_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\ycm.zip"
+            7z x -y -o"$env:DOWNLOADS_PATH" "$env:DOWNLOADS_PATH\ycm.zip"
+            $env:ycm_temp = "$env:DOWNLOADS_PATH\ycm-$env:YCM_LATEST"
+            cmake -H"$env:ycm_temp" -B"$env:ycm_temp\build" -G"$env:CMAKE_GENERATOR" -DCMAKE_INSTALL_PREFIX:PATH=C:\YCM
+            cmake --build "$env:ycm_temp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
+            Set-Content C:\YCM\.version "$env:YCM_LATEST"
+        }
+  - cmd: set YCM_DIR=C:\YCM\share\YCM\cmake
+
   # Download and build YARP (if not in cache)
   - ps: >-
         if (
@@ -121,6 +145,22 @@ install:
         }
   - cmd: set YARP_DIR=C:\YARP\CMake
   - cmd: set PATH=C:\YARP\bin;%PATH%
+
+  # Download and build color-debug
+  - cmd: echo Cloning %COLOR_DEBUG_CLONE_URL%
+  - cmd: git clone "%COLOR_DEBUG_CLONE_URL%" "%CLONES_PATH%\color-debug"
+  - cmd: md "%CLONES_PATH%\color-debug\build"
+  - cmd: cmake -H"%CLONES_PATH%\color-debug" -B"%CLONES_PATH%\color-debug\build" -G"%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX:PATH="%CLONES_PATH%\color-debug\build\install"
+  - cmd: cmake --build "%CLONES_PATH%\color-debug\build" --config "%CONFIGURATION%" --target INSTALL -- /m /v:m
+  - cmd: set COLOR_DEBUG_DIR="%CLONES_PATH%\color-debug\build\install"
+
+  # Download and build yarp-devices
+  - cmd: echo Cloning %YARP_DEVICES_CLONE_URL%
+  - cmd: git clone "%YARP_DEVICES_CLONE_URL%" "%CLONES_PATH%\yarp-devices"
+  - cmd: md "%CLONES_PATH%\yarp-devices\build"
+  - cmd: cmake -H"%CLONES_PATH%\yarp-devices" -B"%CLONES_PATH%\yarp-devices\build" -G"%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX:PATH="%CLONES_PATH%\yarp-devices\build\install"
+  - cmd: cmake --build "%CLONES_PATH%\yarp-devices\build" --config "%CONFIGURATION%" --target INSTALL -- /m /v:m
+  - cmd: set ASROB_YARP_DEVICES_DIR="%CLONES_PATH%\yarp-devices\build\install"
 
   # Download and install ZBar (keep this section before the SDL2 one)
   - cmd: echo Downloading %ZBAR_DOWNLOAD_URL%

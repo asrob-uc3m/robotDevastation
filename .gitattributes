@@ -1,0 +1,37 @@
+* text=auto
+
+*.c text
+*.cpp text
+*.h text
+*.H text
+*.hpp text
+*.py text
+*.txt text
+*.yml text
+*.ini text
+*.svg text
+
+*.cmake text
+*.in text
+*.md text
+*.dox text
+
+Doxyfile text
+LICENSE text
+AUTHORS text
+
+*.pdf binary
+*.png binary
+*.dia binary
+*.ttf binary
+*.jpg binary
+*.ppm binary
+*.xcf binary
+*.mp3 binary
+*.wav binary
+*.tgz binary
+*.zip binary
+
+*.bat text eol=crlf
+*.sh text eol=lf
+*.desktop text eol=lf

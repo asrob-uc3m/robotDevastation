@@ -2,12 +2,6 @@
 # CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
-find_package(YARP REQUIRED)
-
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-find_package(SDL2_ttf REQUIRED)
-
 add_library(UserInterfaceLib DeadScreen.hpp
                              DeadScreen.cpp
                              GameScreen.hpp
@@ -23,8 +17,6 @@ add_library(UserInterfaceLib DeadScreen.hpp
                              SDLScreenManager.hpp
                              SDLScreenManager.cpp)
 
-add_dependencies(UserInterfaceLib COLOR_DEBUG)
-
 target_include_directories(UserInterfaceLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                                    ${YARP_INCLUDE_DIRS}
                                                    ${SDL2_INCLUDE_DIR}
@@ -39,4 +31,5 @@ target_link_libraries(UserInterfaceLib PUBLIC YARP::YARP_OS
                                               MentalMapLib)
 
 target_link_libraries(UserInterfaceLib PRIVATE ${SDL2_IMAGE_LIBRARIES}
-                                               UtilsLib)
+                                               UtilsLib
+                                               ROBOTICSLAB::ColorDebug)

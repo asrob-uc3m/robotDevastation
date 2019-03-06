@@ -18,7 +18,7 @@
 #include <yarp/os/PortReader.h>
 #include <yarp/os/Time.h>
 
-#include <ColorDebug.hpp>
+#include <ColorDebug.h>
 
 namespace rd
 {
