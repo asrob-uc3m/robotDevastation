@@ -39,10 +39,10 @@ init:
   - cmd: set ACE_LATEST=6.4.6
   - cmd: set YCM_LATEST=0.10.4
   - cmd: set YARP_LATEST=3.2.2
-  - cmd: set SDL2_LATEST=2.0.7
-  - cmd: set SDL2_IMAGE_LATEST=2.0.2
-  - cmd: set SDL2_TTF_LATEST=2.0.14
-  - cmd: set SDL2_MIXER_LATEST=2.0.2
+  - cmd: set SDL2_LATEST=2.0.12
+  - cmd: set SDL2_IMAGE_LATEST=2.0.5
+  - cmd: set SDL2_TTF_LATEST=2.0.15
+  - cmd: set SDL2_MIXER_LATEST=2.0.4
   - cmd: set ZBAR_LATEST=0.10-rd1
   - cmd: set GTEST_LATEST=1.8.1
 
