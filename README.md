@@ -16,7 +16,7 @@
    - [YARP Devices Repository (yarp-devices)](https://github.com/asrob-uc3m/yarp-devices)
    - [Simulator Repository (robotDevastation-simulator)](https://github.com/asrob-uc3m/robotDevastation-simulator)
    - [OpenRAVE Models Repository (robotDevastation-openrave-models)](https://github.com/asrob-uc3m/robotDevastation-openrave-models)
-   - [Research Repository (robotDevastation-research)](https://github.com/asrob-uc3m/robotDevastation-research)
+   - [Playground Repository (robotDevastation-playground)](https://github.com/asrob-uc3m/robotDevastation-playground)
 - Publications
    - (2016) [A Lightweight Finite State Machine C++ Library aimed at Seamless Integration with Robotic Middlewares](https://roboticslab-uc3m.github.io/workshop-humanoids2016/papers/Humanoids_2016_Workshop___RD_Final.pdf)
    - (2016) [A New Generation of Entertainment Robots Enhanced with Augmented Reality](http://roboticslab.uc3m.es/roboticslab/sites/default/files/estevez2016a-preprint.pdf)
