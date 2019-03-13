@@ -96,7 +96,7 @@ endif()
 
 if(UNIX)
     set(CPACK_DEBIAN_PACKAGE_NAME robotdevastation)
-    set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "http://asrob.uc3m.es/index.php/Robot_Devastation")
+    set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://asrob.uc3m.es/workgroups/2017-05-28-robot-devastation.html")
     set(CPACK_DEBIAN_PACKAGE_SECTION games)
     set(CPACK_DEBIAN_PACKAGE_DEPENDS "libsdl2-2.0-0, libsdl2-image-2.0-0, libsdl2-mixer-2.0-0, libsdl2-ttf-2.0-0, libzbar0")
 
