@@ -5,13 +5,10 @@
 # crontab -e
 # 30 2 * * * /your/command
 
-echo "Update robotDevastation repo..."
-cd $HOME/robotDevastation
-git pull
-
+path="$HOME/robotDevastation"
+echo "Update robotDevastation..."
+git -C "$path" pull
 echo "Doxy robotDevastation..."
-cd doc
-rm -r html
-/usr/bin/doxygen
-cd ../..
-
+path="$path/doc/build"
+mkdir -p "$path"
+make -C "$path" clean && make -C "$path" dox

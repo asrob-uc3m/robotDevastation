@@ -37,7 +37,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake
                               ${CMAKE_SOURCE_DIR}/cmake/find-modules)
 
 # Find project's hard dependencies.
-find_package(YCM REQUIRED)
+find_package(YCM 0.10 REQUIRED)
 find_package(COLOR_DEBUG REQUIRED)
 find_package(ASROB_YARP_DEVICES REQUIRED)
 find_package(YARP REQUIRED)
@@ -78,29 +78,7 @@ include(CMakeDependentOption)
 add_subdirectory(share)
 add_subdirectory(src)
 add_subdirectory(tests)
-
-# Generate documentation.
-cmake_dependent_option(GENERATE_doc_html "Choose if you want to generate HTML documentation through Doxygen" OFF
-                       DOXYGEN_FOUND OFF)
-
-if(GENERATE_doc_html)
-    if(CMAKE_GENERATOR MATCHES "^(Visual Studio|Xcode)")
-        set(_dox DOX)
-    else()
-        set(_dox dox)
-    endif()
-
-    add_custom_target(${_dox}
-                      COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/doc/Doxyfile
-                      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/doc
-                      COMMENT "Generating doxygen documentation"
-                      SOURCES ${CMAKE_SOURCE_DIR}/doc/Doxyfile)
-
-    set_property(TARGET ${_dox} PROPERTY FOLDER CMakePredefinedTargets)
-
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/doc/html
-            DESTINATION ${CMAKE_INSTALL_DOCDIR})
-endif()
+add_subdirectory(doc)
 
 # Uninstall target.
 include(AddUninstallTarget)
