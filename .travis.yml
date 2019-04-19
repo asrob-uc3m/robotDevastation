@@ -3,7 +3,7 @@
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
 language: cpp
-dist: trusty
+dist: xenial
 
 os:
   - linux
@@ -43,6 +43,9 @@ addons:
     - libgtest-dev
     - lcov
     - doxygen
+
+services:
+  - xvfb
 
 branches:
   except:
@@ -103,11 +106,6 @@ before_script:
   - cmake .. -DCMAKE_INSTALL_PREFIX:PATH="$PWD/install" -DENABLE_coverage:BOOL=ON
   - cmake --build . --target install
   - export YARP_DATA_DIRS=$PWD/install/share/rd:$YARP_DATA_DIRS
-
-  # SDL stuff
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
 
 script:
   - bin/testDeadState
