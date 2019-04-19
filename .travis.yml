@@ -4,18 +4,11 @@
 
 language: cpp
 dist: xenial
-
-os:
-  - linux
-  - osx
+os: linux
 
 compiler:
   - gcc
   - clang
-
-matrix:
-  exclude:
-  - os: osx
 
 env:
   global:
@@ -52,19 +45,6 @@ branches:
   - /^.*appveyor.*$/
 
 before_install:
-  # OS X dependencies
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export XQUARTZ_VERSION=2.7.6;fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then curl -L -O http://xquartz.macosforge.org/downloads/SL/XQuartz-${XQUARTZ_VERSION}.dmg; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then hdiutil mount XQuartz-${XQUARTZ_VERSION}.dmg; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo installer -store -pkg /Volumes/XQuartz-${XQUARTZ_VERSION}/XQuartz.pkg -target / ; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then hdiutil unmount /Volumes/XQuartz-${XQUARTZ_VERSION}; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install `brew deps --1 yarp | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g'`; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install cmake goocanvas  sdl sdl_image sdl_mixer sdl_ttf gfortran; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install ode --enable-double-precision; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew tap homebrew/science; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install opencv; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install --with-qt3support qt; fi
-
   #-- Code coverage
   - if [ "$CXX" = "g++" ]; then gem install coveralls-lcov; fi
 
