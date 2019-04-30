@@ -89,7 +89,7 @@ if(WIN32 AND CMAKE_GENERATOR MATCHES "^Visual Studio")
     # Additional Start Menu shortcuts.
     list(APPEND CPACK_NSIS_MENU_LINKS "https://github.com/asrob-uc3m/robotDevastation" "Source code at GitHub")
 
-    if(GENERATE_doc_html)
+    if(DOXYGEN_FOUND)
         list(APPEND CPACK_NSIS_MENU_LINKS "share/doc/${PROJECT_NAME}/html/index.html" "HTML documentation")
     endif()
 endif()

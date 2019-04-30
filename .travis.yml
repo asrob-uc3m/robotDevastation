@@ -3,19 +3,12 @@
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
 language: cpp
-dist: trusty
-
-os:
-  - linux
-  - osx
+dist: xenial
+os: linux
 
 compiler:
   - gcc
   - clang
-
-matrix:
-  exclude:
-  - os: osx
 
 env:
   global:
@@ -23,6 +16,7 @@ env:
     - CACHE_DIR=~/cached-deps # common cache location
   matrix:
     - YARP_CHECKOUT=master
+    - YARP_CHECKOUT=v3.1.1
     - YARP_CHECKOUT=30dce54 # hotfix for v3.0.1
     - YARP_CHECKOUT=v2.3.72.1
     - YARP_CHECKOUT=v2.3.70.2
@@ -43,24 +37,14 @@ addons:
     - lcov
     - doxygen
 
+services:
+  - xvfb
+
 branches:
   except:
   - /^.*appveyor.*$/
 
 before_install:
-  # OS X dependencies
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export XQUARTZ_VERSION=2.7.6;fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then curl -L -O http://xquartz.macosforge.org/downloads/SL/XQuartz-${XQUARTZ_VERSION}.dmg; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then hdiutil mount XQuartz-${XQUARTZ_VERSION}.dmg; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sudo installer -store -pkg /Volumes/XQuartz-${XQUARTZ_VERSION}/XQuartz.pkg -target / ; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then hdiutil unmount /Volumes/XQuartz-${XQUARTZ_VERSION}; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install `brew deps --1 yarp | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g'`; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install cmake goocanvas  sdl sdl_image sdl_mixer sdl_ttf gfortran; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install ode --enable-double-precision; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew tap homebrew/science; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install opencv; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install --with-qt3support qt; fi
-
   #-- Code coverage
   - if [ "$CXX" = "g++" ]; then gem install coveralls-lcov; fi
 
@@ -102,11 +86,6 @@ before_script:
   - cmake .. -DCMAKE_INSTALL_PREFIX:PATH="$PWD/install" -DENABLE_coverage:BOOL=ON
   - cmake --build . --target install
   - export YARP_DATA_DIRS=$PWD/install/share/rd:$YARP_DATA_DIRS
-
-  # SDL stuff
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
 
 script:
   - bin/testDeadState

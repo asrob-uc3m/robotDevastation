@@ -1,7 +1,6 @@
 set(ENABLE_rdServer          ON CACHE BOOL "" FORCE)
 set(ENABLE_robotDevastation  ON CACHE BOOL "" FORCE)
 set(ENABLE_tests            OFF CACHE BOOL "" FORCE)
-set(GENERATE_doc_html        ON CACHE BOOL "" FORCE)
 
 if(WIN32)
     set(CPACK_BINARY_7Z   OFF CACHE BOOL "" FORCE)
