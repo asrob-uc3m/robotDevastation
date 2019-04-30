@@ -43,4 +43,5 @@ doxygen_add_docs(${_dox} ${_doxygen_input}
 
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html
         DESTINATION ${CMAKE_INSTALL_DOCDIR}
+        OPTIONAL
         COMPONENT docs)
