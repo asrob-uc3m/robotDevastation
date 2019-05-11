@@ -1,3 +1,7 @@
 include(BundleUtilities)
 
-fixup_bundle("${CMAKE_INSTALL_PREFIX}/@CMAKE_INSTALL_BINDIR@/@_bundled_app@@CMAKE_EXECUTABLE_SUFFIX@" "" "")
+set(_app "${CMAKE_INSTALL_PREFIX}/@CMAKE_INSTALL_BINDIR@/@_bundled_app@@CMAKE_EXECUTABLE_SUFFIX@")
+set(_libs "@_bundled_libs@")
+set(_dirs "@_bundled_dirs@")
+
+fixup_bundle("${_app}" "${_libs}" "${_dirs}")
