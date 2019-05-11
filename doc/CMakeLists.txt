@@ -40,3 +40,5 @@ set(_doxygen_input doc
 
 doxygen_add_docs(${_dox} ${_doxygen_input}
                  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..)
+
+set_property(TARGET ${_dox} PROPERTY FOLDER "CMakePredefinedTargets")
