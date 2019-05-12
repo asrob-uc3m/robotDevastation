@@ -19,15 +19,18 @@
 #
 # * gtest_add_tests (as in FindGTest.cmake)
 
+if(POLICY CMP0074)
+    cmake_policy(SET CMP0074 NEW)
+endif()
+
 find_package(GTest QUIET)
 
 if(NOT GTestSources_SOURCE_DIR)
-    find_path(GTestSources_SOURCE_DIR src/gtest.cc
+    find_path(GTestSources_SOURCE_DIR CMakeLists.txt
                                       HINTS $ENV{GTEST_ROOT}
                                             ${GTEST_ROOT}
                                       PATHS /usr/src/gtest
-                                            /usr/src/googletest
-                                      PATH_SUFFIXES googletest)
+                                            /usr/src/googletest)
 endif()
 
 if(NOT GTestSources_INCLUDE_DIR)
@@ -37,6 +40,7 @@ if(NOT GTestSources_INCLUDE_DIR)
                                              $ENV{GTEST_ROOT}
                                              ${GTEST_ROOT}
                                        PATH_SUFFIXES include
+                                                     googletest/include
                                        NO_CMAKE_PATH
                                        NO_CMAKE_ENVIRONMENT_PATH)
 endif()

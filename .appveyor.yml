@@ -44,7 +44,7 @@ init:
   - cmd: set SDL2_TTF_LATEST=2.0.14
   - cmd: set SDL2_MIXER_LATEST=2.0.2
   - cmd: set ZBAR_LATEST=0.10-rd1
-  - cmd: set GTEST_LATEST=1.8.0
+  - cmd: set GTEST_LATEST=1.8.1
 
   # Download/clone paths and URLs
   - cmd: set CLONES_PATH=C:\git
