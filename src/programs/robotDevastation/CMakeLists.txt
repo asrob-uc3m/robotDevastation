@@ -34,25 +34,38 @@ install(TARGETS robotDevastation
         COMPONENT rd_game)
 
 if(BUNDLE_DEPS)
-    get_filename_component(_sdl_image_link_dir "${SDL2_IMAGE_LIBRARIES}" DIRECTORY)
-    get_filename_component(_sdl_mixer_link_dir "${SDL2_MIXER_LIBRARIES}" DIRECTORY)
+    if(NOT DEFINED YARP_DEVICES_INSTALL)
+        message(SEND_ERROR "Missing option: \"YARP_DEVICES_INSTALL\"")
+    endif()
 
-    set(_bundled_app robotDevastation)
+    if(WIN32)
+        get_filename_component(_sdl_image_link_dir "${SDL2_IMAGE_LIBRARIES}" DIRECTORY)
+        get_filename_component(_sdl_mixer_link_dir "${SDL2_MIXER_LIBRARIES}" DIRECTORY)
 
-    set(_bundled_libs ${_sdl_image_link_dir}/libpng16-16.dll
-                      ${_sdl_mixer_link_dir}/libmpg123-0.dll)
+        set(_bundled_app robotDevastation)
 
-    set(_bundled_dirs ${_sdl_image_link_dir}
-                      ${_sdl_mixer_link_dir})
+        set(_bundled_libs ${_sdl_image_link_dir}/libpng16-16.dll
+                          ${_sdl_mixer_link_dir}/libmpg123-0.dll
+                          ${YARP_DEVICES_INSTALL}/${CMAKE_INSTALL_LIBDIR}/asrob-yarp-devices/FakeMotorController.dll
+                          ${YARP_DEVICES_INSTALL}/${CMAKE_INSTALL_LIBDIR}/asrob-yarp-devices/RobotClient.dll)
 
-    configure_file(${CMAKE_SOURCE_DIR}/cmake/templates/fixup_bundle.cmake.in
-                   ${CMAKE_BINARY_DIR}/fixup_bundle_robotDevastation.cmake @ONLY)
+        set(_bundled_dirs ${_sdl_image_link_dir}
+                          ${_sdl_mixer_link_dir}
+                          ${YARP_DEVICES_INSTALL}/${CMAKE_INSTALL_LIBDIR})
 
-    install(FILES ${_bundled_libs}
-            DESTINATION ${CMAKE_INSTALL_BINDIR}
-            COMPONENT rd_game)
+        configure_file(${CMAKE_SOURCE_DIR}/cmake/templates/fixup_bundle.cmake.in
+                       ${CMAKE_BINARY_DIR}/fixup_bundle_robotDevastation.cmake @ONLY)
 
-    install(SCRIPT ${CMAKE_BINARY_DIR}/fixup_bundle_robotDevastation.cmake
+        install(FILES ${_bundled_libs}
+                DESTINATION ${CMAKE_INSTALL_BINDIR}
+                COMPONENT rd_game)
+
+        install(SCRIPT ${CMAKE_BINARY_DIR}/fixup_bundle_robotDevastation.cmake
+                COMPONENT rd_game)
+    endif()
+
+    install(DIRECTORY ${YARP_DEVICES_INSTALL}/
+            DESTINATION .
             COMPONENT rd_game)
 endif()
 

@@ -24,7 +24,7 @@ install(TARGETS rdServer
         DESTINATION ${CMAKE_INSTALL_BINDIR}
         COMPONENT rd_server)
 
-if(BUNDLE_DEPS)
+if(BUNDLE_DEPS AND WIN32)
     set(_bundled_app rdServer)
 
     configure_file(${CMAKE_SOURCE_DIR}/cmake/templates/fixup_bundle.cmake.in

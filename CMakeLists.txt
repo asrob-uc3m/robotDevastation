@@ -8,7 +8,6 @@ project(robotDevastation LANGUAGES CXX)
 
 if(WIN32)
     set(CMAKE_DEBUG_POSTFIX "d")
-    option(BUNDLE_DEPS "Choose if you want to bundle system and 3rd-party dependencies on install" OFF)
 endif()
 
 # Let the user specify a configuration (only single-config generators).
@@ -68,6 +67,9 @@ if(ENABLE_coverage)
     endif()
 endif()
 
+option(BUNDLE_DEPS "Choose if you want to bundle system and 3rd-party dependencies on install" OFF)
+mark_as_advanced(BUNDLE_DEPS)
+
 # Let CMake organize projects in folders (in IDEs that support this).
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -80,7 +82,7 @@ add_subdirectory(src)
 add_subdirectory(tests)
 add_subdirectory(doc)
 
-if(BUNDLE_DEPS)
+if(BUNDLE_DEPS AND WIN32)
     # Install system runtime libraries.
     set(CMAKE_INSTALL_SYSTEM_RUNTIME_COMPONENT runtime)
     include(InstallRequiredSystemLibraries)

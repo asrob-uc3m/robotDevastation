@@ -107,10 +107,14 @@ after_success:
   - if [ "$CXX" = "g++" ]; then source "$TRAVIS_BUILD_DIR/scripts/travis/coverage.sh"; fi
 
 before_deploy:
+  - cmake ~/"ROBOTICSLAB_YARP_DEVICES-develop" ~/"ROBOTICSLAB_YARP_DEVICES-develop/build" -DCMAKE_INSTALL_PREFIX:PATH="$PWD/install-devices" -C~/"ROBOTICSLAB_YARP_DEVICES-develop/scripts/cmake/rd-cpack-cache.cmake"
+  - cmake --build ~/"ROBOTICSLAB_YARP_DEVICES-develop/build" --target install
+
   - sudo apt-get -y install doxygen graphviz
-  - cmake .. -C"$TRAVIS_BUILD_DIR/scripts/cmake/cpack-cache.cmake"
+  - cmake .. -C"$TRAVIS_BUILD_DIR/scripts/cmake/cpack-cache.cmake" -DYARP_DEVICES_INSTALL:PATH="$PWD/install-devices"
   - cmake --build . --target dox
   - cmake --build . --target package
+
   - ls -l
 
 deploy:
