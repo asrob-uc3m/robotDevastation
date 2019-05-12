@@ -44,8 +44,10 @@ if(BUNDLE_DEPS)
 
         set(_bundled_app robotDevastation)
 
-        set(_bundled_libs ${_sdl_image_link_dir}/libpng16-16.dll
-                          ${_sdl_mixer_link_dir}/libmpg123-0.dll
+        set(_bundled_libs_exported ${_sdl_image_link_dir}/libpng16-16.dll
+                                   ${_sdl_mixer_link_dir}/libmpg123-0.dll)
+
+        set(_bundled_libs ${_bundled_libs_exported}
                           ${YARP_DEVICES_INSTALL}/${CMAKE_INSTALL_LIBDIR}/asrob-yarp-devices/FakeMotorController.dll
                           ${YARP_DEVICES_INSTALL}/${CMAKE_INSTALL_LIBDIR}/asrob-yarp-devices/RobotClient.dll)
 
@@ -56,7 +58,7 @@ if(BUNDLE_DEPS)
         configure_file(${CMAKE_SOURCE_DIR}/cmake/templates/fixup_bundle.cmake.in
                        ${CMAKE_BINARY_DIR}/fixup_bundle_robotDevastation.cmake @ONLY)
 
-        install(FILES ${_bundled_libs}
+        install(FILES ${_bundled_libs_exported}
                 DESTINATION ${CMAKE_INSTALL_BINDIR}
                 COMPONENT rd_game)
 
