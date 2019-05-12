@@ -223,7 +223,7 @@ build:
   verbosity: minimal
 
 before_package:
-  - cmd: cmake -H"%APPVEYOR_BUILD_FOLDER%" -B"%APPVEYOR_BUILD_FOLDER%\build" -C"%APPVEYOR_BUILD_FOLDER%\scripts\admin\cpack-cache.cmake"
+  - cmd: cmake -H"%APPVEYOR_BUILD_FOLDER%" -B"%APPVEYOR_BUILD_FOLDER%\build" -C"%APPVEYOR_BUILD_FOLDER%\scripts\cmake\cpack-cache.cmake"
   - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target DOX -- /v:m
   - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target PACKAGE -- /v:m
   - cmd: dir "%APPVEYOR_BUILD_FOLDER%\build"

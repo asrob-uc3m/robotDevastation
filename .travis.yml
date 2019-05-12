@@ -108,7 +108,7 @@ after_success:
 
 before_deploy:
   - sudo apt-get -y install doxygen graphviz
-  - cmake .. -C"$TRAVIS_BUILD_DIR/scripts/admin/cpack-cache.cmake"
+  - cmake .. -C"$TRAVIS_BUILD_DIR/scripts/cmake/cpack-cache.cmake"
   - cmake --build . --target dox
   - cmake --build . --target package
   - ls -l
@@ -117,7 +117,7 @@ deploy:
   provider: releases
   api_key:
     secure: 'DORjZTWdhauq/l3s+pQj0ywjtkKxb00YNy9Tj3RH5+4I8/aRF2u6nFP61tnLUEEzz6GcEDp/lyIOtbuOI+hKO2M4Nq2stI++8FNvPjA8sdmNGXm3w2yIQFY+wFwZyLcn9y3l/7I8FeiQnfFk47/vHfy5DrdsqOr3Z6Ub7xINpKM='
-  file_glob: true  
+  file_glob: true
   file:
   - '*.tar.gz'
   - '*.deb'
