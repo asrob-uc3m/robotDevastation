@@ -41,7 +41,10 @@ set(_doxygen_input doc
 doxygen_add_docs(${_dox} ${_doxygen_input}
                  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
+
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html
         DESTINATION ${CMAKE_INSTALL_DOCDIR}
         OPTIONAL
         COMPONENT docs)
+
+set_property(TARGET ${_dox} PROPERTY FOLDER "CMakePredefinedTargets")
