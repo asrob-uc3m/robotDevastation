@@ -27,7 +27,7 @@ bool rd::YarpNetworkManager::RegisterManager()
     return Register( uniqueInstance, id);
 }
 
-rd::YarpNetworkManager::YarpNetworkManager() : RateThread(KEEPALIVE_RATE_MS)
+rd::YarpNetworkManager::YarpNetworkManager() : PeriodicThread(KEEPALIVE_RATE_MS * 0.001)
 {
     started = false;
 }
@@ -112,7 +112,7 @@ bool rd::YarpNetworkManager::start()
 
     callbackPort.useCallback(*this);
 
-    RateThread::start();
+    PeriodicThread::start();
 
     started = true;
     return true;
@@ -158,7 +158,7 @@ bool rd::YarpNetworkManager::stop()
         return false;
     }
 
-    RateThread::askToStop();
+    PeriodicThread::askToStop();
 
     rpcClient.close();
 
