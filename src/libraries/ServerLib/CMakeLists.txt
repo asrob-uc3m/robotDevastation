@@ -7,11 +7,9 @@ add_library(ServerLib RpcResponder.hpp
                       Server.hpp
                       Server.cpp)
 
-target_include_directories(ServerLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-                                            ${YARP_INCLUDE_DIRS})
+target_include_directories(ServerLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(ServerLib PUBLIC YARP::YARP_OS
-                                       MentalMapLib)
-
-target_link_libraries(ServerLib PRIVATE UtilsLib
+                                       MentalMapLib
+                                PRIVATE UtilsLib
                                         ROBOTICSLAB::ColorDebug)

@@ -16,6 +16,5 @@ target_include_directories(MentalMapLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(MentalMapLib PUBLIC NetworkLib
                                           MusicLib
-                                          UtilsLib)
-
-target_link_libraries(MentalMapLib PRIVATE ROBOTICSLAB::ColorDebug)
+                                          UtilsLib
+                                   PRIVATE ROBOTICSLAB::ColorDebug)

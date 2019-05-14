@@ -11,7 +11,7 @@ rd::MockAudioManager * rd::MockAudioManager::uniqueInstance = NULL;
 const std::string rd::MockAudioManager::id = "MOCK";
 
 
-rd::MockAudioManager::MockAudioManager() : yarp::os::RateThread(UPDATE_PERIOD)
+rd::MockAudioManager::MockAudioManager() : yarp::os::PeriodicThread(UPDATE_PERIOD * 0.001)
 {
     stopped = true;
 }
@@ -139,14 +139,14 @@ bool rd::MockAudioManager::stopMusic()
 bool rd::MockAudioManager::start()
 {
     stopped = false;
-    return yarp::os::RateThread::start();
+    return yarp::os::PeriodicThread::start();
 }
 
 bool rd::MockAudioManager::stop()
 {
     durations_mutex.unlock();
     loop_times_mutex.unlock();
-    yarp::os::RateThread::askToStop();
+    yarp::os::PeriodicThread::askToStop();
     stopped = true;
     return true;
 }

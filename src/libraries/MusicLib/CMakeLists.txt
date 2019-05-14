@@ -10,12 +10,10 @@ add_library(MusicLib AudioManager.hpp
                      SDLAudioManager.cpp)
 
 target_include_directories(MusicLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-                                           ${YARP_INCLUDE_DIRS}
                                            ${SDL2_INCLUDE_DIR}
                                            ${SDL2_MIXER_INCLUDE_DIRS})
 
 target_link_libraries(MusicLib PUBLIC YARP::YARP_OS
                                       ${SDL2_LIBRARY}
-                                      ${SDL2_MIXER_LIBRARIES})
-
-target_link_libraries(MusicLib PRIVATE ROBOTICSLAB::ColorDebug)
+                                      ${SDL2_MIXER_LIBRARIES}
+                               PRIVATE ROBOTICSLAB::ColorDebug)

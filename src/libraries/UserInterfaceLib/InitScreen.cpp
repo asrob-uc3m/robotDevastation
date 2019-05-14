@@ -7,7 +7,6 @@
 #include <SDL_image.h>
 
 #include <yarp/os/ResourceFinder.h>
-#include <yarp/os/ConstString.h>
 
 #include <ColorDebug.h>
 
@@ -30,7 +29,7 @@ bool rd::InitScreen::init()
     rf.setDefaultConfigFile("robotDevastation.ini");
 
     //-- Load splash screen resource
-    yarp::os::ConstString splashPath = rf.findFileByName(SPLASH_PATH);
+    std::string splashPath = rf.findFileByName(SPLASH_PATH);
     if (splashPath == "")
     {
         CD_ERROR("Unable to find splash screen (resource: %s)!\n", splashPath.c_str());
