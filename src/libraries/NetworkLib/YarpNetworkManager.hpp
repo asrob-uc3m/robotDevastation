@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include <yarp/os/RateThread.h>
+#include <yarp/os/PeriodicThread.h>
 #include <yarp/os/PortReaderBuffer.h>
 #include <yarp/os/Bottle.h>
 #include <yarp/os/RpcClient.h>
@@ -35,7 +35,7 @@ namespace rd{
  *
  */
 class YarpNetworkManager : public NetworkManager,
-                           private yarp::os::RateThread,
+                           private yarp::os::PeriodicThread,
                            public yarp::os::TypedReaderCallback<yarp::os::Bottle>
 {
     public:

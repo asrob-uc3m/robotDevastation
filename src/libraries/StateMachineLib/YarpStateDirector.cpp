@@ -8,7 +8,7 @@
 
 const int rd::YarpStateDirector::DEFAULT_RATE_MS = 100;
 
-rd::YarpStateDirector::YarpStateDirector(State *state) : StateDirector(state), RateThread(DEFAULT_RATE_MS)
+rd::YarpStateDirector::YarpStateDirector(State *state) : StateDirector(state), PeriodicThread(DEFAULT_RATE_MS * 0.001)
 {
 
 }
@@ -29,7 +29,7 @@ bool rd::YarpStateDirector::Start()
         return false;
     }
 
-    return yarp::os::RateThread::start();
+    return yarp::os::PeriodicThread::start();
 }
 
 bool rd::YarpStateDirector::Stop()
@@ -39,7 +39,7 @@ bool rd::YarpStateDirector::Stop()
 
     active = false;
 
-    yarp::os::RateThread::askToStop();
+    yarp::os::PeriodicThread::askToStop();
 
     if (state != NULL)
         state->cleanup();

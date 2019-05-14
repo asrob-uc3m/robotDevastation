@@ -9,8 +9,6 @@ if(ENABLE_rdServer)
 # Set up our main executable.
 add_executable(rdServer main.cpp)
 
-target_include_directories(rdServer PUBLIC ${YARP_INCLUDE_DIRS})
-
 target_link_libraries(rdServer YARP::YARP_init
                                YARP::YARP_OS
                                ServerLib

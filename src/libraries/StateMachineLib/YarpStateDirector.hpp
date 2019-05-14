@@ -5,7 +5,7 @@
 #ifndef __RD_YARP_STATE_DIRECTOR_HPP__
 #define __RD_YARP_STATE_DIRECTOR_HPP__
 
-#include <yarp/os/RateThread.h>
+#include <yarp/os/PeriodicThread.h>
 
 #include "StateDirector.hpp"
 #include "State.hpp"
@@ -17,7 +17,7 @@ namespace rd {
  *
  * @brief StateDirector based on YARP, creates a separate thread
  */
-class YarpStateDirector : public StateDirector, private yarp::os::RateThread
+class YarpStateDirector : public StateDirector, private yarp::os::PeriodicThread
 {
 public:
     YarpStateDirector(State * state);
@@ -25,7 +25,7 @@ public:
     /**
      * @brief Function that starts the State execution using YARP
      *
-     * It launches a yarp::os::RateThread thread after State.setup().
+     * It launches a yarp::os::PeriodicThread thread after State.setup().
      */
     virtual bool Start();
     virtual bool Stop();

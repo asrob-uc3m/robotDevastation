@@ -8,8 +8,8 @@
 #include <string>
 #include <map>
 
-#include <yarp/os/RateThread.h>
 #include <yarp/os/Mutex.h>
+#include <yarp/os/PeriodicThread.h>
 
 #include "AudioManager.hpp"
 
@@ -22,7 +22,7 @@ namespace rd{
  *
  */
 class MockAudioManager : public AudioManager,
-                           public yarp::os::RateThread
+                         public yarp::os::PeriodicThread
 {
     public:
         //---------------- Mock interface -------------------------------------------------------------------------//
@@ -72,7 +72,7 @@ class MockAudioManager : public AudioManager,
         MockAudioManager(const MockAudioManager &);
         MockAudioManager & operator=(const MockAudioManager &);
 
-        //! @brief Method called periodically from the RateThread class. It simply calls the update() method.
+        //! @brief Method called periodically from the PeriodicThread class. It simply calls the update() method.
         void run();
 
         //! \brief Stores the unique instance of the AudioManager

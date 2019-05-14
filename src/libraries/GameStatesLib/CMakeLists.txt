@@ -18,6 +18,5 @@ target_link_libraries(GameStatesLib PUBLIC StateMachineLib
                                            MentalMapLib
                                            MusicLib
                                            UserInterfaceLib
-                                           ASROB::RobotInterfaces)
-
-target_link_libraries(GameStatesLib PRIVATE ROBOTICSLAB::ColorDebug)
+                                           ASROB::RobotInterfaces
+                                    PRIVATE ROBOTICSLAB::ColorDebug)

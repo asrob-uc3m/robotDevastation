@@ -22,8 +22,7 @@ target_link_libraries(UtilsLib PUBLIC ${SDL2_LIBRARY}
                                       NetworkLib
                                       MusicLib
                                       UserInterfaceLib
-                                      ASROB::RobotInterfaces)
-
-target_link_libraries(UtilsLib PRIVATE ${SDL2_IMAGE_LIBRARIES}
+                                      ASROB::RobotInterfaces
+                               PRIVATE ${SDL2_IMAGE_LIBRARIES}
                                        ${SDL2_TTF_LIBRARIES}
                                        ROBOTICSLAB::ColorDebug)

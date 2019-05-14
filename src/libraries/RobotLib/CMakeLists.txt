@@ -5,9 +5,7 @@
 add_library(RobotLib MockRobotManager.cpp
                      MockRobotManager.hpp)
 
-target_include_directories(RobotLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-                                           ${YARP_INCLUDE_DIRS})
+target_include_directories(RobotLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(RobotLib PUBLIC ASROB::RobotInterfaces)
-
-target_link_libraries(RobotLib PRIVATE ROBOTICSLAB::ColorDebug)
+target_link_libraries(RobotLib PUBLIC ASROB::RobotInterfaces
+                               PRIVATE ROBOTICSLAB::ColorDebug)
