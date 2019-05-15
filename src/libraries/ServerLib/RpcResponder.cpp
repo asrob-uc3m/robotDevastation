@@ -29,8 +29,8 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
     else if((in.get(0).asString() == "hit")||(in.get(0).asVocab() == VOCAB_RD_HIT))  //-- hit
     {
         //-- Extract data
-        int hitId = in.get(1).asInt();
-        int damage = in.get(2).asInt();
+        int hitId = in.get(1).asInt32();
+        int damage = in.get(2).asInt32();
 
         //-- Check if the player hit is logged in the game
         players_mutex->lock();
@@ -54,13 +54,13 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
     }
     else if((in.get(0).asString() == "login")||(in.get(0).asVocab() == VOCAB_RD_LOGIN))  //-- login
     {
-        int loginId = in.get(1).asInt();
+        int loginId = in.get(1).asInt32();
 
         players_mutex->lock();
         if ( players->find(loginId) == players->end() )  // if not found, we can create
         {
             //-- Player( int id, std::string name, int health, int max_health, int team_id, int score);
-            Player rdPlayer( loginId, in.get(2).asString().c_str(),100,100,in.get(3).asInt(),0);
+            Player rdPlayer( loginId, in.get(2).asString().c_str(),100,100,in.get(3).asInt32(),0);
 
             (*players)[loginId] = rdPlayer;
             (*players_belief)[loginId] = MAX_BELIEF;
@@ -76,7 +76,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
     }
     else if ((in.get(0).asString() == "logout")||(in.get(0).asVocab() == VOCAB_RD_LOGOUT)) //-- logout
     {
-        int logoutId = in.get(1).asInt();
+        int logoutId = in.get(1).asInt32();
 
         players_mutex->lock();
         if ( players->find(logoutId) == players->end() )
@@ -94,7 +94,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
     }
     else if ((in.get(0).asString() == "respawn")||(in.get(0).asVocab() == VOCAB_RD_RESPAWN)) //-- respawn
     {
-        int respawnId = in.get(1).asInt();
+        int respawnId = in.get(1).asInt32();
 
         players_mutex->lock();
         if ( players->find(respawnId) == players->end() )
@@ -111,7 +111,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
     }
     else if ((in.get(0).asString() == "keepAlive")||(in.get(0).asVocab() == VOCAB_RD_KEEPALIVE)) //-- keepalive
     {
-        int keepAliveId = in.get(1).asInt();
+        int keepAliveId = in.get(1).asInt32();
 
         players_mutex->lock();
         if ( players->find(keepAliveId) == players->end() )

@@ -127,12 +127,12 @@ void rd::YarpNetworkManager::onRead(yarp::os::Bottle &b)
         std::vector< Player > players;
         for (int i = 1; i < b.size(); i++)
         {
-            Player rdPlayer(b.get(i).asList()->get(0).asInt(),
+            Player rdPlayer(b.get(i).asList()->get(0).asInt32(),
                               b.get(i).asList()->get(1).asString().c_str(),
-                              b.get(i).asList()->get(2).asInt(),
-                              b.get(i).asList()->get(3).asInt(),
-                              b.get(i).asList()->get(4).asInt(),
-                              b.get(i).asList()->get(5).asInt()
+                              b.get(i).asList()->get(2).asInt32(),
+                              b.get(i).asList()->get(3).asInt32(),
+                              b.get(i).asList()->get(4).asInt32(),
+                              b.get(i).asList()->get(5).asInt32()
                               );
             players.push_back(rdPlayer);
         }
@@ -199,8 +199,8 @@ bool rd::YarpNetworkManager::sendPlayerHit(const Player & player, int damage)
     //-- Send a message to the server with the player Id and the damage done:
     yarp::os::Bottle msg_player_hit, response;
     msg_player_hit.addVocab(VOCAB_RD_HIT);
-    msg_player_hit.addInt(player.getId());
-    msg_player_hit.addInt(damage);
+    msg_player_hit.addInt32(player.getId());
+    msg_player_hit.addInt32(damage);
     rpcClient.write(msg_player_hit,response);
     CD_INFO("rdServer response from hit: %s\n",response.toString().c_str());
 
@@ -230,9 +230,9 @@ bool rd::YarpNetworkManager::login()
     //-- Send login message
     yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_LOGIN);
-    msgRdPlayer.addInt(player.getId());
+    msgRdPlayer.addInt32(player.getId());
     msgRdPlayer.addString(player.getName().c_str());
-    msgRdPlayer.addInt(player.getTeamId());
+    msgRdPlayer.addInt32(player.getTeamId());
     rpcClient.write(msgRdPlayer,res);
     CD_INFO("rdServer response from login: %s\n",res.toString().c_str());
 
@@ -254,7 +254,7 @@ bool rd::YarpNetworkManager::logout()
     CD_INFO("Logout...\n");
     yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_LOGOUT);
-    msgRdPlayer.addInt(player.getId());
+    msgRdPlayer.addInt32(player.getId());
     rpcClient.write(msgRdPlayer,res);
     CD_INFO("rdServer response from logout: %s\n",res.toString().c_str());
 
@@ -280,7 +280,7 @@ bool rd::YarpNetworkManager::keepAlive()
     CD_INFO("Keep alive...\n");
     yarp::os::Bottle msgRdPlayer,res;
     msgRdPlayer.addVocab(VOCAB_RD_KEEPALIVE);
-    msgRdPlayer.addInt(player.getId());
+    msgRdPlayer.addInt32(player.getId());
     rpcClient.write(msgRdPlayer,res);
 
     //-- Check response

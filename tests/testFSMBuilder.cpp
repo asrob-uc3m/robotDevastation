@@ -105,10 +105,10 @@ class FSMBuilderTest : public testing::Test
                 yarp::os::Time::delay(delay_s);
 
                 command.clear();
-                command.addInt(MockState::REQUEST_STATE);
+                command.addInt32(MockState::REQUEST_STATE);
 
                 rpcClient.write(command, response);
-                currentState = response.get(0).asInt();
+                currentState = response.get(0).asInt32();
 
                 retry_count++;
             } while ((currentState & reference_state) != reference_state);
@@ -189,7 +189,7 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
 
     //-- Send command to pass to state 2
     yarp::os::Bottle command;
-    command.addInt(2);
+    command.addInt32(2);
     rpcClient.write(command);
 
     //-- Check that state 1 passed through cleanup
@@ -208,7 +208,7 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedIsCorrect)
 
     //-- Send command to pass to state 3
     command.clear();
-    command.addInt(3);
+    command.addInt32(3);
     rpcClient.write(command);
 
     //-- Check that state 2 passed through cleanup
@@ -275,7 +275,7 @@ TEST_F(FSMBuilderTest, StateMachineGeneratedStopsAtNULL)
 
     //-- Send command to pass to state 2
     yarp::os::Bottle command;
-    command.addInt(2);
+    command.addInt32(2);
     rpcClient.write(command);
 
     //-- Check that state 1 passed through cleanup

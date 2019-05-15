@@ -78,7 +78,7 @@ bool rd::MockState::read(yarp::os::ConnectionReader & connection)
 {
     yarp::os::Bottle in;
     in.read(connection);
-    int received = in.get(0).asInt();
+    int received = in.get(0).asInt32();
 
     if (received != REQUEST_STATE)
     {
@@ -92,7 +92,7 @@ bool rd::MockState::read(yarp::os::ConnectionReader & connection)
     {
         CD_INFO("Preparing response...\n");
         yarp::os::Bottle out;
-        out.addInt(state_history);
+        out.addInt32(state_history);
         out.write(*returnToSender);
     }
 

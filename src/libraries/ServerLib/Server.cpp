@@ -53,12 +53,12 @@ bool rd::Server::updateModule()
         quiet || std::printf("----------------------\n%s\n", (iterator->second).str().c_str());
         quiet || std::printf("Belief: %d\n", players_belief[iterator->first]);
         yarp::os::Bottle msgPlayer;
-        msgPlayer.addInt( (iterator->second).getId() );
+        msgPlayer.addInt32( (iterator->second).getId() );
         msgPlayer.addString( (iterator->second).getName().c_str() );
-        msgPlayer.addInt( (iterator->second).getHealth() );
-        msgPlayer.addInt( (iterator->second).getMaxHealth() );
-        msgPlayer.addInt( (iterator->second).getTeamId() );
-        msgPlayer.addInt( (iterator->second).getScore() );
+        msgPlayer.addInt32( (iterator->second).getHealth() );
+        msgPlayer.addInt32( (iterator->second).getMaxHealth() );
+        msgPlayer.addInt32( (iterator->second).getTeamId() );
+        msgPlayer.addInt32( (iterator->second).getScore() );
         msgBroadcast.addList() = msgPlayer;
     }
 

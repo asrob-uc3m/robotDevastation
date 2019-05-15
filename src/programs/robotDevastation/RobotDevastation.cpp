@@ -89,7 +89,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         if(rf.check("camera_id"))
         {
             std::stringstream camera_id_ss;
-            camera_id_ss << rf.find("camera_id").asInt();
+            camera_id_ss << rf.find("camera_id").asInt32();
             CD_INFO("YarpLocalImageManager is using camera with index %s.\n", camera_id_ss.str().c_str());
             imageManager->configure("camera_id", camera_id_ss.str());
         }
@@ -173,7 +173,7 @@ bool rd::RobotDevastation::initPlayerInfo(yarp::os::ResourceFinder &rf)
 {
     if(rf.check("id"))
     {
-        id = rf.find("id").asInt();
+        id = rf.find("id").asInt32();
         std::stringstream question;
         question << "Insert player id [" << id << "]";
         getInfoFromUser(question.str(), id);
@@ -200,7 +200,7 @@ bool rd::RobotDevastation::initPlayerInfo(yarp::os::ResourceFinder &rf)
 
     if(rf.check("team"))
     {
-        team = rf.find("team").asInt();
+        team = rf.find("team").asInt32();
         std::stringstream question;
         question << "Insert team [" << team << "]";
         getInfoFromUser(question.str(), team);
