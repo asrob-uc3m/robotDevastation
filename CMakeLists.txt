@@ -40,7 +40,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake
 find_package(YCM 0.10 REQUIRED)
 find_package(COLOR_DEBUG REQUIRED)
 find_package(ASROB_YARP_DEVICES REQUIRED)
-find_package(YARP 3.0 REQUIRED COMPONENTS OS dev sig)
+find_package(YARP 3.1 REQUIRED COMPONENTS OS dev sig)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
