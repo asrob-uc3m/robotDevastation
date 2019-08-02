@@ -26,7 +26,7 @@
 
 ## Status
 
-[![Build Status (Linux/OSX)](https://travis-ci.org/asrob-uc3m/robotDevastation.svg?branch=develop)](https://travis-ci.org/asrob-uc3m/robotDevastation)
+[![Build Status (Linux)](https://travis-ci.com/asrob-uc3m/robotDevastation.svg?branch=develop)](https://travis-ci.com/asrob-uc3m/robotDevastation)
 
 [![Build Status (Windows)](https://ci.appveyor.com/api/projects/status/github/asrob-uc3m/robotdevastation?branch=develop&svg=true)](https://ci.appveyor.com/project/asrob-uc3m/robotdevastation)
 
