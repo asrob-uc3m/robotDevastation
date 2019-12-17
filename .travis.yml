@@ -3,7 +3,7 @@
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
 language: cpp
-dist: xenial
+dist: bionic
 os: linux
 
 compiler:
@@ -14,9 +14,10 @@ env:
   global:
     - SDL_AUDIODRIVER=dummy # avoid ALSA errors
     - CACHE_DIR=~/cached-deps # common cache location
+    - YCM_CHECKOUT=ycm-0.11
   matrix:
-    - YARP_CHECKOUT=master
-    - YARP_CHECKOUT=v3.1.2
+    - YARP_CHECKOUT=yarp-3.3
+    - YARP_CHECKOUT=yarp-3.2
 
 cache:
   directories: $CACHE_DIR
@@ -51,7 +52,7 @@ install:
     source "$TRAVIS_BUILD_DIR/scripts/travis/git-cache-dependency.sh"
     --package-name YCM
     --repo-url https://github.com/robotology/ycm
-    --repo-checkout "${ROBOTOLOGY_CHECKOUT:-${YCM_CHECKOUT:-master}}"
+    --repo-checkout "${ROBOTOLOGY_CHECKOUT:-$YCM_CHECKOUT}"
 
   #-- Install YARP
   - >
