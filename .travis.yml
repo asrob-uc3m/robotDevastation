@@ -15,11 +15,11 @@ env:
     - SDL_AUDIODRIVER=dummy # avoid ALSA errors
     - CACHE_DIR=~/cached-deps # common cache location
     - YCM_CHECKOUT=ycm-0.11
-  matrix:
+  jobs:
     - YARP_CHECKOUT=yarp-3.3
     - YARP_CHECKOUT=yarp-3.2
 
-matrix:
+jobs:
   include:
     - if: type = cron
       compiler: gcc
@@ -85,7 +85,7 @@ install:
     source "$TRAVIS_BUILD_DIR/scripts/travis/git-cache-dependency.sh"
     --package-name ROBOTICSLAB_YARP_DEVICES
     --repo-url https://github.com/asrob-uc3m/yarp-devices
-    --repo-checkout develop
+    --repo-checkout master
     --additional-export-paths "YARP_DATA_DIRS;share/asrob-yarp-devices"
 
 before_script:
