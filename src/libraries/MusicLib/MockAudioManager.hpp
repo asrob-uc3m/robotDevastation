@@ -7,8 +7,8 @@
 
 #include <string>
 #include <map>
+#include <mutex>
 
-#include <yarp/os/Mutex.h>
 #include <yarp/os/PeriodicThread.h>
 
 #include "AudioManager.hpp"
@@ -79,11 +79,11 @@ class MockAudioManager : public AudioManager,
         static MockAudioManager * uniqueInstance;
 
         //! \brief Dictionary for sound durations:
-        mutable yarp::os::Mutex durations_mutex;
+        mutable std::mutex durations_mutex;
         std::map<std::string, int> durations;
 
         //! \brief Dictionary for loop times
-        mutable yarp::os::Mutex loop_times_mutex;
+        mutable std::mutex loop_times_mutex;
         std::map<std::string, int> loop_times;
 
         bool stopped;

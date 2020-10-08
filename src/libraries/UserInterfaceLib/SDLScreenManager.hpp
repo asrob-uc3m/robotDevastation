@@ -8,10 +8,9 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <mutex>
 
 #include <SDL.h>
-
-#include <yarp/os/Mutex.h> //-- Right now use yarp mutex. In the future is better to use C++11 std::mutex
 
 #include "ScreenManager.hpp"
 #include "Screen.hpp"
@@ -108,7 +107,7 @@ class SDLScreenManager : public ScreenManager
         bool fullscreen;
 
         SDL_Window * window;
-        mutable yarp::os::Mutex mutex;
+        mutable std::mutex mutex;
 };
 
 }

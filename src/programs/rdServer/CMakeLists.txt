@@ -10,7 +10,7 @@ if(ENABLE_rdServer)
 add_executable(rdServer main.cpp)
 
 target_link_libraries(rdServer YARP::YARP_init
-                               YARP::YARP_OS
+                               YARP::YARP_os
                                ServerLib
                                ROBOTICSLAB::ColorDebug)
 

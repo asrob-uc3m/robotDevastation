@@ -14,7 +14,7 @@ add_library(NetworkLib MockNetworkEventListener.hpp
 
 target_include_directories(NetworkLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(NetworkLib PUBLIC YARP::YARP_OS
+target_link_libraries(NetworkLib PUBLIC YARP::YARP_os
                                         MentalMapLib
                                  PRIVATE UtilsLib
                                          ROBOTICSLAB::ColorDebug)

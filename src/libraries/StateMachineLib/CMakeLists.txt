@@ -17,5 +17,5 @@ add_library(StateMachineLib MockState.hpp
 
 target_include_directories(StateMachineLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(StateMachineLib PUBLIC YARP::YARP_OS
+target_link_libraries(StateMachineLib PUBLIC YARP::YARP_os
                                       PRIVATE ROBOTICSLAB::ColorDebug)

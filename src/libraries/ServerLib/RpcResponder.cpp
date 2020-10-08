@@ -135,7 +135,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
 
 }
 
-void rd::RpcResponder::setPlayers(std::map<int,Player> *value, std::map<int, int> *players_belief, yarp::os::Mutex *players_mutex)
+void rd::RpcResponder::setPlayers(std::map<int,Player> *value, std::map<int, int> *players_belief, std::mutex *players_mutex)
 {
     players = value;
     this->players_belief = players_belief;

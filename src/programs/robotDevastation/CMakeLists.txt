@@ -12,7 +12,7 @@ add_executable(robotDevastation main.cpp
 
 target_include_directories(robotDevastation PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(robotDevastation YARP::YARP_OS
+target_link_libraries(robotDevastation YARP::YARP_os
                                        MusicLib
                                        MentalMapLib
                                        InputLib

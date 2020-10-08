@@ -23,7 +23,7 @@ target_include_directories(UserInterfaceLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 
 target_include_directories(UserInterfaceLib PRIVATE ${SDL2_IMAGE_INCLUDE_DIRS})
 
-target_link_libraries(UserInterfaceLib PUBLIC YARP::YARP_OS
+target_link_libraries(UserInterfaceLib PUBLIC YARP::YARP_os
                                               ${SDL2_LIBRARY}
                                               ${SDL2_TTF_LIBRARIES}
                                               ImageLib

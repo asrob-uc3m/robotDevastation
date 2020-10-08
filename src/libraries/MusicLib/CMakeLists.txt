@@ -13,7 +13,7 @@ target_include_directories(MusicLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                            ${SDL2_INCLUDE_DIR}
                                            ${SDL2_MIXER_INCLUDE_DIRS})
 
-target_link_libraries(MusicLib PUBLIC YARP::YARP_OS
+target_link_libraries(MusicLib PUBLIC YARP::YARP_os
                                       ${SDL2_LIBRARY}
                                       ${SDL2_MIXER_LIBRARIES}
                                PRIVATE ROBOTICSLAB::ColorDebug)
