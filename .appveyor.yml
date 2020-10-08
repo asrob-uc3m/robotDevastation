@@ -37,7 +37,7 @@ branches:
 init:
   # Dependency version tags
   - cmd: set ACE_LATEST=6.4.6
-  - cmd: set YCM_LATEST=0.10.4
+  - cmd: set YCM_LATEST=0.11.4
   - cmd: set YARP_LATEST=3.2.2
   - cmd: set SDL2_LATEST=2.0.12
   - cmd: set SDL2_IMAGE_LATEST=2.0.5
@@ -116,7 +116,7 @@ install:
             cmake --build "$env:ycm_temp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
             Set-Content C:\YCM\.version "$env:YCM_LATEST"
         }
-  - cmd: set YCM_DIR=C:\YCM\share\YCM\cmake
+  - cmd: set YCM_DIR=C:\YCM\CMake
 
   # Download and build YARP (if not in cache)
   - ps: >-
