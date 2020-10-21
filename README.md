@@ -26,9 +26,9 @@
 
 ## Status
 
-[![Build Status (Linux)](https://travis-ci.com/asrob-uc3m/robotDevastation.svg?branch=develop)](https://travis-ci.com/asrob-uc3m/robotDevastation)
+[![Build Status (Linux)](https://travis-ci.com/asrob-uc3m/robotDevastation.svg?branch=master)](https://travis-ci.com/asrob-uc3m/robotDevastation)
 
-[![Build Status (Windows)](https://ci.appveyor.com/api/projects/status/github/asrob-uc3m/robotdevastation?branch=develop&svg=true)](https://ci.appveyor.com/project/asrob-uc3m/robotdevastation)
+[![Build Status (Windows)](https://ci.appveyor.com/api/projects/status/github/asrob-uc3m/robotdevastation?branch=master&svg=true)](https://ci.appveyor.com/project/asrob-uc3m/robotdevastation)
 
 [![Coverage Status](https://coveralls.io/repos/asrob-uc3m/robotDevastation/badge.svg)](https://coveralls.io/r/asrob-uc3m/robotDevastation)
 
