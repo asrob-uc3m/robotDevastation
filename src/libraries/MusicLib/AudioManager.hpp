@@ -1,36 +1,29 @@
-// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
 
-#ifndef __AUDIO_MANAGER_HPP__
-#define __AUDIO_MANAGER_HPP__
+#ifndef __RD_AUDIO_MANAGER_HPP__
+#define __RD_AUDIO_MANAGER_HPP__
 
-#include <iostream>
+#include <string>
 #include <map>
-
-#include "RdMacros.hpp"
 
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup RdMusicLib
- *
- * @brief The RdMusicLib library contains classes related to game music and sound effects
-
-/**
- * @ingroup RdMusicLib
+ * @ingroup MusicLib
  *
  * @brief Music and sound effects manager
  *
- * RdAudioManger can load several audio files and assign them a string for identification,
+ * AudioManager can load several audio files and assign them a string for identification,
  * so that they can be played later.
  *
- * RdAudioManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
+ * AudioManager is a <a href="http://en.wikipedia.org/wiki/Singleton_pattern">singleton text</a> (only
  * one instance of this object can exist, that is is shared by all the users). To use this
- * class, we first get the reference to the RdAudioManager with getAudioManager() and then we
+ * class, we first get the reference to the AudioManager with getAudioManager() and then we
  * access the manager with that reference.
  *
- * When the program finishes, the RdAudioManager can be deallocated using destroAudioManager().
+ * When the program finishes, the AudioManager can be deallocated using destroAudioManager().
  */
 class AudioManager
 {
@@ -48,9 +41,9 @@ class AudioManager
          * @return The AudioManager registered with the given id, NULL if the id is not found in
          * the registry.
          */
-        static AudioManager * getAudioManager(std::string id);
+        static AudioManager * getAudioManager(const std::string & id);
 
-        //! @brief Deallocate all the registered RdInputManager
+        //! @brief Deallocate all the registered AudioManager
         static bool destroyAudioManager();
 
         virtual ~AudioManager();
@@ -67,10 +60,12 @@ class AudioManager
         //! @brief Stops the AudioManager
         virtual bool stop() = 0;
 
+        //! @brief True if the manager is not active
+        virtual bool isStopped() const = 0;
 
         //------------------------------ Configuration ----------------------------------------------------------------//
         //! @brief Configures a parameter with a value
-        virtual bool configure(std::string parameter, std::string value);
+        virtual bool configure(const std::string & parameter, const std::string & value);
 
 
         //------------------------------- Audio Manager functions -----------------------------------------------------//
@@ -108,7 +103,7 @@ class AudioManager
          * @brief This function allows subclasses to install their unique instances in the singleton register to be
          * selected later by the user
          */
-        static bool Register( AudioManager * manager, std::string id);
+        static bool Register( AudioManager * manager, const std::string & id);
 
 
     private:
@@ -118,11 +113,11 @@ class AudioManager
         //! \brief Stores the id of the current unique instance used
         static std::string currentId;
 
-        //! \brief Stores all the RdInputManager that have been registered
+        //! \brief Stores all the AudioManager that have been registered
         static std::map< std::string, AudioManager * > audioManagerRegistry;
 
 };
 
 }
 
-#endif //-- __AUDIO_MANAGER_HPP__
+#endif //-- __RD_AUDIO_MANAGER_HPP__

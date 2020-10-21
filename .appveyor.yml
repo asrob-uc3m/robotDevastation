@@ -1,0 +1,254 @@
+# Authors: see AUTHORS.md at project root.
+# CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+# URL: https://github.com/asrob-uc3m/robotDevastation
+
+version: appveyor.{build}
+
+image: Visual Studio 2019
+
+configuration: Release
+
+environment:
+  global:
+    SDL_AUDIODRIVER: dummy
+    ACE_VC_SLN: ACE_wrappers_vs2019.sln
+
+  matrix:
+    - platform: Win32
+      system_arch: x86
+      zbar_arch: i686
+
+    - platform: x64
+      system_arch: x64
+      zbar_arch: x86_64
+
+cache:
+  - C:\ACE
+  - C:\YCM
+  - C:\YARP
+  - C:\SDL2
+
+branches:
+  except:
+  - /^.*travis.*$/
+
+init:
+  # Dependency version tags
+  - cmd: set ACE_LATEST=6.5.11
+  - cmd: set YCM_LATEST=0.11.4
+  - cmd: set YARP_LATEST=3.4.1
+  - cmd: set SDL2_LATEST=2.0.12
+  - cmd: set SDL2_IMAGE_LATEST=2.0.5
+  - cmd: set SDL2_TTF_LATEST=2.0.15
+  - cmd: set SDL2_MIXER_LATEST=2.0.4
+  - cmd: set ZBAR_LATEST=0.10-rd1
+  - cmd: set GTEST_LATEST=1.8.1
+
+  # Download/clone paths and URLs
+  - cmd: set CLONES_PATH=C:\git
+  - cmd: set DOWNLOADS_PATH=C:\downloads
+  - cmd: set NUGET_PATH=C:\nuget_packages
+
+  - cmd: set COLOR_DEBUG_CLONE_URL=https://github.com/roboticslab-uc3m/color-debug
+  - cmd: set YARP_DEVICES_CLONE_URL=https://github.com/asrob-uc3m/yarp-devices
+
+  - cmd: set ACE_DOWNLOAD_URL=http://download.dre.vanderbilt.edu/previous_versions/ACE-%ACE_LATEST%.zip
+  - cmd: set YCM_DOWNLOAD_URL=https://github.com/robotology/ycm/archive/v%YCM_LATEST%.zip
+  - cmd: set YARP_DOWNLOAD_URL=https://github.com/robotology/yarp/archive/v%YARP_LATEST%.zip
+  - cmd: set SDL2_DOWNLOAD_URL=https://www.libsdl.org/release/SDL2-devel-%SDL2_LATEST%-VC.zip
+  - cmd: set SDL2_IMAGE_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-%SDL2_IMAGE_LATEST%-VC.zip
+  - cmd: set SDL2_TTF_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-%SDL2_TTF_LATEST%-VC.zip
+  - cmd: set SDL2_MIXER_DOWNLOAD_URL=https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-%SDL2_MIXER_LATEST%-VC.zip
+  - cmd: set ZBAR_DOWNLOAD_URL=https://github.com/asrob-uc3m/ZBar/releases/download/%ZBAR_LATEST%/zbar-%ZBAR_LATEST%-%ZBAR_ARCH%-setup.exe
+  - cmd: set GTEST_DOWNLOAD_URL=https://github.com/google/googletest/archive/release-%GTEST_LATEST%.zip
+
+  # Print some useful informations
+  - cmd: set
+  - cmd: cmake --version
+  - cmd: msbuild /version
+
+install:
+  # Create folders
+  - cmd: md %CLONES_PATH%
+  - cmd: md %DOWNLOADS_PATH%
+  - cmd: md %NUGET_PATH%
+
+  # Download and build ACE (if not in cache)
+  - ps: >-
+        if (
+            (Test-Path -Path C:\ACE -PathType Container) -And
+            (Test-Path -Path C:\ACE\.version -PathType Leaf) -And
+            (Get-Content C:\ACE\.version | Where-Object { $_.Equals("$env:ACE_LATEST") })
+        ) {
+            Write-Host "ACE found in cache ($env:ACE_LATEST)"
+        } else {
+            Write-Host "ACE not in cache or version mismatch, running download and build step..."
+            Write-Host "Downloading $env:ACE_DOWNLOAD_URL"
+            Start-FileDownload "$env:ACE_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\ace.zip"
+            7z x -y -o"$env:DOWNLOADS_PATH" "$env:DOWNLOADS_PATH\ace.zip"
+            Add-Content "$env:DOWNLOADS_PATH\ACE_wrappers\ace\config.h" "#include `"ace/config-win32.h`""
+            msbuild "$env:DOWNLOADS_PATH\ACE_wrappers\$env:ACE_VC_SLN" /m /v:m
+            Write-Host "Copying selected contents of $env:DOWNLOADS_PATH\ACE_wrappers to C:\ACE"
+            robocopy "$env:DOWNLOADS_PATH\ACE_wrappers\ace" C:\ACE\ace /e /xd "$env:DOWNLOADS_PATH\ACE_wrappers\ace\$env:CONFIGURATION" /ns /nc /nfl /ndl /njh
+            xcopy "$env:DOWNLOADS_PATH\ACE_wrappers\lib" C:\ACE\lib /e /i /y /q
+            Set-Content C:\ACE\.version "$env:ACE_LATEST"
+        }
+  - cmd: set ACE_ROOT=C:\ACE
+  - cmd: set PATH=%ACE_ROOT%\lib;%PATH%
+
+  # Download and build YCM (if not in cache)
+  - ps: >-
+        if (
+            (Test-Path -Path C:\YCM -PathType Container) -And
+            (Test-Path -Path C:\YCM\.version -PathType Leaf) -And
+            (Get-Content C:\YCM\.version | Where-Object { $_.Equals("$env:YCM_LATEST") })
+        ) {
+            Write-Host "YCM found in cache ($env:YCM_LATEST)"
+        } else {
+            Write-Host "YCM not in cache or version mismatch, running download and build step..."
+            Write-Host "Downloading $env:YCM_DOWNLOAD_URL"
+            Start-FileDownload "$env:YCM_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\ycm.zip"
+            7z x -y -o"$env:DOWNLOADS_PATH" "$env:DOWNLOADS_PATH\ycm.zip"
+            $env:ycm_temp = "$env:DOWNLOADS_PATH\ycm-$env:YCM_LATEST"
+            cmake -H"$env:ycm_temp" -B"$env:ycm_temp\build" -A"$env:PLATFORM" -DCMAKE_INSTALL_PREFIX:PATH=C:\YCM
+            cmake --build "$env:ycm_temp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
+            Set-Content C:\YCM\.version "$env:YCM_LATEST"
+        }
+  - cmd: set YCM_DIR=C:\YCM\CMake
+
+  # Download and build YARP (if not in cache)
+  - ps: >-
+        if (
+            (Test-Path -Path C:\YARP -PathType Container) -And
+            (Test-Path -Path C:\YARP\.version -PathType Leaf) -And
+            (Get-Content C:\YARP\.version | Where-Object { $_.Equals("$env:YARP_LATEST") })
+        ) {
+            Write-Host "YARP found in cache ($env:YARP_LATEST)"
+        } else {
+            Write-Host "YARP not in cache or version mismatch, running download and build step..."
+            Write-Host "Downloading $env:YARP_DOWNLOAD_URL"
+            Start-FileDownload "$env:YARP_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\yarp.zip"
+            7z x -y -o"$env:DOWNLOADS_PATH" "$env:DOWNLOADS_PATH\yarp.zip"
+            $env:yarp_temp = "$env:DOWNLOADS_PATH\yarp-$env:YARP_LATEST"
+            cmake -H"$env:yarp_temp" -B"$env:yarp_temp\build" -A"$env:PLATFORM" -DCMAKE_INSTALL_PREFIX:PATH=C:\YARP
+            cmake --build "$env:yarp_temp\build" --config "$env:CONFIGURATION" --target INSTALL -- /m /v:m
+            Set-Content C:\YARP\.version "$env:YARP_LATEST"
+        }
+  - cmd: set YARP_DIR=C:\YARP\CMake
+  - cmd: set PATH=C:\YARP\bin;%PATH%
+
+  # Download and build color-debug
+  - cmd: echo Cloning %COLOR_DEBUG_CLONE_URL%
+  - cmd: git clone "%COLOR_DEBUG_CLONE_URL%" "%CLONES_PATH%\color-debug"
+  - cmd: md "%CLONES_PATH%\color-debug\build"
+  - cmd: cmake -H"%CLONES_PATH%\color-debug" -B"%CLONES_PATH%\color-debug\build" -A"%PLATFORM%" -DCMAKE_INSTALL_PREFIX:PATH="%CLONES_PATH%\color-debug\build\install"
+  - cmd: cmake --build "%CLONES_PATH%\color-debug\build" --config "%CONFIGURATION%" --target INSTALL -- /m /v:m
+  - cmd: set COLOR_DEBUG_DIR="%CLONES_PATH%\color-debug\build\install"
+
+  # Download and build yarp-devices
+  - cmd: echo Cloning %YARP_DEVICES_CLONE_URL%
+  - cmd: git clone "%YARP_DEVICES_CLONE_URL%" "%CLONES_PATH%\yarp-devices"
+  - cmd: md "%CLONES_PATH%\yarp-devices\build"
+  - cmd: cmake -H"%CLONES_PATH%\yarp-devices" -B"%CLONES_PATH%\yarp-devices\build" -A"%PLATFORM%" -DCMAKE_INSTALL_PREFIX:PATH="%CLONES_PATH%\yarp-devices\build\install"
+  - cmd: cmake --build "%CLONES_PATH%\yarp-devices\build" --config "%CONFIGURATION%" --target INSTALL -- /m /v:m
+  - cmd: set ASROB_YARP_DEVICES_DIR="%CLONES_PATH%\yarp-devices\build\install"
+
+  # Download and install ZBar (keep this section before the SDL2 one)
+  - cmd: echo Downloading %ZBAR_DOWNLOAD_URL%
+  - cmd: appveyor DownloadFile "%ZBAR_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\zbar.exe"
+  - cmd: '"%DOWNLOADS_PATH%\zbar.exe" /S /D=C:\ZBar'
+  - cmd: set ZBAR_DIR=C:\ZBar
+  - cmd: set PATH=%ZBAR_DIR%\bin;%PATH% # final PATH must give precedence to SDL2 due to overlapping versions of the zlib1.dll dependency
+
+  # Download and extract SDL2 libraries (if not in cache)
+  - ps: $sdl2_releases = @("$env:SDL2_LATEST", "image_$env:SDL2_IMAGE_LATEST", "ttf_$env:SDL2_TTF_LATEST", "mixer_$env:SDL2_MIXER_LATEST")
+  - ps: >-
+        if (
+            (Test-Path -Path C:\SDL2 -PathType Container) -And
+            (Test-Path -Path C:\SDL2\.version -PathType Leaf) -And
+            -Not (Compare-Object -ReferenceObject (Get-Content C:\SDL2\.version) -DifferenceObject $sdl2_releases -PassThru)
+        ) {
+            Write-Host "SDL2 found in cache:"
+            Write-Host "SDL2 = $env:SDL2_LATEST"
+            Write-Host "SDL2_image = $env:SDL2_IMAGE_LATEST"
+            Write-Host "SDL2_ttf = $env:SDL2_TTF_LATEST"
+            Write-Host "SDL2_mixer = $env:SDL2_MIXER_LATEST"
+        } else {
+            Write-Host "SDL2 not in cache or version mismatch, running download and extract step..."
+            Write-Host "Downloading $env:SDL2_DOWNLOAD_URL"
+            Start-FileDownload "$env:SDL2_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\sdl2.zip"
+            Write-Host "Downloading $env:SDL2_IMAGE_DOWNLOAD_URL"
+            Start-FileDownload "$env:SDL2_IMAGE_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\sdl2_image.zip"
+            Write-Host "Downloading $env:SDL2_TTF_DOWNLOAD_URL"
+            Start-FileDownload "$env:SDL2_TTF_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\sdl2_ttf.zip"
+            Write-Host "Downloading $env:SDL2_MIXER_DOWNLOAD_URL"
+            Start-FileDownload "$env:SDL2_MIXER_DOWNLOAD_URL" -FileName "$env:DOWNLOADS_PATH\sdl2_mixer.zip"
+            7z x -y -o"$env:DOWNLOADS_PATH\SDL2_temp" "$env:DOWNLOADS_PATH\sdl2*.zip"
+            Write-Host "Copying contents of $env:DOWNLOADS_PATH\SDL2_temp to C:\SDL2"
+            Get-ChildItem -Directory "$env:DOWNLOADS_PATH\SDL2_temp" | ?{ $_.PSIsContainer } | ForEach-Object {
+                xcopy $_.FullName C:\SDL2 /e /i /d /y /q
+            }
+            $sdl2_releases | Set-Content C:\SDL2\.version
+        }
+  - cmd: set SDL2DIR=C:\SDL2
+  - cmd: set PATH=%SDL2DIR%\lib\%SYSTEM_ARCH%;%PATH%
+
+  # Download googletest
+  - cmd: echo Downloading %GTEST_DOWNLOAD_URL%
+  - cmd: appveyor DownloadFile "%GTEST_DOWNLOAD_URL%" -FileName "%DOWNLOADS_PATH%\gtest.zip"
+  - cmd: 7z x -y -o"%DOWNLOADS_PATH%" "%DOWNLOADS_PATH%\gtest.zip"
+  - cmd: set GTEST_ROOT=%DOWNLOADS_PATH%\googletest-release-%GTEST_LATEST%
+
+  # Download and install NuGet packages
+  - cmd: nuget install Doxygen -OutputDirectory "%NUGET_PATH%" -ExcludeVersion
+  - cmd: nuget install Graphviz -OutputDirectory "%NUGET_PATH%" -ExcludeVersion
+  - cmd: set PATH=%PATH%;%NUGET_PATH%\Doxygen\tools;%NUGET_PATH%\Graphviz
+
+before_build:
+  - cmd: echo Configuring project %APPVEYOR_PROJECT_NAME%
+  - cmd: cmake -H"%APPVEYOR_BUILD_FOLDER%" -B"%APPVEYOR_BUILD_FOLDER%\build" -A"%PLATFORM%" -DCMAKE_INSTALL_PREFIX:PATH="%APPVEYOR_BUILD_FOLDER%\install"
+
+build:
+  project: build\robotDevastation.sln
+  parallel: false
+  verbosity: minimal
+
+after_build:
+  - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target DOX -- /v:m
+  - cmd: cmake --build "%APPVEYOR_BUILD_FOLDER%\build" --config "%CONFIGURATION%" --target INSTALL -- /v:m
+  - cmd: set YARP_DATA_DIRS=%APPVEYOR_BUILD_FOLDER%\install\share\rd
+
+before_test:
+  - cmd: echo %PATH%
+
+test_script:
+  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testDeadState.exe"'
+  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testFSMBuilder.exe"'
+  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testFSM.exe"'
+  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testGameState.exe"'
+  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testInitState.exe"'
+  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testMentalMap.exe"'
+  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testMockAudioManager.exe"'
+  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testMockInputManager.exe"'
+  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testMockRobotManager.exe"'
+  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testProcessorImageEventListener.exe"'
+  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testYarpNetworkManager.exe"'
+  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testSDLAudioManager.exe"'
+  - cmd: '"%APPVEYOR_BUILD_FOLDER%\build\bin\%CONFIGURATION%\testRobotDevastation.exe"'
+
+after_test:
+  - cmd: set DEPLOY_SUFFIX=appveyor-%APPVEYOR_BUILD_NUMBER%_v16_%SYSTEM_ARCH%
+  - cmd: move "%APPVEYOR_BUILD_FOLDER%\install" "%APPVEYOR_BUILD_FOLDER%\robotDevastation_%DEPLOY_SUFFIX%"
+
+artifacts:
+  - path: robotDevastation_%DEPLOY_SUFFIX%
+
+deploy:
+  tag: $(APPVEYOR_REPO_TAG_NAME)
+  release: 'Robot Devastation $(APPVEYOR_REPO_TAG_NAME)'
+  description: 'Put a description here.'
+  provider: GitHub
+  auth_token:
+    secure: '1MhIS1JCjeWkXo60v14wxONNDvSSEOJK95HEzkEXCA6B1eJx1sle/N5aEwlJv3lD'
+  on:
+    appveyor_repo_tag: true

@@ -1,14 +1,18 @@
-
 /**
-@brief The main, catch-all namespace for Robot Devastation.
+ * @brief The main, catch-all namespace for Robot Devastation.
  */
-namespace rd {}
+namespace rd
+{
+    /**
+     * @brief Contains classes related to unit testing.
+     */
+    namespace test {}
+}
 
 /**
 * \defgroup rd_programs List of Robot Devastation programs
 *
-* Documentation for each program goes in each 
-* directory.
+* Documentation for each program goes in each directory.
 *
 * <hr>
 *
@@ -18,11 +22,100 @@ namespace rd {}
 /**
 * \defgroup rd_libraries List of Robot Devastation libraries
 *
-* Documentation for each library goes in each 
-* directory.
+* Documentation for each library goes in each directory.
 *
 * <hr>
 *
 * This file can be edited at robotDevastation/doc/groups.dox
 */
 
+/**
+ * @ingroup rd_libraries
+ *
+ * \defgroup GameStatesLib GameStatesLib
+ *
+ * @brief The GameStatesLib library contains classes derived from the rd::State class
+ */
+
+ /**
+ * @ingroup rd_libraries
+ *
+ * \defgroup ImageLib ImageLib
+ *
+ * @brief The ImageLib library contains classes related to image input (from cameras, etc)
+ */
+ 
+ /**
+ * @ingroup rd_libraries
+ *
+ * \defgroup InputLib InputLib
+ *
+ * @brief The InputLib library contains classes related to user input (keyboard, mouse, etc).
+ */
+ 
+ /**
+ * @ingroup rd_libraries
+ *
+ * \defgroup MentalMapLib MentalMapLib
+ *
+ * @brief The MentalMapLib library contains all the classes related to game information storage
+ * (e.g. players, targets, weapons, etc)
+ */
+ 
+ /**
+ * @ingroup rd_libraries
+ *
+ * \defgroup MusicLib MusicLib
+ *
+ * @brief The MusicLib library contains classes related to game music and sound effects
+ */
+ 
+ /**
+ * @ingroup rd_libraries
+ *
+ * \defgroup NetworkLib NetworkLib
+ *
+ * @brief The NetworkLib library contains everything related to the communications with the
+ * Robot Devastation network
+ */
+ 
+ /**
+ * @ingroup rd_libraries
+ *
+ * \defgroup RobotLib RobotLib
+ *
+ * @brief The RobotLib library contains the rd::RobotManager base class and derived classes.
+ */
+ 
+ /**
+ * @ingroup rd_libraries
+ *
+ * @defgroup ServerLib ServerLib
+ *
+ * @brief The ServerLib library contains the rd::Server and rd::RpcResponder classes.
+ */
+ 
+ /**
+ * @ingroup rd_libraries
+ *
+ * \defgroup StateMachineLib StateMachineLib
+ *
+ * @brief The StateMachineLib library contains the rd::FiniteStateMachine base class and derived classes.
+ */
+ 
+ /**
+ * @ingroup rd_libraries
+ *
+ * \defgroup UserInterfaceLib UserInterfaceLib
+ *
+ * @brief The UserInterfaceLib library contains classes related to the game graphical user interface
+ */
+ 
+ /**
+ * @ingroup rd_libraries
+ *
+ * \defgroup UtilsLib UtilsLib
+ *
+ * @brief The UtilsLib library contains miscellaneous macros and utilities
+ */
+ 

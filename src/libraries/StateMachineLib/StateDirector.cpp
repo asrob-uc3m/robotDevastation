@@ -1,7 +1,12 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
+
 #include "StateDirector.hpp"
 
+#include <ColorDebug.h>
 
-rd::StateDirector::StateDirector(rd::State *state)
+rd::StateDirector::StateDirector(State *state)
 {
     this->state = state;
     active = false;
@@ -15,7 +20,7 @@ rd::StateDirector::~StateDirector()
     state = NULL;
 }
 
-std::string rd::StateDirector::getStateId()
+std::string rd::StateDirector::getStateId() const
 {
     if (state != NULL)
         return state->getStateId();
@@ -23,23 +28,23 @@ std::string rd::StateDirector::getStateId()
         return "";
 }
 
-bool rd::StateDirector::addTransition(rd::StateDirector *nextState, int condition)
+bool rd::StateDirector::addTransition(StateDirector *nextState, int condition)
 {
     if ( nextStates.find(condition) == nextStates.end())
     {
-        RD_DEBUG("Added transition from %s to %s linked to condition %d\n", state->getStateId().c_str(),
+        CD_DEBUG("Added transition from %s to %s linked to condition %d\n", state->getStateId().c_str(),
                  nextState->getStateId().c_str(), condition);
         nextStates[condition] = nextState;
         return true;
     }
     else
     {
-        RD_ERROR("Condition %d already in use in %s\n", condition, state->getStateId().c_str());
+        CD_ERROR("Condition %d already in use in %s\n", condition, state->getStateId().c_str());
         return false;
     }
 }
 
-bool rd::StateDirector::isActive()
+bool rd::StateDirector::isActive() const
 {
     return active;
 }

@@ -1,25 +1,20 @@
-// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
 
-#ifndef __FINITE_STATE_MACHINE_HPP__
-#define __FINITE_STATE_MACHINE_HPP__
+#ifndef __RD_FINITE_STATE_MACHINE_HPP__
+#define __RD_FINITE_STATE_MACHINE_HPP__
+
+#include <vector>
 
 #include "StateDirector.hpp"
 
 namespace rd{
 
 /**
- * @ingroup rd_libraries
- *
- * \defgroup RdStateMachineLib
- *
- * @brief The RdStateMachineLib library contains the \ref RdStateMachine base class and derived classes.
- */
-
-/**
- * @ingroup RdStateMachineLib
+ * @ingroup StateMachineLib
  *
  * @brief Class implementing a finite state machine
- *
  */
 class FiniteStateMachine
 {
@@ -29,12 +24,15 @@ class FiniteStateMachine
          * @param stateDirectors vector of StateDirector forming the FiniteStateMachine
          * @param initial_state_id Id of the initial state
          */
-        FiniteStateMachine(std::vector<StateDirector *> stateDirectors, int initial_state_id);
-        ~FiniteStateMachine();
+        FiniteStateMachine(const std::vector<StateDirector *> & stateDirectors, int initial_state_id);
+        virtual ~FiniteStateMachine();
 
         //! @brief Starts the state machine (running the initial state)
         bool start();
         bool stop();
+
+        //! @brief Returns current active state id
+        int getCurrentState() const;
 
     private:
         FiniteStateMachine();
@@ -45,5 +43,4 @@ class FiniteStateMachine
 
 }
 
-#endif //-- __FINITE_STATE_MACHINE_HPP__
-
+#endif //-- __RD_FINITE_STATE_MACHINE_HPP__

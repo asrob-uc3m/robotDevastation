@@ -1,10 +1,17 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
+
 #include "StateMachineBuilder.hpp"
+#include "YarpStateDirector.hpp"
+
+#include <ColorDebug.h>
 
 rd::StateMachineBuilder::StateMachineBuilder()
 {
     //-- Default parameters:
-    this->type = "YARP";
-    this->initial_state_id = 0;
+    type = "YARP";
+    initial_state_id = 0;
 }
 
 bool rd::StateMachineBuilder::setDirectorType(const std::string &type)
@@ -19,7 +26,7 @@ bool rd::StateMachineBuilder::setInitialState(int initial_state_id)
     return true;
 }
 
-int rd::StateMachineBuilder::addState(rd::State *state)
+int rd::StateMachineBuilder::addState(State *state)
 {
     states.push_back(state);
     return states.size() -1;
@@ -56,43 +63,43 @@ bool rd::StateMachineBuilder::addTransition(int origin_id, int destination_id, i
 rd::FiniteStateMachine *rd::StateMachineBuilder::buildStateMachine()
 {
     //-- Create StateDirectors of selected type:
-    for (int i = 0; i < states.size(); i++)
+    for (std::vector<State *>::iterator it = states.begin(); it != states.end(); ++it)
     {
-        stateDirectors.push_back(createStateDirector(type, states[i]));
+        stateDirectors.push_back(createStateDirector(type, *it));
     }
 
     //-- Set transitions from table to state directors:
-    for( std::map< int, std::vector<std::pair<int, int> > >::iterator it = transition_table.begin(); it != transition_table.end(); ++it)
+    for (std::map< int, std::vector<std::pair<int, int> > >::iterator it = transition_table.begin(); it != transition_table.end(); ++it)
     {
         //-- Extract data of current entry:
         int origin_id = it->first;
-        if (origin_id >= stateDirectors.size())
+        if (origin_id >= (int) stateDirectors.size())
         {
-            RD_ERROR("Bad transition found: origin state %d does not exist.\n", origin_id);
+            CD_ERROR("Bad transition found: origin state %d does not exist.\n", origin_id);
             return NULL;
         }
 
         std::vector<std::pair<int, int> > transitions = it->second;
 
         //-- Apply transitions to stateDirector
-        for (int i = 0; i < transitions.size(); i++)
+        for (std::vector< std::pair<int, int> >::iterator itt = transitions.begin(); itt != transitions.end(); ++itt)
         {
-            int dest_id = transitions[i].first;
-            if (dest_id >= stateDirectors.size())
+            int dest_id = itt->first;
+            if (dest_id >= (int) stateDirectors.size())
             {
-                RD_ERROR("Bad transition found: destination state %d does not exist.\n", dest_id);
+                CD_ERROR("Bad transition found: destination state %d does not exist.\n", dest_id);
                 return NULL;
             }
 
             StateDirector * destination = stateDirectors[dest_id];
-            stateDirectors[origin_id]->addTransition(destination, transitions[i].second);
+            stateDirectors[origin_id]->addTransition(destination, itt->second);
         }
     }
 
     //-- Check that initial_state_id is within limits:
-    if (initial_state_id >= stateDirectors.size())
+    if (initial_state_id >= (int) stateDirectors.size())
     {
-        RD_ERROR("Error: initial state provided (%d) does not exist.\n", initial_state_id);
+        CD_ERROR("Error: initial state provided (%d) does not exist.\n", initial_state_id);
         return NULL;
     }
 

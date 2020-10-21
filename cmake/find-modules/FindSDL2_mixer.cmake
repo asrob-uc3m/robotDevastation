@@ -1,0 +1,53 @@
+#
+# this module look for SDL2_Mixer (http://www.libsdl.org) support
+# it will define the following values
+#
+# SDL2_MIXER_INCLUDE_DIRS  = where SDL_mixer.h can be found
+# SDL2_MIXER_LIBRARIES      = the library to link against SDL2_mixer
+# SDLMIXER_FOUND        = set to 1 if SDL2_mixer is found
+#
+
+IF(SDL2_Mixer_INCLUDE_DIRS)
+
+  FIND_PATH(SDL2_MIXER_INCLUDE_DIRS SDL2/SDL_mixer.h ${SDL2_Mixer_INCLUDE_DIRS})
+  FIND_LIBRARY(SDL2_MIXER_LIBRARIES SDL2_mixer ${SDL2_Mixer_LIBRARY_DIRS})
+
+ELSE(SDL2_Mixer_INCLUDE_DIRS)
+
+  if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(VC_LIB_PATH_SUFFIX lib/x64)
+  else()
+    set(VC_LIB_PATH_SUFFIX lib/x86)
+  endif()
+
+  SET(TRIAL_LIBRARY_PATHS
+    $ENV{SDL2DIR}/${VC_LIB_PATH_SUFFIX}
+    $ENV{SDL2_MIXER_HOME}/lib
+    /usr/lib
+    /usr/local/lib
+    /sw/lib
+  ) 
+  SET(TRIAL_INCLUDE_PATHS
+    $ENV{SDL2DIR}/include
+    $ENV{SDL2_MIXER_HOME}/include/SDL2
+    /usr/include/SDL2
+    /usr/local/include/SDL2
+    /sw/include/SDL2
+  ) 
+
+  FIND_LIBRARY(SDL2_MIXER_LIBRARIES SDL2_mixer ${TRIAL_LIBRARY_PATHS})
+  FIND_PATH(SDL2_MIXER_INCLUDE_DIRS SDL_mixer.h ${TRIAL_INCLUDE_PATHS})
+
+ENDIF(SDL2_Mixer_INCLUDE_DIRS)
+
+IF(SDL2_MIXER_INCLUDE_DIRS AND SDL2_MIXER_LIBRARIES)
+  SET(SDLMIXER_FOUND 1 CACHE BOOL "Found SDL2_Mixer library")
+ELSE(SDL2_MIXER_INCLUDE_DIRS AND SDL2_MIXER_LIBRARIES)
+  SET(SDLMIXER_FOUND 0 CACHE BOOL "Not fount SDL2_Mixer library")
+ENDIF(SDL2_MIXER_INCLUDE_DIRS AND SDL2_MIXER_LIBRARIES)
+
+MARK_AS_ADVANCED(
+  SDL2_MIXER_INCLUDE_DIRS 
+  SDL2_MIXER_LIBRARIES 
+  SDLMIXER_FOUND
+)

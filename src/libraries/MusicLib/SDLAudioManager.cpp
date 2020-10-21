@@ -1,5 +1,12 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "SDLAudioManager.hpp"
+
+#include <SDL.h>
+
+#include <ColorDebug.h>
 
 //-- This is very important:
 rd::SDLAudioManager * rd::SDLAudioManager::uniqueInstance = NULL;
@@ -8,10 +15,12 @@ const std::string rd::SDLAudioManager::id = "SDL";
 rd::SDLAudioManager::SDLAudioManager()
 {
     if(SDL_Init(SDL_INIT_AUDIO)==-1)
-        RD_ERROR("SDL Audio subsystem could not be initialized!\n");
+        CD_ERROR("SDL Audio subsystem could not be initialized!\n");
 
-    if(Mix_OpenAudio(22050, AUDIO_S16, 2, 4096)==-1)
-        RD_ERROR("AudioMixer could not be opened!\n");
+    if (Mix_OpenAudio(22050, AUDIO_S16, 2, 4096) == -1)
+        CD_ERROR("AudioMixer could not be opened: %s\n", Mix_GetError());
+
+    stopped = true;
 }
 
 
@@ -23,7 +32,7 @@ bool rd::SDLAudioManager::load(const std::string &music_filepath, const std::str
 
         if(pMusic == 0)
         {
-            RD_ERROR( "Error loading file: \"%s\": %s\n", music_filepath.c_str(), Mix_GetError());
+            CD_ERROR( "Error loading file: \"%s\": %s\n", music_filepath.c_str(), Mix_GetError());
             return false;
         }
 
@@ -35,7 +44,7 @@ bool rd::SDLAudioManager::load(const std::string &music_filepath, const std::str
         Mix_Chunk* pChunk = Mix_LoadWAV(music_filepath.c_str());
         if(pChunk == 0)
         {
-            RD_ERROR( "Error loading file: \"%s\": %s\n", music_filepath.c_str(), Mix_GetError());
+            CD_ERROR( "Error loading file: \"%s\": %s\n", music_filepath.c_str(), Mix_GetError());
             return false;
         }
 
@@ -52,7 +61,7 @@ bool rd::SDLAudioManager::play(const std::string &id, int loop)
         //-- Play music
         if (Mix_PlayMusic(music_sounds[id], loop) == -1)
         {
-            RD_ERROR( "Error playing music \"%s\"\n", id.c_str());
+            CD_ERROR( "Error playing music \"%s\"\n", id.c_str());
             return false;
         }
     }
@@ -61,13 +70,13 @@ bool rd::SDLAudioManager::play(const std::string &id, int loop)
         //-- Play fx sound:
         if( Mix_PlayChannel(-1, fx_sounds[id], loop) == -1 )
         {
-            RD_ERROR( "Error playing sound \"%s\"\n", id.c_str());
+            CD_ERROR( "Error playing sound \"%s\"\n", id.c_str());
             return false;
         }
     }
     else
     {
-        RD_ERROR( "Sound \"%s\" not found (maybe it was not loaded?)\n", id.c_str());
+        CD_ERROR( "Sound \"%s\" not found (maybe it was not loaded?)\n", id.c_str());
         return false;
     }
 
@@ -79,7 +88,7 @@ bool rd::SDLAudioManager::stopMusic()
     if ( Mix_PlayingMusic() )
         if(Mix_HaltMusic() == -1)
         {
-            RD_ERROR( "Error stopping music\n");
+            CD_ERROR( "Error stopping music\n");
             return false;
         }
 
@@ -88,13 +97,20 @@ bool rd::SDLAudioManager::stopMusic()
 
 bool rd::SDLAudioManager::start()
 {
+    stopped = false;
     return true;
 }
 
 bool rd::SDLAudioManager::stop()
 {
     Mix_CloseAudio();
+    stopped = true;
     return true;
+}
+
+bool rd::SDLAudioManager::isStopped() const
+{
+    return stopped;
 }
 
 bool rd::SDLAudioManager::RegisterManager()
@@ -110,6 +126,6 @@ bool rd::SDLAudioManager::RegisterManager()
 rd::SDLAudioManager::~SDLAudioManager()
 {
     //-- Stop this manager
-    this->stop();
+    stop();
     uniqueInstance = NULL;
 }

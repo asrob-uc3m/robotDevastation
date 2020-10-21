@@ -1,4 +1,10 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
+
 #include "AudioManager.hpp"
+
+#include <ColorDebug.h>
 
 //-- This is very important:
 rd::AudioManager * rd::AudioManager::audioManagerInstance = NULL;
@@ -15,20 +21,20 @@ rd::AudioManager *rd::AudioManager::getAudioManager()
     {
         if(!audioManagerRegistry.empty() )
         {
-            //-- Install the first RdImageManger found
+            //-- Install the first ImageManager found
             currentId = audioManagerRegistry.begin()->first;
             audioManagerInstance = audioManagerRegistry.begin()->second;
         }
         else
         {
-            RD_ERROR("No AudioManager registered!! Returning null\n");
+            CD_ERROR("No AudioManager registered!! Returning null\n");
         }
     }
 
     return audioManagerInstance;
 }
 
-rd::AudioManager *rd::AudioManager::getAudioManager(std::string id)
+rd::AudioManager *rd::AudioManager::getAudioManager(const std::string & id)
 {
     if (audioManagerInstance == NULL )
     {
@@ -39,7 +45,7 @@ rd::AudioManager *rd::AudioManager::getAudioManager(std::string id)
         }
         else
         {
-            RD_ERROR("AudioManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            CD_ERROR("AudioManager %s not found! (Maybe it was not registered?)\n", id.c_str());
         }
     }
 
@@ -87,12 +93,12 @@ rd::AudioManager::~AudioManager()
 {
 }
 
-bool rd::AudioManager::configure(std::string parameter, std::string value)
+bool rd::AudioManager::configure(const std::string & parameter, const std::string & value)
 {
     return true;
 }
 
-bool rd::AudioManager::Register(rd::AudioManager *manager, std::string id)
+bool rd::AudioManager::Register(AudioManager *manager, const std::string & id)
 {
     if ( audioManagerRegistry.find(id) == audioManagerRegistry.end())
     {
@@ -103,14 +109,14 @@ bool rd::AudioManager::Register(rd::AudioManager *manager, std::string id)
         }
         else
         {
-            RD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
+            CD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
             return false;
         }
     }
     else
     {
-        RD_ERROR( "AudioManager with id \"%s\" was already registered\n", id.c_str());
-        return false;
+        CD_WARNING( "(known issue) AudioManager with id \"%s\" was already registered\n", id.c_str());  // Change to CD_ERRROR after fixing #30
+        return true;  // Return false after fixing #30
     }
 
 }

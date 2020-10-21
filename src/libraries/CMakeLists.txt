@@ -1,29 +1,29 @@
+# Authors: see AUTHORS.md at project root.
+# CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+# URL: https://github.com/asrob-uc3m/robotDevastation
 
-# Order may be important here
-### macros
-MACRO(SUBDIRLIST result curdir)
-  FILE(GLOB children RELATIVE ${curdir} ${curdir}/*)
-  SET(dirlist "")
-  FOREACH(child ${children})
-    IF(IS_DIRECTORY ${curdir}/${child})
-        SET(dirlist ${dirlist} ${child})
-    ENDIF()
-  ENDFOREACH()
-  SET(${result} ${dirlist})
-ENDMACRO()
-
-SUBDIRLIST(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR})
-FOREACH(subdir ${SUBDIRS})
-    set(RD_INCLUDE_DIRS ${RD_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/${subdir} CACHE INTERNAL "appended header dirs")
-ENDFOREACH()
-
-add_subdirectory(RdUtilsLib)
+add_subdirectory(GameStatesLib)
+add_subdirectory(ImageLib)
+add_subdirectory(InputLib)
+add_subdirectory(MentalMapLib)
 add_subdirectory(MusicLib)
-add_subdirectory(RdMentalMapLib)
-add_subdirectory(RdUserInterfaceLib)
-add_subdirectory(RdInputLib)
-add_subdirectory(RdNetworkLib)
-add_subdirectory(RdRobotLib)
-add_subdirectory(RdImageLib)
+add_subdirectory(NetworkLib)
+add_subdirectory(RobotLib)
+add_subdirectory(ServerLib)
 add_subdirectory(StateMachineLib)
+add_subdirectory(UserInterfaceLib)
+add_subdirectory(UtilsLib)
 
+# Organize targets in folders (Visual Studio)
+set_target_properties(GameStatesLib
+                      ImageLib
+                      InputLib
+                      MentalMapLib
+                      MusicLib
+                      NetworkLib
+                      RobotLib
+                      ServerLib
+                      StateMachineLib
+                      UserInterfaceLib
+                      UtilsLib
+                      PROPERTIES FOLDER Libraries)

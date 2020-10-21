@@ -1,26 +1,42 @@
-// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
 
 #ifndef __ROBOT_DEVASTATION_HPP__
 #define __ROBOT_DEVASTATION_HPP__
 
-#include <yarp/os/RFModule.h>
+#include <cstdio>
+#include <string>
+#include <sstream>
+#include <iostream>
+#include <vector>
 
-#include "RdUtils.hpp"
-#include "RateThreadOutput.hpp"
-#include "SDLAudioManager.hpp" //-- Should be AudioManager.hpp
-#include "RdMentalMap.hpp"
-#include "RdInputManager.hpp"
-#include "RdSDLInputManager.hpp"
-#include "RdInputEventListener.hpp"
-#include "RdYarpNetworkManager.hpp"
-#include "RdRobotManager.hpp"
-#include "RdYarpRobotManager.hpp"
-#include "RdMockupRobotManager.hpp"
+#include <yarp/os/RFModule.h>
+#include <yarp/os/ResourceFinder.h>
+
+#include <yarp/dev/PolyDriver.h>
+
+#include "SDLAudioManager.hpp"
+#include "MentalMap.hpp"
+#include "InputManager.hpp"
+#include "SDLInputManager.hpp"
+#include "InputEventListener.hpp"
+#include "YarpNetworkManager.hpp"
+#include "IRobotManager.hpp"
 #include "StateMachine.hpp"
-#include "RdImageManager.hpp"
-#include "RdYarpImageManager.hpp"
-#include "RdMockupImageManager.hpp"
-#include "RdProcessorImageEventListener.hpp"
+#include "ImageManager.hpp"
+#include "YarpImageManager.hpp"
+#include "YarpLocalImageManager.hpp"
+#include "MockImageManager.hpp"
+#include "ProcessorImageEventListener.hpp"
+#include "SDLScreenManager.hpp"
+
+//-- Game FSM
+#include "StateMachine.hpp"
+#include "StateMachineBuilder.hpp"
+#include "InitState.hpp"
+#include "GameState.hpp"
+#include "DeadState.hpp"
 
 namespace rd
 {
@@ -29,37 +45,58 @@ namespace rd
  * @ingroup robotDevastation
  * @brief The parent Robot Devastation class of the \ref robotDevastation program.
  */
-class RobotDevastation : public yarp::os::RFModule, public RdInputEventListener
+class RobotDevastation : public yarp::os::RFModule
 {
     public:
         /** Called on initialization. */
         virtual bool configure(yarp::os::ResourceFinder &rf);
 
-        /** Released keyboard key. */
-        virtual bool onKeyUp(RdKey k);
-
-        /** Pressed keyboard key. */
-        virtual bool onKeyDown(RdKey k);
-
     private:
-        RateThreadOutput rateThreadOutput;
-        RdInputManager *  inputManager;
+
+        template<typename T> void getInfoFromUser(const std::string& question, T& info, const bool& no_empty=false)
+        {
+
+            std::string answer;
+            do {
+                std::printf("%s?>",question.c_str());
+                std::getline(std::cin, answer);
+            } while(no_empty && answer.empty());
+
+            if (!answer.empty())
+            {
+                std::stringstream ss(answer);
+                ss >> info;
+            }
+        }
+
+        FiniteStateMachine * gameFSM;
+
+        InputManager *  inputManager;
         AudioManager * audioManager;
-        RdMentalMap * mentalMap;
-        RdNetworkManager * networkManager;
-        RdRobotManager * robotManager;
-        FiniteStateMachine * stateMachine;
-        RdImageManager * imageManager;
-        RdProcessorImageEventListener processorImageEventListener;
+        MentalMap * mentalMap;
+        NetworkManager * networkManager;
+        asrob::IRobotManager * robotManager;
+        ImageManager * imageManager;
+        ScreenManager * screenManager;
+
+        yarp::dev::PolyDriver robotDevice;
 
         bool interruptModule();
         double getPeriod();
         bool updateModule();
 
+        bool initPlayerInfo(yarp::os::ResourceFinder &rf);
         bool initSound(yarp::os::ResourceFinder &rf);
+        bool initGameFSM();
+        bool cleanup();
+
+        //-- Player data
+        int id;
+        std::string name;
+        int team;
+        std::string robotName;
 };
 
 }  // namespace rd
 
 #endif  // __ROBOT_DEVASTATION_HPP__
-

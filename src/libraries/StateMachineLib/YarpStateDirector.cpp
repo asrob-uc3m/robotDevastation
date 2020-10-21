@@ -1,53 +1,65 @@
+// Authors: see AUTHORS.md at project root.
+// CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
+// URL: https://github.com/asrob-uc3m/robotDevastation
+
 #include "YarpStateDirector.hpp"
 
+#include <ColorDebug.h>
 
 const int rd::YarpStateDirector::DEFAULT_RATE_MS = 100;
 
-rd::YarpStateDirector::YarpStateDirector(rd::State *state) : StateDirector(state), RateThread(DEFAULT_RATE_MS)
+rd::YarpStateDirector::YarpStateDirector(State *state) : StateDirector(state), PeriodicThread(DEFAULT_RATE_MS * 0.001)
 {
 
 }
 
 bool rd::YarpStateDirector::Start()
 {
-    RD_DEBUG("Starting StateDirector for id %s\n", state->getStateId().c_str());
+    if (state == NULL)
+    {
+        CD_DEBUG("Null state. Exiting...\n");
+        return Stop();
+    }
+
+    CD_DEBUG("Starting StateDirector for id %s\n", state->getStateId().c_str());
     active = true;
     if (!state->setup())
     {
-        RD_ERROR("Error in state setup for id %s\n", state->getStateId().c_str());
+        CD_ERROR("Error in state setup for id %s\n", state->getStateId().c_str());
         return false;
     }
 
-    return yarp::os::RateThread::start();
+    return yarp::os::PeriodicThread::start();
 }
 
 bool rd::YarpStateDirector::Stop()
 {
-    RD_DEBUG("Stopping StateDirector for id %s\n", state->getStateId().c_str());
+    if (state != NULL)
+        CD_DEBUG("Stopping StateDirector for id %s\n", state->getStateId().c_str());
 
     active = false;
 
-    yarp::os::RateThread::askToStop();
-    yarp::os::RateThread::stop();
+    yarp::os::PeriodicThread::askToStop();
 
-    state->cleanup();
+    if (state != NULL)
+        state->cleanup();
 
     return true;
 }
 
 void rd::YarpStateDirector::run()
 {
-    //RD_DEBUG("Entering loop in StateDirector with id %s\n", state->getStateId().c_str());
+    //CD_DEBUG("Entering loop in StateDirector with id %s\n", state->getStateId().c_str());
     if ( !state->loop() )
     {
-        RD_ERROR("Error in loop. Stopping this state...\n");
-        this->Stop();
+        CD_ERROR("Error in loop. Stopping this state...\n");
+        Stop();
     }
     int condition = state->evaluateConditions();
 
     if (nextStates.find(condition) != nextStates.end())
     {
-        this->Stop();
+        Stop();
         nextStates.find(condition)->second->Start();
     }
 
