@@ -1,4 +1,4 @@
-[![Image](share/images/800px-Devastation-thin.png)](http://asrob-uc3m.github.io/workgroups/2017-05-28-robot-devastation.html) 
+<p align="center"><img src="https://raw.githubusercontent.com/asrob-uc3m/robotDevastation/develop/share/images/800px-Devastation-thin.png" alt="Robot Devastation"/></p>
 
 **Robot Devastation**: a new-generation shooter with augmented reality and real robots. You can play online with other users with your PC or smartphone, moving robots in championships and campaigns: ¡everything 24/7!
 
