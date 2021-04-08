@@ -11,8 +11,7 @@ add_executable(rdServer main.cpp)
 
 target_link_libraries(rdServer YARP::YARP_init
                                YARP::YARP_os
-                               ServerLib
-                               ROBOTICSLAB::ColorDebug)
+                               ServerLib)
 
 if(WIN32)
     target_compile_definitions(rdServer PUBLIC SDL_MAIN_HANDLED)

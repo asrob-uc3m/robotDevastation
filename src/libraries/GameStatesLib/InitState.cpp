@@ -5,7 +5,7 @@
 #include "InitState.hpp"
 #include "YarpNetworkManager.hpp"
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 const int rd::InitState::LOGIN_SUCCESSFUL = 1;
 const int rd::InitState::EXIT_REQUESTED = 2;
@@ -76,7 +76,7 @@ bool rd::InitState::loop()
 
 bool rd::InitState::cleanup()
 {
-    CD_DEBUG("Cleanup!!\n");
+    yDebug() << "Cleanup!!";
     audioManager->stopMusic();
     inputManager->removeInputEventListeners();
     screen.cleanup();
@@ -112,13 +112,13 @@ bool rd::InitState::onKeyUp(const Key & k)
 {
     if (k.getValue() == Key::KEY_ESCAPE)
     {
-        CD_DEBUG("Escape was pressed!\n");
+        yDebug() << "Escape was pressed!";
         received_exit = true;
         return true;
     }
     else if (k.isControlKey() || k.isPrintable())
     {
-        CD_DEBUG("Key was pressed!\n");
+        yDebug() << "Key was pressed!";
         login = true;
         return true;
     }
@@ -130,7 +130,7 @@ bool rd::InitState::onWindowEvent(const WindowEvent & event)
 {
     if (event.getEvent() == WindowEvent::WINDOW_CLOSE)
     {
-        CD_DEBUG("Exit was triggered!\n");
+        yDebug() << "Exit was triggered!";
         received_exit = true;
         return true;
     }

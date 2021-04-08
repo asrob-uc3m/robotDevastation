@@ -4,7 +4,7 @@
 
 #include "AudioManager.hpp"
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 //-- This is very important:
 rd::AudioManager * rd::AudioManager::audioManagerInstance = NULL;
@@ -27,7 +27,7 @@ rd::AudioManager *rd::AudioManager::getAudioManager()
         }
         else
         {
-            CD_ERROR("No AudioManager registered!! Returning null\n");
+            yError() << "No AudioManager registered, returning null";
         }
     }
 
@@ -45,7 +45,7 @@ rd::AudioManager *rd::AudioManager::getAudioManager(const std::string & id)
         }
         else
         {
-            CD_ERROR("AudioManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            yError() << "AudioManager" << id << "not found (maybe it was not registered?)";
         }
     }
 
@@ -109,14 +109,13 @@ bool rd::AudioManager::Register(AudioManager *manager, const std::string & id)
         }
         else
         {
-            CD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
+            yError() << "Trying to register a NULL manager with id" << id;
             return false;
         }
     }
     else
     {
-        CD_WARNING( "(known issue) AudioManager with id \"%s\" was already registered\n", id.c_str());  // Change to CD_ERRROR after fixing #30
-        return true;  // Return false after fixing #30
+        yWarning() << "(known issue) AudioManager with id" << id << "was already registered"; // change to yError after fixing #30
+        return true; // return false after fixing #30
     }
-
 }

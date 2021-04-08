@@ -8,8 +8,7 @@
 
 #include <yarp/os/Bottle.h>
 #include <yarp/os/ConnectionWriter.h>
-
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 const int rd::MockState::STATE_INITIAL = 0;
 const int rd::MockState::STATE_SETUP = 1;
@@ -30,7 +29,7 @@ rd::MockState::MockState(int id)
     internal_variable = -1;
     state_history = STATE_INITIAL;
 
-    CD_DEBUG("Creating MockState with id: %s\n", state_id.c_str());
+    yDebug() << "Creating MockState with id:" << state_id;
 }
 
 rd::MockState::~MockState()
@@ -39,7 +38,7 @@ rd::MockState::~MockState()
 
 bool rd::MockState::setup()
 {
-    CD_INFO("State with id %d entered in setup() function\n", id);
+    yInfo() << "State with id" << id << "entered in setup() function";
 
     internal_variable = 0;
     state_history |= STATE_SETUP;
@@ -49,10 +48,10 @@ bool rd::MockState::setup()
 
 bool rd::MockState::loop()
 {
-    CD_INFO("State with id %d entered in loop() function\n", id);
+    yInfo() << "State with id" << id << "entered in loop() function";
     if (!(state_history & STATE_LOOP))
     {
-        CD_DEBUG("First loop (id %d)\n", id);
+        yDebug() << "First loop, id:" << id;
         state_history |= STATE_LOOP;
     }
 
@@ -61,7 +60,7 @@ bool rd::MockState::loop()
 
 bool rd::MockState::cleanup()
 {
-    CD_INFO("State with id %d entered in cleanup() function\n", id);
+    yInfo() << "State with id" << id << "entered in cleanup() function";
 
     internal_variable = -1;
     state_history |= STATE_CLEANUP;
@@ -82,7 +81,7 @@ bool rd::MockState::read(yarp::os::ConnectionReader & connection)
 
     if (received != REQUEST_STATE)
     {
-        CD_INFO("Received: %d at state %s\n", received, state_id.c_str());
+        yInfo() << "Received" << received << "at state" << state_id;
         internal_variable = received;
     }
 
@@ -90,7 +89,7 @@ bool rd::MockState::read(yarp::os::ConnectionReader & connection)
 
     if (returnToSender != NULL)
     {
-        CD_INFO("Preparing response...\n");
+        yInfo() << "Preparing response...";
         yarp::os::Bottle out;
         out.addInt32(state_history);
         out.write(*returnToSender);

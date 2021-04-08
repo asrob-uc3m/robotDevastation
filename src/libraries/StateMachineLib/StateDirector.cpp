@@ -4,7 +4,7 @@
 
 #include "StateDirector.hpp"
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 rd::StateDirector::StateDirector(State *state)
 {
@@ -32,14 +32,13 @@ bool rd::StateDirector::addTransition(StateDirector *nextState, int condition)
 {
     if ( nextStates.find(condition) == nextStates.end())
     {
-        CD_DEBUG("Added transition from %s to %s linked to condition %d\n", state->getStateId().c_str(),
-                 nextState->getStateId().c_str(), condition);
+        yDebug() << "Added transition from" << state->getStateId() << "to" << nextState->getStateId() << "linked to condition" << condition;
         nextStates[condition] = nextState;
         return true;
     }
     else
     {
-        CD_ERROR("Condition %d already in use in %s\n", condition, state->getStateId().c_str());
+        yError() << "Condition" << condition << "already in use in" << state->getStateId();
         return false;
     }
 }

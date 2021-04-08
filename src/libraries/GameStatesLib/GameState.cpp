@@ -4,7 +4,7 @@
 
 #include "GameState.hpp"
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 const int rd::GameState::KILLED = 1;
 const int rd::GameState::EXIT_REQUESTED = 2;
@@ -47,7 +47,7 @@ bool rd::GameState::setup()
     }
     else
     {
-        CD_ERROR("Null mentalMap or networkManager\n");
+        yError() << "Null mentalMap or networkManager";
         return false;
     }
 
@@ -60,7 +60,7 @@ bool rd::GameState::setup()
     }
     else
     {
-        CD_ERROR("Null imageManager\n");
+        yError() << "Null imageManager";
         return false;
     }
 
@@ -72,7 +72,7 @@ bool rd::GameState::setup()
     }
     else
     {
-        CD_ERROR("Null audioManager\n");
+        yError() << "Null audioManager";
         return false;
     }
 
@@ -83,14 +83,14 @@ bool rd::GameState::setup()
     }
     else
     {
-        CD_ERROR("Null inputManager\n");
+        yError() << "Null inputManager";
         return false;
     }
 
     //-- Show Robot Devastation game screen:
     if (!screen.init())
     {
-        CD_ERROR("Could not init game screen\n");
+        yError() << "Could not init game screen";
         return false;
     }
 
@@ -118,7 +118,7 @@ bool rd::GameState::loop()
     //-- Show graphics
     if(!screenManager->show())
     {
-        CD_ERROR("Could not show game screen\n");
+        yError() << "Could not show game screen";
         return false;
     }
     return true;
@@ -172,7 +172,7 @@ bool rd::GameState::onKeyDown(const Key & k)
 
     if (k == KEY_EXIT)
     {
-        CD_DEBUG("Exit was triggered!\n");
+        yDebug() << "Exit was triggered!";
         received_exit = true;
         return true;
     }
@@ -180,25 +180,25 @@ bool rd::GameState::onKeyDown(const Key & k)
     //-- Movement control
     if (k == KEY_TURN_LEFT)
     {
-        CD_DEBUG("Turn left was triggered!\n");
+        yDebug() << "Turn left was triggered!";
         robotManager->turnLeft(1.0);
         return true;
     }
     if (k == KEY_TURN_RIGHT)
     {
-        CD_DEBUG("Turn right was triggered!\n");
+        yDebug() << "Turn right was triggered!";
         robotManager->turnLeft(-1.0);
         return true;
     }
     if (k == KEY_MOVE_FWD)
     {
-        CD_DEBUG("Move forward was triggered!\n");
+        yDebug() << "Move forward was triggered!";
         robotManager->moveForward(1.0);
         return true;
     }
     if (k == KEY_MOVE_BACK)
     {
-        CD_DEBUG("Move backwards was triggered!\n");
+        yDebug() << "Move backwards was triggered!";
         robotManager->moveForward(-1.0);
         return true;
     }
@@ -206,25 +206,25 @@ bool rd::GameState::onKeyDown(const Key & k)
     //-- Pan-tilt control
     if (k == KEY_PAN_LEFT)
     {
-        CD_DEBUG("Pan left was triggered!\n");
+        yDebug() << "Pan left was triggered!";
         robotManager->panLeft(30.0);
         return true;
     }
     if (k == KEY_PAN_RIGHT)
     {
-        CD_DEBUG("Pan right was triggered!\n");
+        yDebug() << "Pan right was triggered!";
         robotManager->panLeft(-30.0);
         return true;
     }
     if (k == KEY_TILT_UP)
     {
-        CD_DEBUG("Tilt pos was triggered!\n");
+        yDebug() << "Tilt pos was triggered!";
         robotManager->tiltDown(-30.0);
         return true;
     }
     if (k == KEY_TILT_DOWN)
     {
-        CD_DEBUG("Tilt neg was triggered!\n");
+        yDebug() << "Tilt neg was triggered!";
         robotManager->tiltDown(30.0);
         return true;
     }
@@ -237,25 +237,25 @@ bool rd::GameState::onKeyUp(const Key & k)
     //-- Movement control
     if (k == KEY_TURN_LEFT)
     {
-        CD_DEBUG("Turn left was released!\n");
+        yDebug() << "Turn left was released!";
         robotManager->stopMovement();
         return true;
     }
     if (k == KEY_TURN_RIGHT)
     {
-        CD_DEBUG("Turn right was released!\n");
+        yDebug() << "Turn right was released!";
         robotManager->stopMovement();
         return true;
     }
     if (k == KEY_MOVE_FWD)
     {
-        CD_DEBUG("Move forward was released!\n");
+        yDebug() << "Move forward was released!";
         robotManager->stopMovement();
         return true;
     }
     if (k == KEY_MOVE_BACK)
     {
-        CD_DEBUG("Move backwards was released!\n");
+        yDebug() << "Move backwards was released!";
         robotManager->stopMovement();
         return true;
     }
@@ -263,25 +263,25 @@ bool rd::GameState::onKeyUp(const Key & k)
     //-- Pan-tilt control
     if (k == KEY_PAN_LEFT)
     {
-        CD_DEBUG("Pan left was released!\n");
+        yDebug() << "Pan left was released!";
         robotManager->stopCameraMovement();
         return true;
     }
     if (k == KEY_PAN_RIGHT)
     {
-        CD_DEBUG("Pan right was released!\n");
+        yDebug() << "Pan right was released!";
         robotManager->stopCameraMovement();
         return true;
     }
     if (k == KEY_TILT_UP)
     {
-        CD_DEBUG("Tilt up was released!\n");
+        yDebug() << "Tilt up was released!";
         robotManager->stopCameraMovement();
         return true;
     }
     if (k == KEY_TILT_DOWN)
     {
-        CD_DEBUG("Tilt down was released!\n");
+        yDebug() << "Tilt down was released!";
         robotManager->stopCameraMovement();
         return true;
     }
@@ -292,7 +292,7 @@ bool rd::GameState::onWindowEvent(const WindowEvent & event)
 {
     if (event.getEvent() == WindowEvent::WINDOW_CLOSE)
     {
-        CD_DEBUG("Exit was triggered!\n");
+        yDebug() << "Exit was triggered!";
         received_exit = true;
         return true;
     }

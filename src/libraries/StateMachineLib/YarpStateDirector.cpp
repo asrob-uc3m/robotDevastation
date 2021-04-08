@@ -4,7 +4,7 @@
 
 #include "YarpStateDirector.hpp"
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 const int rd::YarpStateDirector::DEFAULT_RATE_MS = 100;
 
@@ -17,15 +17,15 @@ bool rd::YarpStateDirector::Start()
 {
     if (state == NULL)
     {
-        CD_DEBUG("Null state. Exiting...\n");
+        yDebug() << "Null state. Exiting...";
         return Stop();
     }
 
-    CD_DEBUG("Starting StateDirector for id %s\n", state->getStateId().c_str());
+    yDebug() << "Starting StateDirector for id" << state->getStateId();
     active = true;
     if (!state->setup())
     {
-        CD_ERROR("Error in state setup for id %s\n", state->getStateId().c_str());
+        yError() << "Error in state setup for id" << state->getStateId();
         return false;
     }
 
@@ -35,7 +35,7 @@ bool rd::YarpStateDirector::Start()
 bool rd::YarpStateDirector::Stop()
 {
     if (state != NULL)
-        CD_DEBUG("Stopping StateDirector for id %s\n", state->getStateId().c_str());
+        yDebug() << "Stopping StateDirector for id" << state->getStateId();
 
     active = false;
 
@@ -49,10 +49,9 @@ bool rd::YarpStateDirector::Stop()
 
 void rd::YarpStateDirector::run()
 {
-    //CD_DEBUG("Entering loop in StateDirector with id %s\n", state->getStateId().c_str());
     if ( !state->loop() )
     {
-        CD_ERROR("Error in loop. Stopping this state...\n");
+        yError() << "Error in loop. Stopping this state...";
         Stop();
     }
     int condition = state->evaluateConditions();
@@ -62,5 +61,4 @@ void rd::YarpStateDirector::run()
         Stop();
         nextStates.find(condition)->second->Start();
     }
-
 }

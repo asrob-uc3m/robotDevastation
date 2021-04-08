@@ -21,8 +21,7 @@ target_link_libraries(robotDevastation YARP::YARP_os
                                        ImageLib
                                        UserInterfaceLib
                                        GameStatesLib
-                                       ASROB::RobotInterfaces
-                                       ROBOTICSLAB::ColorDebug)
+                                       ASROB::RobotInterfaces)
 
 if(WIN32)
     target_compile_definitions(robotDevastation PUBLIC SDL_MAIN_HANDLED)

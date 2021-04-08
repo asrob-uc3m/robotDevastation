@@ -3,6 +3,7 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "gtest/gtest.h"
+#include <yarp/os/LogStream.h>
 #include <yarp/os/Property.h>
 #include <yarp/dev/PolyDriver.h>
 #include <yarp/os/Network.h>
@@ -11,8 +12,6 @@
 #include "ImageManager.hpp"
 #include "YarpImageManager.hpp"
 #include "MockImageEventListener.hpp"
-
-#include <ColorDebug.h>
 
 namespace rd
 {
@@ -70,7 +69,7 @@ class YarpImageManagerEnvironment : public testing::Environment
 
             if (!cameraDevice.isValid())
             {
-                CD_ERROR("Camera class instantiation not worked.\n");
+                yError() << "Camera class instantiation not worked";
                 return;
             }
 

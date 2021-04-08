@@ -52,7 +52,7 @@ target_link_libraries(testSDLAudioManager YARP::YARP_os MusicLib gtest_main)
 
 # Input manager related
 add_executable(testInputManager testInputManager.cpp)
-target_link_libraries(testInputManager InputLib MusicLib ${SDL2_LIBRARY} ${SDL2_TTF_LIBRARIES} ROBOTICSLAB::ColorDebug gtest_main)
+target_link_libraries(testInputManager InputLib MusicLib ${SDL2_LIBRARY} ${SDL2_TTF_LIBRARIES} YARP::YARP_os gtest_main)
 target_include_directories(testInputManager PUBLIC ${SDL2_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIRS})
 
 add_executable(testMockInputManager testMockInputManager.cpp)
@@ -64,14 +64,14 @@ target_link_libraries(testMentalMap MentalMapLib MusicLib UtilsLib gtest_main)
 
 # Network manager related
 add_executable(testYarpNetworkManager testYarpNetworkManager.cpp)
-target_link_libraries(testYarpNetworkManager YARP::YARP_os NetworkLib ServerLib ROBOTICSLAB::ColorDebug gtest_main)
+target_link_libraries(testYarpNetworkManager YARP::YARP_os NetworkLib ServerLib gtest_main)
 
 add_executable(testMockNetworkManager testMockNetworkManager.cpp)
 target_link_libraries(testMockNetworkManager MentalMapLib NetworkLib UtilsLib gtest_main)
 
 # Image manager related
 add_executable(testYarpImageManager testYarpImageManager.cpp)
-target_link_libraries(testYarpImageManager YARP::YARP_os YARP::YARP_dev ImageLib ROBOTICSLAB::ColorDebug gtest_main)
+target_link_libraries(testYarpImageManager YARP::YARP_os YARP::YARP_dev ImageLib gtest_main)
 
 add_executable(testMockImageManager testMockImageManager.cpp)
 target_link_libraries(testMockImageManager YARP::YARP_os YARP::YARP_dev YARP::YARP_sig ImageLib gtest_main)
@@ -85,10 +85,10 @@ target_link_libraries(testMockRobotManager RobotLib gtest_main)
 
 # State machine related
 add_executable(testFSM testFSM.cpp)
-target_link_libraries(testFSM YARP::YARP_os YARP::YARP_init StateMachineLib ROBOTICSLAB::ColorDebug gtest_main)
+target_link_libraries(testFSM YARP::YARP_os YARP::YARP_init StateMachineLib gtest_main)
 
 add_executable(testFSMBuilder testFSMBuilder.cpp)
-target_link_libraries(testFSMBuilder YARP::YARP_os YARP::YARP_init StateMachineLib ROBOTICSLAB::ColorDebug gtest_main)
+target_link_libraries(testFSMBuilder YARP::YARP_os YARP::YARP_init StateMachineLib gtest_main)
 
 # Game States related
 add_executable(testInitState testInitState.cpp)

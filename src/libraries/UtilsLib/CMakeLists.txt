@@ -23,6 +23,6 @@ target_link_libraries(UtilsLib PUBLIC ${SDL2_LIBRARY}
                                       MusicLib
                                       UserInterfaceLib
                                       ASROB::RobotInterfaces
-                               PRIVATE ${SDL2_IMAGE_LIBRARIES}
-                                       ${SDL2_TTF_LIBRARIES}
-                                       ROBOTICSLAB::ColorDebug)
+                               PRIVATE YARP::YARP_os
+                                       ${SDL2_IMAGE_LIBRARIES}
+                                       ${SDL2_TTF_LIBRARIES})

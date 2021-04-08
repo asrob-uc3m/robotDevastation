@@ -19,4 +19,4 @@ target_link_libraries(GameStatesLib PUBLIC StateMachineLib
                                            MusicLib
                                            UserInterfaceLib
                                            ASROB::RobotInterfaces
-                                    PRIVATE ROBOTICSLAB::ColorDebug)
+                                    PRIVATE YARP::YARP_os)

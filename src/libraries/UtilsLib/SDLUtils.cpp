@@ -7,7 +7,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 SDL_Surface * rd::RdImage2SDLImage(const Image & image)
 {
@@ -36,14 +36,14 @@ bool rd::initSDL()
     //-- Init SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
-        CD_ERROR("SDL could not initialize!\n SDL Error: %s\n", SDL_GetError());
+        yError() << "SDL could not initialize:" << SDL_GetError();
         return false;
     }
 
     //-- Init ttf
     if (TTF_Init() == -1)
     {
-        CD_ERROR("Unable to initialize SDL_ttf: %s \n", TTF_GetError());
+        yError() << "SDL_ttf could not initialize:" << TTF_GetError();
         cleanupSDL();
         return false;
     }
@@ -51,7 +51,7 @@ bool rd::initSDL()
     //Initialize PNG loading
     if(!(IMG_Init(IMG_INIT_PNG)&IMG_INIT_PNG))
     {
-        CD_ERROR("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+        yError() << "SDL_image could not initialize:" << IMG_GetError();
         cleanupSDL();
         return false;
     }
@@ -60,7 +60,7 @@ bool rd::initSDL()
 
 bool rd::cleanupSDL()
 {
-    CD_INFO("Freeing resources...\n");
+    yInfo() << "Freeing resources...";
     IMG_Quit();
     TTF_Quit();
     SDL_Quit();

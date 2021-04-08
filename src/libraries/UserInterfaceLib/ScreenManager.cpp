@@ -4,7 +4,7 @@
 
 #include "ScreenManager.hpp"
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 //-- This is very important:
 rd::ScreenManager * rd::ScreenManager::screenManagerInstance = NULL;
@@ -24,7 +24,7 @@ rd::ScreenManager *rd::ScreenManager::getScreenManager()
         }
         else
         {
-            CD_ERROR("No ScreenManager registered!! Returning null\n");
+            yError() << "No ScreenManager registered, returning null";
         }
     }
 
@@ -42,7 +42,7 @@ rd::ScreenManager *rd::ScreenManager::getScreenManager(const std::string & id)
         }
         else
         {
-            CD_ERROR("ScreenManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            yError() << "ScreenManager" << id << "not found (mMaybe it was not registered?)";
         }
     }
 
@@ -141,13 +141,13 @@ bool rd::ScreenManager::Register(ScreenManager *manager, const std::string & id)
         }
         else
         {
-            CD_ERROR("Trying to register a NULL ScreenManager with id \"%s\"\n", id.c_str());
+            yError() << "Trying to register a NULL ScreenManager with id" << id;
             return false;
         }
     }
     else
     {
-        CD_ERROR( "ScreenManager with id \"%s\" was already registered\n", id.c_str());
+        yError() << "ScreenManager with id" << id << "was already registered";
         return false;
     }
 

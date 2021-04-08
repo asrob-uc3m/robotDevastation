@@ -11,6 +11,7 @@
  *
  ***/
 
+#include <yarp/os/LogStream.h>
 #include <yarp/os/Thread.h>
 #include <yarp/os/ResourceFinder.h>
 #include <yarp/os/Network.h>
@@ -20,8 +21,6 @@
 #include "MockNetworkEventListener.hpp"
 #include "Server.hpp"
 #include "RpcResponder.hpp"
-
-#include <ColorDebug.h>
 
 #include "gtest/gtest.h"
 
@@ -75,17 +74,17 @@ class YarpNetworkManagerTestBase : public testing::Test
             me = Player(0, "me", 100, 100, 0, 0);
             other_player = Player(1, "dummy", 100, 100, 1, 0);
 
-            CD_DEBUG("Running rdServer\n");
+            yDebug() << "Running rdServer";
             rf = new yarp::os::ResourceFinder();
             rf->setDefault("quiet", yarp::os::Value());
             rdServer.configure(*rf);
             rdServer.runModuleThreaded();
-            CD_DEBUG("rdServer now running\n");
+            yDebug() << "rdServer now running";
         }
 
         virtual void TearDown()
         {
-            CD_DEBUG("Stopping rdServer\n");
+            yDebug() << "Stopping rdServer";
             rdServer.stopModule(true);
             ASSERT_TRUE(NetworkManager::destroyNetworkManager());
 
@@ -242,7 +241,7 @@ TEST_F(YarpNetworkManagerNoKeepAliveTest, DisconnectedIfNoKeepAlive)
 
     //-- Wait more than the timeout time
     double delay = RpcResponder::MAX_BELIEF * rdServer.getPeriod();
-    CD_INFO("Waiting %.1f + 1 seconds...\n", delay);
+    yInfo("Waiting %.1f + 1 seconds...", delay);
     yarp::os::Time::delay(delay + 1);
 
     //-- Check that I'm no longer logged in

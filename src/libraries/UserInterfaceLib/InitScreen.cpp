@@ -6,9 +6,8 @@
 
 #include <SDL_image.h>
 
+#include <yarp/os/LogStream.h>
 #include <yarp/os/ResourceFinder.h>
-
-#include <ColorDebug.h>
 
 const std::string rd::InitScreen::SPLASH_PATH = "../images/800px-Devastation-thin.png";
 const std::string rd::InitScreen::FONT_PATH = "../fonts/FreeMono.ttf";
@@ -32,13 +31,13 @@ bool rd::InitScreen::init()
     std::string splashPath = rf.findFileByName(SPLASH_PATH);
     if (splashPath == "")
     {
-        CD_ERROR("Unable to find splash screen (resource: %s)!\n", splashPath.c_str());
+        yError() << "Unable to find splash screen" << splashPath;
         return false;
     }
     image = IMG_Load(splashPath.c_str());
     if (image == NULL)
     {
-        CD_ERROR("Unable to load splash screen (resource: %s)!\n SDL_image Error: %s\n", splashPath.c_str(), IMG_GetError());
+        yError() << "Splash screen" << splashPath << "failed to load:" << IMG_GetError();
         return false;
     }
 
@@ -46,7 +45,7 @@ bool rd::InitScreen::init()
     font = TTF_OpenFont(rf.findFileByName(FONT_PATH).c_str(), 28);
     if (font == NULL)
     {
-        CD_ERROR("Unable to load font: %s %s \n", rf.findFileByName(FONT_PATH).c_str(), TTF_GetError());
+        yError() << "Font" << rf.findFileByName(FONT_PATH) << "failed to load:" << TTF_GetError();
         return false;
     }
 

@@ -8,7 +8,7 @@
 
 #include "SDLAudioManager.hpp"
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 //-- This is very important:
 rd::MentalMap * rd::MentalMap::mentalMapInstance = NULL;
@@ -81,8 +81,8 @@ rd::Target rd::MentalMap::getTarget(const int &id) const
     }
     else
     {
-        CD_ERROR("Enemy with id %i not found!!\n", id);
-        CD_ERROR("Returning standard target\n");
+        yError() << "Enemy with id" << id << "not found!!";
+        yError() << "Returning standard target";
         return Target();
     }
 }
@@ -95,8 +95,8 @@ rd::Player rd::MentalMap::getPlayer(const int &id) const
     }
     else
     {
-        CD_ERROR("Player with id %i not found!!\n", id);
-        CD_ERROR("Returning standard player\n");
+        yError() << "Player with id" << id << "not found!!";
+        yError() << "Returning standard player";
         return Player();
     }
 }
@@ -105,8 +105,8 @@ rd::Player rd::MentalMap::getMyself() const
 {
     if (!myself)
     {
-        CD_ERROR("Myself not found in mental map\n");
-        CD_ERROR("Returning standard player\n");
+        yError() << "Myself not found in mental map";
+        yError() << "Returning standard player";
         return Player();
     }
     else
@@ -121,8 +121,8 @@ rd::Weapon rd::MentalMap::getCurrentWeapon() const
         return weapons[current_weapon];
     else
     {
-        CD_ERROR("No weapons added yet!\n");
-        CD_ERROR("Returning standard weapon\n");
+        yError() << "No weapons added yet!";
+        yError() << "Returning standard weapon";
         return Weapon();
     }
 }
@@ -155,7 +155,7 @@ bool rd::MentalMap::shoot()
                 if (players.find(target_id) != players.end())
                 {
                     Player * player = &players[target_id];
-                    CD_SUCCESS("Target %s was hit!\n", player->getName().c_str());
+                    yInfo() << "Target" << player->getName() << "was hit!";
 
                     player->getDamageFromWeapon(weapons[current_weapon]);
 
@@ -167,13 +167,13 @@ bool rd::MentalMap::shoot()
                 }
                 else
                 {
-                    CD_WARNING("Ignoring target with invalid player id %d\n", target_id);
+                    yWarning() << "Ignoring target with invalid player id" << target_id;
                 }
 
             }
             else
             {
-                CD_INFO("Missed!\n");
+                yInfo() << "Missed!";
             }
         }
     }
@@ -181,7 +181,7 @@ bool rd::MentalMap::shoot()
     {
             //-- Play sound
             audioManager->play("noAmmo", false);
-            CD_WARNING("No ammo! Reload!\n");
+            yWarning() << "No ammo! Reload!";
     }
 
     return hit;

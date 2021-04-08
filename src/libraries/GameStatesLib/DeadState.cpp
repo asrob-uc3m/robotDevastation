@@ -6,7 +6,7 @@
 
 #include <sstream>
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 const int rd::DeadState::RESPAWN_SELECTED = 1;
 const int rd::DeadState::EXIT_SELECTED = 2;
@@ -154,14 +154,14 @@ bool rd::DeadState::onKeyUp(const Key & k)
 
     if (k.getValue() == Key::KEY_ENTER)
     {
-        CD_DEBUG("Enter was pressed!\n");
+        yDebug() << "Enter was pressed!";
         received_respawn = true;
         return true;
     }
 
     if (k.getValue() == Key::KEY_ESCAPE)
     {
-        CD_DEBUG("Escape was pressed!\n");
+        yDebug() << "Escape was pressed!";
         received_exit = true;
         return true;
     }
@@ -173,7 +173,7 @@ bool rd::DeadState::onWindowEvent(const WindowEvent & event)
 {
     if (event.getEvent() == WindowEvent::WINDOW_CLOSE)
     {
-        CD_DEBUG("Exit was triggered!\n");
+        yDebug() << "Exit was triggered!";
         received_exit = true;
         return true;
     }

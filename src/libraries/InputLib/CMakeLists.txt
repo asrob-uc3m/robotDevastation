@@ -22,4 +22,4 @@ target_include_directories(InputLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                            ${SDL2_INCLUDE_DIR})
 
 target_link_libraries(InputLib PUBLIC ${SDL2_LIBRARY}
-                               PRIVATE ROBOTICSLAB::ColorDebug)
+                               PRIVATE YARP::YARP_os)

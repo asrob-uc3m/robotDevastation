@@ -4,8 +4,6 @@
 
 #include "MockRobotManager.hpp"
 
-#include <ColorDebug.h>
-
 const int rd::MockRobotManager::NONE = 0;
 const int rd::MockRobotManager::FORWARD = 1;
 const int rd::MockRobotManager::BACKWARDS = 2;
@@ -80,7 +78,7 @@ bool rd::MockRobotManager::stopCameraMovement()
     camera_movement_direction = CAMERA_NONE;
     return true;
 }
-        
+
 bool rd::MockRobotManager::isMoving() const
 {
     return movement_direction!=NONE;

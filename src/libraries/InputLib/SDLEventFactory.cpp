@@ -4,7 +4,7 @@
 
 #include "SDLEventFactory.hpp"
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 bool rd::SDLEventFactory::initialized = false;
 std::map<SDL_Keycode, char> rd::SDLEventFactory::sdl_printable_map = std::map<SDL_Keycode, char>();
@@ -33,7 +33,7 @@ rd::Key rd::SDLEventFactory::makeKey(SDL_Keycode keycode)
     }
     else
     {
-        CD_ERROR("Key not supported!\n");
+        yError() << "Key not supported!";
         return Key::KEY_UNKNOWN;
     }
 }

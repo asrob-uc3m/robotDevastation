@@ -11,14 +11,13 @@
 #include "StateMachine.hpp"
 #include "StateMachineBuilder.hpp"
 
+#include <yarp/os/LogStream.h>
 #include <yarp/os/Network.h>
 #include <yarp/os/Bottle.h>
 #include <yarp/os/RpcClient.h>
 #include <yarp/os/RpcServer.h>
 #include <yarp/os/PortReader.h>
 #include <yarp/os/Time.h>
-
-#include <ColorDebug.h>
 
 namespace rd
 {
@@ -91,7 +90,7 @@ class FSMBuilderTest : public testing::Test
     protected:
         bool awaitStateCheck(const std::string & state_id, const int reference_state)
         {
-            CD_DEBUG("%s\n", state_id.c_str());
+            yDebug() << state_id;
 
             int retry_count = 0;
             int currentState = 0;

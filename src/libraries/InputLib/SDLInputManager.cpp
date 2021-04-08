@@ -12,7 +12,7 @@ rd::SDLInputManager * rd::SDLInputManager::uniqueInstance = NULL;
 const std::string rd::SDLInputManager::id = "SDL";
 
 bool rd::SDLInputManager::start()
-{  
+{
     //-- Start input callback
     SDL_AddEventWatch(staticInputCallback, this);
 
@@ -104,7 +104,6 @@ bool rd::SDLInputManager::inputCallback(SDL_Event *event)
     }
     else
     {
-//          CD_WARNING("Unkown event ocurred! (Event is not supported yet)\n");
         return false;
     }
 

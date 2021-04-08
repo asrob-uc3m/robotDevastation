@@ -6,9 +6,8 @@
 
 #include <cstdio>
 
+#include <yarp/os/LogStream.h>
 #include <yarp/os/Property.h>
-
-#include <ColorDebug.h>
 
 bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 {
@@ -25,7 +24,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     screenManager = ScreenManager::getScreenManager(SDLScreenManager::id);
     if (screenManager==NULL)
     {
-        CD_ERROR("Could not create ScreenManager\n");
+        yError() << "Could not create ScreenManager";
         return false;
     }
     if( rf.check("fullscreen") )
@@ -53,20 +52,16 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
     //-- Start robot device
     if( ! robotDevice.open(robotOptions) )
     {
-        CD_INFO_NO_HEADER("Checking for robot motors... ");
-        CD_ERROR_NO_HEADER("[fail]\n");
-        CD_INFO_NO_HEADER("Found no robot motors with robotName %s (try running with --fakeRobotManager if no robot), bye!\n", robotName.c_str());
+        yError() << "Found no robot motors with robotName" << robotName << "(try running with --fakeRobotManager if no robot)";
         return false;
     }
 
     //-- Acquire robot interface
     if( ! robotDevice.view(robotManager) )
     {
-        CD_ERROR("Could not acquire robot interface\n");
+        yError() << "Could not acquire robot interface";
         return false;
     }
-    CD_INFO_NO_HEADER("Checking for robot motors... ");
-    CD_SUCCESS_NO_HEADER("[ok]\n");
 
     //-- Init image manager
     if( rf.check("fakeImageManager") )
@@ -82,7 +77,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         imageManager = ImageManager::getImageManager(YarpLocalImageManager::id);
         if (imageManager == NULL)
         {
-            CD_ERROR("Could not create yarpLocalImageManager\n");
+            yError() << "Could not create yarpLocalImageManager";
             return false;
         }
 
@@ -90,7 +85,7 @@ bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
         {
             std::stringstream camera_id_ss;
             camera_id_ss << rf.find("camera_id").asInt32();
-            CD_INFO("YarpLocalImageManager is using camera with index %s.\n", camera_id_ss.str().c_str());
+            yInfo() << "YarpLocalImageManager is using camera with index" << camera_id_ss.str();
             imageManager->configure("camera_id", camera_id_ss.str());
         }
     }
@@ -165,7 +160,7 @@ bool rd::RobotDevastation::updateModule()
         return true;
     }
 
-    CD_DEBUG("Current state id: %d\n", gameFSM->getCurrentState());
+    yDebug() << "Current state id:" << gameFSM->getCurrentState();
     return true;
 }
 
@@ -328,6 +323,6 @@ bool rd::RobotDevastation::cleanup()
 
 bool rd::RobotDevastation::interruptModule()
 {
-    CD_INFO("Closing program...\n");
+    yInfo() << "Closing program...";
     return cleanup();
 }

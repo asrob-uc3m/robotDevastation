@@ -4,7 +4,7 @@
 
 #include "MockAudioManager.hpp"
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 //-- This is very important:
 rd::MockAudioManager * rd::MockAudioManager::uniqueInstance = NULL;
@@ -56,7 +56,7 @@ bool rd::MockAudioManager::isPlaying(const std::string &id) const
 
     if (durations.find(id) == durations.end() || loop_times.find(id) == loop_times.end())
     {
-        CD_ERROR("Sound \"%s\" not found (maybe it was not loaded?)\n", id.c_str());
+        yError() << "Sound" << id << "not found (maybe it was not loaded?)";
         durations_mutex.unlock();
         loop_times_mutex.unlock();
         return false;
@@ -80,7 +80,7 @@ bool rd::MockAudioManager::load(const std::string &music_filepath, const std::st
 
     if (durations.find(id) != durations.end() || loop_times.find(id) != loop_times.end())
     {
-        CD_ERROR("Sound \"%s\" already exists\n", id.c_str());
+        yError() << "Sound" << id << "already exists";
         durations_mutex.unlock();
         loop_times_mutex.unlock();
         return false;
@@ -102,7 +102,7 @@ bool rd::MockAudioManager::play(const std::string &id, int loop)
 
     if (durations.find(id) == durations.end() || loop_times.find(id) == loop_times.end())
     {
-        CD_ERROR("Sound \"%s\" not found (maybe it was not loaded?)\n", id.c_str());
+        yError() << "Sound" << id << "not found (maybe it was not loaded?)";
         durations_mutex.unlock();
         loop_times_mutex.unlock();
         return false;

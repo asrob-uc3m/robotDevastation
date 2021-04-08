@@ -4,7 +4,7 @@
 
 #include "NetworkManager.hpp"
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 //-- Static members initialization:
 rd::NetworkManager * rd::NetworkManager::networkManagerInstance = NULL;
@@ -23,7 +23,7 @@ rd::NetworkManager *rd::NetworkManager::getNetworkManager()
         }
         else
         {
-            CD_ERROR("No NetworkManager registered!! Returning null\n");
+            yError() << "No NetworkManager registered, returning null";
         }
     }
 
@@ -41,7 +41,7 @@ rd::NetworkManager *rd::NetworkManager::getNetworkManager(const std::string & id
         }
         else
         {
-            CD_ERROR("ImageManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            yError() << "ImageManager" << id << "not found (maybe it was not registered?)";
         }
     }
 
@@ -126,13 +126,13 @@ bool rd::NetworkManager::Register(NetworkManager *manager, const std::string & i
         }
         else
         {
-            CD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
+            yError() << "Trying to register a NULL manager with id" << id;
             return false;
         }
     }
     else
     {
-        CD_ERROR( "ImageManager with id \"%s\" was already registered\n", id.c_str());
+        yError() << "ImageManager with id" << id << "was already registered";
         return false;
     }
 

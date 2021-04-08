@@ -4,7 +4,7 @@
 
 #include "MockImageManager.hpp"
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 //-- Initialize static members
 rd::MockImageManager * rd::MockImageManager::uniqueInstance = NULL;
@@ -13,7 +13,6 @@ const std::string rd::MockImageManager::id = "MOCK";
 
 bool rd::MockImageManager::start()
 {
-    CD_DEBUG("\n");
     stopped = false;
     return true;
 
@@ -21,7 +20,6 @@ bool rd::MockImageManager::start()
 
 bool rd::MockImageManager::stop()
 {
-    CD_DEBUG("\n");
     stopped = true;
     enabled = false;
     return true;
@@ -45,7 +43,7 @@ bool rd::MockImageManager::isEnabled() const
 
 bool rd::MockImageManager::configure(const std::string & parameter, const std::string & value)
 {
-    CD_DEBUG("Configure called for parameter: \"%s\" with value: \"%s\"\n", parameter.c_str(), value.c_str());
+    yDebug() << "Configure called for parameter" << parameter << "with value" << value;
     return ImageManager::configure(parameter, value);
 }
 
@@ -89,7 +87,7 @@ bool rd::MockImageManager::receiveImage(const Image & received_image)
     }
     else
     {
-        CD_WARNING("MockImageManager is disabled!\n");
+        yWarning() << "MockImageManager is disabled!";
         return false;
     }
 

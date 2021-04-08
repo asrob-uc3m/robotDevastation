@@ -29,5 +29,4 @@ target_link_libraries(UserInterfaceLib PUBLIC YARP::YARP_os
                                               ImageLib
                                               MentalMapLib
                                        PRIVATE ${SDL2_IMAGE_LIBRARIES}
-                                               UtilsLib
-                                               ROBOTICSLAB::ColorDebug)
+                                               UtilsLib)

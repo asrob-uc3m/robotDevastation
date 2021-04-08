@@ -4,7 +4,7 @@
 
 #include "ImageManager.hpp"
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 //-- Static members initialization:
 rd::ImageManager * rd::ImageManager::imageManagerInstance = NULL;
@@ -23,7 +23,7 @@ rd::ImageManager *rd::ImageManager::getImageManager()
         }
         else
         {
-            CD_ERROR("No ImageManager registered!! Returning null\n");
+            yError() << "No ImageManager registered, returning null";
         }
     }
 
@@ -41,7 +41,7 @@ rd::ImageManager *rd::ImageManager::getImageManager(const std::string & id)
         }
         else
         {
-            CD_ERROR("ImageManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            yError() << "ImageManager" << id << "not found (maybe it was not registered?)";
         }
     }
 
@@ -119,13 +119,13 @@ bool rd::ImageManager::Register(ImageManager *manager, const std::string & id)
         }
         else
         {
-            CD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
+            yError() << "Trying to register a NULL manager with id" << id;
             return false;
         }
     }
     else
     {
-        CD_ERROR( "ImageManager with id \"%s\" was already registered\n", id.c_str());
+        yError() << "ImageManager with id" << id << "was already registered";
         return false;
     }
 

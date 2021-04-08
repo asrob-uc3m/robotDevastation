@@ -4,7 +4,7 @@
 
 #include "InputManager.hpp"
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 //-- This is very important:
 rd::InputManager * rd::InputManager::inputManagerInstance = NULL;
@@ -24,7 +24,7 @@ rd::InputManager *rd::InputManager::getInputManager()
         }
         else
         {
-            CD_ERROR("No InputManager registered!! Returning null\n");
+            yError() << "No InputManager registered, returning null";
         }
     }
 
@@ -42,7 +42,7 @@ rd::InputManager *rd::InputManager::getInputManager(const std::string & id)
         }
         else
         {
-            CD_ERROR("InputManager %s not found! (Maybe it was not registered?)\n", id.c_str());
+            yError() << "InputManager" << id << "not found (maybe it was not registered?)";
         }
     }
 
@@ -109,7 +109,6 @@ bool rd::InputManager::configure(const std::string & parameter, const std::strin
 
 bool rd::InputManager::refreshEvents()
 {
-    CD_INFO("Base implementation, does nothing!\n");
     return true;
 }
 
@@ -124,14 +123,13 @@ bool rd::InputManager::Register(InputManager *manager, const std::string & id)
         }
         else
         {
-            CD_ERROR("Trying to register a NULL manager with id \"%s\"\n", id.c_str());
+            yError() << "Trying to register a NULL manager with id" << id;
             return false;
         }
     }
     else
     {
-        CD_ERROR( "InputManager with id \"%s\" was already registered\n", id.c_str());
+        yError() << "InputManager with id" << id << "was already registered";
         return false;
     }
-
 }

@@ -24,7 +24,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 namespace rd
 {
@@ -46,7 +46,7 @@ class TestEventListener : public InputEventListener
 
             if (audioManager == NULL)
             {
-                CD_ERROR("Could not get AudioManager\n");
+                yError() << "Could not get AudioManager";
                 exit(1);
             }
 
@@ -62,17 +62,17 @@ class TestEventListener : public InputEventListener
         {
             if ( k.isControlKey() )
             {
-                CD_SUCCESS( "Control key with code %d pressed!\n", k.getValue() );
+                yInfo() << "Control key with code" << k.getValue() << "pressed!";
 
                 if ( k.getValue() == Key::KEY_SPACE)
                 {
                     audioManager->play("shoot", false);
-                    CD_SUCCESS("Shoot!\n");
+                    yInfo() << "Shoot!";
                 }
                 else if ( k.getValue() == Key::KEY_ESCAPE)
                 {
                     finished = true;
-                    CD_SUCCESS("Exit!\n");
+                    yInfo() << "Exit!";
                 }
                 else if ( k.getValue() == Key::KEY_ARROW_LEFT)
                 {
@@ -80,7 +80,7 @@ class TestEventListener : public InputEventListener
                     if (x_pos < 0 )
                         x_pos = 0;
 
-                    CD_SUCCESS("Reduce x!\n");
+                    yInfo() << "Reduce x!";
                 }
                 else if ( k.getValue() == Key::KEY_ARROW_RIGHT)
                 {
@@ -88,7 +88,7 @@ class TestEventListener : public InputEventListener
                     if (x_pos > 640 )
                         x_pos = 640;
 
-                    CD_SUCCESS("Increase x!\n");
+                    yInfo() << "Increase x!";
                 }
                 else if ( k.getValue() == Key::KEY_ARROW_UP)
                 {
@@ -96,7 +96,7 @@ class TestEventListener : public InputEventListener
                     if (y_pos < 0 )
                         y_pos = 0;
 
-                    CD_SUCCESS("Reduce y!\n");
+                    yInfo() << "Reduce y!";
                 }
                 else if ( k.getValue() == Key::KEY_ARROW_DOWN)
                 {
@@ -104,23 +104,23 @@ class TestEventListener : public InputEventListener
                     if (y_pos > 640 )
                         y_pos = 640;
 
-                    CD_SUCCESS("Increase y!\n");
+                    yInfo() << "Increase y!";
                 }
 
             }
             else if (k.isPrintable() )
             {
-                CD_SUCCESS( "Key \"%c\" was pressed!\n", k.getChar() );
+                yInfo() << "Key" << k.getChar() << "was pressed!";
 
                 if ( k.getChar() == '0')
                 {
                     audioManager->play("shoot", false);
-                    CD_SUCCESS("Shoot!\n");
+                    yInfo() << "Shoot!";
                 }
                 else if ( k.getChar() == 'q')
                 {
                     finished = true;
-                    CD_SUCCESS("Exit!\n");
+                    yInfo() << "Exit!";
                 }
             }
             return true;
@@ -130,31 +130,31 @@ class TestEventListener : public InputEventListener
         {
             if ( k.isControlKey() )
             {
-                CD_SUCCESS( "Control key with code %d released!\n", k.getValue() );
+                yInfo() << "Control key with code" << k.getValue() << "released!";
                 if ( k.getValue() == Key::KEY_SPACE)
                 {
-                    CD_SUCCESS("Released shoot!\n");
+                    yInfo() << "Released shoot!";
                 }
                 else if ( k.getValue() == Key::KEY_ARROW_LEFT)
                 {
-                    CD_SUCCESS("Released left!\n");
+                    yInfo() << "Released left!";
                 }
                 else if ( k.getValue() == Key::KEY_ARROW_RIGHT)
                 {
-                    CD_SUCCESS("Released right!\n");
+                    yInfo() << "Released right!";
                 }
                 else if ( k.getValue() == Key::KEY_ARROW_UP)
                 {
-                    CD_SUCCESS("Released up!\n");
+                    yInfo() << "Released up!";
                 }
                 else if ( k.getValue() == Key::KEY_ARROW_DOWN)
                 {
-                    CD_SUCCESS("Release down!\n");
+                    yInfo() << "Release down!";
                 }
             }
             else if (k.isPrintable() )
             {
-                CD_SUCCESS( "Key \"%c\" was released!\n", k.getChar() );
+                yInfo() << "Key" << k.getChar() << "was released!";
 
             }
             return true;
@@ -164,16 +164,16 @@ class TestEventListener : public InputEventListener
         {
             if ( event.getEvent() == WindowEvent::WINDOW_UNKNOWN )
             {
-                CD_WARNING("Window event not implemented!\n");
+                yWarning() << "Window event not implemented!";
             }
             else
             {
-                CD_SUCCESS( "Triggered window event with code %d!\n", event.getEvent() );
+                yInfo() << "Triggered window event with code" << event.getEvent();
 
                 if ( event.getEvent() == WindowEvent::WINDOW_CLOSE )
                 {
                     finished = true;
-                    CD_SUCCESS("Exit!\n");
+                    yInfo() << "Exit!";
                 }
             }
             return true;
@@ -217,7 +217,7 @@ int main(void)
     InputManager * inputManager = InputManager::getInputManager("SDL");
     if (inputManager == NULL)
     {
-        CD_ERROR("Could not get AudioManager\n");
+        yError() << "Could not get AudioManager";
         return 1;
     }
 

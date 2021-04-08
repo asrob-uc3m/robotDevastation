@@ -6,7 +6,7 @@
 
 #include <SDL.h>
 
-#include <ColorDebug.h>
+#include <yarp/os/LogStream.h>
 
 //-- This is very important:
 rd::SDLAudioManager * rd::SDLAudioManager::uniqueInstance = NULL;
@@ -15,10 +15,10 @@ const std::string rd::SDLAudioManager::id = "SDL";
 rd::SDLAudioManager::SDLAudioManager()
 {
     if(SDL_Init(SDL_INIT_AUDIO)==-1)
-        CD_ERROR("SDL Audio subsystem could not be initialized!\n");
+        yError() << "SDL Audio subsystem could not be initialized!";
 
     if (Mix_OpenAudio(22050, AUDIO_S16, 2, 4096) == -1)
-        CD_ERROR("AudioMixer could not be opened: %s\n", Mix_GetError());
+        yError() << "AudioMixer could not be opened:" << Mix_GetError();
 
     stopped = true;
 }
@@ -32,7 +32,7 @@ bool rd::SDLAudioManager::load(const std::string &music_filepath, const std::str
 
         if(pMusic == 0)
         {
-            CD_ERROR( "Error loading file: \"%s\": %s\n", music_filepath.c_str(), Mix_GetError());
+            yError() << "File" << music_filepath << "not loaded:" << Mix_GetError();
             return false;
         }
 
@@ -44,7 +44,7 @@ bool rd::SDLAudioManager::load(const std::string &music_filepath, const std::str
         Mix_Chunk* pChunk = Mix_LoadWAV(music_filepath.c_str());
         if(pChunk == 0)
         {
-            CD_ERROR( "Error loading file: \"%s\": %s\n", music_filepath.c_str(), Mix_GetError());
+            yError() << "File" << music_filepath << "not loaded:" << Mix_GetError();
             return false;
         }
 
@@ -61,7 +61,7 @@ bool rd::SDLAudioManager::play(const std::string &id, int loop)
         //-- Play music
         if (Mix_PlayMusic(music_sounds[id], loop) == -1)
         {
-            CD_ERROR( "Error playing music \"%s\"\n", id.c_str());
+            yError() << "Error playing music" << id;
             return false;
         }
     }
@@ -70,13 +70,13 @@ bool rd::SDLAudioManager::play(const std::string &id, int loop)
         //-- Play fx sound:
         if( Mix_PlayChannel(-1, fx_sounds[id], loop) == -1 )
         {
-            CD_ERROR( "Error playing sound \"%s\"\n", id.c_str());
+            yError() << "Error playing sound" << id;
             return false;
         }
     }
     else
     {
-        CD_ERROR( "Sound \"%s\" not found (maybe it was not loaded?)\n", id.c_str());
+        yError() << "Sound" << id << "not found (maybe it was not loaded?)";
         return false;
     }
 
@@ -88,7 +88,7 @@ bool rd::SDLAudioManager::stopMusic()
     if ( Mix_PlayingMusic() )
         if(Mix_HaltMusic() == -1)
         {
-            CD_ERROR( "Error stopping music\n");
+            yError() << "Error stopping music";
             return false;
         }
 
