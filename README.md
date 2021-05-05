@@ -6,7 +6,7 @@
 
 - [User Manual](https://asrob-uc3m.gitbooks.io/robotdevastation-user-manual/content) (includes Installation Guide)
 - [Developer Manual](https://asrob-uc3m.gitbooks.io/robotdevastation-developer-manual/content)
-- [Doxygen API Documentation](http://wiki.asrob.uc3m.es/rddoc/index.html)
+- [Doxygen API Documentation](https://asrob.uc3m.es/robotDevastation/)
 - Development Tracking
    - [GitHub Project](https://github.com/orgs/asrob-uc3m/projects/1)
    - [GitHub Wiki (Cuaderno de Bitácora)](https://github.com/asrob-uc3m/robotDevastation/wiki/Cuaderno-de-Bitácora)
