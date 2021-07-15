@@ -4,6 +4,7 @@
 
 #include "RpcResponder.hpp"
 
+#include <yarp/conf/version.h>
 #include <yarp/os/Bottle.h>
 #include <yarp/os/ConnectionWriter.h>
 #include <yarp/os/LogStream.h>
@@ -20,11 +21,19 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
     yarp::os::ConnectionWriter *returnToSender = connection.getWriter();
     if (returnToSender==NULL) return false;
 
-    if ((in.get(0).asString() == "help")||(in.get(0).asVocab() == VOCAB_RD_HELP))  //-- help
+#if YARP_VERSION_MINOR >= 5
+    if (in.get(0).asString() == "help" || in.get(0).asVocab32() == VOCAB_RD_HELP) //-- help
+#else
+    if (in.get(0).asString() == "help" || in.get(0).asVocab() == VOCAB_RD_HELP) //-- help
+#endif
     {
         out.addString("Available commands: help, hit I:id I:damage, login I:id S:name I:team_id, logout I:id.");
     }
-    else if((in.get(0).asString() == "hit")||(in.get(0).asVocab() == VOCAB_RD_HIT))  //-- hit
+#if YARP_VERSION_MINOR >= 5
+    else if (in.get(0).asString() == "hit" || in.get(0).asVocab32() == VOCAB_RD_HIT) //-- hit
+#else
+    else if (in.get(0).asString() == "hit" || in.get(0).asVocab() == VOCAB_RD_HIT) //-- hit
+#endif
     {
         //-- Extract data
         int hitId = in.get(1).asInt32();
@@ -41,16 +50,28 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
                 newHealth = players->at( hitId ).getMaxHealth();
             players->at( hitId ).setHealth( newHealth );
 
+#if YARP_VERSION_MINOR >= 5
+            out.addVocab32(VOCAB_RD_OK);
+#else
             out.addVocab(VOCAB_RD_OK);
+#endif
         }
         else
         {
             yError() << "Player with id" << hitId << "not logged in!";
+#if YARP_VERSION_MINOR >= 5
+            out.addVocab32(VOCAB_RD_FAIL);
+#else
             out.addVocab(VOCAB_RD_FAIL);
+#endif
         }
         players_mutex->unlock();
     }
-    else if((in.get(0).asString() == "login")||(in.get(0).asVocab() == VOCAB_RD_LOGIN))  //-- login
+#if YARP_VERSION_MINOR >= 5
+    else if (in.get(0).asString() == "login" || in.get(0).asVocab32() == VOCAB_RD_LOGIN) //-- login
+#else
+    else if (in.get(0).asString() == "login" || in.get(0).asVocab() == VOCAB_RD_LOGIN) //-- login
+#endif
     {
         int loginId = in.get(1).asInt32();
 
@@ -63,16 +84,28 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
             (*players)[loginId] = rdPlayer;
             (*players_belief)[loginId] = MAX_BELIEF;
 
+#if YARP_VERSION_MINOR >= 5
+            out.addVocab32(VOCAB_RD_OK);
+#else
             out.addVocab(VOCAB_RD_OK);
+#endif
         }
         else
         {
             yError() << "Already logged, id:" << loginId;
+#if YARP_VERSION_MINOR >= 5
+            out.addVocab32(VOCAB_RD_FAIL);
+#else
             out.addVocab(VOCAB_RD_FAIL);
+#endif
         }
         players_mutex->unlock();
     }
-    else if ((in.get(0).asString() == "logout")||(in.get(0).asVocab() == VOCAB_RD_LOGOUT)) //-- logout
+#if YARP_VERSION_MINOR >= 5
+    else if (in.get(0).asString() == "logout" || in.get(0).asVocab32() == VOCAB_RD_LOGOUT) //-- logout
+#else
+    else if (in.get(0).asString() == "logout" || in.get(0).asVocab() == VOCAB_RD_LOGOUT) //-- logout
+#endif
     {
         int logoutId = in.get(1).asInt32();
 
@@ -80,17 +113,29 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         if ( players->find(logoutId) == players->end() )
         {
             yError() << "Not logged to logout, id:" << logoutId;
+#if YARP_VERSION_MINOR >= 5
+            out.addVocab32(VOCAB_RD_FAIL);
+#else
             out.addVocab(VOCAB_RD_FAIL);
+#endif
         }
         else
         {
             players->erase(logoutId);
             players_belief->erase(logoutId);
+#if YARP_VERSION_MINOR >= 5
+            out.addVocab32(VOCAB_RD_OK);
+#else
             out.addVocab(VOCAB_RD_OK);
+#endif
         }
         players_mutex->unlock();
     }
-    else if ((in.get(0).asString() == "respawn")||(in.get(0).asVocab() == VOCAB_RD_RESPAWN)) //-- respawn
+#if YARP_VERSION_MINOR >= 5
+    else if (in.get(0).asString() == "respawn" || in.get(0).asVocab32() == VOCAB_RD_RESPAWN) //-- respawn
+#else
+    else if (in.get(0).asString() == "respawn" || in.get(0).asVocab() == VOCAB_RD_RESPAWN) //-- respawn
+#endif
     {
         int respawnId = in.get(1).asInt32();
 
@@ -98,16 +143,28 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         if ( players->find(respawnId) == players->end() )
         {
             yError() << "Could not respawn, player not logged in, id:" << respawnId;
+#if YARP_VERSION_MINOR >= 5
+            out.addVocab32(VOCAB_RD_FAIL);
+#else
             out.addVocab(VOCAB_RD_FAIL);
+#endif
         } else {
             int newHealth = players->at(respawnId).getMaxHealth();
             players->at(respawnId).setHealth(newHealth);
             players_belief->at(respawnId) = MAX_BELIEF;
+#if YARP_VERSION_MINOR >= 5
+            out.addVocab32(VOCAB_RD_OK);
+#else
             out.addVocab(VOCAB_RD_OK);
+#endif
         }
         players_mutex->unlock();
     }
-    else if ((in.get(0).asString() == "keepAlive")||(in.get(0).asVocab() == VOCAB_RD_KEEPALIVE)) //-- keepalive
+#if YARP_VERSION_MINOR >= 5
+    else if (in.get(0).asString() == "keepAlive" || in.get(0).asVocab32() == VOCAB_RD_KEEPALIVE) //-- keepalive
+#else
+    else if (in.get(0).asString() == "keepAlive" || in.get(0).asVocab() == VOCAB_RD_KEEPALIVE) //-- keepalive
+#endif
     {
         int keepAliveId = in.get(1).asInt32();
 
@@ -115,19 +172,31 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         if ( players->find(keepAliveId) == players->end() )
         {
             yError() << "Could not keep alive, player not logged in, id:" << keepAliveId;
+#if YARP_VERSION_MINOR >= 5
+            out.addVocab32(VOCAB_RD_FAIL);
+#else
             out.addVocab(VOCAB_RD_FAIL);
+#endif
         }
         else
         {
             players_belief->at(keepAliveId) = MAX_BELIEF;
+#if YARP_VERSION_MINOR >= 5
+            out.addVocab32(VOCAB_RD_OK);
+#else
             out.addVocab(VOCAB_RD_OK);
+#endif
         }
         players_mutex->unlock();
     }
     else
     {
         yError() << "Unkown command:" << in.toString();
+#if YARP_VERSION_MINOR >= 5
+        out.addVocab32(VOCAB_RD_FAIL);
+#else
         out.addVocab(VOCAB_RD_FAIL);
+#endif
     }
 
     return out.write(*returnToSender);

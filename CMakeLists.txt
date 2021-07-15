@@ -39,7 +39,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake
 # Find project's hard dependencies.
 find_package(YCM 0.11 REQUIRED)
 find_package(ASROB_YARP_DEVICES REQUIRED)
-find_package(YARP 3.3 REQUIRED COMPONENTS os dev sig)
+find_package(YARP 3.4 REQUIRED COMPONENTS os dev sig)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)

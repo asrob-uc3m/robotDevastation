@@ -6,6 +6,7 @@
 
 #include <cstdio>
 
+#include <yarp/conf/version.h>
 #include <yarp/os/Bottle.h>
 #include <yarp/os/LogStream.h>
 
@@ -42,7 +43,11 @@ bool rd::Server::updateModule()
     //-- Broadcast player info
     players_mutex.lock();
     yarp::os::Bottle msgBroadcast;
+#if YARP_VERSION_MINOR >= 5
+    msgBroadcast.addVocab32(VOCAB_RD_PLAYERS);
+#else
     msgBroadcast.addVocab(VOCAB_RD_PLAYERS);
+#endif
     quiet || std::printf("=======rdServer=======\n");
     quiet || std::printf("Number of players: %zd\n",players.size());
 

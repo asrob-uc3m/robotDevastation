@@ -15,7 +15,8 @@ target_include_directories(UtilsLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 target_include_directories(UtilsLib PRIVATE ${SDL2_IMAGE_INCLUDE_DIR}
                                             ${SDL2_TTF_INCLUDE_DIR})
 
-target_link_libraries(UtilsLib PUBLIC ${SDL2_LIBRARY}
+target_link_libraries(UtilsLib PUBLIC YARP::YARP_os
+                                      ${SDL2_LIBRARY}
                                       ImageLib
                                       InputLib
                                       MentalMapLib
@@ -23,6 +24,5 @@ target_link_libraries(UtilsLib PUBLIC ${SDL2_LIBRARY}
                                       MusicLib
                                       UserInterfaceLib
                                       ASROB::RobotInterfaces
-                               PRIVATE YARP::YARP_os
-                                       ${SDL2_IMAGE_LIBRARIES}
+                               PRIVATE ${SDL2_IMAGE_LIBRARIES}
                                        ${SDL2_TTF_LIBRARIES})

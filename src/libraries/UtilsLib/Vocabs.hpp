@@ -5,17 +5,31 @@
 #ifndef __RD_VOCABS_HPP__
 #define __RD_VOCABS_HPP__
 
-#define VOCAB(a,b,c,d) ((((int)(d))<<24)+(((int)(c))<<16)+(((int)(b))<<8)+((int)(a)))
+#include <yarp/conf/version.h>
+#include <yarp/os/Vocab.h>
 
-#define VOCAB_RD_FAIL VOCAB('f','a','i','l')
-#define VOCAB_RD_GAME_OVER VOCAB('o','v','e','r')
-#define VOCAB_RD_HELP VOCAB('h','e','l','p')
-#define VOCAB_RD_HIT VOCAB('h','i','t',0)
-#define VOCAB_RD_LOGIN VOCAB('l','o','g',0)
-#define VOCAB_RD_LOGOUT VOCAB('l','o','g','o')
-#define VOCAB_RD_OK VOCAB('o','k',0,0)
-#define VOCAB_RD_PLAYERS VOCAB('p','l','y','s')
-#define VOCAB_RD_RESPAWN VOCAB('r','p','w','n')
-#define VOCAB_RD_KEEPALIVE VOCAB('k','e','e','p')
+#if YARP_VERSION_MINOR >= 5
+constexpr auto VOCAB_RD_FAIL = yarp::os::createVocab32('f','a','i','l');
+constexpr auto VOCAB_RD_GAME_OVER = yarp::os::createVocab32('o','v','e','r');
+constexpr auto VOCAB_RD_HELP = yarp::os::createVocab32('h','e','l','p');
+constexpr auto VOCAB_RD_HIT = yarp::os::createVocab32('h','i','t');
+constexpr auto VOCAB_RD_LOGIN = yarp::os::createVocab32('l','o','g');
+constexpr auto VOCAB_RD_LOGOUT = yarp::os::createVocab32('l','o','g','o');
+constexpr auto VOCAB_RD_OK = yarp::os::createVocab32('o','k');
+constexpr auto VOCAB_RD_PLAYERS = yarp::os::createVocab32('p','l','y','s');
+constexpr auto VOCAB_RD_RESPAWN = yarp::os::createVocab32('r','p','w','n');
+constexpr auto VOCAB_RD_KEEPALIVE = yarp::os::createVocab32('k','e','e','p');
+#else
+constexpr auto VOCAB_RD_FAIL = yarp::os::createVocab('f','a','i','l');
+constexpr auto VOCAB_RD_GAME_OVER = yarp::os::createVocab('o','v','e','r');
+constexpr auto VOCAB_RD_HELP = yarp::os::createVocab('h','e','l','p');
+constexpr auto VOCAB_RD_HIT = yarp::os::createVocab('h','i','t');
+constexpr auto VOCAB_RD_LOGIN = yarp::os::createVocab('l','o','g');
+constexpr auto VOCAB_RD_LOGOUT = yarp::os::createVocab('l','o','g','o');
+constexpr auto VOCAB_RD_OK = yarp::os::createVocab('o','k');
+constexpr auto VOCAB_RD_PLAYERS = yarp::os::createVocab('p','l','y','s');
+constexpr auto VOCAB_RD_RESPAWN = yarp::os::createVocab('r','p','w','n');
+constexpr auto VOCAB_RD_KEEPALIVE = yarp::os::createVocab('k','e','e','p');
+#endif
 
 #endif  // __RD_VOCABS_HPP__

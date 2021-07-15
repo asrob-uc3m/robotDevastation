@@ -14,10 +14,10 @@ env:
   global:
     - SDL_AUDIODRIVER=dummy # avoid ALSA errors
     - CACHE_DIR=~/cached-deps # common cache location
-    - YCM_CHECKOUT=ycm-0.11
+    - YCM_CHECKOUT=ycm-0.13
   jobs:
+    - YARP_CHECKOUT=yarp-3.5
     - YARP_CHECKOUT=yarp-3.4
-    - YARP_CHECKOUT=yarp-3.3
 
 jobs:
   include:
