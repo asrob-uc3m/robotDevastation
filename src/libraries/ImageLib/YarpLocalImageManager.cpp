@@ -10,6 +10,8 @@
 #include <yarp/os/Network.h>
 #include <yarp/os/Property.h>
 
+#include "LogComponent.hpp"
+
 //-- Initialize static members
 rd::YarpLocalImageManager * rd::YarpLocalImageManager::uniqueInstance = NULL;
 const std::string rd::YarpLocalImageManager::id = "YARPlocal";
@@ -23,30 +25,30 @@ bool rd::YarpLocalImageManager::start()
     cameraOptions.put("device","grabber");
     cameraOptions.put("subdevice","opencv_grabber");
     cameraOptions.put("name",remote_port_name);
-    yDebug() << "Camera id:" << camera_id;
+    yCDebug(RD_IMG) << "Camera id:" << camera_id;
     cameraOptions.put("camera", camera_id);
     cameraDevice.open(cameraOptions);
     if(!cameraDevice.isValid())
     {
-        yError() << "Could not open opencv_grabber device";
+        yCError(RD_IMG) << "Could not open opencv_grabber device";
         return false;
     }
-    yInfo() << "Opened opencv_grabber device";
+    yCInfo(RD_IMG) << "Opened opencv_grabber device";
 
     imagePort.open(local_port_name.c_str());
     imagePort.useCallback(*this);
 
     if(! yarp::os::Network::connect( remote_port_name.c_str(), local_port_name.c_str(), "mjpeg" ) )
     {
-        yWarning() << "Could not connect to robot camera via mjpeg";
+        yCWarning(RD_IMG) << "Could not connect to robot camera via mjpeg";
         if (!yarp::os::Network::connect(remote_port_name.c_str(), local_port_name.c_str()))
         {
-            yWarning() << "Could not connect to robot camera";
+            yCWarning(RD_IMG) << "Could not connect to robot camera";
             return false;
         }
     }
 
-    yInfo() << "Connected to robot camera";
+    yCInfo(RD_IMG) << "Connected to robot camera";
 
     stopped = false;
     enabled = false;
@@ -139,7 +141,7 @@ void rd::YarpLocalImageManager::onRead(Image &image)
     }
     else
     {
-        yWarning() << "YarpImageManager is disabled!";
+        yCWarning(RD_IMG) << "YarpImageManager is disabled!";
     }
 }
 

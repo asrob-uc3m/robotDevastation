@@ -10,7 +10,9 @@ add_library(NetworkLib MockNetworkEventListener.hpp
                        NetworkManager.hpp
                        NetworkManager.cpp
                        YarpNetworkManager.hpp
-                       YarpNetworkManager.cpp)
+                       YarpNetworkManager.cpp
+                       LogComponent.hpp
+                       LogComponent.cpp)
 
 target_include_directories(NetworkLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

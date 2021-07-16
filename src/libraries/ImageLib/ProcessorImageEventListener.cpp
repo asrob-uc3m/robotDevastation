@@ -15,6 +15,8 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 rd::ProcessorImageEventListener::ProcessorImageEventListener()
 {
     //images_arrived = 0;
@@ -80,11 +82,11 @@ bool rd::ProcessorImageEventListener::onImageArrived( ImageManager * manager )
         if (isInteger(identifier_str.str()))
         {
             identifier_str >> identifier_int;
-            yInfo() << "QR id:" << identifier_int;
+            yCInfo(RD_IMG) << "QR id:" << identifier_int;
         }
         else
         {
-            yWarning() << "Ignoring QR with id:" << identifier_str.str();
+            yCWarning(RD_IMG) << "Ignoring QR with id:" << identifier_str.str();
             continue;
         }
 

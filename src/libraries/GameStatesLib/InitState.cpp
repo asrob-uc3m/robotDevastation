@@ -3,9 +3,11 @@
 // URL: https://github.com/asrob-uc3m/robotDevastation
 
 #include "InitState.hpp"
-#include "YarpNetworkManager.hpp"
 
 #include <yarp/os/LogStream.h>
+
+#include "YarpNetworkManager.hpp"
+#include "LogComponent.hpp"
 
 const int rd::InitState::LOGIN_SUCCESSFUL = 1;
 const int rd::InitState::EXIT_REQUESTED = 2;
@@ -76,7 +78,7 @@ bool rd::InitState::loop()
 
 bool rd::InitState::cleanup()
 {
-    yDebug() << "Cleanup!!";
+    yCDebug(RD_GS) << "Cleanup!!";
     audioManager->stopMusic();
     inputManager->removeInputEventListeners();
     screen.cleanup();
@@ -112,13 +114,13 @@ bool rd::InitState::onKeyUp(const Key & k)
 {
     if (k.getValue() == Key::KEY_ESCAPE)
     {
-        yDebug() << "Escape was pressed!";
+        yCDebug(RD_GS) << "Escape was pressed!";
         received_exit = true;
         return true;
     }
     else if (k.isControlKey() || k.isPrintable())
     {
-        yDebug() << "Key was pressed!";
+        yCDebug(RD_GS) << "Key was pressed!";
         login = true;
         return true;
     }
@@ -130,7 +132,7 @@ bool rd::InitState::onWindowEvent(const WindowEvent & event)
 {
     if (event.getEvent() == WindowEvent::WINDOW_CLOSE)
     {
-        yDebug() << "Exit was triggered!";
+        yCDebug(RD_GS) << "Exit was triggered!";
         received_exit = true;
         return true;
     }

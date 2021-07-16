@@ -6,6 +6,8 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 //-- This is very important:
 rd::AudioManager * rd::AudioManager::audioManagerInstance = NULL;
 std::string rd::AudioManager::currentId = "";
@@ -27,7 +29,7 @@ rd::AudioManager *rd::AudioManager::getAudioManager()
         }
         else
         {
-            yError() << "No AudioManager registered, returning null";
+            yCError(RD_MUS) << "No AudioManager registered, returning null";
         }
     }
 
@@ -45,7 +47,7 @@ rd::AudioManager *rd::AudioManager::getAudioManager(const std::string & id)
         }
         else
         {
-            yError() << "AudioManager" << id << "not found (maybe it was not registered?)";
+            yCError(RD_MUS) << "AudioManager" << id << "not found (maybe it was not registered?)";
         }
     }
 
@@ -109,13 +111,13 @@ bool rd::AudioManager::Register(AudioManager *manager, const std::string & id)
         }
         else
         {
-            yError() << "Trying to register a NULL manager with id" << id;
+            yCError(RD_MUS) << "Trying to register a NULL manager with id" << id;
             return false;
         }
     }
     else
     {
-        yWarning() << "(known issue) AudioManager with id" << id << "was already registered"; // change to yError after fixing #30
+        yCWarning(RD_MUS) << "(known issue) AudioManager with id" << id << "was already registered"; // change to yError after fixing #30
         return true; // return false after fixing #30
     }
 }

@@ -9,6 +9,7 @@
 #include <yarp/os/LogStream.h>
 #include <yarp/os/ResourceFinder.h>
 
+#include "LogComponent.hpp"
 #include "SDLUtils.hpp"
 
 //-- Public
@@ -42,7 +43,7 @@ bool rd::DeadScreen::init()
     skull_image = IMG_Load(rf.findFileByName(SKULL_PATH).c_str());
     if (skull_image == NULL)
     {
-        yError() << "Skull image" << SKULL_PATH << "failed to load:" << IMG_GetError();
+        yCError(RD_UI) << "Skull image" << SKULL_PATH << "failed to load:" << IMG_GetError();
         return false;
     }
 
@@ -50,7 +51,7 @@ bool rd::DeadScreen::init()
     font = TTF_OpenFont(rf.findFileByName(FONT_PATH).c_str(), 32);
     if (font == NULL)
     {
-        yError() << "Font" << rf.findFileByName(FONT_PATH) << "failed to load:" << TTF_GetError();
+        yCError(RD_UI) << "Font" << rf.findFileByName(FONT_PATH) << "failed to load:" << TTF_GetError();
         return false;
     }
     TTF_SetFontStyle(font, TTF_STYLE_BOLD);
@@ -128,7 +129,7 @@ bool rd::DeadScreen::update(const std::string & parameter, const std::string & v
         return true;
     }
 
-    yError() << "No string parameter" << parameter << "exists";
+    yCError(RD_UI) << "No string parameter" << parameter << "exists";
     return false;
 }
 
@@ -136,7 +137,7 @@ bool rd::DeadScreen::update(const std::string & parameter, const Image & value)
 {
     if (value.width() == 0 || value.height() == 0)
     {
-        yError() << "Invalid image";
+        yCError(RD_UI) << "Invalid image";
         return false;
     }
 
@@ -154,6 +155,6 @@ bool rd::DeadScreen::update(const std::string & parameter, const Image & value)
         return true;
     }
 
-    yError() << "No image parameter" << parameter << "exists";
+    yCError(RD_UI) << "No image parameter" << parameter << "exists";
     return false;
 }

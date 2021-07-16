@@ -7,6 +7,8 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 rd::StateMachineBuilder::StateMachineBuilder()
 {
     //-- Default parameters:
@@ -75,7 +77,7 @@ rd::FiniteStateMachine *rd::StateMachineBuilder::buildStateMachine()
         int origin_id = it->first;
         if (origin_id >= (int) stateDirectors.size())
         {
-            yError() << "Bad transition found: origin state" << origin_id << "does not exist";
+            yCError(RD_SM) << "Bad transition found: origin state" << origin_id << "does not exist";
             return NULL;
         }
 
@@ -87,7 +89,7 @@ rd::FiniteStateMachine *rd::StateMachineBuilder::buildStateMachine()
             int dest_id = itt->first;
             if (dest_id >= (int) stateDirectors.size())
             {
-                yError() << "Bad transition found: destination state" << dest_id << "does not exist";
+                yCError(RD_SM) << "Bad transition found: destination state" << dest_id << "does not exist";
                 return NULL;
             }
 
@@ -99,7 +101,7 @@ rd::FiniteStateMachine *rd::StateMachineBuilder::buildStateMachine()
     //-- Check that initial_state_id is within limits:
     if (initial_state_id >= (int) stateDirectors.size())
     {
-        yError() << "Initial state provided" << initial_state_id << "does not exist";
+        yCError(RD_SM) << "Initial state provided" << initial_state_id << "does not exist";
         return NULL;
     }
 

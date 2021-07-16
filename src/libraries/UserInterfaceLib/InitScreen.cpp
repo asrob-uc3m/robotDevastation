@@ -9,6 +9,8 @@
 #include <yarp/os/LogStream.h>
 #include <yarp/os/ResourceFinder.h>
 
+#include "LogComponent.hpp"
+
 const std::string rd::InitScreen::SPLASH_PATH = "../images/800px-Devastation-thin.png";
 const std::string rd::InitScreen::FONT_PATH = "../fonts/FreeMono.ttf";
 
@@ -31,13 +33,13 @@ bool rd::InitScreen::init()
     std::string splashPath = rf.findFileByName(SPLASH_PATH);
     if (splashPath == "")
     {
-        yError() << "Unable to find splash screen" << splashPath;
+        yCError(RD_UI) << "Unable to find splash screen" << splashPath;
         return false;
     }
     image = IMG_Load(splashPath.c_str());
     if (image == NULL)
     {
-        yError() << "Splash screen" << splashPath << "failed to load:" << IMG_GetError();
+        yCError(RD_UI) << "Splash screen" << splashPath << "failed to load:" << IMG_GetError();
         return false;
     }
 
@@ -45,7 +47,7 @@ bool rd::InitScreen::init()
     font = TTF_OpenFont(rf.findFileByName(FONT_PATH).c_str(), 28);
     if (font == NULL)
     {
-        yError() << "Font" << rf.findFileByName(FONT_PATH) << "failed to load:" << TTF_GetError();
+        yCError(RD_UI) << "Font" << rf.findFileByName(FONT_PATH) << "failed to load:" << TTF_GetError();
         return false;
     }
 

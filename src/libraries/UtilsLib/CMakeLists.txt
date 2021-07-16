@@ -7,7 +7,9 @@ add_library(UtilsLib ManagerHub.hpp
                      SDLUtils.hpp
                      SDLUtils.cpp
                      Vector2dBase.hpp
-                     Vocabs.hpp)
+                     Vocabs.hpp
+                     LogComponent.hpp
+                     LogComponent.cpp)
 
 target_include_directories(UtilsLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                            ${SDL2_INCLUDE_DIR})

@@ -15,7 +15,9 @@ add_library(UserInterfaceLib DeadScreen.hpp
                              ScreenManager.hpp
                              ScreenManager.cpp
                              SDLScreenManager.hpp
-                             SDLScreenManager.cpp)
+                             SDLScreenManager.cpp
+                             LogComponent.hpp
+                             LogComponent.cpp)
 
 target_include_directories(UserInterfaceLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                                    ${SDL2_INCLUDE_DIR}

@@ -8,6 +8,8 @@
 #include <yarp/os/Time.h>
 #include <yarp/os/Network.h>
 
+#include "LogComponent.hpp"
+
 //-- Initialize static members
 rd::YarpImageManager * rd::YarpImageManager::uniqueInstance = NULL;
 const std::string rd::YarpImageManager::id = "YARP";
@@ -19,8 +21,8 @@ bool rd::YarpImageManager::start()
 
     if ( ! yarp::os::NetworkBase::checkNetwork() )
     {
-        yError() << "Found no yarp network";
-        yInfo() << "Try running 'yarpserver &'', or '--fakeImageManager' or '--yarpLocalImageManager' for Fake robot camera";
+        yCError(RD_IMG) << "Found no yarp network";
+        yCInfo(RD_IMG) << "Try running 'yarpserver &'', or '--fakeImageManager' or '--yarpLocalImageManager' for Fake robot camera";
         return false;
     }
 
@@ -32,13 +34,13 @@ bool rd::YarpImageManager::start()
    {
         if(imagePort.getInputCount() > 0)
             break;
-        yInfo() << "Try to connect from robot camera to robotDevastation (via mjpeg). Attempt:" << mjpegTries;
+        yCInfo(RD_IMG) << "Try to connect from robot camera to robotDevastation (via mjpeg). Attempt:" << mjpegTries;
         yarp::os::Time::delay(0.5);
         yarp::os::Network::connect( remote_port_name.c_str(), local_port_name.c_str(), "mjpeg" );
     }
     if (mjpegTries == 11)  //-- 11 allows  10 attempts
     {
-        yError() << "Timeout for connect from robot camera to robotDevastation (via mjpeg)";
+        yCError(RD_IMG) << "Timeout for connect from robot camera to robotDevastation (via mjpeg)";
 
         //-- Connect from robot camera to robotDevastation (NON-mjpeg)
         int tries = 0;
@@ -46,25 +48,25 @@ bool rd::YarpImageManager::start()
        {
             if(imagePort.getInputCount() > 0)
                 break;
-            yInfo() << "Try to connect from robot camera to robotDevastation (NON-mjpeg). Attempt:" << tries;
+            yCInfo(RD_IMG) << "Try to connect from robot camera to robotDevastation (NON-mjpeg). Attempt:" << tries;
             yarp::os::Time::delay(0.5);
             yarp::os::Network::connect( remote_port_name.c_str(), local_port_name.c_str());
         }
         if (tries == 11)  //-- 11 allows  10 attempts
         {
-            yError() << "Timeout for connect from robot camera to robotDevastation (NON-mjpeg)";
-            yError() << "Could not connect to robot camera";
-            yInfo() << "If you prefer a fake camera use the '--fakeImageManager' or '--yarpLocalImageManager' parameter to run robotDevastation";
+            yCError(RD_IMG) << "Timeout for connect from robot camera to robotDevastation (NON-mjpeg)";
+            yCError(RD_IMG) << "Could not connect to robot camera";
+            yCInfo(RD_IMG) << "If you prefer a fake camera use the '--fakeImageManager' or '--yarpLocalImageManager' parameter to run robotDevastation";
             return false;
         }
         else
         {
-            yInfo() << "Connection from robot camera to robotDevastation (NON-mjpeg)";
+            yCInfo(RD_IMG) << "Connection from robot camera to robotDevastation (NON-mjpeg)";
         }
     }
     else
     {
-        yInfo() << "Connection from robot camera to robotDevastation (via mjpeg)";
+        yCInfo(RD_IMG) << "Connection from robot camera to robotDevastation (via mjpeg)";
     }
 
     imagePort.useCallback(*this);
@@ -153,7 +155,7 @@ void rd::YarpImageManager::onRead(Image &image)
     }
     else
     {
-        yWarning() << "YarpImageManager is disabled!";
+        yCWarning(RD_IMG) << "YarpImageManager is disabled!";
     }
 }
 

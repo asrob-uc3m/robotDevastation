@@ -8,11 +8,12 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 const int rd::DeadState::RESPAWN_SELECTED = 1;
 const int rd::DeadState::EXIT_SELECTED = 2;
 const int rd::DeadState::DEFAULT_RATE_MS = 100;
 const int rd::DeadState::MAX_HEALTH = 100;
-
 
 rd::DeadState::DeadState(NetworkManager *networkManager, ImageManager *imageManager,
                          InputManager *inputManager, MentalMap *mentalMap,
@@ -154,14 +155,14 @@ bool rd::DeadState::onKeyUp(const Key & k)
 
     if (k.getValue() == Key::KEY_ENTER)
     {
-        yDebug() << "Enter was pressed!";
+        yCDebug(RD_GS) << "Enter was pressed!";
         received_respawn = true;
         return true;
     }
 
     if (k.getValue() == Key::KEY_ESCAPE)
     {
-        yDebug() << "Escape was pressed!";
+        yCDebug(RD_GS) << "Escape was pressed!";
         received_exit = true;
         return true;
     }
@@ -173,7 +174,7 @@ bool rd::DeadState::onWindowEvent(const WindowEvent & event)
 {
     if (event.getEvent() == WindowEvent::WINDOW_CLOSE)
     {
-        yDebug() << "Exit was triggered!";
+        yCDebug(RD_GS) << "Exit was triggered!";
         received_exit = true;
         return true;
     }

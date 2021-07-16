@@ -13,7 +13,9 @@ add_library(StateMachineLib MockState.hpp
                             StateMachineBuilder.hpp
                             StateMachineBuilder.cpp
                             YarpStateDirector.hpp
-                            YarpStateDirector.cpp)
+                            YarpStateDirector.cpp
+                            LogComponent.hpp
+                            LogComponent.cpp)
 
 target_include_directories(StateMachineLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

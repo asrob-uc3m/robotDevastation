@@ -6,6 +6,8 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 //-- Static members initialization:
 rd::NetworkManager * rd::NetworkManager::networkManagerInstance = NULL;
 std::string rd::NetworkManager::currentId = "";
@@ -23,7 +25,7 @@ rd::NetworkManager *rd::NetworkManager::getNetworkManager()
         }
         else
         {
-            yError() << "No NetworkManager registered, returning null";
+            yCError(RD_NET) << "No NetworkManager registered, returning null";
         }
     }
 
@@ -41,7 +43,7 @@ rd::NetworkManager *rd::NetworkManager::getNetworkManager(const std::string & id
         }
         else
         {
-            yError() << "ImageManager" << id << "not found (maybe it was not registered?)";
+            yCError(RD_NET) << "ImageManager" << id << "not found (maybe it was not registered?)";
         }
     }
 
@@ -126,13 +128,13 @@ bool rd::NetworkManager::Register(NetworkManager *manager, const std::string & i
         }
         else
         {
-            yError() << "Trying to register a NULL manager with id" << id;
+            yCError(RD_NET) << "Trying to register a NULL manager with id" << id;
             return false;
         }
     }
     else
     {
-        yError() << "ImageManager with id" << id << "was already registered";
+        yCError(RD_NET) << "ImageManager with id" << id << "was already registered";
         return false;
     }
 

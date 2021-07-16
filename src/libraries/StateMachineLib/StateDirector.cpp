@@ -6,6 +6,8 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 rd::StateDirector::StateDirector(State *state)
 {
     this->state = state;
@@ -32,13 +34,13 @@ bool rd::StateDirector::addTransition(StateDirector *nextState, int condition)
 {
     if ( nextStates.find(condition) == nextStates.end())
     {
-        yDebug() << "Added transition from" << state->getStateId() << "to" << nextState->getStateId() << "linked to condition" << condition;
+        yCDebug(RD_SM) << "Added transition from" << state->getStateId() << "to" << nextState->getStateId() << "linked to condition" << condition;
         nextStates[condition] = nextState;
         return true;
     }
     else
     {
-        yError() << "Condition" << condition << "already in use in" << state->getStateId();
+        yCError(RD_SM) << "Condition" << condition << "already in use in" << state->getStateId();
         return false;
     }
 }

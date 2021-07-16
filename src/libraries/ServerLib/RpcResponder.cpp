@@ -9,6 +9,7 @@
 #include <yarp/os/ConnectionWriter.h>
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
 #include "Vocabs.hpp"
 
 const int rd::RpcResponder::MAX_BELIEF = 600;
@@ -58,7 +59,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         }
         else
         {
-            yError() << "Player with id" << hitId << "not logged in!";
+            yCError(RD_SRV) << "Player with id" << hitId << "not logged in!";
 #if YARP_VERSION_MINOR >= 5
             out.addVocab32(VOCAB_RD_FAIL);
 #else
@@ -92,7 +93,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         }
         else
         {
-            yError() << "Already logged, id:" << loginId;
+            yCError(RD_SRV) << "Already logged, id:" << loginId;
 #if YARP_VERSION_MINOR >= 5
             out.addVocab32(VOCAB_RD_FAIL);
 #else
@@ -112,7 +113,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         players_mutex->lock();
         if ( players->find(logoutId) == players->end() )
         {
-            yError() << "Not logged to logout, id:" << logoutId;
+            yCError(RD_SRV) << "Not logged to logout, id:" << logoutId;
 #if YARP_VERSION_MINOR >= 5
             out.addVocab32(VOCAB_RD_FAIL);
 #else
@@ -142,7 +143,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         players_mutex->lock();
         if ( players->find(respawnId) == players->end() )
         {
-            yError() << "Could not respawn, player not logged in, id:" << respawnId;
+            yCError(RD_SRV) << "Could not respawn, player not logged in, id:" << respawnId;
 #if YARP_VERSION_MINOR >= 5
             out.addVocab32(VOCAB_RD_FAIL);
 #else
@@ -171,7 +172,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
         players_mutex->lock();
         if ( players->find(keepAliveId) == players->end() )
         {
-            yError() << "Could not keep alive, player not logged in, id:" << keepAliveId;
+            yCError(RD_SRV) << "Could not keep alive, player not logged in, id:" << keepAliveId;
 #if YARP_VERSION_MINOR >= 5
             out.addVocab32(VOCAB_RD_FAIL);
 #else
@@ -191,7 +192,7 @@ bool rd::RpcResponder::read(yarp::os::ConnectionReader& connection)
     }
     else
     {
-        yError() << "Unkown command:" << in.toString();
+        yCError(RD_SRV) << "Unkown command:" << in.toString();
 #if YARP_VERSION_MINOR >= 5
         out.addVocab32(VOCAB_RD_FAIL);
 #else

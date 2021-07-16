@@ -9,6 +9,8 @@
 #include <yarp/os/LogStream.h>
 #include <yarp/os/ResourceFinder.h>
 
+#include "LogComponent.hpp"
+
 //-- Public
 const std::string rd::MockScreen::PARAM_MESSAGE = "message";
 
@@ -40,7 +42,7 @@ bool rd::MockScreen::init()
     background = IMG_Load(rf.findFileByName(IMAGE_PATH).c_str());
     if (background == NULL)
     {
-        yError() << "Background image" << IMAGE_PATH << "failed to load:" << IMG_GetError();
+        yCError(RD_UI) << "Background image" << IMAGE_PATH << "failed to load:" << IMG_GetError();
         return false;
     }
 
@@ -48,7 +50,7 @@ bool rd::MockScreen::init()
     font = TTF_OpenFont(rf.findFileByName(FONT_PATH).c_str(), 32);
     if (font == NULL)
     {
-        yError() << "Font" << rf.findFileByName(FONT_PATH) << "failed to load:" << TTF_GetError();
+        yCError(RD_UI) << "Font" << rf.findFileByName(FONT_PATH) << "failed to load:" << TTF_GetError();
         return false;
     }
     TTF_SetFontStyle(font, TTF_STYLE_BOLD);
@@ -97,7 +99,7 @@ bool rd::MockScreen::show()
                                   0);  // 16, SDL_DOUBLEBUF // SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL
         if (!window)
         {
-            yError() << "Unable to set video mode:" << SDL_GetError();
+            yCError(RD_UI) << "Unable to set video mode:" << SDL_GetError();
             return false;
         }
 
@@ -157,6 +159,6 @@ bool rd::MockScreen::update(const std::string & parameter, const std::string & v
         return true;
     }
 
-    yError() << "No string parameter" << parameter << "exists";
+    yCError(RD_UI) << "No string parameter" << parameter << "exists";
     return false;
 }

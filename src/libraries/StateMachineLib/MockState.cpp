@@ -10,6 +10,8 @@
 #include <yarp/os/ConnectionWriter.h>
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 const int rd::MockState::STATE_INITIAL = 0;
 const int rd::MockState::STATE_SETUP = 1;
 const int rd::MockState::STATE_LOOP = 2;
@@ -29,7 +31,7 @@ rd::MockState::MockState(int id)
     internal_variable = -1;
     state_history = STATE_INITIAL;
 
-    yDebug() << "Creating MockState with id:" << state_id;
+    yCDebug(RD_SM) << "Creating MockState with id:" << state_id;
 }
 
 rd::MockState::~MockState()
@@ -38,7 +40,7 @@ rd::MockState::~MockState()
 
 bool rd::MockState::setup()
 {
-    yInfo() << "State with id" << id << "entered in setup() function";
+    yCInfo(RD_SM) << "State with id" << id << "entered in setup() function";
 
     internal_variable = 0;
     state_history |= STATE_SETUP;
@@ -48,10 +50,10 @@ bool rd::MockState::setup()
 
 bool rd::MockState::loop()
 {
-    yInfo() << "State with id" << id << "entered in loop() function";
+    yCInfo(RD_SM) << "State with id" << id << "entered in loop() function";
     if (!(state_history & STATE_LOOP))
     {
-        yDebug() << "First loop, id:" << id;
+        yCDebug(RD_SM) << "First loop, id:" << id;
         state_history |= STATE_LOOP;
     }
 
@@ -60,7 +62,7 @@ bool rd::MockState::loop()
 
 bool rd::MockState::cleanup()
 {
-    yInfo() << "State with id" << id << "entered in cleanup() function";
+    yCInfo(RD_SM) << "State with id" << id << "entered in cleanup() function";
 
     internal_variable = -1;
     state_history |= STATE_CLEANUP;
@@ -81,7 +83,7 @@ bool rd::MockState::read(yarp::os::ConnectionReader & connection)
 
     if (received != REQUEST_STATE)
     {
-        yInfo() << "Received" << received << "at state" << state_id;
+        yCInfo(RD_SM) << "Received" << received << "at state" << state_id;
         internal_variable = received;
     }
 
@@ -89,7 +91,7 @@ bool rd::MockState::read(yarp::os::ConnectionReader & connection)
 
     if (returnToSender != NULL)
     {
-        yInfo() << "Preparing response...";
+        yCInfo(RD_SM) << "Preparing response...";
         yarp::os::Bottle out;
         out.addInt32(state_history);
         out.write(*returnToSender);

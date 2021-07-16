@@ -6,6 +6,8 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 //-- This is very important:
 rd::ScreenManager * rd::ScreenManager::screenManagerInstance = NULL;
 std::string rd::ScreenManager::currentId = "";
@@ -24,7 +26,7 @@ rd::ScreenManager *rd::ScreenManager::getScreenManager()
         }
         else
         {
-            yError() << "No ScreenManager registered, returning null";
+            yCError(RD_UI) << "No ScreenManager registered, returning null";
         }
     }
 
@@ -42,7 +44,7 @@ rd::ScreenManager *rd::ScreenManager::getScreenManager(const std::string & id)
         }
         else
         {
-            yError() << "ScreenManager" << id << "not found (mMaybe it was not registered?)";
+            yCError(RD_UI) << "ScreenManager" << id << "not found (mMaybe it was not registered?)";
         }
     }
 
@@ -141,13 +143,13 @@ bool rd::ScreenManager::Register(ScreenManager *manager, const std::string & id)
         }
         else
         {
-            yError() << "Trying to register a NULL ScreenManager with id" << id;
+            yCError(RD_UI) << "Trying to register a NULL ScreenManager with id" << id;
             return false;
         }
     }
     else
     {
-        yError() << "ScreenManager with id" << id << "was already registered";
+        yCError(RD_UI) << "ScreenManager with id" << id << "was already registered";
         return false;
     }
 

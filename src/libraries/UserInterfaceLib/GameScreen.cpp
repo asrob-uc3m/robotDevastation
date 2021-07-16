@@ -9,6 +9,7 @@
 #include <yarp/os/LogStream.h>
 #include <yarp/os/ResourceFinder.h>
 
+#include "LogComponent.hpp"
 #include "SDLUtils.hpp"
 
 const std::string rd::GameScreen::PARAM_CAMERA_FRAME = "camera_frame";
@@ -43,21 +44,21 @@ bool rd::GameScreen::init()
     player_font = TTF_OpenFont(rf.findFileByName(font_name).c_str(), 12);
     if (player_font == NULL)
     {
-        yError() << "Font" << rf.findFileByName(font_name) << "failed to load:" << TTF_GetError();
+        yCError(RD_UI) << "Font" << rf.findFileByName(font_name) << "failed to load:" << TTF_GetError();
         return false;
     }
 
     target_font = TTF_OpenFont(rf.findFileByName(font_name).c_str(), 12);
     if (target_font == NULL)
     {
-        yError() << "Font" << rf.findFileByName(font_name) << "failed to load:" << TTF_GetError();
+        yCError(RD_UI) << "Font" << rf.findFileByName(font_name) << "failed to load:" << TTF_GetError();
         return false;
     }
 
     weapon_font = TTF_OpenFont(rf.findFileByName(font_name).c_str(), 12);
     if (weapon_font == NULL)
     {
-        yError() << "Font" << rf.findFileByName(font_name) << "failed to load:" << TTF_GetError();
+        yCError(RD_UI) << "Font" << rf.findFileByName(font_name) << "failed to load:" << TTF_GetError();
         return false;
     }
 
@@ -92,7 +93,7 @@ bool rd::GameScreen::drawScreen(void *screen)
             SDL_BlitSurface(camera_frame_surface, NULL, sdl_screen, &camera_frame_rect);
         }
         else
-            yWarning() << "No camera frame received yet";
+            yCWarning(RD_UI) << "No camera frame received yet";
 
         //-- Draw enemies
         for (int i = 0; i < (int) targets.size(); i++)
@@ -136,7 +137,7 @@ rd::GameScreen::~GameScreen()
 
 bool rd::GameScreen::update(const std::string & parameter, const std::string & value)
 {
-    yError() << "No string parameter" << parameter << "exists";
+    yCError(RD_UI) << "No string parameter" << parameter << "exists";
     return false;
 }
 
@@ -149,7 +150,7 @@ bool rd::GameScreen::update(const std::string & parameter, const Player & value)
         return true;
     }
 
-    yError() << "No Player parameter" << parameter << "exists";
+    yCError(RD_UI) << "No Player parameter" << parameter << "exists";
     return false;
 }
 
@@ -162,7 +163,7 @@ bool rd::GameScreen::update(const std::string & parameter, const std::vector<Pla
         return true;
     }
 
-    yError() << "No vector<Player> parameter" << parameter << "exists";
+    yCError(RD_UI) << "No vector<Player> parameter" << parameter << "exists";
     return false;
 }
 
@@ -175,7 +176,7 @@ bool rd::GameScreen::update(const std::string & parameter, const std::vector<Tar
         return true;
     }
 
-    yError() << "No vector<Target> parameter" << parameter << "exists";
+    yCError(RD_UI) << "No vector<Target> parameter" << parameter << "exists";
     return false;
 }
 
@@ -188,14 +189,14 @@ bool rd::GameScreen::update(const std::string & parameter, const Weapon & value)
         return true;
     }
 
-    yError() << "No Weapon parameter" << parameter << "exists";
+    yCError(RD_UI) << "No Weapon parameter" << parameter << "exists";
     return false;
 }
 
 bool rd::GameScreen::update(const std::string & parameter, const Image & value)
 {    if (value.width() == 0 || value.height() == 0)
     {
-        yError() << "Invalid image";
+        yCError(RD_UI) << "Invalid image";
         return false;
     }
 
@@ -211,7 +212,7 @@ bool rd::GameScreen::update(const std::string & parameter, const Image & value)
         camera_frame_surface = RdImage2SDLImage(camera_frame);
         if (camera_frame_surface==NULL)
         {
-            yError() << "Error converting Image to SDL";
+            yCError(RD_UI) << "Error converting Image to SDL";
             return false;
         }
         w = camera_frame_surface->w;
@@ -220,7 +221,7 @@ bool rd::GameScreen::update(const std::string & parameter, const Image & value)
         return true;
     }
 
-    yError() << "No Image parameter" << parameter << "exists";
+    yCError(RD_UI) << "No Image parameter" << parameter << "exists";
     return false;
 }
 
@@ -300,7 +301,7 @@ bool rd::GameScreen::drawTargetUI(SDL_Surface *screen, const Target & target, co
     if (target.getDimensions().getX() < 0 || target.getDimensions().getY() < 0 ||
             target.getPos().getX() < 0 || target.getPos().getY() < 0)
     {
-        yError() << "Trying to draw an invalid target:" << player_data.getName();
+        yCError(RD_UI) << "Trying to draw an invalid target:" << player_data.getName();
         return false;
     }
 

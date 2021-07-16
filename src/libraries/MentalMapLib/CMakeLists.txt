@@ -10,7 +10,9 @@ add_library(MentalMapLib MentalMap.hpp
                          Target.hpp
                          Target.cpp
                          Weapon.hpp
-                         Weapon.cpp)
+                         Weapon.cpp
+                         LogComponent.hpp
+                         LogComponent.cpp)
 
 target_include_directories(MentalMapLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

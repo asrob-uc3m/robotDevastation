@@ -6,10 +6,11 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 //-- Initialize static members
 rd::MockImageManager * rd::MockImageManager::uniqueInstance = NULL;
 const std::string rd::MockImageManager::id = "MOCK";
-
 
 bool rd::MockImageManager::start()
 {
@@ -43,7 +44,7 @@ bool rd::MockImageManager::isEnabled() const
 
 bool rd::MockImageManager::configure(const std::string & parameter, const std::string & value)
 {
-    yDebug() << "Configure called for parameter" << parameter << "with value" << value;
+    yCDebug(RD_IMG) << "Configure called for parameter" << parameter << "with value" << value;
     return ImageManager::configure(parameter, value);
 }
 
@@ -87,7 +88,7 @@ bool rd::MockImageManager::receiveImage(const Image & received_image)
     }
     else
     {
-        yWarning() << "MockImageManager is disabled!";
+        yCWarning(RD_IMG) << "MockImageManager is disabled!";
         return false;
     }
 

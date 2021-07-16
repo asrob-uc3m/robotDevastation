@@ -6,6 +6,8 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 //-- Initialize static members
 rd::MockNetworkManager * rd::MockNetworkManager::uniqueInstance = NULL;
 const std::string rd::MockNetworkManager::id = "MOCK";
@@ -58,7 +60,7 @@ bool rd::MockNetworkManager::sendPlayerHit(const Player & player, int damage)
 
     if (!logged_in)
     {
-        yError() << "Not logged in, id:" << id;
+        yCError(RD_NET) << "Not logged in, id:" << id;
         return false;
     }
 
@@ -74,7 +76,7 @@ bool rd::MockNetworkManager::sendPlayerHit(const Player & player, int damage)
     }
     else
     {
-        yError() << "Target does not exist, id:" << id;
+        yCError(RD_NET) << "Target does not exist, id:" << id;
         return false;
     }
 
@@ -90,7 +92,7 @@ bool rd::MockNetworkManager::login()
 
     if (logged_in)
     {
-        yError() << "Already logged, id:" << loginId;
+        yCError(RD_NET) << "Already logged, id:" << loginId;
         return false;
     }
 
@@ -101,7 +103,7 @@ bool rd::MockNetworkManager::login()
     }
     else
     {
-        yError() << "Already logged, id:" << loginId;
+        yCError(RD_NET) << "Already logged, id:" << loginId;
         return false;
     }
 
@@ -116,7 +118,7 @@ bool rd::MockNetworkManager::logout()
 
     if (!logged_in)
     {
-        yError() << "Not logged in, id:" << id;
+        yCError(RD_NET) << "Not logged in, id:" << id;
         return false;
     }
 
@@ -129,7 +131,7 @@ bool rd::MockNetworkManager::logout()
     }
     else
     {
-        yError() << "Not logged in, id:" << id;
+        yCError(RD_NET) << "Not logged in, id:" << id;
         return false;
     }
 
@@ -198,7 +200,7 @@ bool rd::MockNetworkManager::setLoggedIn(bool logged_in)
     }
     else
     {
-        yWarning() << "Already in that state:" << logged_in;
+        yCWarning(RD_NET) << "Already in that state:" << logged_in;
         return false;
     }
 }

@@ -7,7 +7,9 @@ add_library(MusicLib AudioManager.hpp
                      MockAudioManager.hpp
                      MockAudioManager.cpp
                      SDLAudioManager.hpp
-                     SDLAudioManager.cpp)
+                     SDLAudioManager.cpp
+                     LogComponent.hpp
+                     LogComponent.cpp)
 
 target_include_directories(MusicLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                            ${SDL2_INCLUDE_DIR}

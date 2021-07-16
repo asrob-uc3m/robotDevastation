@@ -6,6 +6,8 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 //-- This is very important:
 rd::InputManager * rd::InputManager::inputManagerInstance = NULL;
 std::string rd::InputManager::currentId = "";
@@ -24,7 +26,7 @@ rd::InputManager *rd::InputManager::getInputManager()
         }
         else
         {
-            yError() << "No InputManager registered, returning null";
+            yCError(RD_INP) << "No InputManager registered, returning null";
         }
     }
 
@@ -42,7 +44,7 @@ rd::InputManager *rd::InputManager::getInputManager(const std::string & id)
         }
         else
         {
-            yError() << "InputManager" << id << "not found (maybe it was not registered?)";
+            yCError(RD_INP) << "InputManager" << id << "not found (maybe it was not registered?)";
         }
     }
 
@@ -123,13 +125,13 @@ bool rd::InputManager::Register(InputManager *manager, const std::string & id)
         }
         else
         {
-            yError() << "Trying to register a NULL manager with id" << id;
+            yCError(RD_INP) << "Trying to register a NULL manager with id" << id;
             return false;
         }
     }
     else
     {
-        yError() << "InputManager with id" << id << "was already registered";
+        yCError(RD_INP) << "InputManager with id" << id << "was already registered";
         return false;
     }
 }

@@ -5,7 +5,9 @@
 add_library(ServerLib RpcResponder.hpp
                       RpcResponder.cpp
                       Server.hpp
-                      Server.cpp)
+                      Server.cpp
+                      LogComponent.hpp
+                      LogComponent.cpp)
 
 target_include_directories(ServerLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

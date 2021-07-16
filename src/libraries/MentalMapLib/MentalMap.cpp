@@ -10,6 +10,8 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 //-- This is very important:
 rd::MentalMap * rd::MentalMap::mentalMapInstance = NULL;
 
@@ -81,8 +83,8 @@ rd::Target rd::MentalMap::getTarget(const int &id) const
     }
     else
     {
-        yError() << "Enemy with id" << id << "not found!!";
-        yError() << "Returning standard target";
+        yCError(RD_MM) << "Enemy with id" << id << "not found!!";
+        yCError(RD_MM) << "Returning standard target";
         return Target();
     }
 }
@@ -95,8 +97,8 @@ rd::Player rd::MentalMap::getPlayer(const int &id) const
     }
     else
     {
-        yError() << "Player with id" << id << "not found!!";
-        yError() << "Returning standard player";
+        yCError(RD_MM) << "Player with id" << id << "not found!!";
+        yCError(RD_MM) << "Returning standard player";
         return Player();
     }
 }
@@ -105,8 +107,8 @@ rd::Player rd::MentalMap::getMyself() const
 {
     if (!myself)
     {
-        yError() << "Myself not found in mental map";
-        yError() << "Returning standard player";
+        yCError(RD_MM) << "Myself not found in mental map";
+        yCError(RD_MM) << "Returning standard player";
         return Player();
     }
     else
@@ -121,8 +123,8 @@ rd::Weapon rd::MentalMap::getCurrentWeapon() const
         return weapons[current_weapon];
     else
     {
-        yError() << "No weapons added yet!";
-        yError() << "Returning standard weapon";
+        yCError(RD_MM) << "No weapons added yet!";
+        yCError(RD_MM) << "Returning standard weapon";
         return Weapon();
     }
 }
@@ -155,7 +157,7 @@ bool rd::MentalMap::shoot()
                 if (players.find(target_id) != players.end())
                 {
                     Player * player = &players[target_id];
-                    yInfo() << "Target" << player->getName() << "was hit!";
+                    yCInfo(RD_MM) << "Target" << player->getName() << "was hit!";
 
                     player->getDamageFromWeapon(weapons[current_weapon]);
 
@@ -167,13 +169,13 @@ bool rd::MentalMap::shoot()
                 }
                 else
                 {
-                    yWarning() << "Ignoring target with invalid player id" << target_id;
+                    yCWarning(RD_MM) << "Ignoring target with invalid player id" << target_id;
                 }
 
             }
             else
             {
-                yInfo() << "Missed!";
+                yCInfo(RD_MM) << "Missed!";
             }
         }
     }
@@ -181,7 +183,7 @@ bool rd::MentalMap::shoot()
     {
             //-- Play sound
             audioManager->play("noAmmo", false);
-            yWarning() << "No ammo! Reload!";
+            yCWarning(RD_MM) << "No ammo! Reload!";
     }
 
     return hit;

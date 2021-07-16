@@ -9,6 +9,8 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 SDL_Surface * rd::RdImage2SDLImage(const Image & image)
 {
     if (image.width()==0)
@@ -36,14 +38,14 @@ bool rd::initSDL()
     //-- Init SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
-        yError() << "SDL could not initialize:" << SDL_GetError();
+        yCError(RD_UTIL) << "SDL could not initialize:" << SDL_GetError();
         return false;
     }
 
     //-- Init ttf
     if (TTF_Init() == -1)
     {
-        yError() << "SDL_ttf could not initialize:" << TTF_GetError();
+        yCError(RD_UTIL) << "SDL_ttf could not initialize:" << TTF_GetError();
         cleanupSDL();
         return false;
     }
@@ -51,7 +53,7 @@ bool rd::initSDL()
     //Initialize PNG loading
     if(!(IMG_Init(IMG_INIT_PNG)&IMG_INIT_PNG))
     {
-        yError() << "SDL_image could not initialize:" << IMG_GetError();
+        yCError(RD_UTIL) << "SDL_image could not initialize:" << IMG_GetError();
         cleanupSDL();
         return false;
     }
@@ -60,7 +62,7 @@ bool rd::initSDL()
 
 bool rd::cleanupSDL()
 {
-    yInfo() << "Freeing resources...";
+    yCInfo(RD_UTIL) << "Freeing resources...";
     IMG_Quit();
     TTF_Quit();
     SDL_Quit();

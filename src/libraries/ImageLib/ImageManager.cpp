@@ -6,6 +6,8 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 //-- Static members initialization:
 rd::ImageManager * rd::ImageManager::imageManagerInstance = NULL;
 std::string rd::ImageManager::currentId = "";
@@ -23,7 +25,7 @@ rd::ImageManager *rd::ImageManager::getImageManager()
         }
         else
         {
-            yError() << "No ImageManager registered, returning null";
+            yCError(RD_IMG) << "No ImageManager registered, returning null";
         }
     }
 
@@ -41,7 +43,7 @@ rd::ImageManager *rd::ImageManager::getImageManager(const std::string & id)
         }
         else
         {
-            yError() << "ImageManager" << id << "not found (maybe it was not registered?)";
+            yCError(RD_IMG) << "ImageManager" << id << "not found (maybe it was not registered?)";
         }
     }
 
@@ -119,13 +121,13 @@ bool rd::ImageManager::Register(ImageManager *manager, const std::string & id)
         }
         else
         {
-            yError() << "Trying to register a NULL manager with id" << id;
+            yCError(RD_IMG) << "Trying to register a NULL manager with id" << id;
             return false;
         }
     }
     else
     {
-        yError() << "ImageManager with id" << id << "was already registered";
+        yCError(RD_IMG) << "ImageManager with id" << id << "was already registered";
         return false;
     }
 

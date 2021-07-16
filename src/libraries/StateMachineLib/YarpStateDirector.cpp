@@ -6,6 +6,8 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 const int rd::YarpStateDirector::DEFAULT_RATE_MS = 100;
 
 rd::YarpStateDirector::YarpStateDirector(State *state) : StateDirector(state), PeriodicThread(DEFAULT_RATE_MS * 0.001)
@@ -17,15 +19,15 @@ bool rd::YarpStateDirector::Start()
 {
     if (state == NULL)
     {
-        yDebug() << "Null state. Exiting...";
+        yCDebug(RD_SM) << "Null state. Exiting...";
         return Stop();
     }
 
-    yDebug() << "Starting StateDirector for id" << state->getStateId();
+    yCDebug(RD_SM) << "Starting StateDirector for id" << state->getStateId();
     active = true;
     if (!state->setup())
     {
-        yError() << "Error in state setup for id" << state->getStateId();
+        yCError(RD_SM) << "Error in state setup for id" << state->getStateId();
         return false;
     }
 
@@ -35,7 +37,7 @@ bool rd::YarpStateDirector::Start()
 bool rd::YarpStateDirector::Stop()
 {
     if (state != NULL)
-        yDebug() << "Stopping StateDirector for id" << state->getStateId();
+        yCDebug(RD_SM) << "Stopping StateDirector for id" << state->getStateId();
 
     active = false;
 
@@ -51,7 +53,7 @@ void rd::YarpStateDirector::run()
 {
     if ( !state->loop() )
     {
-        yError() << "Error in loop. Stopping this state...";
+        yCError(RD_SM) << "Error in loop. Stopping this state...";
         Stop();
     }
     int condition = state->evaluateConditions();

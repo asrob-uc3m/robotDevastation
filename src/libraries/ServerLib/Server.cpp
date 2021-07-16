@@ -10,6 +10,7 @@
 #include <yarp/os/Bottle.h>
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
 #include "Vocabs.hpp"
 
 bool rd::Server::configure(yarp::os::ResourceFinder &rf)
@@ -17,7 +18,7 @@ bool rd::Server::configure(yarp::os::ResourceFinder &rf)
     quiet = false;
     if (rf.check("quiet"))
     {
-        yInfo() << "stdout feedback disabled";
+        yCInfo(RD_SRV) << "stdout feedback disabled";
         quiet = true;
     }
 

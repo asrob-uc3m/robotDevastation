@@ -7,7 +7,9 @@ add_library(GameStatesLib DeadState.hpp
                           GameState.hpp
                           GameState.cpp
                           InitState.hpp
-                          InitState.cpp)
+                          InitState.cpp
+                          LogComponent.hpp
+                          LogComponent.cpp)
 
 target_include_directories(GameStatesLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

@@ -6,6 +6,8 @@
 
 #include <yarp/os/LogStream.h>
 
+#include "LogComponent.hpp"
+
 bool rd::SDLEventFactory::initialized = false;
 std::map<SDL_Keycode, char> rd::SDLEventFactory::sdl_printable_map = std::map<SDL_Keycode, char>();
 std::map<SDL_Keycode, int>  rd::SDLEventFactory::sdl_control_map = std::map<SDL_Keycode, int>();
@@ -33,7 +35,7 @@ rd::Key rd::SDLEventFactory::makeKey(SDL_Keycode keycode)
     }
     else
     {
-        yError() << "Key not supported!";
+        yCError(RD_INP) << "Key not supported!";
         return Key::KEY_UNKNOWN;
     }
 }

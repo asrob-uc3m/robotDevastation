@@ -16,7 +16,9 @@ add_library(InputLib InputEventListener.hpp
                      SDLInputManager.hpp
                      SDLInputManager.cpp
                      WindowEvent.hpp
-                     WindowEvent.cpp)
+                     WindowEvent.cpp
+                     LogComponent.hpp
+                     LogComponent.cpp)
 
 target_include_directories(InputLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
                                            ${SDL2_INCLUDE_DIR})
