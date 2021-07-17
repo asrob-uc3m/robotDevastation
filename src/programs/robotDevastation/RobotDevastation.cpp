@@ -10,7 +10,10 @@
 #include <yarp/os/LogStream.h>
 #include <yarp/os/Property.h>
 
-YARP_LOG_COMPONENT(RD, "asrob.rd.RobotDevastation")
+namespace
+{
+    YARP_LOG_COMPONENT(RD, "asrob.rd.RobotDevastation")
+}
 
 bool rd::RobotDevastation::configure(yarp::os::ResourceFinder &rf)
 {
