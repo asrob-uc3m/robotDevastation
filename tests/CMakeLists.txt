@@ -12,8 +12,6 @@ cmake_dependent_option(ENABLE_tests "Enable/disable unit tests" ON
 if(ENABLE_tests)
 
 set(gtest_force_shared_crt ON CACHE INTERNAL "") # needed for Windows
-set(BUILD_GMOCK OFF CACHE INTERNAL "")
-set(INSTALL_GTEST OFF CACHE INTERNAL "")
 
 add_subdirectory(${GTestSources_SOURCE_DIR} ${CMAKE_BINARY_DIR}/gtest)
 

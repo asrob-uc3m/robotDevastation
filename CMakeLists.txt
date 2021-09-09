@@ -2,7 +2,7 @@
 # CopyPolicy: released under the terms of the LGPLv2.1, see LICENSE at project root.
 # URL: https://github.com/asrob-uc3m/robotDevastation
 
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5)
 
 project(robotDevastation LANGUAGES CXX)
 
@@ -48,7 +48,7 @@ find_package(ZBar REQUIRED)
 
 # Find project's soft dependencies.
 find_package(Doxygen QUIET)
-find_package(GTestSources 1.6.0 QUIET)
+find_package(GTestSources 1.8 QUIET)
 
 # Standard installation directories.
 include(GNUInstallDirs)
@@ -72,6 +72,9 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Create targets if specific requirements are satisfied.
 include(CMakeDependentOption)
+
+# Acknowledge this is a CTest-friendly project.
+enable_testing()
 
 # Add main contents.
 add_subdirectory(share)
