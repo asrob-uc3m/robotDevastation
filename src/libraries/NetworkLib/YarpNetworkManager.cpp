@@ -6,7 +6,6 @@
 
 #include <sstream>
 
-#include <yarp/conf/version.h>
 #include <yarp/os/LogStream.h>
 #include <yarp/os/Network.h>
 
@@ -114,11 +113,7 @@ bool rd::YarpNetworkManager::start()
 
 void rd::YarpNetworkManager::onRead(yarp::os::Bottle &b)
 {
-#if YARP_VERSION_MINOR >= 5
     if (b.get(0).asString() == "players" || b.get(0).asVocab32() == VOCAB_RD_PLAYERS) {  // players //
-#else
-    if (b.get(0).asString() == "players" || b.get(0).asVocab() == VOCAB_RD_PLAYERS) {  // players //
-#endif
         std::vector< Player > players;
         for (int i = 1; i < b.size(); i++)
         {
@@ -193,11 +188,7 @@ bool rd::YarpNetworkManager::sendPlayerHit(const Player & player, int damage)
 
     //-- Send a message to the server with the player Id and the damage done:
     yarp::os::Bottle msg_player_hit, response;
-#if YARP_VERSION_MINOR >= 5
     msg_player_hit.addVocab32(VOCAB_RD_HIT);
-#else
-    msg_player_hit.addVocab(VOCAB_RD_HIT);
-#endif
     msg_player_hit.addInt32(player.getId());
     msg_player_hit.addInt32(damage);
     rpcClient.write(msg_player_hit,response);
@@ -228,11 +219,7 @@ bool rd::YarpNetworkManager::login()
 
     //-- Send login message
     yarp::os::Bottle msgRdPlayer,res;
-#if YARP_VERSION_MINOR >= 5
     msgRdPlayer.addVocab32(VOCAB_RD_LOGIN);
-#else
-    msgRdPlayer.addVocab(VOCAB_RD_LOGIN);
-#endif
     msgRdPlayer.addInt32(player.getId());
     msgRdPlayer.addString(player.getName().c_str());
     msgRdPlayer.addInt32(player.getTeamId());
@@ -256,11 +243,7 @@ bool rd::YarpNetworkManager::logout()
 
     yCInfo(RD_NET) << "Logout...";
     yarp::os::Bottle msgRdPlayer,res;
-#if YARP_VERSION_MINOR >= 5
     msgRdPlayer.addVocab32(VOCAB_RD_LOGOUT);
-#else
-    msgRdPlayer.addVocab(VOCAB_RD_LOGOUT);
-#endif
     msgRdPlayer.addInt32(player.getId());
     rpcClient.write(msgRdPlayer,res);
     yCInfo(RD_NET) << "rdServer response from logout:" << res.toString();
@@ -285,11 +268,7 @@ bool rd::YarpNetworkManager::keepAlive()
 
     yCInfo(RD_NET) << "Keep alive...";
     yarp::os::Bottle msgRdPlayer,res;
-#if YARP_VERSION_MINOR >= 5
     msgRdPlayer.addVocab32(VOCAB_RD_KEEPALIVE);
-#else
-    msgRdPlayer.addVocab(VOCAB_RD_KEEPALIVE);
-#endif
     msgRdPlayer.addInt32(player.getId());
     rpcClient.write(msgRdPlayer,res);
 
