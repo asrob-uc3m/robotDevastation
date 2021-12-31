@@ -36,7 +36,7 @@ init:
   # Dependency version tags
   - cmd: set ACE_LATEST=6.5.11
   - cmd: set YCM_LATEST=0.13.0
-  - cmd: set YARP_LATEST=3.5.0
+  - cmd: set YARP_LATEST=3.6.0
   - cmd: set SDL2_LATEST=2.0.12
   - cmd: set SDL2_IMAGE_LATEST=2.0.5
   - cmd: set SDL2_TTF_LATEST=2.0.15

@@ -16,8 +16,8 @@ env:
     - CACHE_DIR=~/cached-deps # common cache location
     - YCM_CHECKOUT=ycm-0.13
   jobs:
+    - YARP_CHECKOUT=yarp-3.6
     - YARP_CHECKOUT=yarp-3.5
-    - YARP_CHECKOUT=yarp-3.4
 
 jobs:
   include:
