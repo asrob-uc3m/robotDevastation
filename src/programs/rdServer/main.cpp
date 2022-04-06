@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     std::cout << "|_| \\_\\___/|_.__/ \\___/ \\__|____/ \\___| \\_/ \\__,_|___/\\__\\__,_|\\__|_|\\___/|_| |_|" << std::endl;
     std::cout << std::endl;
     std::cout << "Fire with 'space'. Reload with 'r'. Move with 'a,s,d,w,x'. Run \"robotDevastation --help\" for options." << std::endl;
-    std::cout << "For a full description, please visit http://wiki.asrob.uc3m.es/rddoc/group__robotDevastation.html." << std::endl;
+    std::cout << "For a full description, please visit https://asrob.uc3m.es/robotDevastation/group__robotDevastation.html." << std::endl;
     std::cout << "--------------------------------------------------------------" << std::endl;
 
     yarp::os::ResourceFinder rf;

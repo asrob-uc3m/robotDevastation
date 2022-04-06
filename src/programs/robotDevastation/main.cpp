@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     std::printf("|_| \\_\\___/|_.__/ \\___/ \\__|____/ \\___| \\_/ \\__,_|___/\\__\\__,_|\\__|_|\\___/|_| |_|\n");
     std::printf("\n");
     std::printf("Fire with 'space'. Reload with 'r'. Move with 'Left, Up, Down, Right'. Run \"robotDevastation --help\" for help.\n");
-    std::printf("For a full description, please visit http://wiki.asrob.uc3m.es/rddoc/group__robotDevastation.html.\n");
+    std::printf("For a full description, please visit https://asrob.uc3m.es/robotDevastation/group__robotDevastation.html.\n");
     std::printf("--------------------------------------------------------------\n");
 
     yarp::os::ResourceFinder rf;

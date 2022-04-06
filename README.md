@@ -22,7 +22,7 @@
    - (2016) [A New Generation of Entertainment Robots Enhanced with Augmented Reality](http://roboticslab.uc3m.es/roboticslab/sites/default/files/estevez2016a-preprint.pdf)
    - (2015) [Robot Devastation: Using DIY Low-Cost Platforms for Multiplayer Interaction in an Augmented Reality Game](http://roboticslab.uc3m.es/roboticslab/sites/default/files/estevez2015robot-preprint.pdf)
    - (2013) [Augmented Reality and Social Interaction platform through Multirobot Design](http://roboticslab.uc3m.es/roboticslab/sites/default/files/Victores%20et%20al.%20-%202013%20-%20Augmented%20reality%20and%20social%20interaction%20platform%20through%20multirobot%20design.pdf)
-   - (2013) [Android Controlled Mobile Robot](http://asrob.uc3m.es/images/1/1d/PFC_-_Jorge_Kazacos.pdf)
+   - (2013) [Android Controlled Mobile Robot](https://apps-robots.uc3m.es/asrob/w/images/1/1d/PFC_-_Jorge_Kazacos.pdf)
 
 ## Status
 
