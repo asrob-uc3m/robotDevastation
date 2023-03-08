@@ -7,4 +7,6 @@ CMakeLists.txt.user
 /external/
 /.cproject
 /.project
+/.vs/
+/.vscode/
 /doc/html/
